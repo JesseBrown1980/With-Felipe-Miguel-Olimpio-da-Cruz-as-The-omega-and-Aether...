@@ -49,3 +49,14 @@ Estate satellites carrying the four instances of this one theorem:
 ## Current boundary
 
 This README closes the root doctrine gap only. It does not promote a branch, fire an engine, cut over runtime, publish private evidence, or replace the live fabric. Runtime and migration claims still require their owning gates.
+## Homes
+
+Asolaria is published, byte-identical, at three public homes that mirror each other:
+
+- GitHub — [JesseBrown1980/asolaria-aether](https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...)
+- Hugging Face — [Jessedbrown/asolaria](https://huggingface.co/Jessedbrown/asolaria)
+- Hugging Face — [Jessedbrown/asolaria-aether](https://huggingface.co/Jessedbrown/asolaria-aether)
+
+Each carries the same clean commit: the doctrine, the runnable slices
+(`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`),
+and the Rust 1.81 tribit kernel under `kernel/tribit/`.
