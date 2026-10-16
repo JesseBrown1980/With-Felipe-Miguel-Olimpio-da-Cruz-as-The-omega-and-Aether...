@@ -1,0 +1,7 @@
+# OPERATOR RULE (Jesse Daniel Brown) - GLOBAL, NO EXCEPTIONS.
+# Rust 1.81 with clippy. Integer arithmetic only. Ternary (trits), never float.
+# Do not raise, do not drift.
+[toolchain]
+channel = "1.81.0"
+components = ["clippy", "rustfmt"]
+profile = "minimal"

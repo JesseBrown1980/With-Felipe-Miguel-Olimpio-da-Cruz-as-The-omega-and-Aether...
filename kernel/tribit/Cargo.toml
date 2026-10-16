@@ -1,0 +1,14 @@
+[package]
+name = "asolaria-tribit"
+version = "0.1.0"
+edition = "2021"
+description = "Balanced-ternary tribit core: three zeros, the rainbow register hose, and an exact 27-point integer transform over Z/1000081Z. Integer only, no float, no_std, zero dependencies."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/JesseBrown1980/asolaria-tribit"
+keywords = ["ternary", "trit", "balanced-ternary", "ntt", "no-std"]
+categories = ["no-std", "mathematics"]
+
+[dependencies]
+
+[lints.rust]
+unsafe_code = "forbid"

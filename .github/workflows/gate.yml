@@ -1,0 +1,28 @@
+name: asolaria-aether gate
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions: { contents: read }
+jobs:
+  python-slices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - run: |
+          set -euo pipefail
+          python prime_cylinder_expansion.py
+          python slice_glyph_messaging.py
+  tribit-kernel:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: kernel/tribit } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --all-targets -- -D warnings
+      - run: cargo +1.81.0 test
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi

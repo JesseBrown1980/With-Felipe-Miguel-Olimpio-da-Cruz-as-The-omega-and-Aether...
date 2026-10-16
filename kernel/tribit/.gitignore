@@ -1,0 +1,3 @@
+# Build artifacts never belong in the core. The first push of this repo swept in 88 files from
+# target/, including 5 cargo fingerprint .json files - in a repo whose whole law is json=0.
+/target/

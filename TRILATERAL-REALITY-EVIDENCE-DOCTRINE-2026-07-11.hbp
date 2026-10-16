@@ -1,0 +1,7 @@
+ASOLARIA-TRILATERALv1|date=2026-07-11|bilateral_runtime=preserved|trilateral_evidence=required_when_available|json=0
+SEAT|acer=origin+implementation+measurement|liris=attack-verify+reimplementation|third=independent-execution|ci=immutable-head|json=0
+LAW|no_deflate=1|no_inflate=1|vantage_tagging=1|old_new_split=1|authority_preserved=1|json=0
+DENY-DEFLATE|cannot_see_as_false=1|private_carveout_as_absence=1|staged_new_erases_old=1|disk_state_as_unreal=1|classical_as_unreal=1|json=0
+DENY-INFLATE|capacity_as_resident=1|tally_as_model_call=1|disk_as_gpu=1|selector_as_entropy=1|classical_as_quantum=1|verification_as_authority=1|json=0
+ANCHOR|path1=third+ci-green|path2=third+ci-green|qprism3d=ci-green|gnn_lineage=blob-identical|json=0
+MERGE|obvious=tagged+additive+clean+green|hold=failed+conflict+secret+authority+destructive+unsupported|json=0
