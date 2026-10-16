@@ -26,3 +26,14 @@ jobs:
       - run: cargo +1.81.0 test
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  behcs1024-kernel:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: kernel/behcs1024-60d } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - run: cargo +1.81.0 clippy --all-targets -- -D warnings
+      - run: cargo +1.81.0 test
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi

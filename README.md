@@ -59,4 +59,4 @@ Asolaria is published, byte-identical, at three public homes that mirror each ot
 
 Each carries the same clean commit: the doctrine, the runnable slices
 (`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`),
-and the Rust 1.81 tribit kernel under `kernel/tribit/`.
+and the Rust 1.81 kernels under `kernel/tribit/` (ternary core) and `kernel/behcs1024-60d/` (the verified 60D / BEHCS-1024 hash-coordinate collapse).
