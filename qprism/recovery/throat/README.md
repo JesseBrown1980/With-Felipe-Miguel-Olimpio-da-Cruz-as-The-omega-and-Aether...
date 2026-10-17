@@ -1,5 +1,9 @@
 # asolaria-qprism-throat
 
+Written fresh for aether by Claude; not upstream code. It is secondary to the owner's DBBH -> DBWH
+codec (`JesseBrown1980/holographic-wormhole-codec`, vendored at `codec/dbbh-dbwh` in aether), which
+is the primary throat, and it is never the default path.
+
 The Q-PRISM **combined throat** (Layer 3 coordinator). It selects recovery
 Path 1 (retained-output LZ) or Path 2 (CRT two shadows) from the evidence a
 caller actually holds, cross-validates both when both are present, and returns

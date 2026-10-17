@@ -1,0 +1,26 @@
+[package]
+name = "asolaria-gguf-roundtrip"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+publish = false
+description = "Runs the owner's DBBH -> DBWH codec (holographic-wormhole-codec@4901280, vendored at codec/dbbh-dbwh) over every GGUF in gguf/MANIFEST.hbp and prints HBP rows."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+
+[lib]
+name = "asolaria_gguf_roundtrip"
+path = "src/lib.rs"
+
+[[bin]]
+name = "asolaria-gguf-roundtrip"
+path = "src/main.rs"
+
+[dependencies]
+holographic-wormhole-codec = { path = "../dbbh-dbwh" }
+
+# The codec's own release profile (codec/dbbh-dbwh/Cargo.toml lines 15-17).
+[profile.release]
+opt-level = 3
+lto = true

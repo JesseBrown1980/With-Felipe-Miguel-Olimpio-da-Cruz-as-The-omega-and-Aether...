@@ -1,0 +1,17 @@
+[package]
+name = "holographic-wormhole-codec"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "The unified DBBH -> DBWH throat in one tested loop: black mouth (compress + IX-737 capsule) -> throat (capsule + residual selector cross, not the object) -> white mouth (consent-gated reconstruct) -> N-directional watcher gate (black<->white AGT round-trip + N-cylinder cross-checks) -> VerifiedClone or Held. HBP receipts json=0. Clone=classical representation copy (no-cloning respected); Shannon caps the roof. Zero deps."
+repository = "https://github.com/JesseBrown1980/holographic-wormhole-codec"
+
+[lib]
+name = "holographic_wormhole_codec"
+path = "src/lib.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
