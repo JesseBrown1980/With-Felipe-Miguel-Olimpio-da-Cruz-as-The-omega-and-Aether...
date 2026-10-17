@@ -26,7 +26,7 @@ made them are in the upstream repository's `measurements/`, with receipts in its
 ## Large files
 
 Four GGUFs are stored upstream with Git LFS, and are stored here the same way: as the upstream
-LFS pointer files (same blob ids). Their bytes are on the Hugging Face homes and at
+LFS pointer files (same blob ids). Their bytes are served from the upstream repository's LFS at
 `https://media.githubusercontent.com/media/<upstream repo>/<commit>/<path>`.
 
 | GGUF | Bytes | SHA-256 |
