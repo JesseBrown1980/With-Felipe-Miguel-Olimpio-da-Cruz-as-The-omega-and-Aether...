@@ -53,8 +53,11 @@ job tribit-kernel bash -c '
 
 job behcs1024-kernel bash -c '
   cd kernel/behcs1024-60d
+  sha256sum -c UPSTREAM.sha256
   cargo +1.81.0 clippy --all-targets -- -D warnings
   cargo +1.81.0 test
+  cargo +1.81.0 build -q --bin behcs60-demo
+  python3 independent_referee.py target/debug/behcs60-demo
   ! grep -rnE "\bf32\b|\bf64\b|as f[0-9]" src/'
 
 job qprism-representation bash -c "$(declare -f rust no_float); ROOT='$ROOT'

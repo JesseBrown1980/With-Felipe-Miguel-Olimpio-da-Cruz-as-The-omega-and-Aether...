@@ -31,10 +31,25 @@ jobs:
     defaults: { run: { working-directory: kernel/behcs1024-60d } }
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
       - name: Install Rust 1.81 with clippy + rustfmt
         run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - name: extracts equal federation-1024@dc1da1a9 hwinv.rs lines 99-101 and 147-262
+        run: |
+          set -euo pipefail
+          curl -fsSL -o "$RUNNER_TEMP/hwinv.rs" https://raw.githubusercontent.com/JesseBrown1980/asolaria-federation-1024/dc1da1a9cd88b77eb463053312b7c42a7dbe9b33/kernel/boot/src/hwinv.rs
+          test "$(git hash-object "$RUNNER_TEMP/hwinv.rs")" = d08bc2a9ba6f3b63fec5249f0670d68c8df744d4
+          sed -n '99,101p' "$RUNNER_TEMP/hwinv.rs" | cmp - src/upstream/hwinv-tuple-cap.rs
+          sed -n '147,262p' "$RUNNER_TEMP/hwinv.rs" | cmp - src/upstream/hwinv-sha256-project-60d.rs
       - run: cargo +1.81.0 clippy --all-targets -- -D warnings
       - run: cargo +1.81.0 test
+      - name: independent referee against the demo binary
+        run: |
+          cargo +1.81.0 build --bin behcs60-demo
+          python independent_referee.py target/debug/behcs60-demo
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
   qprism-representation:

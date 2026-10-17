@@ -1,5 +1,5 @@
 //! CLI uses heap only for argument parsing and printing; library uses no allocation.
-use behcs1024_60d::{project_60d, MAX_SOURCE_BYTES};
+use behcs1024_60d::{bytes_read, counter_bytes_hashed, project_60d, TUPLE_CAP};
 use std::fmt::Write as _;
 
 fn nibble(b: u8) -> Option<u8> {
@@ -12,8 +12,8 @@ fn nibble(b: u8) -> Option<u8> {
 }
 
 fn parse_hex(s: &str) -> Result<Vec<u8>, &'static str> {
-    if s.len() % 2 != 0 || s.len() / 2 > MAX_SOURCE_BYTES {
-        return Err("bad hex length or excessive source tuple");
+    if s.len() % 2 != 0 {
+        return Err("bad hex length");
     }
     let mut decoded = Vec::with_capacity(s.len() / 2);
     for pair in s.as_bytes().chunks_exact(2) {
@@ -43,14 +43,8 @@ fn main() {
             std::process::exit(2);
         }
     };
-    let projection = match project_60d(&bytes) {
-        Ok(result) => result,
-        Err(error) => {
-            eprintln!("PROJECTION_HELD|reason={error:?}|json=0");
-            std::process::exit(2);
-        }
-    };
-    println!("HBP1|schema=ASOLARIA-BEHCS1024-60D-SAFE-V1|dims=60|alphabet=1024|json=0");
+    let projection = project_60d(&bytes);
+    println!("HBP1|schema=ASOLARIA-BEHCS1024-60D-UPSTREAM-V1|dims=60|alphabet=1024|json=0");
     print!("COORD|glyphs=");
     for (i, glyph) in projection.glyphs.iter().enumerate() {
         if i > 0 {
@@ -65,7 +59,12 @@ fn main() {
         hex(&projection.coordinate_sha256),
         hex(&projection.host8),
     );
-    println!("BOUNDARY|inverse=NOT_ESTABLISHED|full_source_required=TRUE|json=0");
+    println!(
+        "BOUNDARY|inverse=NOT_ESTABLISHED|full_source_required=TRUE|tuple_cap={TUPLE_CAP}|bytes={}|bytes_read={}|counter_bytes_hashed={}|json=0",
+        bytes.len(),
+        bytes_read(&bytes),
+        counter_bytes_hashed(&bytes),
+    );
 }
 
 #[cfg(test)]
@@ -77,6 +76,6 @@ mod tests {
         assert_eq!(parse_hex("616263").unwrap(), b"abc");
         assert!(parse_hex("g0").is_err());
         assert!(parse_hex("1").is_err());
-        assert!(parse_hex(&"aa".repeat(MAX_SOURCE_BYTES + 1)).is_err());
+        assert_eq!(parse_hex(&"aa".repeat(TUPLE_CAP + 1)).unwrap().len(), TUPLE_CAP + 1);
     }
 }
