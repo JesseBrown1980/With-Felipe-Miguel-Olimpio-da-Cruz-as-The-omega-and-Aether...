@@ -4,3 +4,4 @@ target/
 three-seat-ci-only-result.json
 eval/artifacts/
 eval/vendor/nnest/data/
+.check-venv/

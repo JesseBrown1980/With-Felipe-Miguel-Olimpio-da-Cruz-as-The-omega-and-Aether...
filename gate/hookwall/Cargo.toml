@@ -5,7 +5,10 @@ edition = "2021"
 rust-version = "1.81"
 license = "MIT OR Apache-2.0"
 description = "Standalone extract of the asolaria-federation-1024 kernel-core hookwall, spawn/sign/tier gates, Ed25519 envelope signing (ed25519-dalek) and in-memory cosign chain"
-publish = false
+readme = "README.md"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["ed25519", "policy", "gate", "no-std"]
+categories = ["cryptography", "no-std"]
 
 [lib]
 path = "src/lib.rs"

@@ -1,15 +1,19 @@
 [package]
-name = "behcs1024-60d"
+name = "asolaria-behcs1024-60d"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.81"
 license = "MIT OR Apache-2.0"
 description = "Source-bounded, no-alloc 60-glyph BEHCS-1024 coordinate and Host8 digest"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["behcs", "hilbert", "no-std", "integer"]
+categories = ["no-std", "algorithms"]
 
 [workspace]
 resolver = "2"
 
 [lib]
+name = "behcs1024_60d"
 path = "src/lib.rs"
 
 [[bin]]

@@ -6,6 +6,9 @@ rust-version = "1.81"
 license = "MIT OR Apache-2.0"
 authors = ["Asolaria Federation"]
 description = "Asolaria userspace server · Fischer evaluator kernel · Host-8 json=0 HBP port"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["policy", "gate", "integer", "hbp"]
+categories = ["command-line-utilities", "algorithms"]
 
 [lib]
 crate-type = ["rlib"]

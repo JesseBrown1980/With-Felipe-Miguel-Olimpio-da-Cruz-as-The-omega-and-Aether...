@@ -3,7 +3,11 @@ name = "asolaria-verify-schedule"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.81"
-publish = false
+license = "MIT"
+description = "Confidence-ranked verify scheduler: ranks proposals by an integer acceptance prior and marks the top of a verify budget. Plans only; never fires."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["scheduler", "integer", "verify"]
+categories = ["algorithms"]
 
 [lib]
 path = "schedule.rs"

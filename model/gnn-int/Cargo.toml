@@ -5,7 +5,9 @@ edition = "2021"
 rust-version = "1.81"
 description = "Integer-only (Q16) reference for a 2-layer GCN with an edge-scoring MLP head. Hand-set, untrained weights. Zero dependencies."
 license = "MIT OR Apache-2.0"
-publish = false
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["gnn", "graph", "fixed-point", "integer", "gcn"]
+categories = ["science", "mathematics"]
 
 [dependencies]
 
