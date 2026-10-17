@@ -65,15 +65,25 @@ implementation existed, written fresh and honest. Full detail and provenance:
 | 3 — recovery Path 2 | `qprism/recovery/omega-path123-v0/` | checked **CRT** two-shadow reconstruction over coprime moduli |
 | 3 — combined throat | `qprism/recovery/throat/` | coordinator that selects Path 1 vs Path 2, cross-validates, gates on consent + a SHA consistency check, and **holds** rather than fabricates |
 | time | `time/` | deterministic GF(2) fast-forward with a Python↔Node byte-identity cross-check (self-labels `SIMULATED`) |
-| 4/5 — eval/watcher | `eval/` | staged trust layer (needs external control vendored; not yet gated) — see [`eval/STATUS.md`](eval/STATUS.md) |
+| 4/5 — control + watcher | `eval/` | pinned Q-PRISM control arms and N-Nest depth-3/7 watchers, vendored by Git blob identity; software simulation only — see [`eval/STATUS.md`](eval/STATUS.md) |
+| 5 — Fischer | `gate/fischer-eval/` | deterministic rule-table action gate (integer `cpl` → PROCEED/HOLD/ANALYZE/BLOCK/REFUTE); chess words are metaphor |
+| 5 — Hookwall | `gate/hookwall/` | tier table, deny tags, score thresholds and a caller→target tier policy, extracted from a larger kernel with library logic unchanged (doc and test-fixture edits only) — see its `PROVENANCE.md` |
+| 5 — composition | `gate/verdict/` | tighten-only merge of Hookwall, spawn gate, tier gate, Fischer and an input guard: strictest wins, nothing can loosen |
+| 6 — proposals | `proposals/verify-schedule/` | confidence-ranked verify scheduler; plans which proposals to verify, never fires |
+| 6 — GNN | `model/gnn-int/` | integer-only Q16 two-layer GCN + edge head; hand-set, **untrained** weights; no accuracy claims |
+| 6 — HRM, MTP | — | **boundary**: no implementation exists in the estate yet; the slots are left empty rather than filled with labels |
 
 The one rule every layer obeys: **no layer manufactures information.** Content
 addressing returns retained bytes; CRT needs jointly-sufficient shadows (which
 *expand*, never compress); SHA-256 is an integrity coordinate, never a source.
 When evidence is insufficient the stack holds — it never invents bytes to satisfy
-a hash. The gated, runnable layers (the three Rust crates and the time harness)
-build on Rust 1.81.0 / stdlib Python + Node; the eval layer is clean reference
-source awaiting its external control.
+a hash. Every layer above is gated in CI on Rust 1.81.0 / stdlib Python + Node.
+
+Layers 5 and 6 carry their own honesty notes. The Hookwall's `crypto` tags are
+sha256 placeholders derived from the *public* key, not ed25519 signatures, so the
+composition never treats a tag as authentication. Scores, `g4_state` and tiers are
+caller-supplied inputs, not measurements; nothing in these gates persists or
+attests physical presence.
 
 ## Homes
 
@@ -86,4 +96,5 @@ Asolaria is published, byte-identical, at three public homes that mirror each ot
 Each carries the same clean commit: the doctrine, the runnable slices
 (`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`),
 the Rust 1.81 kernels under `kernel/tribit/` (ternary core) and `kernel/behcs1024-60d/` (the verified 60D / BEHCS-1024 hash-coordinate collapse),
-and the Q-PRISM stack under `qprism/` (representation + recovery paths + combined throat), the deterministic time harness under `time/`, and the staged eval layer under `eval/`.
+the Q-PRISM stack under `qprism/` (representation + recovery paths + combined throat), the deterministic time harness under `time/`,
+the pinned control + watcher layer under `eval/`, the Layer-5 gates under `gate/`, and the Layer-6 scheduler and integer GNN under `proposals/` and `model/`.

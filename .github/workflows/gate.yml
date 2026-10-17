@@ -109,3 +109,69 @@ jobs:
           name: qprism-nnest-software-receipts
           path: eval/artifacts/
           if-no-files-found: ignore
+  fischer-gate:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: gate/fischer-eval } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: sha256 sidecars match
+        run: sha256sum -c Cargo.toml.sha256 && (cd src && sha256sum -c lib.rs.sha256)
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - run: cargo +1.81.0 run --locked -q -- --once
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  hookwall-gate:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: gate/hookwall } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      # Two upstream style lints are allowed so copied logic stays unchanged
+      # (see PROVENANCE.md); every other warning still denies.
+      - run: >
+          cargo +1.81.0 clippy --locked --all-targets --
+          -D warnings
+          -A clippy::identity_op
+          -A clippy::manual_range_contains
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  verdict-compose:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: gate/verdict } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  verify-schedule:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: proposals/verify-schedule } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: byte-identical to upstream pin
+        run: sha256sum -c schedule.rs.sha256
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -nE '\bf32\b|\bf64\b|as f[0-9]' schedule.rs; then exit 1; fi
+  gnn-int:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/gnn-int } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
