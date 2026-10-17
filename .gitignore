@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 target/
 three-seat-ci-only-result.json
+eval/artifacts/
+eval/vendor/nnest/data/
