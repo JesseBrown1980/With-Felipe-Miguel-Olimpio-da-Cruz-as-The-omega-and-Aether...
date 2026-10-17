@@ -1,0 +1,18 @@
+[package]
+name = "asolaria-hrm-mtp"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the Asolaria HRM / MTP / zeta triad (bigpickle-rebuild) and the universe simulator's HRM and MTP slice agents"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["hrm", "mtp", "integer", "hilbert"]
+categories = ["algorithms"]
+
+[lib]
+name = "hrm_mtp"
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-l0-edge = { path = "../l0-edge", version = "0.1.0" }
+sha2 = "0.10.9"

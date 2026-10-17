@@ -1,0 +1,9 @@
+# rime_agents.py mtp_agent() and hrm_agent() on synthetic_bytes() of tools/rime_referee.py, run by that referee; do not edit
+SYNTH|bytes=600000|sha256=750b3f638f972d5fc7b94cda022d019b279701c0cd2f6286749580d3fff59547
+LINE|text=  direction 0 (hold)     : accuracy 1.0000  — the free center, costs nothing, says nothing
+LINE|text=  direction + (forward)  : x1 0.0458   x3 0.0000   x27 0.0000
+LINE|text=  direction - (backward) : x1 0.0475   (frozen on reversed time — real, ~symmetric)
+LINE|text=  levels used: deep(27-ish ctx) 99%  mid(3-ish) 0%  base(rime floor) 0%
+LINE|text=  frozen hierarchical bpc on held-out enwik8 = 4.4871
+MTPAGENT|x1=55/1200|x3=0/1200|x27=0/1200|back1=57/1200
+HRMAGENT|n=99998|deep=99814|mid=92|base=92|bpc_exact=4.48707777747832600154|upstream_float=4.487077777478059

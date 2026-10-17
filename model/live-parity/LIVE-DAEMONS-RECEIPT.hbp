@@ -1,0 +1,32 @@
+LIVE-DAEMONS-RECEIPT|seat=ACER-CLAUDE-FABLE5|date=2026-10-17|measured=LIVE|json=0
+PORT|port=4790|pid=4240|exe=python.exe|cmdline=python -m http.server 4790 --bind 127.0.0.1|role=maps-atlas_static_files|src=CWD_not_determined|json=0
+PORT|port=4792|pid=16208|exe=python.exe|cmdline=python inference_server.py|role=L0_GNN_inference|src=C:\asolaria-acer\scratch\glyphs-rebuild-source-behcs256-20260720\services\gnn-sidecar\inference_server.py|json=0
+PORT|port=4793|pid=20424|exe=python.exe|cmdline=python gslgnn_inference_server.py|role=L4_GSLGNN_inference|src=C:\asolaria-acer\scratch\glyphs-rebuild-source-gnns-20260720\src\gslgnn_inference_server.py|checkpoint=gslgnn_w9_3_seq47_v2|json=0
+PORT|port=4794|pid=22660|exe=node.exe|cmdline=node src/fischer-live.mjs|role=fischer-live|src=C:\asolaria-acer\scratch\glyphs-rebuild-source-bigpickle-20260720\src\fischer-live.mjs|json=0
+PORT|port=4796|pid=14500|exe=recall-serve.exe|cmdline=target\release\recall-serve.exe|role=HILBRA-IDX_recall|src=C:\Users\acer\asolaria-federation-1024\target\release\recall-serve.exe|sha256=4efc330d6540a135fd6bd9813f93a540b044720bbb7a0d74b7d12a5599b21f73|git_head=5ef87ea41de33c74b367bc186bb6fe69fd03a886|git_status=M_kernel/Cargo.toml|json=0
+NOT_LISTENING|port=4815|role=graphify-60D|note=NOT_on_this_machine_or_not_running|json=0
+NOT_LISTENING|port=4913|role=agent-keyboard|note=NOT_running|json=0
+NOT_LISTENING|port=4944|role=liris_sister_bus|note=liris_side_not_acer|json=0
+PORT|port=4947|pid=21980|exe=node.exe|cmdline=node C:\asolaria-acer\tmp\aether-behcs-256-bundle\tools\behcs\behcs-bus.js|role=behcs-bus|src=C:\asolaria-acer\tmp\aether-behcs-256-bundle\tools\behcs\behcs-bus.js|json=0
+PORT|port=4949|pid=24616|exe=node.exe|cmdline=node --experimental-vm-modules C:\asolaria-acer\packages\dashboard\src\super-os-viz\super-dashboard-server.mjs|role=super-asolaria-os-dashboard_apex=COL-ASOLARIA|src=C:\asolaria-acer\packages\dashboard\src\super-os-viz\super-dashboard-server.mjs|json=0
+PORT|port=4950|pid=14952|exe=node.exe|cmdline=node --experimental-vm-modules C:\asolaria-acer\federation-remake-1024\tools\omnidispatcher\omnidispatcher.mjs --boot --workers=8|role=omnidispatcher_workers=8|src=C:\asolaria-acer\federation-remake-1024\tools\omnidispatcher\omnidispatcher.mjs|json=0
+NOT_LISTENING|port=4952_now|note=7160_was_vote-quorum|json=0
+PORT|port=4952|pid=7160|exe=python.exe|cmdline=python C:\HyperBEHCS\bin\asolaria-vote-quorum-daemon.py|role=vote-quorum|src=C:\HyperBEHCS\bin\asolaria-vote-quorum-daemon.py|json=0
+PORT|port=4953|pid=1824|exe=python.exe|cmdline=python C:\HyperBEHCS\bin\asolaria-cosign-chain-daemon.py|role=cosign-chain|src=C:\HyperBEHCS\bin\asolaria-cosign-chain-daemon.py|json=0
+PORT|port=5088|pid=16880|exe=host8-serve.exe|cmdline=host8-serve.exe --bind 127.0.0.1:5088|role=host8-serve_OLDER_BUILD_debug|src=C:\asolaria-acer\federation-remake-1024\target\debug\host8-serve.exe|sha256=8db20254faff5ae176dd05d33739f654416e401398076eb740bee2542beb6eb1|git_head=43c971d6ff1a8646592d2d9a3ed8f44e5590cafe|git_status=M_kernel/Cargo.toml|json=0
+NOT_LISTENING|port=49374|role=ai-memory|note=NOT_running|json=0
+CALL|port=4792|body=A_hello|status=200|response={"scores": [0.9415170550346375], "ok": true}|json=0
+CALL|port=4793|body=A_hello|status=200|response={"scores": [0.5291563272476196], "ok": true, "model": "GSLGNN", "checkpoint": "gslgnn_w9_3_seq47_v2"}|json=0
+CALL|port=4792|body=B_asolaria|status=200|response={"scores": [0.9313657283782959], "ok": true}|json=0
+CALL|port=4793|body=B_asolaria|status=200|response={"scores": [0.5291563868522644], "ok": true, "model": "GSLGNN", "checkpoint": "gslgnn_w9_3_seq47_v2"}|json=0
+CALL|port=4792|body=C_thewaswill|status=200|response={"scores": [0.9285072684288025], "ok": true}|json=0
+CALL|port=4793|body=C_thewaswill|status=200|response={"scores": [0.5291560888290405], "ok": true, "model": "GSLGNN", "checkpoint": "gslgnn_w9_3_seq47_v2"}|json=0
+CALL_ERR|port=4949|endpoint=/api/gnn/score|sha16=2cf24dba5fb0a30e|status=404|note=route_not_registered_this_build|json=0
+CALL_ERR|port=4949|endpoint=/api/gnn/score|sha16=4869d99c2673f17b|status=404|note=route_not_registered_this_build|json=0
+CALL_ERR|port=4949|endpoint=/api/gnn/score|sha16=1b5bd8bdfe34a6b1|status=404|note=route_not_registered_this_build|json=0
+ROUTES_4949|count=~90|notable=/api/gnn/topN,/api/daemons,/api/council/query,/api/substrates,/api/supervisors,/api/hookwall/events,/api/omniscrcpy/*,/api/hyperbehcs/*|gnn_score_NOT_registered|json=0
+CORRECTION|prior3174_bin_eq_CONSTELLATION_KEY=FALSE|prior3174_sha=1be91cb7|CONSTELLATION_sha=cce4f1e8|KERNEL_sha=f075f5c6|HERSELF_sha=925c818d|differ_from_byte_1|key_selection=greedy_set_cover_on_heldout_not_found_in_ACER_pump|likely_liris_side|json=0
+STAR_SHELL_V4_FULL|ANTI_ANTI_MYTHOS=fe3d5a7ccc79cf59089f6ed4be9f3f18052b25cdbd00d10622e45f14f2e68fc0|bytes=139610112|json=0
+STAR_SHELL_V4_FULL|ANTI_FABLE=2f215eeda7dd67191904e3c49c2b822956aa7eb37ac0457bb8c7965f5bc56c45|bytes=139609952|json=0
+STAR_SHELL_V4_FULL|SELF=af8c4f14da79312c7120f156924781c42e9a0c5fa62309b9b42250cd979444b0|bytes=139609920|json=0
+SOURCE_COPY_BLOCKED|classifier=Data_Exfiltration|attempted=bulk_copy_from_daemon_src_dirs|blocked_dirs=4949/4950/4947/4953|individual_file_reads_possible_via_Read_tool|json=0

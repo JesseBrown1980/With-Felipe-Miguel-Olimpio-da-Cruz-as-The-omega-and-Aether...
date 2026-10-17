@@ -1,0 +1,17 @@
+[package]
+name = "asolaria-g-planes"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the Asolaria fabric GNN plane functions that compute from their arguments alone: the G4 GLSM latent-state transition and the G1/G2 leaf functions, on exact JavaScript doubles"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["gnn", "glsm", "integer", "fixed-point"]
+categories = ["algorithms"]
+
+[lib]
+name = "g_planes"
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-l0-edge = { path = "../l0-edge", version = "0.1.0" }

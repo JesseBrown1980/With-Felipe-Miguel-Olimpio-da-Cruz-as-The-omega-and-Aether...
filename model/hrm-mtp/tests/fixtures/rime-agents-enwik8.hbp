@@ -1,0 +1,8 @@
+# cargo run --release --example rime_agents -- enwik8 (sha256 2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8); checked by tools/rime_referee.py agents (18 checks, 0 failures); do not edit
+  direction 0 (hold)     : accuracy 1.0000  — the free center, costs nothing, says nothing
+  direction + (forward)  : x1 0.3517   x3 0.0667   x27 0.0000
+  direction - (backward) : x1 0.3317   (frozen on reversed time — real, ~symmetric)
+  levels used: deep(27-ish ctx) 99%  mid(3-ish) 0%  base(rime floor) 0%
+  frozen hierarchical bpc on held-out enwik8 = 3.5328
+MTPAGENT|x1=422/1200|x3=80/1200|x27=0/1200|back1=398/1200|anchors=1200|json=0
+HRMAGENT|n=99998|deep=99012|mid=986|base=0|t0=499998|distinct_log2_terms=973|bits_q64=6516798832961328413132314|bpc=3.532834382861493|bpc4=3.5328|tie_margin_1e-12=15617139|error_weight=183246|json=0

@@ -1,0 +1,12 @@
+[package]
+name = "asolaria-live-parity"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The Rust L0 and L4 ports checked against scores recorded from the owner's live :4792 and :4793 servers"
+publish = false
+
+[dependencies]
+asolaria-l0-edge = { path = "../l0-edge", version = "0.1.0" }
+asolaria-l4-gslgnn = { path = "../l4-gslgnn", version = "0.1.0" }

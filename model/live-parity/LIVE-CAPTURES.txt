@@ -1,0 +1,12 @@
+CALL|port=4792|body=A_hello|status=200|time_ms=307.8|response={"scores": [0.9415170550346375], "ok": true}
+CALL|port=4793|body=A_hello|status=200|time_ms=569.4|response={"scores": [0.5291563272476196], "ok": true, "model": "GSLGNN", "checkpoint": "gslgnn_w9_3_seq47_v2.pt", "checkpoint_sha256_first16": "9e50723b10c9de5c", "disclosure": "label-rule-learnability not generalization; fit-for-body-tally-scoring"}
+CALL|port=4792|body=B_asolaria|status=200|time_ms=3.3|response={"scores": [0.9313657283782959], "ok": true}
+CALL|port=4793|body=B_asolaria|status=200|time_ms=3.7|response={"scores": [0.5291563868522644], "ok": true, "model": "GSLGNN", "checkpoint": "gslgnn_w9_3_seq47_v2.pt", "checkpoint_sha256_first16": "9e50723b10c9de5c", "disclosure": "label-rule-learnability not generalization; fit-for-body-tally-scoring"}
+CALL|port=4792|body=C_thewaswill|status=200|time_ms=3.1|response={"scores": [0.9285072684288025], "ok": true}
+CALL|port=4793|body=C_thewaswill|status=200|time_ms=3.8|response={"scores": [0.5291560888290405], "ok": true, "model": "GSLGNN", "checkpoint": "gslgnn_w9_3_seq47_v2.pt", "checkpoint_sha256_first16": "9e50723b10c9de5c", "disclosure": "label-rule-learnability not generalization; fit-for-body-tally-scoring"}
+CALL_ERR|port=4949|sha16=2cf24dba5fb0a30e|err=O código de status da réplica não indica êxito: 404 (Not Found).|time_ms=242.7
+CALL_ERR|port=4949|sha16=4869d99c2673f17b|err=O código de status da réplica não indica êxito: 404 (Not Found).|time_ms=9.6
+CALL_ERR|port=4949|sha16=1b5bd8bdfe34a6b1|err=O código de status da réplica não indica êxito: 404 (Not Found).|time_ms=2.6
+CALL_ERR|port=4949|sha16=2cf24dba5fb0a30e|err=O código de status da réplica não indica êxito: 404 (Not Found).|time_ms=104.2
+CALL_ERR|port=4949|sha16=4869d99c2673f17b|err=O código de status da réplica não indica êxito: 404 (Not Found).|time_ms=55.7
+CALL_ERR|port=4949|sha16=1b5bd8bdfe34a6b1|err=O código de status da réplica não indica êxito: 404 (Not Found).|time_ms=15.8

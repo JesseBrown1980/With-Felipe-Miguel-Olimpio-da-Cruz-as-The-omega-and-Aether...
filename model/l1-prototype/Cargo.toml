@@ -1,0 +1,16 @@
+[package]
+name = "asolaria-l1-prototype"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the Asolaria L1 PrototypeGNN with its trained run-1 checkpoint's weights"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["gnn", "graph", "integer", "fixed-point"]
+categories = ["algorithms"]
+
+[lib]
+name = "l1_prototype"
+path = "src/lib.rs"
+
+[dependencies]

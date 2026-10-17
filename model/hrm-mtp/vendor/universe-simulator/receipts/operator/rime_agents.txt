@@ -1,0 +1,30 @@
+THE FOUR FROZEN SLICE AGENTS — Laws 23-26, one measured demo each
+
+==========================================================================
+AGENT 1 — FISCHER (Law 23): -,0,+ at every level
+  sphere (Z/1000081Z)*  g=7  point=g^77777
+  level 3    : third #2
+  level 27   : k mod 27 = 17  trime digits [-0-]  (cascaded, -,0,+)
+  level rime : full k = 77777  byte-exact invert = True
+  GATE: cost is sqrt-scaled per prime tower; one large tower is the wall (Law 14).
+==========================================================================
+AGENT 2 — MTP (Law 24): frozen multi-token prediction  x1 / x3 / x27
+  direction 0 (hold)     : accuracy 1.0000  — the free center, costs nothing, says nothing
+  direction + (forward)  : x1 0.3517   x3 0.0667   x27 0.0000
+  direction - (backward) : x1 0.3317   (frozen on reversed time — real, ~symmetric)
+  GATE: lookahead accuracy DECAYS with depth — compounding error, DPI. A frozen
+  model predicts a fraction, never recreates unseen wholes (Laws 18/22).
+==========================================================================
+AGENT 3 — HRM (Law 25): two-rate hierarchy, slow picks the level, fast predicts
+  levels used: deep(27-ish ctx) 99%  mid(3-ish) 0%  base(rime floor) 0%
+  frozen hierarchical bpc on held-out enwik8 = 3.5328
+  GATE: the hierarchy ROUTES between frozen levels (+,0,-); it never dips below
+  the entropy of what the levels jointly know (Law 15/21).
+==========================================================================
+AGENT 4 — MCP (Law 26): stateless cells x CRT fan-in  (3 x 27-structured x rime)
+  cells: sphere(Z/163Z)* + sphere(Z/271Z)* + sphere(Z/379Z)*  (each 27|q-1)
+  address space M = 4,814,857   batch of 9 values round-tripped: byte-exact = True
+  GATE: cells are STATELESS (the SGRAM doctrine) — all knowledge is in the frozen
+  spheres; the coordinator only fans in. Addressing axis, ~0 bpc, never compression.
+==========================================================================
+ALL FOUR AGENTS PLAYED. Frozen, sliced, trime-signed, receipt-backed.

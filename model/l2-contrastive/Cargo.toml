@@ -1,0 +1,16 @@
+[package]
+name = "asolaria-l2-contrastive"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the trained Asolaria L2 ContrastiveGNN: the run-1 checkpoint's weights and its forward as trained"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["gnn", "graph", "integer", "fixed-point"]
+categories = ["algorithms"]
+
+[lib]
+name = "l2_contrastive"
+path = "src/lib.rs"
+
+[dependencies]
