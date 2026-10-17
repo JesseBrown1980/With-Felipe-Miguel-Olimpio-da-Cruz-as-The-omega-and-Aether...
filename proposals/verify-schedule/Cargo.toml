@@ -1,0 +1,11 @@
+[package]
+name = "asolaria-verify-schedule"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+publish = false
+
+[lib]
+path = "schedule.rs"
+
+[dependencies]
