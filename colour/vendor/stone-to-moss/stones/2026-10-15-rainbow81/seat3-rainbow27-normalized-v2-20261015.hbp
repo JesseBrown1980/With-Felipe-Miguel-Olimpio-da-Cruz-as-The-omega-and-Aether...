@@ -1,0 +1,10 @@
+PORTAL|schema=ASOLARIA-SEAT3-RAINBOW27-V2-RECEIPT-V1|date=2026-10-15|json=0
+PREREG|commit=b7b38948b8cd7a0007cdf85bd008318e89f814af|prior_v1_unchanged=1|json=0
+PRODUCER|commit=f198cfdd1da21026b36de9fa099519ada76f96e9|run=38746397517|ci_jobs=4/4_PASS|json=0
+INPUT|source_fixture_sha256=351c5c0aaebb4b877680e16d7e0d346cae71ec5a3cfa4110f6c001b7ae4dccc1|source_is_synthetic=1|json=0
+TRACE|rows=59049|bytes=3886535|sha256=8544bb305943d7423f6993cffec4a8232d291811e974c78e7d8ec91a53719672|json=0
+LANES|lane0=36906|lane1=10179|lane2=9777|dark_held=2187|json=0
+CLASSES|ordered=27|raw=10|normalized_including_dark=7|ordered_inverse=PASS|primitive_scale_invariant=PASS|json=0
+CHECKS|python_node_byte_exact=PASS|ubuntu_windows=PASS|full_hbp_tamper=HELD|sha_sidecars=PASS|json=0
+LIMITS|physical_spectrum=NOT_TESTED|physical_host_attested=0|source_authenticated=0|release_authorized=0|json=0
+END|release_issue10=OPEN|historical_stones_unchanged=1|peer_review=PENDING|json=0

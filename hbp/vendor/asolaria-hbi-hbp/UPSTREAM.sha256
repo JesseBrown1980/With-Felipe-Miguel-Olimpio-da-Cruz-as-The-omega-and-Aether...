@@ -1,0 +1,7 @@
+960f5d2fa509d3f9d6f7fd725a68cf4a2a5f66dfbfb85ae971c43e6d31a865b7  ./.github/workflows/rust-1.81-clippy-verification.yml
+14e9e94e6a7050e4517c6c7199dd0abae5e56d76f781fb7600e155bbd3f519b4  ./Cargo.toml
+218ddd87cddc393792f88ccc474e73ef37fa3659402859e2acbbdfa07d9900bf  ./LICENSE
+9aed09a54121a8794169cb09856056835e1eca59c5fedbfddd3b13e032f1612f  ./README.md
+b19266c79d308cd1f288d0d59fd26573964c03ecccdebb8587d1584b03e259b1  ./rust-toolchain.toml
+d0354ccc84b5b66f1df2637b27ed75ec5bea475a1c0d000869fd37987386164a  ./src/lib.rs
+1564c329d33a4e1e8d3267eeb65cf4daecb8a747f0dc0c5c77c52ae9ba915887  ./tests/roundtrip.rs

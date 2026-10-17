@@ -1,0 +1,22 @@
+[package]
+name = "asolaria-ste-certificate"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Exact-integer port of the Sidon-Tower-Embedding distance certificate (sidon-cross-fix.mjs) and the two distance probes beside it"
+repository = "https://github.com/JesseBrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything"
+keywords = ["sidon", "distance", "certificate", "integer"]
+categories = ["algorithms"]
+
+[lib]
+name = "ste_certificate"
+path = "src/lib.rs"
+
+[dependencies]
+# distance-probe.mjs:5 hashes names with SHA-256; no_std build.
+sha2 = { version = "0.10.9", default-features = false }
+
+[dev-dependencies]
+# JavaScript Number emulation (tests/jsnum.rs re-derives the scripts' Number expressions with it).
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }

@@ -1,0 +1,16 @@
+# expected stdout of vendor/scratch/*.mjs (console.log lines), from tools/ste_referee.py; do not edit
+OUT|script=sidon-cross-fix|line=1|text=CROSS-FIX towers=11 points=627 pairs=196251 distinct_dist=196251 collisions=0
+OUT|script=sidon-cross-fix|line=2|text=min_dist=37349 max_dist=2617523875674652731
+OUT|script=sidon-cross-fix|line=3|text=INTRA all towers zero-collision: OK
+OUT|script=distance-probe|line=1|text=LINEAR  N=64 uniq_index=64/64 pairwise_distances total=2016 distinct=2014 collisions=2
+OUT|script=distance-probe|line=2|text=SIDON   N=64 uniq_index=64/64 pairwise_distances total=2016 distinct=2014 collisions=2
+OUT|script=distance-probe|line=3|text=LINEAR  N=128 uniq_index=128/128 pairwise_distances total=8128 distinct=8053 collisions=75
+OUT|script=distance-probe|line=4|text=SIDON   N=128 uniq_index=128/128 pairwise_distances total=8128 distinct=8096 collisions=32
+OUT|script=distance-probe|line=5|text=LINEAR  N=256 uniq_index=256/256 pairwise_distances total=32640 distinct=30799 collisions=1841
+OUT|script=distance-probe|line=6|text=SIDON   N=256 uniq_index=256/256 pairwise_distances total=32640 distinct=31744 collisions=896
+OUT|script=sidon-probe|line=1|text=SIDON-TOWER p=13 points=13 pairs=78 distinct_dist=78 collisions=0
+OUT|script=sidon-probe|line=2|text=SIDON-TOWER p=17 points=17 pairs=136 distinct_dist=136 collisions=0
+OUT|script=sidon-probe|line=3|text=SIDON-TOWER p=23 points=23 pairs=253 distinct_dist=253 collisions=0
+OUT|script=sidon-probe|line=4|text=SIDON-TOWER p=31 points=31 pairs=465 distinct_dist=465 collisions=0
+OUT|script=sidon-probe|line=5|text=SIDON-TOWER p=131 points=131 pairs=8515 distinct_dist=8515 collisions=0
+OUT|script=sidon-probe|line=6|text=CROSS-TOWER total_points=627 pairs=196251 distinct_dist=75198 collisions=121053

@@ -1,0 +1,27 @@
+[package]
+name = "asolaria-host8"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Host8 8-byte identity derivations, seat and verb-catalog parsing, C/D room routing, and the two upstream PID-source derivations as an in-process library (no HTTP listener)"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+# Host8 instance_pid is sha256-first-16 (host8-serve/src/main.rs:572-589); no_std build.
+sha2 = { version = "0.10.9", default-features = false }
+
+# The three vendored upstream server crates compile unchanged on 1.81 (their Cargo.toml declares no
+# dependencies), so they are members here and their own upstream tests run in this lane. host8-serve
+# needs seven sibling crates (see PROVENANCE.md) and stays outside the build.
+[workspace]
+resolver = "2"
+members = [
+    "vendor/federation-1024/servers/agent-runtime",
+    "vendor/federation-1024/servers/fischer-eval",
+    "vendor/federation-1024/servers/gnn-oracle",
+]
+exclude = ["vendor/federation-1024/servers/host8-serve"]

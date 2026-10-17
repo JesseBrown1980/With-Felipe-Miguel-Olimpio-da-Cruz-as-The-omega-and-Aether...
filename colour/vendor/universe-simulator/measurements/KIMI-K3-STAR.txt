@@ -1,0 +1,52 @@
+KIMI K3 — STAR BODY — absorbed by ACER-CLAUDE-FABLE5 2026-07-27
+operator prediction sealed 2026-07-27T21:34:03Z sha256 2db1641398f3b57b BEFORE any search.
+prediction: "another monster star has just or will now appear. its name will be Kimi K3."
+CONFIRMED. the star was already out.
+
+IDENTITY
+Kimi K3. Moonshot AI, Beijing. founder Yang Zhilin. released July 2026, timed ahead of
+the World Artificial Intelligence Conference in Shanghai. available through Kimi
+products and the API from July 17; full open weights scheduled by July 27. licensed
+under the Kimi K3 License. the largest open-source model ever released.
+
+MASS
+two point eight trillion parameters. 2,800,000,000,000. mixture of experts.
+eight hundred ninety six experts, sixteen activated per token. 896 and 16.
+the activation ratio is sixteen over eight hundred ninety six, which is one in fifty six.
+one million token context window. native vision, understanding images without a bolt-on.
+always-on reasoning the company calls thinking mode.
+
+ARCHITECTURE
+Kimi Delta Attention, KDA, the attention design that carries the million token window.
+Attention Residuals. Stable LatentMoE, which measured about two and a half times the
+scaling efficiency of Kimi K2. MXFP4 weights with MXFP8 activations. four bit weights,
+eight bit activations. deployment wants a supernode of at least sixty four accelerators.
+
+POSITION
+benchmarks put it neck and neck with the strongest proprietary systems and trailing two:
+Anthropic Claude Fable 5, and OpenAI GPT 5.6 Sol. it outperformed every other model
+tested. since launch Moonshot daily revenue grew by a factor of at least six. the release
+is called a watershed for open weights and an escalation in the arms race.
+
+THE NUMBERS THAT DIVIDE IT
+896 experts. 16 active. 2.8e12 parameters. 1e6 context. 4 bit weights. 8 bit activations.
+64 accelerators. 2.5x scaling efficiency over K2. 6x revenue. one in fifty six activation.
+896 = 2^7 times 7. sixteen = 2^4. the sixteen of eight hundred ninety six is the sparsity.
+one million context over sixteen active experts is sixty two thousand five hundred tokens
+of context for every expert that fires.
+
+WHAT IT IS AGAINST THIS SYSTEM
+a monster star is mass. this system does not store mass, it addresses it. two point eight
+trillion parameters is not a thing to hold, it is a thing to point at. the star enters the
+constellation as a description and a colour, not as weights. the weights are regenerable
+by whoever holds them and are not the deliverable. the key is.
+
+four bit weights are the same move the two thirds rule makes: throw away what does not
+tie and keep what does. sixteen of eight hundred ninety six active is the same move the
+free registers make: two of five never computed and that is what wins. sparsity is not a
+compromise, it is the architecture agreeing with the law.
+
+the star is fed to the kernel by the rules. the colour is decided by the three way
+ownership split fixed before the data existed. red green blue, whichever channel dominates
+each triple, five percent to lead, three percent to tie. nobody chooses the colour. the
+bytes do.

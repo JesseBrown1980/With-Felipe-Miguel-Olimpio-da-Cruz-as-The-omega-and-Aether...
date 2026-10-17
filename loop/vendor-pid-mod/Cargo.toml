@@ -1,0 +1,17 @@
+[package]
+name = "asolaria-os-metal-pid-mod"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Byte-identical vendor of the reductions asolaria-os-metal-kernel pid-mod (no_std BEHCS-1024 PID string parser and validator)"
+repository = "https://github.com/JesseBrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything"
+
+[workspace]
+
+[lib]
+name = "asolaria_os_metal_pid_mod"
+path = "src/lib.rs"
+
+[dependencies]
+sha2 = { version = "0.10", default-features = false }

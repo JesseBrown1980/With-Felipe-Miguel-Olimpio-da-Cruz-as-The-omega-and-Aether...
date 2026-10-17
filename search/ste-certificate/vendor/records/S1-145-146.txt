@@ -1,0 +1,2 @@
+CROSS-FIX  towers=11  points=627  pairs=196251  distinct_dist=196251  collisions=0
+min_dist=37349   max_dist=2617523875674652731

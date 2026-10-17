@@ -1,0 +1,6 @@
+FIXTURE|k=rainbow|source=stone-to-moss@f032bc0/experiments/seat3/rainbow27_v2/rainbow27_v2.py+experiments/seat1/rainbow7/rainbow7_bank.py|referee=referee/colour_referee.py|json=0
+R27V2_FIXTURE|sha256=351c5c0aaebb4b877680e16d7e0d346cae71ec5a3cfa4110f6c001b7ae4dccc1|json=0
+R27V2_ORBITS|raw=1.1.1.3.3.3.3.3.3.6|normalized=1.2.3.3.6.6.6|json=0
+TRACE|rows=59049|bytes=3886535|sha256=8544bb305943d7423f6993cffec4a8232d291811e974c78e7d8ec91a53719672|json=0
+LANES|lane0=36906|lane1=10179|lane2=9777|dark_held=2187|json=0
+RAINBOW7|bands=red.orange.yellow.green.blue.indigo.violet|addresses=567|first=rainbow7/red/site-000|last=rainbow7/violet/site-080|sha256=f185c25601fc22e5254a4e4643b653ccc58fc5def0bf5873832d0f609d18c7ec|json=0

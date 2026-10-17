@@ -1,0 +1,18 @@
+[package]
+name = "hbp"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "HBP/HBI content and integrity layer: Rust hot-lane port of the BigPickle .hbp/.hbi/.sha256/.hex emitter + verifier and the RELAY row envelope. Byte-identical to upstream JS on the measured domain listed in HBP.md."
+
+[lib]
+name = "hbp"
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-hbi-hbp = { path = "vendor/asolaria-hbi-hbp", version = "0.1.0" }
+
+[profile.release]
+opt-level = 3

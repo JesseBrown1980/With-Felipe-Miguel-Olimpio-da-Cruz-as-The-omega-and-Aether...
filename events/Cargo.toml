@@ -1,0 +1,19 @@
+[package]
+name = "asolaria-events"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the Asolaria graph-event producer: edge-risk score, buildGraphEvent as HBP EVENT rows, and buildActionManifest"
+repository = "https://github.com/JesseBrown1980"
+keywords = ["graph", "events", "integer", "hbp"]
+categories = ["algorithms"]
+
+[lib]
+name = "asolaria_events"
+path = "src/lib.rs"
+
+[dependencies]
+
+[dev-dependencies]
+asolaria-l0-edge = { path = "../model/l0-edge", version = "0.1.0" }

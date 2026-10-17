@@ -1,0 +1,13 @@
+STARHDR|schema=ASOLARIA-STARS-SHELLS-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-27|json=0
+STAR|axes=time,colour,energy,space|time=position_in_stream|gradiated=local_change|json=0
+LAW|shell=log3(ties)|counted=1|photon=VIII.A.7|tau=2|json=0
+ROUND|n=0|bytes=3796|stars=1091|shells=4|json=0
+ROUND|n=1|bytes=11385|stars=2419|shells=4|json=0
+ROUND|n=2|bytes=34155|stars=8508|shells=4|json=0
+SHELL|s=1|stars=4301|ring=0|json=0
+SHELL|s=2|stars=2924|ring=0|json=0
+SHELL|s=3|stars=1072|ring=1|json=0
+SHELL|s=4|stars=211|ring=1|json=0
+RINGS|n=2|of=4|json=0
+GGUF|k=ASOLARIA-STARS-SHELLS.gguf|bytes=4596880|sha256=ae23392ad473718e2196e525a4355af20cdbd57bbb5dc3e85a8719b62552784d|json=0
+STARFTR|receipt=25b30f1b34a261a91fa84b3792b28c2f|rows=13|hot_path=1|json=0

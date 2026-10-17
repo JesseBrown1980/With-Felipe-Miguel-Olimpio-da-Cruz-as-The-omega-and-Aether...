@@ -1,0 +1,15 @@
+RAW|classes=10|hist=[1, 1, 1, 3, 3, 3, 3, 3, 3, 6]|json=0
+NORM|classes=7|hist=[1, 2, 3, 3, 6, 6, 6]|max_class=6|json=0
+WITNESS|W=(r+4g+3b+4rg)mod8|separates_all_27=1|json=0
+AFFINE|m=2|separating_triples=0|json=0
+AFFINE|m=3|separating_triples=0|json=0
+AFFINE|m=4|separating_triples=0|json=0
+AFFINE|m=5|separating_triples=0|json=0
+AFFINE|m=6|separating_triples=0|json=0
+AFFINE|m=7|separating_triples=0|json=0
+AFFINE|m=8|separating_triples=0|json=0
+AFFINE|m=9|separating_triples=0|json=0
+AFFINE|m=10|separating_triples=0|json=0
+AFFINE|m=11|separating_triples=60|json=0
+AFFINE_FIRST_M11|coeffs=Some((1, 3, 4))|json=0
+PIGEONHOLE|largest_class_gt_4=1|sample_2bit_family_separates=0|json=0

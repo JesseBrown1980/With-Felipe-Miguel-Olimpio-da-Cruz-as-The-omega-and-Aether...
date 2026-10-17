@@ -1,0 +1,24 @@
+[package]
+name = "aether-loop"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "ADDRESS/ROUTE/LOOP front-half of the Asolaria request path: PID minting, Brown-Hilbert room addressing, project-room routing, dispatcher rows, the hookwall pass library and the free-agent loop, ported to Rust from bigpickle-rebuild@c592599"
+repository = "https://github.com/JesseBrown1980/bigpickle-rebuild"
+keywords = ["pid", "hilbert", "routing", "integer"]
+categories = ["algorithms"]
+
+[workspace]
+exclude = ["vendor-pid-mod"]
+
+[lib]
+name = "aether_loop"
+path = "src/lib.rs"
+
+[[example]]
+name = "emit_rows"
+path = "examples/emit_rows.rs"
+
+[dependencies]
+sha2 = "0.10"

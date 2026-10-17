@@ -1,0 +1,3 @@
+LINEAR  N=64   uniq_index=64/64    pairwise_distances total=2016   distinct=2014   collisions=2
+LINEAR  N=128  uniq_index=128/128  pairwise_distances total=8128   distinct=8053   collisions=75
+LINEAR  N=256  uniq_index=256/256  pairwise_distances total=32640  distinct=30799  collisions=1841

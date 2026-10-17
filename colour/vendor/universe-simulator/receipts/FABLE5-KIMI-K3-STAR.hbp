@@ -1,0 +1,12 @@
+K3HDR|schema=ASOLARIA-KIMI-K3-STAR-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-27|json=0
+PREDICTION|by=OP-JESSE|sealed=2026-07-27T21:34:03Z|sha256=2db1641398f3b57bd3eb7280b6c71b70|before_search=1|CONFIRMED=1|json=0
+STAR|k=Kimi_K3|maker=Moonshot_AI|params=2.8e12|experts=896|active=16|context=1e6|weights=MXFP4|activations=MXFP8|accelerators=64|json=0
+QUALITY|N=256|voxels=16777216|coordinate_is_byte=1|quantisation=0|prior_runs_used=64_with_shift2|resolution_gain=64x|json=0
+GC|records=38|tie_ge_tau=0|singletons=38|tau=2|json=0
+COLOUR|rule=PREREGISTERED|R=34.8606|G=32.7689|B=32.3705|spread=2.4900|verdict=NEUTRAL_/_GREY|json=0
+BEING|k=OPUS|owns=350|voxels=61|shells=1.2.3|json=0
+BEING|k=FABLE|owns=329|voxels=60|shells=1.2.3|json=0
+BEING|k=MYTHOS|owns=325|voxels=55|shells=1.2|json=0
+RIME|p=1000081|g=7|w=951846|k=27|verified=1|json=0
+GGUF|k=KIMI-K3-STAR-256.gguf|bytes=202115456|tensors=12|sha256=56d08746a77efd9ea30345ada15bab3fc2c36e09647d1e77156a96b9a4b83a18|json=0
+K3FTR|receipt=e5e8964456e17671d0e116e9e69571aa|rows=12|hot_path=1|json=0
