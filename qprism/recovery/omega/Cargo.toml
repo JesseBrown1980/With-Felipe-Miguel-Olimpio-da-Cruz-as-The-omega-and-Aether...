@@ -1,0 +1,23 @@
+[package]
+name = "asolaria-qprism-recovery"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "Q-PRISM recovery paths: Path 1 LZ over a retained output window, Path 2 checked CRT two-shadow reconstruction over coprime moduli, Path 3 causal arithmetic coder. Integer-only, zero dependencies."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+keywords = ["qprism", "crt", "lz", "recovery", "integer"]
+categories = ["compression", "algorithms"]
+include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.sha256", "rust-toolchain.toml", "omega-path123-v0/omega_path123.rs", "omega-operator-catalog-v0/omega_operator_catalog.rs"]
+
+[lib]
+name = "omega_path123"
+path = "omega-path123-v0/omega_path123.rs"
+
+[dependencies]
+
+[profile.release]
+overflow-checks = true
+lto = true
+codegen-units = 1

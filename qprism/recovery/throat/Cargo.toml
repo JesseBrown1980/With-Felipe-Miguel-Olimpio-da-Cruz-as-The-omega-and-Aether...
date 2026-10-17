@@ -1,15 +1,20 @@
 [package]
-name = "qprism-recovery-throat"
+name = "asolaria-qprism-throat"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.81"
-publish = false
+license = "MIT"
+description = "Q-PRISM combined throat: selects recovery Path 1 or Path 2 from the evidence held, cross-validates both, gates on consent and a post-recovery SHA-256 check, and holds rather than fabricates."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+keywords = ["qprism", "recovery", "crt", "integrity"]
+categories = ["algorithms"]
 
 [lib]
 path = "src/lib.rs"
 
 [dependencies]
-omega-path123 = { path = "../omega-path123-v0" }
+omega-path123 = { package = "asolaria-qprism-recovery", path = "../omega", version = "0.1.0" }
 
 [profile.release]
 overflow-checks = true

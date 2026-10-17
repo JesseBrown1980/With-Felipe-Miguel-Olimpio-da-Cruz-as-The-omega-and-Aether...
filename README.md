@@ -60,10 +60,11 @@ implementation existed, written fresh and honest. Full detail and provenance:
 
 | Layer | Where | What it is |
 |---|---|---|
-| 2 — representation | `qprism/rust-qprism-181/` | 2D → 3D orb → signed-2D color-leaf renderer; checked-`i128`, inverse cross-check, own SHA-256, zero-dep, integer-only |
-| 3 — recovery Path 1 | `qprism/recovery/omega-path123-v0/` | LZ over a **retained** output window (recovers bytes it kept) |
-| 3 — recovery Path 2 | `qprism/recovery/omega-path123-v0/` | checked **CRT** two-shadow reconstruction over coprime moduli |
+| 2 — representation | `qprism/representation/` | 2D → 3D orb → signed-2D color-leaf renderer; checked-`i128`, inverse cross-check, own SHA-256, zero-dep, integer-only |
+| 3 — recovery Path 1 | `qprism/recovery/omega/` | LZ over a **retained** output window (recovers bytes it kept) |
+| 3 — recovery Path 2 | `qprism/recovery/omega/` | checked **CRT** two-shadow reconstruction over coprime moduli |
 | 3 — combined throat | `qprism/recovery/throat/` | coordinator that selects Path 1 vs Path 2, cross-validates, gates on consent + a SHA consistency check, and **holds** rather than fabricates |
+| 3 — operator catalog | `qprism/recovery/catalog/` | the 40 exact-inverse byte permutations recovery Path 3 mixes over, published on its own |
 | time | `time/` | deterministic GF(2) fast-forward with a Python↔Node byte-identity cross-check (self-labels `SIMULATED`) |
 | 4/5 — control + watcher | `eval/` | pinned Q-PRISM control arms and N-Nest depth-3/7 watchers, vendored by Git blob identity; software simulation only — see [`eval/STATUS.md`](eval/STATUS.md) |
 | 5 — Fischer | `gate/fischer-eval/` | deterministic rule-table action gate (integer `cpl` → PROCEED/HOLD/ANALYZE/BLOCK/REFUTE); chess words are metaphor |

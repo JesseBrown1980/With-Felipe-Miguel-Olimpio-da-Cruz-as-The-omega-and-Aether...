@@ -3,12 +3,12 @@
 version = 3
 
 [[package]]
-name = "omega-path123"
+name = "asolaria-qprism-recovery"
 version = "0.1.0"
 
 [[package]]
-name = "qprism-recovery-throat"
+name = "asolaria-qprism-throat"
 version = "0.1.0"
 dependencies = [
- "omega-path123",
+ "asolaria-qprism-recovery",
 ]

@@ -1,0 +1,27 @@
+[package]
+name = "asolaria-qprism-representation"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "Q-PRISM representation layer: exact 2D -> 3D orb -> signed-2D projection over checked i128, with an inverse cross-check, own SHA-256 and static SVG. Integer-only, zero dependencies."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+keywords = ["qprism", "projection", "integer", "exact", "sha256"]
+categories = ["mathematics", "visualization"]
+include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.sha256", "PUBLIC-OWNER-2D.hbp", "rust-toolchain.toml", "rust-qprism-181/**"]
+
+[lib]
+name = "rust_qprism_181"
+path = "rust-qprism-181/src/lib.rs"
+
+[[bin]]
+name = "rust-qprism-181"
+path = "rust-qprism-181/src/main.rs"
+
+[dependencies]
+
+[profile.release]
+overflow-checks = true
+lto = true
+codegen-units = 1

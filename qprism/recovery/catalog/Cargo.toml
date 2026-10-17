@@ -1,0 +1,18 @@
+[package]
+name = "asolaria-omega-operator-catalog"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "The Omega operator catalog used by Q-PRISM recovery Path 3: 40 length-preserving byte permutations, each with an exact computed inverse. Integer-only, zero dependencies."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+keywords = ["qprism", "permutation", "bijection", "integer"]
+categories = ["algorithms"]
+include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.sha256", "rust-toolchain.toml", "omega_operator_catalog.rs"]
+
+[lib]
+name = "omega_operator_catalog"
+path = "omega_operator_catalog.rs"
+
+[dependencies]
