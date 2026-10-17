@@ -49,6 +49,32 @@ Estate satellites carrying the four instances of this one theorem:
 ## Current boundary
 
 This README closes the root doctrine gap only. It does not promote a branch, fire an engine, cut over runtime, publish private evidence, or replace the live fabric. Runtime and migration claims still require their owning gates.
+
+## Q-PRISM stack
+
+Q-PRISM is a family of connected implementations, stacked on the Layer-1 kernels
+(`kernel/tribit/`, `kernel/behcs1024-60d/`). Each layer here is copied
+byte-identical from its owner repository (clean source only) or, where no clean
+implementation existed, written fresh and honest. Full detail and provenance:
+[`qprism/README.md`](qprism/README.md).
+
+| Layer | Where | What it is |
+|---|---|---|
+| 2 — representation | `qprism/rust-qprism-181/` | 2D → 3D orb → signed-2D color-leaf renderer; checked-`i128`, inverse cross-check, own SHA-256, zero-dep, integer-only |
+| 3 — recovery Path 1 | `qprism/recovery/omega-path123-v0/` | LZ over a **retained** output window (recovers bytes it kept) |
+| 3 — recovery Path 2 | `qprism/recovery/omega-path123-v0/` | checked **CRT** two-shadow reconstruction over coprime moduli |
+| 3 — combined throat | `qprism/recovery/throat/` | coordinator that selects Path 1 vs Path 2, cross-validates, gates on consent + a SHA consistency check, and **holds** rather than fabricates |
+| time | `time/` | deterministic GF(2) fast-forward with a Python↔Node byte-identity cross-check (self-labels `SIMULATED`) |
+| 4/5 — eval/watcher | `eval/` | staged trust layer (needs external control vendored; not yet gated) — see [`eval/STATUS.md`](eval/STATUS.md) |
+
+The one rule every layer obeys: **no layer manufactures information.** Content
+addressing returns retained bytes; CRT needs jointly-sufficient shadows (which
+*expand*, never compress); SHA-256 is an integrity coordinate, never a source.
+When evidence is insufficient the stack holds — it never invents bytes to satisfy
+a hash. The gated, runnable layers (the three Rust crates and the time harness)
+build on Rust 1.81.0 / stdlib Python + Node; the eval layer is clean reference
+source awaiting its external control.
+
 ## Homes
 
 Asolaria is published, byte-identical, at three public homes that mirror each other:
@@ -59,4 +85,5 @@ Asolaria is published, byte-identical, at three public homes that mirror each ot
 
 Each carries the same clean commit: the doctrine, the runnable slices
 (`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`),
-and the Rust 1.81 kernels under `kernel/tribit/` (ternary core) and `kernel/behcs1024-60d/` (the verified 60D / BEHCS-1024 hash-coordinate collapse).
+the Rust 1.81 kernels under `kernel/tribit/` (ternary core) and `kernel/behcs1024-60d/` (the verified 60D / BEHCS-1024 hash-coordinate collapse),
+and the Q-PRISM stack under `qprism/` (representation + recovery paths + combined throat), the deterministic time harness under `time/`, and the staged eval layer under `eval/`.

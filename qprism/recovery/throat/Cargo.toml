@@ -1,0 +1,17 @@
+[package]
+name = "qprism-recovery-throat"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+omega-path123 = { path = "../omega-path123-v0" }
+
+[profile.release]
+overflow-checks = true
+lto = true
+codegen-units = 1

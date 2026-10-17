@@ -37,3 +37,54 @@ jobs:
       - run: cargo +1.81.0 test
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  qprism-representation:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: qprism/rust-qprism-181 } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  qprism-recovery:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: qprism/recovery/omega-path123-v0 } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      # Three upstream pedantic style lints are allowed so the source stays
+      # byte-identical to its owner repo; every other warning still denies.
+      - run: >
+          cargo +1.81.0 clippy --locked --all-targets --
+          -D warnings
+          -A clippy::unusual_byte_groupings
+          -A clippy::derivable_impls
+          -A clippy::needless_range_loop
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' omega_path123.rs ../omega-operator-catalog-v0/omega_operator_catalog.rs; then exit 1; fi
+  qprism-throat:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: qprism/recovery/throat } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  time-evolution:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: time } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Deterministic GF(2) evolution + Python/Node byte-identity
+        run: python test_three_seat_ci.py
