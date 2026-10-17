@@ -1,0 +1,15 @@
+[package]
+name = "asolaria-verdict"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Tighten-only composition of the hookwall, spawn, tier and Fischer gates plus an input guard into one verdict"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-hookwall = { path = "../hookwall" }
+asolaria-server-fischer-eval = { path = "../fischer-eval" }
