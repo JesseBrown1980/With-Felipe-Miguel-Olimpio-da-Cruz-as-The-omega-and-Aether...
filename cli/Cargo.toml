@@ -1,0 +1,22 @@
+[package]
+name = "asolaria"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "Command-line Ed25519 signing and tighten-only gate verdicts for the Asolaria Aether stack, without writing Rust"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+keywords = ["ed25519", "signature", "policy", "verdict", "cli"]
+categories = ["command-line-utilities", "cryptography"]
+
+[[bin]]
+name = "asolaria"
+path = "src/main.rs"
+
+[dependencies]
+asolaria-hookwall = { path = "../gate/hookwall", version = "0.1.0" }
+asolaria-verdict = { path = "../gate/verdict", version = "0.1.0" }
+asolaria-server-fischer-eval = { path = "../gate/fischer-eval", version = "0.1.0" }
+getrandom = "0.2"
+zeroize = { version = "1.7", features = ["alloc"] }

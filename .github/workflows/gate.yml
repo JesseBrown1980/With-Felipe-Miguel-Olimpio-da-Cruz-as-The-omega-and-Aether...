@@ -195,3 +195,18 @@ jobs:
       - run: cargo +1.81.0 test --locked
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  asolaria-cli:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: cli } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: install exactly as the README says, then run the example envelope
+        run: |
+          cargo +1.81.0 install --locked --path . --root "$RUNNER_TEMP/root"
+          "$RUNNER_TEMP/root/bin/asolaria" gate examples/envelope.hbp
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi

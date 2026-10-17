@@ -2,6 +2,32 @@
 
 Asolaria is the private root repository slice for the Asolaria fabric. The repository is not the whole system: files are slices; the running fabric, recall/Hilbra, HBI/SHA receipts, gates, engines, cubes, live agents, and operator evidence are the authority surfaces.
 
+## Quick start
+
+This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be
+used under `LICENSE-APACHE`. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
+1.81.0), Python 3.11+ and Node 18+.
+
+```sh
+git clone https://huggingface.co/Jessedbrown/asolaria-aether
+cd asolaria-aether
+scripts/check-all.sh            # build + test every layer exactly as CI does (--no-eval to skip Python deps)
+```
+
+Use it from the command line, without writing Rust:
+
+```sh
+cargo install --locked --path cli                 # installs `asolaria`
+asolaria keygen --out ~/asolaria-me.seed          # Ed25519 seed (mode 0600); prints your public key
+asolaria sign --key ~/asolaria-me.seed cli/examples/envelope.hbp
+asolaria verify --pub <public> --sig <sig> cli/examples/envelope.hbp
+asolaria gate cli/examples/envelope.hbp --pub <public> --sig <sig>   # Fischer + Hookwall + composition
+```
+
+Only exit code 0 means PROCEED. `cli/README.md` documents every command, the envelope keys and the
+honest scope: deterministic software policy over caller-supplied values, Ed25519 via
+`ed25519-dalek` (`verify_strict`), nothing persists, and no physical attestation.
+
 ## Canonical doctrine
 
 Start with the shared doctrine:
