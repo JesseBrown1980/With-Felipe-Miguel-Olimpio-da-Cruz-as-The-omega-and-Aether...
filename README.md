@@ -106,6 +106,18 @@ addressing returns retained bytes; CRT needs jointly-sufficient shadows (which
 When evidence is insufficient the stack holds — it never invents bytes to satisfy
 a hash. Every layer above is gated in CI on Rust 1.81.0 / stdlib Python + Node.
 
+**Integration status.** CI proves each crate builds and behaves as tested; it does
+not prove the layers are connected. Today only three links are real code:
+the throat calls the recovery paths, the composition calls Fischer and the
+Hookwall gates, and the CLI calls the composition. The upper layers do not yet
+consume lower-layer outputs: the gates' GNN-derived inputs (Fischer's
+`gnn_observable`, the spawn gate's forward/reverse scores, the scheduler's
+`score_q`) are supplied by the caller, and `model/gnn-int` reads no BEHCS, 60D,
+tribit or Q-PRISM data. The trained GNN/FNN models live in
+`Asolaria-fnns-trained-and-reverse-gnns-many` and `Shannon-and-the-gnns-stage`
+and are not wired into this stack yet; `model/gnn-int` is an untrained
+integer reference, not a replacement for them.
+
 Layers 5 and 6 carry their own honesty notes. The Hookwall's `crypto` signs and
 verifies with real Ed25519 (`ed25519-dalek`, `verify_strict`, keys zeroized on
 drop). The composition does not call it yet, so a `VerifiedEnvelope` relies on its
