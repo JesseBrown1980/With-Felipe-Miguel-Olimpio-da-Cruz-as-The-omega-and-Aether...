@@ -235,8 +235,8 @@ pub fn evaluate(envelope: &FischerEnvelope, score: &FischerScore, strict: bool) 
         );
     }
 
-    let (raw_cpl, flags) = compute_cpl(envelope, score);
-    let cpl = (raw_cpl + glsm_cpl_mod(&g4_state)).max(0);
+    let (raw_cpl, flags, hard_floor) = compute_cpl(envelope, score);
+    let cpl = (raw_cpl + glsm_cpl_mod(&g4_state)).max(hard_floor).max(0);
     let needs_analyze = !strict
         && (is_write_verb(&envelope.verb) || is_spawn_verb(&envelope.verb))
         && flags.contains(&"no_replay_path");
@@ -297,7 +297,10 @@ fn hard_eval(spec: HardEvalSpec, score: &FischerScore) -> FischerEval {
     }
 }
 
-fn compute_cpl(envelope: &FischerEnvelope, score: &FischerScore) -> (i32, Vec<&'static str>) {
+fn compute_cpl(
+    envelope: &FischerEnvelope,
+    score: &FischerScore,
+) -> (i32, Vec<&'static str>, i32) {
     let mut cpl = 0;
     let mut hard_floor = 0;
     let mut flags = Vec::new();
@@ -378,7 +381,7 @@ fn compute_cpl(envelope: &FischerEnvelope, score: &FischerScore) -> (i32, Vec<&'
         flags.push("compaction_gain");
     }
 
-    (0.max(cpl.max(hard_floor)), flags)
+    (0.max(cpl.max(hard_floor)), flags, hard_floor)
 }
 
 fn axis_scores(envelope: &FischerEnvelope, score: &FischerScore) -> AxisScores {
@@ -803,7 +806,7 @@ mod tests {
             verb: "tick".to_string(),
             target: "fabric".to_string(),
             payload: "heartbeat".to_string(),
-            hbp_path: Some("D:/bigpickle-rebuild/ledger/test.hbp".to_string()),
+            hbp_path: Some("ledger/test.hbp".to_string()),
             halt_path: Some("/halt".to_string()),
             ..FischerEnvelope::default()
         };
@@ -859,6 +862,23 @@ mod tests {
             &clean_score(),
             false,
         );
+        assert!(r.cpl >= 150);
+        assert_ne!(r.verdict, FischerVerdict::Proceed);
+    }
+
+    #[test]
+    fn caller_claimed_convergence_cannot_undercut_a_hard_floor() {
+        let mut score = clean_score();
+        score.g4_state = "CONVERGED".to_string();
+        let r = evaluate(
+            &clean(|env| {
+                env.verb = "promote".to_string();
+                env.cosign = None;
+            }),
+            &score,
+            false,
+        );
+        assert!(r.flags.contains(&"missing_cosign"));
         assert!(r.cpl >= 150);
         assert_ne!(r.verdict, FischerVerdict::Proceed);
     }

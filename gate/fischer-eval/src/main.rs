@@ -190,9 +190,7 @@ fn fields_to_eval(
     fields: &BTreeMap<String, String>,
 ) -> (FischerEnvelope, FischerScore, bool, String) {
     let mut env = FischerEnvelope::default();
-    env.pid = opt_nonempty(fields, "pid")
-        .or_else(|| opt_nonempty(fields, "bh"))
-        .or(env.pid);
+    env.pid = opt_nonempty(fields, "pid").or_else(|| opt_nonempty(fields, "bh"));
     env.actor = val(fields, "actor", &env.actor);
     env.verb = val_alias(fields, &["verb", "move"], &env.verb);
     env.target = val(fields, "target", &env.target);
@@ -342,6 +340,13 @@ mod tests {
         let out = render_eval_input("pid=BH.X&verb=self_authorize&target=fabric&hbp_path=x");
         assert!(out.contains("|verdict=REFUTE|"));
         assert!(out.contains("|cpl=999|"));
+    }
+
+    #[test]
+    fn absent_pid_blocks_instead_of_borrowing_the_default() {
+        let out = render_eval_input("verb=tick&target=fabric&hbp_path=x");
+        assert!(out.contains("|verdict=BLOCK|"));
+        assert!(out.contains("missing_pid"));
     }
 
     #[test]
