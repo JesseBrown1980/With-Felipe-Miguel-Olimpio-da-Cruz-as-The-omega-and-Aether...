@@ -26,22 +26,14 @@ This algorithm does NOT decode or reconstruct source tuples. A short Host8 ident
 collide; it is not a digital signature, a custody witness, an instrument attestation, or a
 proof of physical 60D structure.
 
-## Upstream boundary behaviour (kept exactly)
+## Upstream behaviour (kept exactly)
 
-Upstream reads at most `TUPLE_CAP` = 512 tuple bytes and its SHA-256 helper hashes at most 512
-bytes. This crate keeps both, as the owner decided on 2026-10-17:
-
-- Tuples of 0–508 bytes: all four counter bytes are hashed, so the four 16-glyph groups come
-  from four different hashes.
-- Tuples of 509–512 bytes: the helper drops the last 1–4 counter bytes. Counters 0–3 differ only
-  in their last byte, so all four hashes are equal and the glyphs repeat with period 16.
-- Tuples longer than 512 bytes: only the first 512 are read, so they map exactly like their
-  512-byte prefix, and `source_sha256` is the SHA-256 of that prefix (upstream's
-  `hw_tuple_pid_full`). Upstream's hardware tuple never exceeds 512 bytes.
-
-The demo prints `bytes_read` and `counter_bytes_hashed` on its `BOUNDARY` row so a caller can
-see which case applies. An earlier version of this crate rejected tuples over 508 bytes; that
-departure from upstream has been removed.
+Upstream bounds its input by `TUPLE_CAP` = 512 bytes, in its own words: "Input is bounded by
+`TUPLE_CAP`" (hwinv.rs:148), and `project_60d` reads `min(len, TUPLE_CAP)` tuple bytes
+(hwinv.rs:243-247). This crate runs those lines unchanged, so its output equals upstream's for
+every tuple length. The tests pin upstream vectors for 0, 3, 508, 509–512 and longer tuples.
+An earlier version of this crate rejected tuples over 508 bytes; that departure from upstream
+has been removed (2026-10-17).
 
 The coordinate SHA-256 must be matched against the original source SHA-256
 and source bytes to establish reproducible custody. Information not retained

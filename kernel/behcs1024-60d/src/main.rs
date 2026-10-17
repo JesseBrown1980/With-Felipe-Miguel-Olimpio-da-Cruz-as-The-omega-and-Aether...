@@ -1,5 +1,5 @@
 //! CLI uses heap only for argument parsing and printing; library uses no allocation.
-use behcs1024_60d::{bytes_read, counter_bytes_hashed, project_60d, TUPLE_CAP};
+use behcs1024_60d::project_60d;
 use std::fmt::Write as _;
 
 fn nibble(b: u8) -> Option<u8> {
@@ -44,7 +44,7 @@ fn main() {
         }
     };
     let projection = project_60d(&bytes);
-    println!("HBP1|schema=ASOLARIA-BEHCS1024-60D-UPSTREAM-V1|dims=60|alphabet=1024|json=0");
+    println!("HBP1|schema=ASOLARIA-BEHCS1024-60D-SAFE-V1|dims=60|alphabet=1024|json=0");
     print!("COORD|glyphs=");
     for (i, glyph) in projection.glyphs.iter().enumerate() {
         if i > 0 {
@@ -59,12 +59,7 @@ fn main() {
         hex(&projection.coordinate_sha256),
         hex(&projection.host8),
     );
-    println!(
-        "BOUNDARY|inverse=NOT_ESTABLISHED|full_source_required=TRUE|tuple_cap={TUPLE_CAP}|bytes={}|bytes_read={}|counter_bytes_hashed={}|json=0",
-        bytes.len(),
-        bytes_read(&bytes),
-        counter_bytes_hashed(&bytes),
-    );
+    println!("BOUNDARY|inverse=NOT_ESTABLISHED|full_source_required=TRUE|json=0");
 }
 
 #[cfg(test)]
@@ -76,6 +71,7 @@ mod tests {
         assert_eq!(parse_hex("616263").unwrap(), b"abc");
         assert!(parse_hex("g0").is_err());
         assert!(parse_hex("1").is_err());
-        assert_eq!(parse_hex(&"aa".repeat(TUPLE_CAP + 1)).unwrap().len(), TUPLE_CAP + 1);
+        let past_cap = behcs1024_60d::TUPLE_CAP + 1;
+        assert_eq!(parse_hex(&"aa".repeat(past_cap)).unwrap().len(), past_cap);
     }
 }

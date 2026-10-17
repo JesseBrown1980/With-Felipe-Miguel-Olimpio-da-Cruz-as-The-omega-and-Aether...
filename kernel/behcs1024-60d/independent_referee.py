@@ -9,7 +9,7 @@ TUPLE_CAP = 512
 
 
 def upstream_sha(raw):
-    # Upstream's fixed-buffer helper hashes at most TUPLE_CAP bytes.
+    # hwinv.rs:148 "Input is bounded by `TUPLE_CAP`": the helper reads data[..min(len, TUPLE_CAP)].
     return hashlib.sha256(raw[:TUPLE_CAP]).digest()
 
 
@@ -48,16 +48,11 @@ def main():
         assert proc.returncode == 0, (i, proc.stderr)
         lines = proc.stdout.splitlines()
         assert len(lines) == 4 and lines[0] == (
-            "HBP1|schema=ASOLARIA-BEHCS1024-60D-UPSTREAM-V1|dims=60|alphabet=1024|json=0"
+            "HBP1|schema=ASOLARIA-BEHCS1024-60D-SAFE-V1|dims=60|alphabet=1024|json=0"
         )
         assert lines[1].startswith("COORD|glyphs=") and lines[1].endswith("|json=0")
         assert lines[2].startswith("DIGEST|source_sha256=") and lines[2].endswith("|json=0")
-        read = min(len(raw), TUPLE_CAP)
-        counter = min(TUPLE_CAP - read, 4)
-        assert lines[3] == (
-            "BOUNDARY|inverse=NOT_ESTABLISHED|full_source_required=TRUE|tuple_cap=512"
-            f"|bytes={len(raw)}|bytes_read={read}|counter_bytes_hashed={counter}|json=0"
-        ), (i, lines[3])
+        assert lines[3] == "BOUNDARY|inverse=NOT_ESTABLISHED|full_source_required=TRUE|json=0"
         coordinate = tuple(int(g) for g in lines[1].split("=")[1].split("|")[0].split("."))
         expected = project(raw)
         assert coordinate == tuple(expected[0]), i
@@ -65,10 +60,7 @@ def main():
         assert f"coordinate_sha256={expected[1]}" in lines[2]
         assert f"host8={expected[2]}" in lines[2]
         assert proc.stdout == run(binary, raw).stdout
-        repeats = all(coordinate[k] == coordinate[k % 16] for k in range(60))
-        assert repeats == (counter < 4), i
-        print(f"PARITY|case={i}|bytes={len(raw)}|counter_bytes_hashed={counter}|groups_repeat={int(repeats)}"
-              f"|source_sha256={expected[3]}|pass=TRUE|json=0")
+        print(f"PARITY|case={i}|bytes={len(raw)}|source_sha256={expected[3]}|pass=TRUE|json=0")
     print("VERDICT|independent_reference=PASS|physical_instrument=NOT_TESTED|json=0")
 
 

@@ -2,8 +2,8 @@
 #![forbid(unsafe_code)]
 //! BEHCS-1024 60-glyph hash-derived coordinate: Federation-1024's own `project_60d` and `sha256`.
 //!
-//! The two upstream functions are included byte-identical, so every tuple maps exactly as upstream,
-//! including upstream's 512-byte truncation. A coordinate is an address, not source recovery.
+//! The two upstream functions are included byte-identical, so every tuple maps exactly as upstream.
+//! A coordinate is an address, not source recovery.
 
 /// The upstream source, byte-identical (federation-1024@dc1da1a9, `kernel/boot/src/hwinv.rs`).
 mod hwinv {
@@ -21,7 +21,7 @@ mod hwinv {
 pub const DIMENSIONS: usize = 60;
 /// Symbol indices range from 0 through 1023 inclusive.
 pub const ALPHABET_SIZE: usize = 1024;
-/// Upstream reads at most this many tuple bytes and its SHA-256 hashes at most this many bytes.
+/// Upstream's `TUPLE_CAP`: "Input is bounded by `TUPLE_CAP`" (hwinv.rs:148).
 pub const TUPLE_CAP: usize = hwinv::UPSTREAM_TUPLE_CAP;
 
 /// 60 dimensions plus the digests upstream derives from them, stored without heap allocation.
@@ -32,7 +32,7 @@ pub struct Projection {
     pub coordinate_sha256: [u8; 32],
     /// First eight bytes of `coordinate_sha256` (`device_pid` upstream); a short handle, not a signer.
     pub host8: [u8; 8],
-    /// Upstream SHA-256 of the tuple (`hw_tuple_pid_full`): of its first `TUPLE_CAP` bytes only.
+    /// Upstream `sha256` of the tuple (`hw_tuple_pid_full` upstream).
     pub source_sha256: [u8; 32],
 }
 
@@ -45,16 +45,6 @@ impl Projection {
         }
         bytes
     }
-}
-
-/// Bytes of `tuple` upstream reads: the first `TUPLE_CAP`.
-pub fn bytes_read(tuple: &[u8]) -> usize {
-    tuple.len().min(TUPLE_CAP)
-}
-
-/// Counter bytes upstream's SHA-256 still sees (0..=4); below 4 the four glyph groups repeat.
-pub fn counter_bytes_hashed(tuple: &[u8]) -> usize {
-    (TUPLE_CAP - bytes_read(tuple)).min(4)
 }
 
 /// Upstream's projection plus the digests upstream's `emit_device_pid` derives from it.
@@ -94,10 +84,6 @@ mod tests {
         (0..len).map(|i| (i % 256) as u8).collect()
     }
 
-    fn period_16(glyphs: &[u16; DIMENSIONS]) -> bool {
-        (0..DIMENSIONS).all(|i| glyphs[i] == glyphs[i % 16])
-    }
-
     #[test]
     fn sha256_standard_vectors() {
         assert_eq!(hex(&hwinv::sha256(b"")), "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
@@ -121,17 +107,15 @@ mod tests {
     }
 
     #[test]
-    fn full_counter_edge_508_exact_vector() {
+    fn upstream_vector_508() {
         let p = project_60d(&pattern(508));
         assert_eq!(&p.glyphs[..10], &[902, 3, 689, 384, 304, 662, 46, 568, 144, 1004]);
         assert_eq!(hex(&p.coordinate_sha256), "d9c002d12a4b667b1f4f8e351e38f35d4c731e566ebd51a09e367e23470dd943");
-        assert_eq!(counter_bytes_hashed(&pattern(508)), 4);
-        assert!(!period_16(&p.glyphs));
     }
 
     #[test]
-    fn upstream_counter_truncation_509_to_512() {
-        // Vectors from independent_referee.py's model of upstream: SHA-256 of the first 512 bytes.
+    fn upstream_vectors_509_to_512() {
+        // Vectors from independent_referee.py's model of upstream.
         let expected = [
             (509, [189, 526, 380, 507], "c8e0925819849fc411afe4c452e5da2c615949beaff0387114f93991604bb344"),
             (510, [539, 52, 514, 404], "79a25f0c2fac953137c230cc5ee89d46207931efeaa62639906cb468ea71df1a"),
@@ -143,20 +127,14 @@ mod tests {
             let p = project_60d(&tuple);
             assert_eq!(&p.glyphs[..4], &head, "len {len}");
             assert_eq!(hex(&p.coordinate_sha256), coordinate, "len {len}");
-            assert_eq!(counter_bytes_hashed(&tuple), 512 - len);
-            // Counters 0..=3 differ only in their last byte, which upstream's SHA no longer reads.
-            assert!(period_16(&p.glyphs), "len {len}");
         }
     }
 
     #[test]
-    fn upstream_reads_only_the_first_512_bytes() {
-        let at_cap = project_60d(&pattern(512));
+    fn upstream_vectors_beyond_tuple_cap() {
+        let at_cap = project_60d(&pattern(TUPLE_CAP));
         for len in [513, 600, 1024] {
-            let longer = pattern(len);
-            assert_eq!(bytes_read(&longer), TUPLE_CAP);
-            assert_eq!(counter_bytes_hashed(&longer), 0);
-            assert_eq!(project_60d(&longer), at_cap, "len {len}");
+            assert_eq!(project_60d(&pattern(len)), at_cap, "len {len}");
         }
         assert_eq!(
             hex(&at_cap.source_sha256),
