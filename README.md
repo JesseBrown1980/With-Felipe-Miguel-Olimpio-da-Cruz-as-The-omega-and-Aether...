@@ -67,7 +67,7 @@ implementation existed, written fresh and honest. Full detail and provenance:
 | time | `time/` | deterministic GF(2) fast-forward with a Python↔Node byte-identity cross-check (self-labels `SIMULATED`) |
 | 4/5 — control + watcher | `eval/` | pinned Q-PRISM control arms and N-Nest depth-3/7 watchers, vendored by Git blob identity; software simulation only — see [`eval/STATUS.md`](eval/STATUS.md) |
 | 5 — Fischer | `gate/fischer-eval/` | deterministic rule-table action gate (integer `cpl` → PROCEED/HOLD/ANALYZE/BLOCK/REFUTE); chess words are metaphor |
-| 5 — Hookwall | `gate/hookwall/` | tier table, deny tags, score thresholds and a caller→target tier policy, extracted from a larger kernel with library logic unchanged (doc and test-fixture edits only) — see its `PROVENANCE.md` |
+| 5 — Hookwall | `gate/hookwall/` | tier table, deny tags, score thresholds and a caller→target tier policy, extracted from a larger kernel; comment-only edits except `crypto`, which completes the upstream Phase-2 plan with real Ed25519 (`ed25519-dalek`, `verify_strict`) — see its `PROVENANCE.md` |
 | 5 — composition | `gate/verdict/` | tighten-only merge of Hookwall, spawn gate, tier gate, Fischer and an input guard: strictest wins, nothing can loosen |
 | 6 — proposals | `proposals/verify-schedule/` | confidence-ranked verify scheduler; plans which proposals to verify, never fires |
 | 6 — GNN | `model/gnn-int/` | integer-only Q16 two-layer GCN + edge head; hand-set, **untrained** weights; no accuracy claims |
@@ -79,9 +79,10 @@ addressing returns retained bytes; CRT needs jointly-sufficient shadows (which
 When evidence is insufficient the stack holds — it never invents bytes to satisfy
 a hash. Every layer above is gated in CI on Rust 1.81.0 / stdlib Python + Node.
 
-Layers 5 and 6 carry their own honesty notes. The Hookwall's `crypto` tags are
-sha256 placeholders derived from the *public* key, not ed25519 signatures, so the
-composition never treats a tag as authentication. Scores, `g4_state` and tiers are
+Layers 5 and 6 carry their own honesty notes. The Hookwall's `crypto` signs and
+verifies with real Ed25519 (`ed25519-dalek`, `verify_strict`, keys zeroized on
+drop). The composition does not call it yet, so a `VerifiedEnvelope` relies on its
+caller having checked the signature. Scores, `g4_state` and tiers are
 caller-supplied inputs, not measurements; nothing in these gates persists or
 attests physical presence.
 

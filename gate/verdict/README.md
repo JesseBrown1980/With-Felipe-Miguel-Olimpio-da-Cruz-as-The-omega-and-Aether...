@@ -31,8 +31,8 @@ severity, Fischer's included. `strictest(&[])` is Block.
 - This is deterministic software policy over values passed in. It is not a sandbox and it does not
   stop or launch anything; the caller must act on the verdict.
 - "Verified" in `VerifiedEnvelope` is the caller's contract. This crate checks no signature, origin
-  or identity. The hookwall crate's `crypto` module is a sha256 placeholder, not ed25519, and is not
-  used here.
+  or identity. The hookwall crate's `crypto` module is real Ed25519 (`verify_strict`), but it is not
+  called here: verify the envelope with `asolaria_hookwall::crypto::verify` before building one.
 - `forward_score_q`, `reverse_risk_q` and the Fischer score fields (including `g4_state`,
   `l0_real` and `shannon_q`) are caller-provided inputs, not measurements.
 - Nothing persists. No ledger, file, chain row or log is written.
@@ -71,8 +71,8 @@ These are fixed in composition only. `evaluate` itself still behaves this way, a
   from BLOCK (CPL 530) to ANALYZE (CPL 330).
 - **Exact matching.** Verb, pid and `g4_state` are matched exactly (see the guard table above).
 
-`asolaria-hookwall`'s `sign_gate::gate_envelope` accepts tags forged from the public key, and any
-VIRUS-named envvar rescues every deny term. This crate does not call it. See
+`asolaria-hookwall`'s `sign_gate::gate_envelope` verifies real Ed25519 signatures, but any
+VIRUS-named envvar still rescues every deny term, so this crate does not call it. See
 `../hookwall/PROVENANCE.md`.
 
 ## Commands

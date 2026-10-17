@@ -80,7 +80,7 @@ pub struct CosignRow {
     pub kind: String,
     /// 16-char hex sha16 of the payload this row witnesses.
     pub payload_sha16: String,
-    /// Unverified 64-byte field (no ed25519 here); excluded from the canonical bytes.
+    /// ed25519 signature over the canonical bytes (row + ts + prev + kind + payload); not verified here.
     pub sig: Signature,
 }
 
@@ -132,8 +132,8 @@ impl CosignChain {
     /// - On success: clones the row into `self.rows`, advances `self.head_sha16` to the
     ///   sha16 of the row's canonical bytes, bumps `self.next_row`.
     ///
-    /// Signature verification is NOT enforced here yet — that requires real ed25519
-    /// public-key infrastructure plumbed via `crypto` module, landing in v0.3.
+    /// Signature verification is NOT enforced here: `crypto::verify` is real ed25519, but a row
+    /// carries no signer public key to verify against.
     pub fn append(&mut self, row: &CosignRow) -> Result<(), CosignChainErr> {
         if row.row != self.next_row {
             return Err(CosignChainErr::NonMonotonicRow);
@@ -157,7 +157,7 @@ impl CosignChain {
     /// v0.2: walks `self.rows` from the genesis prev_sha16, verifying that each row's
     /// `row` index is the position-1 expected value, its `prev_sha16` matches the
     /// re-derived sha16 of the previous row's canonical bytes, and its `kind` is
-    /// non-empty. Signature verification is skipped (v0.3 wires real ed25519).
+    /// non-empty. Signature verification is skipped (rows carry no signer public key).
     ///
     /// Returns `Ok(())` if the chain is internally consistent; otherwise the FIRST
     /// integrity violation encountered. Useful for re-validating an in-memory chain

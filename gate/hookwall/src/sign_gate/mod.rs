@@ -8,7 +8,7 @@
 //!
 //! Three-keys context (REPO_LAW Invariant 2 + 4):
 //!   hookwall (uniform entry) + PID (uniform addressing) + GNN pipes (uniform flow).
-//! Sign-gate checks the uniform entry: `crypto::verify` (sha256 placeholder, not ed25519) then deny/allow filter.
+//! Sign-gate checks the uniform entry (design intent; not called by `hookwall_pre` here): ed25519-verify then deny/allow filter.
 
 use crate::crypto::{verify, CryptoErr, PublicKey, Signature};
 use alloc::string::String;
@@ -33,7 +33,7 @@ pub struct GateVerdict {
     pub admitted: bool,
     /// Brief reason — never empty.
     pub reason: String,
-    /// True if the `crypto::verify` placeholder accepted the tag; forgeable from the public key alone.
+    /// True if signature verified successfully.
     pub sig_valid: bool,
     /// True if no deny-tag matched.
     pub deny_clean: bool,
@@ -47,15 +47,15 @@ pub struct GateVerdict {
 pub enum SignGateErr {
     /// Envelope canonical bytes empty.
     EnvelopeEmpty,
-    /// Algorithm label is not "ed25519" (the check run is still the sha256 placeholder).
+    /// Algorithm not supported (only ed25519 in v0.1).
     UnsupportedAlg,
-    /// Signature missing.
+    /// Signature missing, invalid, or the owner key is malformed (every `crypto::verify` failure).
     SigMissing,
     /// Signature owner missing — cannot resolve key.
     OwnerMissing,
 }
 
-/// Check the `crypto::verify` placeholder tag (sha256-derived, not ed25519) over the canonical bytes.
+/// Verify the ed25519 signature over the envelope canonical bytes.
 /// Wraps `crypto::verify` with sign-gate-specific error mapping.
 pub fn verify_envelope_signature(
     canonical_bytes: &[u8],
@@ -111,8 +111,8 @@ pub fn task_39_envvar_virus_allow(envvar_name: &str) -> bool {
     envvar_name.contains("VIRUS")
 }
 
-/// Combined gate: placeholder tag check (forgeable) + deny-check + unscoped allow-rescue.
-/// Returns a full `GateVerdict` recording all 3 sub-decisions. Not an admission control; unused by verdict.
+/// Combined gate: verify sig + deny-check + unscoped allow-rescue.
+/// Returns a full `GateVerdict` recording all 3 sub-decisions. Unused by verdict: the rescue is unscoped.
 pub fn gate_envelope(
     canonical_bytes: &[u8],
     sig: &Signature,
@@ -186,7 +186,7 @@ mod tests {
     fn gate_envelope_sig_invalid_rejects() {
         let sig = Signature([0u8; 64]);
         let pk = PublicKey([0u8; 32]);
-        // crypto::verify returns VerificationFailed → SignGateErr::SigMissing → sig_valid=false
+        // crypto::verify rejects the all-zero key + signature → SignGateErr::SigMissing → sig_valid=false
         let v = gate_envelope(
             b"canonical-bytes",
             &sig,
