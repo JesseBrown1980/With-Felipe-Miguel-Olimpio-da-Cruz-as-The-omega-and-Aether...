@@ -1,0 +1,13 @@
+[package]
+name = "asolaria-gnn-int"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+description = "Integer-only (Q16) reference for a 2-layer GCN with an edge-scoring MLP head. Hand-set, untrained weights. Zero dependencies."
+license = "MIT OR Apache-2.0"
+publish = false
+
+[dependencies]
+
+[lints.rust]
+unsafe_code = "forbid"
