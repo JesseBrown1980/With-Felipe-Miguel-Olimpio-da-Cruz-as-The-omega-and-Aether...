@@ -1,0 +1,49 @@
+{
+  "schema": "ASOLARIA-SEAT1-NNEST-QPRISM-SOURCE-PINS-V1",
+  "date": "2026-10-15",
+  "classification": "public-software-synthetic-only",
+  "protocol": "experiments/integration/seat1/PREREG-NNEST-QPRISM-SOURCE-20261015.md",
+  "sources": [
+    {
+      "repo": "JesseBrown1980/N-Nest-Prime-INFINITE-SELF-REFLECT-AGENTS-NESTED",
+      "commit": "307903651f56e8a28ef98ca36aef22ee8cda935c",
+      "files": {
+        "nest-depth3-verify.cjs": "2baca296edec2d46a9bc197efee8850bd168a5ef",
+        "nest-depthN-prime-verify.cjs": "fd24c0eceff455351f27e7244d5bd61bffd38a25"
+      }
+    },
+    {
+      "repo": "JesseBrown1980/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control",
+      "commit": "b4a21a25381d6920b7aab92c94c3c3e1420fc9e4",
+      "files": {
+        "qprism/harness.py": "addb3bc5c7ebf493a0c33c53fe37b1e04c400aa1",
+        "qprism/sources.py": "76cb2cad57d1e988f422c328e79795a4616e03e2",
+        "qprism/behcs.py": "b1363fdeaf3bbfffda5a8bfea6f26d1ec98d4bfa",
+        "qprism/physics.py": "a8e9b1b9ab06375fbb62980fd9f8d0e2353902e0",
+        "qprism/data/alphabet-1024.json": "c535817e0b814fbb735a43e313524dc797a296be",
+        "docs/CLAIMS-GATE.md": "450685b632d2e3212d3a80e58eb3f17fcb19539b",
+        "tests/test_harness_null.py": "3ecea744606a97cec740627549fe1bdb7319637f"
+      }
+    }
+  ],
+  "control": {
+    "base_seed": 2000,
+    "budget": 60,
+    "repeats": 25,
+    "influence": 0.5,
+    "couplings": [
+      0,
+      0.9
+    ],
+    "proposal_seed": 20261015,
+    "proposal_budget": 8,
+    "ref_optimum_samples": 200
+  },
+  "verdict_restrictions": {
+    "real_neural_data": false,
+    "real_physical_control": false,
+    "actual_nnest_agent_farm": false,
+    "physical_host_independence": false,
+    "authenticated_hardware_identity": false
+  }
+}

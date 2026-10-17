@@ -88,3 +88,24 @@ jobs:
         with: { node-version: '22' }
       - name: Deterministic GF(2) evolution + Python/Node byte-identity
         run: python test_three_seat_ci.py
+
+  qprism-eval-watchers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Install pinned-source software test dependencies
+        run: python -m pip install -r eval/vendor/qprism-control/requirements.txt
+      - name: Q-PRISM / N-Nest control and adversarial watcher
+        run: python eval/vendor_gate.py
+      - name: Retain audit receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qprism-nnest-software-receipts
+          path: eval/artifacts/
+          if-no-files-found: ignore
