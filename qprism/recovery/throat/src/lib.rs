@@ -6,6 +6,10 @@
 //! cross-validates the two independent recoveries against each other and against
 //! the pinned original hash.
 //!
+//! It is bound to the real, verified recovery paths — [`decode_path1`] and
+//! [`decode_path2_crt`] from the byte-identical `omega-path123` crate — and never
+//! reimplements their math.
+//!
 //! Honest-math contract, enforced in code and not only in prose:
 //!   * No path here manufactures information. Path 1 (`RetainedPath1`) returns
 //!     bytes that were retained in an output window (LZ back-references);
@@ -15,9 +19,12 @@
 //!   * SHA-256 is an integrity coordinate checked AFTER recovery. It is never a
 //!     source. A hash alone cannot regenerate discarded bytes, and this
 //!     coordinator never pretends that selecting a mode could.
-//!   * When the offered evidence is absent or insufficient, the coordinator
-//!     HOLDS. It never guesses, never fabricates bytes to satisfy the pinned
-//!     hash, and never falls back across modes to invent a result.
+//!   * The coordinator returns bytes ONLY on [`Outcome::Recovered`]. Every other
+//!     outcome is [`Outcome::Held`] carrying the reason — missing authorization,
+//!     missing or insufficient evidence, a decode failure, a cross-path
+//!     disagreement, or a failed integrity check. It never guesses, never
+//!     fabricates bytes to satisfy the pinned hash, and never falls back across
+//!     modes to invent a result.
 //!   * Recovery is attempted only under explicit [`Consent`].
 
 #![forbid(unsafe_code)]
@@ -70,33 +77,28 @@ pub enum Provenance {
     CrossValidated,
 }
 
-/// Why no bytes were produced, with no attempt to complete recovery.
+/// Why the coordinator produced no bytes. Every non-recovery path lands here.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum HoldReason {
+    /// Recovery was not authorized.
     ConsentWithheld,
+    /// No evidence, or not enough of it, was offered.
     InsufficientEvidence,
-}
-
-/// Why an attempted recovery could not be trusted.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum RejectReason {
-    /// A path failed to decode the supplied evidence.
+    /// A selected path could not decode the supplied evidence.
     DecodeFailed,
+    /// Both modes decoded but produced different bytes (inconsistent results).
+    CrossPathDisagreement,
     /// Recovered bytes did not hash to the pinned original SHA-256.
     ConsistencyMismatch,
-    /// Both modes decoded but produced different bytes.
-    CrossPathDisagreement,
 }
 
-/// The coordinator's verdict.
+/// The coordinator's verdict: recovered bytes, or held with a reason.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Outcome {
     /// Recovery succeeded and the bytes hash to the pinned original.
     Recovered { bytes: Vec<u8>, via: Provenance },
-    /// Recovery was not attempted (or deliberately not completed).
+    /// No bytes were produced; the reason says why.
     Held(HoldReason),
-    /// Recovery was attempted but the result could not be trusted.
-    Rejected(RejectReason),
 }
 
 /// A recovery request: the pinned original hash, the evidence, and consent.
@@ -127,7 +129,7 @@ fn accept(bytes: Vec<u8>, pinned: &[u8; 32], via: Provenance) -> Outcome {
     if &sha256(&bytes) == pinned {
         Outcome::Recovered { bytes, via }
     } else {
-        Outcome::Rejected(RejectReason::ConsistencyMismatch)
+        Outcome::Held(HoldReason::ConsistencyMismatch)
     }
 }
 
@@ -143,7 +145,7 @@ pub fn recover(request: &Request) -> Outcome {
             original_len,
         } => match recover_path1(tokens, *original_len) {
             Ok(bytes) => accept(bytes, &request.original_sha256, Provenance::RetainedPath1),
-            Err(_) => Outcome::Rejected(RejectReason::DecodeFailed),
+            Err(_) => Outcome::Held(HoldReason::DecodeFailed),
         },
         Evidence::CrtShadows {
             residues,
@@ -152,7 +154,7 @@ pub fn recover(request: &Request) -> Outcome {
             original_len,
         } => match recover_crt(residues, *bits, *symbol_count, *original_len) {
             Ok(bytes) => accept(bytes, &request.original_sha256, Provenance::CrtShadows),
-            Err(_) => Outcome::Rejected(RejectReason::DecodeFailed),
+            Err(_) => Outcome::Held(HoldReason::DecodeFailed),
         },
         Evidence::Both {
             path1_tokens,
@@ -168,8 +170,8 @@ pub fn recover(request: &Request) -> Outcome {
                 (Ok(a), Ok(b)) if a == b => {
                     accept(a, &request.original_sha256, Provenance::CrossValidated)
                 }
-                (Ok(_), Ok(_)) => Outcome::Rejected(RejectReason::CrossPathDisagreement),
-                _ => Outcome::Rejected(RejectReason::DecodeFailed),
+                (Ok(_), Ok(_)) => Outcome::Held(HoldReason::CrossPathDisagreement),
+                _ => Outcome::Held(HoldReason::DecodeFailed),
             }
         }
     }
@@ -274,7 +276,7 @@ mod tests {
     }
 
     #[test]
-    fn wrong_pinned_hash_is_rejected_for_consistency() {
+    fn wrong_pinned_hash_holds_on_failed_integrity_check() {
         let mut pinned = sha256(SAMPLE);
         pinned[0] ^= 0xFF;
         let out = recover(&Request {
@@ -282,17 +284,38 @@ mod tests {
             evidence: path1_evidence(SAMPLE),
             consent: Consent::Granted,
         });
-        assert_eq!(out, Outcome::Rejected(RejectReason::ConsistencyMismatch));
+        assert_eq!(out, Outcome::Held(HoldReason::ConsistencyMismatch));
     }
 
     #[test]
-    fn tampered_path1_evidence_is_rejected() {
+    fn tampered_path1_evidence_is_held() {
         let mut ev = path1_evidence(SAMPLE);
         if let Evidence::RetainedPath1 { tokens, .. } = &mut ev {
             tokens[0] ^= 0xFF;
         }
         let out = recover(&req(ev, SAMPLE, Consent::Granted));
-        assert!(matches!(out, Outcome::Rejected(_)));
+        assert!(matches!(
+            out,
+            Outcome::Held(HoldReason::DecodeFailed | HoldReason::ConsistencyMismatch)
+        ));
+    }
+
+    #[test]
+    fn cross_path_disagreement_holds() {
+        // Path 1 carries the true bytes; Path 2 carries a different message.
+        // Both decode, but they disagree, so the coordinator holds.
+        let other = b"a different message entirely, same length budget here ok!!!!!!!!!!";
+        let symbols = pack_bytes_to_symbols(other, 8).unwrap();
+        let ev = Evidence::Both {
+            path1_tokens: serialize_path1(&encode_path1(SAMPLE, P1Mode::Auto).unwrap()),
+            path1_original_len: SAMPLE.len(),
+            crt_residues: serialize_crt(&encode_path2_crt(&symbols, 8).unwrap()),
+            crt_bits: 8,
+            crt_symbol_count: symbols.len(),
+            crt_original_len: other.len(),
+        };
+        let out = recover(&req(ev, SAMPLE, Consent::Granted));
+        assert_eq!(out, Outcome::Held(HoldReason::CrossPathDisagreement));
     }
 
     #[test]
