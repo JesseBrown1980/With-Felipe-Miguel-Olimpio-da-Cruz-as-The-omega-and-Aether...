@@ -1,0 +1,18 @@
+=== ARM ADJACENT-317400  prior=priorPREV317400.bin  bytes=317400 ===
+cm3ti-gt256[g:256:64:8+prior317400] k=10 N=10000000 payload=2272589 decoder_src=26377 total=2298966 bpc_total=1.8392 restore=OK comp_sha=b9122ac701b1c550 enc=93s dec=94s
+--- arm ADJACENT-317400 done 18:57:21 ---
+=== ARM DISTANT-317400  prior=prior317400.bin  bytes=317400 ===
+cm3ti-gt256[g:256:64:8+prior317400] k=10 N=10000000 payload=2275161 decoder_src=26377 total=2301538 bpc_total=1.8412 restore=OK comp_sha=d7fb8239dc17415a enc=115s dec=105s
+--- arm DISTANT-317400 done 19:01:01 ---
+=== ARM NOISE-317400  prior=priorC317400.bin  bytes=317400 ===
+cm3ti-gt256[g:256:64:8+prior317400] k=10 N=10000000 payload=2299064 decoder_src=26377 total=2325441 bpc_total=1.8604 restore=OK comp_sha=6b6cd62511b616b1 enc=110s dec=111s
+--- arm NOISE-317400 done 19:04:42 ---
+=== ARM DISTANT-31740  prior=prior31740.bin  bytes=31740 ===
+cm3ti-gt256[g:256:64:8+prior31740] k=10 N=10000000 payload=2283602 decoder_src=26377 total=2309979 bpc_total=1.8480 restore=OK comp_sha=4e34b849526a066b enc=114s dec=108s
+--- arm DISTANT-31740 done 19:08:23 ---
+=== ARM ADJACENT-3174000  prior=priorPREV3174000.bin  bytes=3174000 ===
+cm3ti-gt256[g:256:64:8+prior3174000] k=10 N=10000000 payload=2244493 decoder_src=26377 total=2270870 bpc_total=1.8167 restore=OK comp_sha=c7e76ba4fdcab775 enc=158s dec=156s
+--- arm ADJACENT-3174000 done 19:13:38 ---
+=== ARM DISTANT-3174000  prior=prior3174000.bin  bytes=3174000 ===
+cm3ti-gt256[g:256:64:8+prior3174000] k=10 N=10000000 payload=2248610 decoder_src=26377 total=2274987 bpc_total=1.8200 restore=OK comp_sha=a815e99a57c138b7 enc=151s dec=151s
+--- arm DISTANT-3174000 done 19:18:40 ---

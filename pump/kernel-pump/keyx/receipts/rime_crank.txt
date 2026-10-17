@@ -1,0 +1,32 @@
+=== THE SLICE CRANK — discrete rime-time, translucent rooms, null gate ===
+model bank frozen (order-4); crank one 1500-byte slice at a time
+
+crank      new slice sha  novel?  info/sym  H-rel    RSS KB  rooms on disk
+    0  577727b66485ec81…    True    1.5366  under    422568              3
+    1  123a0085705b52d5…    True    1.6701   over    422580              3
+    2  80d69bbdfd6938c4…    True    1.6909   over    422588              3
+    3  691200ceb26b0cb5…    True    1.6042  under    422588              3
+    4  36e803397324940c…    True    1.7416   over    422592              3
+    5  35331410d0c8d8eb…    True    1.6110  under    422596              3
+    6  f8eccb0cf84d0de8…    True    1.7079   over    422596              3
+    7  31b3043851681d61…    True    1.6074  under    422596              3
+    8  311e53fb8aa86563…    True    1.6335  under    422600              3
+    9  67251aa5596bef67…    True    1.6814   over    422600              3
+   10  659ca4b17c42e4a2…    True    1.6978   over    422600              3
+   11  0a3ff5dd0cc6ea10…    True    1.6492  under    422604              3
+
+memory: start 422556 KB -> end 422604 KB  (delta 48 KB over 12 cranks)
+translucent rooms remaining on disk: 0 (GC'd each crank)
+
+WHAT THE MATH SAYS (honest):
+  * CRANK works: bounded memory across all cranks (no explosion between quant
+    levels) — discrete slices + GC, exactly Jesse's 'avoid continuous time'.
+  * GENERATE-DURING-TEST is real: every crank emitted a NOVEL slice (not in the
+    corpus), byte-exact reproducible from its seed. The engine produces during
+    the run things it had never seen. That part is true.
+  * The NULL GATE: per-slice info FLUCTUATES around H (1.6591) — some slices
+    above, some below (locally harder/easier text); the bound is on the AVERAGE,
+    not each slice. Translucent reproduction is RATE 1.0 — it adds nothing of its
+    own. Compression still comes from the MODEL, and the mean never beats Shannon.
+    Generation and compression are two doors of the same null; the crank opens
+    both, honestly — and the referee reports the fluctuation instead of hiding it.

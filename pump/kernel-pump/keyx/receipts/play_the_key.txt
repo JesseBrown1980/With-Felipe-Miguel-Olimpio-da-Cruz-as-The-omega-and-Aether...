@@ -1,0 +1,19 @@
+=== PLAY THE 3.1 KB KEY — MTP agent, Law 24 ===
+corpus       /root/compressor-run/enwik8
+held-out     enwik8[20,000,000 .. 20,600,000)  sha16 8e35ab13a8ce933d
+KEY          3,174 B  sha16 1be91cb748b2b364  (full sha256 in KEY-3174.hbp)
+ADJACENT     3,174 B  sha16 49c1e9cb0ef98922
+RANDOM       3,174 B  sha16 9edd2d7482974ee3
+BIG          500,000 B  sha16 132b96fff10690fa
+
+arm         train_B    ctxs   cover   +x1 raw  +x1 cov   +x3 raw  +x27 raw  -x1 raw
+-----------------------------------------------------------------------------------
+KEY           3,174     508  0.7967    0.2070   0.2598    0.0288    0.0000   0.2092
+ADJACENT      3,174     557  0.8195    0.2245   0.2739    0.0338    0.0000   0.2235
+RANDOM        3,174   3,104  0.0605    0.0000   0.0000    0.0000    0.0000   0.0000
+BIG         500,000   4,062  0.9932    0.3523   0.3546    0.0735    0.0000   0.3645
+
+  direction 0 (hold) is 1.0000 by construction in every arm — the free
+  center. It costs nothing and it says nothing (Law 24).
+  GATE: a frozen slice predicts a fraction. It never recreates an unseen
+  whole. x27 going to zero is that boundary measured, not an opinion.

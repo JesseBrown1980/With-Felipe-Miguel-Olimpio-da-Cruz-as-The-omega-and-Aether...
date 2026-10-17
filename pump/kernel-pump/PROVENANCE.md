@@ -72,3 +72,19 @@ simulator's `key/` folder, byte-identical to the hashes the package's receipts g
 The programs that wrote `ASOLARIA-CONSTELLATION-KEY-3174.bin` and `ASOLARIA-KERNEL-3174.bin`
 (receipt schemas `ASOLARIA-CONSTELLATION-KEY-3174-V1`, `ASOLARIA-KERNEL-FED-V1`, `ASOLARIA-KERNEL-STREAMED-K3-V1`)
 are not among these 31 files; none of the 13 programs writes those keys.
+
+## keyx/ (second delivery, 2026-10-17)
+
+`asolaria-keyx-2026-10-17.zip` (160,609 B of content, ZIP sha256
+`b58a10040304f929590f4726a004907c26d6a3e9ee452cbed9065c647b4892ba`), the folder
+`D:\asolaria-absorb\kernel-pump\keyx\ASOLARIA-KEY-20260727\` on ACER: 12 players, `PLAY.md`, five law files,
+`key/KEY-3174.hbp` with its sidecar, and 12 receipts and run logs. All 31 files are byte-identical to files
+already public in the universe simulator @3f9f42d (`players/`, `books/PLAY.md`, `books/operator-laws/`,
+`key/`, `receipts/operator/`). They are stored unchanged.
+
+Measured here: `prior3174.bin` (sha256 `1be91cb748b2b364c1f9f4dca1e7a89bcd8840e5e179e494dc611452be6556fd`)
+equals `enwik8[90,000,000 .. 90,003,174)` byte for byte (enwik8 from mattmahoney.net, 100,000,000 B, sha256
+`2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8`). `ASOLARIA-CONSTELLATION-KEY-3174.bin`
+(`cce4f1e8…`), `ASOLARIA-KERNEL-3174.bin` (`f075f5c6…`) and `ASOLARIA-HERSELF-KEY-3174.bin` (`925c818d…`) are
+different files from `prior3174.bin` (they differ from the first byte). Their receipts record how they were
+selected (`greedy_set_cover_on_heldout_order2_contexts`); the programs that ran that selection are not in either delivery.

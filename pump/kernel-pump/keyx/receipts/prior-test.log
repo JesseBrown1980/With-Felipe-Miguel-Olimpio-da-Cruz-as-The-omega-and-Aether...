@@ -1,0 +1,4 @@
+=== ARM A: no prior ===
+cm3ti-gt256[g:256:64:8] k=10 N=10000000 payload=2285979 decoder_src=26377 total=2312356 bpc_total=1.8499 restore=OK comp_sha=4fac453c0a61ff5b enc=107s dec=101s
+=== ARM B: RB_PRIOR=prior3174.bin (3174 B, must be added to total) ===
+cm3ti-gt256[g:256:64:8+prior3174] k=10 N=10000000 payload=2285400 decoder_src=26377 total=2311777 bpc_total=1.8494 restore=OK comp_sha=f0d005cc84c6f440 enc=118s dec=120s

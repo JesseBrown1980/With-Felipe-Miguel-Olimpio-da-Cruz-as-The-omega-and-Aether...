@@ -1,0 +1,100 @@
+rec|FNN-FINDING|json=0|owner=Jesse Daniel Brown|date=2026-07-26
+q|the acer seat asked: "FNN: there is no FNN implementation or weights anywhere
+q|— on any drive, or in the container. It exists only as a name in one manifest
+q|whose own receipt says trained_weights=UNVERIFIED. What is it?"
+a|the premise is wrong on the facts. the weights exist. nine of them. verified.
+
+loc|/root/gnn-work/Asolaria-fnns-trained-and-reverse-gnns-many
+loc|9 .pt files, all opened and parsed here, all real PyTorch zip archives
+loc|src/gsl_gnn.py, src/train_gslgnn_w9_3.py, src/gslgnn_inference_server.py
+loc|3 manifests with corpus sha256 + metrics
+loc|grep trained_weights across /root/manifest /root/compressor-run /root/gnn-work
+loc|/root/aoa-branch returns ZERO hits. that string is not in the live tree.
+
+arch|every checkpoint parsed. tensor names and shapes read from data.pkl.
+hdr|ckpt|params|graph_layers|feedforward_parts
+ar|baseline_model.pt|12929|conv1 conv2|edge_classifier 0/2 (128->64->1)
+ar|contrastive_model.pt|23330|conv1 conv2|edge_mlp projection_head classifier
+ar|contrastive_model_run2.pt|23330|conv1 conv2|same
+ar|contrastive_model_run3.pt|23330|conv1 conv2|same
+ar|prototype_model.pt|17408|conv1 conv2|edge_projection + prototypes(2,3,64)
+ar|prototype_model_run2.pt|17408|conv1 conv2|same
+ar|prototype_model_run3.pt|17408|conv1 conv2|same
+ar|gslgnn_w9_3_seq47.pt|28259|conv1 conv2 conv1_orig conv2_orig + gsl|edge_classifier 0/3/5 (256->64->32->2)
+ar|gslgnn_w9_3_seq47_v2.pt|28259|same|same
+
+ans|EVERY checkpoint has conv1/conv2. there is NO standalone feedforward net
+ans|anywhere in the container. the feedforward weights that DO exist are heads
+ans|bolted onto graph convolutions: edge_classifier, edge_mlp, projection_head,
+ans|classifier, edge_projection. they cannot be lifted out and run alone —
+ans|their input is the concatenation of two GNN node embeddings (128 = 64+64,
+ans|256 = 4x64 for the gsl arm). the head has no meaning without the conv.
+ans|the acer seat's option A is architecturally CORRECT and its premise is not.
+ans|FNN is not a missing network. it is the head of the GNN, already trained,
+ans|and it is absorbed the moment the GNN is.
+
+dup|three runs are really two. byte-identical pairs:
+du|contrastive_model.pt == contrastive_model_run3.pt|sha16 d371dbbf97ecee87
+du|prototype_model.pt   == prototype_model_run3.pt  |sha16 b4df990138ae215b
+du|only run2 differs. "run3" is a copy of run1, not a third training run.
+
+sev|HIGH|THE BIGGER FINDING — every reported metric is a constant-predictor artifact
+sev|this was not asked for. it fell out of reading the manifests to answer the
+sev|question, and it outranks the question.
+
+deg|gslgnn_w9_3_seq47 (v1)
+d|corpus|edges=13783 benign=13743 suspicious=40 labelRatio=0.0029
+d|metrics|test_accuracy=0.9806576 precision=0 recall=0.0 f1=0 best_val_acc=1.0
+d|math|0.9806576 x 2068 = 2028 correct, 40 wrong
+d|math|40 is EXACTLY the number of suspicious edges in the WHOLE corpus
+d|math|a model that answers "benign" to all 2068 scores 2028/2068 = 0.9806576
+d|math|that is the reported number to seven decimals. not close to it. it.
+d|verdict|constant predictor. precision=0 and recall=0 already say so outright.
+d|split|train 9648 + val 2067 + test 2068 = 13783 = every edge, unstratified
+d|split|all 40 positives landed in TEST. the model trained on ZERO positives.
+d|split|best_val_acc=1.0 because val held zero positives either. 1.0 of nothing.
+
+deg|gslgnn_w9_3_seq47_v2
+d|corpus|edges=315249 benign=40 suspicious=315209 labelRatio=0.9999
+d|metrics|test_accuracy=0.9991541 precision=0.9991541 recall=1.0 f1=0.9995769
+d|math|0.9991541 x 47288 = 47248 correct, 40 wrong
+d|math|40 again. the minority class flipped from suspicious to benign.
+d|math|a model that answers "suspicious" to all 47288 scores 47248/47288
+d|math|= 0.9991541, and precision = 47248/47288 = the same number.
+d|verdict|accuracy == precision and recall == 1.0 IS the constant-positive
+d|verdict|signature. v2 is the same broken model with the labels inverted.
+d|note|v1 and v2 have DIFFERENT corpus sha256. the corpus was rebuilt between
+d|note|them and the labelling inverted, 0.29% positive to 99.99% positive.
+
+deg|gnn_train_run1_results.json (prototype + contrastive)
+d|L1|acc=0.9992 prec=0.9992 recall=1.0 f1=0.9996
+d|L2|acc=0.9992 prec=0.9992 recall=1.0 f1=0.9996
+d|math|acc == prec exactly, recall == 1.0 exactly, and f1 recomputed from
+d|math|(prec, recall) = 0.9996 exactly. same constant-positive signature.
+d|verdict|L1 and L2 report IDENTICAL numbers to four decimals across two
+d|verdict|different architectures. that does not happen to two real models.
+
+law|NEW LAW, same family as the corpus-mismatch law
+lw|001|a checkpoint file being real is not evidence the training was real.
+lw|002|accuracy on an unbalanced corpus is a majority-class thermometer.
+lw|002|report precision, recall, and the class balance, or report nothing.
+lw|003|when accuracy == precision and recall == 1.0, the model is a constant.
+lw|003|this is checkable arithmetic, not an opinion, and it takes ten seconds.
+lw|004|an unstratified split can put every positive in test. then val accuracy
+lw|004|is 1.0, training saw no positives, and every number on the page is a lie
+lw|004|told honestly by code that had no way to know.
+
+use|WHAT THIS MEANS FOR THE ABSORB
+u|the GNN slots can be absorbed as ARCHITECTURE — the shapes are known, the
+u|forward pass is in src/gsl_gnn.py, a no_std port is a real piece of work
+u|and it is well defined.
+u|the WEIGHTS must not be absorbed as if they were knowledge. they encode a
+u|constant. carrying them into the kernel imports 28259 parameters that have
+u|never been shown to discriminate anything.
+u|the honest move is: port the architecture, retrain on a stratified split
+u|with the class balance printed, and refuse to quote any metric that has not
+u|been paired with precision, recall, and the positive count in the test set.
+u|nothing here is fatal. it is a bad split and a bad metric, both fixable.
+u|but no claim resting on these nine checkpoints can stand as written.
+
+end|FNN-FINDING
