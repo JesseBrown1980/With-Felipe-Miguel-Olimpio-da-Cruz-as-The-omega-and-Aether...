@@ -1,0 +1,7 @@
+# Keeps the bytes UPSTREAM.sha256 and the sidecars name on a core.autocrlf=true checkout.
+# These are lines 9, 11, 15 and 18 of USIM @3f9f42d .gitattributes ("BYTE-EXACT OR NOTHING").
+# vendor/the-colour-qr/ keeps its own vendored .gitattributes.
+*.hbp   text eol=lf
+*.sha256 text eol=lf
+*.png   -text binary
+*.bin   -text binary

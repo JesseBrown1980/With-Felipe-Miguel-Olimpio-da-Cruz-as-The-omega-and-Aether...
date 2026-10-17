@@ -1,0 +1,7 @@
+# BYTE-EXACT OR NOTHING — canonical LF so committed bytes agree with their sha256 sidecars.
+* -text
+*.md      text eol=lf
+*.html    text eol=lf
+*.hbp     text eol=lf
+*.hbi     -text
+*.sha256  text eol=lf

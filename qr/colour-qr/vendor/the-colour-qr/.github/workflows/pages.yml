@@ -1,0 +1,150 @@
+name: Measure the continuously served door
+
+# OPERATOR RULE, 2026-08-07 (Jesse Daniel Brown):
+#   "We don't want any verification doors. The light is the code.
+#    All the doors need to be open."
+#
+# So nothing in this file can refuse. Every job is continue-on-error, no job
+# declares needs:, and no step exits non-zero on a finding. Verification still
+# happens — it is written down, to the log and to the run summary, where a
+# person can read it. It records; it does not admit.
+#
+# WHAT CAME OUT, and why:
+#
+# 1. The self-containment step. It was, verbatim:
+#
+#        grep -oE '(src|href)[[:space:]]*=[[:space:]]*"https?://[^"]+' index.html
+#        -> "FAIL: index.html references an external URL"; exit 1
+#
+#    That alternation bans `src=` (a load-time dependency — the page cannot
+#    render without the network) and `<a href=` (an EXIT — the page renders
+#    fine offline; the link is a door) with the same breath. The identical line
+#    lived in asolaria-multiverse and froze that door on an exitless build from
+#    17:49Z until 23:39Z on 2026-08-06 — five hours and fifty minutes — because
+#    every commit that ADDED exits failed the check that was supposed to
+#    protect the door. Measured there: 25 of 25 absolute URLs were `<a href>`;
+#    src=0; <link href>=0. The door already rendered offline. The gate was
+#    refusing the fix.
+#
+#    This was the only other copy in the corpus. Now there are none.
+#
+# 2. `needs: verify` on measure-served-door, and `set -e` / `exit 1` in every
+#    step. A door is an opening. A check that can turn it red puts a state on a
+#    thing that has none.
+#
+# The counts are still taken. They are just reported instead of enforced.
+# Note for whoever reads the receipts: the door measured 0 exits on 2026-08-07.
+# That is a room. The corridor block fixes it; this file will not make you.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# No cancel-in-progress guard is needed: nothing here gates a deploy, so a slow
+# run cannot hold anything behind it.
+concurrency:
+  group: colour-qr-receipts
+  cancel-in-progress: true
+
+jobs:
+  receipts:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read the sidecars and say what is
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -u
+          n=0; bad=0
+          while IFS= read -r -d '' s; do
+            d=$(dirname "$s"); b=$(basename "$s")
+            if ( cd "$d" && sha256sum -c "$b" >/dev/null 2>&1 ); then :; else
+              bad=$((bad+1)); echo "MISMATCH|$s"
+              printf '`MISMATCH|%s`\n' "$s" >> "$GITHUB_STEP_SUMMARY"
+            fi
+            n=$((n+1))
+          done < <(find . -path './.git' -prune -o -name '*.sha256' -print0)
+          row="SIDECARS|checked=${n}|failed=${bad}|json=0"
+          echo "$row"; printf '`%s`\n' "$row" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Count the doors and say what is
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -u
+          [ -f index.html ] || {
+            row="DOOR|verdict=NOT_MEASURED|reason=NO_INDEX_HTML|json=0"
+            echo "$row"; printf '`%s`\n' "$row" >> "$GITHUB_STEP_SUMMARY"; exit 0
+          }
+          # -o | wc -l, NOT -c: `grep -c` counts matching LINES and silently
+          # overrides -o, so three anchors sharing one line report as 1.
+          # `<a\b` so a remote stylesheet is never miscounted as a door.
+          exits=$(grep -oE '<a\b[^>]*\bhref[[:space:]]*=[[:space:]]*"[^"]+' index.html | wc -l)
+          ext=$(grep -oE '<a\b[^>]*\bhref[[:space:]]*=[[:space:]]*"https?://[^"]+' index.html | wc -l)
+          res=$(grep -oE '<[^>]*\bsrc[[:space:]]*=[[:space:]]*"https?://[^"]+' index.html | wc -l)
+          css=$(grep -oE '<link\b[^>]*\bhref[[:space:]]*=[[:space:]]*"https?://[^"]+' index.html | wc -l)
+          net=$(grep -oE '\b(fetch|XMLHttpRequest|WebSocket|EventSource|importScripts)[[:space:]]*\(' index.html | wc -l)
+          row="DOOR|exits=${exits}|exits_offsite=${ext}|remote_resources=${res}|remote_stylesheets=${css}|runtime_network=${net}|json=0"
+          echo "$row"; printf '`%s`\n' "$row" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$exits" -eq 0 ]; then
+            note="NOTE|a door with no way out is a room. This is reported, not enforced."
+            echo "$note"; printf '`%s`\n' "$note" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  # Runs beside, not after. No needs:. Samples one served snapshot of a page
+  # whose lifecycle is continuous — there is no moment at which it is "done",
+  # so a sample is the method, not a compromise.
+  measure-served-door:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Measure one served byte snapshot
+        continue-on-error: true
+        shell: bash
+        env:
+          PAGE_URL: https://jessebrown1980.github.io/the-colour-qr/
+        run: |
+          set -u
+          sample=$(mktemp)
+          status=$(curl --silent --show-error --location \
+                     --output "$sample" --write-out '%{http_code}' \
+                     "$PAGE_URL") || curl_rc=$?
+          curl_rc=${curl_rc:-0}
+
+          emit() { echo "$1"; printf '`%s`\n' "$1" >> "$GITHUB_STEP_SUMMARY"; }
+
+          if [ "$curl_rc" -ne 0 ]; then
+            emit "PAGESMEASURE|verdict=NOT_MEASURED|reason=TRANSPORT_UNAVAILABLE|curl_exit=${curl_rc}|url=${PAGE_URL}|json=0"
+            exit 0
+          fi
+
+          bytes=$(stat -c '%s' "$sample")
+          expected=$(sha256sum index.html | cut -d' ' -f1)
+          served=$(sha256sum "$sample"   | cut -d' ' -f1)
+          exits=$(grep -oE '<a\b[^>]*\bhref[[:space:]]*=' "$sample" | wc -l)
+
+          if [ "$status" != "200" ]; then
+            emit "PAGESMEASURE|verdict=MEASURED_FAIL|reason=HTTP_STATUS|http_status=${status}|bytes=${bytes}|served_sha256=${served}|json=0"
+          elif [ "$bytes" -eq 0 ]; then
+            emit "PAGESMEASURE|verdict=MEASURED_FAIL|reason=EMPTY_BODY|http_status=${status}|bytes=0|json=0"
+          elif [ "$served" != "$expected" ]; then
+            # Not necessarily wrong. Pages serves from the branch source and the
+            # CDN holds max-age=600, so a fresh commit legitimately reads as a
+            # mismatch for up to ten minutes. Say what is; draw no conclusion.
+            emit "PAGESMEASURE|verdict=MEASURED_FAIL|reason=SOURCE_BYTE_MISMATCH|http_status=${status}|bytes=${bytes}|expected_sha256=${expected}|served_sha256=${served}|note=CDN_max_age_600_or_undeployed_commit|json=0"
+          else
+            emit "PAGESMEASURE|verdict=MEASURED_PASS|invariant=HTTP_200_NONEMPTY_SOURCE_BYTES|http_status=${status}|bytes=${bytes}|sha256=${served}|json=0"
+          fi
+          emit "SERVED_DOOR|exits=${exits}|json=0"
+          exit 0

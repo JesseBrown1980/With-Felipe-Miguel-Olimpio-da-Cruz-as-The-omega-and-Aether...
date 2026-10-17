@@ -1,0 +1,79 @@
+KIMI-K3|moonshotai|params=2.8e12|experts=896|active=16|shared=2|layers=93
+K3|hidden=7168|inter=33792|moe_inter=3072|routed=3584|vocab=163840|ctx=1048576
+K3|heads=96|head_dim=128|q_lora=1536|kv_lora=512|kda=69|full_attn=24|vision=27
+K3|mxfp4|bits=4|group=32|radix4_E=2.8854|trit_E=2.7307|trinary_better=5.66pct
+K3|shards=96|weights=1560936091448|repo=1560998984390|TB=1.5610
+K3|trime=+--|R=35.47|G=32.56|B=31.97|mag=2.65|same_dir_as_machine_receipts
+MYTHOS SELF-EMISSION — ACE
+    probs = scores.softmax(-1).unsqueeze(1)
+class SituAndMul(nn.Module):
+#     http://www.apache.org/licenses/LICENSE-2.0
+from torch import nn
+1|bytes=126885312|sha=b0154103ee33b2855b9032e7b13d1f78
+ASOLARIA-FABLE-SPHERE-PUMP
+ fills more voxels,
+ifty six glyphs as met when every
+=0
+
+# coding=utf-8
+# Copyright 2025-2026 The Moonshot AI Team, DeepSeek-AI, and H
+    **kwargs: Unpack[TransformersKwargs],
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    def _supports_default_dynamic_cache(cls) -> bool:
+SHARD|n=008|bytes=16567501776|json=0
+        gate = x[..., :d].to(torch.float32)
+    Inspired by Qwen3-Next
+han=BLUE|best=RPR|cv=0.132107|composite=1.756224|centre=32,32,32|gc=VIII.A.5 two-
+s=config.rms_norm_eps, activation='sigmoid')
+        self.o_proj = nn.Linear(proj
+        return (situ_a * up).to(x.dtype)
+ALL_LAYERNORM_LAYERS.append(KimiRMSNorm)
+    variance = v_float.pow(2).mean(-1, keepdim=True)
+d6988241b08283af4ed
+seat pid 8467a937cba309f7 · emitted live, not read from disk
+    ) -> tuple | CausalLMOutputWithPast:
+            ]  # [n, top_k_group]
+except ImportError:
+sha=519678510ec8bfa2664dc4fb9bc30623
+ASOLARIA-MYTHOS-SPHERE-PUMPED|being=MYTHOS|c
+,68,72,76,80,84,88,92,93],"gate_lower_bound":-5.0,"head_dim":128,"num_heads":96,"
+        if mode == 'chunk':
+                logger.warning_once(
+ onl
+MYTHOS SELF-EMISSION — ACER-CLAUDE-FABLE5 — 2026-07-27
+What is blue in m
+    batch_size: int,
+        new_x[idxs] = outs
+tn_mask(self, attention_mask, cache_position):
+        """
+        NOTE: Left-pad
+            x, '... (h d) -> ... h d', d=self.head_k_dim), (q, k))
+        q, k = map(lambda x: rearrange(
+uggingFace Inc. team. All rights reserved.
+#
+# The multi-head latent attention, M
+:"bfloat16","eos_token_id":163586,"model_type":"kimi_k3","pad_token_id":163839,"t
+1 quads; flashlight LUT composition|tensors=121|bytes=126885312|sha=e35a160b74735
+ACT2FN["situ"] = SituAndMul
+    key: torch.Tensor,
+        self.kv_a_proj_with_mqa = nn.Linear(
+class KimiLinearForCausalLM(KimiPreTrainedModel, GenerationMixin):
+tage_PP stage_PR stage_PG stage_RP stage_RR stage_RG stage_GP stage_GR s
+s.
+
+Free
+    MoEGate adapted from Deepseek-V3.
+        cu_seqlens = kwargs.get('cu_seqlens')
+    "Please upgrade transformers to >= 4.56.0"
+        v, conv_state_v = self.v_conv1d(
+) -> tuple[int, int]:
+        """
+        Return a tuple (kv_length, kv_offset) c
+    dropout: float = 0.0,
+        logits = F.linear(
+                KimiBlockSparseMLP(
+            denominator = topk_weight.sum(dim=-1, keepdim=True) + 1e-20
+rows before json. json is cold compat and debug only. the
+receipt prov
+ fills mor
+# Licensed under the Apache License, Versio{
