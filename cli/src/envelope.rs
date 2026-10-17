@@ -1,9 +1,11 @@
-//! HBP envelope text -> `VerifiedEnvelope`. One `key=value` per line; fails closed on anything odd.
+//! HBP envelope text -> `VerifiedEnvelope` (`gate`) or `PolicyInputs` (`observe`).
+//! One `key=value` per line; fails closed on anything odd.
 
 use std::collections::BTreeMap;
 
 use asolaria_hookwall::hookwall::HookTier;
 use asolaria_hookwall::syscall::AccessTier;
+use asolaria_observed::PolicyInputs;
 use asolaria_server_fischer_eval::{FischerEnvelope, FischerScore};
 use asolaria_verdict::VerifiedEnvelope;
 
@@ -41,6 +43,17 @@ pub const KEYS: [&str; 32] = [
     "shannon_above",
     "g4_state",
     "fischer_strict",
+];
+
+/// Keys `observe` refuses: it computes these from the events.
+pub const SCORE_KEYS: [&str; 7] = [
+    "forward_score_q",
+    "reverse_risk_q",
+    "composite",
+    "l0_real",
+    "shannon_q",
+    "shannon_above",
+    "g4_state",
 ];
 
 fn known_key(key: &str) -> Option<&'static str> {
@@ -151,9 +164,8 @@ fn is_display_spoofing(c: char) -> bool {
         )
 }
 
-/// Parses envelope text. Unknown, duplicate, missing-required or malformed keys are errors.
-/// So are control and bidi characters on any line, comments included (a trailing CR is allowed).
-pub fn parse(text: &str) -> Result<VerifiedEnvelope, String> {
+/// Reads every `key=value` line; a key in `refused` is an error like an unknown key.
+fn read_fields<'a>(text: &'a str, refused: &[&str]) -> Result<Fields<'a>, String> {
     if text.starts_with('\u{FEFF}') {
         return Err("envelope starts with a UTF-8 byte order mark; save it without a BOM".into());
     }
@@ -175,13 +187,20 @@ pub fn parse(text: &str) -> Result<VerifiedEnvelope, String> {
             .split_once('=')
             .ok_or_else(|| format!("line {line_no}: expected key=value"))?;
         let key = known_key(key).ok_or_else(|| format!("line {line_no}: unknown key {key:?}"))?;
+        if refused.contains(&key) {
+            return Err(format!(
+                "line {line_no}: score key {key} is not accepted; observe sets every score itself"
+            ));
+        }
         if values.insert(key, value).is_some() {
             return Err(format!("line {line_no}: duplicate key {key}"));
         }
     }
-    let f = Fields { values };
+    Ok(Fields { values })
+}
 
-    let fischer_envelope = FischerEnvelope {
+fn fischer_envelope(f: &Fields) -> Result<FischerEnvelope, String> {
+    Ok(FischerEnvelope {
         pid: f.optional("pid"),
         actor: f.text_or("actor", ""),
         verb: f.text_or("verb", ""),
@@ -199,7 +218,14 @@ pub fn parse(text: &str) -> Result<VerifiedEnvelope, String> {
         recursive_consent: f.flag("recursive_consent")?,
         operator_witness_required: f.flag("operator_witness_required")?,
         operator_witness: f.flag("operator_witness")?,
-    };
+    })
+}
+
+/// Parses `gate` envelope text. Unknown, duplicate, missing-required or malformed keys are errors.
+/// So are control and bidi characters on any line, comments included (a trailing CR is allowed).
+pub fn parse(text: &str) -> Result<VerifiedEnvelope, String> {
+    let f = read_fields(text, &[])?;
+    let fischer_envelope = fischer_envelope(&f)?;
     let fischer_score = FischerScore {
         composite: f.text_or("composite", "0"),
         l0_real: f.flag("l0_real")?,
@@ -219,6 +245,25 @@ pub fn parse(text: &str) -> Result<VerifiedEnvelope, String> {
         reverse_risk_q: f.required_uint("reverse_risk_q", Some(1000))?,
         fischer_envelope,
         fischer_score,
+        fischer_strict: f.flag("fischer_strict")?,
+    })
+}
+
+/// Parses `observe` envelope text: the `gate` rules, `payload` is required (asolaria-hookwall.mjs:70
+/// scores a string payload), and any of [`SCORE_KEYS`] is an error.
+pub fn parse_policy(text: &str) -> Result<PolicyInputs, String> {
+    let f = read_fields(text, &SCORE_KEYS)?;
+    f.required("payload")?;
+    let fischer_envelope = fischer_envelope(&f)?;
+    Ok(PolicyInputs {
+        slot: f.required_uint("slot", Some(255))?,
+        syscall_no: f.required_uint("syscall_no", Some(255))?,
+        caller_pid: f.required_uint("caller_pid", None)?,
+        hook_tier: hook_tier(f.required("hook_tier")?)?,
+        caller_tier: access_tier("caller_tier", f.required("caller_tier")?)?,
+        target_tier: access_tier("target_tier", f.required("target_tier")?)?,
+        event_tags: event_tags(f.raw("event_tags").unwrap_or(""))?,
+        fischer_envelope,
         fischer_strict: f.flag("fischer_strict")?,
     })
 }
@@ -302,5 +347,63 @@ mod tests {
     fn values_are_kept_verbatim() {
         let env = parse(&EXAMPLE.replace("verb=tick", "verb=a=b ")).unwrap();
         assert_eq!(env.fischer_envelope.verb, "a=b ");
+    }
+
+    const OBSERVE_EXAMPLE: &str = include_str!("../examples/observe-envelope.hbp");
+
+    #[test]
+    fn observe_example_is_the_gate_example_policy_with_a_fixture_edge() {
+        let policy = parse_policy(OBSERVE_EXAMPLE).expect("observe example parses");
+        let gate = parse(EXAMPLE).expect("gate example parses");
+        assert_eq!(policy.fischer_envelope.actor, "agent:benign");
+        assert_eq!(policy.fischer_envelope.target, "svc:ledger");
+        let same_edge = FischerEnvelope {
+            actor: gate.fischer_envelope.actor.clone(),
+            target: gate.fischer_envelope.target.clone(),
+            ..policy.fischer_envelope.clone()
+        };
+        assert_eq!(same_edge, gate.fischer_envelope);
+        assert_eq!(
+            (policy.slot, policy.syscall_no, policy.caller_pid),
+            (gate.slot, gate.syscall_no, gate.caller_pid)
+        );
+        assert_eq!(
+            (policy.hook_tier, policy.caller_tier, policy.target_tier),
+            (gate.hook_tier, gate.caller_tier, gate.target_tier)
+        );
+        assert_eq!(policy.event_tags, gate.event_tags);
+        assert_eq!(policy.fischer_strict, gate.fischer_strict);
+    }
+
+    #[test]
+    fn policy_refuses_every_score_key_with_its_line() {
+        let lines = OBSERVE_EXAMPLE.lines().count();
+        for key in SCORE_KEYS {
+            assert!(known_key(key).is_some(), "{key}");
+            let err = match parse_policy(&format!("{OBSERVE_EXAMPLE}{key}=0\n")) {
+                Ok(_) => panic!("{key} accepted"),
+                Err(err) => err,
+            };
+            assert_eq!(
+                err,
+                format!(
+                    "line {}: score key {key} is not accepted; observe sets every score itself",
+                    lines + 1
+                )
+            );
+        }
+        assert!(parse_policy(&OBSERVE_EXAMPLE.replace("slot=0\n", "")).is_err());
+        assert!(parse_policy(&format!("{OBSERVE_EXAMPLE}colour=blue\n")).is_err());
+    }
+
+    #[test]
+    fn policy_requires_payload_and_scores_an_empty_one_as_empty() {
+        assert_eq!(
+            parse_policy(&OBSERVE_EXAMPLE.replace("payload=heartbeat\n", "")).err(),
+            Some("missing required key payload".to_string())
+        );
+        let empty = parse_policy(&OBSERVE_EXAMPLE.replace("payload=heartbeat", "payload="))
+            .expect("empty payload parses");
+        assert_eq!(empty.fischer_envelope.payload, "");
     }
 }

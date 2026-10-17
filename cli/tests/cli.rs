@@ -456,7 +456,7 @@ fn help_and_version() {
         let out = run(args);
         assert_eq!(code(&out), 0);
         let text = stdout(&out);
-        for word in ["keygen", "pubkey", "sign", "verify", "gate", "EXIT CODES", "SCOPE"] {
+        for word in ["keygen", "pubkey", "sign", "verify", "gate", "observe", "EXIT CODES", "SCOPE"] {
             assert!(text.contains(word), "{word}");
         }
     }
@@ -574,7 +574,7 @@ fn oversized_envelope_is_a_usage_error() {
 
 #[test]
 fn subcommand_help_and_help_topics() {
-    for command in ["keygen", "pubkey", "sign", "verify", "gate"] {
+    for command in ["keygen", "pubkey", "sign", "verify", "gate", "observe"] {
         for args in [vec![command, "--help"], vec![command, "-h"], vec!["help", command]] {
             let out = run(&args);
             assert_eq!(code(&out), 0, "{args:?}: {out:?}");
@@ -595,4 +595,379 @@ fn out_of_range_u8_says_maximum() {
     let out = gate_text(&EXAMPLE.replacen("slot=0", "slot=256", 1), &[]);
     assert_eq!(code(&out), 2);
     assert!(String::from_utf8_lossy(&out.stderr).contains("slot: 256 is above the maximum 255"));
+}
+
+const OBSERVE_EXAMPLE: &str = include_str!("../examples/observe-envelope.hbp");
+const OBSERVE_PID: &str = "BH.VERDICT.EXAMPLE000000001";
+
+/// The SYNTHETIC events fixture of model/l0-edge.
+fn fixture_events() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../model/l0-edge/tests/fixtures/events.hbp")
+}
+
+fn observe_text(text: &str, extra: &[&str]) -> Output {
+    let dir = TempDir::new("observe");
+    let env = dir.file("observe.hbp", text.as_bytes());
+    let events = fixture_events();
+    let mut args = vec!["observe", "--events", p(&events), p(&env)];
+    args.extend_from_slice(extra);
+    run(&args)
+}
+
+/// The observe example with its request edge set to `actor -> target`.
+fn with_edge(actor: &str, target: &str) -> String {
+    assert!(OBSERVE_EXAMPLE.contains("\nactor=agent:benign\n"));
+    assert!(OBSERVE_EXAMPLE.contains("\ntarget=svc:ledger\n"));
+    OBSERVE_EXAMPLE
+        .replacen("\nactor=agent:benign\n", &format!("\nactor={actor}\n"), 1)
+        .replacen("\ntarget=svc:ledger\n", &format!("\ntarget={target}\n"), 1)
+}
+
+fn rows(out: &Output) -> Vec<String> {
+    stdout(out).lines().map(str::to_string).collect()
+}
+
+#[test]
+fn observe_example_prints_the_row_in_the_readme() {
+    let example = Path::new(env!("CARGO_MANIFEST_DIR")).join("examples/observe-envelope.hbp");
+    let events = fixture_events();
+    let out = run(&["observe", "--events", p(&events), p(&example)]);
+    assert_eq!(code(&out), 3, "{out:?}");
+    let printed = rows(&out);
+    assert_eq!(printed.len(), 1, "{printed:?}");
+    let readme = include_str!("../README.md");
+    assert!(
+        readme.contains(printed[0].as_str()),
+        "README lacks {}",
+        printed[0]
+    );
+}
+
+#[test]
+fn observe_scores_each_fixture_request_pair_from_the_events() {
+    let cases = [
+        (
+            "agent:benign",
+            "svc:ledger",
+            "GATE|verdict=HOLD|score=0.2139|l0_real=true|mark=REVERSE_GAIN_MARK_MISTAKE|reverse_risk=0.7861|",
+            ("HOLD", 3),
+        ),
+        (
+            "agent:rogue",
+            "svc:vault",
+            "GATE|verdict=PROCEED|score=0.7593|l0_real=true|mark=FORWARD_GNN_MARK_GENIUS|reverse_risk=0.2407|",
+            ("PROCEED", 0),
+        ),
+        (
+            "agent:ghost",
+            "svc:ledger",
+            "GATE|verdict=HOLD|score=0.4705|l0_real=false|mark=REVERSE_GAIN_MARK_MISTAKE|reverse_risk=0.5295|",
+            ("HOLD", 3),
+        ),
+    ];
+    for (actor, target, start, (spawn, exit)) in cases {
+        let out = observe_text(&with_edge(actor, target), &[]);
+        assert_eq!(code(&out), exit, "{out:?}");
+        let printed = rows(&out);
+        assert_eq!(printed.len(), 1, "{printed:?}");
+        let gate = &printed[0];
+        assert!(gate.starts_with(start), "{gate}");
+        assert_eq!(field(gate, "spawn_gate"), spawn, "{gate}");
+        for other in ["hookwall", "tier_gate", "fischer", "input_guard"] {
+            assert_eq!(field(gate, other), "PROCEED", "{gate}");
+        }
+        assert_eq!(field(gate, "signature"), "unchecked");
+        let has_gnn_flag = field(gate, "reason").contains("gnn_observable");
+        assert_eq!(has_gnn_flag, field(gate, "l0_real") == "true", "{gate}");
+    }
+}
+
+#[test]
+fn observe_rows_are_what_the_library_computes() {
+    use asolaria_hookwall::hookwall::HookTier;
+    use asolaria_hookwall::syscall::AccessTier;
+    use asolaria_observed::{observe_and_compose, PolicyInputs};
+    use asolaria_server_fischer_eval::FischerEnvelope;
+
+    let text = std::fs::read_to_string(fixture_events()).expect("events fixture");
+    let events = l0_edge::event::parse_events(&text).expect("events parse");
+    for (actor, target) in [
+        ("agent:benign", "svc:ledger"),
+        ("agent:rogue", "svc:vault"),
+        ("agent:ghost", "svc:ledger"),
+        ("agent:benign", "agent:ghost"),
+    ] {
+        let policy = PolicyInputs {
+            slot: 0,
+            syscall_no: 1,
+            caller_pid: 43981,
+            hook_tier: HookTier::Micro,
+            caller_tier: AccessTier::Public,
+            target_tier: AccessTier::Public,
+            event_tags: vec!["safe-tag".to_string()],
+            fischer_envelope: FischerEnvelope {
+                pid: Some(OBSERVE_PID.to_string()),
+                actor: actor.to_string(),
+                verb: "tick".to_string(),
+                target: target.to_string(),
+                payload: "heartbeat".to_string(),
+                payload_json_true: false,
+                hbp_path: Some("ledger/example.hbp".to_string()),
+                sidecar_plan: None,
+                ledger_path: None,
+                tuple: None,
+                cube_47d: None,
+                cosign: None,
+                halt_path: Some("/halt".to_string()),
+                authority_jump: false,
+                recursive_consent: false,
+                operator_witness_required: false,
+                operator_witness: false,
+            },
+            fischer_strict: false,
+        };
+        let (observed, composed) = observe_and_compose(&events, policy);
+        let out = observe_text(&with_edge(actor, target), &[]);
+        let printed = rows(&out);
+        assert_eq!(printed.len(), 1, "{printed:?}");
+        let gate = &printed[0];
+        let js_number = |e4: u32| {
+            let text = format!("{}.{:04}", e4 / 10_000, e4 % 10_000);
+            text.trim_end_matches('0').trim_end_matches('.').to_string()
+        };
+        assert_eq!(field(gate, "score"), js_number(observed.composite_e4));
+        assert_eq!(
+            field(gate, "score"),
+            observed.envelope.fischer_score.composite
+        );
+        assert_eq!(field(gate, "l0_real"), observed.l0.is_some().to_string());
+        let reverse = &observed.reverse_gain;
+        let mark = if reverse.promoted {
+            "FORWARD_GNN_MARK_GENIUS"
+        } else {
+            "REVERSE_GAIN_MARK_MISTAKE"
+        };
+        assert_eq!(field(gate, "mark"), mark);
+        assert_eq!(
+            field(gate, "reverse_risk"),
+            js_number(reverse.reverse_risk_e4)
+        );
+        let signals = &observed.signals;
+        assert_eq!(
+            (signals.l4, signals.g1, signals.g2, signals.g3),
+            (None, None, None, None)
+        );
+        assert_eq!(field(gate, "verdict"), composed.verdict.as_str());
+        for (name, severity) in composed.per_gate {
+            assert_eq!(field(gate, name), severity.as_str(), "{name}");
+        }
+        assert_eq!(field(gate, "reason"), composed.reason);
+        let exit = match composed.verdict.as_str() {
+            "PROCEED" => 0,
+            "HOLD" => 3,
+            _ => 4,
+        };
+        assert_eq!(code(&out), exit);
+    }
+}
+
+#[test]
+fn observe_rejects_every_score_key_with_exit_2() {
+    let keys = keygen("observe-score-key");
+    for line in [
+        "forward_score_q=800",
+        "reverse_risk_q=100",
+        "composite=0.85",
+        "l0_real=1",
+        "shannon_q=550",
+        "shannon_above=0",
+        "g4_state=UNKNOWN",
+    ] {
+        let key = line.split('=').next().unwrap_or_default();
+        let env = keys.dir.file(
+            "scored.hbp",
+            format!("{OBSERVE_EXAMPLE}{line}\n").as_bytes(),
+        );
+        let sig = sign_file(&keys, &env);
+        let events = fixture_events();
+        for extra in [&[][..], &["--pub", &keys.public, "--sig", &sig][..]] {
+            let mut args = vec!["observe", "--events", p(&events), p(&env)];
+            args.extend_from_slice(extra);
+            let out = run(&args);
+            assert_eq!(code(&out), 2, "{line}: {out:?}");
+            assert!(out.stdout.is_empty(), "{line}");
+            let err = String::from_utf8_lossy(&out.stderr);
+            assert!(
+                err.starts_with("ERROR|kind=usage|reason=envelope: line "),
+                "{err}"
+            );
+            assert!(
+                err.contains(&format!("score key {key} is not accepted")),
+                "{err}"
+            );
+        }
+        // A failed signature over a refused envelope is BLOCK, as `gate` does for any unparseable one.
+        let forged = flip_hex_bit(&sig, 9);
+        let mut args = vec!["observe", "--events", p(&events), p(&env)];
+        args.extend_from_slice(&["--pub", &keys.public, "--sig", &forged]);
+        let out = run(&args);
+        assert_eq!(code(&out), 4, "{line}: {out:?}");
+        let row = stdout(&out);
+        assert_eq!(field(&row, "verdict"), "BLOCK");
+        assert_eq!(field(&row, "spawn_gate"), "UNEVALUATED");
+        assert!(
+            field(&row, "reason").contains("envelope unparseable"),
+            "{row}"
+        );
+    }
+    // The gate example carries every score key, so observe refuses it.
+    let out = observe_text(EXAMPLE, &[]);
+    assert_eq!(code(&out), 2, "{out:?}");
+}
+
+#[test]
+fn observe_signature_covers_the_envelope_and_only_tightens() {
+    let keys = keygen("observe-sig");
+    let env = keys.dir.file(
+        "observe.hbp",
+        with_edge("agent:rogue", "svc:vault").as_bytes(),
+    );
+    let sig = sign_file(&keys, &env);
+    let events = fixture_events();
+    let base = ["observe", "--events", p(&events), p(&env)];
+    let unchecked = run(&base);
+    assert_eq!(code(&unchecked), 0, "{unchecked:?}");
+
+    let mut args = base.to_vec();
+    args.extend_from_slice(&["--pub", &keys.public, "--sig", &sig]);
+    let verified = run(&args);
+    assert_eq!(code(&verified), 0, "{verified:?}");
+    assert_eq!(
+        stdout(&verified).replace("signature=verified", "signature=unchecked"),
+        stdout(&unchecked)
+    );
+
+    let forged = flip_hex_bit(&sig, 3);
+    let mut args = base.to_vec();
+    args.extend_from_slice(&["--pub", &keys.public, "--sig", &forged]);
+    let blocked = run(&args);
+    assert_eq!(code(&blocked), 4, "{blocked:?}");
+    let (forged, clean) = (stdout(&blocked), stdout(&unchecked));
+    for key in ["score", "l0_real", "mark", "reverse_risk"] {
+        assert_eq!(field(&forged, key), field(&clean, key), "{key}");
+    }
+    assert_eq!(field(&forged, "verdict"), "BLOCK");
+    assert_eq!(field(&forged, "signature"), "invalid");
+    assert_eq!(field(&forged, "spawn_gate"), "PROCEED");
+
+    // The events file is not signed: a different events file keeps signature=verified.
+    let other_events = keys.dir.file(
+        "events.hbp",
+        b"EVENT|actor=agent:rogue|target=svc:vault|risk=0\n",
+    );
+    let out = run(&[
+        "observe",
+        "--events",
+        p(&other_events),
+        p(&env),
+        "--pub",
+        &keys.public,
+        "--sig",
+        &sig,
+    ]);
+    assert_eq!(field(&stdout(&out), "signature"), "verified");
+    assert_ne!(field(&stdout(&out), "score"), field(&clean, "score"));
+}
+
+#[test]
+fn observe_reads_events_or_envelope_from_stdin() {
+    let events = fixture_events();
+    let events_text = std::fs::read(&events).expect("events fixture");
+    let file_run = observe_text(OBSERVE_EXAMPLE, &[]);
+    let dir = TempDir::new("observe-stdin");
+    let env = dir.file("observe.hbp", OBSERVE_EXAMPLE.as_bytes());
+    let events_stdin = run_stdin(&["observe", "--events", "-", p(&env)], &events_text);
+    assert_eq!(stdout(&events_stdin), stdout(&file_run));
+    let envelope_stdin = run_stdin(
+        &["observe", "--events", p(&events), "-"],
+        OBSERVE_EXAMPLE.as_bytes(),
+    );
+    assert_eq!(stdout(&envelope_stdin), stdout(&file_run));
+    let both = run(&["observe", "--events", "-", "-"]);
+    assert_eq!(code(&both), 2, "{both:?}");
+    assert!(String::from_utf8_lossy(&both.stderr).contains("cannot both be read from stdin"));
+}
+
+#[test]
+fn observe_usage_and_io_errors() {
+    let dir = TempDir::new("observe-errors");
+    let env = dir.file("observe.hbp", OBSERVE_EXAMPLE.as_bytes());
+    let events = fixture_events();
+    let bad_events = dir.file("bad-events.hbp", b"EVENT|actor=a|risk=x\n");
+    let no_payload = dir.file(
+        "no-payload.hbp",
+        OBSERVE_EXAMPLE
+            .replace("payload=heartbeat\n", "")
+            .as_bytes(),
+    );
+    let not_utf8 = dir.file(
+        "latin1.hbp",
+        &[b'E', b'V', b'E', b'N', b'T', b'|', 0xff, b'\n'],
+    );
+    let usage_cases: Vec<Vec<&str>> = vec![
+        vec!["observe", p(&env)],
+        vec!["observe", "--events", p(&events)],
+        vec!["observe", "--events", p(&events), p(&env), p(&env)],
+        vec![
+            "observe",
+            "--events",
+            p(&events),
+            "--forward_score_q",
+            "800",
+            p(&env),
+        ],
+        vec![
+            "observe",
+            "--events",
+            p(&events),
+            "--pub",
+            NON_POINT_KEY,
+            p(&env),
+        ],
+        vec!["observe", "--events", p(&bad_events), p(&env)],
+        vec!["observe", "--events", p(&not_utf8), p(&env)],
+        vec!["observe", "--events", p(&events), p(&no_payload)],
+    ];
+    for args in usage_cases {
+        let out = run(&args);
+        assert_eq!(code(&out), 2, "{args:?}: {out:?}");
+        assert!(out.stdout.is_empty(), "{args:?}");
+        assert!(String::from_utf8_lossy(&out.stderr).starts_with("ERROR|kind=usage|"));
+    }
+    let out = run(&["observe", "--events", p(&bad_events), p(&env)]);
+    assert!(String::from_utf8_lossy(&out.stderr)
+        .contains("reason=events: line 1: risk must be decimal digits"));
+    let out = run(&["observe", "--events", p(&events), p(&no_payload)]);
+    assert_eq!(
+        String::from_utf8_lossy(&out.stderr),
+        "ERROR|kind=usage|reason=envelope: missing required key payload|json=0\n"
+    );
+    for args in [
+        vec![
+            "observe",
+            "--events",
+            p(&dir.path("absent-events.hbp")),
+            p(&env),
+        ],
+        vec![
+            "observe",
+            "--events",
+            p(&events),
+            p(&dir.path("absent.hbp")),
+        ],
+    ] {
+        let out = run(&args);
+        assert_eq!(code(&out), 1, "{args:?}: {out:?}");
+        assert!(String::from_utf8_lossy(&out.stderr).starts_with("ERROR|kind=io|"));
+    }
 }

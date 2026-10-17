@@ -1,0 +1,20 @@
+[package]
+name = "asolaria-observed"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Gate inputs computed from observed graph events: the L0 EdgeLevelGNN score and the asolaria-score signals, composite and reverse-gain gate"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["gnn", "policy", "gate", "integer"]
+categories = ["algorithms"]
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }
+asolaria-verdict = { path = "../verdict", version = "0.1.0" }
+asolaria-hookwall = { path = "../hookwall", version = "0.1.0" }
+asolaria-server-fischer-eval = { path = "../fischer-eval", version = "0.1.0" }
+sha2 = { version = "0.10.9", default-features = false }

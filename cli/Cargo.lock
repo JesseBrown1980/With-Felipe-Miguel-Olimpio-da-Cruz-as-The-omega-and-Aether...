@@ -7,6 +7,8 @@ name = "asolaria"
 version = "0.1.0"
 dependencies = [
  "asolaria-hookwall",
+ "asolaria-l0-edge",
+ "asolaria-observed",
  "asolaria-server-fischer-eval",
  "asolaria-verdict",
  "getrandom",
@@ -20,6 +22,21 @@ dependencies = [
  "ed25519-dalek",
  "sha2",
  "zeroize",
+]
+
+[[package]]
+name = "asolaria-l0-edge"
+version = "0.1.0"
+
+[[package]]
+name = "asolaria-observed"
+version = "0.1.0"
+dependencies = [
+ "asolaria-hookwall",
+ "asolaria-l0-edge",
+ "asolaria-server-fischer-eval",
+ "asolaria-verdict",
+ "sha2",
 ]
 
 [[package]]

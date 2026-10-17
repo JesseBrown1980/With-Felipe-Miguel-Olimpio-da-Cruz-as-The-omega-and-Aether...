@@ -6,13 +6,16 @@ Asolaria is the private root repository slice for the Asolaria fabric. The repos
 
 This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be
 used under `LICENSE-APACHE`. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
-1.81.0), Python 3.11+ and Node 18+.
+1.81.0) and Python 3.11+; the `time/` and `eval/` checks also need Node 18+.
 
 ```sh
 git clone https://huggingface.co/Jessedbrown/asolaria-aether
 cd asolaria-aether
-scripts/check-all.sh            # build + test every layer exactly as CI does (--no-eval to skip Python deps)
+scripts/check-all.sh            # build + test every layer as CI does (--no-eval to skip Python deps)
 ```
+
+The L0 torch parity check runs only when `ASOLARIA_TORCH_PYTHON` names a Python with
+`torch==2.14.1+cpu` and `torch_geometric==2.8.1`; otherwise `check-all.sh` prints a SKIP line for it.
 
 Use it from the command line, without writing Rust:
 
@@ -24,9 +27,22 @@ asolaria verify --pub <public> --sig <sig> cli/examples/envelope.hbp
 asolaria gate cli/examples/envelope.hbp --pub <public> --sig <sig>   # Fischer + Hookwall + composition
 ```
 
+`observe` computes the gate scores itself from graph events, with the trained L0 model, instead of
+taking them from the envelope (which must not contain any):
+
+```sh
+asolaria observe --events model/l0-edge/tests/fixtures/events.hbp cli/examples/observe-envelope.hbp
+# GATE|verdict=HOLD|score=0.2139|l0_real=true|mark=REVERSE_GAIN_MARK_MISTAKE|reverse_risk=0.7861|hookwall=PROCEED|spawn_gate=HOLD|tier_gate=PROCEED|fischer=PROCEED|input_guard=PROCEED|signature=unchecked|reason=...|json=0
+```
+
+`score`, `l0_real`, `mark` and `reverse_risk` are the keys of the upstream hookwall observation
+row (asolaria-hookwall.mjs:48-51). The events file there is a SYNTHETIC fixture; with
+`actor=agent:rogue` and `target=svc:vault` the same envelope gives `score=0.7593` and PROCEED.
+
 Only exit code 0 means PROCEED. `cli/README.md` documents every command, the envelope keys and the
-honest scope: deterministic software policy over caller-supplied values, Ed25519 via
-`ed25519-dalek` (`verify_strict`), nothing persists, and no physical attestation.
+honest scope: deterministic software policy over the values supplied (for `gate`, the scores too;
+for `observe`, the events), Ed25519 via `ed25519-dalek` (`verify_strict`), nothing persists, and
+no physical attestation.
 
 ## Canonical doctrine
 
@@ -96,7 +112,9 @@ implementation existed, written fresh and honest. Full detail and provenance:
 | 5 — Fischer | `gate/fischer-eval/` | deterministic rule-table action gate (integer `cpl` → PROCEED/HOLD/ANALYZE/BLOCK/REFUTE); chess words are metaphor |
 | 5 — Hookwall | `gate/hookwall/` | tier table, deny tags, score thresholds and a caller→target tier policy, extracted from a larger kernel; comment-only edits except `crypto`, which completes the upstream Phase-2 plan with real Ed25519 (`ed25519-dalek`, `verify_strict`) — see its `PROVENANCE.md` |
 | 5 — composition | `gate/verdict/` | tighten-only merge of Hookwall, spawn gate, tier gate, Fischer and an input guard: strictest wins, nothing can loosen |
+| 5 — observed gate inputs | `gate/observed/` | computes the L0 reading, Shannon, sha baseline, composite and reverse gain from observed graph events with the `asolaria-score.mjs` formulas (L0 e4 agreement as measured in `model/l0-edge/README.md`), and hands them to Fischer (`l0_real`, Shannon) and the spawn gate (forward/reverse) through the composition; nothing score-like comes from the caller |
 | 6 — proposals | `proposals/verify-schedule/` | confidence-ranked verify scheduler; plans which proposals to verify, never fires |
+| 6 — L0 EdgeLevelGNN | `model/l0-edge/` | integer-only Q24 port of the **trained** L0 model (`baseline_model.pt`, vendored byte-identical) with the forward the port-4792 server runs, and of the `gnnDataExport.js` feature extractor it was trained on; within 6 Q24 units of torch over 3,273 fixture scores and 15 over 3,338 request rows; see its `PROVENANCE.md` |
 | 6 — GNN | `model/gnn-int/` | integer-only Q16 two-layer GCN + edge head; hand-set, **untrained** weights; no accuracy claims |
 | 6 — HRM, MTP | — | **boundary**: no implementation exists in the estate yet; the slots are left empty rather than filled with labels |
 
@@ -104,26 +122,46 @@ The one rule every layer obeys: **no layer manufactures information.** Content
 addressing returns retained bytes; CRT needs jointly-sufficient shadows (which
 *expand*, never compress); SHA-256 is an integrity coordinate, never a source.
 When evidence is insufficient the stack holds — it never invents bytes to satisfy
-a hash. Every layer above is gated in CI on Rust 1.81.0 / stdlib Python + Node.
+a hash. Every layer above is gated in CI on Rust 1.81.0 and stdlib Python; Node runs only in the
+existing `time/` and `eval/` jobs, torch only in the L0 parity job, and the `eval/` job also
+installs numpy, scipy and pytest.
 
-**Integration status.** CI proves each crate builds and behaves as tested; it does
-not prove the layers are connected. Today only three links are real code:
-the throat calls the recovery paths, the composition calls Fischer and the
-Hookwall gates, and the CLI calls the composition. The upper layers do not yet
-consume lower-layer outputs: the gates' GNN-derived inputs (Fischer's
-`gnn_observable`, the spawn gate's forward/reverse scores, the scheduler's
-`score_q`) are supplied by the caller, and `model/gnn-int` reads no BEHCS, 60D,
-tribit or Q-PRISM data. The trained GNN/FNN models live in
-`Asolaria-fnns-trained-and-reverse-gnns-many` and `Shannon-and-the-gnns-stage`
-and are not wired into this stack yet; `model/gnn-int` is an untrained
-integer reference, not a replacement for them.
+**Lanes.** The hot lane is what runs per request: event parsing, features, the L0
+forward, the score, the gates and the CLI. It is Rust only, in process, over HBP
+text, SHA-256 and integers: no V8, JSON, HTTP or Python. Python and torch run only
+in the cold verification lane (CI referees and the torch parity harness). The
+Node and JSON already in `time/` and `eval/` are an existing cold lane.
+
+**Integration status.** CI proves each crate builds and behaves as tested; a link
+between layers exists only where code calls code. These links are real code:
+
+- the throat calls the recovery paths;
+- the composition calls Fischer and the Hookwall gates, and the CLI calls the composition;
+- the observed path (`gate/observed`, `asolaria observe`): graph events (HBP text) ->
+  the `gnnDataExport.js` feature extractor -> the trained L0 EdgeLevelGNN with the
+  forward the port-4792 server runs -> the `asolaria-score.mjs` signals and composite
+  -> Fischer's `l0_real` and Shannon inputs and the spawn gate's forward/reverse
+  scores -> the tighten-only verdict. On this path the caller supplies the events and
+  the policy fields, and no score.
+
+Not connected: L4 GSLGNN and G1-G4 (this stack has no :4793 or :4949 service, so
+those signals are absent and `g4_state` is `UNKNOWN`), the other networks of
+`Shannon-and-the-gnns-stage`, and the other trained models in
+`Asolaria-fnns-trained-and-reverse-gnns-many`. `asolaria gate` and the verdict crate
+still take caller-supplied scores, the scheduler's `score_q` is caller-supplied, and
+`model/gnn-int` reads no BEHCS, 60D, tribit or Q-PRISM data; it is an untrained
+integer reference, not a replacement for the trained models. The events in this
+repository are a SYNTHETIC fixture (`model/l0-edge/tests/fixtures/events.hbp`), not
+observed traffic.
 
 Layers 5 and 6 carry their own honesty notes. The Hookwall's `crypto` signs and
 verifies with real Ed25519 (`ed25519-dalek`, `verify_strict`, keys zeroized on
 drop). The composition does not call it yet, so a `VerifiedEnvelope` relies on its
-caller having checked the signature. Scores, `g4_state` and tiers are
-caller-supplied inputs, not measurements; nothing in these gates persists or
-attests physical presence.
+caller having checked the signature; `asolaria gate` and `asolaria observe` check it
+over the envelope bytes when given `--pub`/`--sig` (the events file is not signed).
+For `gate`, scores, `g4_state` and tiers are caller-supplied inputs, not
+measurements; for `observe`, the scores are computed from the events, which are
+themselves an input. Nothing in these gates persists or attests physical presence.
 
 ## Homes
 

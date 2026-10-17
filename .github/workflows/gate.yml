@@ -44,12 +44,12 @@ jobs:
           test "$(git hash-object "$RUNNER_TEMP/hwinv.rs")" = d08bc2a9ba6f3b63fec5249f0670d68c8df744d4
           sed -n '99,101p' "$RUNNER_TEMP/hwinv.rs" | cmp - src/upstream/hwinv-tuple-cap.rs
           sed -n '147,262p' "$RUNNER_TEMP/hwinv.rs" | cmp - src/upstream/hwinv-sha256-project-60d.rs
-      - run: cargo +1.81.0 clippy --all-targets -- -D warnings
-      - run: cargo +1.81.0 test
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
       - name: independent referee against the demo binary
         run: |
           cargo +1.81.0 build --bin behcs60-demo
-          python independent_referee.py target/debug/behcs60-demo
+          python -I independent_referee.py target/debug/behcs60-demo
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
   qprism-representation:
@@ -210,6 +210,68 @@ jobs:
       - run: cargo +1.81.0 test --locked
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  l0-edge:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l0-edge } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      # Stdlib Python referees mirror the upstream JavaScript and Python line by line;
+      # each --check regenerates its committed HBP file in memory and diffs it.
+      - name: referees regenerate the committed fixtures and weights
+        run: |
+          set -euo pipefail
+          python3 -I tools/make_fixture.py --check
+          python3 -I tools/quantize.py --check
+          python3 -I tools/features_referee.py --check
+          python3 -I tools/jsnum_referee.py --check
+      - name: Math.round over the full extractor grids (gnnDataExport.js:58 and :60)
+        run: |
+          set -euo pipefail
+          python3 -I tools/jsnum_referee.py --grid | cargo +1.81.0 run --locked -q --release --example jsnum_grid
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
+  l0-torch-parity:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l0-edge } }
+    steps:
+      - uses: actions/checkout@v4
+      # torch 2.14.1+cpu has a cp313 manylinux_2_28_x86_64 wheel on the CPU index; these are the
+      # versions named in the header of tests/fixtures/expected-model.hbp.
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13.16' }
+      - name: Install torch 2.14.1+cpu and torch_geometric 2.8.1
+        run: |
+          set -euo pipefail
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install torch_geometric==2.8.1
+      # tools/model_parity.py sets the kernel selection itself (KERNEL_ENV) before torch loads.
+      - name: runner CPU
+        run: grep -m1 'model name' /proc/cpuinfo
+      - name: vendored inference_server.py MODEL reproduces tests/fixtures/expected-model.hbp
+        run: python -I tools/model_parity.py --check
+  observed:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: gate/observed } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: stdlib Python referee (asolaria-score.mjs line by line) regenerates the committed fixture
+        run: python3 -I tools/score_referee.py --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
   asolaria-cli:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: cli } }
@@ -219,9 +281,13 @@ jobs:
         run: rustup toolchain install 1.81.0 --profile minimal -c clippy
       - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
       - run: cargo +1.81.0 test --locked
-      - name: install exactly as the README says, then run the example envelope
+      - name: install exactly as the README says, then run the example envelopes
         run: |
           cargo +1.81.0 install --locked --path . --root "$RUNNER_TEMP/root"
           "$RUNNER_TEMP/root/bin/asolaria" gate examples/envelope.hbp
+          # The README's observe example: HOLD, exit 3.
+          status=0
+          "$RUNNER_TEMP/root/bin/asolaria" observe --events ../model/l0-edge/tests/fixtures/events.hbp examples/observe-envelope.hbp || status=$?
+          test "$status" -eq 3
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi

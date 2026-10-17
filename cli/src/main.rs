@@ -1,5 +1,5 @@
-//! `asolaria`: Ed25519 keygen / sign / verify and the tighten-only gate verdict, from the shell.
-//! Every result is one HBP row (`json=0`). Nothing persists except the seed file `keygen` writes.
+//! `asolaria`: Ed25519 keygen / sign / verify, the tighten-only gate verdict and the observed
+//! L0 path, from the shell. Results are HBP rows (`json=0`); only `keygen` writes a file.
 
 #![forbid(unsafe_code)]
 
@@ -15,7 +15,9 @@ use asolaria_hookwall::crypto::{
     derive_public, sign, verify, CryptoErr, PrivateKey, PublicKey, Signature, PRIVATE_KEY_LEN,
     PUBLIC_KEY_LEN, SIGNATURE_LEN,
 };
-use asolaria_verdict::{compose, strictest, Severity, GATE_NAMES};
+use asolaria_observed::{observe_and_compose, Observed};
+use asolaria_verdict::{compose, strictest, Composed, Severity, GATE_NAMES};
+use l0_edge::event::parse_events;
 use zeroize::Zeroizing;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -35,6 +37,7 @@ USAGE
   asolaria sign   --key <seed-file> <file|->
   asolaria verify --pub <64 hex> --sig <128 hex> <file|->
   asolaria gate   <envelope-file|-> [--pub <64 hex> --sig <128 hex>]
+  asolaria observe --events <events.hbp|-> <envelope-file|-> [--pub <64 hex> --sig <128 hex>]
   asolaria help [<command>] | <command> --help | --version
 
 OUTPUT
@@ -42,15 +45,19 @@ OUTPUT
   Errors go to stderr as ERROR|kind=<usage|io>|reason=<escaped>|json=0.
 
 EXIT CODES
-  0  success / gate PROCEED     3  gate HOLD
+  0  success / gate or observe PROCEED     3  HOLD
   1  verify failed, I/O error, or the result row could not be written
-  2  usage or envelope parse error
-  4  gate BLOCK
+  2  usage, envelope or events parse error
+  4  BLOCK
   Only 0 means PROCEED: treat every other exit code as do-not-proceed.
+  -h or --help before -- prints help with exit 0 and no GATE row: put -- before file paths and
+  require the GATE row.
 
 SCOPE
   Real Ed25519 (ed25519-dalek, verify_strict). The gates are deterministic software policy
   over the values you supply; they are not measurements and enforce nothing by themselves.
+  observe computes the scores from the events file you supply, which decides the L0 term; --sig
+  does not cover it.
   signature=verified only means the exact bytes were signed by the key passed as --pub: take
   --pub from a trusted channel. No key registry; signed envelopes have no expiry or nonce and
   can be replayed. Nothing persists. No physical attestation. A seed file is a secret: keep it
@@ -103,6 +110,20 @@ come from a trusted channel, never from the envelope's sender.
 Exit 0 PROCEED, 3 HOLD, 4 BLOCK, 2 usage/parse error, 1 I/O error. Only 0 means PROCEED.
 ";
 
+const HELP_OBSERVE: &str = "\
+USAGE
+  asolaria observe --events <events.hbp|-> <envelope-file|-> [--pub <64 hex> --sig <128 hex>]
+
+Reads EVENT rows and an envelope with a payload key and without score keys (see README; a missing
+payload, or forward_score_q, reverse_risk_q, composite, l0_real, shannon_q, shannon_above or
+g4_state, is a usage error, exit 2). Scores the edge actor -> target with the L0 EdgeLevelGNN over
+the events, computes the asolaria-score signals, composite and reverse gain, composes the five
+gates and prints the GATE|.. row of `gate` with the score keys of asolaria-hookwall.mjs:48-51
+after the verdict: score=<composite>|l0_real=<true|false>|mark=..|reverse_risk=<1 - composite>.
+--pub/--sig cover the envelope bytes only, not the events file, which decides the L0 term.
+Exit codes as for gate.
+";
+
 /// Per-command usage text, for `<command> --help` and `help <command>`.
 fn command_help(command: &str) -> Option<&'static str> {
     match command {
@@ -111,6 +132,7 @@ fn command_help(command: &str) -> Option<&'static str> {
         "sign" => Some(HELP_SIGN),
         "verify" => Some(HELP_VERIFY),
         "gate" => Some(HELP_GATE),
+        "observe" => Some(HELP_OBSERVE),
         _ => None,
     }
 }
@@ -510,8 +532,14 @@ fn severity_exit(severity: Severity) -> u8 {
 /// Value printed for every gate when a forged signature BLOCKs an envelope that did not parse.
 const UNEVALUATED: &str = "UNEVALUATED";
 
-fn gate_row(verdict: Severity, per_gate: &[(&str, &str)], signature: &str, reason: &str) -> String {
-    let mut row = format!("GATE|verdict={}", verdict.as_str());
+fn gate_row(
+    verdict: Severity,
+    observation: &str,
+    per_gate: &[(&str, &str)],
+    signature: &str,
+    reason: &str,
+) -> String {
+    let mut row = format!("GATE|verdict={}{observation}", verdict.as_str());
     for (name, severity) in per_gate {
         row.push_str(&format!("|{name}={severity}"));
     }
@@ -522,67 +550,157 @@ fn gate_row(verdict: Severity, per_gate: &[(&str, &str)], signature: &str, reaso
     row
 }
 
-fn cmd_gate(raw: &[String]) -> Result<Report, Fail> {
-    let args = Args::parse(raw, &["--pub", "--sig"])?;
-    if args.help {
-        return Ok(Report::help(HELP_GATE));
-    }
-    let source = &args.positionals(1, "one envelope file or -")?[0];
-    let check = match (args.get("--pub"), args.get("--sig")) {
+/// The `--pub`/`--sig` pair: both or neither.
+fn signature_option(args: &Args) -> Result<Option<(PublicKey, Signature)>, Fail> {
+    match (args.get("--pub"), args.get("--sig")) {
         (Some(public), Some(signature)) => {
-            Some((decode_public(public)?, decode_signature(signature)?))
+            Ok(Some((decode_public(public)?, decode_signature(signature)?)))
         }
-        (None, None) => None,
-        _ => return Err(usage("--pub and --sig must be given together")),
-    };
-    let bytes = read_input_limited(source, ENVELOPE_READ_LIMIT)?;
+        (None, None) => Ok(None),
+        _ => Err(usage("--pub and --sig must be given together")),
+    }
+}
 
-    let signature_failure = check.and_then(|(public, signature)| {
-        verify(&bytes, &signature, &public)
-            .err()
-            .map(verify_reason)
+/// Outcome of the optional signature check over the exact envelope bytes.
+struct SignatureCheck {
+    state: &'static str,
+    failure: Option<&'static str>,
+}
+
+fn check_signature(check: Option<(PublicKey, Signature)>, bytes: &[u8]) -> SignatureCheck {
+    let failure = check.and_then(|(public, signature)| {
+        verify(bytes, &signature, &public).err().map(verify_reason)
     });
-    let signature_state = match (check.is_some(), signature_failure) {
+    let state = match (check.is_some(), failure) {
         (false, _) => "unchecked",
         (true, None) => "verified",
         (true, Some(_)) => "invalid",
     };
+    SignatureCheck { state, failure }
+}
 
-    let parsed = std::str::from_utf8(&bytes)
-        .map_err(|_| "envelope is not UTF-8".to_string())
-        .and_then(|text| envelope::parse(text).map_err(|e| format!("envelope: {e}")));
-    let env = match (parsed, signature_failure) {
-        (Ok(env), _) => env,
-        (Err(why), None) => return Err(usage(why)),
-        (Err(why), Some(sig_why)) => {
-            let per_gate = GATE_NAMES.map(|name| (name, UNEVALUATED));
-            let reason = format!("BLOCK by signature ({sig_why}); envelope unparseable: {why}");
-            return Ok(Report::row(
-                gate_row(Severity::Block, &per_gate, signature_state, &reason),
-                severity_exit(Severity::Block),
-            ));
-        }
+/// Input that does not parse: a usage error, or BLOCK with every gate unevaluated when the
+/// signature failed.
+fn unparseable(why: String, input: &str, signature: &SignatureCheck) -> Result<Report, Fail> {
+    let Some(sig_why) = signature.failure else {
+        return Err(usage(why));
     };
-    let composed = compose(&env);
-    let signature_severity = if signature_failure.is_some() {
+    let per_gate = GATE_NAMES.map(|name| (name, UNEVALUATED));
+    let reason = format!("BLOCK by signature ({sig_why}); {input} unparseable: {why}");
+    Ok(Report::row(
+        gate_row(Severity::Block, "", &per_gate, signature.state, &reason),
+        severity_exit(Severity::Block),
+    ))
+}
+
+/// The GATE row and exit code: the composition, tightened to BLOCK by a failed signature.
+fn verdict_row(composed: &Composed, observation: &str, signature: &SignatureCheck) -> (String, u8) {
+    let signature_severity = if signature.failure.is_some() {
         Severity::Block
     } else {
         Severity::Proceed
     };
     let verdict = strictest(&[composed.verdict, signature_severity]);
-    let reason = match signature_failure {
+    let reason = match signature.failure {
         Some(why) => format!(
             "BLOCK by signature ({why}); envelope alone: {}",
             composed.reason
         ),
         None => composed.reason.clone(),
     };
-
-    let per_gate = composed.per_gate.map(|(name, severity)| (name, severity.as_str()));
-    Ok(Report::row(
-        gate_row(verdict, &per_gate, signature_state, &reason),
+    let per_gate = composed
+        .per_gate
+        .map(|(name, severity)| (name, severity.as_str()));
+    (
+        gate_row(verdict, observation, &per_gate, signature.state, &reason),
         severity_exit(verdict),
-    ))
+    )
+}
+
+fn cmd_gate(raw: &[String]) -> Result<Report, Fail> {
+    let args = Args::parse(raw, &["--pub", "--sig"])?;
+    if args.help {
+        return Ok(Report::help(HELP_GATE));
+    }
+    let source = &args.positionals(1, "one envelope file or -")?[0];
+    let check = signature_option(&args)?;
+    let bytes = read_input_limited(source, ENVELOPE_READ_LIMIT)?;
+    let signature = check_signature(check, &bytes);
+
+    let parsed = std::str::from_utf8(&bytes)
+        .map_err(|_| "envelope is not UTF-8".to_string())
+        .and_then(|text| envelope::parse(text).map_err(|e| format!("envelope: {e}")));
+    let env = match parsed {
+        Ok(env) => env,
+        Err(why) => return unparseable(why, "envelope", &signature),
+    };
+    let (row, code) = verdict_row(&compose(&env), "", &signature);
+    Ok(Report::row(row, code))
+}
+
+/// JavaScript `String(n)` of `n = units / 10^4`, a value with at most four decimals.
+fn js_number_of_e4(units: u32) -> String {
+    let (whole, fraction) = (units / 10_000, units % 10_000);
+    if fraction == 0 {
+        return whole.to_string();
+    }
+    let digits = format!("{fraction:04}");
+    format!("{whole}.{}", digits.trim_end_matches('0'))
+}
+
+/// The score keys of the hookwall observation row (asolaria-hookwall.mjs:48-51), as JavaScript
+/// renders `sc.composite`, `sc.l0_real`, `sc.mark` and `sc.reverseRisk`.
+fn observation_keys(observed: &Observed) -> String {
+    let score = &observed.envelope.fischer_score;
+    let gain = &observed.reverse_gain;
+    let mark = if gain.promoted {
+        "FORWARD_GNN_MARK_GENIUS"
+    } else {
+        "REVERSE_GAIN_MARK_MISTAKE"
+    };
+    format!(
+        "|score={}|l0_real={}|mark={mark}|reverse_risk={}",
+        escape(&score.composite),
+        score.l0_real,
+        js_number_of_e4(gain.reverse_risk_e4)
+    )
+}
+
+fn cmd_observe(raw: &[String]) -> Result<Report, Fail> {
+    let args = Args::parse(raw, &["--events", "--pub", "--sig"])?;
+    if args.help {
+        return Ok(Report::help(HELP_OBSERVE));
+    }
+    let source = &args.positionals(1, "one envelope file or -")?[0];
+    let events_source = args.require("--events")?;
+    if events_source == "-" && source == "-" {
+        return Err(usage(
+            "--events and the envelope cannot both be read from stdin",
+        ));
+    }
+    let check = signature_option(&args)?;
+    let bytes = read_input_limited(source, ENVELOPE_READ_LIMIT)?;
+    let events_bytes = read_input(events_source)?;
+    let signature = check_signature(check, &bytes);
+
+    let parsed = std::str::from_utf8(&bytes)
+        .map_err(|_| "envelope is not UTF-8".to_string())
+        .and_then(|text| envelope::parse_policy(text).map_err(|e| format!("envelope: {e}")));
+    let policy = match parsed {
+        Ok(policy) => policy,
+        Err(why) => return unparseable(why, "envelope", &signature),
+    };
+    let parsed = std::str::from_utf8(&events_bytes)
+        .map_err(|_| "events file is not UTF-8".to_string())
+        .and_then(|text| parse_events(text).map_err(|e| format!("events: {e}")));
+    let events = match parsed {
+        Ok(events) => events,
+        Err(why) => return unparseable(why, "events", &signature),
+    };
+
+    let (observed, composed) = observe_and_compose(&events, policy);
+    let (row, code) = verdict_row(&composed, &observation_keys(&observed), &signature);
+    Ok(Report::row(row, code))
 }
 
 fn run(raw: Vec<String>) -> Result<Report, Fail> {
@@ -595,6 +713,7 @@ fn run(raw: Vec<String>) -> Result<Report, Fail> {
         "sign" => cmd_sign(rest),
         "verify" => cmd_verify(rest),
         "gate" => cmd_gate(rest),
+        "observe" => cmd_observe(rest),
         "help" | "--help" | "-h" => match rest {
             [] => Ok(Report::help(HELP)),
             [topic] => command_help(topic)
@@ -689,6 +808,20 @@ mod tests {
         assert_eq!(ok.positionals, s(&["-", "-x"]));
         assert!(Args::parse(&s(&["--key", "-h"]), &["--key"]).ok().is_some_and(|a| !a.help));
         assert!(Args::parse(&s(&["--help", "--bogus"]), &["--key"]).ok().is_some_and(|a| a.help));
+    }
+
+    #[test]
+    fn js_number_of_e4_is_the_shortest_decimal() {
+        let cases = [
+            (0, "0"),
+            (10_000, "1"),
+            (2139, "0.2139"),
+            (7200, "0.72"),
+            (1, "0.0001"),
+        ];
+        for (units, text) in cases {
+            assert_eq!(js_number_of_e4(units), text);
+        }
     }
 
     #[test]

@@ -1,0 +1,25 @@
+# Example asolaria observe envelope (HBP text: one key=value per line).
+# It is examples/envelope.hbp without its score keys, with actor and target set to the first
+# request pair of the SYNTHETIC events fixture. Run it from the repository root:
+#   asolaria observe --events model/l0-edge/tests/fixtures/events.hbp cli/examples/observe-envelope.hbp
+# observe refuses forward_score_q, reverse_risk_q, composite, l0_real, shannon_q, shannon_above
+# and g4_state: it computes them from the events and this request.
+
+# Hookwall / spawn / tier gate inputs
+slot=0
+syscall_no=1
+caller_pid=43981
+hook_tier=micro
+caller_tier=public
+target_tier=public
+event_tags=safe-tag
+
+# Fischer envelope: actor -> target is the L0 request edge; pid and payload are scored
+pid=BH.VERDICT.EXAMPLE000000001
+actor=agent:benign
+verb=tick
+target=svc:ledger
+payload=heartbeat
+hbp_path=ledger/example.hbp
+halt_path=/halt
+fischer_strict=0
