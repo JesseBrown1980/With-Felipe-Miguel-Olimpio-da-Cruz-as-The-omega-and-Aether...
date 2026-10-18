@@ -299,7 +299,20 @@ from `seed`, all end on `ded30f877db06882`. The bench's `fnv1a64` row times `fnv
 
 So the native hash is within the 200 ns class on both machines, and host8's `sha16` is slower only
 because it formats each of the 32 digest bytes with `format!`. The table-hex form gives the same
-bytes 6.4× (ACER) to 10.5× (cloud) faster. It is proposed, not applied: host8-serve is upstream
-(federation-1024), so the change belongs there first, with `sha16_matches_node_crypto` and the Rust
-1.81 gate, and aether re-vendors the lines after; fischer-eval's `sha16` (`lib.rs:564`) has the same
-pattern. That is the owner's call.
+bytes 6.4× (ACER) to 10.5× (cloud) faster.
+
+Checked from the cloud side, recorded beside the receipt: the bench's chained unit
+(`pid = sha16(pid + "|agent")`) is not host8's mint — the `|agent` rule appears nowhere in host8-serve
+— and its raw-hash and `fnv1a64` rows are not per-request host8 work. What each :5088 route runs per
+seat is `tuple60d` then `resolve_instance_pid` (main.rs:624-661: two or three `sha16` plus string
+building), reached from `/summon`, `/launch-plan`, `/summon-batch`, `/shadow-parity` and
+`/replay-prep`. No native per-request "200 ns emitter" exists in the Rust host; the kernel's spawn
+path is a counter. `host8/examples/instance_pid_bench.rs` (added here) times that mint through the
+compiled byte-identical slice, with the bench's own harness: on the cloud, **5.77 µs** per seat as
+written and **1.44 µs** with table hex (5.85 and 1.69 µs with the served binary's build profile),
+identical on 1,000,001 mints, PID digest `4fa68d74…`. ACER can run the same example for its row.
+
+The table-hex change is proposed, not applied: host8-serve is upstream (federation-1024), so it
+belongs there first, with `sha16_matches_node_crypto` and the Rust 1.81 gate, and aether re-vendors
+the lines after; fischer-eval's `sha16` (`lib.rs:564`) has the same pattern. That is the owner's
+call.

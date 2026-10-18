@@ -32,3 +32,18 @@ cargo +1.81.0 fmt --all --check
 cargo +1.81.0 clippy --locked --workspace --all-targets -- -D warnings
 cargo +1.81.0 test --locked --workspace
 ```
+
+`examples/instance_pid_bench.rs` times the per-seat mint the :5088 routes run (`tuple60d` then
+`resolve_instance_pid`) on one thread, gated on upstream's vector `d125579d9644c37a`, with the bench
+harness of `docs/handoffs/nano-speed-native-2026-10-18/native-emit-bench` and a table-hex variant
+checked against it:
+
+```
+cargo +1.81.0 run --locked --release --example instance_pid_bench -- ../acer/HyperBEHCS/data/catalogs/verbs.hbp
+```
+
+Measured 2026-10-18 on the cloud Xeon (SHA extensions, Linux), 73-verb catalog, 1,000,000 mints over
+`ts` 1750000000.. : 5.77 µs median as written, 1.44 µs with table hex; built with the served binary's
+profile (`opt-level="z"`, LTO, one codegen unit, `panic=abort`), 5.85 µs and 1.69 µs. The two forms
+are identical on all 1,000,001 mints, and the PIDs hash to `4fa68d74…` (sha256 over each PID plus
+`\n`).
