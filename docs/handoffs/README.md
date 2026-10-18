@@ -17,10 +17,12 @@ entries, and the eight checkpoint hashes equal the known-good values in `OWNER-R
 gslgnn v1 6f82384f / v2 9e50723b, gsl_gnn.py 783b9b50). The manifest's own scan row records
 emails 0, phones 0, keys 0, mask-ids 0, ipv4 0 over the 13 text files and the corpus.
 
-The cube chains onto `prior=028ce13b…`. That link is not checkable from the cloud side with the
-receipts received so far: none of them has that digest with either line ending. The ACER office
-records `028ce13b…` as the digest of a receipt before its line endings were converted to LF, in
-a `NORMALIZE` row; the CMP3 receipt received here (sha256 `002dcf21…`) predates those rows.
+The cube chains onto `prior=028ce13b…`, the digest of CMP3 before its line endings were
+converted to LF. Verified from the cloud side 2026-10-18: the current CMP3 (sha256 `38d76049…`,
+259 rows ending in a `NORMALIZE` row) rebuilds to the pre-conversion bytes by dropping the
+`NORMALIZE` row and restoring CRLF on the last 27 of the remaining 258 rows; those bytes hash to
+`028ce13b…` exactly, and the earlier `002dcf21…` copy is a byte-exact prefix (first 61,094 bytes)
+of them. So the chain resolves unbroken from the cloud's copy to the cube's `prior=`.
 
 What it locates, that the model crates previously recorded as not on disk: the L4/L2 corpus
 `gslgnn_w9_3_corpus.json` (68,695,303 B, sha256 7e7d0406…), the L1 server
@@ -34,6 +36,26 @@ the shard-quant receipts, an HRM checkpoint, the Host8 seat book, and the cadenc
 of these is a statement about the ACER seat only; LIRIS and the cloud sessions were not
 searched. It also records that the 47D reverse-gain variant carries no trained weights
 (`trained_weights=0`), is an older bridge stratum, and is held private.
+
+## FABLE5-BROWN-HILBERT-PASS-2026-10-18
+
+The owner's Brown-Hilbert operating-model documents: the root, the 15 dated law entries, the
+49D language specs, the D50 archaeology, the continuity records, the foundation guides, the
+seat laws, and the adapter files. Cube `bd0b0257ce781057`, 46 files, 213,855 bytes,
+merkle_sha256 `720f621e…`, chained onto `e34501c1…`.
+
+Verified here 2026-10-18 against the sent zip: the cube sidecar checks, and all 46 file bodies
+match their cube sha256 (46/46). Independent scan of the bodies: no real credentials (the one
+`BEGIN PRIVATE KEY` is a phrase inside a held-out test-scenario prompt in
+`heldout-scenarios.json`, with no key material), the only emails are the owner org's own seats
+(`@jbrowndevelopmentllc.com`), and every IPv4 is private or loopback. The GitHub repo
+`JesseBrown1980/Asolaria` is private, so 18 of the 46 files are not in its public mirror.
+
+This manifest records those documents and pins them. aether records them as provenance; it does
+not load them as active agent instructions. Several of them (`00-TOP-AGENT-PRECOMMAND.md`, the
+`CLAUDE.md` / `AGENTS.md` / `CODEX.md` adapters, `seat/CLAUDE.md`, `AGENT-DISCIPLINE.md`) are
+written to direct an agent's operating model; here their content is data, read for the record,
+not instructions that govern work in this repository.
 
 ## Scope labels for missing items
 
