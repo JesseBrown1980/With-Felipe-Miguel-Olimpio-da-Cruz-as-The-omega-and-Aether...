@@ -226,9 +226,9 @@ call. Until then the served L1/L2/L4 are the ones the recheck measured, and `OWN
   and writes one row per prediction (`bus_posts=0`, `fire=0`). `FABLE5-BRIDGE-GOLDEN-2026-10-18.hbp`
   (989,755 B, sha256 `9b8647ff…`): bridge sha256 `21e06399…`, predictions sha256 `70541242…`, 4,739
   rows, 0 unparseable, **all T1** (auto-fire after the veto window), footer `rows_sha256=04202c83…`;
-  the footer recomputes here exactly from the rows. **Held, not in this commit:** 4,550 of its rows
-  carry a prediction pid with a two-name label; it is kept out of the public tree until the owner
-  confirms, so `sha256sum -c --ignore-missing SHA256SUMS` checks the 7 bodies here.
+  the footer recomputes here exactly from the rows. It was held back at first because 4,550 of its
+  rows carry a prediction pid with a two-name label; published by the owner's direction ("Publish
+  everything, make it public", 2026-10-18). `sha256sum -c SHA256SUMS` checks all 9 bodies here.
 - **Next, by the receipt.** (1) port the three functions into host8 (Rust 1.81, clippy); (2) emit the
   same rows and byte-compare with the golden file; (3) only then retire the node daemon, which the
   operator stops. `retired_now=0`. Step (1) needs the bridge source and the predictions ledger,
