@@ -106,5 +106,11 @@ is 4 of 4. On Python 3.11 the verdict is 26 of 27 (see "Python version"); not re
   integer-only (`grep` for float constructs is empty).
 - The 3D-to-2D adapter also re-derives the 86400-second seed: run on upstream
   `PUBLIC-OWNER-3D-MEDIA-TREE.hbi` (README.md:59) it wrote `PUBLIC-OWNER-MEDIA-POSITION-2D.hbp`
-  and its sidecar, both equal to the stored files (`c8c3a6ba…3310`), in a scratch run. That media
-  tree carries the same repository names, so it is not vendored and this step is not wired here.
+  and its sidecar, both equal to the stored files (`c8c3a6ba…3310`), in a scratch run. This media
+  3D->2D re-derivation is not wired here: wiring it would add a referee step the running system did
+  not wire, and the 86400 run already regenerates from the vendored `PUBLIC-OWNER-MEDIA-POSITION-2D.hbp`
+  (0 repository names). The repository-name reason that once held the media seed out is cleared by the
+  owner's 2026-10-18 "Publish the seed" decision, which names `PUBLIC-OWNER-3D-MEDIA-TREE.hbp`: its
+  `.hbp` (147 `REPO` rows) is vendored and published under that decision at
+  `qprism/representation-bins/seeds/PUBLIC-OWNER-3D-MEDIA-TREE.hbp`, and its `.hbi` descriptor carries
+  no repository names (0 `REPO` rows).
