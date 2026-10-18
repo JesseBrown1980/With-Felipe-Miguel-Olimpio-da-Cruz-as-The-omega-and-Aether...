@@ -8,9 +8,9 @@ These objects are part of the build-day record but are not copied into `vendor/`
 
 The full tree of those six directories at `e8c3369` (139 files) is listed in `pins/e8c3369-routes-src-lib-middleware-tests-services.pin.tsv`, one row per `path<TAB>blob<TAB>bytes<TAB>flag`. The `V` flag marks the 74 blobs that are also vendored byte-identical somewhere under `vendor/` in this step (the b49a725 first-commit set that survives unchanged into `e8c3369`, plus the `58b51eb` guardian/hook/approvalEngine files and the hardened `middleware/auth.js` `f1c32b7`). The remaining 65 are new at `e8c3369` (the security-hardening additions) and are recorded by blob only.
 
-## 2. TASKS.md — later versions (first version held)
+## 2. TASKS.md — later versions (first version vendored)
 
-The first `TASKS.md` (`02ad906b201669575f02a0779ab1ce9b2988a277`, 232401 bytes, first at `e8c3369` 2026-03-15) is held, not vendored: it carries the owner's personal phone number (see `HELD.hbp`). Its later versions are pinned only; each of the six below carries the same phone number on two lines, so none of them should be vendored either:
+The first `TASKS.md` (`02ad906b201669575f02a0779ab1ce9b2988a277`, 232401 bytes, first at `e8c3369` 2026-03-15) is vendored at `vendor/Asolaria/TASKS.md` (restored on the owner's word that his number is public). Its later versions are pinned only, by blob:
 
 | blob | bytes | first commit | date |
 |---|---:|---|---|
