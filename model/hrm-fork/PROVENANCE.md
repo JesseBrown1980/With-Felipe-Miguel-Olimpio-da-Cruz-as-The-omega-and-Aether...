@@ -76,8 +76,9 @@ task names it; built from this directory it prints `decoder_src_bytes=13074`.
 
 ## 2. Trained HRM weights: what was searched (MEASURED, 2026-10-17)
 
-Result: **no trained HRM checkpoint of the owner was found** in any place listed below. Nothing is
-pinned and nothing is ported.
+Result: **no trained HRM checkpoint of the owner is present in any place listed below**, and the
+gnn-sidecar cube `9859b576` manifest likewise records no HRM checkpoint on ACER (`docs/handoffs`).
+Nothing is pinned and nothing is ported.
 
 | Where | How | Result |
 |---|---|---|

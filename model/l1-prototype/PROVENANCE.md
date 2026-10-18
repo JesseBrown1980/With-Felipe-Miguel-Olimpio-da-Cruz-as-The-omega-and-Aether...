@@ -86,8 +86,9 @@ Upstream records the same training environment and key layout:
 So the port runs the layers the weights were trained in: `conv1` and `conv2` are `Linear` layers on each node's
 own features. The L0 server, behcs-256 `services/gnn-sidecar/inference_server.py:11` (blob
 `3089da1d249f0eb76bb79e03a446714636474980`), renames `conv*.lin.bias` to `conv*.bias` and loads L0's checkpoint
-into torch_geometric `GCNConv`. For L1 the server file `prototype_inference_server.py` is not on disk (see
-[Not on disk](#not-on-disk)); upstream records a rekey as the pending load path, bigpickle
+into torch_geometric `GCNConv`. For L1 the server file `prototype_inference_server.py` is not on this container; the gnn-sidecar
+cube `9859b576` locates it on ACER (sha256 `c4a36e8a…`, body pending transfer — see
+[Not on disk](#not-on-disk) and docs/handoffs); upstream records a rekey as the pending load path, bigpickle
 `src/fabric-thinker-gnn.mjs:15-16`: "When L1/L2/L4 also load (state_dict rekey pending), the full 4-layer immune
 cascade activates". Measured with the same rename (torch 2.14.1+cpu, torch_geometric 2.8.1, the kernel pin below;
 the `VARIANT` row of `tests/fixtures/expected-model.hbp`, which `tools/model_parity.py --check` regenerates): the
@@ -281,6 +282,12 @@ Every scalar any upstream code on disk derives from a PrototypeGNN output:
 No composite weight is set here; the owner states it (OWNER-RULES 7b).
 
 ## Not on disk
+
+Resolved since by the gnn-sidecar cube `9859b576` (verified 32/32, docs/handoffs): the cube located
+`prototype_inference_server.py` (sha256 `c4a36e8a…`) and the prototype trainer `train_prototype.py`
+(sha256 `25969b29…`) on ACER in `C:/Users/acer/Asolaria/services/gnn-sidecar/`, bodies pending
+transfer. The first two rows below are therefore found on ACER, not missing — only their bodies are
+not yet on this container. The table is the pre-cube search record.
 
 | Missing | Where it should be, with evidence | Searched |
 |---|---|---|

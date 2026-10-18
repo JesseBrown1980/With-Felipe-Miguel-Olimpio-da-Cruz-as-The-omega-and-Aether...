@@ -127,7 +127,8 @@ component below 2^51, none.
 
 ## Training script
 
-Not on disk. bigpickle-rebuild @ `c592599c` `tests/unit/gnn-l1-l2-status.test.mjs` names it and
+Not on this container; the gnn-sidecar cube `9859b576` locates `train_contrastive.py` on ACER (sha256
+`87247eb4…`, body pending transfer — docs/handoffs). bigpickle-rebuild @ `c592599c` `tests/unit/gnn-l1-l2-status.test.mjs` names it and
 says how it was to be run: line 12 "training required: run train_contrastive.py", line 90
 "train_contrastive.py was run 2026-06-01", and lines 106-116 expect `train_contrastive.py`
 referencing `contrastive_model.pt` in the sidecar directory, whose default is
@@ -159,8 +160,11 @@ following the same pattern as prototype_inference_server.py.
 
 The vendored checkpoint (99,073 bytes) has exactly these keys and this architecture.
 
-**Corpus: named and pinned upstream; its bytes are not on disk.** The note names
-`gslgnn_w9_3_corpus.json`. Asolaria-fnns @ `c4b2458c` `src/train_gslgnn_w9_3.py` builds it in
+**Corpus: named and pinned upstream; its bytes are not on this container.** The note names
+`gslgnn_w9_3_corpus.json`. The gnn-sidecar cube `9859b576` locates a build of it on ACER (sha256
+`7e7d0406…`, 68,695,303 B, docs/handoffs); that build differs from the v2 manifest's pinned
+`0f123581…` below, since `build_corpus()` joins time-varying orchestrator ticks, so the exact v2
+corpus is not the cube's copy. Asolaria-fnns @ `c4b2458c` `src/train_gslgnn_w9_3.py` builds it in
 `build_corpus()` (lines 182-205, historical orchestrator ticks joined with the current Phase-1
 tensor-fabric outputs), and `main()` writes it to `SIDECAR_DIR / "gslgnn_w9_3_corpus.json"`
 (lines 317-324; `SIDECAR_DIR` is `services/gnn-sidecar`, line 35) and takes its sha256.
@@ -207,8 +211,9 @@ from the status test's `services/gnn-sidecar`, so it says nothing about the trai
 On disk, then: the corpus's name, sha256 and counts, the feature order of the corpus's own trainer
 (`[min(edgeVolume/100, 1), avgRisk/9, maxRisk/9, failureRate, online, trustTier/3]`,
 train_gslgnn_w9_3.py:224-231, the same order as train_baseline.py:31-38), and the L2 trainer's
-expected keys and architecture. Not on disk: the L2 trainer's own code, and with it how it turns the
-corpus into node features and labels, its loss weights and its split. The checkpoint's input width
+expected keys and architecture. Not on this container (the gnn-sidecar cube `9859b576` locates
+`train_contrastive.py` on ACER, sha256 `87247eb4…`, body pending transfer): the L2 trainer's own
+code, and with it how it turns the corpus into node features and labels, its loss weights and its split. The checkpoint's input width
 is 6. This crate takes the Q24 feature matrix as input and does not build features.
 
 ## Server
@@ -219,14 +224,16 @@ None upstream. The status test asserts its absence:
 "Trained to ~99.92% on the 40-benign-vs-315k-suspicious corpus — the same imbalance that left L4 a
 dead constant 0.5292. Present but NOT trusted as a voter until a class-weighted retrain passes spread
 std > 0.01. The inference server (:4796) is intentionally NOT wired until that spread check passes."
-and the assertion that `contrastive_inference_server.py` does not exist. The same file's header
+and the assertion that `contrastive_inference_server.py` does not exist (the :4796 server; the cube
+`9859b576` manifest records it as not on ACER — LIRIS and the cloud sessions not searched). The same file's header
 (lines 10-12) reads "L2 STATUS : CHECKPOINT ABSENT — contrastive_model.pt does not exist / inference
 server NOT written (no weights to load) / training required: run train_contrastive.py", and the
 describe block at line 84 reads "L2 ContrastiveGNN checkpoint (TRAINED 2026-06-01 — gap closed)".
 Lines 145-146 plan the server: "After training, write contrastive_inference_server.py at :4796
 following the same pattern as prototype_inference_server.py." `prototype_inference_server.py`, which
-the header names as the L1 server at :4795 (lines 7-8), is not on disk either: the searches listed
-under [Training script](#training-script) find it nowhere.
+the header names as the L1 server at :4795 (lines 7-8), was not found by the searches listed under
+[Training script](#training-script); the gnn-sidecar cube `9859b576` later located it on ACER (sha256
+`c4a36e8a…`, body pending transfer — docs/handoffs).
 `feed-gnn-archaeology-to-fabric.mjs:16` names an `inference_server_v2` with role
 `4-layer-immune-cascade` at `C:/Users/acer/Asolaria/sovereignty/research/gnn-patterns/inference_server_v2.py`;
 its bytes are not on disk or in any mirror commit (the mirror report above lists the path as
@@ -242,7 +249,7 @@ untracked).
 | AI-healthCare-project @ `e0048c0a` `backend/anomaly_detector/service.py:51-58`, `api.py:50-65` | `model(x, edge_index)` | with two classes, an edge is reported when `score > threshold` (service.py:258-260, default `threshold=0.5` at :141; api.py:65 `score > settings.ANOMALY_THRESHOLD`, 0.8 at config.py:34); with more classes, when the argmax class is an anomaly class and the anomaly classes' probabilities sum above the threshold (service.py:245-252). With `MODEL_TYPE=contrastive` (default `gsl`, config.py:18) that service builds `ContrastiveGNN(16, 32, projection_dim=64, num_classes=4)` by default (config.py:21-29) and loads no weights (service.py:104-107 are comments), so it does not run this checkpoint. |
 | asolaria-score.mjs (Shannon-and-the-gnns-stage @ `32f9670a`, lines 151-163) | — | no L2 signal and no L2 weight |
 | bigpickle-rebuild `src/fabric-thinker-gnn.mjs:223` | — | lists `cascade_layers: ['L0_EdgeLevel', 'L1_Contrastive', 'L2_Prototype', 'L4_GSLGNN']`; `feed-gnn-archaeology-to-fabric.mjs:12` gives contrastive_gnn the role `L1-embedding-separation`, accuracy 0.9471. The run-1 manifest and the status test call the contrastive network L2. |
-| Asolaria-fnns `manifests/gnn_train_run1_results.json` | the trainer's evaluation | `L2_acc`, `L2_prec`, `L2_recall`, `L2_f1` (trainer not on disk) |
+| Asolaria-fnns `manifests/gnn_train_run1_results.json` | the trainer's evaluation | `L2_acc`, `L2_prec`, `L2_recall`, `L2_f1` (trainer on ACER in cube `9859b576`) |
 
 So the one scalar upstream code takes from this network is `probs[:, 1]`, which this crate returns
 as `anomaly_q24`; the projections are returned as `projection_q24`. The only combining rule that
@@ -308,8 +315,9 @@ an AMD CPU here.
   exactly 1.0 (float32 bits `3f800000`, Q24 16,777,216). Over the 187 edges whose nodes use the
   6-feature training layout (risk up to 21, 100 or 1,000,000): minimum 16,770,213 (16770213/2^24),
   maximum 16,777,216, range 7,003, 97 distinct values, the same 50 edges exactly 1.0. The status
-  test's promotion criterion is "spread std > 0.01" on its corpus; that corpus is not on disk, so
-  these numbers describe the synthetic fixture only.
+  test's promotion criterion is "spread std > 0.01" on its corpus; that corpus's bytes were not on this
+  container when these were measured (the gnn-sidecar cube `9859b576` later located a build on ACER,
+  `7e7d0406…`, pending transfer), so these numbers describe the synthetic fixture only.
 - Projections, over the 262 layout edges: the mean direction (the summed projection vector,
   normalized) has its largest-magnitude component at number 48, value -1,073,727,916 in Q30
   (-1073727916/2^30; the next-largest component's magnitude is 244 times smaller). Every edge's
@@ -319,7 +327,8 @@ an AMD CPU here.
 - `conv1.lin.weight` columns 1 and 2 are equal in all 64 rows, in run 1 and in run 2. In the
   6-feature layout of train_baseline.py:31-38 and train_gslgnn_w9_3.py:224-231 (the trainer of the
   corpus the status test names for L2) these columns take `avgRisk/9` and `maxRisk/9`; the L2
-  trainer itself is not on disk.
+  trainer itself (`train_contrastive.py`) is not on this container; the cube `9859b576` locates it on
+  ACER (`87247eb4…`).
 - Asolaria-fnns README.md states for these checkpoints: "the training corpus is approximately
   **99.99% positive** (315,209 suspicious / 315,249 total — only 40 benign nodes)" and "Treat them as
   an upper bound on a skewed split, not a calibrated scorer baseline." The fixture measurements do
