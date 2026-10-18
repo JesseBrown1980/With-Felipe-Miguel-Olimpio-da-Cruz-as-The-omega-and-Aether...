@@ -351,7 +351,7 @@ code, and the seat's guess that later commits explain a difference is not needed
 | trit decode, 41 trits → PID | 216 ns | 308 ns |
 | binary PID emit (`sha16(hex16(pid) + "\|agent")`, no allocation) | 278 ns | 89 ns |
 | ternary PID emit, as the bench writes it (unpack, emit, repack) | 599 ns | 543 ns |
-| **ternary PID emit kept as `TritWord`** (cloud probe `cloud/direct.rs`) | — | **70 ns** |
+| **ternary PID emit kept as `TritWord`** (cloud probe `cloud/direct.rs`) | **304 ns** | **70 ns** |
 | `prism` + `unprism` seal, K = 27 | 23 µs | 12.5 µs |
 
 Read beside the sheet. `TritWord::pack` stores the base-3 value of its digits (`kernel/tribit/src/
@@ -480,3 +480,20 @@ conjectures, and nothing here tests them.
   `FABLE5-PLAY-KEYS-ENWIK9.hbp` is not printed by `rime_bpc.py`: it is the `cm3ti-gt256` run in USIM
   `receipts/operator/prior-test.log` (payload 2,285,979 B + decoder source 26,377 B = 2,312,356 B over
   10,000,000 bytes), and the 26,377-byte decoder is `cm3ti_gt256.rs`, still not found.
+
+**Round 2 from ACER** (`FABLE5-REGEN-MASTER-AND-ROUND2-RECEIPTS-2026-10-18/`, with the batch receipt
+`FABLE5-REGEN-BATCH-2026-10-18.hbp`; each folder below passes its own `sha256sum -c`).
+- `FABLE5-REGEN-DIRECT-PROBE-ON-ACER-2026-10-18/`: ACER compiled `proof-nanoseconds-ternary-2026-10-18/cloud/direct.rs`
+  unchanged against its own tribit kernel (`50e4cb85…`, through a two-line shim crate) with Rust 1.81: parity
+  100,001/100,001 words and 100,000/100,000 41-trit digits; the bench form (unpack, emit, repack) 698.6 ns,
+  the `TritWord` direct form 304.1 ns, median of 3 runs, one thread, i5-8300H. The difference from the
+  cloud's 70 ns is the SHA-256 under the emit: the cloud Xeon has SHA instructions, the i5 does not.
+- `FABLE5-REGEN-SELF-SEED-3078-ACER-653e3d9b-2026-10-18/`: ACER holds `FABLE5-SELF-SEED-3078.hbi` only as
+  `653e3d9b…` (three copies), not the `5c040e04…` version the CONSTELLATION GGUF holds. Its writer,
+  `emit-self-seed-binary.py`, takes the 38 largest files of several office globs plus 7 laws files, so
+  its output depends on what the office held when it ran.
+- KERNEL key: the body beside the sidecar on ACER is `202ff2f0…` (the FED version), so that sidecar holds;
+  ACER keeps both versions, and the public one is `f075f5c6…`.
+- No recorded `PYTHONHASHSEED` or tie order exists for the HERSELF or CONSTELLATION key runs.
+- `FABLE5-REGEN-RELEASED-4-RULE-7M-2026-10-18/`: the four HyperBEHCS files held for the owner's word,
+  released by the owner ("Release all 4"); 0 credential hits.

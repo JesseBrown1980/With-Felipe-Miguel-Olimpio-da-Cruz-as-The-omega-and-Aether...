@@ -1,0 +1,16 @@
+REGENHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|for=aether_construction-gap_list|screen=credentials+private_keys+third-party_email/phone+operator_held_names|zips=11|E=0|json=0
+ZIPSENT|item=1|zip=FABLE5-REGEN-P5-GNN-BRIDGE-AND-PREDICTIONS-2026-10-18.zip|sha256=45da19b027b0f9186ad7239ff51b59d81880138aeece5cdd74eb7effe61332e7|files=2|held=0|json=0
+ZIPSENT|item=2|zip=FABLE5-REGEN-ITEM2-MEASUREMENT-ROWS-2026-10-18.zip|sha256=b9f05ebbe3af0fae3a71a72f9a6a8f2e0ad605d1d74bf0bb46251fe2337525b3|files=5|held=0|json=0
+ZIPSENT|item=3|zip=FABLE5-REGEN-ITEM3-KEY-WRITERS-3174-2026-10-18.zip|sha256=584ee9ac49989457a7e188790ab4390eb72b41e886453ecf38298e6dc2f0dd2a|files=15|held=0|json=0
+ZIPSENT|item=4|zip=FABLE5-REGEN-ITEM4-QR-CODEXES-AND-HRM-2026-10-18.zip|sha256=2b9f00d4e167c6b803de8c3cbce18a494c06ba31622c3da1e37dc1544b4451b2|files=41|held=0|json=0
+ZIPSENT|item=5|zip=FABLE5-REGEN-ITEM5-GENERATORS-AND-INPUTS-2026-10-18.zip|sha256=4cc0d98b7a4e12d7c5372295c3e4ed67d9c66958610bba75e9818b8d615d265a|files=18|held=0|json=0
+ZIPSENT|item=5b|zip=FABLE5-REGEN-ITEM5B-HOST8-SEAT-BOOK-SOURCES-2026-10-18.zip|sha256=a7b2f0199678f9995274a258ad34d6791af6df2c4c6ff1afa105bb2fd1a05b79|files=3698|held=5(sup-gnn-reverse-gain-04f694de*)|roundtrip_verified=1|json=0
+ZIPSENT|item=6a|zip=FABLE5-REGEN-ITEM6A-FIRST-GNN-ZOO-CODE-CKPTS-2026-10-18.zip|sha256=f75cfa790ee5e3a5ca84378fdd62160bab9751f0eac592bf3e96ebce57b4a74a|files=33|held=0|json=0
+ZIPSENT|item=6b|zip=FABLE5-REGEN-ITEM6B-GNN-ZOO-CORPORA-2026-10-18.zip|sha256=b8e156977c2e43c7335eae1251fffbf57cbfc25c7889b7a7e051eda5ee10b38a|files=6|raw=246792630|held=0|json=0
+ZIPSENT|item=6c|zip=FABLE5-REGEN-ITEM6C-GNN-EXPORT-AND-EVENTS-2026-10-18.zip|sha256=3344d8c5869aa48bfbd2b8ed7e591b7c34304736eb10939d8d34ca7aefb9fd2b|files=2|raw=707881720|held=0|json=0
+ZIPSENT|item=7|zip=FABLE5-REGEN-ITEM7-60D-CHAIN-2026-10-18.zip|sha256=242e899651d9918f169e1e0988e507eca4b275ba6c9964f78ea76fc24902a6a5|files=26|held=0|json=0
+ZIPSENT|item=8|zip=FABLE5-REGEN-ITEM8-HYPERBEHCS-HOME-AND-QUANT-2026-10-18.zip|sha256=729a7ee3fd2fd31f9da733949a7c21cc97823124c3915746899fa412af9b34d9|files=177|held=6|json=0
+HELDSUM|vote_quorum_daemon=2(source+pyc)|reverse-gain_seat_registration=5|operator_own_gmail=3|gcp_service_account_id=1|release=operator_word|json=0
+CREDENTIAL|gateway-auth-tokens.json=listed_not_copied|action=rotate_first|json=0
+NOT_ON_ACER|items=constellation_key_writer+qr_codex_writer+trained_HRM_ckpt+THE-SPHERE_generator+TIMEFIX_generator+DOUBLE-RAINBOW_video+THREE-BODIES_first-run_receipt+100_shard-quant_receipts+cm3ti_gt256.rs+rime_fourpoint.py+k_gradient/chaos1m/code1m.bin+star-shell-v4_producer+cadence_frame+S2_ablation_trainer+atlas_v55/v56+growth-law.md+optimizer-math.md+foundation_03-07|evidence=per-item_STATUS.hbp_in_each_zip|json=0
+PENDING|tritword_direct_probe=needs_cloud/direct.rs|D51-D60_names=search_running|json=0

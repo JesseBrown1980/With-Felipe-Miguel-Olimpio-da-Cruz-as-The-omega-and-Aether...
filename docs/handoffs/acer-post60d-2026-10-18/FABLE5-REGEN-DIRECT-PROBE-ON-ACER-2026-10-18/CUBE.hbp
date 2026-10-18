@@ -1,0 +1,8 @@
+CUBEHDR|name=FABLE5-REGEN-DIRECT-PROBE-ON-ACER-2026-10-18|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=6|merkle_sha256=448dce7d85d33175f37b685847f06e5d03ccaaf8c491d6dadb73c8ddbe0817db|note=direct.rs_unchanged_304ns|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=direct-probe/Cargo.toml|bytes=214|sha256=7b732fbd772a2b1dd073962fae930600533b480a30334af19289cba0cf480694|json=0
+FILE|name=direct-probe/Cargo.lock|bytes=2471|sha256=41627e52d431c8de179c00681f4750405f9ae738eb6a09695feb015e3f64cd48|json=0
+FILE|name=direct-probe/src/main.rs|bytes=3258|sha256=74332f371c84c3cc93264db3254a33151c9b2e78f9ebedd2deffef7e0612b7ce|json=0
+FILE|name=direct-probe/tribit-shim/Cargo.toml|bytes=135|sha256=4072051b2e7f2f98258dee7fdb255f9bb04be3383c065a63b86531bafa917fea|json=0
+FILE|name=direct-probe/tribit-shim/src/lib.rs|bytes=313|sha256=c8af512935233051b95891351d6ba7957dbc4b80945940046e0c4e953ee76cb9|json=0
+FILE|name=PROBE-OUTPUT-ACER.log|bytes=418|sha256=b4101620e47b35ac7da65f37df5792b8a48889d4cb9dbe3e9564a014eaa9b12e|json=0
+CUBEFTR|merkle_sha256=448dce7d85d33175f37b685847f06e5d03ccaaf8c491d6dadb73c8ddbe0817db|json=0

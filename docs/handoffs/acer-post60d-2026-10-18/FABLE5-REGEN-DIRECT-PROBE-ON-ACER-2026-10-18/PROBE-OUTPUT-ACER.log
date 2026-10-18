@@ -1,0 +1,3 @@
+DIRECTPARITY|steps=100001|tritword_equal=100001|all_41_trits_equal=100000/100000|json=0
+NATIVEBENCH|unit=TERNARY_pid_emit(bench_form,unpack+repack)|n=2000000|runs=3|ps_per_op_min=660340|ps_per_op_median=698646|ops_per_s_median=1431339|threads=1|json=0
+NATIVEBENCH|unit=TERNARY_pid_emit(TritWord_direct,same_trits)|n=2000000|runs=3|ps_per_op_min=296133|ps_per_op_median=304122|ops_per_s_median=3288147|threads=1|json=0

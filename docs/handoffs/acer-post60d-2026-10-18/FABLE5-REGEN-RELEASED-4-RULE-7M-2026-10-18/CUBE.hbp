@@ -1,0 +1,6 @@
+CUBEHDR|name=FABLE5-REGEN-RELEASED-4-RULE-7M-2026-10-18|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=4|merkle_sha256=b7ca553610930fc28541e95db15570eeee764bc86e4f5917ed73232bcb0b9a25|note=owner_released_rule_7.m_credential_hits_0|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=HyperBEHCS/bin/asolaria-google-enterprise-citizen-daemon.py|bytes=5260|sha256=f09ebd7359848ae748bdbf8e6d783a5b811c7dc3039c25a1f99e32b906adc306|json=0
+FILE|name=HyperBEHCS/bin/google-38tb-integration-readiness.md|bytes=5799|sha256=b43e08010b9f76575f92a783a59e58fa062106d5df2a08a28ecbe0027fa5b54c|json=0
+FILE|name=HyperBEHCS/bin/v47-g-mint-and-fire.py|bytes=6800|sha256=e1af9d1d639b837f4decdbbfbb04f3893508234d27638bb7c0aa6ed82f635dcf|json=0
+FILE|name=HyperBEHCS/bin/emit-catalogs-batch-3.mjs|bytes=11203|sha256=195a491d48964ee45389df2cebcf13d66ff091aa4a208200f9b4fdcee89a50ca|json=0
+CUBEFTR|merkle_sha256=b7ca553610930fc28541e95db15570eeee764bc86e4f5917ed73232bcb0b9a25|json=0
