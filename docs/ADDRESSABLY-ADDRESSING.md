@@ -2,7 +2,9 @@
 
 A guide to the rule the whole system runs on. Operator: Jesse Daniel Brown. Written 2026-10-18
 from the operator's words and from the records cited under each section. The same file sits in the
-Asolaria repo and in the aether rebuild.
+Asolaria repo and in the aether rebuild (GitHub
+`JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...`); paths marked
+*aether* are in that repo.
 
 Tags: **MEASURED** (reproducible from the cited receipt), **CANON** (the operator's frame, written
 in the records), **OPERATOR** (stated by the operator on 2026-10-18, not yet written up elsewhere).
@@ -43,7 +45,8 @@ or one level deeper.
   saturates."* (CANON; the file is on ACER, described in the reductions repo at
   `01-rebuild/F01-prime-tower-geometry--builder.md:80`)
 - **Expansion without resharding.** `EVT-HILBERT-HOTEL-EXPANDED`: *"new supervisors minted at level
-  N, no reshard."* (CANON; Asolaria `kernel/glyph-families.json:598`)
+  N, no reshard."* (CANON; Asolaria @ `80bf516`, `kernel/glyph-families.json:598`, and
+  `asolaria-behcs-256` @ `818cc23`, `packages/deep-wave/scripts/run-batch-17-triple.mjs:77`)
 - **A free address always exists between two.** `bh_inject_between(a,b)` deepens one slice of a
   1024-ary Brown-Hilbert address so the gap multiplies by 1024: *"a strictly-between addressable
   midpoint always exists."* (CANON; `Metatagging-data-for-a-Quantum-universe` README, "Downstream
