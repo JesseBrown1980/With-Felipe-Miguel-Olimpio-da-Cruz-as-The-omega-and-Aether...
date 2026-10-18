@@ -136,3 +136,82 @@ running. The receipt's own NEXT gate (operator): rerun the L1/L2 verifiers throu
 fabric + office, and move the first shell-hosted daemon (`gnn-dispatch-bridge`) into host8 via
 `/shadow-parity.hbp`, parity before retire. `FABLE5-SHELLS-VS-SIDECARS-2026-10-18.hbp`; its `.sha256`
 sidecar checks here (delivered in a zip of sha256 `4860bf93…`).
+
+## Stratified retrain of L1/L2/L4 (P3, 2026-10-18)
+
+`gnn-retrain-2026-10-18/`: the owner's retrain of L1, L2 and L4 on `gslgnn_w9_3_corpus.json` with a
+seeded stratified split, run on ACER with the owner's go (`directed_by=OP-JESSE`),
+`originals_touched=0`, `servers_swapped=0`, `E=0`. Cube `FABLE5-P3-GNN-RETRAIN-STRAT-2026-10-18`,
+11 files, merkle_sha256 `83700d77…`; `sha256sum -c SHA256SUMS` checks all 11 here. The receipt is
+`FABLE5-GNN-RETRAIN-STRAT-2026-10-18.hbp`; `RETRAIN.rows` are its measured rows;
+`retrain_stratified.py` is the script (seed 1792, 300 steps, PyG's `GCNConv` for all three,
+class-balanced cross-entropy, a shuffled 70/15/15 cut taken separately per class).
+
+What the receipt measured (torch 2.13.0+cpu, PyG 2.7.0): split 28/6/6 benign, 220,646 / 47,281 /
+47,282 suspicious, `split_sha16=27152b521ce28662`.
+
+| Model | checkpoint (sha256) | std on the corpus | AUC train / val / test | test benign caught at 0.5 | test false alarms at 0.5 | `scores_sha16` |
+|---|---|---|---|---|---|---|
+| L1 | `prototype_model_strat_2026-10-18.pt` (`dc8ea195…`) | 0.0119466 | 1 / 1 / 1 | 6/6 | 1/47,282 | `38b043191a5e62e2` |
+| L2 | `contrastive_model_strat_2026-10-18.pt` (`fe9b3a8e…`) | 0.0119465 | 1 / 1 / 1 | 6/6 | 1/47,282 | `8bc74ee31839acab` |
+| L4 | `gslgnn_w9_3_strat_2026-10-18.pt` (`23e44abf…`) | 0.0119452 | 1 / 1 / 1 | 6/6 | 1/47,282 | `993cb532f9944bbf` |
+
+All three clear the `std > 0.01` gate, which the trained checkpoints did not (0 of 4 in the recheck
+above). Each checkpoint reloads strictly and gives identical scores. The receipt keeps its own
+correction beside its `GATECEILING` row: 0.011264 is the std of a *perfect* 0/1 classifier at 40 of
+315,249 (√(p(1−p))), not a maximum; the observed 0.01195 is higher because the few false alarms add
+spread. Its `SCOPE` row: AUC 1.0 means separable within this corpus, not generalization.
+
+Checked from the cloud side, recorded beside the `SCOPE` row: the split rebuilds here exactly
+(`split_sha16` 27152b521ce28662, match). The receipt gives the reason as held-out benign edges sitting
+"on the same pure-benign node pairs as train"; at pair level that is not what the split shows:
+
+| Held-out benign | same (source, target) pair as a train benign edge | shares ≥1 endpoint node with train benign | both endpoints seen in train benign | same snapshot as a train benign edge |
+|---|---|---|---|---|
+| val (6) | 0 | 6 | 0 | 6 |
+| test (6) | 0 | 5 | 3 | 6 |
+
+Each of the 40 benign edges is its own (source, target) pair; all are phase-1 tensor-fabric beat
+edges, and train benign covers all 9 snapshots. So the scope limit stands, for a nearby reason:
+held-out benign edges share nodes and snapshots with train, and the node features the retrain reads
+from the corpus (`retrain_stratified.py:30-31`) are the fixed organ values the corpus builder set
+(`train_gslgnn_w9_3.py:159-160`). A split that holds out whole snapshots is the test of
+generalization; it has not been run. The retrain was not re-run here, so the three `scores_sha16`
+are the receipt's.
+
+Not done, by the receipt (`SWAP|status=NOT_DONE`): the retrained checkpoints are not served — the
+servers hard-code the original filenames and L2 has no server; swapping them in is the owner's
+call. Until then the served L1/L2/L4 are the ones the recheck measured, and `OWNER-RULES` 7.a/7.b
+(weight/count 0) describe what is served.
+
+## Sidecar lanes, seal tool, bridge golden rows (P4, 2026-10-18)
+
+`p4-sidecar-lanes-2026-10-18/`: the owner's P4 work on ACER (`E=0`). Cube
+`FABLE5-P4-SIDECAR-LANES-2026-10-18`, 9 files, merkle_sha256 `23b04ab9…`. The receipt is
+`FABLE5-P4-SIDECAR-LANES-2026-10-18.hbp`.
+
+- **Tools.** Five tools added to the `asolaria-os-on-metal` MCP server (`server.js`, sha256
+  `2d33700e…`; 20 → 25 tools): `aoom_host8_read`, `aoom_recall_search`, `aoom_office_verify`,
+  `aoom_office_seal`, `aoom_office_append`. Measured over stdio: host8 `task-manager` 200, the
+  `shadow-parity` call 3/3, recall search 200, office verify of `eee98bdb…` OK, and both escape probes
+  (writes outside the office) refused. The P3 and P4 receipts and their seals were written with these
+  tools (`shell_writes_to_office=0`). `server.js.pre-p4-2026-10-18.reconstructed` (`7411083b…`) is the
+  pre-P4 file rebuilt by removing the additive insertions. `server.js` reads its API keys from the
+  environment only; its URLs are loopback.
+- **Findings, measured in code.** host8's `/shadow-parity.hbp` compares host8's summon against the
+  launch plan (`host8-serve/src/main.rs:1332`); it does not compare `gnn-dispatch-bridge`. Its
+  `parity_proven=0` and `node_retired=0` are literals (`main.rs:801`, `:806`), so nothing can flip
+  them yet. host8's bridge room is a stub; the bridge itself is a firing daemon (veto window, then
+  auto-dispatch to the bus).
+- **Golden rows.** `bridge_golden.mjs` imports only the bridge's three pure functions
+  (`stablePredictionId`, `classifyTier`, `resolvePredictionPid`), reads `gnn-predictions.ndjson`,
+  and writes one row per prediction (`bus_posts=0`, `fire=0`). `FABLE5-BRIDGE-GOLDEN-2026-10-18.hbp`
+  (989,755 B, sha256 `9b8647ff…`): bridge sha256 `21e06399…`, predictions sha256 `70541242…`, 4,739
+  rows, 0 unparseable, **all T1** (auto-fire after the veto window), footer `rows_sha256=04202c83…`;
+  the footer recomputes here exactly from the rows. **Held, not in this commit:** 4,550 of its rows
+  carry a prediction pid with a two-name label; it is kept out of the public tree until the owner
+  confirms, so `sha256sum -c --ignore-missing SHA256SUMS` checks the 7 bodies here.
+- **Next, by the receipt.** (1) port the three functions into host8 (Rust 1.81, clippy); (2) emit the
+  same rows and byte-compare with the golden file; (3) only then retire the node daemon, which the
+  operator stops. `retired_now=0`. Step (1) needs the bridge source and the predictions ledger,
+  which are not here yet (P5 in `ACER-REGENERATE-HANDOFF.md`).

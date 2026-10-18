@@ -1,0 +1,10 @@
+P4HDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=P4_sidecar_lanes+seal_tool+bridge_parity|directed_by=OP-JESSE_yes_I_want_the_other_two_2026-10-18|E=0|json=0
+P4TOOLS|server=mcp-servers/asolaria-os-on-metal/server.js|added=aoom_host8_read,aoom_recall_search,aoom_office_verify,aoom_office_seal,aoom_office_append|tools_before=20|tools_after=25|node_check=OK|json=0
+P4TEST|host8_task_manager=200|shadow_parity_3=matched_3/3|recall_search=200|office_verify=OK_eee98bdb|escape_probes=2/2_refused_outside_office|tag=MEASURED_stdio|json=0
+P4SELFUSE|this_receipt_and_P3_receipt_and_seals_written_via=aoom_office_append+aoom_office_seal|shell_writes_to_office=0|json=0
+P4BACKUP|server_js_now_sha256=2d33700eebfa2720396965d77999dba8401dc5c17be1eb72ac2af07d1c8c06df|reconstructed_pre_p4_sha256=7411083b8a4d8210c4a0061b0d919260bf13f375a0f8bef4b8ffff78a8f487d1|method=remove_additive_insertions|file=server.js.pre-p4-2026-10-18.reconstructed|json=0
+P4FINDING|shadow_parity_route_compares=host8_summon_vs_launch_plan(instance_pid)|does_NOT_compare=gnn-dispatch-bridge|source=host8-serve/src/main.rs:1332|tag=MEASURED_code|json=0
+P4FINDING|parity_proven=0_and_node_retired=0|are=hardcoded_literals|source=host8-serve/src/main.rs:801+806|meaning=no_code_can_flip_them_yet|tag=MEASURED_code|json=0
+P4BRIDGE|host8_room=stub_default-embedded_no_bridge_logic|bridge_is=firing_daemon(veto_window_then_auto_dispatch_to_bus)|golden=FABLE5-BRIDGE-GOLDEN-2026-10-18.hbp|predictions=4739|T1=4739|T2=0|T3=0|meaning=every_prediction_is_auto-fire-after-veto|json=0
+P4NEXT|1=port_classifyTier+stablePredictionId+resolvePredictionPid_into_host8_Rust_1.81_clippy|2=emit_same_rows_and_byte-compare_with_golden|3=only_then_retire_node(operator_stops_daemon)|retired_now=0|json=0
+P4REQUIRES|new_tools_visible_after=/mcp_reconnect_or_new_session|json=0

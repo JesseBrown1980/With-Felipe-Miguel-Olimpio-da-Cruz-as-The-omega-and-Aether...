@@ -15,6 +15,13 @@ From the cloud session, to Claude Code on ACER (Windows), working for the owner,
 > delivered: all 32 bodies of cube `9859b576` arrived in four zips, each body matches its cube pin
 > (32/32), and they are at `acer/` under their ACER paths. Items 6, 7, 8, 9, 10 and the `verbs.hbp`
 > part of item 12 are **RECEIVED**.
+>
+> **P3 and P4 delivered** (`docs/handoffs/gnn-retrain-2026-10-18/`,
+> `docs/handoffs/p4-sidecar-lanes-2026-10-18/`; see `docs/handoffs/README.md`). **P5, next send:** the
+> bridge source `C:/Users/acer/Asolaria/tools/behcs/gnn-dispatch-bridge.mjs` (sha256 `21e06399…`) and
+> the ledger `C:/Users/acer/Asolaria/data/behcs/gnn-predictions.ndjson` (sha256 `70541242…`), hash
+> first, then zip, as in §1. aether ports `stablePredictionId`, `classifyTier` and
+> `resolvePredictionPid` to Rust and byte-compares its rows with the P4 golden file.
 
 ## 1. Why this handoff, and the rules
 

@@ -1,0 +1,15 @@
+RETRAINHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=P3_stratified_retrain_L1_L2_L4|directed_by=OP-JESSE_yes_I_want_the_other_two_2026-10-18|outdir=gnn-retrain-2026-10-18|originals_touched=0|servers_swapped=0|E=0|json=0
+RETRAINENV|torch=2.13.0+cpu|pyg=2.7.0|gcn_l1=torch_geometric|gcn_l2=torch_geometric|gcn_l4=torch_geometric|seed=1792|steps=300|json=0
+SPLIT|kind=stratified_seeded|benign_train=28|benign_val=6|benign_test=6|susp_train=220646|susp_val=47281|susp_test=47282|split_sha16=27152b521ce28662|json=0
+GATECEILING|gate=std_gt_0.01_on_corpus|max_possible_std=0.011264|meaning=even_a_perfect_0/1_classifier_clears_the_gate_by_only_0.00126_at_40_of_315249|json=0
+RETRAINED|model=L1|n=315249|min=2.083985464196303e-06|max=1.0|std=0.0119466|n_unique=7|gate_std_gt_0p01=1|auc_corpus=25216720/25216720=1.000000|auc_train=12356176/12356176=1.000000|auc_val=567372/567372=1.000000|auc_test=567384/567384=1.000000|test_benign_caught_at_0p5=6/6|test_false_alarms_at_0p5=1/47282|train_secs=39.4|scores_sha16=38b043191a5e62e2|json=0
+CKPT|model=L1|file=prototype_model_strat_2026-10-18.pt|bytes=74176|sha256=dc8ea19512ad62da617b8e42da98575940c990f89d364a682fa74ed0da5cba0c|keyform=pyg|strict_reload=1|reload_scores_identical=1|json=0
+RETRAINED|model=L2|n=315249|min=1.5795305898791412e-06|max=1.0|std=0.0119465|n_unique=20|gate_std_gt_0p01=1|auc_corpus=25216720/25216720=1.000000|auc_train=12356176/12356176=1.000000|auc_val=567372/567372=1.000000|auc_test=567384/567384=1.000000|test_benign_caught_at_0p5=6/6|test_false_alarms_at_0p5=1/47282|train_secs=40.7|scores_sha16=8bc74ee31839acab|json=0
+CKPT|model=L2|file=contrastive_model_strat_2026-10-18.pt|bytes=99541|sha256=fe9b3a8ecd4cceb92539f98397a7361afd4dcb85d7aded9f76707b24788ac723|keyform=pyg|strict_reload=1|reload_scores_identical=1|json=0
+HELPERPARITY|model=L4|gsl_logits_vs_forward_max_abs=0.0|probe_edges=317|json=0
+RETRAINED|model=L4|n=315249|min=3.03053020616062e-05|max=1.0|std=0.0119452|n_unique=20|gate_std_gt_0p01=1|auc_corpus=25216720/25216720=1.000000|auc_train=12356176/12356176=1.000000|auc_val=567372/567372=1.000000|auc_test=567384/567384=1.000000|test_benign_caught_at_0p5=6/6|test_false_alarms_at_0p5=1/47282|train_secs=44.8|scores_sha16=993cb532f9944bbf|json=0
+CKPT|model=L4|file=gslgnn_w9_3_strat_2026-10-18.pt|bytes=120759|sha256=23e44abfc111d62078771fd9deaa9ece570074111a4c92f0132538ccded423d0|keyform=pyg|strict_reload=1|reload_scores_identical=1|json=0
+RETRAINDONE|secs=126.9|originals_touched=0|servers_swapped=0|json=0
+CORRECTION_BESIDE|row=GATECEILING|wrong_label=max_possible_std|right=std_of_a_PERFECT_0/1_classifier=0.011264|observed=0.01195_higher_because_~5_false_alarms_add_low_scores|row_kept_beside|json=0
+SCOPE|auc_1.0_means=separable_within_this_corpus|not=generalization|why=val/test_benign_edges_sit_on_the_same_pure-benign_node_pairs_as_train|json=0
+SWAP|status=NOT_DONE|why=servers_hardcode_original_filenames+L2_has_no_server|owner_call=1|json=0
