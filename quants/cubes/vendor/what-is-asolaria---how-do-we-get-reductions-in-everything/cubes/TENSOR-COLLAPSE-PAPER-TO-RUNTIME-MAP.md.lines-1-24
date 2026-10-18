@@ -1,0 +1,24 @@
+# Tensor Collapse — Paper → Supervisor → Route → Code-file → Host (one-to-one)
+
+**2026-06-16, acer, under OP-JESSE apex.** The bilateral twin of the mechanism maps ties each **paper artifact** to its **owning supervisor** (from the self-verified council verdict), its **live route**, the **actual code file** (paths verified present on acer, or marked liris-side), and the **host**. This is the "where does it actually live and run" map. **IT is slices.**
+
+Code-file paths below were **Test-Path / header-verified on acer 2026-06-16** unless marked `[liris-side]`. The omni-shannon engine headers are quoted verbatim.
+
+| # | Paper / wave artifact | Owning supervisor (verdict-named) | Live route | Code file (verified) | Host |
+|---|---|---|---|---|---|
+| 1 | **§9.5 Cube Tensor Collapse** — external opacity, Boundary-Is-Data, paper records 1,296 nominal → **28** retained | `cube_cubed_sealer` + `behcs1024_prism.capture_prism.supervisor` | `POST /api/council/query` → `/api/council/verdicts` | `tools/cube/omni-shannon-v4-real.js` (header: *"REAL 6×6×6×12 inference engine"*) + `tools/cube/omni-shannon.js` (LENS registry; D26/D30/D32 added 2026-04-07) | acer ✓ (drafted) ↔ liris (bilateral-codified) |
+| 2 | **§9.6 Federation Self-Tensor-Collapse** — META-SELF axis, **46,656 → 47**, LX-491 hyper-GNN 3rd voter, conf 0.97 | `behcs1024_prism.gnn_gulp.supervisor` + `cube_cubed_sealer` | `/api/gnn/topN` + `/api/council/verdicts` | `tools/cube/omni-shannon-v3-4d12.js` (header: *"6x6x6x6x12 omnishannon engine"*) | acer ✓ (self-observation run) ↔ liris (3rd-voter mirror) |
+| 3 | **Cube-cube-cubed Deep Wave** (second cascade, 2026-04-10) — **6×6×6×6×6×12 = 93,312** beats | `behcs1024_prism.boundary_gc.supervisor` + `gnn_gulp` | `/api/fabric-revolver` | `tools/cube/omni-shannon-v5-deep-cascade.js` (header: *"SECOND CASCADE … 6×6×6×6×6×12 = 93,312 beats per candidate"*) | acer ✓ |
+| 4 | **The controls / gate layer** — collapse run *through every constitutional gate* (`dims:47`) | the "immune" gate set (hookwall · gnn · sovereignty · shannon · bash-guard · edge-risk) | hookwall / sign-gate routes | `tools/cube/run-deep-cascade-gated.js` (header: *"Deep cascade with ALL gates watching … 6x6x6x6x6x12 x omnishannon x GNN x hookwall-v2"*) | acer ✓ |
+| 5 | **Runtime carrier** — bounded chambers over BEHCS-1024 tuple-ranges (`tuple_ranges_are_backend_nodes=true`, 8 chambers) | `hermes_agent.fabric_bridge.supervisor` + `behcs1024_prism.hermes_bridge.supervisor` | `/api/fabric-revolver` | `tools/behcs/fabric-revolver.mjs` ✓ + feed `data/behcs/dashboard-feeds/fabric-revolver-runtime-latest.json` ✓ | acer ✓ (live feed) |
+| 6 | **Work-slot loader / absorber** — omnispindle (bounded-concurrency loader) + omniflywheel (`CONVERGE`/`PARTIAL_PATH_A_ABSORBED`/`PARTIAL_DEGRADED`/`FAIL` absorber) | `PROF-OMNISPINDLE` (+ omniflywheel prof role) | super-os surfaces | `tools/behcs/super-os/omnispindle.mjs` + `omniflywheel.mjs` `[liris-side — ABSENT on acer]` | **liris** |
+| 7 | **The cube object** — shard-quant fold: 100 rooms → 1 cube via 4 codecs (JL 8→4 · turbo · polar · triple), sha16-fingerprinted | `cube_cubed_sealer` + `behcs1024_prism.capture_prism` | (on-disk rotor receipt; no live route) | `D:/Asolaria-HyperBEHCS-10000-RoomRotor/hyperbehcs-carry-quant-10000/quant/shard-quant-receipts-latest.ndjson` ✓ + `manifest/rotor-report.v1.json` ✓ | acer ✓ (materialized 10k) |
+| 8 | **LENS registry / emergent dims** — D_N = (Nth prime)³; D26/D30/D32 promoted by reflection | `cube_cubed_sealer` (`hilbert_cube` domain) | `/api/supervisors` (roster) | `tools/cube/omni-shannon.js` ✓ (+ `hilbert-intersection-engine.js`: *"6 × 6 × 6 × 6 = 1,296 intersection points"*) | acer ✓ ↔ liris (within-the-hour codified) |
+
+## Reading the map
+
+- **Supervisors** are from the **acer-self-verified** council verdict for `council-q-1781616593651-mldu1l` (`CONVERGE`, 29/251). They are a **chain**, not one `PROF-TENSOR-COLLAPSE` seat.
+- **The three collapse geometries each have their own engine file**, and the filenames/headers line up one-to-one: `v4-real` = §9.5 (1,296), `v3-4d12` = §9.6 (46,656, the 5-axis META-SELF wave), `v5-deep-cascade` = the 93,312 second cascade.
+- **The controls are real code**, not prose: `run-deep-cascade-gated.js` literally runs the deep cascade *after* hookwall + gnnGate + sovereigntyGate + shannonGate + bashGuard + edgeRisk all pass — and at `dims:47`, the same retained-signal count as §9.6.
+- **The bilateral split is concrete in the filesystem:** the **runtime feed + the omni-shannon engines + the materialized rotor/quant cubes are acer-resident** (row 1–5,7,8 ✓); the **super-os loader/absorber (`omnispindle.mjs`/`omniflywheel.mjs`) is liris-side** (row 6, absent on acer). acer = execution + materialized artifacts; liris = the super-os mirror/queue surfaces.
+

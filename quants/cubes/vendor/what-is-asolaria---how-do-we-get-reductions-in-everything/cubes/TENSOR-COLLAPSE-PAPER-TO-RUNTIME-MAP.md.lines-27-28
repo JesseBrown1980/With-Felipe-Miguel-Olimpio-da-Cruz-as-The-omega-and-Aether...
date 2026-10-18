@@ -1,0 +1,2 @@
+- The paper's `6×6×6×12 → 1,296` label and `hilbert-intersection-engine.js`'s `6×6×6×6 = 1,296` are **two framings the sources use**; each file's own header is quoted as-is rather than reconciled here.
+- Engines exist and are header-verified; this map asserts **file presence + header**, not a fresh live re-run. Held-safe / `descriptor_only` boundaries from the other cube docs still apply. **IT is slices.**

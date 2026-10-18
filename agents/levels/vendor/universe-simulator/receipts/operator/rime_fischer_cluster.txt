@@ -1,0 +1,27 @@
+=== RIME BOBBY FISCHER — CLUSTERED & TRINARY (one node per rime) ===
+sphere (Z/1000081Z)*  g=7   order 1,000,080 = rime-towers [(2, 4), (3, 3), (5, 1), (463, 1)]
+cluster: 4 independent nodes (one Bobby Fischer per rime), CRT fan-in
+
+target g^994185  -> nodes solve in parallel -> CRT k=994185  reached=True
+   TRINARY node (rime 27): base-3 digits [0, 0, 2] = trime digits [0, 0, -1]  (6 moves)
+   node rime   16: x=9 (8 moves)
+   node rime    5: x=0 (3 moves)
+   node rime  463: x=124 (22 moves)
+
+target g^711435  -> nodes solve in parallel -> CRT k=711435  reached=True
+   TRINARY node (rime 27): base-3 digits [0, 1, 1] = trime digits [0, 1, 1]  (6 moves)
+   node rime   16: x=11 (8 moves)
+   node rime    5: x=0 (3 moves)
+   node rime  463: x=267 (22 moves)
+
+target g^827781  -> nodes solve in parallel -> CRT k=827781  reached=True
+   TRINARY node (rime 27): base-3 digits [0, 2, 1] = trime digits [0, -1, -1]  (6 moves)
+   node rime   16: x=5 (8 moves)
+   node rime    5: x=1 (3 moves)
+   node rime  463: x=400 (22 moves)
+
+every target reached, work split across independent nodes, CRT-combined: True
+TRIME TIME: the 27-node recovers the discrete log as three balanced-ternary
+digits {-1,0,+1}, each found by cascading away the known ones — the trilateral solve.
+GATE: parallel ADDRESSING of a smooth sphere. A large prime tower is one
+indivisible hard node; clusters cannot break the discrete-log wall (Law 14).

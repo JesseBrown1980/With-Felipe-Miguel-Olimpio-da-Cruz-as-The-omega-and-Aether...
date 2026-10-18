@@ -1,0 +1,20 @@
+[package]
+name = "asolaria-quant-head8"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the Asolaria eight-stage large-message quant head (quant8): JL count-sketch, Turbo int8, Polar sign, Zeta log-magnitude, Triple, Quadruple, histogram and prime-power lanes"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["quantization", "sketch", "integer", "binary64"]
+categories = ["algorithms"]
+
+[lib]
+name = "quant_head8"
+path = "src/lib.rs"
+
+[dependencies]
+
+[dev-dependencies]
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }
+sha2 = "=0.10.9"

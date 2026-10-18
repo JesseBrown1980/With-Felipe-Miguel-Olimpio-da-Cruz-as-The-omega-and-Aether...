@@ -1,0 +1,17 @@
+GCTRACE|source=gc-runtime.mjs@c59e2e6:14-59|ops=1799e+e+199e+e+5e+cli_manual+4000e|json=0
+GC|op=0|total=1|since=1|runs=0|files=1|cap=pass|reason=null|json=0
+GC|op=1|total=2|since=2|runs=0|files=2|cap=pass|reason=null|json=0
+GC|op=2|total=3|since=3|runs=0|files=3|cap=pass|reason=null|json=0
+GC|op=1798|total=1799|since=1799|runs=0|files=1799|cap=pass|reason=null|json=0
+GC|op=1799|total=1800|since=1800|runs=0|files=1800|cap=warn|reason=null|json=0
+GC|op=1800|total=1801|since=1801|runs=0|files=1801|cap=warn|reason=null|json=0
+GC|op=1998|total=1999|since=1999|runs=0|files=1999|cap=warn|reason=null|json=0
+GC|op=1999|total=2000|since=0|runs=1|files=0|cap=pass|reason=auto_threshold|json=0
+GC|op=2000|total=2001|since=1|runs=1|files=1|cap=pass|reason=auto_threshold|json=0
+GC|op=2004|total=2005|since=5|runs=1|files=5|cap=pass|reason=auto_threshold|json=0
+GC|op=2005|total=2005|since=0|runs=2|files=0|cap=pass|reason=cli_manual|json=0
+GC|op=2006|total=2006|since=1|runs=2|files=1|cap=pass|reason=cli_manual|json=0
+GC|op=4005|total=4005|since=0|runs=3|files=0|cap=pass|reason=auto_threshold|json=0
+GC|op=6003|total=6003|since=1998|runs=3|files=1998|cap=warn|reason=auto_threshold|json=0
+GC|op=6004|total=6004|since=1999|runs=3|files=1999|cap=warn|reason=auto_threshold|json=0
+GC|op=6005|total=6005|since=0|runs=4|files=0|cap=pass|reason=auto_threshold|json=0

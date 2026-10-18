@@ -1,0 +1,26 @@
+A cube's address is not a fixed point — it is a **1024-ary Brown-Hilbert prefix** (depth 6 = 2⁶⁰,
+the 60D ceiling). **Space expands per slice (frame):** between any two addresses, a new
+pid-addressable point can be **injected one slice deeper** (`bh_inject_between` → midpoint at
+depth+1; there is always room because deepening multiplies the gap by 1024). So as space/time grows
+to the next slice, points slot in **between** existing ones. The row carries:
+`space_expandable=1 | frame=N | bh_depth=6 | bh_prefix=d0.d1…d5 | inject_between=bh_digital_expansion`.
+
+Honest tag: this is **addressing capacity** — the address form is expandable and points are
+*injectable*; it does not materialize infinite points. Materializing an expanded slice is
+operator-gated (E=0). (`pixels_first` traces to the paper's spacetime-pixels; the frontend only
+projects that discrete pixel substrate.)
+
+## Round-trip proof (comb coherence, lossless transcode)
+The claim "losslessly transcodable across levels" is proven on our own artifact:
+`transcode_256_to_1024` separates a cube's 3200-byte tuple into **2,560 base-1024 glyph "lines"**
+(25,600 bits ÷ 10; the "4 symbols ⇄ 5 bytes" packing), and `transcode_1024_to_256` recombines them —
+**byte-identical, sha256-identical, 0 loss** (Rust `roundtrip_lossless_transcode_comb_coherence` +
+Python `roundtrip_proof`, and Rust==Python symbol-identical). This is the comb: separate → recombine,
+coherent — a **bijection between representation levels**, NOT compression below entropy.
+
+## Gates
+- **No raw M/EEG in git.** `raw_in_repo=0`, `derived_only=1` on every chunk; raw stays on D:, sha-referenced.
+- **License:** CC-BY-NC-4.0 — research/non-commercial only.
+- **Claims gate:** real data does **not** bypass the honest-null. A cube-driven `CubeSource` wins in the
+  harness only if the neural signal genuinely correlates with better control (see `docs/CLAIMS-GATE.md`).
+- **No third-party personal data** (no subject identities beyond de-identified IDs; no collaborator contacts).

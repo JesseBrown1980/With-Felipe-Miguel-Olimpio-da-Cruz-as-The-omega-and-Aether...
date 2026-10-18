@@ -1,0 +1,19 @@
+[package]
+name = "asolaria-levels-agents"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the universe simulator's Fischer and MCP slice agents at levels 3 / 27 / rime, the rime Fischer solvers, and the four-agent wiring of rime_agents.py"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["fischer", "pohlig-hellman", "integer", "levels"]
+categories = ["algorithms"]
+exclude = ["vendor/asolaria-stone-to-moss"]
+
+[lib]
+name = "levels_agents"
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-hrm-mtp = { path = "../../model/hrm-mtp", version = "0.1.0" }
+sha2 = "0.10.9"

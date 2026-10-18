@@ -1,0 +1,9 @@
+LIRISQUANTRBHDR|host=liris|date=2026-06-11|pulled_commit=a509bdc|topic=liris-readback-and-rerun-of-acer-quant-huge-message-benchmark|json=0
+LIRISQUANTRBVERIFY|pyramid_after_pull=114of114_PASS|diff_check=PASS|tool_check=PASS|acer_receipt=docs/ACER-QUANT-HUGE-MESSAGE-BENCH-2026-06-11.hbp-READ|json=0
+LIRISQUANTRBSCOPE|status=ACCEPTED_AS_RECEIPT_NOT_CANON|stages=JL+Turbo+Polar+Zeta+Triple+Quadruple+JS-histogram+von-Mangoldt|binding=FAITHFUL_TO_DOCTRINE_NOT_FABRIC_ENGINE_BINDING|fidelity=UNSWEPT|json=0
+LIRISQUANTRBLIVE|host=liris|node=v24.13.1|command=tools/behcs/quant-huge-message-benchmark.mjs--run--sizes=1,64,256--disk|message_1MB=head2.2ms+sha1.5_to_0.043ms+write1.1_to_0.564ms+compare1.4_to_0.360ms+payload3.1KB|json=0
+LIRISQUANTRBLIVE|host=liris|node=v24.13.1|message_64MB=head53.3ms+sha54.6_to_0.032ms+write186.4_to_0.634ms+compare14.1_to_0.106ms+payload3.1KB|json=0
+LIRISQUANTRBLIVE|host=liris|node=v24.13.1|message_256MB=head88.2ms+sha218.3_to_0.057ms+write842.8_to_0.736ms+compare59.2_to_0.470ms+payload3.1KB|json=0
+LIRISQUANTRBACCEPT|law_shape_confirmed=head-O(size)-paid-once+tail-O(1)-per-consumer+payload-constant-3.1KB|acer_huge_1GB_2GB_rows=ACCEPTED_AS_ACER_MACHINE_TAGGED_RECEIPT|json=0
+LIRISQUANTRBGUARD|still_not_proven=semantic_fidelity+real_fabric_engine_binding+gate_safe_similarity|next_lane=JL-distortion-sweep-methodology-before-any-gate-trusts-quant-space-similarity|json=0
+LIRISQUANTRBFTR|state=QUANT_BENCH_RERUN_CONFIRMED_DRAFT_LAW_REMAINS_HELD_PENDING_FIDELITY_SWEEP|json=0

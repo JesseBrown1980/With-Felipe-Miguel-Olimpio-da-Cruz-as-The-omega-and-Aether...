@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Asolaria HTTP-0 Proxima Ternary Constellation</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#081827;color:#e5f4ff}
+body{max-width:1000px;margin:auto;padding:20px}section{border:1px solid #35546b;border-radius:14px;padding:15px;margin:15px 0;background:#112b3b}
+h1{font-size:1.8rem}h2{font-size:1.25rem}.muted{color:#b2c6d5}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
+article{padding:12px;background:#173c54;border-radius:12px}canvas{width:100%;border:1px solid #3d6581;border-radius:9px}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #33536b;text-align:left}
+input{padding:10px;border:1px solid #456888;border-radius:10px;color:inherit;background:#172d40}
+mark{color:#ffeab0;background:#513d22;padding:4px;border-radius:6px}
+</style></head><body>
+<h1>Asolaria · Proxima Centauri · Ternary Constellation</h1>
+<p class="muted">HTTP-0 offline HTML · Rust 1.81 · exact integer orbital proxy · no float · trits -1, 0, +1</p>
+<section><mark>Scientific boundary</mark><p>The planet and star paths below are a <strong>schematic</strong>, not telescopically resolved images of exoplanets. This page does not synthesize nonexistent measured wavelengths. B/R/I source filter names are not seven calibrated rainbow spectra. No raw telescope imagery was loaded into the simulator.</p></section>
+<section><h2>Three boxes, nine cats, recursive star-neuron levels</h2><p>Every depth runs HRM, MTP 1/2/3, Bobby Fischer challenges, Shannon ternary counts, GNN neighborhood, GULP note and paired Chariots.</p><div class="cards" id="levels"></div></section>
+<section><h2>Constellation schematic: host star + planets b and d</h2><canvas id="sky" width="940" height="320"></canvas><p class="muted">The circles are illustrative; neither orbital location nor a planet surface was measured here.</p></section>
+<section><h2>Reanalyze a physical-CPU Rust output — locally</h2><p>Select the <code>EPOCHS-RUST181.csv</code> emitted by the Rust kernel. File contents remain in this browser; no network or application server is used.</p><input id="file" type="file" accept=".csv,text/csv"><p id="message">No run loaded.</p><div style="overflow-x:auto"><table><thead><tr><th>3^k</th><th>Years (exact)</th><th>Planet b phase (rational)</th><th>Planet d phase (rational)</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<section><h2>10-billion-year memory and orbital-sector reanalysis</h2>
+<p class="muted">Choose the Rust output <code>TEN-BILLION-YEAR-R1.hbp</code>. BigInt arithmetic maps rational orbital phases to 27 observer sectors. This is a schematic derived from input periods, <strong>not</strong> a new astronomical photograph or a reliable 10-Gyr ephemeris.</p>
+<input id="tenb-file" type="file" accept=".hbp,text/plain">
+<p id="tenb-status">No 10-billion-year run loaded.</p>
+<div class="cards" id="tenb-summary"></div>
+<div id="tenb-sectors"></div>
+</section>
+<footer class="muted">Follow the IS: new digital predictions are separate from source measurements. Historical operator-reported optical memory experiments remain separately registered.</footer>
+<script>
+'use strict';
+const root=document.getElementById('levels');let nodes=1;
+for(let k=1;k<=7;k++){nodes*=3;const el=document.createElement('article');const label=document.createElement('strong');label.textContent='Depth '+k+' — '+nodes+' trits';el.append(label);const p=document.createElement('p');p.className='muted';p.textContent='HRM · MTP¹²³ · Fischer · Shannon · GNN · GULP · Chariots';el.append(p);root.append(el)}
+const canvas=document.getElementById('sky'),context=canvas.getContext('2d');
+for(const rad of [90,152]){context.beginPath();context.ellipse(470,158,rad,rad/2,0,0,2*Math.PI);context.strokeStyle='#6c879e';context.stroke()}
+for(const [name,x,y,r,color] of [['Proxima',470,158,22,'#fa966a'],['b',564,168,6,'#9ad5e2'],['d',425,130,4,'#c5c4e6']]){
+ context.beginPath();context.fillStyle=color;context.arc(x,y,r,0,2*Math.PI);context.fill();
+ context.fillStyle='#e7f5ff';context.font='17px system-ui';context.fillText(name,x+15,y-9);
+}
+document.getElementById('file').addEventListener('change',async ev=>{
+ const file=ev.target.files&&ev.target.files[0];if(!file)return;
+ const lines=(await file.text()).trim().split(/\r?\n/);let header=lines.shift().split(',');
+ if(header[0]!=='exponent'||header[1]!=='years_exact'){document.getElementById('message').textContent='Rejected: unexpected CSV schema';return}
+ const table=document.getElementById('rows');table.replaceChildren();let count=0;
+ for(const line of lines){const cells=line.split(',');if(cells.length!==header.length)continue;
+   const row=document.createElement('tr');
+   for(const value of [cells[0],cells[1],cells[2]+'/'+cells[3],cells[4]+'/'+cells[5]]){const cell=document.createElement('td');cell.textContent=value;row.append(cell)}
+   table.append(row);count++;
+ }document.getElementById('message').textContent='Loaded '+count+' immutable-integer epoch rows from '+file.name;
+});
+
+document.getElementById('tenb-file').addEventListener('change',async ev=>{
+ const file=ev.target.files&&ev.target.files[0];if(!file)return;
+ const content=await file.text(),lines=content.trim().split(/\r?\n/);
+ const take=line=>Object.fromEntries(line.split('|').slice(1).map(s=>s.split('=')).filter(x=>x.length===2));
+ const orbitLine=lines.find(s=>s.startsWith('ORBIT|'));
+ const massLine=lines.find(s=>s.startsWith('MASS|'));
+ const memLine=lines.find(s=>s.startsWith('INDEPENDENT|'));
+ const status=document.getElementById('tenb-status');
+ if(!orbitLine||!massLine||!memLine){status.textContent='Rejected: missing oracle or individual memory observations';return}
+ const orbit=take(orbitLine),mass=take(massLine),mem=take(memLine);
+ if(orbit.model_years!=='10000000000'||mem.materialized_particles!=='81'||mem.total_events!=='2187'){
+  status.textContent='Rejected: unsupported epoch or missing personal memory records';return
+ }
+ const summary=document.getElementById('tenb-summary');summary.replaceChildren();
+ for(const [name,value] of [['Logical years','10,000,000,000'],['Individual memories',mem.materialized_particles],
+ ['Retained individual events',mem.total_events],['Confirmed minimum-mass proxy','1.315 Earth masses'],
+ ['New rocky planet','No independent evidence']]){
+  const article=document.createElement('article'),head=document.createElement('strong'),p=document.createElement('p');
+  head.textContent=name;p.textContent=value;article.append(head,p);summary.append(article);
+ }
+ const sectors=document.getElementById('tenb-sectors');sectors.replaceChildren();
+ for(const name of ['b','d']){
+  const [n,d]=orbit[name+'_phase'].split('/');
+  const sector=Number(BigInt(n)*27n/BigInt(d));
+  const heading=document.createElement('h3');heading.textContent='Proxima '+name+' — 27-sector phase '+sector+' / 26';
+  sectors.append(heading);
+  const ring=document.createElement('div');ring.style.display='grid';
+  ring.style.gridTemplateColumns='repeat(9,1fr)';ring.style.gap='3px';
+  for(let i=0;i<27;i++){
+   const cell=document.createElement('span');cell.textContent=i.toString();
+   cell.style.textAlign='center';cell.style.padding='10px 0';
+   cell.style.borderRadius='5px';cell.style.background=i===sector?'#bb994d':'#21435d';
+   cell.style.color=i===sector?'#091923':'#e6f4ff';ring.append(cell);
+  }
+  sectors.append(ring);
+ }
+ status.textContent='Read '+lines.filter(x=>x.startsWith('PARTICLE|')).length+
+ ' individually predicted particle-memory states from '+file.name+
+ '. Original photon-camera pixels were not in this file.';
+});
+</script></body></html>

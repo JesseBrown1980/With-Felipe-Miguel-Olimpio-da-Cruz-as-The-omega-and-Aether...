@@ -1,0 +1,9 @@
+    #[test]
+    fn roundtrip_lossless_transcode_comb_coherence() {
+        // a cube tuple: 3200 bytes -> 2560 base-1024 symbols -> 3200 bytes, byte-identical
+        let tuple: Vec<u8> = (0..3200u32).map(|i| ((i.wrapping_mul(2654435761)) >> 13) as u8).collect();
+        let down = transcode_256_to_1024(&tuple);       // separate into glyph lines (comb forward)
+        let up = transcode_1024_to_256(&down, tuple.len()); // recombine (comb backward)
+        assert_eq!(down.len(), 2560);                   // 25600 bits / 10
+        assert_eq!(up, tuple);                          // 0 loss on our own artifact
+    }

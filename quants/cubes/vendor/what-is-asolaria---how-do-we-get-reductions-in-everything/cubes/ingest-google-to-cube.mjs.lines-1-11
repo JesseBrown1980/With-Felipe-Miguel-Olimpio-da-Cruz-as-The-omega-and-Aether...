@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+// ingest-google-to-cube.mjs — DEMO: ingest a Google Drive doc (read via the EXISTING claude.ai
+// Drive MCP, no gcloud/key) INTO the Asolaria structures: slice -> tuple -> quant -> cube glyph
+// -> verb/noun glyph-vocabulary catalog -> HBP receipt. Referential: emits the cube + catalog,
+// NOT the raw content (content stays content-addressed). Held-safe: read-only input, no provider
+// calls, no device mutation beyond the local receipt. "Ingest, don't integrate."
+
+import fs from 'node:fs';
+import { createHash } from 'node:crypto';
+const sha = (s) => createHash('sha256').update(s, 'utf8').digest('hex');
+const SRC = process.argv[2] || 'C:/tmp/ingest-source-01.txt';

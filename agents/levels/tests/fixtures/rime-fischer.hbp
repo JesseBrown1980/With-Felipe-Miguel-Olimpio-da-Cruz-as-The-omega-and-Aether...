@@ -1,0 +1,21 @@
+# stdout of the vendored players/rime_fischer.py, run unchanged by tools/levels_referee.py; do not edit
+SOURCE|repo=ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills@3f9f42dab6247c40b30921b253e3f73c9e942ca5|path=players/rime_fischer.py|run=python3 -B -E -s -X utf8|json=0
+LINE|n=1|text==== RIME FISCHER — play the sphere (Z/1000081Z)*, g=7 ===
+LINE|n=2|text=  sphere order 1,000,080 = nested rime-towers [16, 27, 5, 463]  (smooth -> playable)
+LINE|n=3|text=
+LINE|n=4|text=  target g^994185 -> played k=994185  reached=True
+LINE|n=5|text=  target g^711435 -> played k=711435  reached=True
+LINE|n=6|text=  target g^827781 -> played k=827781  reached=True
+LINE|n=7|text=  target g^969278 -> played k=969278  reached=True
+LINE|n=8|text=  target g^238602 -> played k=238602  reached=True
+LINE|n=9|text=
+LINE|n=10|text=  every target reached from the null center, rime-dimensionally: True
+LINE|n=11|text=  one Bobby Fischer per rime, cascading digit-differences (base q), then CRT:
+LINE|n=12|text=    rime   16: ~8 cascade-moves  (vs 16 brute) — the difference cascade
+LINE|n=13|text=    rime   27: ~6 cascade-moves  (vs 27 brute) — the difference cascade
+LINE|n=14|text=    rime    5: ~3 cascade-moves  (vs 5 brute) — the difference cascade
+LINE|n=15|text=    rime  463: ~22 cascade-moves  (vs 463 brute) — the difference cascade
+LINE|n=16|text=
+LINE|n=17|text=  GATE: this works because the order is SMOOTH (small prime towers).
+LINE|n=18|text=  A sphere with a large prime factor is UNPLAYABLE — the discrete-log wall.
+END|lines=18|stdout_bytes=995|stdout_sha256=cd03fa1e3d8746def039d9f383644ae3d3f4a2a7a1235410d37d8a00a300b8e0|json=0

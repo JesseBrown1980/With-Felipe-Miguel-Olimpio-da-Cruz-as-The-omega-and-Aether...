@@ -1,0 +1,19 @@
+[package]
+name = "asolaria-quant-recovery-crosscheck"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+publish = false
+description = "Tests only: ties quants 22-24 of the owner's combined quant registry to the vendored dbbh-coms-quant-prism and path2-two-shadow-recovery crates, and calls codec/dbbh-dbwh side by side with them on the same inputs"
+
+[lib]
+name = "quant_recovery_crosscheck"
+path = "src/lib.rs"
+
+[dependencies]
+
+[dev-dependencies]
+dbbh-coms-quant-prism = { path = "../dbbh-coms-quant-prism", version = "0.1.0" }
+path2-two-shadow-recovery = { path = "../path2-two-shadow-recovery", version = "0.1.0" }
+holographic-wormhole-codec = { path = "../../../codec/dbbh-dbwh", version = "0.1.0" }

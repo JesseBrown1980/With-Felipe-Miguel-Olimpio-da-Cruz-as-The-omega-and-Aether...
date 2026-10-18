@@ -1,0 +1,30 @@
+/// An 8-byte Host-8 handle.
+pub struct Host8(pub [u8; 8]);
+
+impl Host8 {
+    pub fn to_hex(&self) -> String {
+        self.0.iter().map(|b| format!("{:02x}", b)).collect()
+    }
+
+    /// FNV-1a 64-bit — the graphify Host-8 node primary key (byte-identical to graphify.py).
+    pub fn fnv1a64(s: &str) -> Host8 {
+        let mut h: u64 = 0xcbf29ce484222325;
+        for &b in s.as_bytes() {
+            h ^= b as u64;
+            h = h.wrapping_mul(0x100000001b3);
+        }
+        Host8(h.to_be_bytes())
+    }
+
+    /// Content handle from a sha256 hex prefix (>= 16 hex chars) — liris `from_sha256_prefix`.
+    pub fn from_sha256_prefix(hex: &str) -> Result<Host8, &'static str> {
+        if hex.len() < 16 {
+            return Err("sha256 hex prefix must have at least 16 chars");
+        }
+        let mut out = [0u8; 8];
+        for i in 0..8 {
+            out[i] = u8::from_str_radix(&hex[i * 2..i * 2 + 2], 16).map_err(|_| "bad hex")?;
+        }
+        Ok(Host8(out))
+    }
+}

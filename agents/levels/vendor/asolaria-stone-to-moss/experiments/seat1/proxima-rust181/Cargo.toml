@@ -1,0 +1,10 @@
+[package]
+name = "asolaria-proxima-ternary"
+default-run = "asolaria-proxima-ternary"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "Asolaria GF3 orbital phase constellation and level-by-level verification"
+
+[dependencies]

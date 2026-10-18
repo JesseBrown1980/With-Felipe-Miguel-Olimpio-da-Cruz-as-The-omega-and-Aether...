@@ -1,0 +1,106 @@
+    fn payload() -> Vec<u8> {
+        (0..4097u32)
+            .map(|i| ((i.wrapping_mul(2_654_435_761) >> 11) ^ (i * 17)) as u8)
+            .collect()
+    }
+
+    fn assert_tuple_row(row: &str) {
+        assert!(row.ends_with("|json=0"), "row must end json=0: {}", row);
+        assert!(
+            !row.contains('{') && !row.contains('}') && !row.contains('"'),
+            "row must not be JSON: {}",
+            row
+        );
+    }
+
+    #[test]
+    fn unit_sha256_known_answer_tests() {
+        assert_eq!(
+            sha256(b"").hex(),
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        );
+        assert_eq!(
+            sha256(b"abc").hex(),
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+        );
+    }
+
+    #[test]
+    fn unit_behcs_64_256_1024_each_roundtrips() {
+        let p = payload();
+        for rung in [
+            BehcsRung::Behcs64,
+            BehcsRung::Behcs256,
+            BehcsRung::Behcs1024,
+        ] {
+            let frame = SymbolFrame::encode(rung, &p);
+            assert_eq!(frame.decode(), p, "{} did not roundtrip", rung.label());
+        }
+    }
+
+    #[test]
+    fn suite_ladder_groupoid_pairwise_roundtrips() {
+        let p = payload();
+        let rungs = [
+            BehcsRung::Behcs64,
+            BehcsRung::Behcs256,
+            BehcsRung::Behcs1024,
+        ];
+        for from in rungs {
+            let a = SymbolFrame::encode(from, &p);
+            for to in rungs {
+                let b = a.convert(to);
+                let c = b.convert(from);
+                assert_eq!(b.decode(), p);
+                assert_eq!(c.decode(), p);
+            }
+        }
+    }
+
+    #[test]
+    fn unit_hyperbehcs_is_store_backed_lossless_reference() {
+        let p = payload();
+        let mut store = ContentStore::new();
+        let agt = store.put(&p);
+        let hyper = HyperBehcsFrame::new(
+            agt,
+            "PID-AI-ACER-60D",
+            "PID-HW-QPRISM-60D",
+            LinkMode::AiToHardware,
+            p.len(),
+        );
+        assert_eq!(hyper.source.axes.len(), HYPERBEHCS_DIMS);
+        assert_eq!(hyper.target.axes.len(), HYPERBEHCS_DIMS);
+        assert_eq!(hyper.recover(&store).unwrap(), p.as_slice());
+        let row = hyper.hbp_row();
+        assert_tuple_row(&row);
+        assert!(row.contains("mode=AI_HW"));
+        assert!(row.contains("src_dims=60"));
+        assert!(row.contains("dst_dims=60"));
+    }
+
+    #[test]
+    fn integration_double_binary_gate_requires_both_sides_and_supports_modes() {
+        let p = payload();
+        let mut store = ContentStore::new();
+        let agt = store.put(&p);
+        for mode in [
+            LinkMode::AiToAi,
+            LinkMode::AiToHardware,
+            LinkMode::HardwareToHardware,
+        ] {
+            let mut cap = DoubleBinaryCapsule::new("PID-SRC-60D", "PID-DST-60D", mode);
+            assert!(prepare_packet(&mut cap, agt, p.len()).is_none());
+            cap.arm_left();
+            assert!(prepare_packet(&mut cap, agt, p.len()).is_none());
+            cap.arm_right();
+            let packet = prepare_packet(&mut cap, agt, p.len()).expect("both sides armed");
+            let row = packet.hbp_row();
+            assert_tuple_row(&row);
+            assert!(row.contains(&format!("mode={}", mode.as_hbp())));
+            assert!(row.contains("wire=address_only"));
+            assert!(row.contains("payload_bytes_on_wire=0"));
+            cap.collapse();
+            assert!(prepare_packet(&mut cap, agt, p.len()).is_none());
+        }
+    }

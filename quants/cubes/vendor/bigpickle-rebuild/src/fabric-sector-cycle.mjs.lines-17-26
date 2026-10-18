@@ -1,0 +1,10 @@
+
+// the CANONICAL FEDERATED scorer — byte-converged with liris's geniusScore (the 3rd
+// byte-proven convergence, verified 2026-06-01: acer==liris on
+// BH.SECTOR.P2.R0000000.7593C541 = 0.755838). So acer-addresses + liris-scores +
+// acer-buses produce IDENTICAL verdicts on all 3 vantages. HONEST: this is the
+// PLACEHOLDER (address-derived, ignores work content); the real domain scorer (lever-2)
+// scores the WORK and needs a real task — it won't be a pure pid-fn.
+function defaultScore(pid) {
+  return parseInt(createHash('sha256').update(String(pid)).digest('hex').slice(0, 8), 16) / 0xffffffff;
+}

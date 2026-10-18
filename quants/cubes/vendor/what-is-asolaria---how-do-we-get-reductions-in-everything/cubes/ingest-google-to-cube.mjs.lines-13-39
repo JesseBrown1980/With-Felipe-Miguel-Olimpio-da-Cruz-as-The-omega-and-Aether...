@@ -1,0 +1,27 @@
+const TITLE = process.argv[4] || 'ASOLARIA-CANON-SOURCE-01';
+
+const text = fs.readFileSync(SRC, 'utf8');
+const raw_bytes = Buffer.byteLength(text, 'utf8');
+const full_sha = sha(text);
+const cube10 = full_sha.slice(0, 20);          // 10-byte HyperBEHCS cube glyph (content address)
+const handle8 = full_sha.slice(0, 16);          // 8-byte host handle
+
+// BEHCS-style 8-dim quant fingerprint (hash tokens into 8 signed buckets) — the shard-quant shape
+const proj = new Float64Array(8);
+const toks = text.toLowerCase().match(/[a-z][a-z0-9_-]{1,}/g) || [];
+for (const t of toks) { const h = [...t].reduce((a, c) => (a * 131 + c.charCodeAt(0)) >>> 0, 7); proj[h & 7] += (h & 8) ? -1 : 1; }
+const quant8 = Array.from(proj, (v) => Math.max(0, Math.min(255, Math.round(128 + v))) ).join(',');
+
+// verb/noun glyph-vocabulary: distinct content words -> each a glyph-tuple (sha16) catalog entry.
+const STOP = new Set('the a an is it of to and or in on for as by with not no but its are be that this each so an at into we us our their they them then than only one two more most every all any can could should would'.split(' '));
+const freq = new Map();
+for (const t of toks) { if (t.length < 4 || STOP.has(t)) continue; freq.set(t, (freq.get(t) || 0) + 1); }
+const vocab = [...freq.entries()].sort((a, b) => b[1] - a[1]);
+const distinct_terms = vocab.length;
+const top = vocab.slice(0, 10).map(([w, n]) => `${w}:${n}:g${sha(w).slice(0, 8)}`);
+
+// referential compression framing: raw doc vs the cube handle that addresses it
+const ratio_raw_to_handle = Math.round(raw_bytes / 8);
+const ratio_raw_to_cube = Math.round(raw_bytes / 10);
+
+const rows = [];

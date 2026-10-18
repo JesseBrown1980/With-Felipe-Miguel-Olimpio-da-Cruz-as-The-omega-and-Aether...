@@ -1,0 +1,28 @@
+// Lossless transcode between representation LEVELS (the comb: separate -> recombine, 0 loss).
+// 256-level (8-bit bytes) <-> 1024-level (10-bit symbols). A bijection; no info created or lost
+// (referential/coherent, NOT compression below entropy). 4 symbols pack 5 bytes; 3200 B = 2560 symbols.
+fn mask(nbits: u32) -> u32 { if nbits == 0 { 0 } else { (1u32 << nbits) - 1 } }
+
+pub fn transcode_256_to_1024(data: &[u8]) -> Vec<u16> {
+    let (mut bits, mut nbits): (u32, u32) = (0, 0);
+    let mut out = Vec::new();
+    for &b in data {
+        bits = (bits << 8) | b as u32; nbits += 8;
+        while nbits >= 10 { nbits -= 10; out.push(((bits >> nbits) & 0x3FF) as u16); }
+        bits &= mask(nbits);   // drop already-emitted high bits (keep residual)
+    }
+    if nbits > 0 { out.push(((bits << (10 - nbits)) & 0x3FF) as u16); }
+    out
+}
+
+pub fn transcode_1024_to_256(symbols: &[u16], nbytes: usize) -> Vec<u8> {
+    let (mut bits, mut nbits): (u32, u32) = (0, 0);
+    let mut out = Vec::new();
+    for &s in symbols {
+        bits = (bits << 10) | (s as u32 & 0x3FF); nbits += 10;
+        while nbits >= 8 { nbits -= 8; out.push(((bits >> nbits) & 0xFF) as u8); }
+        bits &= mask(nbits);   // drop already-emitted high bits (keep residual)
+    }
+    out.truncate(nbytes);
+    out
+}

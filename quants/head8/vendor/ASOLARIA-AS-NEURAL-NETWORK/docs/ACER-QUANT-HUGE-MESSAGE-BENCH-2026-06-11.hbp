@@ -1,0 +1,16 @@
+QUANTBENCHHDR|host=acer|date=2026-06-11|node=v24.13.1|cpu=Intel-Core-i5-8300H|mode=synthetic-faithful-8-stage|authority=OP-JESSE-apex-human-I-APPROVE-2026-06-11|lane=liris-specced-benchmark-receipt-NOT-canon-law|json=0
+QUANTBENCHSCOPE|stages=JL+Turbo+Polar+Zeta+Triple+Quadruple+JS-histogram+von-Mangoldt|status=FAITHFUL_TO_DOCTRINE_NOT_FABRIC_ENGINE_BINDING|fabric_live_path=4-scalar-quants-per-PID-from-hashes-a-different-cheaper-animal|fidelity=UNSWEPT|json=0
+QUANTBENCHRESULT|message=1MB|head_ms=1.3|sha_gain=62x|write_gain=2x|compare_gain=8x|payload=3.1KB|json=0
+QUANTBENCHRESULT|message=8MB|head_ms=14.7|sha_gain=466x|write_gain=9x|compare_gain=43x|payload=3.1KB|json=0
+QUANTBENCHRESULT|message=64MB|head_ms=25.2|sha_gain=4774x|write_gain=158x|compare_gain=166x|payload=3.1KB|json=0
+QUANTBENCHRESULT|message=256MB|head_ms=123|sha_gain=10239x|write_gain=637x|compare_gain=210x|e2e_gain=8.1x|json=0
+QUANTBENCHRESULT|message=1024MB|head_ms=574|sha_gain=66158x|write_gain=2881x|compare_gain=1781x|e2e_gain=6.8x|json=0
+QUANTBENCHRESULT|message=2048MB|head_ms=1062|sha_gain=79303x|write_gain=4662x|compare_gain=1698x|e2e_gain=7.2x|ingest=1928MBps|json=0
+QUANTBENCHHEADRATE|encode=1.8-to-2.1GBps-FLAT-from-256MB-to-2GB|meaning=head-tax-exactly-linear-never-degrades-while-tail-gains-grow-with-size|json=0
+QUANTBENCHASYMPTOTE|quant_pipeline_ceiling=memory-scan-speed(~1.9GBps)|raw_pipeline_ceiling=disk-plus-hash-speed(~270MBps)|fanout=tail-gains-multiply-per-consumer-head-paid-once|json=0
+QUANTBENCHAPILIMIT|finding=raw-2GB-message-CRASHED-node-single-shot-sha256(ERR_OUT_OF_RANGE-2^31)|forced=chunked-raw-path|quant_tuple=3.1KB-never-hits-API-limits|json=0
+QUANTBENCHRETENTION|raw=~7-messages-of-2GB-fit-16GB-RAM|quant=~5M-tuples-fit-16GB-RAM|meaning=GC-envelope-economics-at-the-message-layer-keep-the-quant-of-everything-the-bytes-of-almost-nothing|json=0
+QUANTLAW_DRAFT|head=O(size)-paid-once|tail=O(1)-per-consumer|rule=quant-converts-size-tail-cost-to-constant-tuple-cost|status=DRAFT_UNTIL_LIRIS_RERUN_AND_FIDELITY_SWEEP|json=0
+QUANTGUARD|not_proven=semantic_fidelity+real_fabric_engine_binding+gate_safe_similarity|next=rerunnable-tool-COMMITTED(tools/behcs/quant-huge-message-benchmark.mjs)+liris-rerun+JL-distortion-sweep+explicit-binding-to-real-quant-engine-path|json=0
+QUANTBENCHSAFETY|repo_side_only=1|no_live_model_run=1|no_mint=1|temp_files_deleted=1|mutates=receipt+tool+test-files-only|json=0
+QUANTBENCHFTR|state=QUANT_BENCH_SEALED_AS_RECEIPT_NOT_CANON_READY_FOR_LIRIS_RERUN|json=0

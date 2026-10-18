@@ -1,0 +1,242 @@
+pub const BH_RADIX: u64 = 1024;
+pub const BH_DEPTH: usize = 6;
+
+pub fn bh_prefix(handle8_hex: &str) -> Vec<u16> {
+    let mut n = u64::from_str_radix(handle8_hex, 16).unwrap_or(0) % BH_RADIX.pow(BH_DEPTH as u32);
+    let mut d = vec![0u16; BH_DEPTH];
+    for i in (0..BH_DEPTH).rev() {
+        d[i] = (n % BH_RADIX) as u16;
+        n /= BH_RADIX;
+    }
+    d
+}
+
+fn bh_int(digits: &[u16]) -> u128 {
+    let mut n: u128 = 0;
+    for &x in digits {
+        n = n * BH_RADIX as u128 + x as u128;
+    }
+    n
+}
+
+/// Inject a pid-addressable point strictly BETWEEN a and b, one slice deeper (the next slice).
+pub fn bh_inject_between(a: &[u16], b: &[u16]) -> Vec<u16> {
+    let l = a.len().max(b.len()) + 1;
+    let mut aa = a.to_vec(); aa.resize(l, 0);
+    let mut bb = b.to_vec(); bb.resize(l, 0);
+    let (mut ai, mut bi) = (bh_int(&aa), bh_int(&bb));
+    if ai > bi {
+        std::mem::swap(&mut ai, &mut bi);
+    }
+    let mut ci = (ai + bi) / 2;
+    if ci <= ai {
+        ci = ai + 1;
+    }
+    let mut out = vec![0u16; l];
+    for i in (0..l).rev() {
+        out[i] = (ci % BH_RADIX as u128) as u16;
+        ci /= BH_RADIX as u128;
+    }
+    out
+}
+
+pub fn bh_render(digits: &[u16]) -> String {
+    digits.iter().map(|d| d.to_string()).collect::<Vec<_>>().join(".")
+}
+
+// Lossless transcode between representation LEVELS (the comb: separate -> recombine, 0 loss).
+// 256-level (8-bit bytes) <-> 1024-level (10-bit symbols). A bijection; no info created or lost
+// (referential/coherent, NOT compression below entropy). 4 symbols pack 5 bytes; 3200 B = 2560 symbols.
+fn mask(nbits: u32) -> u32 { if nbits == 0 { 0 } else { (1u32 << nbits) - 1 } }
+
+pub fn transcode_256_to_1024(data: &[u8]) -> Vec<u16> {
+    let (mut bits, mut nbits): (u32, u32) = (0, 0);
+    let mut out = Vec::new();
+    for &b in data {
+        bits = (bits << 8) | b as u32; nbits += 8;
+        while nbits >= 10 { nbits -= 10; out.push(((bits >> nbits) & 0x3FF) as u16); }
+        bits &= mask(nbits);   // drop already-emitted high bits (keep residual)
+    }
+    if nbits > 0 { out.push(((bits << (10 - nbits)) & 0x3FF) as u16); }
+    out
+}
+
+pub fn transcode_1024_to_256(symbols: &[u16], nbytes: usize) -> Vec<u8> {
+    let (mut bits, mut nbits): (u32, u32) = (0, 0);
+    let mut out = Vec::new();
+    for &s in symbols {
+        bits = (bits << 10) | (s as u32 & 0x3FF); nbits += 10;
+        while nbits >= 8 { nbits -= 8; out.push(((bits >> nbits) & 0xFF) as u8); }
+        bits &= mask(nbits);   // drop already-emitted high bits (keep residual)
+    }
+    out.truncate(nbytes);
+    out
+}
+
+pub const GRAPHIFY_SCHEMA: &str = "ASOLARIA-GRAPHIFY-V3-HYPERBEHCS-60D";
+pub const SELECTOR_CONSTRAINT: &str = "selector_constraint:hyperbehcs-selector-router-60d";
+pub const SELECTOR_AXES: [&str; 11] = [
+    "d-axis-tuples", "glyph-family", "executor-program", "pipe-type", "operation-class",
+    "route-cylinder-room", "proof-tier", "runtime-mode", "colony-vantage", "slice-time",
+    "binary-hash-hex-crypto",
+];
+
+/// Gated CARET active-glyph law — active symbolic geometry, representation-only.
+/// The address DESCRIBES behavior; it never executes without the operator-gated kernel.
+pub fn active_glyph_law(node8: &str) -> String {
+    format!(
+        "QPRISMACTIVEGLYPH|handle8={}|geometry=graphify60d|behavior=represent_address|compile=0|interpret=0|fire=0|json=0",
+        node8
+    )
+}
+
+/// A cube node's identity + provenance handles.
+pub struct CubeHandles {
+    pub node8: String,   // FNV-1a-64(node_id)
+    pub source8: String, // sha256(source)[..8]
+    pub tuple8: String,  // sha256(tuple)[..8]
+    pub glyph: String,
+}
+
+impl CubeHandles {
+    /// Canonical graphify node id (converged with liris): `qprism_cube:{tuple8}` — the cube is
+    /// content-addressed by its quant tuple, so both colonies emit the SAME node PK for a tuple.
+    pub fn graphify_node_id(tuple8: &str) -> String {
+        format!("qprism_cube:{}", tuple8)
+    }
+
+    pub fn new(source_sha256: &str, tuple_sha256: &str, glyph: &str) -> Result<Self, &'static str> {
+        let tuple8 = Host8::from_sha256_prefix(tuple_sha256)?.to_hex();
+        let node_id = CubeHandles::graphify_node_id(&tuple8);
+        Ok(CubeHandles {
+            node8: Host8::fnv1a64(&node_id).to_hex(),
+            source8: Host8::from_sha256_prefix(source_sha256)?.to_hex(),
+            tuple8,
+            glyph: glyph.to_string(),
+        })
+    }
+}
+
+/// acer-vantage value for a graphify-V3 selector axis.
+fn axis_value(axis: &str, h: &CubeHandles, room: &str, slice_time: &str) -> String {
+    match axis {
+        "d-axis-tuples" => "D22_TRANSLATION+D48_HYPERGLYPH_ATLAS+D49_EXECUTION_PROOF_SUPERGRAPH+60D_SELECTOR_FRAME".into(),
+        "glyph-family" => format!("BEHCS_1024+HG1024_QPRISM_{}+HBP_HBI_TUPLE_TEXT", h.glyph),
+        "executor-program" => "NONE_REPRESENTATION_ONLY_AGENTTERMS_FEDENV_NOT_FIRED".into(),
+        "pipe-type" => "DERIVED_FEATURE_CUBE+QUANT8_3200_BYTE_TUPLE+HBP_HBI_TUPLE_TEXT".into(),
+        "operation-class" => "REPRESENT_ADDRESS_DERIVE_DIGEST".into(),
+        "route-cylinder-room" => room.into(),
+        "proof-tier" => "MEASURED_LOCAL_DERIVED+RAW_IN_REPO_0+DISPATCH_OPERATOR_GATED".into(),
+        "runtime-mode" => "COLD_DERIVED_READ_REPRESENTATION_MAP_FIRE_0".into(),
+        "colony-vantage" => "ACER+OP_JESSE_PID+FABRIC_4944".into(),
+        "slice-time" => slice_time.into(),
+        "binary-hash-hex-crypto" => format!("source8:{}+tuple8:{}+node8:{}+sha256_reference", h.source8, h.tuple8, h.node8),
+        _ => "UNKNOWN_AXIS".into(),
+    }
+}
+
+/// Emit the bilateral-converged json=0 kernel-native cube row (the primary carrier). No JSON.
+pub fn cube_row(h: &CubeHandles, room: &str, slice_time: &str, frame: u64, tuple_bytes: usize) -> String {
+    let mut s = String::from("QPRISMCUBE");
+    s.push_str(&format!("|schema=qprism.host8.graphify_selector.v1|graphify_schema={}", GRAPHIFY_SCHEMA));
+    s.push_str(&format!("|handle8={}|source8={}|tuple8={}|glyph={}", h.node8, h.source8, h.tuple8, h.glyph));
+    s.push_str(&format!("|tuple_bytes={}", tuple_bytes));
+    s.push_str("|node_runtime=kernel_contract_not_spawned|nodejs=0|json_object=0");
+    // Jesse's pixels-first: the backend cube IS the representation; the frontend is only a raw
+    // projection (pixels) of it — inert, no logic. machine hot path = tuple-text; JSON = cold.
+    s.push_str("|hot_path=HBP_HBI_TUPLE_TEXT|pixels_first=1|frontend=raw_projection_inert");
+    // space expandable per slice; pid points can be injected in-between (Brown-Hilbert digital expansion)
+    let bh = bh_render(&bh_prefix(&h.node8));
+    s.push_str(&format!("|space_expandable=1|frame={}|bh_depth={}|bh_prefix={}|inject_between=bh_digital_expansion", frame, BH_DEPTH, bh));
+    s.push_str("|agentterms_fedenv_fire=0|dispatch=0|provider_fanout=0|hardware_fire=0");
+    s.push_str("|compile=0|interpret=0|fire=0");
+    s.push_str(&format!("|{}|axis_count={}", SELECTOR_CONSTRAINT, SELECTOR_AXES.len()));
+    for a in SELECTOR_AXES.iter() {
+        s.push_str(&format!("|selector_axis:{}={}", a, axis_value(a, h, room, slice_time)));
+    }
+    s.push_str("|raw_in_repo=0|derived_only=1|json=0");
+    s
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn fnv1a64_matches_graphify() {
+        // FNV-1a-64 of empty string == the offset basis
+        assert_eq!(Host8::fnv1a64("").to_hex(), "cbf29ce484222325");
+        // deterministic 16-hex node PK
+        let h = Host8::fnv1a64("qprism/cube/x").to_hex();
+        assert_eq!(h.len(), 16);
+        assert!(h.chars().all(|c| c.is_ascii_hexdigit()));
+    }
+
+    #[test]
+    fn content_handles_are_sha256_prefixes() {
+        let s = "a".repeat(64);
+        assert_eq!(Host8::from_sha256_prefix(&s).unwrap().to_hex(), "a".repeat(16));
+        assert!(Host8::from_sha256_prefix("tooShort").is_err());
+    }
+
+    #[test]
+    fn row_is_json0_and_gated() {
+        let h = CubeHandles::new(
+            "0ebf9ac4c41cb33d5d1acb071f4e06c8314e83d38088ec1357f36fb786b226b2",
+            "7be9d49b3af31036ccce106658588309d8fb808aaf546cbf7c92baaa1cd3767d",
+            "gly-stcI",
+        ).unwrap();
+        // bilateral parity target: tuple8=7be9d49b3af31036 -> node PK 5edd3a45544437d4
+        assert_eq!(h.tuple8, "7be9d49b3af31036");
+        assert_eq!(h.node8, "5edd3a45544437d4");
+        let row = cube_row(&h, "qprism/SpanishBCBL/stage2/cube-absorption/acer", "2026_07_01_STAGE2", 3, 3200);
+        assert!(row.starts_with("QPRISMCUBE|") && row.ends_with("|json=0"));
+        assert!(!row.contains('{') && !row.contains('}') && !row.contains('"')); // no JSON
+        assert!(row.contains("space_expandable=1") && row.contains("frame=3"));
+        assert!(row.contains("inject_between=bh_digital_expansion") && row.contains("bh_prefix="));
+        assert!(row.contains(&format!("handle8={}", h.node8)));
+        assert!(row.contains(&format!("source8={}", h.source8)));
+        assert!(row.contains(&format!("tuple8={}", h.tuple8)));
+        assert!(row.contains("graphify_schema=ASOLARIA-GRAPHIFY-V3-HYPERBEHCS-60D"));
+        assert!(row.contains("axis_count=11"));
+        for a in SELECTOR_AXES.iter() {
+            assert!(row.contains(&format!("selector_axis:{}=", a)));
+        }
+        for g in ["compile=0", "interpret=0", "fire=0", "agentterms_fedenv_fire=0", "dispatch=0", "nodejs=0"] {
+            assert!(row.contains(g), "missing gate {g}");
+        }
+        assert_eq!(SELECTOR_AXES.len(), 11);
+    }
+
+    #[test]
+    fn roundtrip_lossless_transcode_comb_coherence() {
+        // a cube tuple: 3200 bytes -> 2560 base-1024 symbols -> 3200 bytes, byte-identical
+        let tuple: Vec<u8> = (0..3200u32).map(|i| ((i.wrapping_mul(2654435761)) >> 13) as u8).collect();
+        let down = transcode_256_to_1024(&tuple);       // separate into glyph lines (comb forward)
+        let up = transcode_1024_to_256(&down, tuple.len()); // recombine (comb backward)
+        assert_eq!(down.len(), 2560);                   // 25600 bits / 10
+        assert_eq!(up, tuple);                          // 0 loss on our own artifact
+    }
+
+    #[test]
+    fn bh_inject_is_strictly_between() {
+        // space expandable per slice: inject a pid point BETWEEN two addresses, one slice deeper
+        let a = bh_prefix("0000000000000005");
+        let b = bh_prefix("0000000000000006");
+        let c = bh_inject_between(&a, &b);
+        assert_eq!(c.len(), BH_DEPTH + 1); // deeper = the next slice
+        let pad = |v: &[u16], l: usize| { let mut w = v.to_vec(); w.resize(l, 0); bh_int(&w) };
+        let (la, lb, lc) = (pad(&a, c.len()), pad(&b, c.len()), bh_int(&c));
+        assert!(la.min(lb) < lc && lc < la.max(lb)); // strictly between
+    }
+
+    #[test]
+    fn active_glyph_law_is_gated() {
+        let law = active_glyph_law("3738d5104cd644cd");
+        assert!(law.contains("behavior=represent_address"));
+        for g in ["compile=0", "interpret=0", "fire=0"] {
+            assert!(law.contains(g));
+        }
+        assert!(law.ends_with("|json=0"));
+    }
+}

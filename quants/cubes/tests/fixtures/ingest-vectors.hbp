@@ -1,0 +1,345 @@
+INGESTVECTORS|source=ingest-google-to-cube.mjs@29307bf:15-46|json=0
+CASE|file=vendor/Algorithms-of-Asolaria/ASOLARIA-COMBINED-QUANT-ATLAS-2026-07-13.md|json=0
+INGESTSLICE|raw_bytes=16305|sha256_16=6e3df208579206dc|tokens=1794|distinct_content_terms=737|json=0
+INGESTCUBE|cube10=6e3df208579206dceca1|host_handle8=6e3df208579206dc|quant8=122,74,136,167,165,121,41,114|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=16305|host_handle=8B|cube_glyph=10B|raw->handle=2038x|raw->cube=1631x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=737|sample_top10=exact:28:gfa79d474 text:20:g982d9e3e quant:18:g7327d4d8 lossy:17:g80022a9f representation:13:ga8ad1f5f level:12:g0081779c sketch:12:gf416b363 source:11:g41cf6794 numeric:10:g15f450a5 https:10:g3e194352|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=4174969f87b403f416a0730fa352d91dc89f4ca9766969adb664007462838f78|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Algorithms-of-Asolaria/ASOLARIA-COMBINED-QUANT-REGISTRY-2026-07-13.hbp|json=0
+INGESTSLICE|raw_bytes=6192|sha256_16=147cf6e56a6b0a49|tokens=506|distinct_content_terms=195|json=0
+INGESTCUBE|cube10=147cf6e56a6b0a49e8bb|host_handle8=147cf6e56a6b0a49|quant8=170,160,114,95,175,133,103,134|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=6192|host_handle=8B|cube_glyph=10B|raw->handle=774x|raw->cube=619x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=195|sample_top10=json:43:g02bd175f regime:33:g6ac98b1f owner:29:g4c102969 quant:28:g7327d4d8 alias:28:g1a0a6a36 lossy_numeric_sketch:16:ga2d6307a tools:12:gf9d35d43 exact_representation:8:g799ae29f asolaria-as-neural-network:8:gc17e0174 behcs:8:gba91a612|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=d1cdf9fe0b2375e8dfe3d9688c14c7c9bf6d17183b0eab8c3ef2b8383025adc2|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Algorithms-of-Asolaria/liris/ALGORITHMS-CATALOG-LIRIS-2026-06-19-V2.md.lines-237-260|json=0
+INGESTSLICE|raw_bytes=814|sha256_16=997f5c5bcbe155b9|tokens=99|distinct_content_terms=56|json=0
+INGESTCUBE|cube10=997f5c5bcbe155b9c75d|host_handle8=997f5c5bcbe155b9|quant8=130,130,131,126,122,133,125,126|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=814|host_handle=8B|cube_glyph=10B|raw->handle=102x|raw->cube=81x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=56|sample_top10=measured:4:g6a5cc68c cube:3:g4f3c4172 text:3:g982d9e3e rows:3:gbc51e9e6 tensor:2:gcf4051ef document:2:g43cc23fa ingest:2:g6eb7f2ea google:2:gbbdefa29 sha256:2:g5d5b09f6 raw_bytes:2:g1def113b|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=37a0abdd3eaca5b65c553dec2d90d621f76275ed711b66ac74841aaad55dc9bb|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Asolaria-hermes-work/room-rotor/hyperbehcs-d-drive-10000-room-rotor-latest.md|json=0
+INGESTSLICE|raw_bytes=1203|sha256_16=d9e2d750e74bbfb3|tokens=71|distinct_content_terms=62|json=0
+INGESTCUBE|cube10=d9e2d750e74bbfb35667|host_handle8=d9e2d750e74bbfb3|quant8=130,128,126,126,126,126,124,129|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1203|host_handle=8B|cube_glyph=10B|raw->handle=150x|raw->cube=120x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=62|sample_top10=hyperbehcs:2:gcea0cf3e d-drive:2:g75b7e79e room:2:g1f1c5b2f rotor:1:g977c168f status:1:g073c1634 d_drive_10000_room_rotor_ready:1:g33f1c6ca fingerprint:1:g44863b03 d78af5e3e69bee2:1:g8347cb30 destination:1:gb5c755aa asolaria-hyperbehcs-10000-roomrotor:1:g1178a72b|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=03bd28f4b6d445d35691c31e50b6fd6b080e123b77b194a806fadb730c47a02c|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Asolaria-hermes-work/room-rotor/hyperbehcs-d-drive-10000-room-rotor.mjs|json=0
+INGESTSLICE|raw_bytes=26398|sha256_16=3c8ee673711bf8d7|tokens=2237|distinct_content_terms=451|json=0
+INGESTCUBE|cube10=3c8ee673711bf8d78519|host_handle8=3c8ee673711bf8d7|quant8=87,115,103,137,195,94,86,154|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=26398|host_handle=8B|cube_glyph=10B|raw->handle=3300x|raw->cube=2640x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=451|sample_top10=const:77:gf75c6596 manifest:40:g05b3abf2 false:39:gfcbcf165 function:37:g78f9ac01 return:37:g7187f067 path:33:ga0af9f86 length:32:g0f82aca6 room:30:g1f1c5b2f plane_id:28:g322b7d03 index:27:g1bc04b52|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=790c7548bf5dd266789cac1d4b78c85b686cd9c1a0393c13fc79ef59236dff31|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Asolaria-hermes-work/room-rotor/hyperbehcs-d-drive-10000-room-rotor.unit.test.js|json=0
+INGESTSLICE|raw_bytes=4507|sha256_16=51f3de0ddaab1f26|tokens=407|distinct_content_terms=116|json=0
+INGESTCUBE|cube10=51f3de0ddaab1f262d94|host_handle8=51f3de0ddaab1f26|quant8=119,180,136,125,148,78,99,146|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=4507|host_handle=8B|cube_glyph=10B|raw->handle=563x|raw->cube=451x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=116|sample_top10=assert:40:g25450689 manifest:38:g05b3abf2 equal:24:gf9d6cd1e plane:24:gfad90028 some:11:ga6b46dd0 plane_contract:10:g8a40474a false:8:gfcbcf165 planes:8:g5003f9b6 plane_id:8:g322b7d03 role:8:g4b168d88|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=64e2d4a2d1c1db44152bbff46da32e816e0a5c9d0b0a7a5af1ebcd1097325c11|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Asolaria-the-after-100-billion-run-absorption-and-decomposition-and-cubes/README.md|json=0
+INGESTSLICE|raw_bytes=6032|sha256_16=bcceedcd385d2f66|tokens=716|distinct_content_terms=338|json=0
+INGESTCUBE|cube10=bcceedcd385d2f66d382|host_handle8=bcceedcd385d2f66|quant8=142,125,127,142,155,126,107,144|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=6032|host_handle=8B|cube_glyph=10B|raw->handle=754x|raw->cube=603x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=338|sample_top10=path:12:ga0af9f86 cube:10:g4f3c4172 mint:8:gdc6f17bb text:7:g982d9e3e storage:6:g49a25f9f exact:6:gfa79d474 absorption:5:g6b8640c7 cubes:5:ge4cbd03b promotion:5:gadb84575 gulp:5:g3d7a4d22|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=fcf4e1c249d14764449abb243ebe731ffb8873c0892da563aebe4a29a0c70c8b|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Asolaria-the-after-100-billion-run-absorption-and-decomposition-and-cubes/backend/gc-runtime.mjs|json=0
+INGESTSLICE|raw_bytes=1863|sha256_16=4d44f6a0a1fdc4bc|tokens=174|distinct_content_terms=62|json=0
+INGESTCUBE|cube10=4d44f6a0a1fdc4bc4c87|host_handle8=4d44f6a0a1fdc4bc|quant8=115,101,128,124,112,135,110,135|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1863|host_handle=8B|cube_glyph=10B|raw->handle=233x|raw->cube=186x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=62|sample_top10=filecount:8:gddc7a9ff sincelastgulp:6:g4de413cf runs:6:g1f64fff0 opts:5:gd2a1edd6 gulp:4:g3d7a4d22 gceverymessages:4:gdd6bc353 totalreceived:4:g69ff688a ongulp:4:g649b2149 lastgulpreason:4:g29ae02fb const:3:gf75c6596|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=0a91c466ae9746d041edc5494906924674e56affb4e017c36f268f3e7eb0b06e|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control/LICENSE|json=0
+INGESTSLICE|raw_bytes=1075|sha256_16=e994f1997f8afa96|tokens=167|distinct_content_terms=72|json=0
+INGESTCUBE|cube10=e994f1997f8afa963389|host_handle8=e994f1997f8afa96|quant8=118,122,123,129,133,122,115,127|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1075|host_handle=8B|cube_glyph=10B|raw->handle=134x|raw->cube=108x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=72|sample_top10=software:9:g35390f54 copyright:3:gc2fca2aa without:3:g1216b2a8 permission:2:gfdeb3389 copy:2:g6f5a6034 including:2:g031af55b copies:2:gc62d1843 notice:2:g9368a7d2 shall:2:g56ee5b50 other:2:gd9298a10|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=beb5e39e9abbeec6670cc0f2ba296bd71efcd746979dcb3d7abc3d83f680245c|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control/docs/STAGE2-CUBE-ABSORPTION.md.lines-1-73|json=0
+INGESTSLICE|raw_bytes=4769|sha256_16=0310420942a2f40e|tokens=521|distinct_content_terms=237|json=0
+INGESTCUBE|cube10=0310420942a2f40eb8ea|host_handle8=0310420942a2f40e|quant8=108,86,122,128,129,124,104,126|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=4769|host_handle=8B|cube_glyph=10B|raw->handle=596x|raw->cube=477x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=237|sample_top10=cube:11:g4f3c4172 json:7:g02bd175f qprism:7:gcd57a7c8 handle8:7:g3b6bb2f8 node:6:g545ea538 spanishbcbl:5:ge86a0a19 tuple:5:gfb2c3dcb canonical:5:g0deeb8fa selector:5:gc7567ce6 graphify:5:gaaef3928|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=fc14a4be0cd684bddc18e0b73d219921b23af8782e60444f0b6595910e908802|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control/docs/STAGE2-CUBE-ABSORPTION.md.lines-79-104|json=0
+INGESTSLICE|raw_bytes=2035|sha256_16=f67f28ea94e4b1ab|tokens=238|distinct_content_terms=137|json=0
+INGESTCUBE|cube10=f67f28ea94e4b1ab5381|host_handle8=f67f28ea94e4b1ab|quant8=122,108,125,121,129,123,106,134|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=2035|host_handle=8B|cube_glyph=10B|raw->handle=254x|raw->cube=204x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=137|sample_top10=slice:4:g03fdb065 between:3:gfbb27fbd points:3:gc54a061d cube:2:g4f3c4172 address:2:gd80c9bf9 point:2:g251fecd5 depth:2:gded32129 space:2:g3f49dbbf frame:2:g9dff50df does:2:g961eb436|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=1421bb1ae6904d3d70af0ce26c9df56cd1640b0934c58feed14056154ed31001|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control/host8/qprism_cube_host8.rs.lines-20-49|json=0
+INGESTSLICE|raw_bytes=988|sha256_16=792186b299000048|tokens=99|distinct_content_terms=38|json=0
+INGESTCUBE|cube10=792186b299000048a1a4|host_handle8=792186b299000048|quant8=130,134,130,127,121,132,128,121|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=988|host_handle=8B|cube_glyph=10B|raw->handle=124x|raw->cube=99x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=38|sample_top10=host8:6:g39f48814 host-8:2:g06b19334 handle:2:gc2a116aa self:2:g06c604b3 graphify:2:gaaef3928 sha256:2:g5d5b09f6 prefix:2:ge7a2e8b2 chars:2:g1ce93dac from_sha256_prefix:2:g231dc3b3 byte:1:g1c31626f|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=bc08a34004d0ee9e5c3205fb425c38c4d7c4cfc0aa93062014d36049121b3b20|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control/host8/qprism_cube_host8.rs.lines-55-296|json=0
+INGESTSLICE|raw_bytes=10968|sha256_16=a2efefb083fb83c8|tokens=991|distinct_content_terms=274|json=0
+INGESTCUBE|cube10=a2efefb083fb83c8414d|host_handle8=a2efefb083fb83c8|quant8=116,88,165,215,130,142,130,113|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=10968|host_handle=8B|cube_glyph=10B|raw->handle=1371x|raw->cube=1097x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=274|sample_top10=nbits:17:g3260dddc assert:17:g25450689 contains:16:gbeeb20fb tuple8:15:ga9c3ee37 bits:14:ge5e59d10 format:14:ge904c9cc string:11:g473287f8 push_str:11:g3b3f23aa node8:10:gce8cccba assert_eq:9:g6815a66d|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=f645fd7b0f1339fdafb12998cb14d2b9eec276252589e0463ef9b6e1b0fe4ec2|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Shannon-and-the-gnns-stage/README.md|json=0
+INGESTSLICE|raw_bytes=7267|sha256_16=3303d90bd15a0a3f|tokens=810|distinct_content_terms=386|json=0
+INGESTCUBE|cube10=3303d90bd15a0a3f008f|host_handle8=3303d90bd15a0a3f|quant8=102,130,127,124,159,112,86,138|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=7267|host_handle=8B|cube_glyph=10B|raw->handle=908x|raw->cube=727x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=386|sample_top10=path:11:ga0af9f86 exact:7:gfa79d474 shannon:6:g461f0955 hookwall:6:g6112d4c6 recovery:6:g8c585378 text:6:g982d9e3e gate:6:gc974e17b omnishannon:5:gadc237cf white:5:g018fa96a gulp:5:g3d7a4d22|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=76745485efe79719c37b32cea842b97ee84e3b2a244fdbb09079fbff668f397f|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/Shannon-and-the-gnns-stage/pipeline/whiteroom-consumer-index.mjs|json=0
+INGESTSLICE|raw_bytes=8369|sha256_16=a419f877fa14310e|tokens=827|distinct_content_terms=199|json=0
+INGESTCUBE|cube10=a419f877fa14310e18c1|host_handle8=a419f877fa14310e|quant8=114,37,103,84,159,122,69,143|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=8369|host_handle=8B|cube_glyph=10B|raw->handle=1046x|raw->cube=837x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=199|sample_top10=const:35:gf75c6596 return:26:g7187f067 body:23:g230d8358 state:14:g4ba69735 verb:13:g6806f86a false:10:gfcbcf165 null:10:g74234e98 whiteroom:9:g21b5cd8e path:9:ga0af9f86 json:9:g02bd175f|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=04113b18fd300ebc2f2cd7e6c44b02bc0532dc48f37e0937c432ef27de1345d6|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/README.md|json=0
+INGESTSLICE|raw_bytes=4771|sha256_16=869d23eb3180c46d|tokens=546|distinct_content_terms=301|json=0
+INGESTCUBE|cube10=869d23eb3180c46d655f|host_handle8=869d23eb3180c46d|quant8=130,134,129,129,147,124,129,130|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=4771|host_handle=8B|cube_glyph=10B|raw->handle=596x|raw->cube=477x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=301|sample_top10=path:9:ga0af9f86 address:5:gd80c9bf9 node:5:g545ea538 text:5:g982d9e3e white-room:4:g03b2cf90 room:4:g1f1c5b2f evidence:4:gee8250fb white:4:g018fa96a rooms:4:g5d88c569 body:4:g230d8358|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=eceb176de175ca2f9abb94a8e051d9f84b60d6605b6515c45edcc3b6adc400ac|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/liris-hilbert.mjs|json=0
+INGESTSLICE|raw_bytes=1527|sha256_16=4ab31a8d9be28ec0|tokens=140|distinct_content_terms=58|json=0
+INGESTCUBE|cube10=4ab31a8d9be28ec0f9f9|host_handle8=4ab31a8d9be28ec0|quant8=124,129,131,129,127,115,119,124|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1527|host_handle=8B|cube_glyph=10B|raw->handle=191x|raw->cube=153x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=58|sample_top10=const:5:gf75c6596 acer:4:g166cfb0e hilbertxy:3:g31e36b86 bh3d:3:g4b8fbceb console:3:g93d8874c hbpv1:3:gb1160576 json:3:g02bd175f liris-hilbert:2:gd2b7f8f6 replicate:2:gb23b068c standard:2:gfe6d3468|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=479f2fc544b78d426d919f2a77296719e70c9f57ed1b9a7722359a8f90e3dd9d|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/liris-sector-emitter.mjs|json=0
+INGESTSLICE|raw_bytes=2987|sha256_16=ba8040e740ce83ad|tokens=308|distinct_content_terms=116|json=0
+INGESTCUBE|cube10=ba8040e740ce83adec69|host_handle8=ba8040e740ce83ad|quant8=126,143,135,122,134,131,110,129|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=2987|host_handle=8B|cube_glyph=10B|raw->handle=373x|raw->cube=299x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=116|sample_top10=const:10:gf75c6596 primes:9:gdf35ed99 acer:8:g166cfb0e sectorindex:7:gcb089495 roominsector:7:gf8f340e9 prime:6:gdccc5d01 cand:6:g1386f8fb primeat:5:gb611e0ba globalindex:5:g1d9a4511 globalroomaddress:4:g5adce5e3|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=0b8fbf52ac495b4780e88d35607495ba55fcc1bd367e6b4fc303010a5c3a5536|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/liris-sector-emitter.test.mjs|json=0
+INGESTSLICE|raw_bytes=1663|sha256_16=266327ea97d1f3b3|tokens=142|distinct_content_terms=58|json=0
+INGESTCUBE|cube10=266327ea97d1f3b3d989|host_handle8=266327ea97d1f3b3|quant8=122,132,132,128,126,107,125,136|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1663|host_handle=8B|cube_glyph=10B|raw->handle=208x|raw->cube=166x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=58|sample_top10=assert:14:g25450689 globalroomaddress:12:g5adce5e3 test:6:g9f86d081 prime:6:gdccc5d01 equal:6:gf9d6cd1e primeat:4:gb611e0ba sector:4:g9d5d7fcf import:3:gd942f648 from:3:g75857a45 sector_capacity:3:g7a5fce63|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=c639e5ac5781cd4130a34f1ce6b89c1d4c6d83d8aeb20d0ee48c5f5ca021b77e|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/liris-whiteroom-engine.mjs.lines-1-188|json=0
+INGESTSLICE|raw_bytes=9187|sha256_16=def088bfa35e320f|tokens=973|distinct_content_terms=289|json=0
+INGESTCUBE|cube10=def088bfa35e320f60f5|host_handle8=def088bfa35e320f|quant8=72,72,123,88,114,128,89,137|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=9187|host_handle=8B|cube_glyph=10B|raw->handle=1148x|raw->cube=919x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=289|sample_top10=const:31:gf75c6596 score:16:ga575b798 coord64:13:g2e657bbe port:12:gf8d397a3 return:12:g7187f067 mark:12:g6201eb4d store:11:g824d80d7 scorer:10:gc528cab0 export:10:gd46aee08 live:9:g247610f4|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=e69c890030dd76ddce2a6f0742c122eefd760f8f4ba4aed2a3ecdabdddbea88a|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/liris-whiteroom-engine.mjs.lines-190-200|json=0
+INGESTSLICE|raw_bytes=686|sha256_16=f18e663599d05cf0|tokens=83|distinct_content_terms=34|json=0
+INGESTCUBE|cube10=f18e663599d05cf05fe7|host_handle8=f18e663599d05cf0|quant8=118,125,129,128,122,127,137,127|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=686|host_handle=8B|cube_glyph=10B|raw->handle=86x|raw->cube=69x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=34|sample_top10=engine:9:ged9f6f25 const:5:gf75c6596 metrics:5:g177a7ea3 scorer:3:gc528cab0 console:3:g93d8874c store:3:g824d80d7 ticks:3:g724ef7ea live:3:g247610f4 compacted:3:g05f789d4 marks:2:ge3d11da4|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=333d84e25c0838b4c2fdda472c25ee17ed78f2d019d579bf9b3ed0e2a3e0b4e7|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/asolaria-whiteroom-engine/liris-whiteroom-engine.test.mjs|json=0
+INGESTSLICE|raw_bytes=4061|sha256_16=df66ecc763911ee1|tokens=450|distinct_content_terms=121|json=0
+INGESTCUBE|cube10=df66ecc763911ee10585|host_handle8=df66ecc763911ee1|quant8=94,159,135,110,109,90,135,134|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=4061|host_handle=8B|cube_glyph=10B|raw->handle=508x|raw->cube=406x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=121|sample_top10=assert:28:g25450689 const:20:gf75c6596 equal:15:gf9d6cd1e test:12:g9f86d081 compacted:8:g05f789d4 memorystore:7:gc7713247 live:7:g247610f4 await:7:g1aefe47e genius:7:g9ed142d6 sealed:7:gc9d0036b|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=bc11932fa18b4e36e1f277a29087f1d0c280a6744d43aa23dd3e52b0f2eba0af|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/bigpickle-rebuild/src/fabric-sector-cycle.mjs.lines-17-26|json=0
+INGESTSLICE|raw_bytes=610|sha256_16=7204664e58517871|tokens=71|distinct_content_terms=45|json=0
+INGESTCUBE|cube10=7204664e5851787124ed|host_handle8=7204664e58517871|quant8=129,121,126,125,129,123,124,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=610|host_handle=8B|cube_glyph=10B|raw->handle=76x|raw->cube=61x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=45|sample_top10=scorer:2:gc528cab0 liris:2:gedf3c1bf work:2:g00e13ed7 real:2:gaa33996d canonical:1:g0deeb8fa federated:1:g172e32fe byte-converged:1:ga98af92a geniusscore:1:g3a84e6ed byte-proven:1:g65610892 convergence:1:ge8c3f3d8|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=81b1f2db6660d0d0049f2955e44e1846d6bb703f32965891f7b2fc615086fbce|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/falcon-orbital/envelopes/2026-06-01T20-48Z-sector-PID-triple-confirm.hbp|json=0
+INGESTSLICE|raw_bytes=1704|sha256_16=ef9c086d199432ed|tokens=146|distinct_content_terms=71|json=0
+INGESTCUBE|cube10=ef9c086d199432ed1d29|host_handle8=ef9c086d199432ed|quant8=128,130,135,114,131,110,133,127|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1704|host_handle=8B|cube_glyph=10B|raw->handle=213x|raw->cube=170x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=71|sample_top10=hbpv1:11:gb1160576 json:11:g02bd175f sector:9:g9d5d7fcf acer:4:g166cfb0e liris:4:gedf3c1bf triple_match:4:g79fcbdfc true:4:gb5bea41b r0000000:3:g5e0e5b3b c541:3:gc48e52f0 falcon:3:ga8457139|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=930ddbbb39ce5d5093543cab78379767698a0b6c7fcf7ed4e188f8268abd7e8d|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/ASOLARIA-TENSOR-COLLAPSE-EXCAVATION-2026-06-16.md.lines-194-211|json=0
+INGESTSLICE|raw_bytes=1004|sha256_16=4a24d847b53555f0|tokens=141|distinct_content_terms=85|json=0
+INGESTCUBE|cube10=4a24d847b53555f07646|host_handle8=4a24d847b53555f0|quant8=128,131,130,132,132,128,118,134|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1004|host_handle=8B|cube_glyph=10B|raw->handle=126x|raw->cube=100x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=85|sample_top10=live:3:g247610f4 what:2:g749ab2c0 here:2:gfcec9150 supervisors:2:g14bd3fb6 roster:2:gc6836f7a local:2:g25bf8e1a paper:2:g382635c9 runtime:2:gd92c6a81 revolver:2:g6e98b484 omnispindle:2:g916c757f|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=627d058e0f466bfab93052c31fe1df0cd86dacea80672b1babff48033a052ec7|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/ASOLARIA-TENSOR-COLLAPSE-EXCAVATION-2026-06-16.md.lines-84-106|json=0
+INGESTSLICE|raw_bytes=831|sha256_16=b46072b046047e11|tokens=94|distinct_content_terms=57|json=0
+INGESTCUBE|cube10=b46072b046047e11c277|host_handle8=b46072b046047e11|quant8=120,123,126,124,126,125,120,132|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=831|host_handle=8B|cube_glyph=10B|raw->handle=104x|raw->cube=83x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=57|sample_top10=wave:3:g4b125ec9 self-run:3:g42842471 leader:3:g4d5b6609 papers:2:g8bddf4c0 collapse:2:g93bc5d02 beats:2:gd5803722 hyper-gnn:2:g5582260c self-collapse:2:g80754b99 lx-491:2:g68781a7a actual:1:ge5c6fde8|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=6b312f95629155e327f6bc890854ff65a5f5091b611c02d1f6f3644db6e8def6|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/cubes/README.md|json=0
+INGESTSLICE|raw_bytes=4825|sha256_16=e95ee0fb7109355f|tokens=519|distinct_content_terms=221|json=0
+INGESTCUBE|cube10=e95ee0fb7109355f18b8|host_handle8=e95ee0fb7109355f|quant8=135,124,116,138,125,112,89,124|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=4825|host_handle=8B|cube_glyph=10B|raw->handle=603x|raw->cube=483x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=221|sample_top10=cube:12:g4f3c4172 cubes:8:ge4cbd03b live:8:g247610f4 folder:7:g034a0062 canon:6:g7a535665 receipt:5:g6f328609 tuple-range:5:g779ff567 bounded:5:g73060ad7 tensor-collapse:5:gb10ef348 runtime:5:gd92c6a81|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=3950c9443c5a5e47d3530922dd6e61c648ca6c01250140a71969b24a3ff569be|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/cubes/TENSOR-COLLAPSE-PAPER-TO-RUNTIME-MAP.md.lines-1-24|json=0
+INGESTSLICE|raw_bytes=4915|sha256_16=9d320936e4f904b1|tokens=483|distinct_content_terms=219|json=0
+INGESTCUBE|cube10=9d320936e4f904b1442b|host_handle8=9d320936e4f904b1|quant8=134,112,125,153,119,135,87,118|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=4915|host_handle=8B|cube_glyph=10B|raw->handle=614x|raw->cube=492x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=219|sample_top10=acer:13:g166cfb0e cube:9:g4f3c4172 supervisor:8:g0834c2d6 tools:8:gf9d35d43 council:5:ga0c7ec73 live:5:g247610f4 behcs1024_prism:5:g776846f3 liris:5:gedf3c1bf cascade:5:gfd782ad6 collapse:4:g93bc5d02|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=7e8c25d7714430cdc3f84633be8201073d594a714a311152553bdbbd5c24ebc7|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/cubes/TENSOR-COLLAPSE-PAPER-TO-RUNTIME-MAP.md.lines-27-28|json=0
+INGESTSLICE|raw_bytes=418|sha256_16=6178234e3988ecb6|tokens=51|distinct_content_terms=30|json=0
+INGESTCUBE|cube10=6178234e3988ecb658ad|host_handle8=6178234e3988ecb6|quant8=128,128,125,132,128,130,124,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=418|host_handle=8B|cube_glyph=10B|raw->handle=52x|raw->cube=42x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=30|sample_top10=file:2:g3b9c358f header:2:g1e0584a2 paper:1:g382635c9 label:1:g1aca80e8 hilbert-intersection-engine:1:gb78a09c6 framings:1:g2fd60d80 sources:1:g878a52fc quoted:1:gb3a2bd47 as-is:1:ga29b7dd1 rather:1:gd1ffaf02|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=e4a2ee4268928b9409e9797b3aa58d127b7bea4dd0b36c131e7e9e0b420ec294|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/cubes/ingest-google-to-cube.mjs.lines-1-11|json=0
+INGESTSLICE|raw_bytes=695|sha256_16=ab5ddd4254f787fc|tokens=90|distinct_content_terms=49|json=0
+INGESTCUBE|cube10=ab5ddd4254f787fc4a77|host_handle8=ab5ddd4254f787fc|quant8=121,126,125,123,127,127,125,126|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=695|host_handle=8B|cube_glyph=10B|raw->handle=87x|raw->cube=70x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=49|sample_top10=node:3:g545ea538 ingest:2:g6eb7f2ea drive:2:g7062520c cube:2:g4f3c4172 catalog:2:g652f5501 receipt:2:g6f328609 content:2:ged7002b4 import:2:gd942f648 from:2:g75857a45 createhash:2:g022998a7|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=3ce58480fb2c8b8f4cecb3f40050b6c78a93d3a6c9d19c50ef86c20c995cad62|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/cubes/ingest-google-to-cube.mjs.lines-13-39|json=0
+INGESTSLICE|raw_bytes=1644|sha256_16=7f6078f582403451|tokens=201|distinct_content_terms=71|json=0
+INGESTCUBE|cube10=7f6078f5824034514390|host_handle8=7f6078f582403451|quant8=113,125,133,127,121,136,122,122|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1644|host_handle=8B|cube_glyph=10B|raw->handle=206x|raw->cube=164x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=71|sample_top10=const:20:gf75c6596 math:5:g58a6d680 text:4:g982d9e3e slice:4:g03fdb065 freq:4:gd762b786 raw_bytes:3:g1def113b full_sha:3:gf24e1c73 proj:3:ge73c023a toks:3:g71fa8de0 round:3:ga97b0931|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=7c46a4e8b5bf6673d1f6dcaf1f5872af302f9d2d058c685eddf2cc771cb5d164|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|file=vendor/what-is-asolaria---how-do-we-get-reductions-in-everything/cubes/ingest-google-to-cube.mjs.lines-41-53|json=0
+INGESTSLICE|raw_bytes=1550|sha256_16=974bd17b911e7af2|tokens=139|distinct_content_terms=84|json=0
+INGESTCUBE|cube10=974bd17b911e7af23225|host_handle8=974bd17b911e7af2|quant8=123,121,133,122,129,135,131,127|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1550|host_handle=8B|cube_glyph=10B|raw->handle=194x|raw->cube=155x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=84|sample_top10=rows:9:gbc51e9e6 json:8:g02bd175f push:6:gd107ea36 raw_bytes:4:g1def113b const:4:gf75c6596 length:3:g0f82aca6 distinct_terms:3:g1c14f2e3 body:3:g230d8358 handle8:2:g3b6bb2f8 cube10:2:g43158e0e|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=8c82e986800d9be8258dfd8124b7925762bb18e044493a676d03d40fe2ba1208|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=|json=0
+INGESTSLICE|raw_bytes=0|sha256_16=e3b0c44298fc1c14|tokens=0|distinct_content_terms=0|json=0
+INGESTCUBE|cube10=e3b0c44298fc1c149afb|host_handle8=e3b0c44298fc1c14|quant8=128,128,128,128,128,128,128,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=0|host_handle=8B|cube_glyph=10B|raw->handle=0x|raw->cube=0x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=0|sample_top10=|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=1301c048a2113c629bc4345ecffed78c186fb03b9227823b913a0ce22b6cb661|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=61|json=0
+INGESTSLICE|raw_bytes=1|sha256_16=ca978112ca1bbdca|tokens=0|distinct_content_terms=0|json=0
+INGESTCUBE|cube10=ca978112ca1bbdcafac2|host_handle8=ca978112ca1bbdca|quant8=128,128,128,128,128,128,128,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=1|host_handle=8B|cube_glyph=10B|raw->handle=0x|raw->cube=0x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=0|sample_top10=|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=d4dbcfd89e8e99f56cf02ab874f68e46a5520dddc6f68fae94e3e4b285b56398|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=6162|json=0
+INGESTSLICE|raw_bytes=2|sha256_16=fb8e20fc2e4c3f24|tokens=1|distinct_content_terms=0|json=0
+INGESTCUBE|cube10=fb8e20fc2e4c3f248c60|host_handle8=fb8e20fc2e4c3f24|quant8=128,128,128,128,129,128,128,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=2|host_handle=8B|cube_glyph=10B|raw->handle=0x|raw->cube=0x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=0|sample_top10=|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=14de554b381745637892fa4eb593cd94382b488cea4d83c44b337f8e12eeac0c|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=5468652054484520746865207468656f72793a207839206131205f78202d79202d2d7a2039616263206162632d6465665f676869|json=0
+INGESTSLICE|raw_bytes=52|sha256_16=69ea9449769282b4|tokens=8|distinct_content_terms=2|json=0
+INGESTCUBE|cube10=69ea9449769282b4f731|host_handle8=69ea9449769282b4|quant8=130,128,128,129,127,128,125,127|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=52|host_handle=8B|cube_glyph=10B|raw->handle=7x|raw->cube=5x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=2|sample_top10=theory:1:gf4397b48 abc-def_ghi:1:g4918daba|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=fb88827eace355406449db0ea2d0c40e03590b807e0e438fa0c7c59bd88e35bd|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=c4b07374616e62756c20e284aa656c76696e204b454c56494e20c38974c3a9206e61c3af76652073747261c39f65|json=0
+INGESTSLICE|raw_bytes=46|sha256_16=acac10804836ad67|tokens=6|distinct_content_terms=3|json=0
+INGESTCUBE|cube10=acac10804836ad67c3bd|host_handle8=acac10804836ad67|quant8=126,128,127,129,127,128,129,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=46|host_handle=8B|cube_glyph=10B|raw->handle=6x|raw->cube=5x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=3|sample_top10=kelvin:2:g03105d50 stanbul:1:g03189c78 stra:1:g12da1884|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=20eff1c9f5736a9380c117a7df557a6e1c3632f711b3d07e24dd08f89450c058|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=efbbbf626f6d2d6c656164207465787420746578742074657874|json=0
+INGESTSLICE|raw_bytes=26|sha256_16=df2792c970bfef84|tokens=4|distinct_content_terms=2|json=0
+INGESTCUBE|cube10=df2792c970bfef84992d|host_handle8=df2792c970bfef84|quant8=129,128,128,128,125,128,128,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=26|host_handle=8B|cube_glyph=10B|raw->handle=3x|raw->cube=3x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=2|sample_top10=text:3:g982d9e3e bom-lead:1:g9a45ff36|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=a572bf2cf1a2150de3f1bdbe9c153380b9ab5a5cf146ddb5da20ca4767d5c3b1|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=6c696e65206f6e650d0a6c696e652074776f0d0a6c696e65207468726565|json=0
+INGESTSLICE|raw_bytes=30|sha256_16=f8169f87cc30b565|tokens=6|distinct_content_terms=2|json=0
+INGESTCUBE|cube10=f8169f87cc30b565a4f8|host_handle8=f8169f87cc30b565|quant8=128,128,128,126,128,129,128,129|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=30|host_handle=8B|cube_glyph=10B|raw->handle=4x|raw->cube=3x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=2|sample_top10=line:3:g38a9c1e7 three:1:g8b5b9db0|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=f551f31de05053d30673b9854139b65d605f2efcdd0ea90df0f1a6cc9ba3e1fc|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=62616420fffe20627974657320eda080206865726520f09f9820656e6420c3|json=0
+INGESTSLICE|raw_bytes=43|sha256_16=3571cc190303e4ec|tokens=4|distinct_content_terms=2|json=0
+INGESTCUBE|cube10=3571cc190303e4ec7aba|host_handle8=3571cc190303e4ec|quant8=128,128,128,128,128,128,129,129|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=43|host_handle=8B|cube_glyph=10B|raw->handle=5x|raw->cube=4x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=2|sample_top10=bytes:1:g277089d9 here:1:gfcec9150|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=e71fc6edb3d53a726b22b1d1eab4558a01777f8dcc4d812c065e00da533e6d76|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=776f726420776f726420776f726420776f726420776f726420776f726420776f726420776f726420776f7264206f74686572206f74686572206f74686572206f74686572206f74686572206f74686572206f74686572206f74686572206f7468657220746869726420746869726420746869726420666f7572746820666f7572746820666f7572746820|json=0
+INGESTSLICE|raw_bytes=138|sha256_16=c2d016ee70483875|tokens=24|distinct_content_terms=4|json=0
+INGESTCUBE|cube10=c2d016ee704838759f3a|host_handle8=c2d016ee70483875|quant8=128,119,128,128,125,134,128,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=138|host_handle=8B|cube_glyph=10B|raw->handle=17x|raw->cube=14x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=4|sample_top10=word:9:g98c1eb4e other:9:gd9298a10 third:3:gb1e99324 fourth:3:gdc81b1d3|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=0af2a79970ebd3772d0ba33f6bb7b071a50c4e59e60c1a822de006431f64f3ba|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=7469652074696520616c70686120626574612067616d6d612064656c746120657073696c6f6e207a65746120746865746120696f7461206b61707061206c616d626461|json=0
+INGESTSLICE|raw_bytes=67|sha256_16=0babdf865ad28394|tokens=12|distinct_content_terms=10|json=0
+INGESTCUBE|cube10=0babdf865ad28394ad1d|host_handle8=0babdf865ad28394|quant8=128,129,129,128,128,128,127,129|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=67|host_handle=8B|cube_glyph=10B|raw->handle=8x|raw->cube=7x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=10|sample_top10=alpha:1:g8ed3f6ad beta:1:gf44e64e7 gamma:1:gbe9d587d delta:1:g4f4a9410 epsilon:1:g6ebf3c8d zeta:1:g5cc10d91 theta:1:g973e2235 iota:1:g9604832c kappa:1:g6a30f630 lambda:1:g554e79e6|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=ccd7d9956da16ef7df339e0e31b63014d5025df647e35f8dd1264ffada5a50a6|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0
+CASE|hex=7b6a736f6e7d207c2070697065730d6372|json=0
+INGESTSLICE|raw_bytes=17|sha256_16=65cf7cebd72a22e9|tokens=3|distinct_content_terms=2|json=0
+INGESTCUBE|cube10=65cf7cebd72a22e9704e|host_handle8=65cf7cebd72a22e9|quant8=128,128,126,127,128,128,128,128|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0
+INGESTREDUCTION|raw_bytes=17|host_handle=8B|cube_glyph=10B|raw->handle=2x|raw->cube=2x|note=referential-content-address-not-lossless|json=0
+INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=2|sample_top10=json:1:g02bd175f pipes:1:ge1d2f6b3|each_term=glyph-tuple-addressable|json=0
+INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0
+INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0
+INGESTFTR|sha256=3c180eae1bd4d05873fc6d5bfc52ce3e7049c12fb9ba035abe1c35ab85f12c74|rows=7|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0

@@ -1,0 +1,21 @@
+[package]
+name = "asolaria-quant-cubes"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Combined-quant registry slots 21 and 25-28 (cube, word-glyph, shard-cube, white-room/GULP): the owner's Q-PRISM Host-8 cube Rust and integer ports of the owner's ingest, room-rotor, white-room and GC code"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["quantization", "cube", "integer", "hbp"]
+categories = ["algorithms"]
+
+[lib]
+name = "quant_cubes"
+path = "src/lib.rs"
+
+[dependencies]
+sha2 = "=0.10.9"
+# Slot 26 folds a shard vector through slots 9-12, which this sibling crate ports bit for bit.
+asolaria-quant-hyperbehcs = { path = "../hyperbehcs", version = "0.1.0" }
+# JavaScript binary64 arithmetic for the white-room score (BUILD-CONTRACT rule 4).
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }

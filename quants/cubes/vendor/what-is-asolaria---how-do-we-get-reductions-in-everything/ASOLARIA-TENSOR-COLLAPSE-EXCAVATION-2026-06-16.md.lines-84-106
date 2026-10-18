@@ -1,0 +1,23 @@
+## The actual mechanisms it used
+
+### 1. Omni-Shannon wave structure
+
+The papers describe tensor collapse as a structured wave, not loose brainstorming:
+
+- external opaque-target run: **`6×6×6×12`**
+- federation self-run: **`6×6×6×6×12` per wave, ×3 waves = `46,656` nominal beats**
+- self-run collapse retained **`47`** signal-carrying beats
+
+The added axis for the self-run was:
+
+- **`META_SELF`** = `observe-self, model-self, test-self, falsify-self, heal-self, evolve-self`
+
+### 2. Hyper-GNN third voter
+
+The self-collapse papers explicitly promote **`LX-491 OMNI GNN inference fabric`** from candidate to active for the run. The self-collapse is therefore not just leader introspection; it is presented as:
+
+- acer leader
+- liris leader
+- LX-491 hyper-GNN
+
+three separate voting surfaces on the same self-description.

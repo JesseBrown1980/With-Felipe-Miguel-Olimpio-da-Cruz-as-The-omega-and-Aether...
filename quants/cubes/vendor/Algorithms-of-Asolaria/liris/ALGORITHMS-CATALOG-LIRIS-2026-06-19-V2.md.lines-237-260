@@ -1,0 +1,24 @@
+## F. Storage, cube, tensor, and document ingest
+
+`MEASURED`: Google Drive document -> cube ingest:
+
+```text
+sha = sha256(text)
+cube10 = sha[0:20]
+handle8 = sha[0:16]
+word_glyph = sha256(word)[0:8]
+bucket_vector = 8 signed token buckets, clamped 0..255
+ratio8 = raw_bytes / 8
+ratio10 = raw_bytes / 10
+```
+
+`MEASURED`: Google cloud station/job map has `GCSEAT` rows from existing cloud seats and `GCNEWJOB` rows for new jobs. Conflict kept: the array has `16` seat entries while comments/rows refer to `17`.
+
+`CANON-in-file/MEASURED`: tensor collapse is a chain, not one program:
+
+```text
+6*6*6*12 -> 28
+6*6*6*6*12*3 = 46656 -> 47
+```
+
+`MEASURED`: shard-quant cube has `100` rooms, each with an 8-dim vector folded through JL, Turbo, polar, and triple/spherical codecs. It is descriptor/software-only in this pass.

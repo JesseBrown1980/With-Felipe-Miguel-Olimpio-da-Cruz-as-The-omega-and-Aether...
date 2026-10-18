@@ -1,0 +1,31 @@
+[package]
+name = "asolaria-quant-exact"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Combined-quant slots 13, 14 and 17-20 (exact re-representations) from the owner's Rust: slice-harness wavelengths, the BEHCS 64/256/1024 ladder, HyperBEHCS 60D, Q-PRISM 256<->1024 transcode"
+keywords = ["behcs", "transcode", "integer", "exact"]
+categories = ["encoding"]
+
+# The two owner crates are vendored byte-identical (their own Cargo.toml) and built as members,
+# so `cargo test` runs their own unit and integration tests unchanged.
+[workspace]
+members = [".", "vendor/qprism-3d-slice-harness", "vendor/dbbh-coms-quant-prism"]
+default-members = [".", "vendor/qprism-3d-slice-harness", "vendor/dbbh-coms-quant-prism"]
+resolver = "2"
+
+[lib]
+name = "quant_exact"
+path = "src/lib.rs"
+
+[dependencies]
+qprism-3d-slice-harness = { path = "vendor/qprism-3d-slice-harness", version = "0.1.0" }
+dbbh-coms-quant-prism = { path = "vendor/dbbh-coms-quant-prism", version = "0.1.0" }
+asolaria-behcs1024-60d = { path = "../../kernel/behcs1024-60d", version = "0.1.0" }
+
+# Both vendored manifests declare this release profile (harness Cargo.toml:15-17, dbbh 16-18);
+# cargo reads profiles only from the workspace root, so it is restated here unchanged.
+[profile.release]
+opt-level = 3
+lto = true

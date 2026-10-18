@@ -1,0 +1,4 @@
+# Vendored byte-identical from upstream and referee-generated fixtures (see PROVENANCE.md):
+# never convert line endings here.
+vendor/** -text
+tests/fixtures/** -text

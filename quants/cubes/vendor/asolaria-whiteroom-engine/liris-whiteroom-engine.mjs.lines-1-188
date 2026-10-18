@@ -1,0 +1,188 @@
+// liris-whiteroom-engine.mjs — the white-room engine, impl_A (REAL-NOW, zero cloud gate).
+//
+// The bigpickle neuro-chassis, store-abstracted: emit a port.port.port PID -> open a
+// white-room -> score it -> genius keeps / mistake COMPACTS (never deletes) -> seal HBP -> rotate.
+//
+// Honest boundaries (the night's discipline):
+//  - STORE is pluggable: MemoryStore (real-now) | RedisCloudStore (GATED stub, drop-in when
+//    creds load by role via the Asolaria Profile — never inlined here).
+//  - SCORER is pluggable: DeterministicScorer (offline, testable) | L0GnnScorer (LIVE wiring to
+//    the real :4792 server). L0's score is a real model output but semantically meaningful only
+//    for neurotech-shaped graphs — the WIRING is real, the MEANING is domain-bound. Stated, not hidden.
+//  - Hot path is HBP pipe-rows. JSON appears ONLY at the L0 server boundary (its own protocol).
+//  - port.port.port is a LOGICAL nested address (from sha bytes), one process, NO real sockets
+//    (avoids the socket storm — operator's "same process" constraint).
+import crypto from "node:crypto";
+import fs from "node:fs";
+import { globalRoomAddress } from "./liris-sector-emitter.mjs";
+
+export const sha256hex = (s) => crypto.createHash("sha256").update(String(s)).digest("hex");
+
+// ---- address space: deterministic Brown-Hilbert port.port.port PID emitter -------------------
+export class BHPidEmitter {
+  constructor(seed = "liris-whiteroom") { this.seed = seed; this.counter = 0; }
+  next() {
+    const counter = this.counter++;
+    const pid = `BH.WR.${this.seed}.${counter}`;
+    const coord64 = sha256hex(pid);
+    const b = (i) => parseInt(coord64.slice(2 * i, 2 * i + 2), 16);
+    const cp = parseInt(coord64.slice(0, 3), 16) % 1024;
+    return {
+      pid, counter, coord64, cp,
+      glyph: "cp" + cp.toString(16).padStart(4, "0"),
+      // 3-level nested logical address (port.port.port), one process, no real socket bound:
+      port3: `${4096 + b(0)}.${b(1)}.${b(2)}`,
+    };
+  }
+}
+
+// sector-aware emitter: fills prime-sector S, rooms 0..N, on the BYTE-PROVEN shared address
+// space (acer allocator == liris replication, verified 2026-06-01: 3/3 PIDs byte-match).
+// Each room's PID IS globalRoomAddress(S, room) — the engine fills acer's allocated space exactly.
+export class SectorAwareEmitter {
+  constructor(sectorIndex = 0, startRoom = 0) { this.sectorIndex = sectorIndex; this.room = startRoom; }
+  next() {
+    const room = this.room++;
+    const addr = globalRoomAddress(this.sectorIndex, room);   // shared, byte-proven address space
+    const coord64 = sha256hex(addr.pid);
+    const b = (i) => parseInt(coord64.slice(2 * i, 2 * i + 2), 16);
+    const cp = parseInt(coord64.slice(0, 3), 16) % 1024;
+    return {
+      pid: addr.pid, counter: room, coord64, cp, prime: addr.prime, globalIndex: addr.globalIndex,
+      glyph: "cp" + cp.toString(16).padStart(4, "0"),
+      port3: `${4096 + b(0)}.${b(1)}.${b(2)}`,
+    };
+  }
+}
+
+// ---- STORE interface: put / get / scanByPID / compact(NEVER delete) --------------------------
+export class MemoryStore {
+  constructor() { this.live = new Map(); this.compacted = new Map(); this.kind = "memory"; }
+  put(pid, rec) { this.live.set(pid, rec); }
+  get(pid) { return this.live.get(pid) ?? this.compacted.get(pid) ?? null; }
+  scanByPID(pred) { return [...this.live.entries()].filter(([pid]) => pred(pid)).map(([, r]) => r); }
+  compact(pid) { // gc_evidence_deletion guard: MOVE live->compacted, never delete
+    const r = this.live.get(pid);
+    if (r) { this.compacted.set(pid, { ...r, compacted: true }); this.live.delete(pid); }
+    return r;
+  }
+  stats() { return { live: this.live.size, compacted: this.compacted.size }; }
+}
+
+// Redis-Cloud adapter: same interface, GATED until creds load by role via the Asolaria Profile.
+export class RedisCloudStore {
+  constructor(opts = {}) { this.opts = opts; this.kind = "redis-cloud(GATED)"; }
+  _gate() {
+    throw new Error(
+      "GATED: RedisCloudStore needs a connection string loaded by role via the Asolaria Profile " +
+      "(never inlined). Enable with: npm i ioredis + profile-provided REDIS_URL. Interface is drop-in."
+    );
+  }
+  put() { this._gate(); } get() { this._gate(); } scanByPID() { this._gate(); } compact() { this._gate(); }
+}
+
+// ---- SCORER interface ------------------------------------------------------------------------
+export class DeterministicScorer {
+  constructor(threshold = 0.72, reuseCoord64 = false) {
+    this.threshold = threshold;
+    this.reuseCoord64 = reuseCoord64;  // lever-1: reuse emitter's coord64 -> 1 fewer sha256/room
+    this.name = reuseCoord64 ? "deterministic-coord64" : "deterministic-sha";
+  }
+  async score(pid, mark, coord64) {
+    // lever-1 (reuseCoord64): score = f(sha256(pid)) — drops a sha BUT becomes address-derived,
+    // ignoring mark content. Fine for this PLACEHOLDER spread-generator; the REAL scorer
+    // (L0/domain) MUST stay content-aware. Honest trade, flagged not hidden.
+    const h = (this.reuseCoord64 && coord64) ? coord64 : sha256hex(pid + "|" + String(mark));
+    return parseInt(h.slice(0, 8), 16) / 0xffffffff; // stable [0,1]
+  }
+}
+
+// THE FINAL PLUG: liris's score as a PURE, byte-convergeable function (pid -> [0,1]).
+// acer's fabric-sector-cycle calls this as score() — making the genius/mistake VERDICT
+// converge across all 3 vantages (3rd convergence: language + address + SCORE).
+// HONEST: this is the PLACEHOLDER (address-derived sha, ignores work content). The real
+// domain scorer (lever-2) scores the WORK and will NOT be a pure pid-fn.
+export const GENIUS_THRESHOLD = 0.72;
+export function geniusScore(pid) {
+  return parseInt(sha256hex(String(pid)).slice(0, 8), 16) / 0xffffffff;
+}
+
+export class L0GnnScorer {
+  constructor(url = "http://127.0.0.1:4792/infer") { this.url = url; this.name = "L0-gnn-:4792"; }
+  async score(pid, mark) {
+    const h = sha256hex(pid + "|" + String(mark));
+    const b = (i) => parseInt(h.slice(2 * i, 2 * i + 2), 16) / 255;
+    const graph = {
+      nodes: [[b(0), b(1), b(2), b(3), b(4), b(5)], [b(6), b(7), b(8), b(9), b(10), b(11)]],
+      edges: [[0, 1]],
+      edge_features: [[b(12), b(13), b(14)]],
+    };
+    // L0's wire protocol IS json (the internal torch server's own contract) — boundary-only.
+    const res = await fetch(this.url, {
+      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(graph),
+    });
+    const j = await res.json();
+    const s = (j.scores || []);
+    return s.length ? s.reduce((a, c) => a + c, 0) / s.length : 0;
+  }
+}
+
+// ---- the engine: emit -> open -> score -> keep/compact -> seal -> rotate ----------------------
+export class WhiteRoomEngine {
+  constructor({ store, scorer, emitter, sealPath = null, geniusThreshold = 0.72, batchSize = 1 } = {}) {
+    this.store = store ?? new MemoryStore();
+    this.scorer = scorer ?? new DeterministicScorer(geniusThreshold);
+    this.emitter = emitter ?? new BHPidEmitter();
+    this.sealPath = sealPath;
+    this.geniusThreshold = geniusThreshold;
+    this.batchSize = batchSize;   // 1 = per-room durable (slow); N = bounded 1-in-N writes (fast)
+    this._buf = [];
+    this.metrics = { ticks: 0, genius: 0, mistake: 0 };
+    this.prevHash = "0".repeat(16);
+  }
+  _seal(rec) {
+    const row =
+      `WHITEROOM|pid=${rec.pid}|port3=${rec.port3}|cp=${rec.cp}|mark=${String(rec.mark).replace(/[|\r\n]/g, "_")}` +
+      `|score=${rec.score.toFixed(6)}|verdict=${rec.verdict}|store=${this.store.kind}|scorer=${this.scorer.name}|json=0`;
+    const rh = sha256hex(row + this.prevHash).slice(0, 16);
+    const sealed = row + `|row_hash=${rh}`;
+    this.prevHash = rh;
+    if (this.sealPath) {                              // batched seal: bounded 1-in-N disk writes
+      this._buf.push(sealed);
+      if (this._buf.length >= this.batchSize) this._flush();
+    }
+    return sealed;
+  }
+  _flush() {  // durability cadence = per-batch. Store's never-delete is in-memory, unaffected by batching.
+    if (this.sealPath && this._buf.length) {
+      fs.appendFileSync(this.sealPath, this._buf.join("\n") + "\n", "utf8");
+      this._buf.length = 0;
+    }
+  }
+  // one omnispindle turn
+  async tick(mark) {
+    const a = this.emitter.next();
+    this.store.put(a.pid, { pid: a.pid, port3: a.port3, cp: a.cp, mark });
+    const score = await this.scorer.score(a.pid, mark, a.coord64);
+    const verdict = score >= this.geniusThreshold ? "genius" : "mistake";
+    const rec = this.store.get(a.pid);
+    rec.score = score; rec.verdict = verdict;
+    if (verdict === "mistake") { this.store.compact(a.pid); this.metrics.mistake++; }
+    else { this.metrics.genius++; }
+    this.metrics.ticks++;
+    rec.sealed = this._seal(rec);
+    return rec;
+  }
+  // the omniflywheel: spin N rooms
+  async spin(marks) {
+    const out = [];
+    for (const mark of marks) out.push(await this.tick(mark));
+    this._flush(); // flush the final partial batch
+    return out;
+  }
+}
+
+// ---- CLI smoke run ---------------------------------------------------------------------------
+const isMain = process.argv[1] && process.argv[1].endsWith("liris-whiteroom-engine.mjs");
+if (isMain) {
+  const useL0 = process.argv.includes("--l0");

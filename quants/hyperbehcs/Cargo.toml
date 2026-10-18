@@ -1,0 +1,17 @@
+[package]
+name = "asolaria-quant-hyperbehcs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer port of the Asolaria HyperBEHCS vector quants (registry slots 9-12): Achlioptas JL projection, min/max uniform, polar pair and triple spherical codes, bit-identical to Node v22.22.0 on x86-64 (arm64 not measured)"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["quantization", "projection", "integer", "binary64"]
+categories = ["algorithms"]
+
+[lib]
+name = "quant_hyperbehcs"
+path = "src/lib.rs"
+
+[dependencies]
+sha2 = "=0.10.9"

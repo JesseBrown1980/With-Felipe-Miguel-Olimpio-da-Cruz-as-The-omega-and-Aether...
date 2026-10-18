@@ -1,0 +1,11 @@
+  const engine = new WhiteRoomEngine({
+    scorer: useL0 ? new L0GnnScorer() : new DeterministicScorer(),
+    sealPath,
+  });
+  const marks = Array.from({ length: 12 }, (_, i) => `bigpickle:room:${i}:work`);
+  const recs = await engine.spin(marks);
+  console.log(`HBPv1|row=whiteroom_smoke|scorer=${engine.scorer.name}|store=${engine.store.kind}|json=0`);
+  for (const r of recs) console.log(r.sealed);
+  const st = engine.store.stats();
+  console.log(`HBPv1|row=metrics|ticks=${engine.metrics.ticks}|genius=${engine.metrics.genius}|mistake=${engine.metrics.mistake}|live=${st.live}|compacted=${st.compacted}|never_deleted=${st.live + st.compacted === engine.metrics.ticks}|json=0`);
+}

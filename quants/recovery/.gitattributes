@@ -1,0 +1,4 @@
+# Vendored byte-identical from upstream (see PROVENANCE.md): never convert line endings here.
+dbbh-coms-quant-prism/** -text
+path2-two-shadow-recovery/** -text
+vendor/** -text

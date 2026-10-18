@@ -1,0 +1,13 @@
+rows.push(`INGESTSLICE|raw_bytes=${raw_bytes}|sha256_16=${handle8}|tokens=${toks.length}|distinct_content_terms=${distinct_terms}|json=0`);
+rows.push(`INGESTCUBE|cube10=${cube10}|host_handle8=${handle8}|quant8=${quant8}|schema=asolaria.drive_ingest.cube.v1|descriptor_only=1|json=0`);
+rows.push(`INGESTREDUCTION|raw_bytes=${raw_bytes}|host_handle=8B|cube_glyph=10B|raw->handle=${ratio_raw_to_handle}x|raw->cube=${ratio_raw_to_cube}x|note=referential-content-address-not-lossless|json=0`);
+rows.push(`INGESTCATALOG|kind=verb-noun-glyph-vocabulary|distinct_terms=${distinct_terms}|sample_top10=${top.join(' ')}|each_term=glyph-tuple-addressable|json=0`);
+rows.push(`INGESTLINEAGE|path=drive-doc->slice->tuple/HBP->quant8->cube10->verb-noun-glyph-catalog|maps_into=existing-BEHCS-cubes+index-language-catalogs|new_infra_required=NONE-beyond-this-ingestor|json=0`);
+rows.push(`INGESTBOUNDARY|raw_content_published=0|provider_calls=0|device_mutation=local-receipt-only|gemini_notebooklm=PROPOSE/slice-sources-not-dependencies|notebooklm_write_api=UNVERIFIED|json=0`);
+const body = rows.join('\n') + '\n';
+const ftr = `INGESTFTR|sha256=${sha(body)}|rows=${rows.length}|verdict=INGEST-NOT-INTEGRATE-PROVEN-on-1-real-drive-doc|json=0\n`;
+const out = body + ftr;
+const bad = out.split('\n').filter(Boolean).filter((r) => /[{}\r]/.test(r) || !r.endsWith('|json=0'));
+if (bad.length) { console.error('SELF-CHECK FAIL', bad); process.exit(1); }
+fs.writeFileSync('C:/what-is-asolaria-reductions/cubes/drive-ingest-source-01.hbp', out);
+process.stdout.write(out);

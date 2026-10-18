@@ -1,0 +1,33 @@
+# stdout of the vendored players/rime_agents.py (lines 166-170) on synthetic_bytes(), run by tools/levels_referee.py; do not edit
+SOURCE|repo=ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills@3f9f42dab6247c40b30921b253e3f73c9e942ca5|path=players/rime_agents.py|enwik8=SYNTHETIC|bytes=600000|sha256=750b3f638f972d5fc7b94cda022d019b279701c0cd2f6286749580d3fff59547|json=0
+LINE|n=1|text=THE FOUR FROZEN SLICE AGENTS — Laws 23-26, one measured demo each
+LINE|n=2|text=
+LINE|n=3|text===========================================================================
+LINE|n=4|text=AGENT 1 — FISCHER (Law 23): -,0,+ at every level
+LINE|n=5|text=  sphere (Z/1000081Z)*  g=7  point=g^77777
+LINE|n=6|text=  level 3    : third #2
+LINE|n=7|text=  level 27   : k mod 27 = 17  trime digits [-0-]  (cascaded, -,0,+)
+LINE|n=8|text=  level rime : full k = 77777  byte-exact invert = True
+LINE|n=9|text=  GATE: cost is sqrt-scaled per prime tower; one large tower is the wall (Law 14).
+LINE|n=10|text===========================================================================
+LINE|n=11|text=AGENT 2 — MTP (Law 24): frozen multi-token prediction  x1 / x3 / x27
+LINE|n=12|text=  direction 0 (hold)     : accuracy 1.0000  — the free center, costs nothing, says nothing
+LINE|n=13|text=  direction + (forward)  : x1 0.0458   x3 0.0000   x27 0.0000
+LINE|n=14|text=  direction - (backward) : x1 0.0475   (frozen on reversed time — real, ~symmetric)
+LINE|n=15|text=  GATE: lookahead accuracy DECAYS with depth — compounding error, DPI. A frozen
+LINE|n=16|text=  model predicts a fraction, never recreates unseen wholes (Laws 18/22).
+LINE|n=17|text===========================================================================
+LINE|n=18|text=AGENT 3 — HRM (Law 25): two-rate hierarchy, slow picks the level, fast predicts
+LINE|n=19|text=  levels used: deep(27-ish ctx) 99%  mid(3-ish) 0%  base(rime floor) 0%
+LINE|n=20|text=  frozen hierarchical bpc on held-out enwik8 = 4.4871
+LINE|n=21|text=  GATE: the hierarchy ROUTES between frozen levels (+,0,-); it never dips below
+LINE|n=22|text=  the entropy of what the levels jointly know (Law 15/21).
+LINE|n=23|text===========================================================================
+LINE|n=24|text=AGENT 4 — MCP (Law 26): stateless cells x CRT fan-in  (3 x 27-structured x rime)
+LINE|n=25|text=  cells: sphere(Z/163Z)* + sphere(Z/271Z)* + sphere(Z/379Z)*  (each 27|q-1)
+LINE|n=26|text=  address space M = 4,814,857   batch of 9 values round-tripped: byte-exact = True
+LINE|n=27|text=  GATE: cells are STATELESS (the SGRAM doctrine) — all knowledge is in the frozen
+LINE|n=28|text=  spheres; the coordinator only fans in. Addressing axis, ~0 bpc, never compression.
+LINE|n=29|text===========================================================================
+LINE|n=30|text=ALL FOUR AGENTS PLAYED. Frozen, sliced, trime-signed, receipt-backed.
+END|lines=30|stdout_bytes=2064|stdout_sha256=595a4cfd8213b9f86b7f1dff26f480417f088c4fd0e7ff200af4e1bbda3ed9b5|json=0
