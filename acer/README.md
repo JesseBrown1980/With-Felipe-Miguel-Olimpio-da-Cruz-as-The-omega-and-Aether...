@@ -50,3 +50,16 @@ that crate ports is the same in both.
 
 Scanned before commit: no keys, tokens or passwords; no e-mail addresses or public IP addresses; the
 corpus node ids are component names (`gaia-catalogs`, `identity`, `phase1::tensor-fabric…::immune`).
+
+## P5 (2026-10-18): the gnn-dispatch-bridge
+
+The owner's seat sent `Asolaria/tools/behcs/gnn-dispatch-bridge.mjs` (22,903 B, sha256 `21e06399…`)
+with its predictions ledger in one zip (sha256 `45da19b0…`, CUBE merkle `69ccbe09…`); both bodies
+match the zip's `SHA256SUMS` (2/2). The bridge is here byte-identical and pinned in `UPSTREAM.sha256`;
+`host8` ports its three pure functions and reproduces the P4 golden rows from it (`host8/README.md`,
+`host8/PROVENANCE.md`). The ledger, `Asolaria/data/behcs/gnn-predictions.ndjson` (3,046,232 B, sha256
+`70541242…`), is here byte-identical and pinned too. It carries a personal name that is not on the
+owner's operator list; asked, the owner answered "Publish as-is" (2026-10-18).
+
+Scanned before commit: no keys, tokens or passwords; no e-mail addresses, phone numbers or personal
+names; the one IP address is loopback `127.0.0.1`.

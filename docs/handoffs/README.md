@@ -234,8 +234,12 @@ call. Until then the served L1/L2/L4 are the ones the recheck measured, and `OWN
   everything, make it public", 2026-10-18). `sha256sum -c SHA256SUMS` checks all 9 bodies here.
 - **Next, by the receipt.** (1) port the three functions into host8 (Rust 1.81, clippy); (2) emit the
   same rows and byte-compare with the golden file; (3) only then retire the node daemon, which the
-  operator stops. `retired_now=0`. Step (1) needs the bridge source and the predictions ledger,
-  which are not here yet (P5 in `ACER-REGENERATE-HANDOFF.md`).
+  operator stops. `retired_now=0`. Steps (1) and (2) are done with P5 (2026-10-18): `host8/src/bridge.rs`
+  ports the three functions in integer Rust 1.81, and over the vendored bridge and ledger
+  (`acer/Asolaria/`) it writes the golden file byte for byte (4,741 of 4,741 lines, `9b8647ff…`;
+  `host8/tests/bridge_golden.rs`). A differential run against the real bridge under node, over 27,574
+  generated files, found one difference: lines nested deeper than 512 levels, where the port stops with
+  an error (`host8/PROVENANCE.md`). Step (3), stopping the node daemon, stays the operator's.
 
 ## GNN score drift and training reproducibility (2026-10-18)
 
@@ -397,7 +401,7 @@ plus `cloud/` (added here).
 | `FABLE5-SHADOWCAT-REMADE-BYTE-EXACT-2026-10-18/` | 17/17 | ACER's rebuild at `/root/_horizon/shadowcat`, rustc 1.81.0, WSL Linux | second machine for `shadowcat/` |
 | `FABLE5-MATRIX-IN-COLOUR-62-FILES-NOT-IN-AETHER-2026-10-18/` | CUBE + SUMS (62/62) | `asolaria-matrix-in-colour` @ `7035def`, GitHub blob ids checked | bodies in `colour/matrix-in-colour/vendor/` |
 | `FABLE5-AETHER-COMPARISON-RECEIPT-2026-10-18/` | 9/9 | ACER's comparison of aether @ `4646e9f` with four sources | rechecked in `cloud/recheck/` |
-| `FABLE5-REGEN-P5-GNN-BRIDGE-AND-PREDICTIONS-2026-10-18/` | CUBE + SUMS (2/2) | P5: the bridge (`21e06399…`) and the predictions ledger (`70541242…`) | the host8 bridge port (in progress) |
+| `FABLE5-REGEN-P5-GNN-BRIDGE-AND-PREDICTIONS-2026-10-18/` | CUBE + SUMS (2/2) | P5: the bridge (`21e06399…`) and the predictions ledger (`70541242…`) | `acer/Asolaria/`; `host8/src/bridge.rs` reproduces the P4 golden file byte for byte |
 | `FABLE5-REGEN-ITEM2-MEASUREMENT-ROWS-2026-10-18/` | 5/5 | ACER's step 4d and TritWord rows | tables above |
 | `FABLE5-REGEN-ITEM3-KEY-WRITERS-3174-2026-10-18/` | 15/15 | key writers and their recipes | below |
 | `FABLE5-REGEN-ITEM4-QR-CODEXES-AND-HRM-2026-10-18/` | 41/41 | the four `laws/*.qr` originals, their four readers, and ACER's HRM integration files | below |

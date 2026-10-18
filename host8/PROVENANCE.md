@@ -109,3 +109,60 @@ Each file is `sed -n 'A,Bp'` of the vendored `servers/host8-serve/src/main.rs`; 
 | servers/fischer-eval/Cargo.toml | e1022373 | gate/fischer-upstream/vendor/federation-1024/servers/fischer-eval/Cargo.toml |
 | servers/fischer-eval/src/lib.rs | d8774234 | gate/fischer-upstream/vendor/federation-1024/servers/fischer-eval/src/lib.rs |
 | servers/fischer-eval/src/main.rs | e79c1960 | gate/fischer-upstream/vendor/federation-1024/servers/fischer-eval/src/main.rs |
+
+## gnn-dispatch-bridge (P5 transfer, 2026-10-18)
+
+The owner's ACER seat (pid `8467a937cba309f7`) sent the bridge and its predictions ledger in one zip
+(sha256 `45da19b0…`, CUBE merkle `69ccbe09…`); both bodies match its `SHA256SUMS` (2/2).
+
+| ACER path | bytes | sha256 | here |
+|---|---|---|---|
+| C:/Users/acer/Asolaria/tools/behcs/gnn-dispatch-bridge.mjs | 22,903 | 21e063994b6f812ea0e43d158261fd76e6cdc446fa4db2da0d52a9bf12b13c65 | `acer/Asolaria/tools/behcs/gnn-dispatch-bridge.mjs`, byte-identical (git blob `de628d0a`), pinned in `acer/UPSTREAM.sha256` |
+| C:/Users/acer/Asolaria/data/behcs/gnn-predictions.ndjson | 3,046,232 (4,739 lines) | 7054124272083e229725c825e18305b7eb62999d8a6662453c10b8fa935435b2 | `acer/Asolaria/data/behcs/gnn-predictions.ndjson`, byte-identical, pinned in `acer/UPSTREAM.sha256` |
+
+4,550 of the ledger's rows carry, in `supervisor_title`, a full personal name that is not on the
+owner's operator list. Asked whether the ledger goes into the public repository as it is, the owner
+answered (2026-10-18) "Publish as-is". Scan of the bridge before vendoring: no e-mail addresses, phone numbers, keys, tokens, passwords
+or personal names; the one IP address is loopback `127.0.0.1` (the bus host default at :35 and the
+heartbeat post at :637), and the one path is the owner's device root `C:/Users/acer/Asolaria` (:26).
+
+`src/bridge.rs` ports `sha(input, 16)` (:48-50), `stablePredictionId` (:206-209),
+`resolvePredictionPid` (:211-221) and `classifyTier` (:223-233), and the emitter of
+`docs/handoffs/p4-sidecar-lanes-2026-10-18/bridge_golden.mjs` (sha256 `876d9af9…`). The rest of the
+bridge (cursor, veto map, bus posts, the watch loop) is not ported, and nothing here runs it.
+
+JavaScript semantics, as ported:
+
+- Values are what `JSON.parse` builds. Strings are UTF-16 code units, so a `\ud800` escape stays a
+  lone surrogate, `slice(0, 160)` can split a pair, and a lone surrogate is written as U+FFFD, as node
+  writes it. Objects keep creation order; a repeated key keeps its first slot and its last value.
+  `JSON.stringify` lists array-index keys (`0`..`4294967294`) first in numeric order, escapes as
+  ES2019 well-formed stringify does, and writes a non-finite number as `null`.
+- Numbers are binary64 bit patterns, in integers only: the parse rounds to nearest, ties to even
+  (digits past the 800th become one sticky digit; overflow gives infinity, underflow zero), and
+  `String(x)` is `Number::toString` with the fewest round-trip digits, the closest of them, ties to
+  the even digit, as node prints them.
+- `stablePredictionId` without a truthy id (`""`, `0`, `-0`, `false`, `null`, missing) hashes
+  `JSON.stringify` exactly: it is implemented, not refused. The delivered ledger has 0 such rows (all
+  4,739 ids are strings); the unit tests and the edge fixture carry node's values for them. `String`
+  of an array joins its elements (`null` as empty); of an object, `[object Object]`.
+- `classifyTier` lowercases with the full Unicode mapping per scalar value (U+0130 becomes `i` +
+  U+0307, U+212A becomes `k`); the final-sigma context rule is not applied, since it only picks
+  between two non-ASCII letters. A unit test checks over every code point that only U+0130 and U+212A
+  lowercase into ASCII, as measured in node. `.` in `reset.*hard` skips `\n`, `\r`, U+2028 and U+2029.
+- The emitter decodes the ledger as node's `Buffer.toString("utf8")` does (invalid bytes become U+FFFD
+  per maximal subpart; a BOM is kept), splits on `\r?\n`, drops lines that JavaScript `trim()` empties,
+  and counts a line that fails `JSON.parse` or parses to a falsy value as unparseable.
+- Where node throws, the port returns an error and writes nothing, as node writes nothing:
+  `.toLowerCase()` on a truthy verb or target that is not a string (`JsError::NotAString`), and
+  `String()` of an object with an own `toString` key (`JsError::ToPrimitive`).
+- One place where the port and node differ: a line nested deeper than 512 arrays or objects. Node
+  parses it; the port returns `EmitError::TooDeep` for the run instead of building it. When the row's
+  id is truthy, node never stringifies the deep value and writes the row at any depth (a 100,000-level
+  line gives a row); when it must stringify, node 22.22.0 throws a RangeError past 4,165 levels for
+  `JSON.stringify` and 3,296 for `String()`, limits set by its stack size. The P5 ledger has no such
+  line. A differential run over 27,574 generated files (1,184,902 rows) found no other difference.
+
+Tests: `tests/fixtures/bridge-edge.ndjson` (synthetic, 3,845 B, sha256 `923a1d80…`) and node's rows
+for it, `bridge-edge.golden.hbp` (sha256 `246d034c…`), written by `tests/fixtures/bridge_golden_args.mjs`,
+which is `bridge_golden.mjs` with its paths and predictions label taken from argv.
