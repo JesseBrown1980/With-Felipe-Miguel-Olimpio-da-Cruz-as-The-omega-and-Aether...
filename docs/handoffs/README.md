@@ -17,6 +17,11 @@ entries, and the eight checkpoint hashes equal the known-good values in `OWNER-R
 gslgnn v1 6f82384f / v2 9e50723b, gsl_gnn.py 783b9b50). The manifest's own scan row records
 emails 0, phones 0, keys 0, mask-ids 0, ipv4 0 over the 13 text files and the corpus.
 
+The cube chains onto `prior=028ce13b…`. That link is not checkable from the cloud side with the
+receipts received so far: none of them has that digest with either line ending. The ACER office
+records `028ce13b…` as the digest of a receipt before its line endings were converted to LF, in
+a `NORMALIZE` row; the CMP3 receipt received here (sha256 `002dcf21…`) predates those rows.
+
 What it locates, that the model crates previously recorded as not on disk: the L4/L2 corpus
 `gslgnn_w9_3_corpus.json` (68,695,303 B, sha256 7e7d0406…), the L1 server
 `prototype_inference_server.py`, the L4 server `gslgnn_inference_server.py`, the L2 trainer
