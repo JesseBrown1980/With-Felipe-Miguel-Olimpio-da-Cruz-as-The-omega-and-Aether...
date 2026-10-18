@@ -1,0 +1,14 @@
+RUNBOOKHDR|name=GNN-P3-drift-and-repro|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|env=py3.13+torch_2.13.0+cpu+pyg_2.7.0+numpy_2.4.3|windows_shell=GitBash_or_WSL_not_PowerShell|paths=edit_SIDECAR/CK_constants_only|json=0
+STEP|n=1|what=scoring_determinism|cmd=python rescore_determinism.py|expect=9/9_matches_receipt_L1_38b043191a5e62e2_L2_8bc74ee31839acab_L4_993cb532f9944bbf|tag=MEASURED|json=0
+STEP|n=2a|what=isa_native|cmd=python rescore_isa.py native|expect=3/3_receipt|tag=MEASURED|json=0
+STEP|n=2b|what=aten_only_down|cmd=ATEN_CPU_CAPABILITY=default python rescore_isa.py aten_default|expect=3/3_receipt(unchanged)|tag=MEASURED|json=0
+STEP|n=2c|what=mkl_only_down|cmd=MKL_ENABLE_INSTRUCTIONS=SSE4_2 python rescore_isa.py mkl_only_down|expect=L1_bab3c3515120259d_L2_5a6ac21cbc18652a_L4_56a5278160fdbfe3|tag=MEASURED|json=0
+STEP|n=2d|what=onednn_only_down|cmd=ONEDNN_MAX_CPU_ISA=SSE41 python rescore_isa.py onednn_only_down|expect=3/3_receipt(unchanged)|tag=MEASURED|json=0
+STEP|n=2e|what=drift_size|cmd=python isa_diff.py|expect=9-27_edges_max_51_ulp_0_flips|tag=MEASURED|json=0
+STEP|n=2f|what=avx512_to_acer|cmd=MKL_ENABLE_INSTRUCTIONS=AVX2 MKL_CBWR=AVX2 python rescore_isa.py mkl_avx2|expect=3/3_receipt|tag=NAMED_cloud_relayed|json=0
+STEP|n=3a|what=input_file_hashes|cmd=python train_inputs.py|expect=prototype_4edb9439_contrastive_349a30c0_gsl_783b9b50_init_51b739fb_trainer_c66ca57d(if_unedited)|tag=MEASURED|json=0
+STEP|n=3b|what=corpus_content|cmd=python3 corpus_identity.py|expect=content_3b76c29d5ae3b555_lf_0f1235818828b27d_crlf_7e7d0406ec97af41|tag=MEASURED|json=0
+STEP|n=4a|what=train_default_threads_x2|cmd=python retrain_stratified.py OUTDIR|expect=bytes_differ_run_to_run_counts_identical(auc_1.0+6/6+1/47282)|heavy=1|tag=MEASURED|json=0
+STEP|n=4b|what=train_deterministic_x2|cmd=python retrain_det_wrapper.py OUTDIR|expect=identical_L1_9166cdbe430e5b55_L2_be3ba29f802067e8_L4_7a920ac47fe5eb8d|heavy=1|tag=MEASURED|json=0
+STEP|n=4c|what=cross_machine_training|cmd=MKL_ENABLE_INSTRUCTIONS=AVX2 MKL_CBWR=AVX2 python retrain_det_wrapper.py OUTDIR|expect=same_3_as_4b|tag=CONJECTURE_not_yet_run|json=0
+STEP|n=5|what=verify_zip|cmd=sha256sum -c SHA256SUMS|expect=all_OK|json=0

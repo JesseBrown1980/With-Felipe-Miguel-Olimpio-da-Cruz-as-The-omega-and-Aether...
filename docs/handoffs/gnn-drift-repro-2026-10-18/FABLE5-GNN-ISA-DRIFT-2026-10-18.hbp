@@ -1,0 +1,11 @@
+ISAHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=P3_score_drift_instruction_set_isolation|why=cloud_AVX-512_Xeon_matrix_asked_for_ACER_cpu_capability|script=rescore_isa.py+isa_diff.py|fresh_process_per_variant=1|E=0|json=0
+ISACPU|cpu_name=Intel(R)_Core(TM)_i5-8300H_CPU_@_2.30GHz|cpu_id=Intel64_Family_6_Model_158_Stepping_10|cpu_capability=AVX2|threads=4|os=Windows-11|torch=2.13.0+cpu|pyg=2.7.0|numpy=2.4.3|mkl=1|mkldnn=1|tag=MEASURED|json=0
+ISARESCORE|variant=native|L1=38b043191a5e62e2|L2=8bc74ee31839acab|L4=993cb532f9944bbf|matches_receipt=3/3|tag=MEASURED|json=0
+ISARESCORE|variant=ATEN_CPU_CAPABILITY=default|cpu_capability_reported=DEFAULT|L1=38b043191a5e62e2|L2=8bc74ee31839acab|L4=993cb532f9944bbf|matches_receipt=3/3|tag=MEASURED|json=0
+ISARESCORE|variant=ATEN=default+MKL_ENABLE_INSTRUCTIONS=SSE4_2+ONEDNN_MAX_CPU_ISA=SSE41|L1=bab3c3515120259d|L2=5a6ac21cbc18652a|L4=56a5278160fdbfe3|matches_receipt=0/3|tag=MEASURED|json=0
+ISADIFF|model=L1|edges_differ=27_of_315249|max_abs=5.275e-11|max_ulp=51|decision_flips_at_0p5=0|benign_caught=40/40_both|tag=MEASURED|json=0
+ISADIFF|model=L2|edges_differ=9_of_315249|max_abs=4.093e-12|max_ulp=18|decision_flips_at_0p5=0|benign_caught=40/40_both|tag=MEASURED|json=0
+ISADIFF|model=L4|edges_differ=14_of_315249|max_abs=2.328e-10|max_ulp=15|decision_flips_at_0p5=0|benign_caught=40/40_both|tag=MEASURED|json=0
+ISAVERDICT|aten_own_kernel_isa=NOT_the_source|mkl_onednn_gemm_isa_path=IS_a_source|magnitude=<=51_ulp_<=2.3e-10_abs_0_decision_flips|grain=same_machine_same_versions_only_isa_varied|tag=MEASURED|json=0
+CORRECTION_BESIDE|prior=L1_survives_cross-machine_because_output_saturates|verdict=REFUTED_on_ACER|why=L1_also_changes_under_forced-down_MKL/oneDNN(27_edges_51_ulp)|so=the_cloud_L1_match_means_its_AVX-512_path_happened_to_agree_for_L1_shapes_not_immunity|prior_kept_beside|json=0
+NEXT_FOR_CLOUD|expected_matching_row=MKL_ENABLE_INSTRUCTIONS=AVX2+ONEDNN_MAX_CPU_ISA=AVX2(ATEN_alone_is_not_enough)+PyG_2.7.0|if_still_no_match=torch_2.14.1_vs_2.13.0_or_Linux_vs_Windows_build(next=torch_2.13.0_venv)|tag=CONJECTURE_until_cloud_runs_it|json=0

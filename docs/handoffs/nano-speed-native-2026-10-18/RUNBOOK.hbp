@@ -1,0 +1,7 @@
+RUNBOOKHDR|name=nano-speed-native-PID-mint|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|lane=native_Rust_hot_path_not_JS|toolchain=rust_1.81|dep=sha2_0.10.9|code=host8-serve/src/main.rs:536-589_byte-for-byte|windows_shell=GitBash_or_WSL_not_PowerShell|json=0
+STEP|n=1|what=clippy_gate|cmd=cargo +1.81 clippy --release -- -D warnings|expect=exit_0|json=0
+STEP|n=2|what=run|cmd=cargo +1.81 run --release|expect=PARITY_holds=1+TABLEPARITY_identical=100001+4_NATIVEBENCH_rows|json=0
+STEP|n=3|what=acer_reference|raw_sha256_ns=266|fnv1a64_handle8_ns=148|host8_sha16_exact_ns=3014|proposed_table_sha16_ns=473|cpu=i5-8300H_AVX2_no_SHA-NI|threads=1|units=ps_per_op_integer|tag=MEASURED|json=0
+STEP|n=4|what=finding|host8_sha16_cost=32x_format!(02x)_~11x_the_hash|fix=table_hex_over_8_kept_bytes|parity=100001/100001|speedup=6.4x|applied_to_host8=0|gate=1.81_fmt+clippy+sha16_matches_node_crypto+CI|owner_call=1|json=0
+STEP|n=5|what=js_cold_lane_comparison|cmd=node bench_emitter.mjs|acer=revolver.next_1831ns+raw_node_sha16_1455ns|note=cold_lane_not_the_hot_path|json=0
+STEP|n=6|what=verify_zip|cmd=sha256sum -c SHA256SUMS|expect=all_OK|json=0

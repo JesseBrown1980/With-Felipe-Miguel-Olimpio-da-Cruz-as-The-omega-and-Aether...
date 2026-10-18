@@ -1,0 +1,12 @@
+REPROHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=P3_retrain_self_reproducibility_on_ACER|same_machine=1|same_inputs=1|seed=1792|split_sha16=27152b521ce28662|threads=4|E=0|json=0
+REPRO|model=L1|sealed_ckpt=dc8ea19512ad62da|rerun_ckpt=12f4e6ef832a73b0|sealed_scores=38b043191a5e62e2|rerun_scores=47f4f47c67dc6d27|n_unique=7_vs_7|counts=identical(auc_1.0_all_splits+6/6+1/47282)|tag=MEASURED|json=0
+REPRO|model=L2|sealed_ckpt=fe9b3a8ecd4cceb9|rerun_ckpt=c9b3c03a3cb60ea4|sealed_scores=8bc74ee31839acab|rerun_scores=f3e3886e8c242084|n_unique=20_vs_20|counts=identical|tag=MEASURED|json=0
+REPRO|model=L4|sealed_ckpt=23e44abfc111d620|rerun_ckpt=c541e6ad4ca392a9|sealed_scores=993cb532f9944bbf|rerun_scores=a7ef844d9ca8f4d2|n_unique=20_vs_21|counts=identical|tag=MEASURED|json=0
+REPROVERDICT|training_bytes_reproducible_on_same_machine=0|scoring_reproducible=1(9/9_earlier)|so=cloud_retrain_byte_diff_is_NOT_evidence_of_cross-machine_or_edited-input_cause|matches_cloud_symptom=L4_21_vs_20_unique|tag=MEASURED|json=0
+REPROCAUSE|suspect=multi-threaded_backward_reductions(scatter_add/index_add_in_GCN_message_passing+embedding_gather_backward)|test=PENDING_two_single-thread_deterministic_runs|tag=CONJECTURE|json=0
+DETRUNS|recipe=torch.set_num_threads(1)+use_deterministic_algorithms(True,warn_only)|script=retrain_stratified.py_sealed_c66ca57d_run_via_wrapper|runs=2|both_completed=1(RETRAINDONE_x2)|bg_job_then_reaped_for_low_system_memory=1|restarted=0|tag=MEASURED|json=0
+DETREPRO|model=L1|run_a_ckpt=9166cdbe430e5b55|run_b_ckpt=9166cdbe430e5b55|scores=042912b8f0eece44_x2|identical=1|tag=MEASURED|json=0
+DETREPRO|model=L2|run_a_ckpt=be3ba29f802067e8|run_b_ckpt=be3ba29f802067e8|scores=58d170947fce5a47_x2|identical=1|tag=MEASURED|json=0
+DETREPRO|model=L4|run_a_ckpt=7a920ac47fe5eb8d|run_b_ckpt=7a920ac47fe5eb8d|scores=7190461640d20b5d_x2|n_unique=20_x2|identical=1|tag=MEASURED|json=0
+DETVERDICT|training_reproducible_with_recipe=1|without_recipe(4_threads)=0|counts_identical_across_all_4_runs=1|grain=threads_and_deterministic_flag_changed_together_so_not_separated|tag=MEASURED|json=0
+NEXT_FOR_CLOUD|recipe=1_thread+use_deterministic_algorithms+MKL_ENABLE_INSTRUCTIONS=AVX2+MKL_CBWR=AVX2|expect=9166cdbe/be3ba29f/7a920ac4_if_torch_backward_kernels_agree|if_not=torch_2.14.1_vs_2.13.0_backward|tag=CONJECTURE_until_cloud_runs_it|json=0

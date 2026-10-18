@@ -1,0 +1,14 @@
+EMITHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=200ns_per_thread_emitter_number_check|operator=that_was_an_old_number|E=0|json=0
+WHERE|BROWN-HILBERT.md=0_hits|brown-hilbert/_chapters=0_hits|foundation_messaging=63k/s_single+189k/s_aggregate_bus_~1e7_ceiling|200ns_source=code_comment_asolaria-loop.mjs:4,34_PID~200ns+June_memory+CLAUDE.md_activatable~200ns|tag=MEASURED_grep|json=0
+EMITBENCH|unit=revolver.next(mintPID)|ns_per_op_median=1830.9|ns_per_op_min=1789.4|ops_per_s_median=546182|threads=1|node=v24.13.1|cpu=i5-8300H|n=1000000x3|tag=MEASURED|json=0
+EMITBENCH|unit=raw_sha16_chain|ns_per_op_median=1455.2|ops_per_s_median=687195|threads=1|tag=MEASURED|json=0
+CORRECTION_BESIDE|prior=June_memory_200ns_unit=MEASURED_in_code|verdict=it_is_a_code_comment=NAMED_not_a_timing_run|today_js_on_acer=1831ns_median(~9x_slower_than_200ns)|native_rust=NOT_MEASURED|operator_1.16T=multiplier_canon_untouched|prior_kept_beside|json=0
+NATIVEHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=nano-speed_native_PID_mint|operator=why_are_you_testing_JS_we_use_HBP/HBI_the_nano_speed|lane=Rust_1.81_release_clippy_-D_warnings_offline|code=host8-serve/src/main.rs:536-589_copied_byte-for-byte|sha2=0.10.9|cpu=i5-8300H_AVX2_no_SHA-NI|threads=1|integer_timing=picoseconds|E=0|json=0
+PARITY|host8_test_vector=sha16(abc)=ba7816bf8f01cfea|holds=1|tag=MEASURED|json=0
+NATIVEBENCH|unit=raw_sha256_digest_32B|ns_per_op_median=266|ops_per_s=3760306|tag=MEASURED|json=0
+NATIVEBENCH|unit=host8_fnv1a64_handle8_exact|ns_per_op_median=148|ops_per_s=6769313|tag=MEASURED|json=0
+NATIVEBENCH|unit=host8_sha16_chain_exact_incl_hex|ns_per_op_median=3014|ops_per_s=331756|cost_center=32x_format!(02x)_per_PID_~11x_the_hash|tag=MEASURED|json=0
+NATIVEBENCH|unit=proposed_sha16_table_hex_8_bytes|ns_per_op_median=473|ops_per_s=2114811|parity=100001/100001_identical+abc_vector|speedup_vs_host8=6.4x|applied_to_host8=0|tag=MEASURED|json=0
+VERDICT|nano_class_200ns=CONFIRMED_natively(hash_266ns+handle8_148ns_on_AVX2_laptop_without_SHA-NI)|host8_sha16_today=3014ns_because_of_hex_formatting|js_emitter=1831ns(cold_lane)|tag=MEASURED|json=0
+CORRECTION_BESIDE|prior=EMITTER-200NS-CHECK_said_~9x_too_fast|verdict=WRONG_OBJECT(timed_the_JS_cold_lane)|native_hot_path=200ns_class_holds|prior_kept_beside|json=0
+PROPOSAL|host8_change=sha256hex+sha16->table_hex_over_kept_bytes|expected=~3.0us->~0.47us_per_PID_same_bytes|gate=1.81_fmt+clippy+host8_tests(sha16_matches_node_crypto)+CI|status=PROPOSED_HOLD_owner_call|json=0

@@ -176,8 +176,26 @@ edges, and train benign covers all 9 snapshots. So the scope limit stands, for a
 held-out benign edges share nodes and snapshots with train, and the node features the retrain reads
 from the corpus (`retrain_stratified.py:30-31`) are the fixed organ values the corpus builder set
 (`train_gslgnn_w9_3.py:159-160`). A split that holds out whole snapshots is the test of
-generalization; it has not been run. The retrain was not re-run here, so the three `scores_sha16`
-are the receipt's.
+generalization; it has not been run.
+
+Reproduced from the cloud side (Linux, Python 3.13, torch 2.14.1+cpu, PyG 2.8.1; ACER ran torch
+2.13.0, PyG 2.7.0), the receipt's own refutation test:
+
+- **Scoring the delivered checkpoints** with the script's forward functions on the corpus here: L1
+  gives `scores_sha16=38b043191a5e62e2`, the receipt's exactly. L2 and L4 give the receipt's `min` to
+  the last bit (`1.5795305898791412e-06`, `3.03053020616062e-05`), its std and `n_unique`, but a
+  different `scores_sha16` (`3da917cd…`, `5425e8ca…`): the scores differ only in low float bits. All
+  three score the 40 benign edges at or below 0.5 and 5 suspicious edges at or below 0.5 (the
+  receipt's "~5 false alarms").
+- **Re-running `retrain_stratified.py`** (only the `SIDECAR` path changed, pointed at `acer/`): the
+  split, every AUC pair count, the test catches (6/6), the test false alarms (1/47,282), the std and
+  `n_unique` of all three, and `HELPERPARITY` (0.0) equal the receipt's. The trained bytes differ
+  (L1 `59382d90…`, L2 `ee40e8b4…`, L4 `bc7fd190…`), so the `scores_sha16` differ (`bdbbac1d…`,
+  `e05e6707…`, `5bb35f83…`) — float training on another torch build, not a different result.
+
+So the receipt is not refuted: its integer measurements reproduce exactly on another platform, and
+the delivered checkpoints are the ones it measured. Where the low bits come from, and why retrained
+bytes differ, is pinned down in "GNN score drift and training reproducibility" below.
 
 Not done, by the receipt (`SWAP|status=NOT_DONE`): the retrained checkpoints are not served — the
 servers hard-code the original filenames and L2 has no server; swapping them in is the owner's
@@ -215,3 +233,73 @@ call. Until then the served L1/L2/L4 are the ones the recheck measured, and `OWN
   same rows and byte-compare with the golden file; (3) only then retire the node daemon, which the
   operator stops. `retired_now=0`. Step (1) needs the bridge source and the predictions ledger,
   which are not here yet (P5 in `ACER-REGENERATE-HANDOFF.md`).
+
+## GNN score drift and training reproducibility (2026-10-18)
+
+`gnn-drift-repro-2026-10-18/`: the owner's how-to bundle (zip sha256 `a6bce1ac…`, 19 files; `sha256sum
+-c SHA256SUMS` checks all 19 and the four receipt sidecars check): `FABLE5-GNN-DETERMINISM`,
+`-ISA-DRIFT`, `-TRAIN-INPUTS`, `-RETRAIN-REPRO`, the seven scripts, two raw retrain logs, and the
+how-to as `HOWTO.md` and `RUNBOOK.hbp`. `CLOUD-ROWS.hbp` (added here) holds the cloud's own runs of
+it: Linux, Xeon with AVX-512, torch 2.13.0+cpu with PyG 2.7.0 (ACER's versions) and torch 2.14.1+cpu
+with PyG 2.8.1, the scripts unchanged except their path constants.
+
+Both machines, measured:
+
+| Question | ACER (i5-8300H, AVX2, Windows 11) | Cloud (Xeon, AVX-512, Linux) |
+|---|---|---|
+| Same training inputs? | corpus content `3b76c29d…`; model files `4edb9439…` `349a30c0…` `783b9b50…` `51b739fb…`; trainer `c66ca57d…`; PyG `gcn_conv.py` `036b4647…` | all identical (corpus bytes `7e7d0406…` with CRLF, `0f123581…` as LF, as on ACER) |
+| Scoring a fixed checkpoint, run to run and 4 vs 1 threads | identical, 9/9 match the receipt | identical; 3/9 match natively (L1 only) |
+| Scoring with `MKL_ENABLE_INSTRUCTIONS=AVX2 MKL_CBWR=AVX2` | — | **9/9 match ACER's receipt**, under both torch/PyG pairs |
+| Which library moves the bits | MKL forced to SSE4.2 moves all three; oneDNN and ATen forced down move none | MKL alone restores ACER's bits; ATen alone and oneDNN alone do not; PyG version no effect |
+| MKL capped to SSE4.2 (no `MKL_CBWR`) | L1 `bab3c351…`, L2 `5a6ac21c…`, L4 `56a52781…` | L1 `bab3c351…` (same), L2 `b4cdc6bc…`, L4 `defa07f7…` (differ) |
+| Size of the drift | ≤ 27 edges, ≤ 51 ULP, ≤ 2.3e-10, 0 decisions flipped | AVX-512 vs AVX2: L2 9 edges ≤ 10 ULP, L4 32 edges ≤ 22 ULP, 0 flipped; 40/40 benign caught either way |
+| Retraining, 4 threads | bytes differ run to run, counts identical | bytes differ in all 6 runs, counts identical |
+| Retraining, 1 thread + `use_deterministic_algorithms` | identical twice: `9166cdbe…` `be3ba29f…` `7a920ac4…` | identical 4 times: `549aab5c…` `d9430791…` `2d0c02f8…` |
+| Same recipe across machines, MKL pinned (step 4c) | — | **differs** from ACER's; the step's conjecture is refuted |
+
+What this settles. A score is reproducible across machines when MKL's conditional-reproducibility
+mode is pinned (`MKL_CBWR`); capping MKL's instruction set alone is not enough, and the drift
+otherwise is a few ULP with no decision change. Training is reproducible within a machine under the
+single-thread deterministic recipe, and not across these two machines even with the same versions,
+inputs, recipe and MKL pin; the remaining difference, not separated here, is the Windows vs Linux
+torch build. Every count-based result (AUC on each split, 6/6 benign caught, 1/47,282 false alarms)
+is identical in every run on both machines. The receipts' earlier conjectures are kept beside their
+results: "L1 survives because it saturates" (refuted on ACER), and the cross-machine training match
+(refuted here).
+
+## Nano-speed PID mint on the native path (2026-10-18)
+
+`nano-speed-native-2026-10-18/`: the owner's how-to bundle (zip sha256 `409a8095…`, 8 files, all
+check): the receipt `FABLE5-EMITTER-200NS-CHECK-2026-10-18.hbp`, `native-emit-bench/` (host8-serve's
+own `canonicalize`/`fnv1a64`/`host_handle8`/`sha256hex`/`sha16`, `main.rs:536-589`, copied
+byte-for-byte, timed in integer picoseconds), the JS cold-lane `bench_emitter.mjs`, `HOWTO.md` and
+`RUNBOOK.hbp`. `CLOUD-ROWS.hbp` (added here) holds the cloud's runs.
+
+The 200 ns figure is not in `BROWN-HILBERT.md` (checked on both machines). Its sources are a code
+comment in bigpickle's `asolaria-loop.mjs` (lines 4 and 34, per the receipt; that file is not in this
+repository), the owner's voice transcripts in
+`COMBINED-BOOK-OF-LAWS.md` (lines 2751, 3558, 3683: "200 nano second per thread"), and the map's
+emitter row. Single thread, medians:
+
+| Unit | ACER i5-8300H (no SHA hardware) | Cloud Xeon (SHA hardware) |
+|---|---|---|
+| raw SHA-256, 32 B | 266 ns | 63 ns |
+| host8 `fnv1a64` (with `canonicalize`) | 148 ns | 132 ns |
+| host8 `sha16` chain as written | 3,014 ns | 1,749 ns |
+| `sha16` with table hex over the 8 kept bytes | 473 ns | 166 ns |
+| JS `revolver.next()` (cold lane) | 1,831 ns | 1,224 ns |
+| JS raw `sha16` chain | 1,455 ns | 982 ns |
+
+On the cloud the bench passes `clippy -D warnings`, its `sha16("abc")` gate, and its 100,001-step
+table parity. Two cross-implementation checks were added here: the JS revolver and aether's Rust port
+(`loop/src/revolver.rs`) give the same 1,000,000 PIDs (anchor `bench`, digest `055b3562…`), and
+host8's `sha16`, the table-hex `sha16` and aether's `loop` `sha16`, each chained 1,000,000 times
+from `seed`, all end on `ded30f877db06882`. The bench's `fnv1a64` row times `fnv1a64` without
+`host_handle8`'s `{:016x}` formatting; with it, the cloud measures 87–139 ns.
+
+So the native hash is within the 200 ns class on both machines, and host8's `sha16` is slower only
+because it formats each of the 32 digest bytes with `format!`. The table-hex form gives the same
+bytes 6.4× (ACER) to 10.5× (cloud) faster. It is proposed, not applied: host8-serve is upstream
+(federation-1024), so the change belongs there first, with `sha16_matches_node_crypto` and the Rust
+1.81 gate, and aether re-vendors the lines after; fischer-eval's `sha16` (`lib.rs:564`) has the same
+pattern. That is the owner's call.
