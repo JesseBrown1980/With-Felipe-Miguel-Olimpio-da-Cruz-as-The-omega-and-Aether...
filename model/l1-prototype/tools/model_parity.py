@@ -8,18 +8,19 @@ keys the torch_geometric GCNConv layout lacks and which it does not expect (LAYO
 with the key rename of behcs-256 services/gnn-sidecar/inference_server.py:11 (VARIANT row: its forward's float32
 bits against the fallback model's on every fixture edge). Every case of tools/int_referee.py goes through the
 fallback model in eval mode: encode_nodes, get_edge_embeddings, compute_prototype_distances and forward
-(prototype_gnn.py:65-132).
+(prototype_gnn.py:65-132). KERNEL_ENV is set before torch loads, as model/l0-edge/tools/model_parity.py does, so
+every x86-64 host runs the same kernels. Float runs only inside torch (the owner's float32 lane): this tool builds
+each input tensor from float32 bit patterns made with integer arithmetic, reads every output by its bit pattern
+and converts it with integer arithmetic (tools/quantize.py float32_units).
 Writes tests/fixtures/expected-model.hbp; --check regenerates it in memory and diffs. --sweep prints, without
 writing anything, the two forwards compared on random graphs at growing input scales (SWEEP rows, fixed seed).
 Run: <torch venv>/bin/python -I tools/model_parity.py [--check | --sweep]
 """
 import hashlib
 import importlib.util
-import math
+import os
 import pathlib
-import struct
 import sys
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MODEL_SOURCE = ROOT / "vendor" / "gnn-sidecar" / "models" / "prototype_gnn.py"
@@ -31,6 +32,10 @@ FRAC_BITS = 24
 # temperature keeps its default 0.1 (prototype_gnn.py:39).
 ARGS = dict(node_input_dim=6, hidden_dim=64, num_classes=2, num_prototypes_per_class=3)
 
+# Set before torch loads, as model/l0-edge/tools/model_parity.py does: ATen's scalar kernels, oneMKL's SSE2-only
+# CNR code path, one thread.
+KERNEL_ENV = {"ATEN_CPU_CAPABILITY": "default", "MKL_CBWR": "COMPATIBLE", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
+os.environ.update(KERNEL_ENV)
 sys.dont_write_bytecode = True  # no __pycache__ beside the vendored sources or tools/
 import torch  # noqa: E402
 
@@ -43,6 +48,34 @@ def load_module(name, path):
 
 
 REFEREE = load_module("int_referee", ROOT / "tools" / "int_referee.py")
+QUANTIZE = load_module("quantize", ROOT / "tools" / "quantize.py")
+UNITS_PER_Q24 = QUANTIZE.FLOAT32_UNIT_BITS - FRAC_BITS  # a Q24 unit is 2^125 float32 units of 2^-149
+
+
+def float32_bits_of_q24(q):
+    """The float32 bits of q / 2^24, or None when q / 2^24 is not a float32 (more than 24 significant bits)."""
+    magnitude = abs(q) << UNITS_PER_Q24
+    sign = 0x8000_0000 if q < 0 else 0
+    if magnitude < 1 << 23:
+        return sign | magnitude
+    exponent = magnitude.bit_length() - 23
+    if magnitude & ((1 << (exponent - 1)) - 1) or exponent > 254:
+        return None
+    return sign | exponent << 23 | ((magnitude >> (exponent - 1)) & 0x7F_FFFF)
+
+
+def float32_tensor(x_q24):
+    """The float32 tensor of the Q24 rows, built from bit patterns; None when a value is not a float32."""
+    bits = [[float32_bits_of_q24(q) for q in row] for row in x_q24]
+    if any(b is None for row in bits for b in row):
+        return None
+    signed = [[b - (1 << 32) if b >> 31 else b for b in row] for row in bits]
+    return torch.tensor(signed, dtype=torch.int32).view(torch.float32)
+
+
+def float32_bits(tensor):
+    """The float32 bit patterns of a tensor, as nested lists of unsigned integers."""
+    return (tensor.contiguous().view(torch.int32).to(torch.int64) & 0xFFFF_FFFF).tolist()
 
 
 def load_checkpoint():
@@ -108,10 +141,10 @@ def rekeyed_model(state, module):
 
 
 def forward_bits(model, x_q24, edges):
-    x = torch.tensor([[q / (1 << FRAC_BITS) for q in row] for row in x_q24], dtype=torch.float32)
+    x = float32_tensor(x_q24)
     edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
     with torch.no_grad():
-        return [float32_bits(float(v)) for v in model(x, edge_index).reshape(-1).tolist()]
+        return float32_bits(model(x, edge_index).reshape(-1))
 
 
 def variant_row(fallback, rekeyed, load, cases):
@@ -127,21 +160,13 @@ def variant_row(fallback, rekeyed, load, cases):
             f"conv2.lin.bias>conv2.bias|source=inference_server.py:11{load}|edges={edges}|p_bits_equal={equal}")
 
 
-def float32_bits(value):
-    return struct.unpack("<I", struct.pack("<f", value))[0]
-
-
-def q24_of(value):
-    return math.floor(Fraction(value) * (1 << FRAC_BITS) + Fraction(1, 2))
-
-
-def join_q24(rows):
-    return ";".join(",".join(str(q24_of(v)) for v in row) for row in rows)
+def join_q24(tensor):
+    return ";".join(",".join(str(QUANTIZE.q24_of_float32_bits(b)) for b in row) for row in float32_bits(tensor))
 
 
 def case_row(model, kind, case, x_q24, edges):
-    x = torch.tensor([[q / (1 << FRAC_BITS) for q in row] for row in x_q24], dtype=torch.float32)
-    if any(float(v) * (1 << FRAC_BITS) != q for row, x_row in zip(x_q24, x.tolist()) for q, v in zip(row, x_row)):
+    x = float32_tensor(x_q24)
+    if x is None:
         raise SystemExit(f"MODEL_PARITY|refused=input|case={case}|reason=not exact in float32")
     edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
     with torch.no_grad():
@@ -149,13 +174,13 @@ def case_row(model, kind, case, x_q24, edges):
         e = model.get_edge_embeddings(h, edge_index)
         logits = model.compute_prototype_distances(e)
         p = model(x, edge_index)
-    p_values = [float(v) for v in p.reshape(-1).tolist()]
+    p_bits = float32_bits(p.reshape(-1))
     head = f"{kind}|case={case}|edges={','.join(f'{s}>{t}' for s, t in edges)}"
-    tail = (f"|logits_q24={join_q24(logits.tolist())}|p_bits={','.join(f'{float32_bits(v):08x}' for v in p_values)}"
-            f"|p_q24={','.join(str(q24_of(v)) for v in p_values)}")
+    tail = (f"|logits_q24={join_q24(logits)}|p_bits={','.join(f'{b:08x}' for b in p_bits)}"
+            f"|p_q24={','.join(str(QUANTIZE.q24_of_float32_bits(b)) for b in p_bits)}")
     if kind == "PAIR":
-        return f"{head}|h_q24={join_q24(h.tolist())}|e_q24={join_q24(e.tolist())}{tail}", len(p_values)
-    return head + tail, len(p_values)
+        return f"{head}|h_q24={join_q24(h)}|e_q24={join_q24(e)}{tail}", len(p_bits)
+    return head + tail, len(p_bits)
 
 
 def render():
@@ -176,13 +201,15 @@ def render():
 
     header = (
         "# expected PrototypeGNN outputs from tools/model_parity.py: vendored prototype_gnn.py with its fallback GCNConv, "
-        f"prototype_model.pt (sha256 {CHECKPOINT_SHA256[:16]}...), eval, torch {torch.__version__}; do not edit\n"
+        f"prototype_model.pt (sha256 {CHECKPOINT_SHA256[:16]}...), eval, torch {torch.__version__}, kernels "
+        f"{','.join(f'{k}={v}' for k, v in KERNEL_ENV.items())}; do not edit\n"
         f"# LAYOUT rows load the same state dict into the file's torch_geometric {torch_geometric.__version__} variant; "
-        "inputs are the x of tests/fixtures/expected-int.hbp (exact in float32)\n"
+        "inputs are the x of tests/fixtures/expected-int.hbp (exact in float32, sent as float32 bit patterns)\n"
         "# VARIANT row: that variant loaded after the rename of inference_server.py:11; p_bits_equal counts the fixture "
         "edges whose forward float32 bits equal the fallback model's\n"
         "# *_q24 = floor(v * 2^24 + 1/2) of the float32 outputs of encode_nodes (h), get_edge_embeddings (e), "
-        "compute_prototype_distances (logits) and forward (p); p_bits = forward's float32 bits (hex)\n"
+        "compute_prototype_distances (logits) and forward (p), from their bits in integers; p_bits = forward's float32 "
+        "bits (hex)\n"
     )
     summary = f"cases={len(cases)}|edges={edges_total}|torch={torch.__version__}"
     return header + "\n".join(rows) + "\n", summary
@@ -200,15 +227,16 @@ def signed_draw(rng, bits):
     return value >> (63 - bits)
 
 
-def q24_units_above(a, b):
-    """ceil(|a - b| * 2^24) of two float32 values, exact."""
-    diff = abs(Fraction(a) - Fraction(b)) * (1 << FRAC_BITS)
-    return -(-diff.numerator // diff.denominator)
+def q24_units_above(a_bits, b_bits):
+    """ceil(|a - b| * 2^24) of the two float32 values with these bits, in integers."""
+    diff = abs(QUANTIZE.float32_units(a_bits) - QUANTIZE.float32_units(b_bits))
+    return -(-diff >> UNITS_PER_Q24)
 
 
 def sweep():
     """Fallback vs rekeyed forward on random graphs of 2-9 nodes, features uniform in [-2^s, 2^s) (Q24 inputs with
-    at most 24 significant bits, so exact in float32). Differences are ceil(|a - b| * 2^24), exact."""
+    at most 24 significant bits, so exact in float32). Differences are ceil(|a - b| * 2^24), from the bits, in
+    integers."""
     torch.set_num_threads(1)
     state = load_checkpoint()
     fallback = fallback_model(state)
@@ -222,14 +250,15 @@ def sweep():
             x_q24 = [[REFEREE.float32_exact(signed_draw(rng, scale + FRAC_BITS)) for _ in range(6)]
                      for _ in range(nodes)]
             edges = [[rng.below(nodes), rng.below(nodes)] for _ in range(1 + rng.below(2 * nodes))]
-            x = torch.tensor([[q / (1 << FRAC_BITS) for q in row] for row in x_q24], dtype=torch.float32)
+            x = float32_tensor(x_q24)
             edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
             with torch.no_grad():
-                p = zip(fallback(x, edge_index).tolist(), rekeyed(x, edge_index).tolist())
-                h = zip(fallback.encode_nodes(x, edge_index).reshape(-1).tolist(),
-                        rekeyed.encode_nodes(x, edge_index).reshape(-1).tolist())
+                p = zip(float32_bits(fallback(x, edge_index).reshape(-1)),
+                        float32_bits(rekeyed(x, edge_index).reshape(-1)))
+                h = zip(float32_bits(fallback.encode_nodes(x, edge_index).reshape(-1)),
+                        float32_bits(rekeyed.encode_nodes(x, edge_index).reshape(-1)))
             for a, b in p:
-                unequal += float32_bits(a) != float32_bits(b)
+                unequal += a != b
                 p_max = max(p_max, q24_units_above(a, b))
             h_max = max([h_max] + [q24_units_above(a, b) for a, b in h])
             edges_total += len(edges)

@@ -10,17 +10,17 @@ expects; then it makes torch_geometric unimportable (None in sys.modules), so th
 checkpoint loaded strictly and eval() called. Cases are fixed-seed graphs; every edge's probs[:, 1] (float32
 bits and Q24) and return_projections=True projections (Q24) are written. The mag<K>-<i> graphs hold
 float32-exact features of both signs up to 2^K, for K in MAGNITUDE_BITS.
+Float runs only inside torch (the owner's float32 lane): this tool hands torch each input as float32 bit patterns
+made with integer arithmetic (q / 2^24 rounded to nearest, ties to even, as a float32 tensor holds it), reads
+every output by its bit pattern, and converts it with integer arithmetic (tools/quantize.py float32_units).
 Writes tests/fixtures/expected-model.hbp; --check regenerates it in memory and diffs.
 Run: <torch venv>/bin/python -I tools/model_parity.py [--check]
 """
 import hashlib
 import importlib.util
-import math
 import os
 import pathlib
-import struct
 import sys
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MODEL_FILE = ROOT / "vendor" / "gnn-sidecar" / "models" / "contrastive_gnn.py"
@@ -41,12 +41,19 @@ import torch  # noqa: E402
 import torch_geometric  # noqa: E402
 
 
-def import_vendored(name):
-    spec = importlib.util.spec_from_file_location(name, MODEL_FILE)
+def load_module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
+
+
+def import_vendored(name):
+    return load_module(name, MODEL_FILE)
+
+
+QUANTIZE = load_module("quantize", ROOT / "tools" / "quantize.py")
 
 
 def load_checkpoint():
@@ -141,33 +148,62 @@ def fixed_graphs():
     ]
 
 
-def float32_bits(value):
-    return struct.unpack("<I", struct.pack("<f", value))[0]
+def float32_bits_of_q24(q):
+    """The float32 bits of q / 2^24 rounded to nearest, ties to even, in integers; every nonzero integer q gives
+    a normal float32 (|q / 2^24| >= 2^-24), and a value that rounds beyond the float32 range is refused."""
+    sign = 0x8000_0000 if q < 0 else 0
+    magnitude = abs(q)
+    if magnitude == 0:
+        return sign
+    length = magnitude.bit_length()
+    exponent = length + 102  # biased: q / 2^24 lies in [2^(length - 25), 2^(length - 24))
+    if length <= 24:
+        significand = magnitude << (24 - length)
+    else:
+        shift = length - 24
+        significand = magnitude >> shift
+        remainder = magnitude & ((1 << shift) - 1)
+        half = 1 << (shift - 1)
+        if remainder > half or (remainder == half and significand & 1):
+            significand += 1
+            if significand == 1 << 24:
+                significand >>= 1
+                exponent += 1
+    if exponent > 254:
+        raise SystemExit(f"MODEL_PARITY|refused=input|q24={q}|reason=beyond float32")
+    return sign | exponent << 23 | (significand & 0x7F_FFFF)
 
 
-def q24_of(value):
-    return math.floor(Fraction(value) * (1 << FRAC_BITS) + Fraction(1, 2))
+def float32_tensor(x_q24):
+    """The float32 tensor of the Q24 rows, built from the bit patterns of float32_bits_of_q24."""
+    bits = [[float32_bits_of_q24(q) for q in row] for row in x_q24]
+    signed = [[b - (1 << 32) if b >> 31 else b for b in row] for row in bits]
+    return torch.tensor(signed, dtype=torch.int32).view(torch.float32)
+
+
+def float32_bits(tensor):
+    """The float32 bit patterns of a tensor, as (nested) lists of unsigned integers."""
+    return (tensor.contiguous().view(torch.int32).to(torch.int64) & 0xFFFF_FFFF).tolist()
 
 
 def graph_rows(name, x_q24, edges):
-    nodes = [[q / (1 << FRAC_BITS) for q in row] for row in x_q24]
-    x = torch.tensor(nodes, dtype=torch.float32)
+    x = float32_tensor(x_q24)
     edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
     with torch.no_grad():
         probs = MODEL(x, edge_index)
         probs_again, projections = MODEL(x, edge_index, return_projections=True)
-    if not torch.equal(probs, probs_again):
+    p_bits = float32_bits(probs.reshape(-1))
+    if p_bits != float32_bits(probs_again.reshape(-1)):
         raise SystemExit(f"MODEL_PARITY|refused=nondeterministic|case={name}")
-    probs = [float(v) for v in probs.reshape(-1).tolist()]
-    projections = projections.tolist()
     x_field = ";".join(",".join(str(q) for q in row) for row in x_q24)
     edge_field = ",".join(f"{s}>{t}" for s, t in edges)
-    bits = ",".join(f"{float32_bits(v):08x}" for v in probs)
-    q24 = ",".join(str(q24_of(v)) for v in probs)
+    bits = ",".join(f"{b:08x}" for b in p_bits)
+    q24 = ",".join(str(QUANTIZE.q24_of_float32_bits(b)) for b in p_bits)
     rows = [f"GRAPH|case={name}|x={x_field}|edges={edge_field}|p_bits={bits}|p_q24={q24}"]
-    for index, projection in enumerate(projections):
-        rows.append(f"PROJ|case={name}|edge={index}|q24={','.join(str(q24_of(float(v))) for v in projection)}")
-    return rows, len(probs)
+    for index, projection in enumerate(float32_bits(projections)):
+        q24 = ",".join(str(QUANTIZE.q24_of_float32_bits(b)) for b in projection)
+        rows.append(f"PROJ|case={name}|edge={index}|q24={q24}")
+    return rows, len(p_bits)
 
 
 def render():
@@ -204,8 +240,9 @@ def render():
         f"fallback GCNConv, contrastive_model.pt run 1, torch {torch.__version__}, layout checked against "
         f"torch_geometric {TORCH_GEOMETRIC_VERSION}, kernels "
         f"{','.join(f'{k}={v}' for k, v in KERNEL_ENV.items())}; do not edit\n"
-        "# x = Q24 inputs, sent as the doubles q / 2^24 (float32 in the tensor); p_bits = float32 probs[:, 1] (hex); "
-        "p_q24 and PROJ q24 = floor(value * 2^24 + 1/2)\n"
+        "# x = Q24 inputs, sent to torch as float32 bit patterns: q / 2^24 rounded to nearest even, in integers; "
+        "p_bits = float32 probs[:, 1] (hex); p_q24 and PROJ q24 = floor(value * 2^24 + 1/2), from the float32 bits "
+        "in integers\n"
     )
     summary = f"graphs={len(graphs)}|edges={edges_total}|projections={edges_total * 64}"
     return header + "\n".join(rows) + "\n", summary

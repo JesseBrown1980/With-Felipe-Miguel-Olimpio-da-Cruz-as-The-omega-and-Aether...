@@ -27,7 +27,7 @@ const ONE_EXP: u128 = 1 << EXP_BITS;
 const LN2_EXP: u128 = 3_196_577_161_300_663_915;
 const SIGMOID_SATURATION_Q48: u128 = 18 << LOGIT_BITS;
 /// `exp_neg` is within 12 units of 2^-62 of e^-|t| (at most 18 series terms, each rounded to 1/2 unit, and
-/// `LN2_EXP` within 0.053 units per octave), so its quotient is within 2^-34 of 2^24 * sigmoid(t).
+/// `LN2_EXP` within 3464/2^16 of a unit per octave), so its quotient is within 2^-34 of 2^24 * sigmoid(t).
 const TIE_WINDOW_BITS: u32 = 32;
 
 /// What the model computes for one edge.
@@ -324,7 +324,7 @@ mod tests {
     }
 
     #[test]
-    fn ln2_matches_the_decimal_constant() {
+    fn ln2_matches_the_referee_constant() {
         let line = EXPECTED
             .lines()
             .find(|l| l.starts_with("CONST|name=LN2_Q62|"))
@@ -333,7 +333,7 @@ mod tests {
     }
 
     #[test]
-    fn sigmoid_matches_the_decimal_reference_exactly() {
+    fn sigmoid_matches_the_exact_referee_rows() {
         let mut rows = 0;
         for line in EXPECTED.lines().filter(|l| l.starts_with("SIGMOID|")) {
             let logit = row_value(line, "logit_q48");
@@ -363,7 +363,7 @@ mod tests {
 
     #[test]
     fn exp_exceeds_doubles_the_precision_until_the_sums_decide() {
-        // p / q is a convergent of e with q e - p = 1.6e-20, which the 128-bit sums leave undecided.
+        // p / q is a convergent of e with q e - p in (19731/2^80, 19732/2^80), which the 128-bit sums leave undecided.
         let (p, q) = (5_739_439_214_861_417_731u128, 2_111_421_691_000_680_031u128);
         let (low, high) = exp_series_bounds(1 << LOGIT_BITS, 2);
         let target = [0, 0, p as u64, 0];

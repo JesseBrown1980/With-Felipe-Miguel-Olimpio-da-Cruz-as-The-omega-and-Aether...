@@ -113,8 +113,8 @@ ReLU, `Linear(64, 64)`. Each edge's outputs depend on the features of its two en
 Integer arithmetic: Q24 values, i128 accumulation, one round-half-up per layer output. The two
 logits stay in Q48 and their exact difference goes through a fixed-point sigmoid
 (`softmax([a, b])[1] = 1 / (1 + e^(a - b))`), computed from a Q62 range-reduced `e^-|t|` and rounded
-once to Q24. It equals a 60-digit decimal reference on the 1,511 committed logits and on 20,000
-further random logits in [-20, 20). Next to a rounding tie it can be 1 unit away: of 60,000 logits
+once to Q24. It equals the exact integer reference (`tools/math_referee.py`) on the 1,511 committed
+logits and on 20,000 further random logits in [-20, 20). Next to a rounding tie it can be 1 unit away: of 60,000 logits
 taken within 2 Q48 units of an exact half-unit point, 6 differ by 1, each with an exact value less
 than 2^-39 units from that point. The projection stays in Q48 into `F.normalize`, which divides by
 `max(||v||_2, eps)` with eps the float32 of `1e-12` (9223372 * 2^-63), as
@@ -255,16 +255,19 @@ state; this crate defines none.
 | Check | Cases | Result |
 |---|---|---|
 | Rust `anomaly_probabilities` vs the vendored class (fallback `GCNConv`, run-1 checkpoint, torch 2.14.1+cpu, Python 3.13.16), `tests/model.rs` | 262 edges of the 104 layout graphs | max \|rust - torch\| = 1 Q24 unit; 166 of 262 equal; the test allows 16 |
-| Rust `edge_outputs` projections vs the same | 16,768 components of those edges | max \|rust - torch\| = 8 Q24 units (about 4.8e-7); 13,857 equal; the test allows 16 |
+| Rust `edge_outputs` projections vs the same | 16,768 components of those edges | max \|rust - torch\| = 8 Q24 units (8/2^24); 13,857 of 16,768 equal; the test allows 16 |
 | Rust `edge_outputs` vs the same on the `mag<K>` graphs: features of both signs up to 2^K, float32-exact, 40 graphs per K | K = 4, 8, 12, 16, 20: 98, 104, 101, 96, 94 edges | max \|rust - torch\| of `probs[:, 1]`: 1, 1, 1, 3, 11 Q24 units; of projection components: 7, 7, 8, 80, 946; the test allows 16 up to K = 8 and 16 * 2^(K - 8) above |
-| Fixed-point sigmoid vs Python `decimal` at 60 digits | 1,511 logits | all equal (1 unit apart next to a rounding tie; see [above](#which-forward-is-ported-and-why)) |
+| Fixed-point sigmoid vs the exact integer reference (`tools/math_referee.py`) | 1,511 logits | all equal (1 unit apart next to a rounding tie; see [above](#which-forward-is-ported-and-why)) |
 | Integer `F.normalize` vs exact integer reference (`tools/math_referee.py`) | 126 vectors, 8,064 components (zero, one-hot, near-eps, 3-4-5 and 5-12-13 directions, magnitudes 2^1 to 2^119) | all equal (1 unit apart at a half-unit tie above 2^51; see above) |
 | `weights.rs` vs `tools/quantize.py --check` | 23,330 weights, 18 module paths | equal |
 | `edge_output(x[s], x[t])` vs `edge_outputs(x, edges)[k]` | 755 edges | all equal |
 
 The projection differences of 6 to 8 units follow from the weights' Q24 rounding: the vector before
-`F.normalize` is close to `projection_head.2.bias`, whose norm is 0.06725, and that bias's Q24
-rounding moves a component by up to 2.96e-8, which `F.normalize` scales to up to 7.39 Q24 units.
+`F.normalize` is close to `projection_head.2.bias`, whose Q24 norm is 1,128,284 (1128284/2^24; the
+exact squared norm is 1273026084679/2^48), dominated by component 48 (-1,128,270 Q24). Each weight's
+float32-to-Q24 rounding shifts it by at most half a Q24 unit (2^-25), which `F.normalize`, dividing by
+that norm, scales to at most 2^23/1128284 = 2097152/282071 Q24 units (between 7 and 8), the 8-unit
+projection difference above.
 
 **Input magnitude.** The first two rows hold for the layout graphs: the 6-feature training layout
 with risk up to 21, 100 and 1,000,000, raw Q24 values in [-2^26, 2^26), and four fixed graphs. The
@@ -300,13 +303,19 @@ an AMD CPU here.
 
 ## Measured outputs of the run-1 checkpoint (fixture graphs, SYNTHETIC)
 
-- `probs[:, 1]` over all 262 edges of the layout graphs: 0.99256 to 1.0, population standard deviation 0.0019; 50 edges
-  give exactly 1.0 in float32. Over the 187 edges whose nodes use the 6-feature training layout
-  (risk up to 21, 100 or 1,000,000): 0.99958 to 1.0, standard deviation 8.1e-5. The status test's
-  promotion criterion is "spread std > 0.01" on its corpus; that corpus is not on disk, so these
-  numbers describe the synthetic fixture only.
-- Projections: every edge's projection has cosine at least 0.9999968 with the mean direction, whose
-  largest component is number 48 at -0.99999.
+- `probs[:, 1]` over all 262 edges of the layout graphs, Q24 (1.0 = 2^24 = 16,777,216): minimum
+  16,652,342 (16652342/2^24), maximum 16,777,216, range 124,874, 137 distinct values; 50 edges give
+  exactly 1.0 (float32 bits `3f800000`, Q24 16,777,216). Over the 187 edges whose nodes use the
+  6-feature training layout (risk up to 21, 100 or 1,000,000): minimum 16,770,213 (16770213/2^24),
+  maximum 16,777,216, range 7,003, 97 distinct values, the same 50 edges exactly 1.0. The status
+  test's promotion criterion is "spread std > 0.01" on its corpus; that corpus is not on disk, so
+  these numbers describe the synthetic fixture only.
+- Projections, over the 262 layout edges: the mean direction (the summed projection vector,
+  normalized) has its largest-magnitude component at number 48, value -1,073,727,916 in Q30
+  (-1073727916/2^30; the next-largest component's magnitude is 244 times smaller). Every edge's
+  projection has cosine at least 1,073,738,443 in Q30 (1073738443/2^30) with that mean direction,
+  computed with integer square root (Q30 scale, 1.0 = 2^30 = 1,073,741,824). Equivalently, projection
+  component 48 lies within [-16,777,000, -16,776,935] Q24 on every layout edge (1.0 = 2^24).
 - `conv1.lin.weight` columns 1 and 2 are equal in all 64 rows, in run 1 and in run 2. In the
   6-feature layout of train_baseline.py:31-38 and train_gslgnn_w9_3.py:224-231 (the trainer of the
   corpus the status test names for L2) these columns take `avgRisk/9` and `maxRisk/9`; the L2
@@ -317,10 +326,12 @@ an AMD CPU here.
   not reach the manifest's accuracy, precision, recall or F1, which need the absent corpus and
   trainer.
 
-Run 2 (pinned above), measured in the cold lane on the same 262 edges with the same vendored class:
-`probs[:, 1]` from 0.99229 to 1.0, standard deviation 0.0019; max \|run1 - run2\| of `probs[:, 1]`
-is 5.1e-4 (8,632 Q24 units); its projections point in a different direction (largest component
-difference 1.0).
+Run 2 (pinned above; sha256 `048764063f…` checked before use), measured in the cold lane on the same
+262 layout edges with the same vendored class: `probs[:, 1]` Q24 (1.0 = 2^24) minimum 16,647,798
+(16647798/2^24), maximum 16,777,216, range 129,418, 146 distinct values, the same 50 edges exactly
+1.0; max \|run1 - run2\| of `probs[:, 1]` is 8,632 Q24 units (8632/2^24); its projections point in a
+different direction, the largest \|run1 - run2\| projection component being 16,777,207 Q24 units
+(16777207/2^24, nearly a full unit).
 
 ## Referees
 

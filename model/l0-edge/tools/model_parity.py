@@ -8,18 +8,24 @@ tests/fixtures/events.hbp as the asolaria-score request (nodes [actor, target], 
 features from expected-features.hbp; fixed-seed random graphs; and REQUEST rows: two fixed request
 pairs, and every one of RANDOM_REQUESTS fixed-seed request pairs whose torch score lies within
 NEAR_TIE_Q24 of a toFixed(4) rounding midpoint. PAIR and REQUEST rows also hold the score for the
-float32 inputs of the vendored train_baseline.build_node_features. Also writes the sigmoid reference
-(Python decimal) and LN2_Q62. KERNEL_ENV is set before torch loads, so every x86-64 host runs the
-same kernels. Writes tests/fixtures/expected-model.hbp; --check regenerates it in memory and diffs.
+float32 inputs of the vendored train_baseline.build_node_features. Also writes the exact sigmoid reference
+and LN2_Q62 (tools/sigmoid_referee.py, integers). KERNEL_ENV is set before torch loads, so every x86-64
+host runs the same kernels. Writes tests/fixtures/expected-model.hbp; --check regenerates it in memory
+and diffs.
+Float runs only in the owner's float lane: torch with the trained float32 checkpoint (inference_server.py
+MODEL) and numpy in the vendored build_node_features. This tool's own arithmetic is integer: each input
+tensor is built from float32 bit patterns computed in integers (q / 2^24 rounded to nearest, ties to
+even, as torch.tensor(..., dtype=float32) rounds the server's doubles); the binary64 avgRisk and
+failureRate handed to build_node_features are made from bit patterns computed in integers
+(tools/jsnum_referee.py); every output is read by its float32 bit pattern and converted with integer
+arithmetic (exact rationals as integer pairs).
 Run: <torch venv>/bin/python -I tools/model_parity.py [--check]
 """
 import importlib.util
-import math
 import os
 import pathlib
 import struct
 import sys
-from decimal import ROUND_FLOOR, Decimal, localcontext
 from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -29,7 +35,9 @@ EVENTS = FIXTURES / "events.hbp"
 FEATURES = FIXTURES / "expected-features.hbp"
 EXPECTED = FIXTURES / "expected-model.hbp"
 FRAC_BITS = 24
-LOGIT_BITS = 48
+# Every finite float32 is an integer multiple of 2^-149; a Q24 unit is 2^125 such units.
+FLOAT32_UNIT_BITS = 149
+UNITS_PER_Q24_BITS = FLOAT32_UNIT_BITS - FRAC_BITS
 RANDOM_GRAPHS = 240
 RANDOM_REQUESTS = 100_000
 NEAR_TIE_Q24 = 32
@@ -58,14 +66,16 @@ from torch_geometric.nn import GCNConv  # noqa: E402
 MODEL = inference_server.MODEL
 
 
-def load_features_referee():
-    spec = importlib.util.spec_from_file_location("features_referee", ROOT / "tools" / "features_referee.py")
+def load_tool(name):
+    spec = importlib.util.spec_from_file_location(name, ROOT / "tools" / f"{name}.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
-REFEREE = load_features_referee()
+REFEREE = load_tool("features_referee")
+JSNUM = REFEREE.JSNUM
+SIGMOID = load_tool("sigmoid_referee")
 
 
 class Lcg:
@@ -95,58 +105,108 @@ def model_input_q24(node):
     ]
 
 
-def q24_doubles(x_q24):
-    # The doubles q / 2^24 of the Q24 inputs. model_input_q24 rounds the train_baseline.py:31-38
-    # ratios to Q24; build_node_features (line 39) rounds them to float32.
-    return [[q / (1 << FRAC_BITS) for q in row] for row in x_q24]
+def float32_bits_of_q24(q):
+    """Bits of the float32 nearest q / 2^24, ties to even: the value torch.tensor(..., dtype=float32) stores for
+    the double q / 2^24 (exact for |q| < 2^53), which is what inference_server.py:24 builds from the request."""
+    if abs(q) >= 1 << 53:
+        raise SystemExit(f"MODEL_PARITY|refused=input|q24={q}|reason=q / 2^24 is not an exact double|json=0")
+    sign = 0x8000_0000 if q < 0 else 0
+    magnitude = abs(q)
+    if magnitude == 0:
+        return sign
+    shift = magnitude.bit_length() - 24  # magnitude = significand * 2^shift, significand in [2^23, 2^24)
+    if shift > 0:
+        significand, rest = magnitude >> shift, magnitude & ((1 << shift) - 1)
+        half = 1 << (shift - 1)
+        if rest > half or (rest == half and significand & 1):
+            significand += 1
+        if significand == 1 << 24:
+            significand, shift = significand >> 1, shift + 1
+    else:
+        significand = magnitude << -shift
+    # q / 2^24 = significand * 2^(shift - 24) = (significand / 2^23) * 2^(shift - 1): biased exponent shift + 126.
+    return sign | (shift + 126) << 23 | (significand - (1 << 23))
 
 
-def upstream_inputs(nodes):
-    # gnnDataExport.js:55-63 node objects (avgRisk = round / 100, failureRate = round / 1000), then
-    # train_baseline.build_node_features: float32 rows, as the server's float32 tensor holds them.
+def float32_tensor(bit_rows):
+    """The float32 tensor whose elements have these bit patterns (rows of unsigned 32-bit integers)."""
+    signed = [[b - (1 << 32) if b >> 31 else b for b in row] for row in bit_rows]
+    return torch.tensor(signed, dtype=torch.int32).view(torch.float32)
+
+
+def tensor_bits(tensor):
+    """The float32 bit patterns of a float32 tensor, flattened, as unsigned integers."""
+    if tensor.dtype != torch.float32:
+        raise SystemExit(f"MODEL_PARITY|refused=dtype|got={tensor.dtype}|json=0")
+    return [b & 0xFFFF_FFFF for b in tensor.contiguous().reshape(-1).view(torch.int32).tolist()]
+
+
+def q24_bits(x_q24):
+    # The Q24 inputs as the float32 tensor the server builds from the doubles q / 2^24. model_input_q24 rounds the
+    # train_baseline.py:31-38 ratios to Q24; build_node_features (line 39) rounds them to float32.
+    return [[float32_bits_of_q24(q) for q in row] for row in x_q24]
+
+
+def binary64_value(num, den):
+    # The JS number num / den (gnnDataExport.js:58, :60 `/ 100`, `/ 1000`) as a Python float object built from its
+    # binary64 bit pattern, which tools/jsnum_referee.py computes in integers; it is handed to the owner's float code.
+    return struct.unpack("<d", JSNUM.to_binary64(num, den).to_bytes(8, "little"))[0]
+
+
+def upstream_bits(nodes):
+    # gnnDataExport.js:55-63 node objects (avgRisk = round / 100, failureRate = round / 1000), then the owner's
+    # train_baseline.build_node_features (numpy float32 rows), read by bit pattern.
     objects = [
         {
             "edgeVolume": node["edge_volume"],
-            "avgRisk": node["avg_risk_centi"] / 100,
+            "avgRisk": binary64_value(node["avg_risk_centi"], 100),
             "maxRisk": node["max_risk"],
-            "failureRate": node["failure_rate_milli"] / 1000,
+            "failureRate": binary64_value(node["failure_rate_milli"], 1000),
             "online": node["online"],
             "trustTier": node["trust_tier"],
         }
         for node in nodes
     ]
-    return [[float(v) for v in row] for row in train_baseline.build_node_features(objects).tolist()]
+    features = torch.from_numpy(train_baseline.build_node_features(objects))
+    bits = tensor_bits(features)
+    return [bits[i : i + 6] for i in range(0, len(bits), 6)]
 
 
-def server_scores(nodes, edges):
-    # inference_server.py:24 on these node rows.
+def server_scores(bit_rows, edges):
+    # inference_server.py:24 on these node rows; the float32 scores' bit patterns.
     with torch.no_grad():
-        scores = MODEL(
-            torch.tensor(nodes, dtype=torch.float32), torch.tensor(edges, dtype=torch.long).t().contiguous()
-        ).reshape(-1).tolist()
-    return [float(v) for v in scores]
+        scores = MODEL(float32_tensor(bit_rows), torch.tensor(edges, dtype=torch.long).t().contiguous())
+    return tensor_bits(scores)
 
 
-def float32_bits(value):
-    return struct.unpack("<I", struct.pack("<f", value))[0]
+def float32_units(bits):
+    """The finite float32 with these bits times 2^149, an exact integer."""
+    exponent = (bits >> 23) & 0xFF
+    if exponent == 0xFF:
+        raise SystemExit(f"MODEL_PARITY|refused=not_finite|bits={bits:08x}|json=0")
+    fraction = bits & 0x7F_FFFF
+    magnitude = fraction if exponent == 0 else (fraction | 1 << 23) << (exponent - 1)
+    return -magnitude if bits >> 31 else magnitude
 
 
-def q24_of(value):
-    return math.floor(Fraction(value) * (1 << FRAC_BITS) + Fraction(1, 2))
+def q24_of(bits):
+    # floor(score * 2^24 + 1/2) of the float32 score with these bits.
+    return (float32_units(bits) + (1 << (UNITS_PER_Q24_BITS - 1))) >> UNITS_PER_Q24_BITS
 
 
-def midpoint_distance_q24(value):
-    # Distance from the score to the nearest toFixed(4) rounding midpoint (k + 1/2) / 10^4, in Q24 units.
-    e4 = Fraction(value) * 10000
-    return abs(e4 - math.floor(e4) - Fraction(1, 2)) * (1 << FRAC_BITS) / 10000
+def midpoint_distance_q24(bits):
+    # Distance from the score to the nearest toFixed(4) rounding midpoint (k + 1/2) / 10^4, in Q24 units, as an
+    # exact rational: with e4 = units * 10^4 / 2^149, it is |2 (units * 10^4 mod 2^149) - 2^149| * 2^24 / (2^150 10^4).
+    fraction_part = float32_units(bits) * 10_000 % (1 << FLOAT32_UNIT_BITS)
+    return Fraction(abs(2 * fraction_part - (1 << FLOAT32_UNIT_BITS)) << FRAC_BITS, 10_000 << (FLOAT32_UNIT_BITS + 1))
 
 
 def graph_row(prefix, x_q24, edges):
-    scores = server_scores(q24_doubles(x_q24), edges)
+    scores = server_scores(q24_bits(x_q24), edges)
     x_field = ";".join(",".join(str(q) for q in row) for row in x_q24)
     edge_field = ",".join(f"{s}>{t}" for s, t in edges)
-    bits = ",".join(f"{float32_bits(v):08x}" for v in scores)
-    q24 = ",".join(str(q24_of(v)) for v in scores)
+    bits = ",".join(f"{b:08x}" for b in scores)
+    q24 = ",".join(str(q24_of(b)) for b in scores)
     return f"{prefix}|x={x_field}|edges={edge_field}|out_bits={bits}|q24={q24}", len(scores)
 
 
@@ -206,9 +266,9 @@ def request_features(rng):
     failures = rng.below(edge_volume + 1)
     return (
         edge_volume,
-        REFEREE.js_math_round(total_risk / edge_volume * 100),  # gnnDataExport.js:58
+        JSNUM.js_round_ratio_scaled(total_risk, edge_volume, 100),  # gnnDataExport.js:58
         max_risk,
-        REFEREE.js_math_round(failures / edge_volume * 1000),  # gnnDataExport.js:60
+        JSNUM.js_round_ratio_scaled(failures, edge_volume, 1000),  # gnnDataExport.js:60
         1 + rng.below(3),
     )
 
@@ -232,11 +292,11 @@ def screened_requests(pairs):
         chunk = pairs[start : start + SCREEN_BATCH]
         nodes = []
         for actor, target in chunk:
-            nodes += q24_doubles([model_input_q24(feature_node(actor)), model_input_q24(feature_node(target))])
+            nodes += q24_bits([model_input_q24(feature_node(actor)), model_input_q24(feature_node(target))])
         edges = [[2 * k, 2 * k + 1] for k in range(len(chunk))]
-        for k, value in enumerate(server_scores(nodes, edges)):
-            if midpoint_distance_q24(value) <= SCREEN_Q24:
-                kept.append((start + k, value))
+        for k, bits in enumerate(server_scores(nodes, edges)):
+            if midpoint_distance_q24(bits) <= SCREEN_Q24:
+                kept.append((start + k, bits))
     return kept
 
 
@@ -246,60 +306,34 @@ def request_rows(summary):
     cases = [(name, actor, target, None) for name, actor, target in FIXED_REQUESTS]
     cases += [(str(index), *pairs[index], batched) for index, batched in screened_requests(pairs)]
     rows = []
-    batch_shift = 0
+    batch_shift_units = 0  # largest |single - batched| score difference, in units of 2^-149
     for name, actor, target, batched in cases:
         nodes = [feature_node(actor), feature_node(target)]
         x_q24 = [model_input_q24(node) for node in nodes]
-        [score] = server_scores(q24_doubles(x_q24), [[0, 1]])
-        [upstream] = server_scores(upstream_inputs(nodes), [[0, 1]])
+        [score] = server_scores(q24_bits(x_q24), [[0, 1]])
+        [upstream] = server_scores(upstream_bits(nodes), [[0, 1]])
         if batched is not None:
-            shift = max(abs(Fraction(v) - Fraction(batched)) for v in (score, upstream)) * (1 << FRAC_BITS)
-            batch_shift = max(batch_shift, shift)
+            shift = max(abs(float32_units(b) - float32_units(batched)) for b in (score, upstream))
+            batch_shift_units = max(batch_shift_units, shift)
             if min(midpoint_distance_q24(score), midpoint_distance_q24(upstream)) > NEAR_TIE_Q24:
                 continue
         features = ";".join(",".join(str(v) for v in f) for f in (actor, target))
-        rows.append(
-            f"REQUEST|case={name}|features={features}"
-            f"|out_bits={float32_bits(score):08x}|upstream_bits={float32_bits(upstream):08x}"
-        )
+        rows.append(f"REQUEST|case={name}|features={features}|out_bits={score:08x}|upstream_bits={upstream:08x}")
+    # ceil(shift * 2^24) of the largest shift, in Q24 units.
+    batch_shift_q24 = -(-batch_shift_units >> UNITS_PER_Q24_BITS)
     # The screen holds while a batched score is within (SCREEN_Q24 - NEAR_TIE_Q24) / 2 of both single scores.
-    if 2 * batch_shift > SCREEN_Q24 - NEAR_TIE_Q24:
-        raise SystemExit(f"MODEL_PARITY|refused=screen|batch_shift_q24={float(batch_shift)}|json=0")
-    summary.update(requests=len(rows), random_requests=RANDOM_REQUESTS, request_batch_shift_q24=math.ceil(batch_shift))
+    if 2 * batch_shift_units > (SCREEN_Q24 - NEAR_TIE_Q24) << UNITS_PER_Q24_BITS:
+        raise SystemExit(f"MODEL_PARITY|refused=screen|batch_shift_q24_ceil={batch_shift_q24}|json=0")
+    summary.update(requests=len(rows), random_requests=RANDOM_REQUESTS, request_batch_shift_q24=batch_shift_q24)
     return rows
-
-
-def exact_sigmoid_q24(logit_q48):
-    with localcontext() as ctx:
-        ctx.prec = 60
-        t = Decimal(logit_q48) / Decimal(1 << LOGIT_BITS)
-        p = Decimal(1) / (Decimal(1) + (-t).exp())
-        return int((p * (1 << FRAC_BITS) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
-
-
-def sigmoid_logits(rng):
-    one = 1 << LOGIT_BITS
-    logits = [0, 1, -1, one, -one, 18 * one, 18 * one + 1, 18 * one - 1]
-    logits += [-v for v in logits[5:]]
-    logits += [rng.below(40 * one + 1) - 20 * one for _ in range(800)]
-    logits += [rng.below(2 * one + 1) - one for _ in range(400)]
-    for _ in range(300):
-        v = 17 * one + rng.below(3 * one // 2)
-        logits.append(v if rng.below(2) else -v)
-    return logits
-
-
-def ln2_q62():
-    with localcontext() as ctx:
-        ctx.prec = 60
-        return int((Decimal(2).ln() * (1 << 62) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
 
 
 def render():
     if not (type(MODEL.conv1) is GCNConv and type(MODEL.conv2) is GCNConv and not MODEL.training):
         raise SystemExit("MODEL_PARITY|refused=model|reason=MODEL is not the eval-mode torch_geometric GCNConv model|json=0")
     summary = {}
-    rows = [f"CONST|name=LN2_Q62|value={ln2_q62()}"]
+    sigmoid_rows, sigmoid_header, sigmoid_summary = SIGMOID.rows()
+    rows = sigmoid_rows[:1]  # CONST|name=LN2_Q62
     scores = 0
     features = feature_rows()
     pairs = fixture_pairs()
@@ -308,8 +342,8 @@ def render():
         x_q24 = [model_input_q24(node) for node in nodes]
         prefix = f"PAIR|actor={REFEREE.escape(actor_id)}|target={REFEREE.escape(target_id)}"
         row, count = graph_row(prefix, x_q24, [[0, 1]])
-        [upstream] = server_scores(upstream_inputs(nodes), [[0, 1]])
-        rows.append(f"{row}|upstream_bits={float32_bits(upstream):08x}")
+        [upstream] = server_scores(upstream_bits(nodes), [[0, 1]])
+        rows.append(f"{row}|upstream_bits={upstream:08x}")
         scores += count
     rng = Lcg(0x5DEECE66D)
     for case in range(RANDOM_GRAPHS):
@@ -319,10 +353,8 @@ def render():
         scores += count
     summary.update(pairs=len(pairs), graphs=RANDOM_GRAPHS, scores=scores)
     rows += request_rows(summary)
-    sigmoid_rng = Lcg(0x9E3779B97F4A7C15)
-    logits = sigmoid_logits(sigmoid_rng)
-    rows += [f"SIGMOID|logit_q48={v}|q24={exact_sigmoid_q24(v)}" for v in logits]
-    summary.update(sigmoid=len(logits))
+    rows += sigmoid_rows[1:]
+    summary.update(sigmoid_summary)
     kernels = " ".join(f"{key}={value}" for key, value in KERNEL_ENV.items())
     header = (
         "# expected EdgeLevelGNN scores from tools/model_parity.py: the vendored inference_server.py MODEL under "
@@ -333,7 +365,7 @@ def render():
         "# REQUEST: nodes [actor, target], edges 0>1, x = model_input_q24 of features = edge_volume,avg_risk_centi,"
         f"max_risk,failure_rate_milli,trust_tier of each; the fixed cases, then each of {RANDOM_REQUESTS} fixed-seed "
         f"pairs (case = its index) with a score within {NEAR_TIE_Q24} Q24 units of a toFixed(4) rounding midpoint\n"
-        "# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits\n"
+        + sigmoid_header
     )
     return header + "\n".join(rows) + "\n", "|".join(f"{key}={value}" for key, value in summary.items())
 

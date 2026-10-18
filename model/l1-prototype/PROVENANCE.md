@@ -14,6 +14,14 @@ scalars upstream code derived from the model's output, and what is not on disk.
 
 The vendored Python file is imported only by the cold-lane torch parity harness.
 
+The three tools use integer arithmetic only (Python integers; no float, no decimal).
+Float runs in one place: inside torch, when `tools/model_parity.py` runs the vendored `PrototypeGNN` with the
+trained float32 checkpoint. That is the owner's float32 lane, run unchanged, to show what the trained network
+computes. The harness builds each input tensor from float32 bit patterns made with integers, and reads every torch
+output by its bit pattern and converts it with integers (`float32_units` and `q24_of_float32_bits` in
+`tools/quantize.py`, which reads the checkpoint's weights the same way). The upstream float values quoted below
+(manifest metrics, README and test text, upstream code) are upstream's own printed output, not measurements made here.
+
 ## Vendored upstream files
 
 Every file under `vendor/` is byte-identical to its upstream. `git hash-object <file>` gives the
@@ -40,7 +48,7 @@ Privacy scan before copying: `prototype_gnn.py` holds code and a paper title, no
 | What | Repository @ commit, path | Git blob | sha256 | Why it is pinned |
 |---|---|---|---|---|
 | L1 run-2 checkpoint | fnns @ `c4b2458c`, `models/prototype_model_run2.pt` (73,793 bytes) | `3660b469f648aa4287b9f6a19732543a22e72ccc` | `f9817037b888759ab8b1d1ff8d41b4aa4d3b0e790b70a5a73d659545527073b8` | Present upstream with the same keys, shapes and module tree as run 1 and different values. It is not the run-1 checkpoint and is not ported. |
-| Run-1 manifest | fnns @ `c4b2458c`, `manifests/gnn_train_run1_results.json` | `abc11e6fd5882b811a16f46a8f4136be0fedf36e` | `4845cbb614c20024a116d7c516c6c5775fa9fdf068873fc21df8e4972187993e` | Names the run-1 checkpoint: `"L1_ckpt": "prototype_model.pt (72KB 2026-06-01 07:58)"`, with `"L1_acc": 0.9992`, `"L1_prec": 0.9992`, `"L1_recall": 1.0`, `"L1_f1": 0.9996`. Not vendored (no JSON files in this stack). |
+| Run-1 manifest | fnns @ `c4b2458c`, `manifests/gnn_train_run1_results.json` | `abc11e6fd5882b811a16f46a8f4136be0fedf36e` | `4845cbb614c20024a116d7c516c6c5775fa9fdf068873fc21df8e4972187993e` | Names the run-1 checkpoint: `"L1_ckpt": "prototype_model.pt (72KB 2026-06-01 07:58)"`, with upstream's printed metrics `"L1_acc": 0.9992`, `"L1_prec": 0.9992`, `"L1_recall": 1.0`, `"L1_f1": 0.9996`. Not vendored (no JSON files in this stack). |
 | L1/L2 status test | `JesseBrown1980/bigpickle-rebuild` @ `c592599c`, `tests/unit/gnn-l1-l2-status.test.mjs` | `9d92db79c8ddb6f9b983dbae6e74d76e99511a2e` | `8027739467b86ed13e8357213dd67527534a15751948836cfa6e88cbce9aca98` | The constructor arguments and the training environment (below). |
 
 ## Which forward is ported, and why
@@ -81,15 +89,33 @@ own features. The L0 server, behcs-256 `services/gnn-sidecar/inference_server.py
 into torch_geometric `GCNConv`. For L1 the server file `prototype_inference_server.py` is not on disk (see
 [Not on disk](#not-on-disk)); upstream records a rekey as the pending load path, bigpickle
 `src/fabric-thinker-gnn.mjs:15-16`: "When L1/L2/L4 also load (state_dict rekey pending), the full 4-layer immune
-cascade activates". Measured with the same rename (torch 2.14.1+cpu, torch_geometric 2.8.1; the `VARIANT` row of
-`tests/fixtures/expected-model.hbp`, which `tools/model_parity.py --check` regenerates): the checkpoint loads into
-the torch_geometric `GCNConv` model with no missing or unexpected keys, and that model's `forward` gives the same
-float32 bits as the fallback model, `0x3f7ffe5c`, on all 816 fixture edges. `tools/model_parity.py --sweep` (300
-random graphs of 2-9 nodes per scale `s`, features uniform in `[-s, s)` with at most 24 significant bits, seed
-`0x4e4b`) gives equal `forward` bits at every tested `s` up to `2^28` (1, `2^8`, `2^16`, `2^24`, `2^27`, `2^28`). At
-`s = 2^29`, 12 of 1,757 edges differ, by at most 2 Q24 units; the largest difference is 2 at `2^30`, 8 at `2^33`
-and 50 at `2^36`. The node encodings `h` differ at every scale: at most 22 Q24 units at `s = 1` and 939,246 at
-`s = 2^16`. This crate ports only the trained layout.
+cascade activates". Measured with the same rename (torch 2.14.1+cpu, torch_geometric 2.8.1, the kernel pin below;
+the `VARIANT` row of `tests/fixtures/expected-model.hbp`, which `tools/model_parity.py --check` regenerates): the
+checkpoint loads into the torch_geometric `GCNConv` model with no missing or unexpected keys, and that model's
+`forward` gives the same float32 bits as the fallback model, `0x3f7ffe5c`, on all 816 fixture edges.
+`tools/model_parity.py --sweep` (300 random graphs of 2-9 nodes per scale `s`, features uniform in `[-s, s)` with at
+most 24 significant bits, seed `0x4e4b`) gives equal `forward` bits at every tested `s` up to `2^28` (1, `2^8`,
+`2^16`, `2^24`, `2^27`, `2^28`). At `s = 2^29`, 12 of 1,757 edges differ, by at most 2 Q24 units; the largest
+difference is 2 at `2^30`, 8 at `2^33` and 50 at `2^36`. The node encodings `h` differ at every scale: at most 22 Q24
+units at `s = 1` and 939,246 at `s = 2^16`. Every `SWEEP` row, under the kernel pin (differences are
+`ceil(|a - b| * 2^24)` of the two float32 values, computed from their bits in integers):
+
+| `s` | edges | `forward` bits unequal | max `forward` difference (Q24 units) | max `h` difference (Q24 units) |
+|---|---|---|---|---|
+| 1 | 1,838 | 0 | 0 | 22 |
+| `2^8` | 1,800 | 0 | 0 | 4,409 |
+| `2^16` | 1,828 | 0 | 0 | 939,246 |
+| `2^24` | 1,703 | 0 | 0 | 214,506,073 |
+| `2^27` | 1,704 | 0 | 0 | 1,814,129,303 |
+| `2^28` | 1,757 | 0 | 0 | 4,352,152,320 |
+| `2^29` | 1,757 | 12 | 2 | 6,050,237,972 |
+| `2^30` | 1,854 | 376 | 2 | 17,355,051,024 |
+| `2^33` | 1,771 | 712 | 8 | 120,259,058,288 |
+| `2^36` | 1,860 | 1,580 | 50 | 1,225,842,192,384 |
+
+Without the pin (torch's default kernel selection on the AVX-512 host below) the `forward` columns are the same and
+the `h` maxima differ at four scales: 1,814,129,175 at `2^27`, 4,352,152,832 at `2^28`, 17,355,053,072 at `2^30` and
+120,259,050,080 at `2^33`. This crate ports only the trained layout.
 
 Constructor arguments: bigpickle `tests/unit/gnn-l1-l2-status.test.mjs:65-77` expects the :4795 server to build
 `node_input_dim=6, hidden_dim=64, num_classes=2, num_prototypes_per_class=3`; the checkpoint's shapes agree.
@@ -108,28 +134,38 @@ Constructor arguments: bigpickle `tests/unit/gnn-l1-l2-status.test.mjs:65-77` ex
 `edge_outputs` returns one `EdgeOutput` per edge holding what `get_edge_embeddings`, `compute_prototype_distances`
 and `forward` compute for it. `pair_output` is a helper added for this stack; prototype_gnn.py has no such method.
 
-Weights are `floor(w * 2^24 + 1/2)` of the float32 values (`tools/quantize.py`, a restricted unpickler that needs no
-torch and refuses any checkpoint whose sha256, keys, shapes or module tree differ). The sigmoid is written for
-this stack, not upstream. Its first step is the range-reduced integer series of `model/l0-edge/src/model.rs`
-(`exp_neg`, `sigmoid_q24`; private there, so repeated here rather than reached through a dependency). That series
-is within 12 units of `2^-62` of `e^-|t|` (at most 18 terms, each rounded to half a unit, and `LN2_Q62` within 0.053
-units per octave; every error measured, over 252,154 inputs that include each octave boundary, is below 4 units), so
-its quotient is within `2^-34` of `2^24 sigmoid(t)`. When the quotient lies within `2^-32` of a half, `sigmoid_q24`
-decides the side exactly from lower and upper sums of the series of `e^|t|`, at 128 bits and doubling until the sums
-decide, so it returns `floor(2^24 sigmoid(t) + 1/2)` for every logit. The series step alone, which `model/l0-edge` has and this crate had before, gives a value 1 away from
-that on 20 of the 736 boundary rows below; for example, logit_q48 `-2903085619798773`, where `2^24 sigmoid` is
-`556.50000000000172886...`, gives 556. `tools/int_referee.py` checks the sigmoid against the exact value (Python
-decimal, 60 digits, refusing any value within `10^-40` of a half) on 2447 logits: 1711 over `[-20, 20]` and 736
-whose exact value lies within `2^-32` of a half (Q48 logits next to `ln((k + 1/2) / (2^24 - k - 1/2))`, on the
-integer lattice and on multiples of 10, both signs). `pair_output(s, t)` is `edge_outputs(&[s, t], &[(0, 1)])[0]`;
-because the encoder does not read `edge_index`, every edge's output equals the `pair_output` of its two nodes
-(tested). For any `i64` inputs no intermediate exceeds i128 (bound test over the generated weights).
+Weights are `floor(w * 2^24 + 1/2)` of the float32 values, read by their bit patterns (`tools/quantize.py`, a
+restricted unpickler that needs no torch and refuses any checkpoint whose sha256, keys, shapes or module tree differ).
+The sigmoid is written for this stack, not upstream. Its first step is the range-reduced integer series of
+`model/l0-edge/src/model.rs` (`exp_neg`, `sigmoid_q24`; private there, so repeated here rather than reached through a
+dependency). That series is within 12 units of `2^-62` of `e^-|t|` (at most 18 terms, each rounded to half a unit, and
+`LN2_Q62` off by less than `3464/2^16` of a unit per octave: `LN2_Q62 - 2^62 ln 2` lies between `3463/2^16` and
+`3464/2^16`, from the integer bounds of `tools/int_referee.py`; every error measured, over 252,154 inputs that include
+each octave boundary, is below 4 units), so its quotient is within `2^-34` of `2^24 sigmoid(t)`. When the quotient
+lies within `2^-32` of a half, `sigmoid_q24` decides the side exactly from lower and upper sums of the series of
+`e^|t|`, at 128 bits and doubling until the sums decide, so it returns `floor(2^24 sigmoid(t) + 1/2)` for every logit.
+The series step alone (as `model/l0-edge/src/model.rs` has it at commit `f67b300`, and as this crate had it before
+the exact step) gives a value 1 away from that on 20 of the 736 boundary rows below; for example, logit_q48
+`-2903085619798773`, where `2^24 sigmoid` is `556 + 1/2 + 31891840/2^64` (floor at Q64), gives 556.
+`tools/int_referee.py` checks the sigmoid against the exact value on 2447 logits: 1711 over `[-20, 20]` and 736 whose
+exact value lies within `2^-32` of a half (Q48 logits next to `ln((k + 1/2) / (2^24 - k - 1/2))`, on the integer
+lattice and on multiples of 10, both signs). It computes in integers only: lower and upper bounds of `2^p e^|t|` from
+the Taylor series with range halving (floor and ceiling of each term, a bound on the tail, then squarings), at a
+precision `p` that starts at 128 bits and doubles until both bounds give the same `floor(2^24 sigmoid + 1/2)` and the
+same side of the `2^-32` window; `ln` (for the boundary logits and `LN2_Q62`) comes the same way from bounds of
+`m ln 2 + 2 atanh((c - d) / (c + d))`. Its rows are the ones the earlier version (Python decimal at 60 digits) wrote:
+all 2,592 data rows of `tests/fixtures/expected-int.hbp` are unchanged, and only its third header line, which names
+the method, changed. `pair_output(s, t)` is
+`edge_outputs(&[s, t], &[(0, 1)])[0]`; because the encoder does not read `edge_index`, every edge's output equals the
+`pair_output` of its two nodes (tested). For any `i64` inputs no intermediate exceeds i128 (bound test over the
+generated weights).
 
 ## Measured agreement
 
 Fixtures: 48 two-node graphs and 96 graphs of 2-9 nodes with self loops and duplicate edges, 816 edges; inputs in
 the ranges of the six-feature scaling (train_baseline.py:31-38) and, in every fourth case, signed values up to
-`2^40` (Q24). Every input has at most 24 significant bits, so torch receives it exactly.
+`2^40` (Q24). Every input has at most 24 significant bits, so torch receives it exactly; the harness sends each
+as its float32 bit pattern.
 
 | Comparison | Result |
 |---|---|
@@ -137,15 +173,39 @@ the ranges of the six-feature scaling (train_baseline.py:31-38) and, in every fo
 | Rust sigmoid vs the exact value | equal on all 2447 rows, including the 736 within `2^-32` of a half |
 | Rust vs torch, node encodings `h` (Q24 units) | max 1 in the cases with inputs below `2^31`; max 46 in the cases with inputs up to `2^40` (Q24 weight rounding times the input magnitude) |
 | Rust vs torch, edge embeddings `e` | max 1 |
-| Rust vs torch, logits (rounded to Q24) | max 32 (float32 resolution at `|l| ~ 12` is 16) |
+| Rust vs torch, logits (rounded to Q24) | max 32 for `l0`, which lies between -12 and -11 on every fixture edge (float32 spacing `2^-20` there, 16 Q24 units); max 8 for `l1`, which lies between -2 and -1 (spacing `2^-23`, 2 Q24 units) |
 | Rust vs torch, probability | max 1 |
 
-What the trained weights compute on these inputs (measured): `forward` gives `16776797 / 2^24` (Rust; the exact
-sigmoid of the integer logits is `16776796.68 / 2^24`) on all 816 edges, and torch gives the float32 `0x3f7ffe5c`
-(`16776796 / 2^24`) on all 816. The logit difference `l1 - l0` lies in `[10.5968753, 10.5968757]`, and across the 48
-pair embeddings each component varies by at most one Q24 unit. The weight scales account for it: the largest row L1
-norms are 0.0012 (`conv1.lin.weight`), 0.0019 (`conv2.lin.weight`), 0.0124 (`edge_projection.0.weight`) and
-0.0012 (`edge_projection.2.weight`), while `edge_projection.2.bias` reaches 0.2203.
+The torch side of this table comes from `tests/fixtures/expected-model.hbp`, which `tools/model_parity.py --check`
+compares byte for byte, and torch's float32 results depend on the CPU kernels it selects. As
+model/l0-edge/tools/model_parity.py does, the tool sets `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`,
+`OMP_NUM_THREADS=1` and `MKL_NUM_THREADS=1` before torch loads (ATen's scalar kernels, oneMKL's SSE2-only Conditional
+Numerical Reproducibility code path, one thread), and the file's header names them. On the x86-64 AVX-512 host that
+wrote the file (torch 2.14.1+cpu, torch_geometric 2.8.1, Python 3.13.16), `--check` passes with the caller's
+environment unset or set to `MKL_ENABLE_INSTRUCTIONS=AVX2` (with and without `ATEN_CPU_CAPABILITY=default`),
+`ATEN_CPU_CAPABILITY=default`, `MKL_ENABLE_INSTRUCTIONS=SSE4_2` or `AVX512`, `ATEN_CPU_CAPABILITY=avx2` or `avx512`,
+`MKL_CBWR=AVX2`, or `OMP_NUM_THREADS=4 MKL_NUM_THREADS=3` (20 runs: these 10 environments in two separate torch
+2.14.1+cpu environments). Before the pin, the committed file (written with torch's default selection) passed
+`--check` with the caller's environment unset or set to `ATEN_CPU_CAPABILITY=default`, and failed with
+`MKL_ENABLE_INSTRUCTIONS=AVX2`, with or without `ATEN_CPU_CAPABILITY=default` (`first_diff_line=19`, the `PAIR` row of
+case 11). The pinned file differs from that one in 5 of its 6,144 `h_q24` values, each by 1 Q24 unit, in the `PAIR`
+rows of cases 11 (2 values), 27, 35 and 43 (1 each), all cases with inputs up to `2^40`, and in 3 header lines (the
+kernels, and that inputs and outputs pass as float32 bit patterns); every `e_q24`, `logits_q24`, `p_bits` and `p_q24`
+value and the `LAYOUT` and `VARIANT` rows are unchanged. The same tool with the pin line removed (a scratch copy, not
+committed) reproduces every data row of the earlier file with the caller's environment unset or set to
+`ATEN_CPU_CAPABILITY=default`; with `MKL_ENABLE_INSTRUCTIONS=AVX2` it differs from the pinned file in 2 `h_q24` values
+(cases 27 and 43, by 1 each) and from the earlier file in 3 (case 11 twice and case 35, by 1 each). It has not been run
+on an AMD CPU or a non-x86-64 CPU here.
+
+What the trained weights compute on these inputs (measured): `forward` gives `16776797 / 2^24` (Rust; `2^24` times
+the exact sigmoid of the integer logits lies between `16776796 + 44629/2^16` and `16776796 + 44637/2^16`, Q16 floors
+44629 at the smallest `l1 - l0` and 44636 at the largest) on all 816 edges, and torch gives the float32 `0x3f7ffe5c`,
+exactly `16776796 / 2^24`, on all 816. The logit difference `l1 - l0` takes 13 distinct values over the 816 edges, all
+in `[2982755245111350, 2982755318164950] / 2^48` (Q48; a span of 73,053,600 Q48 units), and across the 48 pair
+embeddings each component varies by at most one Q24 unit. The weight scales account for it. In Q24 units of the
+generated weights, the largest row sums of `|w|` are 19,677 (`conv1.lin.weight`), 32,610 (`conv2.lin.weight`),
+207,493 (`edge_projection.0.weight`) and 20,771 (`edge_projection.2.weight`), while `edge_projection.2.bias` reaches
+3,696,391 (its smallest entry is -3,380,083).
 
 That value holds up to an input magnitude. The test `forward_by_input_magnitude_on_two_node_graphs`
 (`tests/model.rs`) draws 300 two-node graphs per bound, all 12 Q24 features uniform in `[-2^k, 2^k)`, from a fixed
@@ -164,7 +224,8 @@ Upstream's own note on the corpus behind these checkpoints, fnns `README.md:59-6
   data and per-class precision/AUC/MCC.
 ```
 
-The run-1 manifest gives L1 and L2 the same metrics (`acc` 0.9992, `prec` 0.9992, `recall` 1.0, `f1` 0.9996). For
+The run-1 manifest prints the same metrics for L1 and L2 (upstream's values: `acc` 0.9992, `prec` 0.9992, `recall`
+1.0, `f1` 0.9996). For
 L2, bigpickle `tests/unit/gnn-l1-l2-status.test.mjs:94-98`:
 
 ```
@@ -231,7 +292,7 @@ No composite weight is set here; the owner states it (OWNER-RULES 7b).
 
 | Tool | Lane | Checks |
 |---|---|---|
-| `tools/quantize.py [--check]` | stdlib | `src/weights.rs` from the pinned checkpoint, without torch |
-| `tools/int_referee.py [--check]` | stdlib | `tests/fixtures/expected-int.hbp`: the integer forward and the exact sigmoid, line by line against prototype_gnn.py |
-| `tools/model_parity.py [--check]` | torch 2.14.1+cpu, torch_geometric 2.8.1 | `tests/fixtures/expected-model.hbp`: the vendored class with its fallback `GCNConv` and the checkpoint, plus the `LAYOUT` rows and the `VARIANT` row |
-| `tools/model_parity.py --sweep` | torch 2.14.1+cpu, torch_geometric 2.8.1 | prints `SWEEP` rows: fallback against rekeyed `forward` by input scale, the numbers quoted in [Which forward is ported](#which-forward-is-ported-and-why); writes nothing |
+| `tools/quantize.py [--check]` | stdlib, integers only | `src/weights.rs` from the pinned checkpoint, without torch: each float32 weight read by its bit pattern |
+| `tools/int_referee.py [--check]` | stdlib, integers only | `tests/fixtures/expected-int.hbp`: the integer forward and the exact sigmoid, line by line against prototype_gnn.py |
+| `tools/model_parity.py [--check]` | torch 2.14.1+cpu, torch_geometric 2.8.1, kernels pinned; float only inside torch, read by bit pattern | `tests/fixtures/expected-model.hbp`: the vendored class with its fallback `GCNConv` and the checkpoint, plus the `LAYOUT` rows and the `VARIANT` row |
+| `tools/model_parity.py --sweep` | as `--check` | prints `SWEEP` rows: fallback against rekeyed `forward` by input scale, the numbers quoted in [Which forward is ported](#which-forward-is-ported-and-why); writes nothing |

@@ -8,10 +8,16 @@ use std::fmt;
 const HIDDEN: usize = 64;
 const ONE_Q24: i64 = 1 << FRAC_BITS;
 const NORM_BITS: u32 = 32;
+const LOGIT_BITS: u32 = 2 * FRAC_BITS;
 const EXP_BITS: u32 = 62;
 const ONE_EXP: u128 = 1 << EXP_BITS;
 const LN2_EXP: u128 = 3_196_577_161_300_663_915;
-const SIGMOID_SATURATION_Q48: u128 = 18 << (2 * FRAC_BITS);
+const SIGMOID_SATURATION_Q48: u128 = 18 << LOGIT_BITS;
+/// `exp_neg` is within 12 units of 2^-62 of e^-|t| (at most 18 series terms, each rounded to 1/2 unit, and
+/// `LN2_EXP` within 53/1000 of a unit per octave), so its quotient is within 2^-34 of 2^24 * sigmoid(t).
+/// Copied from model/l1-prototype/src/model.rs:29-31; `sigmoid_q24` and `round_near_half` through `big_cmp` below
+/// are copied from lines 191-309 of that file (HEAD f67b300; see PROVENANCE.md, "Duplicated code").
+const TIE_WINDOW_BITS: u32 = 32;
 
 /// Why [`edge_scores`] gives no scores.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -219,16 +225,126 @@ fn exp_neg(magnitude: u128) -> u128 {
     }
 }
 
+/// `1 / (1 + e^-t)` of `t` in Q48, as Q24 rounded half up: `floor(2^24 * sigmoid(t) + 1/2)` for every logit.
+/// When the series quotient lies within 2^-32 of a half, [`round_near_half`] decides the side exactly.
 fn sigmoid_q24(logit_q48: i128) -> i64 {
     let magnitude = logit_q48.unsigned_abs();
     if magnitude > SIGMOID_SATURATION_Q48 {
         return if logit_q48 > 0 { ONE_Q24 } else { 0 };
     }
-    let decay = exp_neg(magnitude << (EXP_BITS - 2 * FRAC_BITS));
+    let decay = exp_neg(magnitude << (EXP_BITS - LOGIT_BITS));
     let denominator = ONE_EXP + decay;
     let numerator = if logit_q48 >= 0 { ONE_EXP } else { decay };
-    let rounded = ((numerator << (FRAC_BITS + 1)) + denominator) / (2 * denominator);
+    let dividend = (numerator << (FRAC_BITS + 1)) + denominator;
+    let window = 2 * denominator;
+    let (rounded, remainder) = (dividend / window, dividend % window);
+    let rounded = if remainder << TIE_WINDOW_BITS < window {
+        round_near_half(logit_q48, magnitude, rounded)
+    } else if (window - remainder) << TIE_WINDOW_BITS <= window {
+        round_near_half(logit_q48, magnitude, rounded + 1)
+    } else {
+        rounded
+    };
     i64::try_from(rounded).unwrap_or(ONE_Q24)
+}
+
+/// `upper` if `2^24 * sigmoid(t) > upper - 1/2`, else `upper - 1`. With `a = 2 upper - 1` and `b = 2^25 - a`, that is
+/// `b e^|t| > a` for `t > 0` and `a e^|t| < b` for `t < 0`; equality needs a rational `e^|t|`, so `t = 0`.
+fn round_near_half(logit_q48: i128, magnitude: u128, upper: u128) -> u128 {
+    let a = 2 * upper - 1;
+    let b = (1 << (FRAC_BITS + 1)) - a;
+    let above = if logit_q48 > 0 {
+        exp_exceeds(magnitude, b, a)
+    } else {
+        !exp_exceeds(magnitude, a, b)
+    };
+    if above {
+        upper
+    } else {
+        upper - 1
+    }
+}
+
+/// Whether `factor * e^(m / 2^48) > bound`, from lower and upper sums of the series of `e^(m / 2^48)` in units of
+/// `2^-(64 limbs)`, doubling `limbs` until the two sums fall on the same side of `bound`.
+fn exp_exceeds(m: u128, factor: u128, bound: u128) -> bool {
+    let mut limbs = 2;
+    loop {
+        let (low, high) = exp_series_bounds(m, limbs);
+        let mut target = vec![0; limbs + 2];
+        target[limbs] = bound as u64;
+        if big_cmp(&big_mul_small(&low, factor as u64), &target).is_gt() {
+            return true;
+        }
+        if big_cmp(&big_mul_small(&high, factor as u64), &target).is_lt() {
+            return false;
+        }
+        limbs *= 2;
+    }
+}
+
+/// `(low, high)` with `low <= 2^(64 limbs) e^(m / 2^48) <= high`: the terms `y^n / n!` rounded down and up, and,
+/// once `n + 1 >= 2y`, the remaining terms bounded by the last upper term.
+fn exp_series_bounds(m: u128, limbs: usize) -> (Vec<u64>, Vec<u64>) {
+    let mut one = vec![0; limbs + 2];
+    one[limbs] = 1;
+    let (mut low, mut high) = (one.clone(), one.clone());
+    let (mut low_term, mut high_term) = (one.clone(), one);
+    let mut n: u64 = 1;
+    loop {
+        low_term = big_scale(&low_term, m as u64, n, false);
+        high_term = big_scale(&high_term, m as u64, n, true);
+        big_add(&mut low, &low_term);
+        big_add(&mut high, &high_term);
+        let tail_bounded = u128::from(n + 1) << LOGIT_BITS >= 2 * m;
+        if tail_bounded && high_term[1..].iter().all(|&limb| limb == 0) && high_term[0] <= 1 {
+            big_add(&mut high, &high_term);
+            return (low, high);
+        }
+        n += 1;
+    }
+}
+
+/// `term * m / (n 2^48)`, rounded down or up, on little-endian u64 limbs of a fixed width.
+fn big_scale(term: &[u64], m: u64, n: u64, round_up: bool) -> Vec<u64> {
+    let mut value = big_mul_small(term, m);
+    for divisor in [1 << LOGIT_BITS, n] {
+        let mut remainder = 0u128;
+        for limb in value.iter_mut().rev() {
+            let current = (remainder << 64) | u128::from(*limb);
+            *limb = (current / u128::from(divisor)) as u64;
+            remainder = current % u128::from(divisor);
+        }
+        if round_up && remainder != 0 {
+            big_add(&mut value, &[1]);
+        }
+    }
+    value
+}
+
+fn big_mul_small(value: &[u64], factor: u64) -> Vec<u64> {
+    let mut carry = 0u128;
+    value
+        .iter()
+        .map(|&limb| {
+            let product = u128::from(limb) * u128::from(factor) + carry;
+            carry = product >> 64;
+            product as u64
+        })
+        .collect()
+}
+
+fn big_add(sum: &mut [u64], value: &[u64]) {
+    let mut carry = 0u128;
+    for (i, limb) in sum.iter_mut().enumerate() {
+        let total = u128::from(*limb) + u128::from(value.get(i).copied().unwrap_or(0)) + carry;
+        *limb = total as u64;
+        carry = total >> 64;
+    }
+}
+
+fn big_cmp(a: &[u64], b: &[u64]) -> std::cmp::Ordering {
+    a.iter().rev().cmp(b.iter().rev())
 }
 
 #[cfg(test)]
@@ -237,6 +353,9 @@ mod tests {
     use crate::event::MAX_EVENTS;
 
     const EXPECTED: &str = include_str!("../tests/fixtures/expected-model.hbp");
+    /// SIGMOID rows of the fixture: 1511 over `[-20, 20]`, then the 736 boundary rows within 2^-32 of a half.
+    const SIGMOID_ROWS: usize = 2247;
+    const BOUNDARY_ROWS: usize = 736;
 
     fn fields(line: &str) -> impl Iterator<Item = (&str, &str)> {
         line.split('|')
@@ -252,7 +371,7 @@ mod tests {
     }
 
     #[test]
-    fn ln2_matches_the_decimal_constant() {
+    fn ln2_matches_the_exact_constant() {
         let line = EXPECTED
             .lines()
             .find(|l| l.starts_with("CONST|name=LN2_Q62|"))
@@ -261,7 +380,7 @@ mod tests {
     }
 
     #[test]
-    fn sigmoid_matches_the_decimal_reference_exactly() {
+    fn sigmoid_matches_the_exact_reference() {
         let mut rows = 0;
         for line in EXPECTED.lines().filter(|l| l.starts_with("SIGMOID|")) {
             let logit = row_value(line, "logit_q48");
@@ -269,7 +388,41 @@ mod tests {
             assert_eq!(i128::from(sigmoid_q24(logit)), want, "{line}");
             rows += 1;
         }
-        assert!(rows >= 1000, "{rows} sigmoid rows");
+        assert_eq!(rows, SIGMOID_ROWS);
+    }
+
+    /// The rounding this crate used before the exact decision: the series quotient alone.
+    fn series_only_q24(logit_q48: i128) -> i64 {
+        let magnitude = logit_q48.unsigned_abs();
+        if magnitude > SIGMOID_SATURATION_Q48 {
+            return if logit_q48 > 0 { ONE_Q24 } else { 0 };
+        }
+        let decay = exp_neg(magnitude << (EXP_BITS - LOGIT_BITS));
+        let denominator = ONE_EXP + decay;
+        let numerator = if logit_q48 >= 0 { ONE_EXP } else { decay };
+        let rounded = ((numerator << (FRAC_BITS + 1)) + denominator) / (2 * denominator);
+        i64::try_from(rounded).unwrap_or(ONE_Q24)
+    }
+
+    #[test]
+    fn series_rounding_alone_is_one_off_on_20_of_the_736_boundary_rows() {
+        let rows: Vec<(i128, i128)> = EXPECTED
+            .lines()
+            .filter(|l| l.starts_with("SIGMOID|"))
+            .map(|l| (row_value(l, "logit_q48"), row_value(l, "q24")))
+            .collect();
+        assert_eq!(rows.len(), SIGMOID_ROWS);
+        let (wide, boundary) = rows.split_at(SIGMOID_ROWS - BOUNDARY_ROWS);
+        let off = |rows: &[(i128, i128)]| {
+            rows.iter()
+                .filter(|&&(logit, want)| {
+                    let diff = i128::from(series_only_q24(logit)) - want;
+                    assert!(diff.abs() <= 1, "logit {logit}: {diff}");
+                    diff != 0
+                })
+                .count()
+        };
+        assert_eq!((off(wide), off(boundary)), (0, 20));
     }
 
     #[test]
@@ -280,8 +433,7 @@ mod tests {
         while logit <= 20i128 << 48 {
             let p = sigmoid_q24(logit);
             assert!(p >= previous, "logit {logit}");
-            let sum = p + sigmoid_q24(-logit);
-            assert!(sum == ONE_Q24 || sum == ONE_Q24 + 1, "logit {logit}: {sum}");
+            assert_eq!(p + sigmoid_q24(-logit), ONE_Q24, "logit {logit}");
             previous = p;
             logit += step;
         }
@@ -291,13 +443,29 @@ mod tests {
     }
 
     #[test]
+    fn exp_exceeds_doubles_the_precision_until_the_sums_decide() {
+        // p / q is a convergent of e with 0 < q e - p < 17 / 10^21, which the 128-bit sums leave undecided.
+        let (p, q) = (5_739_439_214_861_417_731u128, 2_111_421_691_000_680_031u128);
+        let (low, high) = exp_series_bounds(1 << LOGIT_BITS, 2);
+        let target = [0, 0, p as u64, 0];
+        assert!(big_cmp(&big_mul_small(&low, q as u64), &target).is_le());
+        assert!(big_cmp(&big_mul_small(&high, q as u64), &target).is_ge());
+        assert!(exp_exceeds(1 << LOGIT_BITS, q, p));
+        assert!(!exp_exceeds(1 << LOGIT_BITS, q, p + 1));
+    }
+
+    #[test]
     fn coefficients_are_rounded_inverse_square_roots() {
         assert_eq!(gcn_coefficient(1, 1), 1 << 32);
         assert_eq!(gcn_coefficient(1, 4), 1 << 31);
         assert_eq!(gcn_coefficient(2, 2), 1 << 31);
-        // round(2^32 / sqrt(2)) and round(2^32 / sqrt(3)), from Python decimal at 60 digits.
+        // round(2^32 / sqrt(2)) and round(2^32 / sqrt(3)): c with (2c - 1)^2 d <= 2^66 < (2c + 1)^2 d, d = 2 and 3.
         assert_eq!(gcn_coefficient(1, 2), 3_037_000_500);
         assert_eq!(gcn_coefficient(3, 1), 2_479_700_525);
+        for (c, d) in [(3_037_000_500u128, 2u128), (2_479_700_525, 3)] {
+            assert!((2 * c - 1) * (2 * c - 1) * d <= 1 << 66);
+            assert!((2 * c + 1) * (2 * c + 1) * d > 1 << 66);
+        }
         let d = MAX_EVENTS as u64 + 1;
         let c = gcn_coefficient(d, d) as u128;
         assert!((2 * c - 1) * (2 * c - 1) * u128::from(d) * u128::from(d) <= 1 << 66);

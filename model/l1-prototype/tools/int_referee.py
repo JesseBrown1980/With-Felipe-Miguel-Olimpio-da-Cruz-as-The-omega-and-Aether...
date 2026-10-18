@@ -6,20 +6,26 @@ line of prototype_gnn.py with the fallback GCNConv (lines 17-24, `self.lin(x)`),
   conv1 -> ReLU -> conv2 (65-71); cat(h[row], h[col]) -> Linear -> ReLU -> Linear (73-78);
   squared distance to each prototype, min per class, -d / 0.1 (80-105); softmax, column 1 (128-131).
 Linear outputs round half up to Q24 once; distances and logits are exact Q48; the probability is
-floor(2^24 * softmax(logits)[1] + 1/2) with the exact exponential (Python decimal, 60 digits).
+floor(2^24 * softmax(logits)[1] + 1/2), decided from integer lower and upper bounds of the exponential (Taylor
+series with range halving) whose precision doubles until both bounds round to the same value. Integer arithmetic
+only: no float, no decimal.
 Writes tests/fixtures/expected-int.hbp; --check regenerates it in memory and diffs.
 Run: python3 -I tools/int_referee.py [--check]
 """
 import importlib.util
 import pathlib
 import sys
-from decimal import ROUND_FLOOR, Decimal, localcontext
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 EXPECTED = ROOT / "tests" / "fixtures" / "expected-int.hbp"
 FRAC_BITS = 24
 LOGIT_BITS = 2 * FRAC_BITS
 INVERSE_TEMPERATURE = 10  # temperature: float = 0.1 (prototype_gnn.py:39)
+START_PRECISION = 128
+MAX_PRECISION = 1 << 14
+# Above |t| = 64 the bounds use sigmoid(+-64) and the limits 1 and 0: 2^24 * e^-64 is below 2^-68.
+SATURATION_Q48 = 64 << LOGIT_BITS
+BOUNDARY_WINDOW_BITS = 32
 PAIR_CASES = 48
 GRAPH_CASES = 96
 
@@ -94,22 +100,65 @@ def prototype_logits_q48(weights, e):
             for protos in weights.prototypes]
 
 
-def exact_sigmoid(logit_q48):
-    """(floor(2^24 * sigmoid + 1/2), distance of 2^24 * sigmoid from the nearest half) at 60 digits."""
-    with localcontext() as ctx:
-        ctx.prec = 60
-        t = Decimal(logit_q48) / Decimal(1 << LOGIT_BITS)
-        p = Decimal(1) / (Decimal(1) + (-t).exp())
-        v = p * (1 << FRAC_BITS) + Decimal("0.5")
-        q = int(v.to_integral_value(rounding=ROUND_FLOOR))
-        return q, min(v - q, q + 1 - v)
+def ceil_div(num, den):
+    return -(-num // den)
+
+
+def exp_bounds(numerator, frac_bits, precision):
+    """(lo, hi) with lo <= 2^precision * e^(numerator / 2^frac_bits) <= hi, for numerator >= 0."""
+    halvings = max(numerator.bit_length() - frac_bits, 0)  # y = numerator / 2^shift < 1
+    shift = frac_bits + halvings
+    work = precision + 2 * halvings + 8
+    lo = hi = lo_term = hi_term = 1 << work
+    n = 0
+    while hi_term > 1:
+        n += 1
+        lo_term = lo_term * numerator // (n << shift)
+        hi_term = ceil_div(hi_term * numerator, n << shift)
+        lo += lo_term
+        hi += hi_term
+    hi += 1  # the tail after term n is at most term n (y < 1, n >= 1), which is at most hi_term <= 1
+    for _ in range(halvings):
+        lo = lo * lo >> work
+        hi = ceil_div(hi * hi, 1 << work)
+    return lo >> (work - precision), ceil_div(hi, 1 << (work - precision))
+
+
+def rounding_bounds(logit_q48, precision):
+    """(lo, hi) with lo <= 2^precision * (2^24 * sigmoid(logit_q48 / 2^48) + 1/2) <= hi."""
+    one = 1 << precision
+    scale = 1 << (precision + FRAC_BITS)
+    e_lo, e_hi = exp_bounds(min(abs(logit_q48), SATURATION_Q48), LOGIT_BITS, precision)  # 2^precision * e^|t|
+    if logit_q48 >= 0:  # sigmoid = E / (E + 1), increasing in E
+        lo, hi = scale * e_lo // (e_lo + one), ceil_div(scale * e_hi, e_hi + one)
+        if logit_q48 > SATURATION_Q48:
+            hi = scale
+    else:  # sigmoid = 1 / (E + 1), decreasing in E
+        lo, hi = scale * one // (e_hi + one), ceil_div(scale * one, e_lo + one)
+        if -logit_q48 > SATURATION_Q48:
+            lo = 0
+    return lo + one // 2, hi + one // 2
+
+
+def exact_sigmoid(logit_q48, window_bits=BOUNDARY_WINDOW_BITS):
+    """(floor(2^24 * sigmoid + 1/2), whether 2^24 * sigmoid lies within 2^-window_bits of a half), exact."""
+    precision = START_PRECISION
+    while precision <= MAX_PRECISION:
+        lo, hi = rounding_bounds(logit_q48, precision)
+        q = lo >> precision
+        if hi >> precision == q:
+            frac_lo, frac_hi = lo - (q << precision), hi - (q << precision)
+            window, one = 1 << (precision - window_bits), 1 << precision
+            if frac_hi < window or frac_lo > one - window:
+                return q, True
+            if frac_lo >= window and frac_hi <= one - window:
+                return q, False
+        precision *= 2
+    raise SystemExit(f"INT_REFEREE|refused=sigmoid_not_decided|logit_q48={logit_q48}")
 
 
 def exact_sigmoid_q24(logit_q48):
-    q, gap = exact_sigmoid(logit_q48)
-    if gap < Decimal(10) ** -40:  # the 60-digit value could fall on either side of the half
-        raise SystemExit(f"INT_REFEREE|refused=sigmoid_not_certified|logit_q48={logit_q48}")
-    return q
+    return exact_sigmoid(logit_q48)[0]
 
 
 def probability_q24(logits):
@@ -196,26 +245,67 @@ def boundary_logits(rng):
     # exact value lies within 2^-32 of the half (the window src/model.rs decides with interval sums).
     ks = [rng.below(16000) for _ in range(50)] + [(1 << FRAC_BITS) - 1 - rng.below(16000) for _ in range(50)]
     ks += [rng.below(1 << FRAC_BITS) for _ in range(300)]
-    window = Decimal(1) / Decimal(1 << 32)
     # Four logits from the L1 review's boundary hunt (integer lattice, then multiples of 10).
     kept = [-2903085619798773, 4568357769096465, 2979298638208620, -3016837914596280]
     for k in ks:
-        with localcontext() as ctx:
-            ctx.prec = 60
-            half = Decimal(k) + Decimal("0.5")
-            crossing = (half / (Decimal(1 << FRAC_BITS) - half)).ln() * (1 << LOGIT_BITS)
-            crossing = int(crossing.to_integral_value(rounding=ROUND_FLOOR))
+        # floor(2^48 * ln((k + 1/2) / (2^24 - k - 1/2)))
+        crossing = floor_scaled_ln(2 * k + 1, (1 << (FRAC_BITS + 1)) - 2 * k - 1, LOGIT_BITS)
         for step in (1, 10):
             base = crossing // step * step
-            kept += [v for v in (base, base + step) if exact_sigmoid(v)[1] < window]
+            kept += [v for v in (base, base + step) if exact_sigmoid(v)[1]]
     kept = list(dict.fromkeys(kept))
     return kept + [-v for v in kept]
 
 
+def atanh_bounds(p, q, work):
+    """(lo, hi) with lo <= 2^work * atanh(p / q) <= hi, for |p| <= q / 3."""
+    if p < 0:
+        lo, hi = atanh_bounds(-p, q, work)
+        return -hi, -lo
+    lo = hi = 0
+    num, den, n = p, q, 0  # z^(2n+1) = num / den
+    while True:
+        lo += (num << work) // (den * (2 * n + 1))
+        term_hi = ceil_div(num << work, den * (2 * n + 1))
+        hi += term_hi
+        if term_hi <= 1:
+            break
+        n += 1
+        num, den = num * p * p, den * q * q
+    return lo, hi + 1  # the tail after term n is at most term n * z^2 / (1 - z^2) <= term n / 8
+
+
+def ln_bounds(a, b, work):
+    """(lo, hi) with lo <= 2^work * ln(a / b) <= hi, for positive integers a, b: m ln 2 + 2 atanh((c - d) / (c + d))."""
+    m = a.bit_length() - b.bit_length()
+    c, d = (a, b << m) if m >= 0 else (a << -m, b)
+    if 3 * c > 4 * d:
+        m, d = m + 1, 2 * d
+    elif 3 * c < 2 * d:
+        m, c = m - 1, 2 * c
+    ln2_lo, ln2_hi = atanh_bounds(1, 3, work)
+    ln2_lo, ln2_hi = 2 * ln2_lo, 2 * ln2_hi
+    z_lo, z_hi = atanh_bounds(c - d, c + d, work)
+    lo = m * (ln2_lo if m >= 0 else ln2_hi) + 2 * z_lo
+    hi = m * (ln2_hi if m >= 0 else ln2_lo) + 2 * z_hi
+    return lo, hi
+
+
+def floor_scaled_ln(a, b, bits, half_up=False):
+    """floor(2^bits * ln(a / b)), or with half_up floor(2^bits * ln(a / b) + 1/2)."""
+    precision = START_PRECISION
+    while precision <= MAX_PRECISION:
+        lo, hi = ln_bounds(a, b, precision)
+        offset = 1 << (precision - bits - 1) if half_up else 0
+        shift = precision - bits
+        if (lo + offset) >> shift == (hi + offset) >> shift:
+            return (lo + offset) >> shift
+        precision *= 2
+    raise SystemExit(f"INT_REFEREE|refused=ln_not_decided|a={a}|b={b}")
+
+
 def ln2_q62():
-    with localcontext() as ctx:
-        ctx.prec = 60
-        return int((Decimal(2).ln() * (1 << 62) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
+    return floor_scaled_ln(2, 1, 62, half_up=True)
 
 
 def render():
@@ -240,7 +330,7 @@ def render():
     header = (
         "# expected integer forward of PrototypeGNN (prototype_gnn.py, fallback GCNConv) from tools/int_referee.py; do not edit\n"
         "# x, h, e = Q24 (round half up per Linear output); logits_q48 = -10 * min squared distance per class, exact;\n"
-        "# p_q24 and SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = (l1 - l0) or logit_q48 over 2^48, decimal at 60 digits\n"
+        "# p_q24 and SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = (l1 - l0) or logit_q48 over 2^48, exact (integer bounds)\n"
         f"# the last {len(boundary)} SIGMOID rows are logits whose exact 2^24 / (1 + e^-t) lies within 2^-32 of a half\n"
     )
     summary = (f"pairs={PAIR_CASES}|graphs={GRAPH_CASES}|edges={edges_total}|sigmoid={len(logits)}"

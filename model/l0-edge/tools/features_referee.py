@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """Referee for src/features.rs: mirrors extractNodeFeatures (vendor/legacy/gnnDataExport.js:25-64) line by line.
 
-Python floats are the same IEEE-754 binary64 values as JavaScript numbers. Reads tests/fixtures/events.hbp and
-writes tests/fixtures/expected-features.hbp; --check regenerates it in memory and diffs it with the committed copy.
+Integer arithmetic only: a JavaScript number is its binary64 bit pattern, and `/`, `*` and Math.round are the integer
+operations of tools/jsnum_referee.py (each rounded once to the nearest binary64, ties to even). Reads
+tests/fixtures/events.hbp and writes tests/fixtures/expected-features.hbp; --check regenerates it in memory and diffs
+it with the committed copy.
 """
-import math
+import importlib.util
 import pathlib
 import sys
-from fractions import Fraction
 
-FIXTURES = pathlib.Path(__file__).resolve().parent.parent / "tests" / "fixtures"
+TOOLS = pathlib.Path(__file__).resolve().parent
+FIXTURES = TOOLS.parent / "tests" / "fixtures"
 EVENTS = FIXTURES / "events.hbp"
 EXPECTED = FIXTURES / "expected-features.hbp"
 HEADER = (
@@ -30,9 +32,18 @@ KEYS = {
 }
 
 
-def js_math_round(x):
-    # Math.round(x): the integer nearest x, ties toward +infinity.
-    return math.floor(Fraction(x) + Fraction(1, 2))
+sys.dont_write_bytecode = True  # no __pycache__ beside tools/
+
+
+def load_jsnum():
+    spec = importlib.util.spec_from_file_location("jsnum_referee", TOOLS / "jsnum_referee.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+JSNUM = load_jsnum()
+js_round_ratio_scaled = JSNUM.js_round_ratio_scaled
 
 
 def chain(obj, key):
@@ -103,8 +114,8 @@ def parse_events(text):
 
 def extract_node_features(events):
     # gnnDataExport.js:25 function extractNodeFeatures(events)
-    # Its numbers are integers below 2^53 here: Python ints hold them exactly, and int / int is the
-    # correctly rounded binary64 quotient, as JS `/` on those values.
+    # Its counts and sums are integers below 2^53 here, so Python ints hold the JS numbers exactly; the quotients
+    # go through js_round_ratio_scaled, binary64 `/` then `*` then Math.round on bit patterns.
     nodes = {}  # :26 const nodes = new Map(); a dict keeps insertion order like the Map
     for event in events:  # :28 for (const event of events)
         actor_id = chain(event.get("actor"), "id") or "unknown"  # :29 event.actor?.id || "unknown"
@@ -139,10 +150,10 @@ def extract_node_features(events):
             "type": n["type"],  # :56
             "edgeVolume": n["edgeCount"],  # :57
             # :58 avgRisk: n.edgeCount ? Math.round(n.totalRisk / n.edgeCount * 100) / 100 : 0 (the integer before / 100)
-            "avgRiskCenti": js_math_round(n["totalRisk"] / n["edgeCount"] * 100) if n["edgeCount"] else 0,
+            "avgRiskCenti": js_round_ratio_scaled(n["totalRisk"], n["edgeCount"], 100) if n["edgeCount"] else 0,
             "maxRisk": n["maxRisk"],  # :59
             # :60 failureRate: n.edgeCount ? Math.round(n.failures / n.edgeCount * 1000) / 1000 : 0 (the integer before / 1000)
-            "failureRateMilli": js_math_round(n["failures"] / n["edgeCount"] * 1000) if n["edgeCount"] else 0,
+            "failureRateMilli": js_round_ratio_scaled(n["failures"], n["edgeCount"], 1000) if n["edgeCount"] else 0,
             "online": 1,  # :61
             "trustTier": 3 if n["type"] == "runtime" else 2 if n["type"] == "local_client" else 1,  # :62
         }
@@ -180,7 +191,7 @@ def exact_rounding_differences(events):
     return sum(
         1
         for count, total in tallies.values()
-        if js_math_round(total / count * 100) != math.floor(Fraction(total * 100, count) + Fraction(1, 2))
+        if js_round_ratio_scaled(total, count, 100) != (2 * total * 100 + count) // (2 * count)
     )
 
 

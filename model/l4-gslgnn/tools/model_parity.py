@@ -325,9 +325,10 @@ def render(model, seed):
         "# mask = attention > sigmoid(threshold), row-major; p_bits = float32 probs[:, 1] (hex); "
         "p_q24 = floor(p * 2^24 + 1/2); e4 = toFixed(4) of scores[0]\n"
     )
+    request_q24 = [q24_of(s) for s in scores]
     summary = (
         f"graphs={len(graphs)}|edges={edges_total}|requests={len(scores)}"
-        f"|request_min={min(scores):.6f}|request_max={max(scores):.6f}"
+        f"|request_q24_min={min(request_q24)}|request_q24_max={max(request_q24)}"
         f"|request_e4={','.join(sorted({str(to_fixed4_e4(s)) for s in scores}))}"
         f"|boundary_searches={found}|boundary_rows={len(boundary)}"
     )

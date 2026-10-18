@@ -9,7 +9,7 @@ use std::collections::HashMap;
 const EXPECTED: &str = include_str!("fixtures/expected-model.hbp");
 const EVENTS: &str = include_str!("fixtures/events.hbp");
 const ONE_Q24: i64 = 1 << 24;
-/// Largest |rust - torch| allowed, in Q24 units (2^-24), about 1.9e-6; the fixture's largest
+/// Largest |rust - torch| allowed, in Q24 units (2^-24): 32 / 2^24 = 2^-19; the fixture's largest
 /// difference is 6 over the PAIR and GRAPH rows and 15 over the REQUEST rows (case `search`).
 const TOL: i64 = 32;
 /// REQUEST rows: 2 fixed pairs and the random pairs with a torch score near a toFixed(4) midpoint.

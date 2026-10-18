@@ -48,8 +48,8 @@ and `conv2.bias` and has no `conv*.lin.bias`. So `src/model.rs` runs, per node,
 
 Arithmetic is Q24 with i128 accumulation and one round-half-up per layer output. For two classes
 `softmax(logits)[1]` is the sigmoid of `logits[1] - logits[0]`, taken from the exact Q48 difference
-with a fixed-point sigmoid. It equals a 60-digit decimal reference on the 1,511 committed logits,
-and next to a rounding tie it can be 1 unit away. `F.normalize` divides by `max(||v||, eps)` with
+with a fixed-point sigmoid. It equals the exact integer reference (`tools/math_referee.py`) on the
+1,511 committed logits, and next to a rounding tie it can be 1 unit away. `F.normalize` divides by `max(||v||, eps)` with
 `eps` the float32 of `1e-12`, as torch/nn/functional.py:6126-6127 does. The integer version equals
 an exact rational reference on 126 vectors, and at a half-unit tie in a vector whose largest Q48
 component is above 2^51 it can be 1 unit away. `PROVENANCE.md` has the measurements.
@@ -69,7 +69,7 @@ to 2^K, the largest differences for K = 4, 8, 12, 16, 20 are 1, 1, 1, 3, 11 unit
 | File | Written by | Content |
 |---|---|---|
 | `src/weights.rs` | `tools/quantize.py` (stdlib) | the checkpoint's 23,330 float32 weights as Q24, read without torch; refuses any other key list or module-path list |
-| `tests/fixtures/expected-math.hbp` | `tools/math_referee.py` (stdlib) | `LN2_Q62`; 1,511 `SIGMOID` rows (decimal, 60 digits); 126 `NORMALIZE` rows (exact integer arithmetic) |
+| `tests/fixtures/expected-math.hbp` | `tools/math_referee.py` (stdlib) | `LN2_Q62`; 1,511 `SIGMOID` rows (exact, integer bounds on e^-\|t\|); 126 `NORMALIZE` rows (exact integer arithmetic) |
 | `tests/fixtures/expected-model.hbp` | `tools/model_parity.py` (torch) | the `LAYOUT` row; 304 fixed-seed graphs, 755 edges (104 layout graphs with 262 edges, 200 `mag` graphs with 493 edges): Q24 inputs, float32 bits and Q24 of `probs[:, 1]`, and the 64 Q24 projection components per edge |
 
 The graphs are SYNTHETIC, from fixed seeds. The layout graphs hold node features in the 6-feature

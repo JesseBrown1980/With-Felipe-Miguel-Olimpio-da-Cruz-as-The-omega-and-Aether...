@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 """Writes tests/fixtures/expected-math.hbp: exact references for the two non-linear steps of src/model.rs.
 
-SIGMOID rows: floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits; for two
-classes, softmax(logits)[1] (contrastive_gnn.py:114, 121) is the sigmoid of logits[1] - logits[0].
+SIGMOID rows: floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, exact; for two classes, softmax(logits)[1]
+(contrastive_gnn.py:114, 121) is the sigmoid of logits[1] - logits[0]. e^-|t| is bounded above and below by
+integers at 2^-P (Taylor series of e^|t| with every term rounded down, or up and closed by a tail bound); both
+bounds give the rounded value or P doubles. For t != 0, e^-t is irrational, so the two bounds always meet.
+CONST LN2_Q62: floor(ln 2 * 2^62 + 1/2), from integer bounds on sum 1 / (k 2^k), the same way.
 NORMALIZE rows: F.normalize(v, p=2, dim=1, eps=1e-12) = v / max(||v||_2, eps) (torch/nn/functional.py:6126-6127)
 of a Q48 vector, each component floor(2^24 * v_i / max(||v||, eps) + 1/2) in exact integer arithmetic; eps is
 the float32 of 1e-12, 9223372 * 2^-63, as the clamp applies it to a float32 norm.
-Stdlib only. --check regenerates in memory and diffs.
+Stdlib only, integer arithmetic only. --check regenerates in memory and diffs.
 """
 import math
 import pathlib
 import sys
-from decimal import ROUND_FLOOR, Decimal, localcontext
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 EXPECTED = ROOT / "tests" / "fixtures" / "expected-math.hbp"
 FRAC_BITS = 24
 LOGIT_BITS = 48
 PROJECTION = 64
-EPS_F32 = Fraction(9223372, 1 << 63)
-EPS_Q48 = EPS_F32 * (1 << LOGIT_BITS)
+# eps = 9223372 * 2^-63, so eps in Q48 is EPS_SIGNIFICAND / 2^EPS_Q48_SHIFT (between 281 and 282 units).
+EPS_SIGNIFICAND = 9223372
+EPS_Q48_SHIFT = 63 - LOGIT_BITS
+FIRST_PRECISION = 128
 
 
 class Lcg:
@@ -41,12 +44,37 @@ class Lcg:
         return -magnitude if self.below(2) else magnitude
 
 
+def exp_bounds(n, shift, precision):
+    """Integers (lo, hi) with lo <= 2^precision * e^(n / 2^shift) <= hi, for n >= 0."""
+    lo_term = hi_term = lo = hi = 1 << precision
+    k = 0
+    while True:
+        k += 1
+        lo_term = lo_term * n // (k << shift)
+        hi_term = -(-hi_term * n // (k << shift))
+        lo += lo_term
+        hi += hi_term
+        if hi_term <= 1 and 2 * n <= (k + 1) << shift:
+            # Each later term is at most half the one before, so the tail is at most hi_term.
+            return lo, hi + hi_term
+
+
 def exact_sigmoid_q24(logit_q48):
-    with localcontext() as ctx:
-        ctx.prec = 60
-        t = Decimal(logit_q48) / Decimal(1 << LOGIT_BITS)
-        p = Decimal(1) / (Decimal(1) + (-t).exp())
-        return int((p * (1 << FRAC_BITS) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
+    precision = FIRST_PRECISION
+    while True:
+        lo, hi = exp_bounds(abs(logit_q48), LOGIT_BITS, precision)
+        one = 1 << precision
+        # Bounds on e = 2^precision * e^-|t|.
+        e_bounds = ((one * one) // hi, -(-(one * one) // lo))
+        if logit_q48 >= 0:
+            # floor(2^24 / (1 + E) + 1/2), E = e / 2^precision: decreasing in e.
+            rounded = [((one << (FRAC_BITS + 1)) + one + e) // (2 * (one + e)) for e in e_bounds]
+        else:
+            # floor(2^24 * E / (1 + E) + 1/2): increasing in e.
+            rounded = [((e << (FRAC_BITS + 1)) + one + e) // (2 * (one + e)) for e in e_bounds]
+        if rounded[0] == rounded[1]:
+            return rounded[0]
+        precision *= 2
 
 
 def sigmoid_logits(rng):
@@ -62,9 +90,17 @@ def sigmoid_logits(rng):
 
 
 def ln2_q62():
-    with localcontext() as ctx:
-        ctx.prec = 60
-        return int((Decimal(2).ln() * (1 << 62) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
+    # ln 2 = sum_{k >= 1} 1 / (k 2^k); the terms after k = N sum to at most 1 / ((N + 1) 2^N).
+    precision = FIRST_PRECISION
+    while True:
+        terms = precision
+        lo = sum((1 << precision) // (k << k) for k in range(1, terms + 1))
+        hi = sum(-(-(1 << precision) // (k << k)) for k in range(1, terms + 1))
+        hi += -(-(1 << precision) // ((terms + 1) << terms))
+        rounded = [((v << 62) + (1 << (precision - 1))) >> precision for v in (lo, hi)]
+        if rounded[0] == rounded[1]:
+            return rounded[0]
+        precision *= 2
 
 
 def round_over_sqrt(numerator, square):
@@ -82,8 +118,9 @@ def round_over_sqrt(numerator, square):
 
 def exact_normalize_q24(v):
     square = sum(c * c for c in v)
-    if square < EPS_Q48 * EPS_Q48:
-        return [math.floor(Fraction(c * (1 << FRAC_BITS)) / EPS_Q48 + Fraction(1, 2)) for c in v]
+    if square << (2 * EPS_Q48_SHIFT) < EPS_SIGNIFICAND * EPS_SIGNIFICAND:
+        # ||v|| < eps: floor(2^24 * v_i / eps + 1/2), eps = EPS_SIGNIFICAND / 2^EPS_Q48_SHIFT in Q48.
+        return [((c << (FRAC_BITS + EPS_Q48_SHIFT + 1)) + EPS_SIGNIFICAND) // (2 * EPS_SIGNIFICAND) for c in v]
     return [round_over_sqrt(c * (1 << FRAC_BITS), square) for c in v]
 
 
@@ -98,7 +135,7 @@ def normalize_vectors(rng):
         vectors.append([3 * scale, -4 * scale] + [0] * (PROJECTION - 2))
         vectors.append([0] * (PROJECTION - 3) + [-5 * scale, 12 * scale, 0])
     for _ in range(20):
-        # Norms around eps (about 281.47 Q48 units).
+        # Norms around eps (between 281 and 282 Q48 units).
         vectors.append([rng.signed(6) for _ in range(PROJECTION)])
     for _ in range(50):
         # The range of projection_head outputs: |v| below about 2^-3, in Q48 below 2^45.
@@ -125,7 +162,7 @@ def render():
         rows.append(f"NORMALIZE|v_q48={','.join(map(str, v))}|q24={','.join(map(str, q24))}")
     header = (
         "# exact references from tools/math_referee.py (stdlib); do not edit\n"
-        "# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits\n"
+        "# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, exact (integer bounds on e^-|t|)\n"
         "# NORMALIZE q24_i = floor(2^24 * v_i / max(sqrt(sum v^2), eps) + 1/2), v in Q48, eps = 9223372 * 2^-63 "
         "(float32 of 1e-12) in Q48, exact integer arithmetic\n"
     )

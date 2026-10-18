@@ -211,7 +211,7 @@ Search for inputs where the port and torch disagree: 600 seeded searches with th
 in [-2, 2]) found 235 crossings; at the 12 float32 inputs around each (steps -6 to +5 from torch's
 crossing; 2,820 inputs) the mask here differs from torch's at 512, at steps -6 to +5, both ends of that
 sampled window. The score differs by at most 1 Q24 unit where the masks agree and by at most 13 Q24
-units (7.7e-7) where they differ. That search's seed is not recorded; its 2,820 rows were re-run: torch
+units (13/2^24) where they differ. That search's seed is not recorded; its 2,820 rows were re-run: torch
 reproduces every row byte for byte and the port gives the same counts. A second search with a wider
 window (seed `0x51F15E`, 600 searches, the 64 float32 inputs around each crossing, steps -32 to +31)
 found 256 crossings (16,384 inputs); the mask here differs from torch's at 514, at steps -6 to +12; the
@@ -225,17 +225,27 @@ was set; the 64 fixture requests assert the same in torch and here.
 
 ## Measured outputs of the served checkpoint
 
+Scores below are Q24 integers (`floor(float32 * 2^24 + 1/2)`, the measurement); a parenthesised decimal
+is the exact rendering `n/2^24` of the Q24 integer before it, and `toFixed(4)` values (`0.5292`, `0.5291`,
+`0.0000`) are the e4 outputs.
+
 - Every request scored: over the 64 fixture requests, `scores[0]` is 8,877,767 to 8,877,785 Q24 units
-  in torch (0.5291561 to 0.5291572) and 8,877,767 to 8,877,786 in Rust. The smallest is 103 Q24 units
-  (6.1e-6) above 0.52915 (8,877,663.85 Q24 units), below which `toFixed(4)` would give `0.5291`.
+  in torch (0.5291561 to 0.5291572) and 8,877,767 to 8,877,786 in Rust. The smallest, 8,877,767, is 103
+  Q24 units above 8,877,664, the first Q24 integer above the `toFixed(4)` boundary 0.52915 (exact Q24
+  value 8,877,663 + 16928/20000), below which `toFixed(4)` would give `0.5291`.
   `signals.l4` is `0.5292` on every request measured.
 - The fixture graphs (inputs up to 2^29 Q24 units, i.e. 32.0, masks set and unset): probs[:, 1] from
   8,877,586 to 8,878,792 Q24 units (0.5291454 to 0.5292172) in torch.
-- The wiring map's probe (`universe/WIRING-MAP.md:338-349`, `universe/tools/l4_probe.py`) measured,
-  for v2, 500 score requests from 0.529156 to 0.529158 (stdev 2.941e-07, one value at 4 decimals,
-  0.5292) and 500 uniform inputs from 0.529156 to 0.529157 (stdev 2.726e-07); for v1, 0.000000 on both
-  sets (stdev 8.388e-11 and 5.938e-11). Re-run for this crate with `python -I -B` against copies of the
-  files, in both torch environments: the same eight numbers.
+- The wiring map's probe (`universe/WIRING-MAP.md:338-349`, `universe/tools/l4_probe.py`) feeds the
+  served `MODEL` 500 seeded score requests and 500 uniform inputs per checkpoint. Re-run for this crate
+  against copies of the vendored files and read as Q24 (`floor(float32 * 2^24 + 1/2)`, the
+  `model_parity.py` conversion), the served `MODEL`'s `scores[0]` were, for v2: over the 500 score
+  requests, 8,877,762 to 8,877,790 Q24 units (0.5291559 to 0.5291575), 28 distinct values, each
+  `toFixed(4)` = `0.5292`; over the 500 uniform inputs, 8,877,763 to 8,877,788 Q24 units (0.5291559 to
+  0.5291574), 26 distinct values, each `0.5292`. For v1: 0 Q24 units on all 500 of both sets, 1 distinct
+  value, each `toFixed(4)` = `0.0000` (every float32 score in [-2^-25, 2^-25)). The integer facts are
+  identical in both torch environments (`scratchpad/torchvenv`, `scratchpad/ci-torch-venv`) and with or
+  without the `ATEN_CPU_CAPABILITY=avx2` / `MKL_ENABLE_INSTRUCTIONS=AVX2` pin.
 - Upstream's notes on this output: asolaria-score.mjs:28 "may still return degenerate 0.5292 score
   until corpus rebalancing — honest provenance tracked", and line 31 (`L4_STATUS.note`) "process alive,
   now queried alongside L0. May show dead-constant 0.5292 until corpus rebalance.", with

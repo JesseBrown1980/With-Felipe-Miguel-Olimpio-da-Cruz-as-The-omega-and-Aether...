@@ -9,6 +9,15 @@ Rust 1.81, no `f32`/`f64`.
 `tools/` and `vendor/` are cold lane: they verify the port in CI. Provenance, the forward choice, the measured
 agreement and what is not on disk are in [`PROVENANCE.md`](PROVENANCE.md).
 
+**Integers.** The three tools use integer arithmetic only: `tools/quantize.py` reads each float32 weight of the
+checkpoint by its bit pattern, and `tools/int_referee.py` decides the sigmoid from integer lower and upper bounds.
+Float runs in one place, inside torch, when `tools/model_parity.py` runs the vendored `prototype_gnn.py` with the
+trained float32 checkpoint (the owner's float32 lane, run unchanged); the tool builds its input tensors from float32
+bit patterns and reads every output by its bit pattern. Before torch loads it pins the CPU kernels
+(`ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, one thread), as `model/l0-edge` does; on the x86-64 host that
+wrote the fixture, `--check` passes with and without `MKL_ENABLE_INSTRUCTIONS=AVX2` and `ATEN_CPU_CAPABILITY=default`
+set by the caller (the environments run are listed in [`PROVENANCE.md`](PROVENANCE.md#measured-agreement)).
+
 ## Modules
 
 | Module | Port of | Public API |

@@ -1,5 +1,5 @@
 # exact references from tools/math_referee.py (stdlib); do not edit
-# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits
+# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, exact (integer bounds on e^-|t|)
 # NORMALIZE q24_i = floor(2^24 * v_i / max(sqrt(sum v^2), eps) + 1/2), v in Q48, eps = 9223372 * 2^-63 (float32 of 1e-12) in Q48, exact integer arithmetic
 CONST|name=LN2_Q62|value=3196577161300663915
 SIGMOID|logit_q48=0|q24=8388608

@@ -7,8 +7,12 @@ Rust 1.81, no `f32`/`f64`.
 
 **Lane.** Everything under `src/` is hot lane: it runs per request, in process, on integers and
 HBP text, with no Python, torch, Node, JSON or HTTP. `tools/` and the vendored upstream files are
-cold lane: they exist to verify the port in CI and never run per request. Provenance, the vendor
-table and the measured agreement are in [`PROVENANCE.md`](PROVENANCE.md).
+cold lane: they exist to verify the port in CI and never run per request. Every tool here computes
+in integers only (JavaScript numbers held as binary64 bit patterns, exact rationals as integer
+pairs, float32 values read by their bit patterns). Float runs only in the owner's own code that
+`tools/model_parity.py` runs unchanged: torch with the trained float32 checkpoint, and numpy in the
+vendored `build_node_features`. Provenance, the vendor table and the measured agreement are in
+[`PROVENANCE.md`](PROVENANCE.md).
 
 ## Modules
 
@@ -64,11 +68,15 @@ quotient. Over the full input grid this differs from exact rational rounding in 
 symmetric normalisation, bias after propagation) with ReLU between them, then the edge head
 `Linear(128, 64)`, ReLU, `Linear(64, 1)`, `Sigmoid` over the concatenated source and target
 embeddings. Arithmetic is Q24 with i128 accumulation, one round-half-up per layer output, and a
-fixed-point sigmoid equal to a 60-digit decimal reference on 1,511 logits. Against the vendored
-server `MODEL` under torch 2.14.1+cpu and torch_geometric 2.8.1, over the 3,273 scores of the
-fixture pairs and random graphs the largest difference is 6 Q24 units (about 3.6e-7), and over the
-REQUEST rows it is 15 (case `search`, a two-node request found by a local search); the tests
-allow 32 (about 1.9e-6).
+fixed-point sigmoid that returns `floor(2^24 sigmoid(t) + 1/2)` exactly for every Q48 logit: a
+range-reduced integer series, and, when its quotient lies within 2^-32 of a half, an exact decision
+of the side from lower and upper sums of the series of `e^|t|` (code copied from
+`model/l1-prototype`; see `PROVENANCE.md`). It equals the exact value from
+`tools/sigmoid_referee.py` (integers) on 2,247 logits, 736 of them within 2^-32 of a half. Against
+the vendored server `MODEL` under torch 2.14.1+cpu and torch_geometric 2.8.1, over the 3,273 scores
+of the fixture pairs and random graphs the largest difference is 6 Q24 units (6 / 2^24), and over
+the REQUEST rows it is 15 (case `search`, a two-node request found by a local search); the tests
+allow 32 (32 / 2^24 = 2^-19).
 
 `q24_to_e4` gives `+score.toFixed(4)` of the Q24 score in units of 1/10000, as
 asolaria-score.mjs:122 rounds the L0 signal. For all 174 fixture request pairs it equals
@@ -80,15 +88,16 @@ of these the two scores lie on either side of a rounding midpoint `(k + 1/2) / 1
 Q24 units of it; the parity tool writes every pair whose torch score is within 32 units of a
 midpoint as a REQUEST row, and `tests/model.rs` counts them. Two things contribute: the forward's
 difference from torch, and the rounding of the score to Q24 before the fourth decimal (the
-float32 grid is finer than Q24 below 0.5: 20,454 float32 values in [0, 1) have a different fourth
-decimal from their Q24 rounding, all below 0.5; `tests/model.rs` counts them in integers).
+float32 grid is finer than Q24 below 1/2: 20,454 float32 values in [0, 1) have a different fourth
+decimal from their Q24 rounding, all below 1/2; `tests/model.rs` counts them in integers).
 
 Where the L0 e4 value differs, the composite can differ by one e4 unit. Example (the REQUEST
-case `e4_midpoint`): actor features (edge volume 88, avgRisk 8.03, maxRisk 9, failureRate 0.989,
-trust tier 3) and target (53, 3.83, 4, 0.943, 3). Rust gives 16,773,022 Q24 (e4 9998); torch gives
-0.9997499585151672 = 16,773,021 / 2^24 (e4 9997). With payload `heartbeat` and pid
-`BH.VERDICT.FLIP0000000001882` (Shannon 6129, baseline 410) the composite is 7200 and promoted
-here, and 7199 and not promoted with torch's value (gate/observed `tests/e2e.rs`).
+case `e4_midpoint`): actor features (edge volume 88, avgRisk 803/100, maxRisk 9, failureRate
+989/1000, trust tier 3) and target (53, 383/100, 4, 943/1000, 3). Rust gives 16,773,022 Q24 (e4
+9998); torch gives the float32 with bits `3f7fef9d`, 16,773,021 / 2^24 (e4 9997). With payload
+`heartbeat` and pid `BH.VERDICT.FLIP0000000001882` (Shannon 6129, baseline 410) the composite is
+7200 and promoted here, and 7199 and not promoted with torch's value (gate/observed
+`tests/e2e.rs`).
 
 ## Fixtures
 
@@ -97,7 +106,7 @@ here, and 7199 and not promoted with torch's value (gate/observed `tests/e2e.rs`
 | `tests/fixtures/events.hbp` | `tools/make_fixture.py` | SYNTHETIC events from a fixed seed (336 events, 42 nodes); its header lists the request pairs `agent:benign -> svc:ledger`, `agent:rogue -> svc:vault` and `agent:ghost -> svc:ledger`. Not observed traffic. |
 | `tests/fixtures/expected-features.hbp` | `tools/features_referee.py` | `NODE` rows: `extractNodeFeatures` over `events.hbp`, mirrored line by line in Python |
 | `tests/fixtures/jsnum-vectors.hbp` | `tools/jsnum_referee.py` | binary64 arithmetic and rounding vectors, plus every grid case where JavaScript and exact rounding differ |
-| `tests/fixtures/expected-model.hbp` | `tools/model_parity.py` (torch) | Q24 inputs, float32 output bits and their Q24 rounding for the fixture pairs (also the score for `build_node_features`' float32 inputs) and 240 random graphs; REQUEST rows: 2 fixed request pairs and the 3,336 of 100,000 fixed-seed request pairs whose torch score lies within 32 Q24 units of a `toFixed(4)` rounding midpoint; sigmoid references |
+| `tests/fixtures/expected-model.hbp` | `tools/model_parity.py` (torch), its CONST and SIGMOID rows from `tools/sigmoid_referee.py` | Q24 inputs, float32 output bits and their Q24 rounding for the fixture pairs (also the score for `build_node_features`' float32 inputs) and 240 random graphs; REQUEST rows: 2 fixed request pairs and the 3,336 of 100,000 fixed-seed request pairs whose torch score lies within 32 Q24 units of a `toFixed(4)` rounding midpoint; `LN2_Q62` and the exact sigmoid of 2,247 logits (1,511 over [-20, 20], then 736 within 2^-32 of a half) |
 | `src/weights.rs` | `tools/quantize.py` | the checkpoint's float32 weights as Q24, read without torch |
 
 Every data file is HBP text (`KEY|k=v|k=v` rows, `#` comments). No JSON is read or written.
@@ -115,12 +124,17 @@ python3 -I tools/quantize.py --check
 python3 -I tools/features_referee.py --check
 python3 -I tools/jsnum_referee.py --check
 python3 -I tools/jsnum_referee.py --grid | cargo +1.81.0 run --locked -q --release --example jsnum_grid
+python3 -I tools/sigmoid_referee.py --check        # CONST and SIGMOID rows of expected-model.hbp, no torch
 <python with torch 2.14.1+cpu and torch_geometric 2.8.1> -I tools/model_parity.py --check
 ```
 
+`tools/sigmoid_referee.py --check` is not yet in CI's `l0-edge` job or `scripts/check-all.sh`; the
+integrator adds it after `jsnum_referee.py --grid`.
+
 The torch check needs Python 3.13 with `torch==2.14.1+cpu` from
 `https://download.pytorch.org/whl/cpu` and `torch_geometric==2.8.1` from PyPI (the versions named in
-the header of `expected-model.hbp`). It compares float32 bit patterns byte for byte.
+the header of `expected-model.hbp`). It compares float32 bit patterns byte for byte, and computes
+its own comparisons in integers from those bit patterns.
 `tools/model_parity.py` sets `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`,
 `OMP_NUM_THREADS=1` and `MKL_NUM_THREADS=1` before torch loads, so torch runs ATen's scalar
 kernels and oneMKL's single SSE2 code path on every x86-64 CPU; see `PROVENANCE.md`.

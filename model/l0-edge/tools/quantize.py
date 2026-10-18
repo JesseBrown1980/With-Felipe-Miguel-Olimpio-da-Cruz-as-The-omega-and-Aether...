@@ -3,7 +3,8 @@
 
 The checkpoint is a torch zip; data.pkl is unpickled with a restricted Unpickler that resolves only
 collections.OrderedDict, torch._utils._rebuild_tensor_v2 and torch.FloatStorage, and each tensor's bytes are
-read from <archive>/data/<key> as little-endian float32. Each weight becomes floor(w * 2^24 + 1/2), exactly.
+read from <archive>/data/<key> as little-endian float32 bit patterns (u32). Each weight becomes
+floor(w * 2^24 + 1/2), computed from those bits with integer arithmetic only (no float).
 inference_server.py:11 renames conv1.lin.bias -> conv1.bias and conv2.lin.bias -> conv2.bias before
 load_state_dict; the Rust names follow the server's modules. --check regenerates in memory and diffs.
 """
@@ -16,13 +17,14 @@ import pickle
 import struct
 import sys
 import zipfile
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CHECKPOINT = ROOT / "vendor" / "gnn-sidecar" / "baseline_model.pt"
 CHECKPOINT_SHA256 = "a09993369d31ca73345914812e5226b513f5fb9092f43e487a2eafc8c3b621f5"
 WEIGHTS_RS = ROOT / "src" / "weights.rs"
 FRAC_BITS = 24
+# Every finite float32 is an integer multiple of 2^-149 (the smallest subnormal).
+FLOAT32_UNIT_BITS = 149
 VALUES_PER_LINE = 16
 
 # (checkpoint key, key after the inference_server.py:11 rename, Rust name, shape)
@@ -116,7 +118,7 @@ class CheckpointUnpickler(pickle.Unpickler):
         raw = self.archive.read(f"{self.prefix}/data/{key}")
         if len(raw) != 4 * numel:
             raise pickle.UnpicklingError(f"storage {key} holds {len(raw)} bytes, expected {4 * numel}")
-        return Storage(struct.unpack(f"<{numel}f", raw))
+        return Storage(struct.unpack(f"<{numel}I", raw))
 
 
 def load_state_dict(path):
@@ -137,8 +139,20 @@ def load_state_dict(path):
     return state
 
 
-def q24(value):
-    return math.floor(Fraction(value) * (1 << FRAC_BITS) + Fraction(1, 2))
+def float32_units(bits):
+    """The finite float32 with these bits times 2^149, an exact integer; ValueError for an infinity or a NaN."""
+    exponent = (bits >> 23) & 0xFF
+    if exponent == 0xFF:
+        raise ValueError(f"float32 {bits:08x} is not finite")
+    fraction = bits & 0x7FFFFF
+    magnitude = fraction if exponent == 0 else (fraction | 1 << 23) << (exponent - 1)
+    return -magnitude if bits >> 31 else magnitude
+
+
+def q24_of_float32_bits(bits):
+    """floor(w * 2^24 + 1/2) of the float32 w with these bits."""
+    shift = FLOAT32_UNIT_BITS - FRAC_BITS
+    return (float32_units(bits) + (1 << (shift - 1))) >> shift
 
 
 def render_row(values, indent):
@@ -159,7 +173,10 @@ def render(state):
         tensor = state[key]
         if tensor.shape != shape:
             raise SystemExit(f"QUANTIZE|refused=shape|key={key}|got={tensor.shape}|json=0")
-        values = [q24(v) for v in tensor.values]
+        try:
+            values = [q24_of_float32_bits(bits) for bits in tensor.values]
+        except ValueError:
+            raise SystemExit(f"QUANTIZE|refused=not_finite|key={key}|json=0") from None
         if not all(-(1 << 31) <= v < (1 << 31) for v in values):
             raise SystemExit(f"QUANTIZE|refused=range|key={key}|json=0")
         label = f"`{key}`" if key == server_key else f"`{key}`, loaded as `{server_key}`"

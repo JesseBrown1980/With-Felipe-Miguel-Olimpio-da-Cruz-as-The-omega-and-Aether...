@@ -1,5 +1,5 @@
 # expected ContrastiveGNN outputs from tools/model_parity.py: the vendored contrastive_gnn.py with the fallback GCNConv, contrastive_model.pt run 1, torch 2.14.1+cpu, layout checked against torch_geometric 2.8.1, kernels ATEN_CPU_CAPABILITY=default,MKL_CBWR=COMPATIBLE,OMP_NUM_THREADS=1,MKL_NUM_THREADS=1; do not edit
-# x = Q24 inputs, sent as the doubles q / 2^24 (float32 in the tensor); p_bits = float32 probs[:, 1] (hex); p_q24 and PROJ q24 = floor(value * 2^24 + 1/2)
+# x = Q24 inputs, sent to torch as float32 bit patterns: q / 2^24 rounded to nearest even, in integers; p_bits = float32 probs[:, 1] (hex); p_q24 and PROJ q24 = floor(value * 2^24 + 1/2), from the float32 bits in integers
 LAYOUT|fallback_conv=contrastive_gnn.GCNConv|checkpoint_keys=14|checkpoint_modules=18|fallback_modules_equal=1|torch_geometric_conv=torch_geometric.nn.conv.gcn_conv.GCNConv|torch_geometric_missing=conv1.bias,conv2.bias|torch_geometric_unexpected=conv1.lin.bias,conv2.lin.bias
 GRAPH|case=zeros|x=0,0,0,0,0,0;0,0,0,0,0,0|edges=0>1,1>1|p_bits=3f7fcf61,3f7fcf61|p_q24=16764769,16764769
 PROJ|case=zeros|edge=0|q24=0,0,0,0,0,0,2,0,0,0,0,0,0,-68648,-2,0,7577,7,0,0,6,0,0,0,7740,0,47220,0,0,0,1,0,2923,1,0,0,0,0,0,0,1,0,-1,-3,-6,-14238,0,0,-16777000,0,0,0,-3,-7,0,0,0,0,0,10,-1,0,-2,-2

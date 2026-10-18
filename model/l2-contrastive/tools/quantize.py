@@ -3,7 +3,8 @@
 
 The checkpoint is a torch zip; data.pkl is unpickled with a restricted Unpickler that resolves only
 collections.OrderedDict, torch._utils._rebuild_tensor_v2 and torch.FloatStorage, and each tensor's bytes are
-read from <archive>/data/<key> as little-endian float32. Each weight becomes floor(w * 2^24 + 1/2), exactly.
+read from <archive>/data/<key> as little-endian float32 bit patterns (u32). Each weight becomes
+floor(w * 2^24 + 1/2), computed from its bits with integer arithmetic only (no Python float is formed).
 The state dict's keys and its _metadata module paths must be exactly those of ContrastiveGNN(6, 64) built with
 the fallback GCNConv of contrastive_gnn.py:17-23 (a module holding one nn.Linear named lin); the checkpoint
 loads into that class unchanged. --check regenerates in memory and diffs.
@@ -17,13 +18,14 @@ import pickle
 import struct
 import sys
 import zipfile
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CHECKPOINT = ROOT / "vendor" / "fnns" / "models" / "contrastive_model.pt"
 CHECKPOINT_SHA256 = "d371dbbf97ecee87846a87a1a57492e3c03d97168a9b5f5cfcc1fee411488eef"
 WEIGHTS_RS = ROOT / "src" / "weights.rs"
 FRAC_BITS = 24
+# Every finite float32 is an integer multiple of 2^-149 (the smallest subnormal).
+FLOAT32_UNIT_BITS = 149
 VALUES_PER_LINE = 16
 
 # (checkpoint key, Rust name, shape); contrastive_gnn.py:46-70 with node_input_dim=6, hidden_dim=64 and the
@@ -124,7 +126,7 @@ class CheckpointUnpickler(pickle.Unpickler):
         raw = self.archive.read(f"{self.prefix}/data/{key}")
         if len(raw) != 4 * numel:
             raise pickle.UnpicklingError(f"storage {key} holds {len(raw)} bytes, expected {4 * numel}")
-        return Storage(struct.unpack(f"<{numel}f", raw))
+        return Storage(struct.unpack(f"<{numel}I", raw))
 
 
 def load_state_dict(path):
@@ -156,8 +158,24 @@ def check_layout(state):
         raise SystemExit("QUANTIZE|refused=module_versions")
 
 
-def q24(value):
-    return math.floor(Fraction(value) * (1 << FRAC_BITS) + Fraction(1, 2))
+def float32_units(bits):
+    """The finite float32 with these bits times 2^149, an exact integer; ValueError for an infinity or a NaN."""
+    exponent = (bits >> 23) & 0xFF
+    if exponent == 0xFF:
+        raise ValueError(f"float32 {bits:08x} is not finite")
+    fraction = bits & 0x7FFFFF
+    magnitude = fraction if exponent == 0 else (fraction | 1 << 23) << (exponent - 1)
+    return -magnitude if bits >> 31 else magnitude
+
+
+def round_shift(value, shift):
+    """floor(value / 2^shift + 1/2) of an integer, shift >= 1."""
+    return (value + (1 << (shift - 1))) >> shift
+
+
+def q24_of_float32_bits(bits):
+    """floor(w * 2^24 + 1/2) of the float32 w with these bits, in integers."""
+    return round_shift(float32_units(bits), FLOAT32_UNIT_BITS - FRAC_BITS)
 
 
 def render_row(values, indent):
@@ -177,7 +195,7 @@ def render(state):
         tensor = state[key]
         if tensor.shape != shape:
             raise SystemExit(f"QUANTIZE|refused=shape|key={key}|got={tensor.shape}")
-        values = [q24(v) for v in tensor.values]
+        values = [q24_of_float32_bits(b) for b in tensor.values]
         if not all(-(1 << 31) <= v < (1 << 31) for v in values):
             raise SystemExit(f"QUANTIZE|refused=range|key={key}")
         out.append("")
