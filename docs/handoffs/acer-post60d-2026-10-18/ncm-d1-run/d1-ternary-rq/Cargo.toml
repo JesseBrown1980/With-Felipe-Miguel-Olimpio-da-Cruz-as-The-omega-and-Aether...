@@ -1,0 +1,12 @@
+[package]
+name = "d1-ternary-rq"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+publish = false
+
+[dependencies]
+sha2 = "=0.10.9"
+
+[profile.release]
+opt-level = 3

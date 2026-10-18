@@ -1,0 +1,10 @@
+NCMLEVELS|cfg=lm1b-large.yaml|K=12|levels=1,8,16,24,32,40,52,64,76,92,108,128|L=128|sum_codes=641|codes_per_token_x1000=5008|codebooks=8192|json=0
+NCMLEVELS|cfg=lm1b-medium.yaml|K=12|levels=1,8,16,24,32,40,52,64,76,92,108,128|L=128|sum_codes=641|codes_per_token_x1000=5008|codebooks=8192|json=0
+NCMLEVELS|cfg=lm1b-small.yaml|K=12|levels=1,8,16,24,32,40,52,64,76,92,108,128|L=128|sum_codes=641|codes_per_token_x1000=5008|codebooks=8192|json=0
+NCMLEVELS|cfg=owt.yaml|K=32|levels=1,4,9,16,25,36,49,64,81,100,121,144,169,196,225,256,289,324,361,400,441,484,529,576,625,676,729,784,841,900,961,1024|L=1024|sum_codes=11440|codes_per_token_x1000=11172|codebooks=8192|json=0
+NCMLEVELS|cfg=sudoku-easy.yaml|K=12|levels=1,2,4,6,9,13,18,26,37,50,67,89|L=89|sum_codes=322|codes_per_token_x1000=3618|codebooks=16|json=0
+NCMLEVELS|cfg=sudoku-hard.yaml|K=12|levels=1,2,4,6,9,13,18,26,37,50,67,89|L=89|sum_codes=322|codes_per_token_x1000=3618|codebooks=16|json=0
+NCMLEVELS|cfg=sudoku-medium.yaml|K=12|levels=1,2,4,6,9,13,18,26,37,50,67,89|L=89|sum_codes=322|codes_per_token_x1000=3618|codebooks=16|json=0
+NCMLEVELS|cfg=tinystories.yaml|K=12|levels=1,8,16,24,32,40,52,64,76,92,108,128|L=128|sum_codes=641|codes_per_token_x1000=5008|codebooks=4096|json=0
+NCMLEVELS|cfg=wmt14.yaml|K=11|levels=1,4,8,14,20,26,32,40,48,56,64|L=64|sum_codes=313|codes_per_token_x1000=4891|codebooks=4096|json=0
+NCMLEVELS|cfg=xsum.yaml|K=9|levels=4,6,10,14,20,26,32,40,48|L=48|sum_codes=200|codes_per_token_x1000=4167|codebooks=4096|json=0

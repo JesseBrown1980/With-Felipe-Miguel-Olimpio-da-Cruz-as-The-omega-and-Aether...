@@ -1,0 +1,20 @@
+[package]
+name = "asolaria-ncm-rq"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer-only tests of the residual-quantization derivations D1 and D2 against the balanced-ternary kernel: greedy coarse-to-fine quantization equals balanced ternary, and an exact non-trivial integer down/up lifting pair. No float."
+publish = false
+
+[lib]
+name = "ncm_rq"
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-tribit = { path = "../../../kernel/tribit", version = "0.1.0" }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]

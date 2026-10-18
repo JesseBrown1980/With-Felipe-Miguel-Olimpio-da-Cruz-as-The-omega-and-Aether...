@@ -1,0 +1,17 @@
+D1RUN|claim=balanced_ternary_is_exact_integer_residual_quantization|levels=coarse_to_fine|choice=argmin_abs_lowest_index_on_tie|kernel=tribit/mod.rs_via_path|float_arith=denied_by_clippy|json=0
+D1LEVEL|K=1|states=3|span=-1..1|in_range_exact=3/3|ties=0|out_of_range_nonzero=2/2|uncentred_digits_exact=3/3|centred_book_on_uncentred_range_exact=2/3|pass=1|json=0
+D1LEVEL|K=2|states=9|span=-4..4|in_range_exact=9/9|ties=0|out_of_range_nonzero=8/8|uncentred_digits_exact=7/9|centred_book_on_uncentred_range_exact=5/9|pass=1|json=0
+D1LEVEL|K=3|states=27|span=-13..13|in_range_exact=27/27|ties=0|out_of_range_nonzero=26/26|uncentred_digits_exact=15/27|centred_book_on_uncentred_range_exact=14/27|pass=1|json=0
+D1LEVEL|K=4|states=81|span=-40..40|in_range_exact=81/81|ties=0|out_of_range_nonzero=80/80|uncentred_digits_exact=31/81|centred_book_on_uncentred_range_exact=41/81|pass=1|json=0
+D1LEVEL|K=5|states=243|span=-121..121|in_range_exact=243/243|ties=0|out_of_range_nonzero=242/242|uncentred_digits_exact=63/243|centred_book_on_uncentred_range_exact=122/243|pass=1|json=0
+D1LEVEL|K=6|states=729|span=-364..364|in_range_exact=729/729|ties=0|out_of_range_nonzero=728/728|uncentred_digits_exact=127/729|centred_book_on_uncentred_range_exact=365/729|pass=1|json=0
+D1LEVEL|K=7|states=2187|span=-1093..1093|in_range_exact=2187/2187|ties=0|out_of_range_nonzero=2186/2186|uncentred_digits_exact=255/2187|centred_book_on_uncentred_range_exact=1094/2187|pass=1|json=0
+D1LEVEL|K=8|states=6561|span=-3280..3280|in_range_exact=6561/6561|ties=0|out_of_range_nonzero=6560/6560|uncentred_digits_exact=511/6561|centred_book_on_uncentred_range_exact=3281/6561|pass=1|json=0
+D1LEVEL|K=9|states=19683|span=-9841..9841|in_range_exact=19683/19683|ties=0|out_of_range_nonzero=19682/19682|uncentred_digits_exact=1023/19683|centred_book_on_uncentred_range_exact=9842/19683|pass=1|json=0
+D1LEVEL|K=10|states=59049|span=-29524..29524|in_range_exact=59049/59049|ties=0|out_of_range_nonzero=59048/59048|uncentred_digits_exact=2047/59049|centred_book_on_uncentred_range_exact=29525/59049|pass=1|json=0
+D1LEVEL|K=11|states=177147|span=-88573..88573|in_range_exact=177147/177147|ties=0|out_of_range_nonzero=177146/177146|uncentred_digits_exact=4095/177147|centred_book_on_uncentred_range_exact=88574/177147|pass=1|json=0
+D1LEVEL|K=12|states=531441|span=-265720..265720|in_range_exact=531441/531441|ties=0|out_of_range_nonzero=531440/531440|uncentred_digits_exact=8191/531441|centred_book_on_uncentred_range_exact=265721/531441|pass=1|json=0
+D1LEVEL|K=13|states=1594323|span=-797161..797161|in_range_exact=1594323/1594323|ties=0|out_of_range_nonzero=1594322/1594322|uncentred_digits_exact=16383/1594323|centred_book_on_uncentred_range_exact=797162/1594323|pass=1|json=0
+D1TIEPROBE|even_step_probes=3|ties_detected=3|pass=1|json=0
+D1INSTRUMENT|corrupted_code_probes=5|rejected=5|pass=1|json=0
+D1RESULT|all_levels_pass=1|values_tested=9565919|K13_in_range=1594323|K13_code_stream_bytes=20726199|K13_code_stream_sha256=3cae23466ec81a87ffa59abe311904a35288077ee6d926bd100e50e666d82f92|K13_ns_per_value=242|float_used=0|tag=MEASURED|json=0

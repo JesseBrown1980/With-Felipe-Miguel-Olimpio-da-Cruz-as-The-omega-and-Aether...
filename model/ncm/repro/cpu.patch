@@ -1,0 +1,88 @@
+--- a/scripts/eval_shard.py	2026-10-18 16:21:38.750060215 +0000
++++ b/scripts/eval_shard.py	2026-10-18 16:22:12.848372977 +0000
+@@ -5,6 +5,7 @@
+ from models.next_concept import NextConceptTransformer
+ from tokenization.vqvae_tokenizer import VQVAETokenizer
+ from transformers import AutoTokenizer
++from repro_safe_load import load_pt, load_pickle
+ 
+ ap = argparse.ArgumentParser()
+ ap.add_argument("--config", required=True)
+@@ -47,10 +48,9 @@
+     if CFG.checkpoints.get(name):
+         CFG.tokenizer.pre_tokenizer[key] = os.path.join(ck, CFG.checkpoints[name])
+ tk = VQVAETokenizer.from_config(CFG.tokenizer)
+-tk.vqvae = tk.vqvae.cuda().eval()
+-net = NextConceptTransformer(vqvae_local=tk.vqvae, config=CFG.model).cuda()
+-sd = torch.load(os.path.join(ck, CFG.checkpoints.generator), map_location="cpu", weights_only=False)
+-net.load_state_dict(sd["model"], strict=True)
++tk.vqvae = tk.vqvae.cpu().eval()
++net = NextConceptTransformer(vqvae_local=tk.vqvae, config=CFG.model).cpu()
++net.load_state_dict(load_pt(os.path.join(ck, CFG.checkpoints.generator)), strict=True)
+ net.eval()
+ P = int(CFG.model.prefix_len)
+ EOS, PAD = tk.pre_tokenizer.eos_token_id, tk.pre_tokenizer.pad_token_id
+@@ -59,11 +59,11 @@
+ def load_allowance(spec):
+     if ":" in spec:
+         path, ref = spec.split(":", 1)
+-        obj = torch.load(os.path.join(ck, path), map_location="cuda", weights_only=False)
++        obj = torch.load(os.path.join(ck, path), map_location="cpu", weights_only=True)
+         for k in ref.split("."):
+             obj = obj[k]
+         return obj.double()
+-    return torch.load(os.path.join(ck, spec), map_location="cuda").double()
++    return torch.load(os.path.join(ck, spec), map_location="cpu", weights_only=True).double()
+ 
+ 
+ ALLOW = load_allowance(str(G.frequency_allowance)) if G.get("frequency_allowance") else None
+@@ -84,8 +84,8 @@
+     n = a.n or int(CFG.eval.n_samples)
+     items, refs, idxs, src_tok = [], [], [], None
+ else:
+-    items = pickle.load(open(os.path.join(dd, CFG.data[split]), "rb"))[:n]
+-    refs = pickle.load(open(os.path.join(dd, CFG.data[f"{split}_refs"]), "rb"))[:n]
++    items = load_pickle(os.path.join(dd, CFG.data[split]))[:n]
++    refs = load_pickle(os.path.join(dd, CFG.data[f"{split}_refs"]))[:n]
+     assert len(items) == len(refs), f"{len(items)} inputs vs {len(refs)} references"
+     idxs = list(range(a.shard, len(items), a.nshards))
+     src_tok = AutoTokenizer.from_pretrained(str(CFG.tokenizer.pre_tokenizer.model_id)) if isinstance(items[0], str) else None
+@@ -153,8 +153,8 @@
+         torch.manual_seed(seed)
+         for s in range(0, n, bs):
+             B = min(bs, n - s)
+-            l0 = torch.multinomial(L0_P.cpu(), B * L0, replacement=True).view(B, L0).cuda() if L0_P is not None else None
+-            hyps += run(torch.full((B, 1), EOS, device="cuda"), l0)
++            l0 = torch.multinomial(L0_P.cpu(), B * L0, replacement=True).view(B, L0).cpu() if L0_P is not None else None
++            hyps += run(torch.full((B, 1), EOS, device="cpu"), l0)
+             sample_seed += [seed] * B
+         print(f"  shard{a.shard} seed {seed}: {n} samples", flush=True)
+     idxs = list(range(len(hyps)))
+@@ -163,7 +163,7 @@
+ else:
+     for s in range(0, len(idxs), bs):
+         batch = idxs[s:s + bs]
+-        hyps += run(torch.tensor([prefix(items[i]) for i in batch], device="cuda"))
++        hyps += run(torch.tensor([prefix(items[i]) for i in batch], device="cpu"))
+         if a.shard == 0 and (s // bs) % 10 == 0:
+             print(f"  shard0 {s}/{len(idxs)}", flush=True)
+     out = {"idxs": idxs, "hyps": hyps, "refs": [r if isinstance(r, str) else dec(r) for r in (refs[i] for i in idxs)]}
+--- a/tokenization/vqvae_tokenizer.py	2026-10-18 16:21:38.754198237 +0000
++++ b/tokenization/vqvae_tokenizer.py	2026-10-18 16:22:01.164719068 +0000
+@@ -3,6 +3,7 @@
+ from utils.registry import tokenizers
+ from models.vqvae import VQVAE
+ import torch 
++from repro_safe_load import load_pt
+ 
+ class VQVAETokenizer(Tokenizer):
+     def __init__(self, pre_tokenizer, vqvae):
+@@ -15,7 +16,7 @@
+         Tokenizer = hydra.utils.get_class(tokenizers[config.pre_tokenizer.name])
+         pre_tokenizer = Tokenizer.from_config(config.pre_tokenizer)
+         vqvae = VQVAE(**config.vqvae)
+-        vqvae.load_state_dict(torch.load(config.vqvae.checkpoint_path, weights_only=False, map_location='cpu')['model'], strict=True)
++        vqvae.load_state_dict(load_pt(config.vqvae.checkpoint_path), strict=True)
+         return VQVAETokenizer(pre_tokenizer, vqvae)
+     
+     def _adjust_length(self, ids: list[int]) -> list[list[int]]:
