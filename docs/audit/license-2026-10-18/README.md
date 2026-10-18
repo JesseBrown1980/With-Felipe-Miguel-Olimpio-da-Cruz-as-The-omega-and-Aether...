@@ -40,5 +40,6 @@ Third-party crates.io dependencies keep their own licenses. Checked over the tra
 MIT license files name Jesse Daniel Brown or Asolaria Federation as copyright holder; the only other
 license files are the root `LICENSE-APACHE` and HRM's.
 
-The grant concerns licenses only. Items held back for privacy (for example the personal data noted
-in `loop/vendor-pid-mod/PROVENANCE.md`) are a separate decision.
+The owner restated it the same day: "Everything is from me, so everything is free and public to
+use." Everything in this repository is free and public to use; the two Apache-2.0 pieces above already
+are, and their notices stay with them only because Apache-2.0 asks that attribution travel with copies.

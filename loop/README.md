@@ -13,8 +13,8 @@ Two crates live here:
   omni-engine never-explode gulp, quant score and extract -> register -> place cycle with its
   live-format `mintPid`, and the Path A `run_primitive_loop`.
 - `vendor-pid-mod/` (`asolaria-os-metal-pid-mod`) — the reductions `pid-mod.rs` kernel, vendored
-  byte-identical with its own 27 tests. Owner decision pending on the personal data it carries (see its
-  `PROVENANCE.md`); it is not to be published before that decision.
+  byte-identical with its own 27 tests. The operator names and paths it carries are published as is by
+  the owner's decision of 2026-10-18 (see its `PROVENANCE.md`).
 
 Each source module names its upstream file and lines; see `PROVENANCE.md`. `src/js.rs` holds the
 ECMAScript string operations the upstream lines rely on (UTF-16 `slice`/`charCodeAt`, the `trim` set,
