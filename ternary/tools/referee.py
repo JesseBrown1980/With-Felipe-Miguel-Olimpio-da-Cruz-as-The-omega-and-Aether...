@@ -4,7 +4,7 @@
 What runs here, and whose code it is:
 
   OWNER CODE, executed from the vendored files (their bytes are pinned in UPSTREAM.sha256; the
-  referee also checks trijection.py's sha256 itself before running it):
+  referee also checks trijection.py's and trianti.py's sha256 itself before running them):
     trijection.py:42-48 to_balanced_ternary, :50-57 trijection_forward, :59-64 trijection_inverse
                         (the three defs only, compiled from the vendored file)
     trijection.py:55-56 the forward loop body, executed with a, bb, c bound (TRIJ rows, i64 inputs;
@@ -18,6 +18,12 @@ What runs here, and whose code it is:
     rime_27fischers.py:39-44 the 3-trit loop, executed with `x` bound
     rime_27fischers.py:92    the 2/3 rule line, executed with `a, b, c` bound
     rime_agents.py:46-51     the 3-trit loop, executed with `k27` bound
+    trianti.py:31 N, :32 R, :33 R2  (the three defs only, compiled from the vendored file): the
+                        27-cube symmetry group — N negation `t -> -t`, R rotation `(a,b,c)->(c,a,b)`,
+                        R2 = R(R) the anti-inversion. law_negate / law_rotate are N / R.
+    trianti.py:49-77 report()  run from the imported module (its __main__ guard is not hit): the
+                        owner's cube-symmetry counts, quoted by --check and checked against the
+                        referee's own counts over the owner's cube27() cells.
   --measure, the owner's float lane run as written: the module is imported from the vendored path
   (its top level: imports and defs), and its __main__ lines 102-135 are executed with SC bound to
   the directory given (line 101, the old cloud scratchpad path, is the one line not executed) and
@@ -25,10 +31,6 @@ What runs here, and whose code it is:
   measure() unchanged (the as-written run, with no wrapper, prints the same lines).
   measure() (H_bits / math.log2, lzma) and the math.sin signal are the owner's code; their printed
   lines are quoted as the owner's output. Every number this file computes itself is an integer.
-
-  WRITTEN HERE FROM THE LAW'S TEXT (the owner's trianti.py was not found):
-    law_negate      TRIJECTION-BALANCED-TERNARY.md:128  N negation t -> -t
-    law_rotate      :129  R rotation (a,b,c) -> (c,a,b)
 
   TEST INPUTS: splitmix64 seeded draws, mirrored in tests/common/rows.rs; not owner code.
   DIGESTS: hashlib.sha256 of C0 || SA_b || SB_b || REM (tests/common/sha256.rs on the Rust side).
@@ -66,6 +68,8 @@ FISCHERS27 = os.path.join(V_USIM, "players", "rime_27fischers.py")
 AGENTS = os.path.join(V_USIM, "players", "rime_agents.py")
 TRIJ = os.path.join(V_ACER, "tools", "honest-compressor", "trijection", "trijection.py")
 TRIJ_SHA256 = "c5005b1c9acd6a6cb6d6e3fbd25a283c1455109f0408ee9810b0d5a8151baac6"
+TRIANTI = os.path.join(V_ACER, "tools", "honest-compressor", "trijection", "trianti.py")
+TRIANTI_SHA256 = "e7c1a01fd5be6d67a34eb6fc966a0742cca730eaed10899dff72379346229b6c"
 FIXTURE = os.path.join(HERE, "tests", "fixtures", "vectors.hbp")
 
 M64 = (1 << 64) - 1
@@ -102,6 +106,9 @@ def file_sha256(path):
 
 if file_sha256(TRIJ) != TRIJ_SHA256:
     raise SystemExit("REFEREE|trijection.py sha256 %s, want %s|FAIL" % (file_sha256(TRIJ), TRIJ_SHA256))
+
+if file_sha256(TRIANTI) != TRIANTI_SHA256:
+    raise SystemExit("REFEREE|trianti.py sha256 %s, want %s|FAIL" % (file_sha256(TRIANTI), TRIANTI_SHA256))
 
 # The exact upstream text the referee executes or cites, at the cited lines. --check fails if the
 # vendored bytes ever differ from these.
@@ -143,11 +150,18 @@ EXPECT_TEXT = [
     (TRIJ, 85, "    for x in SA + SB:"),
     (TRIJ, 86, "        for t in to_balanced_ternary(abs(x), 6):"),
     (TRIJ, 87, "            tot_tr += 1; zeros += (t == 0)"),
+    # trianti.py: the cells and the three symmetry defs compiled (N, R, R2)
+    (TRIANTI, 28, "T = [-1, 0, 1]"),
+    (TRIANTI, 29, "CELLS = list(itertools.product(T, repeat=3))            # the 27 base-27 symbols"),
+    (TRIANTI, 31, "def N(c):   return tuple(-x for x in c)                 # negation: order-2 inversion"),
+    (TRIANTI, 32, "def R(c):   return (c[2], c[0], c[1])                   # rotation: order-3, trinary-native"),
+    (TRIANTI, 33, "def R2(c):  return R(R(c))                              # anti-inversion (trianti) = R^-1"),
 ]
 
 OWNER = load_defs(REFRAME, ["base3", "bal3"])
 OWNER.update(load_defs(FISCHERS27, ["cube27"]))
 OWNER.update(load_defs(TRIJ, ["to_balanced_ternary", "trijection_forward", "trijection_inverse"]))
+OWNER.update(load_defs(TRIANTI, ["N", "R", "R2"]))
 RECON_SRC = compile(line_block(REFRAME, 44, 44), REFRAME, "exec")
 LOOP27_SRC = compile(line_block(FISCHERS27, 39, 44), FISCHERS27, "exec")
 RULE23_SRC = compile(line_block(FISCHERS27, 92, 92), FISCHERS27, "exec")
@@ -213,14 +227,10 @@ def owner_zero_trits(SA, SB):
     return ns["zeros"], ns["tot_tr"]
 
 
-# ---- written from the law's text (trianti.py not found) ----
-def law_negate(cell):
-    return tuple(-t for t in cell)      # law :128
-
-
-def law_rotate(cell):
-    a, b, c = cell
-    return (c, a, b)                    # law :129
+# ---- the owner's 27-cube symmetry group, compiled from the vendored trianti.py ----
+law_negate = OWNER["N"]                 # trianti.py:31  N negation  t -> -t            (= law :128)
+law_rotate = OWNER["R"]                 # trianti.py:32  R rotation  (a,b,c) -> (c,a,b)  (= law :129)
+law_rotate2 = OWNER["R2"]               # trianti.py:33  R2 = R(R(c)) anti-inversion     (= law :129 "R²")
 
 
 # ---- test inputs ----
@@ -316,8 +326,10 @@ CUBE = OWNER["cube27"]()
 def cube_row(i):
     cell = CUBE[i]
     sep = sum(1 for t in cell if t != 0)                # law :25, trijection.py:25
-    return "CUBE|i=%d|cell=%s|sep=%d|N=%d|R=%d" % (
-        i, j(cell), sep, CUBE.index(law_negate(cell)), CUBE.index(law_rotate(cell)))
+    # N, R and R2 are the owner's trianti.py:31-33, each over every cell (R2 is the anti-inversion)
+    return "CUBE|i=%d|cell=%s|sep=%d|N=%d|R=%d|R2=%d" % (
+        i, j(cell), sep, CUBE.index(law_negate(cell)),
+        CUBE.index(law_rotate(cell)), CUBE.index(law_rotate2(cell)))
 
 
 def streams_sha256(C0, SA, SB, REM):
@@ -563,7 +575,8 @@ def rows(name):
 
 
 def law_counts():
-    """The law's countable statements (:24-25, :131-139), on the owner's cube27() cells."""
+    """The law's countable statements (:24-25, :131-139) through the owner's trianti.py N/R/R2
+    (:31-33), on the owner's cube27() cells."""
     out = []
     by_sep = [0, 0, 0, 0]
     for cell in CUBE:
@@ -571,7 +584,8 @@ def law_counts():
     out.append(("CUBE_SEPARATION|centre=%d|faces=%d|edges=%d|corners=%d" % tuple(by_sep), by_sep == [1, 6, 12, 8]))
     nn = sum(1 for c in CUBE if law_negate(law_negate(c)) == c)
     rrr = sum(1 for c in CUBE if law_rotate(law_rotate(law_rotate(c))) == c)
-    r_eq_r2 = sum(1 for c in CUBE if law_rotate(c) == law_rotate(law_rotate(c)))
+    r2_is_rr = sum(1 for c in CUBE if law_rotate2(c) == law_rotate(law_rotate(c)))
+    r_eq_r2 = sum(1 for c in CUBE if law_rotate(c) == law_rotate2(c))
     fixed_r = [c for c in CUBE if law_rotate(c) == c]
     seen = set()
     sizes = {}
@@ -586,10 +600,11 @@ def law_counts():
         seen.update(orbit)
         sizes[len(orbit)] = sizes.get(len(orbit), 0) + 1
     fixed_all = [c for c in CUBE if law_negate(c) == c and law_rotate(c) == c]
-    out.append(("TRIANTI|NN_id=%d/27|RRR_id=%d/27|R_eq_R2=%d/27|R_fixed=%s|orbits=1:%d,3:%d|group_fixed=%s" % (
-        nn, rrr, r_eq_r2, ";".join(j(c) for c in fixed_r), sizes.get(1, 0), sizes.get(3, 0),
+    out.append(("TRIANTI|NN_id=%d/27|RRR_id=%d/27|R2_eq_RR=%d/27|R_eq_R2=%d/27|R_fixed=%s|orbits=1:%d,3:%d|group_fixed=%s" % (
+        nn, rrr, r2_is_rr, r_eq_r2, ";".join(j(c) for c in fixed_r), sizes.get(1, 0), sizes.get(3, 0),
         ";".join(j(c) for c in fixed_all)),
-        nn == 27 and rrr == 27 and r_eq_r2 == 3 and fixed_r == [(-1, -1, -1), (0, 0, 0), (1, 1, 1)]
+        nn == 27 and rrr == 27 and r2_is_rr == 27 and r_eq_r2 == 3
+        and fixed_r == [(-1, -1, -1), (0, 0, 0), (1, 1, 1)]
         and sizes == {1: 3, 3: 8} and fixed_all == [(0, 0, 0)]))
     centre = CUBE.index((0, 0, 0))
     out.append(("CUBE_CENTRE|glyph=%d" % centre, centre == 13))
@@ -599,9 +614,39 @@ def law_counts():
 WANT_BYTES = "TRIJ_BYTES|cases=16777216|restore_ok=16777216|rem0=5592406|rem1=5592405|rem2=5592405"
 
 
+def import_trianti_module():
+    spec = importlib.util.spec_from_file_location("trianti", TRIANTI)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)          # top level only: imports, T, CELLS and the defs; __main__ is guarded
+    return mod
+
+
+def trianti_report():
+    """Run the owner's trianti.py report() from the vendored module, quote its output, and check
+    the counts it prints against the referee's own, computed over the owner's cube27() cells."""
+    mod = import_trianti_module()
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        mod.report()
+    print("OWNER_OUTPUT|begin|trianti.py report() (owner's cube-symmetry counts, printed by the owner's code)")
+    sys.stdout.write(buf.getvalue())
+    print("OWNER_OUTPUT|end")
+    order_n = mod.order(mod.N)
+    order_r = mod.order(mod.R)
+    center_fixed = mod.N((0, 0, 0)) == (0, 0, 0) and mod.R((0, 0, 0)) == (0, 0, 0)
+    r_ne_anti = any(mod.R(c) != mod.R2(c) for c in mod.CELLS)
+    pie = all(mod.R(mod.R2(c)) == c for c in mod.CELLS)
+    group_fixed = [c for c in mod.CELLS if mod.N(c) == c and mod.R(c) == c and mod.R2(c) == c]
+    ok = (order_n == 2 and order_r == 3 and center_fixed and r_ne_anti and pie
+          and group_fixed == [(0, 0, 0)])
+    return ("TRIANTI_REPORT|order_N=%d|order_R=%d|center_fixed=%s|R_ne_anti=%s|pie_closes=%s|group_fixed=%s" % (
+        order_n, order_r, center_fixed, r_ne_anti, pie, ";".join(j(c) for c in group_fixed)), ok)
+
+
 def check(rust_path):
     bad = 0
     print("UPSTREAM_SHA256|trijection.py=%s|OK" % TRIJ_SHA256)
+    print("UPSTREAM_SHA256|trianti.py=%s|OK" % TRIANTI_SHA256)
     for path, n, text in EXPECT_TEXT:
         got = read_lines(path)[n - 1]
         if got != text:
@@ -617,6 +662,9 @@ def check(rust_path):
     for row, ok in law_counts():
         print("%s|%s" % (row, "OK" if ok else "FAIL"))
         bad += 0 if ok else 1
+    row, ok = trianti_report()
+    print("%s|%s" % (row, "OK" if ok else "FAIL"))
+    bad += 0 if ok else 1
     if rust_path:
         n = 0
         first = None
