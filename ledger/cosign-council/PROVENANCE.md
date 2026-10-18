@@ -98,7 +98,7 @@ without the file and environment reads of `routes.rs:117-144`.
 ## 5. Glue (written for this directory)
 
 `Cargo.toml` (workspace), `rust-toolchain.toml`, `Cargo.lock`. `cosign-ledger/Cargo.toml`, `cosign-serve/Cargo.toml`
-plus `build.rs` plus `src/lib.rs`, `vote-quorum/Cargo.toml` plus `src/glue.rs`, and `council-serve/Cargo.toml` plus `build.rs` plus `src/lib.rs`.
+plus `build.rs` plus `src/lib.rs`, `vote-quorum/Cargo.toml`, and `council-serve/Cargo.toml` plus `build.rs` plus `src/lib.rs`.
 `cosign-serve/tests/inprocess.rs` and `council-serve/tests/inprocess.rs`. `vectors/` (the referee's printer).
 `referee/referee.py`, `referee/REFEREE.hbp` and `referee/LIVE-CHAIN.hbp`. Package names are the upstream ones
 (`asolaria-server-cosign-ledger`, `-cosign-serve`, `-vote-quorum`, `-council-serve`), so upstream `use` lines
