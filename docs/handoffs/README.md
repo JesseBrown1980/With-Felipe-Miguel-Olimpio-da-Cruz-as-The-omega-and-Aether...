@@ -454,9 +454,23 @@ conjectures, and nothing here tests them.
   (`202ff2f0…`, sphere descriptions) and `FABLE5-KERNEL-STREAMED-K3.hbp` (`f075f5c6…`, K3's own bytes),
   and the public key file is the second. ACER's sidecar beside the key names the first.
 - QR codexes: ACER's four `laws/*.qr` originals are byte-identical to aether's fixtures, which were cut
-  from the CONSTELLATION GGUF's tensors. With the originals in hand, codex target #13 can be rerun from
-  inputs that are not the GGUF itself (in progress). The program that wrote the `.qr` files and a trained
-  HRM checkpoint are not on ACER (`D:/Asolaria-HRM` is a clone of `sapientinc/HRM` with no checkpoint).
+  from the CONSTELLATION GGUF's tensors. The program that wrote the `.qr` files and a trained HRM
+  checkpoint are not on ACER (`D:/Asolaria-HRM` is a clone of `sapientinc/HRM` with no checkpoint).
+- Codex #13 review run (`cloud/codex-13/T13-REVIEW.hbp`): `project_gguf.py` @ `4ea2ae3` over 84 inputs
+  (79 from USIM history, ACER's 4 `.qr` originals, 1 more) rebuilds `ASOLARIA-CONSTELLATION.gguf`
+  byte-exact (145,120 B, `3d7b3bdf…`) when the one remaining input, `FABLE5-SELF-SEED-3078.hbi` version
+  `5c040e04…` (3,078 B), is taken from the stored GGUF's tensor; with the public `653e3d9b…` version, 85
+  bytes of that one tensor differ. So the inputs found only inside a stored GGUF are down from 5 files
+  (15,878 B) to that 1 file, and 12 round-2 artifacts that read the qr bytes no longer need the stored GGUF.
+- CONSTELLATION key (`cloud/constellation-key/KEY-ATTEMPT.hbp`): the key is 41 pieces of
+  `MYTHOS-FULL-EMISSION.txt` (33 windows of 81 B, 7 whole lines, one 16 B tail) chosen by greedy set
+  cover over held-out `enwik9[600000:1200000)` with `asolaria_herself.py`'s candidate set; the recorded
+  MTP and screen numbers recompute for 4 of 5 arms. All 41 picks are at the maximum; 22 steps are tied,
+  and the order among tied candidates follows Python's set order under the run's hash secret. A scan of
+  all 4,294,967,296 `PYTHONHASHSEED` values (both SipHash variants) found none that gives the stored key,
+  so the original run used a random secret. `constellation_key_writer.py` replays the method; given the
+  22 tie choices read off the stored key it outputs `cce4f1e8…` byte-exact, which shows the tie order is
+  the only open detail, not a regeneration from the seed alone.
 - Generators: the SPHERE, TIMEFIX and THREE-BODIES first-run items are not on ACER (writers' relatives
   and the final THREE-BODIES receipt were sent; all were already public in USIM). The 1.8499 baseline in
   `FABLE5-PLAY-KEYS-ENWIK9.hbp` is not printed by `rime_bpc.py`: it is the `cm3ti-gt256` run in USIM
