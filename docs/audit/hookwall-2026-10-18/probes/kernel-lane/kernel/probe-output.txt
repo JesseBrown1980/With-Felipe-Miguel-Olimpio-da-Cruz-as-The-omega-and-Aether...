@@ -1,0 +1,46 @@
+=== P1 [FABRIC/hookwall_decision] kernel lane verdict ===
+P1a all 2^32 type prefixes: [2,3]=1 [9,10]=4294967295 other=0
+P1b ty="EXEC" ctx slot=2 syscall_no=3 caller_pid=0 tier=Micro target_tier=Public verdict=Proceed
+P1b ty="KILL" ctx slot=9 syscall_no=10 caller_pid=0 tier=Micro target_tier=Public verdict=Proceed
+P1c all [slot,syscall] pairs: Proceed=16384 Hold=0 Block=49152 min_block_slot=64
+P1d KILL+HD-virus      hook=[9, 10] verdict_row=090a0101000000000000000000485644 verdict_byte=1 appends=1 reply="UNKNKILL"
+P1d BLOK spoof         hook=[9, 10] verdict_row=090a0101000000000000000000485644 verdict_byte=1 appends=1 reply="UNKNBLOK"
+P1d HOLD spoof         hook=[9, 10] verdict_row=090a0101000000000000000000485644 verdict_byte=1 appends=1 reply="UNKNHOLD"
+P1d 0xff prefix        hook=[9, 10] verdict_row=090a0101000000000000000000485644 verdict_byte=1 appends=1 reply="UNKN����"
+P1d SOS!               hook=[9, 10] verdict_row=090a0101000000000000000000485644 verdict_byte=1 appends=1 reply="UNKNSOS!"
+P1d EXEC sovereignty   hook=[2, 3] verdict_row=02030101000000000000000000485644 verdict_byte=1 appends=1 reply="SECRSovereignty USB-SOVLINUX-2TB caller_tier=Sovereignty"
+P1e exchange "PING" hook=[9, 10] verdict_row=Some(1) reply=Ok("PONG")
+P1e exchange "EXEC" hook=[2, 3] verdict_row=Some(1) reply=Ok("EERRinvalid")
+P1e exchange "KILL" hook=[9, 10] verdict_row=Some(1) reply=Ok("UNKNKILL")
+P1e exchange "\0\0\0\0" hook=[9, 10] verdict_row=Some(1) reply=Ok("UNKN")
+P1e exchange "HD-v" hook=[9, 10] verdict_row=Some(1) reply=Ok("UNKNHD-v")
+=== P2 [FABRIC/input] Phase-1 forged signature ===
+P2 pk=ed25519-pub        kernel crypto::verify=Ok(())
+P2 pk=ed25519-pub        kernel sign_gate::gate_envelope admitted=true sig_valid=true reason=admitted-clean
+P2 pk=ed25519-pub        gate/hookwall crypto::verify=Err(SignatureInvalid)
+P2 pk=ed25519-pub        gate/hookwall gate_envelope admitted=false sig_valid=false reason=signature-invalid
+P2 pk=kernel-phase1-pub  kernel crypto::verify=Ok(())
+P2 pk=kernel-phase1-pub  kernel sign_gate::gate_envelope admitted=true sig_valid=true reason=admitted-clean
+P2 pk=kernel-phase1-pub  gate/hookwall crypto::verify=Err(SignatureInvalid)
+P2 pk=kernel-phase1-pub  gate/hookwall gate_envelope admitted=false sig_valid=false reason=signature-invalid
+P2 pk=arbitrary          kernel crypto::verify=Ok(())
+P2 pk=arbitrary          kernel sign_gate::gate_envelope admitted=true sig_valid=true reason=admitted-clean
+P2 pk=arbitrary          gate/hookwall crypto::verify=Err(SignatureInvalid)
+P2 pk=arbitrary          gate/hookwall gate_envelope admitted=false sig_valid=false reason=signature-invalid
+P2 kernel sign(sk) == forge(pk only): true
+=== P3 [FABRIC/action] kernel-lane post / cosign failures ===
+P3a SHTD run_step: cosign_append=Err(Invalid) appends_total=1 verdict_row=090a0101000000000000000000485644
+P3a reply on bus: FINI"init-shutdown"
+P3b len(b"init-shutdown")=13
+P3b sys_cosign_append(b"init-shutdown")=Err(Invalid) appends=0
+P3b cosign_chain::append(13 bytes) bypassing syscall floor ok=true appends=1
+P3b sys_cosign_append(16-byte padded) ok=true appends=1
+P3c sys_hookwall_post(lane hook)=Ok(()) appends=1; sys_hookwall_post([64,65])=Err(Invalid) appends=0
+P3c verdict_row lane SHTD Proceed = 090a0101000000000000000000485644
+=== P4 sys_gnn_infer ===
+P4 inputs=2005 decision histogram [Local,Triad,Quad,UAcer,ULiris,UFalcon,UAether]=[2005, 0, 0, 0, 0, 0, 0] errs=0
+P4 GnnInference::new is_ready=false load_onnx_model=Err(Unimplemented) aggregate_verdict(10,10)=Ok(Hold) aggregate_verdict(0,10)=Ok(Hold)
+P4 sys_gnn_infer(out=empty)=Err(Invalid)
+P4 sys_hookwall_pre(lane hook)=Ok(Proceed) independent of any gnn input
+=== P3d upstream init::exchange(SHTD) on a thread ===
+P3d after 1.5s: thread_finished=false cosign_appends_by_shtd_arm=1 bus=Ok("FINI\"init-shutdown\"")

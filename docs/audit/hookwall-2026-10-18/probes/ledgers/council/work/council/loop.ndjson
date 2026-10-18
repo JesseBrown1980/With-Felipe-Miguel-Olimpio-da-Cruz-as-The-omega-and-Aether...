@@ -1,0 +1,4 @@
+{"id":"s-only","score":0.6}
+{"id":"s-risk","score":0.6,"risk":0.5}
+{"id":"s-worst","score":0.6,"genius":0,"risk":1}
+{"id":"r-str","score":0.6,"risk":"high"}

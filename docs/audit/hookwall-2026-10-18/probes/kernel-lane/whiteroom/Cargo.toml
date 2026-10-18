@@ -1,0 +1,10 @@
+[package]
+name = "probe-whiteroom-hookwall-plane"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+asolaria-whiteroom-shannon = { path = "../../../../../../planes/whiteroom-shannon" }

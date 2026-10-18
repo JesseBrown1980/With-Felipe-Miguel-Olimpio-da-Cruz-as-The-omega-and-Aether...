@@ -1,0 +1,17 @@
+W grant_live five fake strings a..e   granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live same signer x5           granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live five empty strings       granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live five nulls               granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live five undefined           granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live five zeros               granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live five empty arrays        granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live five forged sig objs     granted=true tag=HKG signer_field=Some("5") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live 1000 signers             granted=true tag=HKG signer_field=Some("1000") state=PlaneState { requests: 1, denials: 0, grants: 1 } bus_saw(granted=1,quintuple_authority=true)
+W grant_live CTRL four signers        granted=false tag=HKW signer_field=Some("default_deny_quintuple_required") state=PlaneState { requests: 2, denials: 2, grants: 0 } bus_saw(granted=0,quintuple_authority=false)
+W grant_live CTRL window_ok "true"    granted=false tag=HKW signer_field=Some("default_deny_quintuple_required") state=PlaneState { requests: 2, denials: 2, grants: 0 } bus_saw(granted=0,quintuple_authority=false)
+W grant_live CTRL window_ok 1         granted=false tag=HKW signer_field=Some("default_deny_quintuple_required") state=PlaneState { requests: 2, denials: 2, grants: 0 } bus_saw(granted=0,quintuple_authority=false)
+W grant_live CTRL window_ok false     granted=false tag=HKW signer_field=Some("default_deny_quintuple_required") state=PlaneState { requests: 2, denials: 2, grants: 0 } bus_saw(granted=0,quintuple_authority=false)
+W grant_live CTRL signers string      granted=false tag=HKW signer_field=Some("default_deny_quintuple_required") state=PlaneState { requests: 2, denials: 2, grants: 0 } bus_saw(granted=0,quintuple_authority=false)
+W fire_hookwall forged tuple granted=true tag=HKG fields=["3", "5c7923bd67b06c93", "1", "5", "T", "A"] state=PlaneState { requests: 1, denials: 0, grants: 1 }
+W self_test=Ok(()) state=PlaneState { requests: 2, denials: 1, grants: 1 }
+W EnvelopeIn on grant = EnvelopeIn { room_id: 3, intent_sha16: "5c7923bd67b06c93", granted: 1, quintuple_authority: true }

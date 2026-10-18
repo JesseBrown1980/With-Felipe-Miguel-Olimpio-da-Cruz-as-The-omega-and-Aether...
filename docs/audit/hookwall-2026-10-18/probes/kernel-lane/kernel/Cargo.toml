@@ -1,0 +1,15 @@
+[package]
+name = "probe-kernel-lane"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+asolaria-kernel-lane = { path = "../../../../../../kernel/lane" }
+asolaria-hookwall = { path = "../../../../../../gate/hookwall" }
+sha2 = { version = "0.10", default-features = false }
+
+[profile.release]
+debug = false

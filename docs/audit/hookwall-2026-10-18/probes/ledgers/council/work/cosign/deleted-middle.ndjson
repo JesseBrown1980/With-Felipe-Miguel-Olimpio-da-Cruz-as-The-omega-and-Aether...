@@ -1,0 +1,2 @@
+{"event": "GRANT-A", "ts": "2026-10-18T00:00:00.000Z", "actor": "op", "seq": 1, "antecedents": ["0000000000000000"], "appended_by_daemon": "ASOLARIA-COSIGN-CHAIN-SINGLE-WRITER-DAEMON-PID-2026-05-23", "row_hash": "9a4f9420526a4f1e"}
+{"event": "GRANT-C", "ts": "2026-10-18T00:00:02.000Z", "actor": "op", "seq": 3, "antecedents": ["cfae8d14318b7853"], "appended_by_daemon": "ASOLARIA-COSIGN-CHAIN-SINGLE-WRITER-DAEMON-PID-2026-05-23", "row_hash": "bee80e5b3e858ca4"}

@@ -1,0 +1,28 @@
+# Example asolaria gate envelope (HBP text: one key=value per line).
+# This clean envelope composes to PROCEED. Every key is documented in README.md.
+
+# Hookwall / spawn / tier gate inputs
+slot=0
+syscall_no=1
+caller_pid=43981
+hook_tier=micro
+caller_tier=public
+target_tier=public
+event_tags=safe-tag
+forward_score_q=800
+reverse_risk_q=100
+
+# Fischer envelope
+pid=X1
+actor=helm
+verb=spawn
+target=fabric
+payload=heartbeat
+
+# Fischer score (caller-supplied values, not measurements)
+composite=0.85
+l0_real=0
+shannon_q=550
+shannon_above=0
+g4_state=CONVERGED
+fischer_strict=0

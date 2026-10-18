@@ -1,0 +1,3 @@
+HBPv1|row=hookwall_observation|pid=PID-1|actor=engineering|verb=answer|target=prism|verdict=FARM_GEM_WITH_GATES|score=0.5|l0_real=false|mark=M|reverse_risk=0.0|prev_hash=0000000000000000|ts=2026-06-01T00:00:00.000Z|json=0|runtime=0|row_hash=3f219cdd
+HBPv1|row=hookwall_observation|pid=PID-2|actor=engineering|verb=answer|target=prism|verdict=FARM_GEM_WITH_GATES|score=0.5|l0_real=false|mark=M|reverse_risk=0.0|prev_hash=3f219cdd|ts=2026-06-01T00:00:00.000Z|json=0|runtime=0|row_hash=320548ca
+HBPv1|row=hookwall_observation|pid=PID-3|actor=engineering|verb=answer|target=prism|verdict=FARM_GEM_WITH_GATES|score=0.5|l0_real=false|mark=M|reverse_risk=0.0|prev_hash=320548ca|ts=2026-06-01T00:00:00.000Z|json=0|runtime=0|row_hash=a8e6af57

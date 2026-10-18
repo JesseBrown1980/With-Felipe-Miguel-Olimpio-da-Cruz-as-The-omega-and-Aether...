@@ -1,0 +1,16 @@
+[package]
+name = "probe-ledgers-council"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-server-cosign-serve = { path = "../../../../../../ledger/cosign-council/cosign-serve" }
+asolaria-server-cosign-ledger = { path = "../../../../../../ledger/cosign-council/cosign-ledger" }
+asolaria-server-vote-quorum = { path = "../../../../../../ledger/cosign-council/vote-quorum" }
+asolaria-server-council-serve = { path = "../../../../../../ledger/cosign-council/council-serve" }

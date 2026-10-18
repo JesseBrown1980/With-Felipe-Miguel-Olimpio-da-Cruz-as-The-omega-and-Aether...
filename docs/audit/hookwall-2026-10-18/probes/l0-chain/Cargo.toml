@@ -1,0 +1,17 @@
+[package]
+name = "probe-l0-chain"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.81"
+publish = false
+
+[[bin]]
+name = "probe"
+path = "src/main.rs"
+
+[dependencies]
+asolaria-hookwall = { path = "../../../../../gate/hookwall" }
+asolaria-verdict = { path = "../../../../../gate/verdict" }
+asolaria-server-fischer-eval = { path = "../../../../../gate/fischer-eval" }
+asolaria-observed = { path = "../../../../../gate/observed" }
+asolaria-l0-edge = { path = "../../../../../model/l0-edge" }

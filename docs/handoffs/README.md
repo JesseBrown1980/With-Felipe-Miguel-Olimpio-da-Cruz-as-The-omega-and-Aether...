@@ -255,7 +255,8 @@ Both machines, measured:
 | Size of the drift | ≤ 27 edges, ≤ 51 ULP, ≤ 2.3e-10, 0 decisions flipped | AVX-512 vs AVX2: L2 9 edges ≤ 10 ULP, L4 32 edges ≤ 22 ULP, 0 flipped; 40/40 benign caught either way |
 | Retraining, 4 threads | bytes differ run to run, counts identical | bytes differ in all 6 runs, counts identical |
 | Retraining, 1 thread + `use_deterministic_algorithms` | identical twice: `9166cdbe…` `be3ba29f…` `7a920ac4…` | identical 4 times: `549aab5c…` `d9430791…` `2d0c02f8…` |
-| Same recipe across machines, MKL pinned (step 4c) | — | **differs** from ACER's; the step's conjecture is refuted |
+| Same recipe across machines, MKL pinned (step 4c) | identical to its unpinned recipe runs (the reference; receipt now `c4116334…`, relayed) | **differs** from ACER's; the step's conjecture is refuted |
+| Recipe on the most portable paths (`ATEN_CPU_CAPABILITY=default MKL_CBWR=COMPATIBLE ONEDNN_MAX_CPU_ISA=SSE41`, step 4d) | pending | identical twice: `75070c86…` `f7543e68…` `a44df4a2…` (differs from the cloud's AVX2 recipe bytes) |
 
 What this settles. A score is reproducible across machines when MKL's conditional-reproducibility
 mode is pinned (`MKL_CBWR`); capping MKL's instruction set alone is not enough, and the drift

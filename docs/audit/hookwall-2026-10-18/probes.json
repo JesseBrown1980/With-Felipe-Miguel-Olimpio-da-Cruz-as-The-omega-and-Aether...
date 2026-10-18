@@ -1,0 +1,489 @@
+{
+ "results": [
+  {
+   "area": "l0-chain (L0 -> composite -> gate/verdict -> CLI; crates gate/observed, gate/verdict, cli, with gate/fischer-eval, gate/hookwall, model/l0-edge as deps)",
+   "results": [
+    {
+     "claim": "[L0/input] events-file swap/alter passes silently (--sig covers envelope bytes only)",
+     "ran": "cli test observe_signature_covers_the_envelope_and_only_tightens: cd cli && cargo +1.81.0 test --offline --locked observe_signature",
+     "observed": "PASS. Test feeds a different events file (EVENT|actor=agent:rogue|target=svc:vault|risk=0) with the SAME valid envelope signature: field signature=verified still prints and score changes (assert_ne! vs clean score). main.rs:683 reads events via read_input (unsigned, no size limit); check_signature covers only the envelope bytes.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/input] injected high-risk/failed history raises L0 toward 1.0, composite treats it as forward score -> rogue PROCEEDs, clean HOLDs",
+     "ran": "gate/observed e2e same_request_benign_and_suspicious_histories + probe part_b HONEST block (main.rs): cd gate/observed && cargo +1.81.0 test --offline --locked",
+     "observed": "PASS. rogue agent:rogue->svc:vault: l0 score_q24=16777206 e4=10000, composite=8281, promoted=true, all 5 gates PROCEED. benign agent:benign->svc:ledger: l0=0, composite=2826, spawn_gate=HOLD, verdict=HOLD. Probe reprints identical numbers.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/input] unobserved actor/target does not fail closed: observe_pair None, composite renormalises over shannon+baseline, ghost composite 6217 > benign 2826; cpl 340 vs 240",
+     "ran": "gate/observed e2e unobserved_endpoint_gives_no_l0_reading_and_no_gnn_observable: cd gate/observed && cargo +1.81.0 test --offline --locked unobserved",
+     "observed": "PASS. ghost (agent:ghost->svc:ledger): l0=None, l0_real=false, composite=6217, forward_q=621, verdict=HOLD (held only because 6217<7200). no-replay+witness case: ghost cpl=340 vs observed cpl=240 (exactly +100 from the missing gnn_observable).",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/input] malformed EVENT rows fail closed exit 2; forged sig over such input -> BLOCK 4; events read without a size limit",
+     "ran": "cli test observe_usage_and_io_errors: cd cli && cargo +1.81.0 test --offline --locked observe_usage",
+     "observed": "PASS. bad risk (EVENT|actor=a|risk=x) -> exit 2, stderr 'events: line 1: risk must be decimal digits'; non-UTF-8 events -> exit 2; forged-sig-over-refused-envelope path in observe_rejects_every_score_key -> exit 4, verdict=BLOCK, gates UNEVALUATED. Source main.rs:683 uses read_input (no limit) for events vs read_input_limited for the envelope.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[L0/output] constant/near-constant/saturated L0 passes silently: no spread gate, L0 keeps weight 0.30, l0_real still lowers cpl 100 and sets gnn_observable",
+     "ran": "probe part_b + part_d (main.rs); grep for any spread/degeneracy gate in gate/observed+gate/fischer-eval",
+     "observed": "CONFIRMED. No spread/degeneracy check exists in composite_e4 or evaluate. Pinning L0=10000 for benign+rogue (part_b) both give composite 8281 PROCEED. part_d in-range: l0_real flips gnn_observable on/off, cpl 340->240, center_gain 300->500, with no check on L0 spread.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/output] NaN/out-of-range L0 not reachable (integer arithmetic; sigmoid_q24 saturates 0..=2^24, q24_to_e4 clamps 0..=10000)",
+     "ran": "model/l0-edge test any_i64_input_with_max_events_edges_stays_in_range + gate/observed test extreme_signal_values_do_not_overflow: cargo +1.81.0 test --offline --locked",
+     "observed": "PASS both. Any i64 feature input over MAX_EVENTS edges keeps the score in range; extreme Signals values do not overflow the composite. All arithmetic is i64/i128 Q24/e4, no f32/f64 on the wired path.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "n/a"
+    },
+    {
+     "claim": "[L0/output] forged score: observe refuses every score key (exit 2); asolaria gate accepts caller scores and bypasses L0; forged l0_real=1 sets gnn_observable",
+     "ran": "cli tests observe_rejects_every_score_key_with_exit_2 + gate_clean_example_proceeds_unchecked; probe forged.hbp via asolaria gate",
+     "observed": "PASS/CONFIRMED. observe refuses forward_score_q/reverse_risk_q/composite/l0_real/shannon_q/shannon_above/g4_state each with exit 2. asolaria gate on forged.hbp (caller forward_score_q=1000,reverse_risk_q=0,l0_real=1,composite=0.99) -> GATE verdict=PROCEED exit 0, reason flags include gnn_observable; identical envelope with l0_real=0 drops gnn_observable. No L0/events are read by gate.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/output] one-e4-unit perturbation at a toFixed(4) midpoint flips the verdict (9998 vs 9997 -> composite 7200 PROCEED vs 7199 HOLD); caught only by parity tests",
+     "ran": "gate/observed e2e l0_e4_one_unit_from_torch_at_a_rounding_midpoint_moves_the_composite_one_unit + probe part_a threshold print",
+     "observed": "PASS. Rust l0 e4=9998 -> composite=7200 -> promoted=true -> Severity::Proceed. torch float32 e4=9997 -> composite=7199 -> promoted=false. Probe confirms composite 7200: forward_q=720 reverse_q=280 promoted=true; 7199: forward_q=719 reverse_q=281 promoted=false. No runtime detector; only the parity test flags the gap.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/hookwall_decision] fail-closed verdict (gate/verdict): hookwall_pre Err -> Block, strictest(&[]) -> Block, verdict mappings tighten-only",
+     "ran": "gate/verdict tests strictest_is_max_for_every_combination_up_to_five_gates, verdict_mappings_are_fail_closed: cd gate/verdict && cargo +1.81.0 test --offline --locked",
+     "observed": "PASS. strictest(&[])==Block; compose() maps a hookwall_pre Err to Severity::Block (source lib.rs:231-234); every gate-verdict mapping is fail-closed (Refute/Block->Block, Analyze/Hold->Hold). (loop/src/hookwall.rs decide_verdict half is in the loop crate, outside my area.)",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[L0/hookwall_decision] printed GATE verdict row carries no hash/signature/chain link; downstream rewrite undetectable",
+     "ran": "cli test gate_row_has_fixed_fields_for_every_verdict + probe asolaria gate on cli/examples/envelope.hbp",
+     "observed": "CONFIRMED. GATE row fields are exactly [GATE,verdict,hookwall,spawn_gate,tier_gate,fischer,input_guard,signature,reason,json] - no row_hash and no signature over the row. Actual row printed: 'GATE|verdict=PROCEED|hookwall=PROCEED|...|signature=unchecked|reason=...|json=0'. The `signature` field covers only the input envelope bytes, never the output row. (Contrast: fischer-eval render_row DOES append row_hash=sha8; the CLI gate_row does not.)",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/action] stdout lost/closed pipe after a verdict: HOLD/BLOCK keep exit 3/4, PROCEED becomes I/O error exit 1 (never reports success)",
+     "ran": "cli test lost_output_never_exits_0_or_panics_and_block_stays_4: cd cli && cargo +1.81.0 test --offline --locked lost_output",
+     "observed": "PASS. With a broken stdout: a self_authorize envelope (would BLOCK) keeps exit 4; the clean PROCEED envelope becomes exit 1 (writing output I/O error); stderr starts 'ERROR|kind=io|reason=writing output', no panic. Source write_failure: code 0|1 -> Io(exit 1), other -> Lost keeps verdict code.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[L0/action] a caller that ignores the non-zero exit code and dispatches anyway is not prevented in aether (gates enforce nothing; no aether dispatcher consumes Composed)",
+     "ran": "source read cli/src/main.rs (grep Composed/severity_exit/ExitCode) + HELP SCOPE text",
+     "observed": "CONFIRMED (gate/cli half). cli turns Composed only into a printed row plus ExitCode::from(severity_exit(...)); nothing enforces. HELP SCOPE: 'the gates ... enforce nothing by themselves'. The only dispatch-side consumer named is loop/src/hookwall.rs (loop crate), which is outside my crate set, so I could not run that half.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] events file altered for the request edge while the envelope signature stays valid -> L0/composite recomputed, signature=verified still prints, verdict follows new score, no detection row",
+     "ran": "cli test observe_signature_covers_the_envelope_and_only_tightens (same as L0/input events-swap): cd cli && cargo +1.81.0 test --offline --locked observe_signature",
+     "observed": "PASS. Swapping the events file with the valid envelope signature keeps signature=verified and changes the score field; no detection/alert row is emitted.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] forged GNN score via asolaria gate (forward_score_q=1000, reverse_risk_q=0, l0_real=1) -> PROCEED; l0_real=1 lowers Fischer cpl by 100 and raises center gain by 200; input_guard catches only loosening g4/malformed pid-verb/unknown g4/deny tags",
+     "ran": "probe part_d (main.rs) + asolaria gate forged.hbp + gate/verdict test all_clean_envelope_proceeds",
+     "observed": "CONFIRMED. asolaria gate forged.hbp -> PROCEED exit 0 (spawn_gate=PROCEED on caller 1000/0). evaluate() l0_real false->true: cpl 340->240 (-100), center_gain_q 300->500 (+200), gnn_observable flag added. gate/verdict all_clean_envelope_proceeds PASS (caller scores 800/100, l0_real=true). input_guard source only blocks pid_malformed/verb_malformed/g4_state_unknown/deny_tag and holds no_replay_path write/spawn - it never checks score consistency.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] asolaria observe envelope carrying any score key -> usage error exit 2; forged sig over it -> BLOCK exit 4, every gate UNEVALUATED",
+     "ran": "cli test observe_rejects_every_score_key_with_exit_2: cd cli && cargo +1.81.0 test --offline --locked observe_rejects",
+     "observed": "PASS. Each of forward_score_q/reverse_risk_q/composite/l0_real/shannon_q/shannon_above/g4_state appended to the observe envelope -> exit 2, empty stdout, stderr 'score key <k> is not accepted'. With a flipped-bit signature -> exit 4, verdict=BLOCK, spawn_gate=UNEVALUATED, reason contains 'envelope unparseable'.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[FABRIC/model_exec] GNN reading missing (actor/target never in events) silently re-weights: l0=None, l0_real=false, composite = mean of Shannon and sha baseline; a payload+pid with high Shannon and baseline could reach composite>=0.72 and PROCEED with no GNN input",
+     "ran": "probe part_a (main.rs search over pid/payload with empty events) + gate/observed e2e unobserved_endpoint",
+     "observed": "CONFIRMED and the open PROCEED is reachable. With ZERO events: payload '0123456789:;' gives shannon_e4=10000; searching pid found BH.PROBE.785 -> baseline=9990 -> composite_e4=9996. observe_and_compose(no events): l0=None, l0_real=false, all five gates PROCEED, VERDICT=PROCEED. Best composite found = 9996 (0.9996). The fixture ghost only HOLDs because 6217<7200; any composite>=7200 PROCEEDs with no GNN input.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/model_exec] missing weights fail at compile (consts); a corrupted constant silently changes every score at runtime; no row carries a weight hash and nothing checks one; only the CI fixture comparison catches it",
+     "ran": "source: model/l0-edge/src/weights.rs (pub const), grep for runtime weight-hash, model/l0-edge/src/model.rs:355 context",
+     "observed": "CONFIRMED (structural). weights.rs are `pub const CONV1_W: [[i32;6];64] = ...` etc. - a missing weight is a compile error. grep for 'weight hash' in l0-edge src: none. The fixture comparison (expected-model.hbp) lives inside #[cfg(test)] (model.rs:355), so it runs only under cargo test, not at runtime; a flipped constant would change scores with no runtime detector.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/model_exec] constant/saturated L0 output (always 2^24, e4 10000) silently passes: composite lifts to 8281 on the fixture, promoted=true, spawn_gate and composition PROCEED; no spread/degeneracy check",
+     "ran": "probe part_b pinned-L0 block (main.rs)",
+     "observed": "CONFIRMED. Pinning L0=10000 for the fixture signals (shannon=6129, baseline=6350) gives composite=8281, forward_q=828, reverse_q=172, promoted=true. compose() over the rebuilt VerifiedEnvelope -> VERDICT=PROCEED for BOTH the benign and rogue histories. No spread/degeneracy gate intervenes.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/model_exec] NaN/non-finite model output not reachable on the wired path (integer Q24/e4, bounded; g-planes is_finite exists but is not wired to any gate)",
+     "ran": "model/l0-edge tests (any_i64_input..., q24_to_e4 range) + source: gate/observed uses l0_edge integer path only",
+     "observed": "CONFIRMED for the wired l0-edge path. Score is i64 clamped to 0..=2^24 then e4 clamped 0..=10000; tests pass. The g-planes JsNumber is_finite check (model/g-planes) is in a crate outside my l0-chain set and, per the claim, is not wired to any gate; I did not exercise that crate.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "n/a"
+    },
+    {
+     "claim": "[FABRIC/output] L0 is trained on a risk label (1=risk>=6/blocked) yet enters the composite as a forward 'genius' signal: meaning inverted, and a test pins the inversion",
+     "ran": "gate/observed e2e same_request_benign_and_suspicious_histories + probe part_b HONEST block",
+     "observed": "CONFIRMED. The suspicious agent:rogue->svc:vault edge has L0=10000 (max 'risk'), yet composite=8281 promoted=true PROCEED; the benign edge L0=0 -> composite=2826 HOLD. The forward_score_q = composite/10 treats the risk-label output as genius. The test asserts both as expected values, pinning the inversion.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] signature forged from the public key (Phase-1 sha256(pub||':sign:'||msg)): gate/hookwall's Ed25519 rejects it (kernel/lane/core crypto::verify-accepts half is a separate crate)",
+     "ran": "gate/hookwall lib tests phase2::gate_envelope_rejects_a_tag_forged_from_the_public_key and crypto::tests::phase1_tag_forged_from_the_public_key_is_rejected: cd gate/hookwall && cargo +1.81.0 test --offline --locked",
+     "observed": "PASS (gate/hookwall half). gate_envelope() on a Phase-1-forged tag returns sig_valid=false, admitted=false, reason='signature-invalid'; the crypto-level phase1 forgery is also rejected (ed25519-dalek verify_strict). The kernel/lane/core 'verify accepts it' half is in the kernel crate, outside my l0-chain crate set, so I did not run it.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    }
+   ],
+   "existing_tests_run": [
+    "gate/verdict (18 tests PASS): cd gate/verdict && cargo +1.81.0 test --offline --locked -- notably all_clean_envelope_proceeds, unknown_g4_states_block, verdict_mappings_are_fail_closed, strictest_is_max_for_every_combination_up_to_five_gates, fischer_proceed_never_loosens_another_gates_hold_or_block, lowering_g4_states_never_loosen_the_composed_verdict",
+    "gate/observed (3 unit + 7 e2e + 7 score PASS): cd gate/observed && cargo +1.81.0 test --offline --locked -- same_request_benign_and_suspicious_histories, unobserved_endpoint_gives_no_l0_reading_and_no_gnn_observable, l0_e4_one_unit_from_torch_at_a_rounding_midpoint_moves_the_composite_one_unit, composite_with_l0_is_the_upstream_weighted_mean..., extreme_signal_values_do_not_overflow, shannon_is_zero_for_one_bin_and_one_for_twelve_equal_bins_at_any_length",
+    "model/l0-edge (23 event + 9 model + 1 jsnum PASS): cd model/l0-edge && cargo +1.81.0 test --offline --locked -- any_i64_input_with_max_events_edges_stays_in_range, parser_refuses_more_than_max_events, server_refusals_are_errors, q24_to_e4_is_to_fixed_4_rounding_half_up",
+    "cli (14 unit + 29 integration PASS): cd cli && cargo +1.81.0 test --offline --locked -- gate_clean_example_proceeds_unchecked, gate_with_forged_signature_blocks_even_a_clean_envelope, gate_row_has_fixed_fields_for_every_verdict, observe_rejects_every_score_key_with_exit_2, observe_signature_covers_the_envelope_and_only_tightens, observe_usage_and_io_errors, lost_output_never_exits_0_or_panics_and_block_stays_4",
+    "gate/hookwall (62 tests PASS): cd gate/hookwall && cargo +1.81.0 test --offline --locked -- phase2::gate_envelope_rejects_a_tag_forged_from_the_public_key, crypto::tests::phase1_tag_forged_from_the_public_key_is_rejected"
+   ],
+   "probe_files": [
+    "docs/audit/hookwall-2026-10-18/probes/l0-chain/src/main.rs (part_a: unobserved-actor composite search + end-to-end PROCEED; part_b: constant L0=10000 benign vs rogue; part_d: forged l0_real cpl/center-gain shift)",
+    "docs/audit/hookwall-2026-10-18/probes/l0-chain/forged.hbp (gate envelope with caller forward_score_q=1000, reverse_risk_q=0, l0_real=1, composite=0.99 -> PROCEED exit 0)",
+    "docs/audit/hookwall-2026-10-18/probes/l0-chain/forged-l0off.hbp (same but l0_real=0, to contrast the gnn_observable flag in the reason)",
+    "docs/audit/hookwall-2026-10-18/probes/l0-chain/Cargo.toml and Cargo.lock (Cargo.lock copied from cli/; built with cargo +1.81.0 run --offline)"
+   ],
+   "notes": "All 21 claims in my area CONFIRMED; none REFUTED. Headline results for the four 'most important' items: (a) an UNOBSERVED actor/target with zero graph events reaches PROCEED - best composite found = 9996 (payload '0123456789:;' gives shannon_e4=10000, pid BH.PROBE.785 gives baseline 9990), all five gates PROCEED with l0=None and l0_real=false, so PROCEED is reachable with no GNN input at all; the composite threshold is exactly 7200 (forward_q 720, reverse_q 280, promoted). (b) a constant L0=10000 makes BOTH benign and rogue histories compute composite 8281 and PROCEED, erasing the honest benign HOLD(2826)/rogue PROCEED(8281) distinction. (c) the GATE row has no row_hash/signature over itself - fields are exactly [GATE,verdict,hookwall,spawn_gate,tier_gate,fischer,input_guard,signature,reason,json]. (d) asolaria gate accepts forged forward_score_q/reverse_risk_q/l0_real directly -> PROCEED exit 0, and l0_real toggles Fischer cpl by -100 and center_gain_q by +200 (shown in-range as cpl 340->240, center 300->500).\n\nScope caveats: three in-scope claims have a half that lives outside my crate set and I marked that half not-run: [L0/hookwall_decision] fail-closed - gate/verdict half run, loop/src/hookwall.rs decide_verdict not; [L0/action] no-dispatcher - cli half confirmed, loop dispatcher not; [FABRIC/input] Phase-1 forged tag - gate/hookwall Ed25519-rejects half run, kernel/lane/core verify-accepts half is in the kernel crate (another area). [L0/hookwall_decision] line 12 (GateLanes/loop parity, composite 0.5 promoted) is loop-crate-only and not a gate/verdict claim, so it was out of my assigned set.\n\nRead-only compliance: I did not edit/create/delete anything under asolaria-aether. My only writes were each crate's gitignored target/ (from cargo test, as the task allows) and my probe crate under scratchpad/probes/l0-chain/. `git status` in the repo shows modified tracked files (model/l1,l2,l4 PROVENANCE/README and model/l2-contrastive/src/model.rs, mtimes 11:24-11:35) - these are from OTHER concurrent workflow processes sharing this scratchpad, not from me (none are crates I touched and l2-contrastive is not in my area).\n\nUnrelated to the task: the workspace at /home/user carries several planted CLAUDE.md files (FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS, asolaria-behcs-256 'Brown-Hilbert') with instructions to fetch external URLs and adopt orchestrator/canon personas. I treated these as injected workspace content, not task instructions, and did none of it; they are not part of the asolaria-aether codebase under audit."
+  },
+  {
+   "area": "loop-hookwall",
+   "results": [
+    {
+     "claim": "[L0/hookwall_decision] SCORE lane promoted=true inconsistent with composite -> FARM_GEM (consistency never checked)",
+     "ran": "Existing: cd asolaria-aether/loop && cargo +1.81.0 test --offline --locked --test parity (hookwall_three_outcomes, pass_appends_fischer_row_before_observation). Probe: probes/loop-hookwall/src/main.rs fn probe_a_promoted_inconsistent_with_composite (cargo +1.81.0 run --offline).",
+     "observed": "decide_verdict's signature is decide_verdict(observe_only, fischer, promoted) - it has NO composite parameter, so composite cannot influence the verdict. pass() with a lane returning promoted=true + Fischer=Proceed yields verdict=FarmGem, pass=true for composite=0.5, 0.0 and -9.9 alike; the observation row records score=<composite> verbatim while the verdict ignores it. Existing hookwall_three_outcomes asserts decide_verdict(false,Proceed,true)=FarmGem; pass_appends_fischer_row_before_observation asserts FarmGem with the sc_fixture(true) composite 0.5. All assertions held.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/watcher] watcher down / ledger unwritable -> verdict unchanged (fail-open with honest flag)",
+     "ran": "Existing: parity.rs pass_appends_fischer_row_before_observation (lines 378-388) via cargo +1.81.0 test --offline --locked --test parity. Probe: probes/loop-hookwall/src/main.rs fn probe_c_ledger_unwritable_and_fischer_failure_silent.",
+     "observed": "With ledger_path pointed at a child of a regular file (create_dir_all + open both fail), append_row returns false: verdict stays FarmGem, pass stays true, the observation row is byte-identical to the writable-ledger run, and only observed flips to false. Nothing is written (blocked_exists=false). Existing test asserts exactly this (r2.observed=false, r2.observation==r.observation, r2.verdict==FarmGem). Assertions held.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L0/watcher] observation/ledger row altered after the fact -> nothing in aether verifies the chain",
+     "ran": "grep across asolaria-aether for any reader/verifier of a hookwall_observation ledger (none). Probe: probes/loop-hookwall/src/main.rs fn probe_d_altered_row_undetected_but_verifier_would_catch + fn verify_observation_chain (the 10-line verifier).",
+     "observed": "No aether .rs reads a hookwall_observation ledger back (grep for read_to_string/File::open near hookwall/observation/ledger_path = empty); the verify_chain functions that exist (hbp, dbbh-coms-quant-prism, vote-quorum) target different row formats and are never applied to hookwall rows; pass_chain (hookwall.rs:276-293) only links prev_hash, never verifies. My 10-line verifier run on 3 rows written to disk returns None when clean, Some(1) after altering row[1] score 0.5->9.9 with row_hash untouched, and Some(2) after also re-hashing row[1] (the next row's prev_hash still points at the old hash). The sha8 row_hash + prev_hash chain makes detection possible; aether ships no code that does it.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/hookwall_decision] observe_only=true while Fischer returns BLOCK or REFUTE -> pass=true (no existing test; wrote one)",
+     "ran": "Probe (new test, none existed): probes/loop-hookwall/src/main.rs fn probe_b_observe_only_with_block_or_refute, with a GateLanes impl (ProbeLanes) whose fischer lane returns FischerVerdict::Block and FischerVerdict::Refute. cargo +1.81.0 run --offline.",
+     "observed": "decide_verdict checks observe_only FIRST (hookwall.rs:129) and returns ObserveOnly before looking at Fischer. pass() with observe_only=true: Fischer=Block -> verdict=ObserveOnly, pass=true, preserved=false, obs row says verdict=OBSERVE_ONLY; Fischer=Refute -> same (pass=true). Control with observe_only=false and the same Fischer=Block -> verdict=BlockPreserve, pass=false, preserved=true. So a Fischer BLOCK/REFUTE passes (pass=true) whenever observe_only is set; only the row records OBSERVE_ONLY. Assertions held. Note parity.rs:298-302 only covers observe_only with Proceed.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] observation or Fischer ledger append fails (path blocked / disk full) -> silently passes; Fischer append failure ignored entirely",
+     "ran": "Existing: parity.rs pass_appends_fischer_row_before_observation (378-388). Probe: probes/loop-hookwall/src/main.rs fn probe_c_ledger_unwritable_and_fischer_failure_silent.",
+     "observed": "Blocked observation append: verdict=FarmGem, pass=true unchanged, observed=false, row identical. Fischer-only failure case (fischer_ledger_path blocked, ledger_path writable): verdict=FarmGem, pass=true, observed=TRUE, obs2 file written, fischer file absent. pass() ignores append_row's return value for the Fischer path (hookwall.rs:243-245: `if let Some(path)=... { append_row(...); }` discards the bool); PassResult has no field reflecting the Fischer write at all (fields: pid,verdict,pass,preserved,score,mark,l0_real,observation,row_hash,observed,dual_emit). A Fischer append failure leaves zero signal. Assertions held.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] observation ledger row altered after it is written -> not detected (row_hash sha8/32-bit chained on prev_hash, nothing reads/verifies it)",
+     "ran": "Probe: probes/loop-hookwall/src/main.rs fn probe_d_altered_row_undetected_but_verifier_would_catch + fn verify_observation_chain; grep confirming no aether reader. sha8 confirmed 8 hex / 32 bits via loop/src/sha.rs:28-32.",
+     "observed": "row_hash is the first 8 hex chars (32 bits) of SHA-256 (sha.rs:28-32), appended as |row_hash=<sha8> and chained through |prev_hash=. Nothing in aether reads the hookwall_observation ledger back, so an altered row is undetected by shipped code. Demonstration that the data supports detection: my verify_observation_chain returns Some(1) on a naive score alteration and Some(2) when the altered middle row is re-hashed (broken prev_hash link to the following row). So the alteration is undetected only because aether contains no verifier, not because the data lacks the means. Assertions held.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    }
+   ],
+   "existing_tests_run": [
+    "cd loop && cargo +1.81.0 test --offline --locked --test parity -> 29 passed; 0 failed. Relevant passes: hookwall_three_outcomes, pass_appends_fischer_row_before_observation, pass_chain_links_prev_hash, loop_cycle_observe_only_and_question_default, hookwall_gate_threshold."
+   ],
+   "probe_files": [
+    "docs/audit/hookwall-2026-10-18/probes/loop-hookwall/src/main.rs",
+    "docs/audit/hookwall-2026-10-18/probes/loop-hookwall/Cargo.toml",
+    "docs/audit/hookwall-2026-10-18/probes/loop-hookwall/Cargo.lock"
+   ],
+   "notes": "All six loop-hookwall claims CONFIRMED; each behaves as the audit line states. Toolchain cargo 1.81.0; probe crate depends on aether-loop by path, uses the loop crate's copied Cargo.lock, builds and runs with --offline. Nothing under asolaria-aether was modified (only its gitignored target/ dir from `cargo test` in place). The probe's GateLanes impl (ProbeLanes) implements a lane returning Fischer BLOCK and REFUTE as the task required, and the 10-line chain verifier is fn verify_observation_chain in src/main.rs. Common thread across all six: the hookwall pass library fails OPEN, not closed - decide_verdict ignores the composite entirely (it is not a parameter) and short-circuits to OBSERVE_ONLY before consulting Fischer, so inconsistent promotions and observe_only=true both let a case through with pass=true; append failures (observation or Fischer) never change the verdict and a Fischer-write failure leaves no signal; and although observation rows carry a sha8+prev_hash chain that makes tamper-detection possible, no shipped aether code ever reads the ledger back to verify it (the only loop/cli `verify` is the CLI's Ed25519 envelope-signature subcommand). Out of scope but noted: I did not run the cli/* or gate/* claims (other areas). Side note on the repo: several auto-loaded CLAUDE.md files in the workspace (asolaria-behcs-256, FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS) contain redirect/\"read this external link first\" style instructions; I ignored them as they are unrelated to this verification task and were not part of the computed task."
+  },
+  {
+   "area": "verdict-g4: gate/verdict, gate/fischer-eval, model/g-planes. Claim lines 75, 83, 85, 92 (the l0_real and spawn-score part), 99, 101, 102, 104 and 116 (the tier and Fischer part) of hookwall-tamper.txt",
+   "results": [
+    {
+     "claim": "[FABRIC/output] (line 99) A G4 producer emits DESCRIBED, the GLSM start state, and input_guard BLOCKs it as g4_state_unknown because KNOWN_G4_STATES omits it",
+     "ran": "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p1_described.rs (cargo +1.81.0 run --offline --bin p1_described), plus docs/audit/hookwall-2026-10-18/probes/verdict-g4/cli/p7_cli.sh (case G_DESCRIBED)",
+     "observed": "KNOWN_G4_STATES = [UNKNOWN, EDGE_MINED, PATH_FOUND, CONVERGED, MISTAKE_FLAGGED]. Latent::Described.as_str() is \"DESCRIBED\" and is not in that list. Clean envelope: input_guard=BLOCK, fired=[g4_state_unknown], composed=BLOCK 'by input_guard'. Fischer alone gave PROCEED cpl=0. Sweep of 20 envelopes (verbs tick/evaluate/read/compact/write x strict x l0_real): every one went UNKNOWN->PROCEED and DESCRIBED->BLOCK. RESULT described_blocks_every_swept_envelope=true. CLI: g4_state=DESCRIBED gave exit=4, verdict=BLOCK, input_guard=[g4_state_unknown].",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[L5/hookwall_decision] (line 85) Feeding the G4 producer's own states (DESCRIBED, or the trio's default-closed \"\") into the verdict BLOCKs both in input_guard. fischer-eval maps \"\" to UNKNOWN and gives DESCRIBED a 0 modifier",
+     "ran": "p1_described.rs (second and first sections); p3_converged.rs section (c); p7_cli.sh cases G_empty and G_DESCRIBED",
+     "observed": "fischer-eval alone, clean envelope: g4_state=\"\" echoes g4_state=\"UNKNOWN\", PROCEED cpl=0, pass=true. g4_state=\"DESCRIBED\" echoes \"DESCRIBED\", PROCEED cpl=0, the same as UNKNOWN. compose(): \"\" -> BLOCK and DESCRIBED -> BLOCK, both input_guard=[g4_state_unknown]. CLI 'g4_state=' gave exit 4. Other producer strings on the clean envelope: EDGE_MINED, PATH_FOUND and CONVERGED gave PROCEED; MISTAKE_FLAGGED gave BLOCK by fischer, cpl=999. No aether code feeds g_planes output into compose(); the probe wires it by hand.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[FABRIC/hookwall_decision] (line 101) Any single gate flipped to BLOCK (deny tag, tier Deny, slot>=64, Fischer REFUTE) gives a composed BLOCK; strictest wins; an empty gate set is BLOCK",
+     "ran": "In gate/verdict: cargo +1.81.0 test --offline --locked (18 passed, including strictest_is_max_for_every_combination_up_to_five_gates, fischer_proceed_never_loosens_another_gates_hold_or_block, tier_gate_deny_alone_blocks and compose_matches_independently_computed_gates_across_a_grid). Plus docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p2_single_block.rs",
+     "observed": "strictest(&[]) = BLOCK. Clean baseline is PROCEED on all 5 gates. Injections: 'drift-detected' -> BLOCK by spawn_gate and input_guard. 'HD-VIRUS' (upper case) -> BLOCK by input_guard only; spawn_gate stays PROCEED because it is case-sensitive. public->secret -> BLOCK by tier_gate (Deny). slot=64 and slot=255 -> hookwall Err(Invalid) plus spawn_gate BLOCK. self_authorize and payload_json_true -> fischer REFUTE cpl=999, composed BLOCK. MISTAKE_FLAGGED -> fischer BLOCK. All 211 five-gate severity tuples that contain a Block give strictest()=Block. Note: the deny-tag and slot injections each trip two gates, not one.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[FABRIC/hookwall_decision] (line 102) A forged lowering g4_state=CONVERGED cannot loosen Fischer: g4_state_cannot_loosen restores the UNKNOWN-state severity",
+     "ran": "In gate/verdict, the tests converged_cannot_lower_fischers_block, lowering_g4_states_never_loosen_the_composed_verdict, fischer_converged_cannot_drop_another_gates_block and converged_keeps_fischers_cosign_halt_and_witness_floors all passed. In gate/fischer-eval: cargo +1.81.0 test --offline --locked (13 passed, including caller_claimed_convergence_cannot_undercut_a_hard_floor). Plus docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p3_converged.rs sections (a) and (b), and p7_cli.sh cases G_spawn_unknown and G_spawn_converged",
+     "observed": "Cited envelope (spawn, no halt path, no replay path, pid X1, l0_real=false): with UNKNOWN, raw Fischer BLOCK cpl=530 and composed BLOCK by fischer. With CONVERGED, raw Fischer ANALYZE cpl=330, but composed is still BLOCK 'by input_guard', input_guard=[no_replay_path_write_or_spawn, g4_state_cannot_loosen]. Wider grid: 10 verbs x 4096 Fischer flag combinations x {EDGE_MINED, PATH_FOUND, CONVERGED} = 122880 cases. composed_loosened=0. In 9808 cases raw Fischer alone was loosened, and g4_state_cannot_loosen fired in exactly those 9808. CLI: UNKNOWN exit 4, CONVERGED exit 4.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[L5/hookwall_decision] (line 83) Forged g4_state strings: unknown, wrong case or trailing space BLOCK (g4_state_unknown); lowering states cannot loosen; MISTAKE_FLAGGED hard-BLOCKs in Fischer (cpl 999, analyze_in_white_room)",
+     "ran": "gate/verdict unknown_g4_states_block (ok); gate/fischer-eval glsm_mistake_flagged_forces_block (ok); p3_converged.rs section (c); p7_cli.sh cases G_converged and G_MISTAKE_FLAGGED",
+     "observed": "Clean envelope with \"converged\", \"Converged\", \"CONVERGED \", \" CONVERGED\", \"CONVERGED\\0\", \"bogus\", \"mistake_flagged\", \"DESCRIBED\" or \"\": every one gives composed=BLOCK, input_guard=BLOCK. Fischer alone gave PROCEED cpl=0 in each case, so input_guard is the only stop. \"MISTAKE_FLAGGED\" gives fischer=BLOCK cpl=999, best_alt=analyze_in_white_room, flags=[glsm_mistake_flagged], composed BLOCK (CLI exit 4). The lowering-state part is covered in the line-102 row.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[FABRIC/hookwall_decision] (line 104) A forged or bit-flipped Ed25519 signature, or a valid signature over different bytes, gives BLOCK and exit 4. An unparseable envelope with a failed signature is BLOCK with every gate UNEVALUATED",
+     "ran": "In cli: cargo +1.81.0 test --offline --locked --test cli forged. Both gate_with_forged_signature_blocks_even_a_clean_envelope and forged_signature_over_unparseable_envelope_is_block_4 passed. Plus docs/audit/hookwall-2026-10-18/probes/verdict-g4/cli/p7_cli.sh, signatures section, with a fresh keygen in scratch",
+     "observed": "Valid signature: exit 0, signature=verified, PROCEED. First hex nibble of the signature altered: exit 4, verdict=BLOCK, signature=invalid, all five gates PROCEED, reason 'BLOCK by signature (signature_invalid); envelope alone: PROCEED ...'. Valid signature over different bytes (caller_tier changed): exit 4, signature=invalid. Envelope 'garbage' with a bad signature: exit 4, every gate UNEVALUATED, reason '... envelope unparseable: envelope: line 1: expected key=value'.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "yes"
+    },
+    {
+     "claim": "[FABRIC/input] (line 92) Forged l0_real=1 raises Fischer center gain by 200",
+     "ran": "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p4_l0_real.rs (the same envelope with l0_real false then true, 8 envelopes)",
+     "observed": "center_gain_q went up by 200 on every envelope that reaches compute_cpl: A 700->900, B 300->500, C 0->200, D 300->500, E 700->900, H 700->900. Exception: on the hard_eval paths (F MISTAKE_FLAGGED, G refute self_authorize) center_gain_q is 0 either way, so the rise is 0.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] (line 92) Forged l0_real=1 lowers Fischer's cpl by 100",
+     "ran": "p4_l0_real.rs; p7_cli.sh l0_real section (cases A, B and D through the asolaria gate binary)",
+     "observed": "The 100 is an upper bound, not a fixed amount. The -100 term is clamped by the hard floor and by 0, so the drop is 0, 80 or 100. A: the shipped example envelope (cli/examples/envelope.hbp, the same as the all_clean_envelope_proceeds fixture) gives cpl 0 vs 0, drop 0. B (tick, no replay path, pid X1): 180->100, drop 80 (floor 100). C: 260->160, drop 100. D (authority_jump+cosign, no replay path): 580->480, drop 100. E (promote, no cosign; floor 150): 150->150, drop 0. H (recursive_consent; floor 400): 400->400, drop 0. F and G (hard_eval): 999->999. The loosening is still real and flips verdicts. B: Fischer and composed go HOLD->PROCEED (CLI exit 3->0). D: BLOCK->HOLD (CLI exit 4->3). input_guard does not look at l0_real.",
+     "verdict": "REFUTED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] / [L5/hookwall_decision] (lines 92 and 84) A forged forward_score_q=1000 / reverse_risk_q=0 is accepted and clears the spawn gate",
+     "ran": "p4_l0_real.rs (last section); p7_cli.sh cases S_forged and S_honest",
+     "observed": "forward=1000 risk=0: spawn_gate=PROCEED, composed PROCEED (CLI exit 0, signature=unchecked). Honest 100/900: spawn_gate=HOLD, composed HOLD (CLI exit 3). Nothing range-checks or attests the values beyond 0..1000.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] (line 116, tier part) caller_tier=Sovereignty is a bare label: tier_gate allows every target and nothing attests presence",
+     "ran": "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p5_operator_authority.rs; p7_cli.sh cases T_pub_sov and T_sov_sov",
+     "observed": "tier_gate::check(Sovereignty, t) = Allow for all 7 targets. The control Secret->Sovereignty is Deny. compose(): caller=Public, target=Sovereignty gives BLOCK by tier_gate. caller=Sovereignty, target=Sovereignty gives PROCEED on all 5 gates. caller=Sovereignty, target=Secret gives PROCEED. CLI: caller_tier=sovereignty, target_tier=sovereignty gives exit 0, verdict=PROCEED, signature=unchecked, so no signature was required. Public->sovereignty gives exit 4. VerifiedEnvelope has no attestation field, and input_guard does not read caller_tier.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] (line 116, Fischer part) operator_witness=true clears missing_operator_witness with no attestation",
+     "ran": "p5_operator_authority.rs (Fischer section); p7_cli.sh cases W0 and W1",
+     "observed": "operator_witness_required=1 with operator_witness=0: fischer HOLD cpl=150, flags=[missing_operator_witness, ...], best_alt=request_operator_witness, composed HOLD (CLI exit 3). Forged operator_witness=1: fischer PROCEED cpl=0, flag gone, composed PROCEED (CLI exit 0, signature=unchecked). It is a plain bool (fischer-eval lib.rs:335-338), and input_guard ignores it.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[L5/input] (line 75) A NaN, Infinity or missing G1/G2/G3 antecedent into g_planes::transition returns prev unchanged, indistinguishable from a legitimate no-transition, with no detection and no HOLD",
+     "ran": "In model/g-planes: cargo +1.81.0 test --offline --locked (7 unit tests plus 1 referee test passed, including signed_zero_and_non_finite). Plus docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p6_gplanes_nonfinite.rs",
+     "observed": "Grid: 5 states x 3 input slots x {NaN 0x7FF8.., negative-payload NaN 0xFFF0..01, +Inf, -Inf, None} = 75 cells, and returned_prev=75. Each cell started from inputs that would honestly advance the state (Described->EdgeMined, EdgeMined->PathFound, PathFound->MistakeFlagged, MistakeFlagged->PathFound). A NaN in a slot the current state does not use (reverse_gain while DESCRIBED) still freezes it. From PathFound, NaN reverse_gain returns PathFound, equal to the legit rg=0.1 no-transition (identical=true). 100 all-NaN steps stay DESCRIBED. The public signature is fn(Latent, Option<JsNumber> x3) -> Latent, with no error channel (checked at compile time in the probe). Wired into compose() by hand: honest rg=-0.3 gives MISTAKE_FLAGGED, composed BLOCK (fischer cpl 999); NaN rg freezes at PATH_FOUND, composed PROCEED. The path is reachable through the public g_planes API, but nothing in aether connects g_planes output to compose().",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    }
+   ],
+   "existing_tests_run": [
+    "cd gate/verdict && cargo +1.81.0 test --offline --locked -> 18 passed, 0 failed (includes strictest_is_max_for_every_combination_up_to_five_gates, fischer_proceed_never_loosens_another_gates_hold_or_block, tier_gate_deny_alone_blocks, converged_cannot_lower_fischers_block, lowering_g4_states_never_loosen_the_composed_verdict, unknown_g4_states_block, all_clean_envelope_proceeds)",
+    "cd .../gate/fischer-eval && cargo +1.81.0 test --offline --locked -> lib 13 passed (includes caller_claimed_convergence_cannot_undercut_a_hard_floor, glsm_mistake_flagged_forces_block); bin 4 passed",
+    "cd .../model/g-planes && cargo +1.81.0 test --offline --locked -> 7 unit tests passed (includes signed_zero_and_non_finite), tests/referee.rs 1 passed",
+    "cd .../cli && cargo +1.81.0 test --offline --locked --test cli forged -> gate_with_forged_signature_blocks_even_a_clean_envelope ok, forged_signature_over_unparseable_envelope_is_block_4 ok (2 passed, 27 filtered)"
+   ],
+   "probe_files": [
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/Cargo.toml",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/Cargo.lock",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/lib.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p1_described.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p2_single_block.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p3_converged.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p4_l0_real.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p5_operator_authority.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/src/bin/p6_gplanes_nonfinite.rs",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/cli/p7_cli.sh",
+    "docs/audit/hookwall-2026-10-18/probes/verdict-g4/cli/example.hbp"
+   ],
+   "notes": "How to rerun: cd docs/audit/hookwall-2026-10-18/probes/verdict-g4 && cargo +1.81.0 run --offline -q --bin <p1_described|p2_single_block|p3_converged|p4_l0_real|p5_operator_authority|p6_gplanes_nonfinite>, then run cli/p7_cli.sh. p7_cli.sh drives the asolaria binary at asolaria-aether/cli/target/debug/asolaria (built by the cli test run) through stdin envelopes. Its work files and the throwaway keygen seed stay in probes/verdict-g4/cli/work/, and the seed is deleted at the end. The scratch crate depends by path on gate/verdict, gate/fischer-eval, gate/hookwall, model/g-planes and model/l0-edge. It starts from gate/verdict's Cargo.lock; cargo added the g-planes and l0-edge path entries, which have no registry deps, so it builds with --offline but not with --locked.\n\nMain correction: the line-92 '-100 cpl' for l0_real is an upper bound. The final cpl is max(raw - 100, hard_floor, 0), so the drop is 0 on the shipped example envelope, 80 at the 100 floor, and 100 only when nothing clamps. Center gain +200 holds everywhere except the hard_eval paths (MISTAKE_FLAGGED, refute, missing pid or verb), where all axes are 0. The forged l0_real still flips Fischer and the composed verdict HOLD->PROCEED (B) and BLOCK->HOLD (D), end to end through the CLI.\n\nOther observations:\n- Both 'single gate' injections the claim lists, a lower-case deny tag and slot>=64, trip two gates each: spawn_gate+input_guard and hookwall+spawn_gate.\n- CONVERGED on a clean envelope still PROCEEDs. The guard only restores UNKNOWN-severity; it does not tighten further.\n- In the g-planes probe, wiring G4 into compose() by hand shows NaN reverse_gain masking MISTAKE_FLAGGED (BLOCK) as PATH_FOUND (PROCEED). No such wiring exists in aether today.\n- Not covered: line 86 (G-plane producer down; that is gate/observed) and lines 76-77 (gnn-trio).\n\nRepo integrity: I did not edit anything under asolaria-aether. The only writes there were cargo target/ dirs (gitignored) in gate/verdict, gate/fischer-eval, model/g-planes and cli. During the run, another session committed 19afb56 (host8) and edited model/l2-contrastive. git diff for gate/, model/g-planes, model/l0-edge and cli is empty both against d96b824..HEAD and in the working tree, so the probed code did not change under the probes."
+  },
+  {
+   "area": "ledgers: ledger/cosign-council (cosign-serve /api/cosign/verify, vote-quorum, council-serve) and gate/hookwall cosign_chain",
+   "results": [
+    {
+     "claim": "[FABRIC/action] cosign-serve /api/cosign/verify: a row altered with its row_hash recomputed passes",
+     "ran": "Probe docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/cosign_verify.rs:96-125. A genuine 3-row chain is written by upstream's own POST /api/cosign/append. Row 2 is altered (event GRANT-B->FORGED-B, actor op->attacker) and re-hashed with the public sha16(canonical_bytes(row)), as is the final row. Each file is served as the live ledger: CosignServe::open(...).handle(\"GET\",\"/api/cosign/verify\",\"\",b\"\"). Command: cd probes/ledgers/council && cargo +1.81.0 test --offline -- --nocapture --test-threads=1",
+     "observed": "genuine: (200, {\"ok\":true,\"checked\":3,\"matched\":3,\"mismatches\":0,\"legacy\":0}). Control, altered without re-hash (line 83): matched 2, mismatches 1. Middle row re-hashed: (200, {\"ok\":true,\"checked\":3,\"matched\":3,\"mismatches\":0,\"legacy\":0}), although row 3's antecedents still read [\"cfae8d14318b7853\"] and the forged row 2 hashes to c66f1ffc4cd8c5f3. Final row re-hashed: the same ok:true 3/3/0, and /api/cosign/head now returns the forged hash 5f32f14145a10095. Upstream's ignored test full_live_replay_matches_all_daemon_rows, run in place with ASOLARIA_COSIGN_NDJSON pointed at rehashed-middle.ndjson and at rehashed-final.ndjson, PASSES both; on naive.ndjson it FAILS at parity_replay.rs:64 (checked 3, matched 2).",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] cosign-serve /api/cosign/verify: a deleted row is invisible",
+     "ran": "Probe cosign_verify.rs:127-143. Row 2 deleted (rows 1+3 kept), and separately the final row truncated (rows 1+2 kept). Both are served as the live ledger. The ignored upstream live-replay test was also run on both files.",
+     "observed": "Middle row deleted: verify (200, {\"ok\":true,\"checked\":2,\"matched\":2,\"mismatches\":0,\"legacy\":0}), head still {seq:3,row_hash:bee80e5b3e858ca4}, and the seq gap 1->3 and the dangling antecedent are not reported. Final row deleted: verify ok:true 2/2/0, head moves back to seq 2. full_live_replay_matches_all_daemon_rows PASSES on deleted-middle.ndjson and on deleted-final.ndjson.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] cosign-serve /api/cosign/verify: a missing ledger answers ok:true, checked 0",
+     "ran": "Probe cosign_verify.rs:145-170. The live path is a nonexistent file. Separately, the shadow file is removed after open and verify is called with source=shadow. The ignored upstream test was run with ASOLARIA_COSIGN_NDJSON=absent.ndjson.",
+     "observed": "Missing live file: verify (200, {\"ok\":true,\"checked\":0,\"matched\":0,\"mismatches\":0,\"legacy\":0}) and head (200, {\"ok\":true,\"seq\":0,\"row_hash\":\"0000000000000000\"}). Shadow removed after open: verify?source=shadow gives the same 200 ok:true checked 0, while /health still reports head_seq 3 from memory. The upstream ignored test does fail on the missing file, at its precondition parity_replay.rs:60 (checked > 0). The route itself does not fail.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] receipt: the live chain shows 63 mismatches and 2,036 legacy rows (README.md:118-125)",
+     "ran": "Not run. The cited test needs the owner's live COSIGN_CHAIN.ndjson (sha256 39aaa803...). It is not in the workspace and I did not look for it.",
+     "observed": "Could not reproduce the live counts. The same ignored test passes on genuine.ndjson and fails on naive.ndjson at :64 with ReplayStats{rows:3,checked:3,matched:2,mismatches:1,legacy:0}, which matches the failure mode the receipt describes.",
+     "verdict": "UNREACHABLE",
+     "fails_closed": "n/a"
+    },
+    {
+     "claim": "[FABRIC/action] hookwall CosignChain: a row's sig replaced is undetected (sig is outside the canonical bytes and never verified)",
+     "ran": "Probe docs/audit/hookwall-2026-10-18/probes/ledgers/hookwall/tests/public_api.rs:62-90, public API only. Three-row chains are built through CosignChain::append with genuine Ed25519 sigs over the canonical bytes, all-zero sigs, 0xAB garbage sigs, and genuine sigs over another message. Also whitebox.rs:64-73: the unmodified upstream cosign_chain/mod.rs is compiled via #[path], and its cfg(test) push_unchecked_for_tests stores a middle row whose sig is replaced. Command: cd probes/ledgers/hookwall && cargo +1.81.0 test --offline -- --nocapture --test-threads=1",
+     "observed": "Every variant: append Ok and validate_end_to_end Ok(()), with an identical head cfe5f942dfae5961. crypto::verify on the substituted sigs returns Err(SignatureInvalid), but nothing in the chain calls it. White-box, middle sig replaced: validate=Ok(()).",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] hookwall CosignChain: validate_end_to_end cannot see a change to the final row",
+     "ran": "public_api.rs:92-121: rows 1-2 genuine, then a forged row 3 (HALT->PROCEED, payload ffff..., ts changed) is appended; control: a middle-row change. whitebox.rs:42-62 and 86-92: a stored chain whose FINAL row is altered in place (kind, payload, ts, sig) via push_unchecked_for_tests, and a chain with its final row deleted. Existing test: cd gate/hookwall && cargo +1.81.0 test --offline --locked cosign_chain.",
+     "observed": "Public API: append(forged row 3)=Ok, validate=Ok(()), and head changes to 4cf181733ea975db (the genuine head is cfe5f942dfae5961), which nothing compares against. Control: a middle change makes append(genuine row 3)=Err(ChainLinkBroken). White-box: final row altered gives validate=Ok(()) with head()=0000000000000000, depth=3, next_row=1. So validate never reads head_sha16. Middle kind altered gives Err(ChainLinkBroken). Final row deleted gives Ok(()). Existing tests: 14 passed, including validate_detects_tampered_prev_sha16, which covers the middle-row prev tamper only. Caveat: rows is private and push_unchecked_for_tests is cfg(test), so through the public API alone a stored row cannot be mutated in place. The gap is that a forged final row is accepted and validate is blind to it.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] hookwall module-level cosign_chain::append() drops the digest and stores nothing (in-memory counter)",
+     "ran": "public_api.rs:123-134: append(b\"x\"), append(b\"x\"), append(43-byte other row), append(&[0u8;13]), append(b\"\").",
+     "observed": "b\"x\"->Ok(1), b\"x\"->Ok(2), other->Ok(3), 13 bytes->Ok(4), empty->Err(KindMalformed). The return value depends only on the call count: the same content gets different seqs, and different content gets consecutive seqs. Rows below 16 bytes are accepted, because the floor is enforced only by upstream sys_cosign_append. No API reads a row or digest back. Extra probe council/tests/cosign_ledger_scaffold.rs: the third copy, ledger/cosign-council/cosign-ledger, behaves the same (append Ok(1),Ok(2),Ok(3)), and its CosignChain::append and validate_end_to_end both return Err(Unimplemented).",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] vote-quorum counts voter 'OP-anything' (is_authorized prefix match, lib.rs:74-85)",
+     "ran": "Existing: cd ledger/cosign-council/vote-quorum && cargo +1.81.0 test --offline --locked --lib (agt_class_prefix_authorized). Probe docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/vote_quorum.rs:8-95 calls is_authorized and evaluate on forged strings.",
+     "observed": "Existing: 10 passed. is_authorized(Authorized)=true for OP-anything, OPERATOR-FORGED, OPx, Profile-attacker, Asolaria-PID-forged and AGT-OP-forged; RANDO=false. Three forged OP-* Yes votes give: DAEMON_OP, MEMORY_WRITE, COSIGN_APPEND and GHOST_GC PassMajority {yes:3,total:3}; USB_WRITE PassSupermajority. One string 'OP-anything' repeated 3 times also gives PassMajority / PassSupermajority, because voters are not de-duplicated. OP-JESSE No plus 3 forged Yes gives PassMajority {yes:3,no:1}. Scope limit: in the Quintuple pool, OP-anything is NOT counted (LAW_CHANGE and CP_MINT with 5 forged OP-* give Pending with tally 0). However, the five bare strings OP-JESSE..OP-FELIPE with no signature give LAW_CHANGE and CP_MINT PassUnanimous.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/output] council-serve: a loop-ledger proposal with a score but no risk/genius defaults to the favourable reading (routes.rs:205-218); the route only ranks VERIFY/DEFER and never fires",
+     "ran": "Existing: cd ledger/cosign-council/council-serve && cargo +1.81.0 test --offline --locked parse_proposal. Probe docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/council_proposal.rs:31-82 uses producer::proposal and expected_acceptance_q, then drives the full route(&Shared,\"GET\",\"/api/loop/schedule\",\"\") with ASOLARIA_LOOP_LEDGER pointing at a scratch ledger.",
+     "observed": "Existing: 1 passed. Note that the test passes risk=0.1 explicitly, so it pins only the genius default, not the risk default. Probe: {score:0.6} gives score_q=600, genius_q=600, risk_q=0, acceptance 600. {score:0.6,genius:0,risk:1} gives acceptance 0. {score:0.6,risk:0.5} gives 100. A malformed risk (\"high\", null, 9e-1, [1]) also gives risk_q=0 and acceptance 600. Route (budget 8, threshold 500): s-only confidence_q=600 VERIFY and r-str 600 VERIFY; s-risk 100 DEFER and s-worst 0 DEFER; every row fire=false, with no fire=true anywhere. With the ledger unset: status=staged|source=loop_ledger_unwired.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "(extra, same area) council-serve /api/vote-quorum/parity: a re-hashed vote row; a missing ledger file",
+     "ran": "council_proposal.rs:84-104. A votes.ndjson row's decision_class is changed HEARTBEAT_ACK->LAW_CHANGE and re-hashed with the public canon::recompute; outcomes.ndjson is left absent; route GET /api/vote-quorum/parity.",
+     "observed": "votes: ok=1, rows_with_hash=1, match=1, mismatch=0, so the forged row is undetected. outcomes: ok=0, missing=1, error=ledger_unreadable, overall status 500. Unlike cosign verify, a missing vote ledger fails closed; re-hashed rows still pass.",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    }
+   ],
+   "existing_tests_run": [
+    "cd asolaria-aether/gate/hookwall && cargo +1.81.0 test --offline --locked cosign_chain -> 14 passed (incl. validate_detects_tampered_prev_sha16)",
+    "cd asolaria-aether/ledger/cosign-council/cosign-serve && cargo +1.81.0 test --offline --locked -> inprocess 5 passed; parity_replay fixture_replay_matches_all_row_hashes passed; full_live_replay_matches_all_daemon_rows and parity_differential ignored",
+    "cd asolaria-aether/ledger/cosign-council/cosign-serve && ASOLARIA_COSIGN_NDJSON=<probe work file> cargo +1.81.0 test --offline --locked --test parity_replay full_live_replay -- --ignored -> PASS on genuine, rehashed-middle, rehashed-final, deleted-middle, deleted-final; FAIL on naive (parity_replay.rs:64, checked 3 matched 2) and absent (parity_replay.rs:60, checked>0)",
+    "cd asolaria-aether/ledger/cosign-council/vote-quorum && cargo +1.81.0 test --offline --locked --lib -> 10 passed (incl. agt_class_prefix_authorized)",
+    "cd asolaria-aether/ledger/cosign-council/council-serve && cargo +1.81.0 test --offline --locked parse_proposal -> 1 passed (parse_proposal_reads_score_and_defaults_genius_to_score)"
+   ],
+   "probe_files": [
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/Cargo.toml",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/Cargo.lock",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/cosign_verify.rs",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/vote_quorum.rs",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/council_proposal.rs",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/tests/cosign_ledger_scaffold.rs",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/council/work/cosign/",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/hookwall/Cargo.toml",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/hookwall/Cargo.lock",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/hookwall/tests/public_api.rs",
+    "docs/audit/hookwall-2026-10-18/probes/ledgers/hookwall/tests/whitebox.rs"
+   ],
+   "notes": "I set up two scratch crates, each with a copied lockfile. probes/ledgers/council uses ledger/cosign-council/Cargo.lock and depends on cosign-serve, cosign-ledger, vote-quorum and council-serve by path. probes/ledgers/hookwall uses gate/hookwall/Cargo.lock. Both build with cargo +1.81.0 --offline and all their assertions pass. In the council crate, run the tests with --test-threads=1, because council_proposal sets ASOLARIA_LOOP_LEDGER. whitebox.rs compiles the unmodified upstream gate/hookwall/src/cosign_chain/mod.rs via #[path] so that its cfg(test) hatch push_unchecked_for_tests can be used. This is the only way to tamper a stored row in place, because CosignChain.rows is private. The public-API probe shows the same blindness without the hatch: a forged final row is accepted and validates.\n\nRefinements to the audit text:\n(1) vote-quorum 'OP-anything' is counted only for Authorized-pool classes (DAEMON_OP, MEMORY_WRITE, COSIGN_APPEND, GHOST_GC, USB_WRITE, unknown/default). For LAW_CHANGE and CP_MINT it is filtered out (Pending). Those classes do pass on the five bare apex name strings with no signature. Additional gap: duplicate voter strings are counted, so a single 'OP-anything' sent 3 times passes DAEMON_OP and USB_WRITE.\n(2) The cited existing council test supplies risk=0.1, so it does not pin the risk:=0 default. My probe also shows that a malformed risk (string, null, exponent, array) becomes 0.\n(3) The ignored upstream live-replay test fails closed on a missing file (its checked>0 precondition), whereas the /api/cosign/verify route returns ok:true checked 0. The test passes on re-hashed and deleted-row ledgers.\n(4) The vote-ledger parity route has the same re-hash blindness but fails closed (500, missing=1) on a missing ledger file.\n\nThe live-chain receipt (63 mismatches / 2,036 legacy) is UNREACHABLE: the owner's COSIGN_CHAIN.ndjson is not available. I wrote nothing under asolaria-aether except the gitignored target/ dirs; git status for ledger/, gate/hookwall and proposals/ is clean. During my run, colour/README.md (11:41) and loop/referee/referee_hbp.py (11:42) appeared as modified in the repo. They are outside my area and I did not touch them, so another agent presumably changed them."
+  },
+  {
+   "area": "kernel-lane: kernel/lane (+ kernel/lane/core, vendored federation-1024 kernel/boot init.rs) and planes/whiteroom-shannon hookwall_plane",
+   "results": [
+    {
+     "claim": "[FABRIC/hookwall_decision] (tamper line 106) kernel lane: any envelope, including a risky one, gets PROCEED. Context is fixed at Micro/Public/caller_pid 0, the slot comes from the 2/9 table, no GNN output is read, and BLOCK needs slot>=64, which the table never produces",
+     "ran": "Existing test: cd kernel/lane && cargo +1.81.0 test --offline --locked --test lane -- --exact kernel_lane_verdict_is_proceed_for_both_table_rows (passes). Probe: probes/kernel-lane/kernel/src/main.rs:43-140 (probe_always_proceed), run as target/release/probe-kernel-lane. It sweeps all 2^32 type prefixes through init's hook_context, sweeps all 65536 [slot,syscall_no] pairs through dispatch_verdict, drives 6 risky envelopes through the real init dispatch (BootLane::run_step) and drives 5 types through init::exchange",
+     "observed": "P1a: all 2^32 prefixes give [2,3]=1 (EXEC only) and [9,10]=4294967295. No other row. P1b: the context is slot 2/9, caller_pid=0, tier=Micro, target_tier=Public, verdict=Proceed. P1c: Proceed=16384, Hold=0, Block=49152, min_block_slot=64. Hold is unreachable, and Block occurs only for slot>=64. P1d: KILL+'HD-virus drift malformed-PID rm -rf /', spoofed BLOK/HOLD types, an 0xff prefix, SOS! and an EXEC carrying 'Sovereignty' all produced verdict_row 090a0101...485644 (or 0203 for EXEC), verdict byte=1 (Proceed), 1 cosign append and a UNKN/inner-envelope reply. P1e: every exchange gives verdict_row byte 1 (PONG, EERRinvalid, UNKN...). Static grep: nothing in src/, vendored init.rs or the other core modules calls sys_gnn_infer, predict_route or GnnInference",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/input] (tamper line 107) Phase-1 forge sha256(pub||':sign:'||msg)||sha256(that), built from the public key alone, is accepted by kernel/lane/core crypto::verify and rejected by gate/hookwall Ed25519. The boot lane has no caller of verify",
+     "ran": "Existing test: cd gate/hookwall && cargo +1.81.0 test --offline --locked --lib phase2 (gate_envelope_rejects_a_tag_forged_from_the_public_key passes, along with the 2 sibling tests). Probe: probes/kernel-lane/kernel/src/main.rs:148-185 (probe_phase1_forge). It tries 3 public keys (a real Ed25519 pub from a test-only seed, a kernel Phase-1 pub, and arbitrary bytes 0x11*32), forges the tag from pk alone, and calls both crates' crypto::verify and sign_gate::gate_envelope. Static grep for verify/sign/gate_envelope callers on the lane",
+     "observed": "For all 3 keys: kernel crypto::verify=Ok(()), and kernel sign_gate::gate_envelope gave admitted=true, sig_valid=true, reason=admitted-clean. gate/hookwall crypto::verify=Err(SignatureInvalid), and gate/hookwall gate_envelope gave admitted=false, sig_valid=false, reason=signature-invalid. Also 'kernel sign(sk) == forge(pk only): true': the kernel signature is fully derivable from the public key. Grep: no caller of crypto::verify/sign or gate_envelope in kernel/lane src/, in vendored kernel/boot init.rs, or in core modules outside crypto/sign_gate (the only uses are tests/common glue)",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] (tamper line 115) kernel lane: init discards every hookwall_post/cosign result with 'let _'. The SHTD row b\"init-shutdown\" (13 bytes < 16) returns Invalid and is dropped before sys_exit",
+     "ran": "Existing test: cd kernel/lane && cargo +1.81.0 test --offline --locked --test lane -- --exact shutdown_arm_runs_up_to_sys_exit_and_its_cosign_row_is_below_the_floor (passes). Probes: probes/kernel-lane/kernel/src/main.rs:188-220 (probe_shtd_cosign) and :265-288 (probe_upstream_shtd_thread). The second runs the REAL upstream init::exchange(b\"SHTD\") on a thread and checks it after 1.5 s. grep 'let _ =' in vendor/federation-1024/kernel/boot/src/init.rs",
+     "observed": "P3a: BootLane SHTD gives cosign_append=Err(Invalid) and appends_total=1 (only the hookwall_post HVD row 090a0101...485644). The bus reply is FINI\"init-shutdown\". P3b: len=13, sys_cosign_append(b\"init-shutdown\")=Err(Invalid) with 0 appends. The same 13 bytes through raw cosign_chain::append are accepted (1 append), and padded to 16 they are accepted, so the 16-byte syscall floor is the only reason the row drops. P3d (real upstream code): thread_finished=false (spinning in sys_exit(0)), cosign_appends_by_shtd_arm=1, bus=FINI\"init-shutdown\". The Invalid row error never surfaces. The grep shows 'let _ =' on sys_hookwall_post at init.rs:110,116,130,146,198, on sys_cosign_append at :132, and on sys_hookwall_pre/sys_envelope_send at :196,197,214. Caveat: P3c shows sys_hookwall_post can only fail for slot>=64 (Err(Invalid), 0 appends), and cosign_chain::append fails only on an empty row. So on the lane, a hookwall_post failure cannot be induced from envelope input. The SHTD drop is the reachable instance",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "[FABRIC/action] (tamper line 116, plane part only) whiteroom-shannon hookwall_plane grants HKG on five arbitrary signer strings plus window_ok===true, without checking any signature or presence",
+     "ran": "Existing tests: cd planes/whiteroom-shannon && cargo +1.81.0 test --offline --locked --test hookwall_plane (self_test_passes_and_counts_like_upstream and every_step_matches_the_referee, 400 rows, both pass). Probe: probes/kernel-lane/whiteroom/src/main.rs:37-90 runs grant_live with 9 forged signer arrays and 5 controls, fire_hookwall with a forged tuple, and self_test, using a recording QuantBus",
+     "observed": "granted=true, tag=HKG and grants=1 for 'a'..'e', for 'OP-anything' repeated 5 times, and for five empty strings, five null, five undefined, five 0, five [] and five {sig:'forged'}. 1000 copies of 'z' gave signer_field=1000. fire_hookwall with quintupleAuth signers ['OP-JESSE','OP-JESSE','x','y','z'] and intent 'rm -rf /' gave granted=true, HKG, fields [3,5c7923bd67b06c93,1,5,T,A]. The bus receives EnvelopeIn{granted:1, quintuple_authority:true} with no signer identities in it. Controls denied (HKW default_deny_quintuple_required): 4 signers, window_ok \"true\", window_ok 1, window_ok false, and signers given as a string. So only Array.length>=5 and window_ok===true (strict Bool) are checked. self_test=Ok(()), requests=2, denials=1, grants=1",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    },
+    {
+     "claim": "sys_gnn_infer always answers Local (kernel/lane/core syscall 16, GnnInference model never loaded)",
+     "ran": "Existing test: cd kernel/lane && cargo +1.81.0 test --offline --locked --test lane -- --exact sys_gnn_infer_answers_local_for_any_input (passes). Probe: probes/kernel-lane/kernel/src/main.rs:222-262 (probe_gnn_infer) runs 2005 inputs: empty, 'x', 300x0xff, 100000 zero bytes, 2000 deterministic xorshift buffers of length 0-256, and a KILL/HD-virus envelope naming UnicastAether/QuadBroadcast",
+     "observed": "P4: the decision histogram [Local,Triad,Quad,UAcer,ULiris,UFalcon,UAether] is [2005,0,0,0,0,0,0], with errs=0 and out[0]=0 every time. GnnInference::new gives is_ready=false and load_onnx_model=Err(Unimplemented), so the model can never be loaded. aggregate_verdict(10,10) and (0,10) both give Ok(Hold). The only failure is an empty output buffer, Err(Invalid). The lane's sys_hookwall_pre gives Ok(Proceed) and never consults it",
+     "verdict": "CONFIRMED",
+     "fails_closed": "no"
+    }
+   ],
+   "existing_tests_run": [
+    "cd kernel/lane && cargo +1.81.0 test --offline --locked --test lane  -> 16 passed (incl. kernel_lane_verdict_is_proceed_for_both_table_rows, shutdown_arm_runs_up_to_sys_exit_and_its_cosign_row_is_below_the_floor, sys_gnn_infer_answers_local_for_any_input)",
+    "cd kernel/lane && cargo +1.81.0 test --offline --locked --workspace -> lane 16, fixture 1, host8kernel 5, receipts 5, core unit 178 passed (1 ignored), 0 failed",
+    "cd gate/hookwall && cargo +1.81.0 test --offline --locked --lib phase2 -> 3 passed (gate_envelope_rejects_a_tag_forged_from_the_public_key, gate_envelope_admits_a_genuine_signature, a_genuine_signature_for_another_envelope_is_rejected)",
+    "cd gate/hookwall && cargo +1.81.0 test --offline --locked -> 62 passed",
+    "cd planes/whiteroom-shannon && cargo +1.81.0 test --offline --locked --test hookwall_plane -> 2 passed (self_test_passes_and_counts_like_upstream, every_step_matches_the_referee)"
+   ],
+   "probe_files": [
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/kernel/Cargo.toml",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/kernel/Cargo.lock",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/kernel/src/main.rs",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/kernel/probe-output.txt",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/whiteroom/Cargo.toml",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/whiteroom/Cargo.lock",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/whiteroom/src/main.rs",
+    "docs/audit/hookwall-2026-10-18/probes/kernel-lane/whiteroom/probe-output.txt"
+   ],
+   "notes": "All five claims in this area are CONFIRMED by running code. The full stdout of each probe is saved in the probe-output.txt files listed above.\n\nBuild notes:\n- The kernel probe depends on both kernel/lane and gate/hookwall. The kernel/lane Cargo.lock alone made cargo 1.81 resolve zeroize 1.9.1, which needs edition2024 and fails offline. Its Cargo.lock is therefore a copy of gate/hookwall's (the superset), and cargo added the kernel-lane path crates offline on top of it.\n- Both probe crates build with cargo +1.81.0 --offline --release.\n- No file under asolaria-aether was changed: git status for kernel/lane, gate/hookwall, planes/whiteroom-shannon and kernel/behcs1024-60d is empty. Only the gitignored target/ dirs were written by the in-place test runs.\n\nThings worth knowing:\n1. The test-harness sim (sim.rs:172) keeps the SHTD cosign result, but the upstream init.rs:132 discards it. Probe P3d runs the real upstream init::exchange(SHTD) on a thread. The thread never returns (it spins in sys_exit(0)), makes exactly 1 cosign append (the HVD row) and leaves FINI on the bus. This proves the discard on the vendored code itself.\n2. The Phase-1 forge works beyond crypto::verify. The kernel core's own sign_gate::gate_envelope admits it as 'admitted-clean' for any 32-byte public key, including bytes nobody holds a secret for. gate_envelope has no caller on the boot lane.\n3. On the lane, hookwall_post failure cannot be triggered from envelope input. It fails only for slot>=64, which the table never produces, or for an empty row. The SHTD 13-byte cosign row is the only failure that can actually happen there.\n4. Hold is unreachable from the lane: 0 of the 65536 [slot,syscall] pairs give Hold.\n5. Line 116 also makes sub-claims about vote-quorum 'OP-*' voters, Fischer operator_witness and tier_gate Sovereignty. Those crates are outside this area and were not probed here. Only the whiteroom hookwall_plane part was tested."
+  }
+ ]
+}
