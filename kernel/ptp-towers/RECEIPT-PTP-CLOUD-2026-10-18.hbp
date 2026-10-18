@@ -40,3 +40,11 @@ CELL|r=26|trits=0,0,-1|coprime_to_3=1|primes=36957|json=0
 CUBE27|coprime_cells=18|populated=18|min=36826|max=37023|spread_per10000_of_mean=53|centre_plane_nonempty=3:1|json=0
 P2P|pairs=664576|switch=378567|stay=286009|switch_permille=569|independence_baseline_permille=500|minus_to_plus=189284|plus_to_minus=189283|first_spoke=-1|last_spoke=1|direction_balance_is_forced=1|json=0
 TOWERS|primes_above_3=664577|rebuilt_6k_pm_1=664577|roundtrip_16trit_tribit=664577|all=1|json=0
+LEVEL|level=1|voxels=3^3|primes_sharing_a_voxel=664578|inner_address_kept=664579/664579|json=0
+LEVEL|level=2|voxels=3^6|primes_sharing_a_voxel=664578|inner_address_kept=664579/664579|json=0
+LEVEL|level=3|voxels=3^9|primes_sharing_a_voxel=664578|inner_address_kept=664579/664579|json=0
+LEVEL|level=4|voxels=3^12|primes_sharing_a_voxel=562173|inner_address_kept=664579/664579|json=0
+LEVEL|level=5|voxels=3^15|primes_sharing_a_voxel=0|inner_address_kept=664579/664579|json=0
+LEVEL|level=6|voxels=3^18|primes_sharing_a_voxel=0|inner_address_kept=664579/664579|json=0
+LEVEL|level=60|voxels=3^180|primes_sharing_a_voxel=0|inner_address_kept=664579/664579|json=0
+ADDRESS60|sharing_reaches_zero_at_level=5|stays_zero_through_60=1|room_of_2=-1,1,0|same_at_60=1|room_of_3=0,1,0|same_at_60=1|trit_order=least_significant_first|json=0

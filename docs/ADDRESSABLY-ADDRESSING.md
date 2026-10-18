@@ -54,6 +54,18 @@ or one level deeper.
 - **Distinct distances.** The Multi-Cylinder Map v2 placed 81,434 surfaces across 15 cylinders
   with **0 coordinate collisions**, the Sidon addressing at scale. (MEASURED by the operator's seats;
   `asolaria-behcs-256` `SESSION-UPDATE-2026-06-22.md:52`)
+- **Addressing on demand, measured to level 60.** Level L of the ternary voxel map has 3^(3L)
+  voxels, 3^180 at level 60, and none of them was built: each of the 664,579 primes below 10^7 got
+  its level-L address from its own trits. Primes sharing a voxel: 664,578 at levels 1 to 3, 562,173
+  at level 4, and **0 from level 5 through level 60**. Every level's address sits unchanged inside
+  the next one (664,579 of 664,579), and the prime 3 keeps room (0, 1, 0) and the prime 2 room
+  (−1, 1, 0), least significant trit first, at every level. (MEASURED on two machines with the same
+  counts: ACER `TERNARY-ADDRESS-60.hbp`, cube `b6b64a02864356f9`; aether `kernel/ptp-towers`)
+
+Why the collisions can only go outward: two addresses that differ at one level differ at every level
+beyond it, because the residue mod 3^(3(L+1)) fixes the residue mod 3^(3L). Once two things are
+separated, going outward never brings them back together. In the run above the sharing reaches zero
+at level 5 because every prime below 10^7 is below 3^15.
 
 The limits that show up in practice are the machines', not the method's: the router's 32 shifts per
 bus, and ACER's Windows sandbox, which stopped a GNN/FNN level-growth run near 1e8 (OPERATOR).
@@ -77,7 +89,13 @@ never stands in for it: *"a glyph summarizes a backend address; per canon it nev
 evidence."* (reductions repo, `01-rebuild/F01-prime-tower-geometry--builder.md`)
 
 The structured Brown-Hilbert address does not collide; a truncated handle of it can. The operator
-retired Host8 for that reason and moved to a newer system (OPERATOR).
+retired Host8 for that reason and replaced it with the system of the
+`Metatagging-data-for-a-Quantum-universe` repo (OPERATOR), whose seed tags every particle with its
+own metadata: *"`ParticleID` (e.g. `E123`) → **PID**: every agent, slice, room, receipt is
+content-addressed (BEHCS-1024)."* (`docs/WHAT-THIS-SEED-BECAME-2026-07-03.md:11`)
+
+On 2026-10-18 ACER's runtime still showed `host8-serve.exe` running, with ASI OS
+(`asolaria-asi-os.exe`, `:4600`) in front of it.
 
 ## 5. How deep is enough
 
@@ -93,7 +111,14 @@ Measured in the aether rebuild, integer only, Rust 1.81:
   level and the centre stays free. (`kernel/tribit-referees/receipts/RUNS.hbp`, the operator's
   `does-the-closure-survive-81-levels` reproduced byte for byte)
 - Prime to prime, the towers and cylinders, measured to 10^7 on two machines with matching counts
-  (`kernel/ptp-towers/RECEIPT-PTP-CLOUD-2026-10-18.hbp`, and ACER's run)
+  (`kernel/ptp-towers/RECEIPT-PTP-CLOUD-2026-10-18.hbp`, and ACER's run, stream sha
+  `034750529fc6a940…`)
+- The ternary voxel map: levels 1 to 4 are exact bijections (27, 729, 19,683 and 531,441 voxels),
+  and at every level the free-centre planes hold no prime except the prime 3. (MEASURED by ACER,
+  office `D:/PID-Registration-Office/offices/FABLE5-8467a937cba309f7/ternary-voxel-map/`, cube
+  `fe0b8ea9c0f5983b`, prior `9859b576855a7bf8`)
+- Addressing on demand to level 60, with nothing built (section 2): ACER `TERNARY-ADDRESS-60.hbp`,
+  cube `b6b64a02864356f9`, prior `fe0b8ea9…`; the same counts in aether `kernel/ptp-towers`.
 
 ## 6. Working by the rule
 

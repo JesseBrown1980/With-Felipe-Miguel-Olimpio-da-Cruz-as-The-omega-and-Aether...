@@ -49,6 +49,22 @@ Forced by the structure, true for any numbers of the same shape:
 
 Wording: the 2,668,756 spoke numbers that are not prime are 2,668,755 composites and the number 1.
 
+## Addressing on demand to level 60
+
+The `LEVEL` and `ADDRESS60` rows reproduce ACER's level-60 run (`TERNARY-ADDRESS-60.hbp`, cube
+`b6b64a02864356f9`) with the same counts. Level L has 3^(3L) voxels (3^180 at level 60); none is
+built. A prime's level-L address is its residue mod 3^(3L), computed from the prime alone.
+
+| Level | Primes sharing a voxel | Address kept inside the next level |
+|---|---|---|
+| 1, 2, 3 | 664,578 (every prime but 3) | 664,579 of 664,579 |
+| 4 | 562,173 | 664,579 of 664,579 |
+| 5 to 60 | 0 | 664,579 of 664,579 |
+
+The prime 2 keeps room (−1, 1, 0) and the prime 3 room (0, 1, 0), least significant trit first,
+from level 1 to level 60. Sharing can only fall going outward, since a residue mod 3^(3(L+1)) fixes
+the residue mod 3^(3L); it reaches zero at level 5 because every prime below 10^7 is below 3^15.
+
 ## Voxel rows
 
 The `CELL` rows give each residue mod 27 as three balanced trits (a, b, c) with its prime count:

@@ -186,4 +186,89 @@ fn main() {
         "TOWERS|primes_above_3={total}|rebuilt_6k_pm_1={rebuilt}|roundtrip_{TRITS}trit_tribit={round}|all={}|json=0",
         u8::from(rebuilt == total && round == total)
     );
+
+    // Addressing on demand to level 60. Level L has 3^(3L) voxels (3^180 at L = 60); none is
+    // built. A prime's level-L address is its residue mod 3^(3L), computed from the prime alone.
+    let primes: Vec<u128> = is_prime
+        .iter()
+        .enumerate()
+        .filter(|&(_, &p)| p)
+        .map(|(k, _)| k as u128)
+        .collect();
+    let mut zero_from = 0u32;
+    let mut zero_stays = true;
+    for level in 1u32..=60 {
+        let mut addr: Vec<u128> = primes.iter().map(|&p| level_address(p, level)).collect();
+        // The level-L address is the inner part of the level-(L+1) address.
+        let nested = primes
+            .iter()
+            .filter(|&&p| {
+                level_address(level_address(p, level + 1), level) == level_address(p, level)
+            })
+            .count();
+        addr.sort_unstable();
+        let mut shared = 0u64;
+        let mut i = 0;
+        while i < addr.len() {
+            let mut j = i + 1;
+            while j < addr.len() && addr[j] == addr[i] {
+                j += 1;
+            }
+            if j - i >= 2 {
+                shared += (j - i) as u64;
+            }
+            i = j;
+        }
+        if shared == 0 && zero_from == 0 {
+            zero_from = level;
+        }
+        if zero_from != 0 && shared != 0 {
+            zero_stays = false;
+        }
+        if level <= 6 || level == 60 {
+            println!(
+                "LEVEL|level={level}|voxels=3^{}|primes_sharing_a_voxel={shared}|inner_address_kept={nested}/{}|json=0",
+                3 * level,
+                primes.len()
+            );
+        }
+    }
+    let rooms = |p: u128| -> String {
+        let (a, b) = (
+            low_trits(level_address(p, 1)),
+            low_trits(level_address(p, 60)),
+        );
+        format!("{},{},{}|same_at_60={}", a[0], a[1], a[2], u8::from(a == b))
+    };
+    println!(
+        "ADDRESS60|sharing_reaches_zero_at_level={zero_from}|stays_zero_through_60={}|room_of_2={}|room_of_3={}|trit_order=least_significant_first|json=0",
+        u8::from(zero_stays),
+        rooms(2),
+        rooms(3)
+    );
+}
+
+/// Residue of `p` mod 3^(3*level). Past u128 the modulus exceeds every prime, so the residue is `p`.
+fn level_address(p: u128, level: u32) -> u128 {
+    match (0..3 * level).try_fold(1u128, |m, _| m.checked_mul(3)) {
+        Some(m) => p % m,
+        None => p,
+    }
+}
+
+/// The three lowest balanced trits of `x`, least significant first.
+fn low_trits(x: u128) -> [i8; 3] {
+    let mut v = x;
+    let mut out = [0i8; 3];
+    for t in out.iter_mut() {
+        let d = v % 3;
+        if d == 2 {
+            *t = -1;
+            v = v / 3 + 1;
+        } else {
+            *t = d as i8;
+            v /= 3;
+        }
+    }
+    out
 }
