@@ -1,0 +1,24 @@
+[package]
+name = "asolaria-server-vote-quorum"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Council vote-ledger of asolaria-federation-1024, byte-identical: the sha-chain canon (src/canon.rs), the QUORUM_RULES / is_authorized / evaluate table (src/lib.rs) and the read-only parity-harness bin (src/bin/vote-quorum-parity.rs). lib.rs and the bin were vendored on the owner decision of 2026-10-18 (PROVENANCE.md section 7)."
+
+# Upstream src/lib.rs, vendored byte-identical (it declares `pub mod canon`). src/glue.rs was removed on
+# restore (owner decision, 2026-10-18; PROVENANCE.md section 7).
+[lib]
+crate-type = ["rlib"]
+path = "src/lib.rs"
+
+# Upstream read-only parity harness (vendor/federation-1024/servers/vote-quorum/Cargo.toml:11-13).
+[[bin]]
+name = "vote-quorum-parity"
+path = "src/bin/vote-quorum-parity.rs"
+
+# The upstream manifest's dependency (vendor/federation-1024/servers/vote-quorum/Cargo.toml:19-20), with
+# the upstream workspace line (federation-1024 Cargo.toml:53) written in.
+[dependencies]
+sha2 = { version = "0.10", default-features = false }

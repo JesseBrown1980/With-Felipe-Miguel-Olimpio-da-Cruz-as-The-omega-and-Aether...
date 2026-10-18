@@ -1,0 +1,29 @@
+REFEREE|dir=ledger/hyperbehcs-daemons|upstream=ACER C:/HyperBEHCS/bin 2026-10-17|daemon=vote-quorum|seed=20261017|lane=cold|json=0
+UPSTREAM|file=asolaria-vote-quorum-daemon.py|sha256=9fd9de52e84caf667ccdcee1c37193a4e9197a86f7c951fc04677a65de6db9ae|newlines=263|exec_ranges=30-33,42-61,63-64,66-163,165-254|range_sha16=ed6802e9388e67d4,a904686ab52d4069,fec75d5030b8bfe5,12855fb7087e6160,28c48ba3b456427f|json=0
+CASES|mode=rules|rows=11|equal=1|json=0
+WINDOWS|LAW_WINDOW_END_lines=48,200|OP_WINDOW_END_lines=49,200|extra_key_lines=54|now_iso_call_lines=82,189,219|json=0
+READS|function=is_authorized|lines=118-123|LAW_WINDOW_END=0|OP_WINDOW_END=0|extra=0|clock=0|json=0
+READS|function=evaluate_quorum|lines=125-163|LAW_WINDOW_END=0|OP_WINDOW_END=0|extra=0|clock=0|json=0
+CASES|mode=auth|cases=354|authorized=161|equal=1|rust_sha256=b6182575807adb2e00e39277d6da832b7d6279af7555a0640b37eb1cb8db7ef0|json=0
+CASES|mode=eval|cases=4000|outcomes=PASS-AUTO:308,PASS-MAJORITY:1210,PASS-SUPERMAJORITY:118,PASS-UNANIMOUS:80,PENDING:2056,REJECT:228|equal=1|rust_sha256=a9e2bf0509cd9f7bd438d844e2672b3847ae24fe44cd52a1077108d266369b2c|json=0
+EXHAUSTIVE|max_total=10000|pairs=50015001|totals=10001|equal_totals=10001|equal=1|true_149=16675001|true_151=33340000|true_157=25005000|true_159=25010001|json=0
+EXPR|line=149|python=yes >= (2 * total) / 3|json=0
+EXPR|line=151|python=no > total / 3|json=0
+EXPR|line=157|python=yes > total / 2|json=0
+EXPR|line=159|python=no >= total / 2|json=0
+BIG|band=3..1048576|pairs=10000|equal=10000|differ=0|json=0
+BIG|band=1048576..1099511627776|pairs=10000|equal=10000|differ=0|json=0
+BIG|band=1099511627776..2251799813685248|pairs=10000|equal=10000|differ=0|json=0
+BIG|band=2251799813685248..4503599627370496|pairs=10000|equal=10000|differ=0|json=0
+BIG|band=4503599627370496..9007199254740992|pairs=10000|equal=9866|differ=134|json=0
+BIG|band=9007199254740992..18014398509481984|pairs=10000|equal=9198|differ=802|json=0
+BIG|band=18014398509481984..4611686018427387904|pairs=10000|equal=2319|differ=7681|json=0
+BIG_EDGE|yes=18446744073709551615|no=1|upstream_bits=165|rust_bits=165|equal=1|json=0
+BIG_EDGE|yes=18446744073709551615|no=18446744073709551615|upstream_bits=66|rust_bits=10|equal=0|json=0
+CASES|mode=idem|cases=600|due=403|equal=1|line_247=status["outcome"] in ("PASS-UNANIMOUS", "PASS-MAJORITY", "PASS-SUPERMAJORITY", "PASS-AUTO", "REJECT") and not outcome_exists(body["vote_id"])|json=0
+CASES|mode=flow|votes=500|casts=3949|answered_409=210|outcome_rows=252|equal=1|rust_sha256=a54738cfe67b4dcced40b7953c456b1f8e0ea3204ccb4c7c16ef956d1f0a3a2c|json=0
+SPLITLINES|char=U+0085|first_cast=200|second_cast_same_voter=200|rows_written=2|rows_read_by_votes_for=1|yes_after_second=1|json=0
+SPLITLINES|char=U+2028|first_cast=200|second_cast_same_voter=200|rows_written=2|rows_read_by_votes_for=1|yes_after_second=1|json=0
+SPLITLINES|char=U+2029|first_cast=200|second_cast_same_voter=200|rows_written=2|rows_read_by_votes_for=1|yes_after_second=1|json=0
+TAIL2048|prev_row_bytes=3374|next_antecedents_is_genesis=1|json=0
+RESULT|rust_equals_upstream=1|json=0

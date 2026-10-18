@@ -1,0 +1,24 @@
+[package]
+name = "asolaria-hyperbehcs-daemons"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Integer Rust ports of the decision logic of the owner's two HyperBEHCS daemons (vote-quorum :4952, cosign-chain :4953); the Python daemons are vendored unchanged"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "hyperbehcs-daemons-vectors"
+path = "src/bin/hyperbehcs-daemons-vectors.rs"
+
+[dependencies]
+sha2 = { version = "0.10", default-features = false }
+
+[features]
+# The vote-quorum port is vendored and on by default (owner decision, 2026-10-18; PROVENANCE.md). The
+# feature is kept so the cosign-chain-only lane still builds with --no-default-features.
+default = ["vote-quorum"]
+vote-quorum = []

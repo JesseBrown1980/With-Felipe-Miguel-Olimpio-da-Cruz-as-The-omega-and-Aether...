@@ -1,0 +1,20 @@
+[package]
+name = "asolaria-server-vote-quorum"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Asolaria userspace server · vote-quorum Rust port (QUORUM_RULES + evaluate_quorum + sha-chain canon, parity with py :4952) · council/loop Host-8 responder · STAGED, no cutover"
+
+[lib]
+crate-type = ["rlib"]
+
+# Std parity harness (READ-ONLY): proves the no_std lib + canon reproduce the live py :4952
+# daemon's on-disk ledgers before any cutover. Does not touch the daemon or write any ledger.
+[[bin]]
+name = "vote-quorum-parity"
+path = "src/bin/vote-quorum-parity.rs"
+
+[dependencies]
+sha2 = { workspace = true }

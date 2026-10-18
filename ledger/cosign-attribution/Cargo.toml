@@ -1,0 +1,32 @@
+# Claude's addition, written for aether; not upstream code and not the default verifier.
+# The default verifier is Federation-1024's cosign-serve verify (routes.rs:99-152), in aether at
+# ledger/cosign-council, unchanged. This crate reads it through the cosign-ledger library only.
+[package]
+name = "asolaria-cosign-attribution"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Claude's addition (not the default verifier): prints the default cosign verify counts, then a separate, labelled report of which compact writer serialization the row_hash equals for each row the default counts under mismatches"
+publish = false
+
+[workspace]
+resolver = "2"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "cosign-attribution"
+path = "src/main.rs"
+
+[dependencies]
+# federation-1024 @ dc1da1a9 servers/cosign-ledger, byte-identical in ledger/cosign-council.
+asolaria-server-cosign-ledger = { path = "../cosign-council/cosign-ledger", version = "0.1.0" }
+# The version line cosign-ledger itself uses (federation-1024 Cargo.toml:46); the lock holds 0.10.9.
+# Used here only for the full 64-hex sha256 in the evidence rows.
+sha2 = { version = "0.10", default-features = false }
+
+[dev-dependencies]
+# The default verifier itself (routes.rs:99-152), to show that DEFAULT counts are its counts.
+asolaria-server-cosign-serve = { path = "../cosign-council/cosign-serve", version = "0.1.0" }

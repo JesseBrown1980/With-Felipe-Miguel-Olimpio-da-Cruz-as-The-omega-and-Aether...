@@ -1,0 +1,19 @@
+[package]
+name = "asolaria-cosign-council-vectors"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Cold-lane vector printer for the referee: runs the vendored cosign and council ledger code over input files and prints HBP rows"
+publish = false
+
+[[bin]]
+name = "cosign-council-vectors"
+path = "src/main.rs"
+
+[dependencies]
+asolaria-server-cosign-ledger = { path = "../cosign-ledger", version = "0.1.0" }
+asolaria-server-cosign-serve = { path = "../cosign-serve", version = "0.1.0" }
+asolaria-server-vote-quorum = { path = "../vote-quorum", version = "0.1.0" }
+asolaria-server-council-serve = { path = "../council-serve", version = "0.1.0" }

@@ -1,0 +1,7 @@
+REFEREE|dir=ledger/hyperbehcs-daemons|upstream=ACER C:/HyperBEHCS/bin 2026-10-17|daemon=cosign-chain|seed=20261017|lane=cold|json=0
+UPSTREAM|file=asolaria-cosign-chain-daemon.py|sha256=a2c863db85a747f3b5272d72b2dc6215f7dda3470a6290621de1bc70def22ea2|newlines=137|exec_ranges=17-20,25-32,34-74|range_sha16=fe14b6a3748070dd,f2dbbf0151758c79,8de20aa0fc31061d|json=0
+CASES|mode=iso|cases=3010|equal=1|rust_sha256=9669da9b6c816ecdd8bc52aa92ccf16ae0492deacc193518bb31a64fc55589cf|json=0
+CASES|mode=dumps|values=3000|with_control=1638|with_quote=372|with_backslash=373|with_del=355|with_nonascii_bmp=1690|with_astral=854|with_u2028=392|with_nonascii_key=1110|with_nested_obj=797|equal=1|rust_sha256=178c6d3e44a3c2cdf2ac6c7d9ea9cd8bf56285ce9846fe8a4659790154bb3575|json=0
+CASES|mode=chain|scenarios=450|edge_scenarios=50|historic_lines=1499|historic_skipped_by_lines_46_52=219|appends=1033|head_not_str=51|antecedents_with_head_variant=117|cold_appends_seq_2^127=19|equal=1|rust_sha256=7a1747ccb6eb9f420a5e982cfdd753b80e35451cc0db5e1d122c53a6a538824c|json=0
+VERIFY_TOOL|chains=450|rows=2532|parsed=2313|with_row_hash=2213|hash_equal=1033|hash_differs=1180|daemon_rows=835|daemon_hash_equal=835|daemon_seq_follows_head=835|daemon_antecedents_list=756|daemon_head_in_antecedents=756|daemon_rows_hot_lane_shapes=818|ok=1|json=0
+RESULT|rust_equals_upstream=1|json=0

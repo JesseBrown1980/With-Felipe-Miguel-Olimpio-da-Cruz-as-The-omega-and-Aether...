@@ -1,0 +1,8 @@
+# The cosign and council ledger crates of asolaria-federation-1024 @ dc1da1a9, as in-process libraries.
+# Upstream sources are byte-identical (see PROVENANCE.md); these manifests are glue. The upstream
+# manifests are carried under vendor/ for provenance and are not active. Each member manifest is
+# standalone (no workspace inheritance), so other aether crates can depend on it by path.
+[workspace]
+resolver = "2"
+members = ["cosign-ledger", "cosign-serve", "vote-quorum", "council-serve", "vectors"]
+exclude = ["vendor"]

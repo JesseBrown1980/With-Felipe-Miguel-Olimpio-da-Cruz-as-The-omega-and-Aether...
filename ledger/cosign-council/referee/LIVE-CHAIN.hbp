@@ -1,0 +1,6 @@
+LIVECHAIN|ledger_sha256=39aaa803ad47d794ec3e3f989fcb8b0ca24aef254451941d50419dfbf2791939|bytes=1697115|lines=5439|parse_err=1863|lane=cold|json=0
+LIVEVERIFY|route=/api/cosign/verify|checked=3399|matched=3336|mismatches=63|legacy=2036|json=0
+LIVEHEAD|route=/api/cosign/head|seq=3587|json=0
+LIVECANON|canon=cosign_py_parity|rows_with_row_hash=3399|recompute_equal=3336|json=0
+LIVECANON|canon=vote_quorum|rows_with_row_hash=3399|recompute_equal=3336|json=0
+LIVEVERDICT|mirror_equals_rust=1|json=0

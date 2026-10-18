@@ -1,0 +1,22 @@
+[package]
+name = "asolaria-server-council-serve"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "council-serve of asolaria-federation-1024 as an in-process library: the json=0 routes (vote-ledger parity, confidence-scheduled verify, lane/policy/branch/mcp/event/recovery/ptc diagnostics) without the TCP listener"
+build = "build.rs"
+# src/main.rs is upstream's binary (it binds 127.0.0.1:5090 and starts the gated engine-drive thread).
+# It is carried byte-identical and is not a target here: build.rs takes its Shared struct (main.rs:30-32).
+autobins = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+# The upstream manifest's dependency (vendor/federation-1024/servers/council-serve/Cargo.toml:14-15).
+asolaria-server-vote-quorum = { path = "../vote-quorum", version = "0.1.0" }
+# Upstream main.rs:23 `mod schedule;` is src/schedule.rs (blob 6b3c8d7f). aether holds that file once,
+# byte-identical, as proposals/verify-schedule; it is not copied here.
+asolaria-verify-schedule = { path = "../../../proposals/verify-schedule", version = "0.1.0" }

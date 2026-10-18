@@ -1,0 +1,23 @@
+REFEREE|dir=ledger/cosign-attribution|label=Claude's addition, not upstream, not the default verifier|seed=20261017|lane=cold|json=0
+FIXTURE|name=synthetic|bytes=767267|sha256=fcb7bbed5df8fc82c43e2d5c87b3e6a47b0eaf26350aa575c20799b99748cdff|rust_sha256=2066d20a669536028adb4154d8fd9167c02070aed63c82ae8868748dde14526a|rust_equals_referee=1|json=0
+TOTALS|name=synthetic|checked=5417|matched=1201|mismatches=4216|legacy=393|sorted_compact_kept=612|original_compact_kept=308|sorted_compact_escaped=343|original_compact_escaped=259|unidentified=2153|daemon_row_mismatch=541|json=0
+FIXTURE|name=utf8_stop|bytes=9811|sha256=9e437c4b6e4a70833b42a5615ade5e22c561cb693e1b34b497ea36ebe7b867ab|rust_sha256=cf4aaf39385fd52c16811b68168251849ed7c82c10cd8c8dd867231062d37687|rust_equals_referee=1|json=0
+TOTALS|name=utf8_stop|checked=55|matched=12|mismatches=43|legacy=3|sorted_compact_kept=8|original_compact_kept=6|sorted_compact_escaped=1|original_compact_escaped=4|unidentified=16|daemon_row_mismatch=8|json=0
+FIXTURE|name=cr_tail|bytes=1070|sha256=93d9f7bdfda33aa7f339318fd7a97a0a8d9965a0cbb7d337afd39971442d4acf|rust_sha256=0bed4c38ea489d3c9ee5e3c3abdbb0edf3ef9c8a9648ef79fc0c3bac19e835af|rust_equals_referee=1|json=0
+TOTALS|name=cr_tail|checked=8|matched=2|mismatches=6|legacy=1|sorted_compact_kept=1|original_compact_kept=0|sorted_compact_escaped=0|original_compact_escaped=1|unidentified=3|daemon_row_mismatch=1|json=0
+FIXTURE|name=empty|bytes=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|rust_sha256=91e10566fd4dd37f69e1af2f33cb874d558c1b24e11169fd9008afa79c1601db|rust_equals_referee=1|json=0
+TOTALS|name=empty|checked=0|matched=0|mismatches=0|legacy=0|sorted_compact_kept=0|original_compact_kept=0|sorted_compact_escaped=0|original_compact_escaped=0|unidentified=0|daemon_row_mismatch=0|json=0
+FIXTURE|name=tokens|bytes=272|sha256=15ac6d7e2da51504696c8aa4857c7bf3138f3470d63775dde4cdb4babaf4b797|rust_sha256=9e397acc616e3eb1333d456a7e533d9dda2cca9e4e39ce2a70ee6f091adab808|rust_equals_referee=1|json=0
+TOTALS|name=tokens|checked=5|matched=0|mismatches=5|legacy=0|sorted_compact_kept=3|original_compact_kept=1|sorted_compact_escaped=0|original_compact_escaped=0|unidentified=1|daemon_row_mismatch=0|json=0
+FIXTURE|name=deep|bytes=31413|sha256=bfc1fbdc63e7f91ff62793eb034e2ef581302a6d486537c265afb73190cbe795|rust_sha256=73896619057d9e4bcac54f465a68f1b4cffd34e4a5fb9c3c8c83041d2cd5b353|rust_equals_referee=1|json=0
+TOTALS|name=deep|checked=5|matched=1|mismatches=4|legacy=0|sorted_compact_kept=2|original_compact_kept=1|sorted_compact_escaped=0|original_compact_escaped=0|unidentified=1|daemon_row_mismatch=0|json=0
+FIXTURE|name=missing|rust_equals_referee=1|json=0
+DUMPS|fixture=synthetic|rows=2259|forms_compared=9036|forms_equal=9036|json=0
+MUTATION|name=del_raw_in_escaped|caught=1|json=0
+MUTATION|name=normalize_numbers|caught=1|json=0
+MUTATION|name=escaped_before_kept|caught=1|json=0
+MUTATION|name=utf16_key_order|caught=1|json=0
+MUTATION|name=ignore_daemon_key|caught=1|json=0
+MUTATION|name=surrogatepass_kept|caught=1|json=0
+MUTATION|name=digest_prefix_any_len|caught=1|json=0
+MUTATION|name=json_loads_line|caught=1|json=0
