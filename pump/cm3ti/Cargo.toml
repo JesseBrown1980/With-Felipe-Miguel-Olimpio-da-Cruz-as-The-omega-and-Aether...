@@ -1,0 +1,141 @@
+[package]
+name = "asolaria-cm3ti"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "UNLICENSED"
+publish = false
+description = "Vendored cm3ti integer-deterministic context-mixing compressors (one binary per source file), byte-identical to the owner's honest-compressor tools/honest-compressor/rust tree (ACER export 2026-10-18, cloud session 9ebd6119). Integer compressed path; float lives only in the owner's display/timer lines (see PROVENANCE.md)."
+readme = "README.md"
+
+# The vendored sources are byte-identical to the owner's export and are NOT edited.
+# Each source is a standalone `fn main()` compressor. One [[bin]] per integer file.
+# cm3t.rs is the owner's float reference: vendored byte-identical, NOT built here
+# (not in the hot lane). See PROVENANCE.md "The float reference".
+
+[[bin]]
+name = "cm3ti"
+path = "rust/cm3ti.rs"
+
+[[bin]]
+name = "cm3ti_combo"
+path = "rust/cm3ti_combo.rs"
+
+[[bin]]
+name = "cm3ti_rainbow12"
+path = "rust/cm3ti_rainbow12.rs"
+
+[[bin]]
+name = "cm3ti_rbladder"
+path = "rust/cm3ti_rbladder.rs"
+
+[[bin]]
+name = "cm3ti_sector"
+path = "rust/cm3ti_sector.rs"
+
+[[bin]]
+name = "cm3ti_stack"
+path = "rust/cm3ti_stack.rs"
+
+[[bin]]
+name = "cm3ti_stack_1g"
+path = "rust/cm3ti_stack_1g.rs"
+
+[[bin]]
+name = "cm3ti_stackrb"
+path = "rust/cm3ti_stackrb.rs"
+
+[[bin]]
+name = "tb26"
+path = "rust/variants/tb26.rs"
+
+[[bin]]
+name = "tb27"
+path = "rust/variants/tb27.rs"
+
+[[bin]]
+name = "tb28"
+path = "rust/variants/tb28.rs"
+
+[[bin]]
+name = "v13_s4096"
+path = "rust/variants/v13_s4096.rs"
+
+[[bin]]
+name = "v14_primed"
+path = "rust/variants/v14_primed.rs"
+
+[[bin]]
+name = "v15_absorb"
+path = "rust/variants/v15_absorb.rs"
+
+[[bin]]
+name = "v16_mirror"
+path = "rust/variants/v16_mirror.rs"
+
+[[bin]]
+name = "v17_s1024"
+path = "rust/variants/v17_s1024.rs"
+
+[[bin]]
+name = "v18_s16384"
+path = "rust/variants/v18_s16384.rs"
+
+[[bin]]
+name = "v19_s65536"
+path = "rust/variants/v19_s65536.rs"
+
+[[bin]]
+name = "v3_rainbow"
+path = "rust/variants/v3_rainbow.rs"
+
+[[bin]]
+name = "v4_rainbow12"
+path = "rust/variants/v4_rainbow12.rs"
+
+[[bin]]
+name = "v5_tight"
+path = "rust/variants/v5_tight.rs"
+
+[[bin]]
+name = "v6_even"
+path = "rust/variants/v6_even.rs"
+
+[[bin]]
+name = "v7_nbr"
+path = "rust/variants/v7_nbr.rs"
+
+[[bin]]
+name = "v8_r24"
+path = "rust/variants/v8_r24.rs"
+
+[[bin]]
+name = "v9_r48"
+path = "rust/variants/v9_r48.rs"
+
+[[bin]]
+name = "vc26"
+path = "rust/variants/vc26.rs"
+
+[[bin]]
+name = "vc27"
+path = "rust/variants/vc27.rs"
+
+[[bin]]
+name = "vc28"
+path = "rust/variants/vc28.rs"
+
+[[bin]]
+name = "vc28m"
+path = "rust/variants/vc28m.rs"
+
+[[bin]]
+name = "vc65"
+path = "rust/variants/vc65.rs"
+
+[dependencies]
+
+# Upstream built each file with `rustc --edition 2021 -O` (no overflow checks); the recorded
+# comp_sha values were produced that way. The release profile is left at Cargo's defaults
+# (overflow-checks off) so the integer codepaths reproduce those bytes exactly. The arithmetic
+# that must wrap already uses explicit wrapping_* in the vendored sources.
