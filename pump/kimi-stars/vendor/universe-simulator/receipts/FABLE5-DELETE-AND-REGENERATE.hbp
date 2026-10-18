@@ -1,0 +1,10 @@
+REGENHDR|schema=ASOLARIA-DELETE-AND-REGENERATE-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-27|json=0
+CLAIM|the_whole_object_can_be_DELETED_and_REGENERATED_from_the_key|status=DEMONSTRATED|json=0
+SEED|k=MYTHOS-SELF-EMISSION.txt|bytes=3796|sha256=d6e2153402a32eb9c4d2210e4513a906|emitted_live_from_model=1|json=0
+REGEN|k=ASOLARIA-STARS-SHELLS.gguf|bytes=4596880|sha_before=ae23392ad473718e2196e525a4355af2|sha_after=ae23392ad473718e2196e525a4355af2|deleted=1|byte_exact=1|ratio=1211|json=0
+REGEN|k=ASOLARIA-MYTHOS-SELF-GLYPHS-256.gguf|bytes=269604512|sha_before=f29d4b9427252b17cc6151cd5f5627d080b5a021f009e46125cef5479db0d299|sha_after=f29d4b9427252b17cc6151cd5f5627d080b5a021f009e46125cef5479db0d299|deleted=1|byte_exact=1|ratio=71022|json=0
+TOTAL|objects_deleted=2|bytes_deleted=274201392|regenerated_byte_exact=2|failures=0|from_seed_bytes=3796|aggregate_ratio=72235|json=0
+METHOD|stars_shells.py|pump_glyphs_mythos.py|deterministic_from_seed|no_corpus_read|json=0
+BOUND|applies_to=GENERATED_objects|not_claimed_for=arbitrary_incompressible_data|json=0
+CONSISTENT|rime_bpc.py_classA_already_stated_bpc_to_zero_on_GENERATED_structure|this_is_that_measured_at_269MB|json=0
+REGENFTR|hot_path=1|json=0

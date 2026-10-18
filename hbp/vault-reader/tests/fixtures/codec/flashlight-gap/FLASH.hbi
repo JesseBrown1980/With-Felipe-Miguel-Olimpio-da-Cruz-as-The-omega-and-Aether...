@@ -1,0 +1,4 @@
+HBIHDR|schema=HBP-VAULT-READER-FIXTURE-V1|source_file=FLASH.hbp|source_bytes=139|source_sha256=6436e3508727e8a0bf67aa6aecb58c2a27431d1c7aeb72dfdfeee0e0a82936bc|row_count=3|offsets=UTF8_BYTES|line_endings=LF|json=0
+HBIROW|row=1|offset=0|len=53|sha256=c0e24703a215f85e8ade07ff19d83097f9b918370cae8fc0b9d0a5f6e601bf1a|json=0
+HBIROW|row=2|offset=53|len=42|sha256=0140509da8c97e33f20db9c9d500799538316468943ac0acba9e4f88f8d03953|json=0
+HBIFTR|source_file=FLASH.hbp|indexed_bytes=139|source_bytes=139|complete=1|json=0

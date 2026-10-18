@@ -1,0 +1,21 @@
+[package]
+name = "hbp-relay"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Rust 1.81 hot-lane port of the RELAY auto-driver (lane append + verify + reverse-walk) and the EMIT carve-out guard (structural path guard and content scan). Integer-only, no JSON, POSIX paths. Byte-identical lane output to the upstream JS on the measured domain in PROVENANCE.md. Depends on the hbp crate for the relay-envelope row grammar."
+
+# Own workspace root: this crate is self-contained and does not join any ancestor workspace.
+[workspace]
+
+[lib]
+name = "hbp_relay"
+path = "src/lib.rs"
+
+[dependencies]
+hbp = { path = "..", version = "0.1.0" }
+
+[profile.release]
+opt-level = 3

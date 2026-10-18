@@ -1,0 +1,5 @@
+STONEIDX|schema=ASOLARIA-QG81-SEAT3-INDEX-V1|date=2026-10-14|json=0
+ARTIFACT|name=stone-seat3-81-quantum-gravity-2026-10-14.hbp|sha256=376bb3256690cc8a1dca14c5a440512b00fa5ed5989dbd98c3997f15c0f077de|json=0
+RECEIPT|name=quantum-gravity-81-compact-receipt.json|sha256=377d5fcee423c401e3066e937b9feffbefd497f881dc517feb54905ad1e6c0d9|json=0
+CI_RESULT|name=quantum-gravity-81-full-CI-result.json|sha256=f3c634d62c8ebb634aa6fbd04503f94c2bee3cc1269880a6b69b4db896234dd0|json=0
+CI|run=38589387275|jobs=2|success=2|json=0

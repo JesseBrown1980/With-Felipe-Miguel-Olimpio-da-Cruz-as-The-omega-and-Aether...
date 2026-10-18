@@ -1,0 +1,18 @@
+[package]
+name = "pump-glyphs-herself"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "Apache-2.0"
+description = "Integer hot-lane regeneration of the ASOLARIA-HERSELF and MYTHOS-SELF-GLYPHS-256 GGUFs from their seeds, reproducing the numpy generators (USIM @3f9f42d) byte for byte."
+
+[[bin]]
+name = "pump"
+path = "src/bin/pump.rs"
+
+[lib]
+name = "pump_glyphs_herself"
+path = "src/lib.rs"
+
+[profile.release]
+opt-level = 3

@@ -1,0 +1,12 @@
+STONE|schema=ASOLARIA-QG81-SEAT3-V1|date=2026-10-14|seat=seat-3|kind=CPU_CONSTRUCTED_CONTROLS|json=0
+PREREG|path=experiments/PREREG-81-quantum-gravity-gates-2026-10-14.md|json=0
+SOURCE|path=experiments/test_81_quantum_gravity_controls.py|commit=ea1acf806cab17c25d493db307f9de79efdcf19d|json=0
+RECEIPT|name=quantum-gravity-81-compact-receipt.json|sha256=377d5fcee423c401e3066e937b9feffbefd497f881dc517feb54905ad1e6c0d9|json=0
+FULL_ARTIFACT|name=quantum-gravity-81-full-CI-result.json|sha256=f3c634d62c8ebb634aa6fbd04503f94c2bee3cc1269880a6b69b4db896234dd0|json=0
+CI|run=38589387275|python_3.11=PASS|python_3.13=PASS|byte_identical=1|json=0
+BELL_LOCAL|waves=9|events_per_setting=4096|CHSH_each=2.000|json=0
+BELL_REFERENCE|model=EXPLICIT_QUANTUM_SINGLET|CHSH=2.82842712474619|measured_quantum=0|json=0
+GHZ|sites=81|waves=9|shots_per_basis_per_wave=1024|entanglement_witness=0|json=0
+FORCE|sites=81|spatial_waves=9|hash_only_force=0|inserted_newton_r10_ratio=0.01|inserted_light_gradient_r10_ratio=0.001|json=0
+LIMIT|physical_gravity=NOT_TESTED|quantum_hardware=NOT_TESTED|real_GPU=NOT_TESTED|FTL=NOT_ESTABLISHED|json=0
+CONCLUSION|class=SOFTWARE_CONTROL_GATES|emergent_quantum_or_gravity=NOT_DEMONSTRATED|json=0

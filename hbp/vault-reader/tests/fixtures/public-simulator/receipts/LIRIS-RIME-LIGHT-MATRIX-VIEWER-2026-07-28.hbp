@@ -1,0 +1,15 @@
+RIMELIGHTHDR|schema=ASOLARIA-LIRIS-RIME-LIGHT-MATRIX-VIEWER-V1|seat=LIRIS|date=2026-07-28|evidence=LIRIS_LOCAL_MEASURED|status=PASS|json=0
+SYSTEMBOUND|fabric=STALE_FALLBACK_ALL_BASES_UNAVAILABLE|canon=STALE_FALLBACK_ALL_BASES_UNAVAILABLE|system_affirmation=0|live_runtime_claim=0|json=0
+TARGET|path=web/index.html|bytes=22631|sha256=054ab5ff84b8466981ea87906da759611e3d09e77ba141af8d8839a51f4cfe1e|scope=local_worktree_bytes|commit=0|push=0|json=0
+PRIVACY|mode=browser_local|statement=nothing_leaves_this_tab|external_dependencies=0|server_required=0|raw_input_published=0|json=0
+CENSUS|unit=exact_ordered_raw_RGB_byte_triples|degree1=strict_max_R_or_G_or_B|degree2=equal_max_RG_yellow_or_GB_cyan_or_RB_magenta|degree3=RGB_equal_white|free_proxy=(degree2+degree3)/complete_triples|direct_translucency=0|file_chunk_bytes=2097152|cross_chunk_carry=1|full_file_scan=1|json=0
+VIEWER|camera=rotating_3D|light=continuous_RGB_gradient_plus_depth_translucency|states=Frozen,Play|orientations=Past,Present,Future|orientation_spacing=120_degrees|controls=wave,rungs|physical_time_travel_claim=0|json=0
+WASM|path=web/asolaria_tribit.wasm|required_exports=11|missing_exports=0|input_capacity=1048576|seed_length=3078|receipt_coverage=processed_bytes_over_total_bytes|truncated_tail_attested=0|json=0
+VALIDATION|id=javascript_syntax|tool=node_check_stdin|result=PASS|json=0
+VALIDATION|id=dom_reference_integrity|dom_ids=31|dom_references=31|missing=0|duplicates=0|result=PASS|json=0
+VALIDATION|id=census_partition_and_chunk_carry|fixture_categories=R,G,B,RG,GB,RB,RGB|expected_counts=1,1,1,1,1,1,1|triples=7|residual_bytes=2|input_bytes=23|result=PASS|json=0
+VALIDATION|id=headless_wasm_and_dom_smoke|receipt_coverage=19/19_bytes|census_triples=6|census_residual_bytes=1|count_row=rendered|chain=intact|hidden_row=rendered|seed_sha_chars=32|result=PASS|json=0
+VALIDATION|id=git_diff_check|scope=web/index.html|result=PASS|json=0
+BOUNDARY|measurement=BROWSER_LOCAL_DIRECT_TIE_PROXY|not_direct_translucency=1|not_current_fabric_proof=1|not_current_canon_proof=1|not_hardware_proof=1|not_physical_proof=1|not_physical_time_travel=1|json=0
+CONTROL|local_worktree_edit=1|fire=0|apply=0|runtime=0|commit=0|push=0|publish=0|json=0
+RIMELIGHTFTR|receipt=LIRIS_LOCAL_MEASURED|validation_count=5|validation_pass=5|private_paths=0|raw_input_bytes=0|json=0

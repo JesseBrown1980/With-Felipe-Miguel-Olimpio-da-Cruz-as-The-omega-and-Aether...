@@ -1,0 +1,11 @@
+VAULTOBJ|path=tools/behcs/d22-verb-adapter.hbi|kind=hbi|bytes=621|sha256=ff4c2bf44c9fe312f57f051b9346e6ef6dcedd6ea95baa986606dea85992a61e|pointer=self|verified=+1|reason=ok:sidecar_named|json=0
+VAULTOBJ|path=tools/behcs/d22-verb-adapter.hbp|kind=hbp|bytes=1127|sha256=98116de4e9868d72604a69e5aa2f92b32d40b0c3d49ef8ba87628f8fd3947ad6|pointer=pair:tools/behcs/d22-verb-adapter.hbi|verified=+1|reason=ok:sidecar_named|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=1|files=4|objects=2|verified=2|failed=0|unresolved=0|json=0

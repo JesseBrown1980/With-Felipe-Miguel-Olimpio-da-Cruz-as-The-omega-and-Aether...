@@ -1,0 +1,6 @@
+RIMELIGHTINDEXHDR|schema=ASOLARIA-LIRIS-RIME-LIGHT-MATRIX-VIEWER-INDEX-V1|seat=LIRIS|date=2026-07-28|target=LIRIS-RIME-LIGHT-MATRIX-VIEWER-2026-07-28.hbp|target_bytes=2331|target_rows=15|target_sha256=9d9eb97bc20d12692d91cf7cbf4e19c0ad723fcc98c723ba0c72522cb85919ac|offset_basis=zero_based_utf8_bytes|range_length_includes_terminal_lf=1|json=0
+RANGE|section=identity|first_row=1|last_row=3|offset=0|length=448|sha256=d11f8f3bf48887b8eb9556ef45644e76152168f2f069f239bfb1dabab0087872|json=0
+RANGE|section=features|first_row=4|last_row=7|offset=448|length=840|sha256=fc3942aab49c4c2d485c80b5e367ad967b9842675f57edf8aa0c68b3cc48340c|json=0
+RANGE|section=validations|first_row=8|last_row=12|offset=1288|length=628|sha256=b287881dc2789e8afdfc2d4712895cccebc6cbb14ee98ff60e823cc6550c684c|json=0
+RANGE|section=boundary_control_footer|first_row=13|last_row=15|offset=1916|length=415|sha256=a50d38846276ebc54d2e749efa6f663a5bfd0c90f6a325f12fe09cce1353b02c|json=0
+RIMELIGHTINDEXFTR|range_count=4|covered_bytes=2331|coverage_exact=1|evidence=LIRIS_LOCAL_MEASURED|fire=0|apply=0|runtime=0|json=0

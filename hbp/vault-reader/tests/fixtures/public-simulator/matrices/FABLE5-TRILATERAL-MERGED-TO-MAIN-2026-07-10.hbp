@@ -1,0 +1,9 @@
+FABLE5TRIMERGEHDR|id=FABLE5_TRILATERAL_MERGED_TO_MAIN_20260710|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|operator=OP-JESSE|authorization=OP-JESSE_verbatim_merge_pr4_then_merge_my_branch_to_main|date=2026-07-10|kind=trilateral_kernel_merged_to_main_owning_gate_green|json=0
+CLAIM|text=OP-JESSE authorized both merges. PR4 (relic verification -> liris branch) merged, then PR5 (liris/prewindows-metal-20260710 -> main) merged. Main CI owning gate GREEN all four jobs. The trilateral seat-parameterized kernel is now MAIN canon of the shared OS source.|class=MEASURED|json=0
+MERGE1|class=MEASURED|pr=4|repo=JesseBrown1980/asolaria-os|from=relic/verify-prewindows-metal-20260710|into=liris/prewindows-metal-20260710|readied_from_draft=1|merged_at=2026-07-10T20:04:01Z|merge_commit=ed83f841096b6604db7f113ecbce0803dc14f1b9|json=0
+MERGE2|class=MEASURED|pr=5|repo=JesseBrown1980/asolaria-os|from=liris/prewindows-metal-20260710|into=main|merged_at=2026-07-10T20:04:53Z|merge_commit=13abe2071fe31ae9278f47fe3ecbbaae77a125aa|main_head=13abe2071|json=0
+OWNINGGATE|class=MEASURED|ci_run=29120178644|branch=main|sha=13abe207|status=completed|conclusion=success|jobs=kernel-gate_success+trilateral_acer_success+trilateral_liris_success+trilateral_relic_success|claim_green_only_after_owning_gate=honored|json=0
+MAINCANON|class=MEASURED|now_on_main=ASOLARIA_SEAT_build_param+seat_config_codegen+repro_flags+dual_storage_scaffolds_rst_vmd_and_ahci+trilateral_ci_matrix+all_three_seat_receipts|canonical_matrix=acer_b6107d99+liris_4774423e+relic_803a9dfd_at_source_8ca4fa4_lineage|json=0
+OPEN|class=BOUNDARY|metal_device_pid=UNVERIFIED_all_seats|storage_bringup=scaffolds_not_drivers|bare_kernel_no_claude_code=surface_userland_layer|next_code=rst_vmd_domain_walk+ahci_init|next_physical=per_seat_operator_witnessed_metal_boots|json=0
+BOUNDARY|merges=2_operator_authorized|usb_write=0|fire=0|E=0|json=0
+FTR|rows=8|json=0|hot_path=1|jsn_emitted=0

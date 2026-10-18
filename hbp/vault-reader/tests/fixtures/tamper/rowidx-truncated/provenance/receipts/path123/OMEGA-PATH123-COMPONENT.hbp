@@ -1,0 +1,5 @@
+PATH123HDR|schema=OMEGA-PATH123-COMPONENT-V0|mode=LOCAL_COMPONENT_PROOF|source=omega_path123.rs|source_sha256=d475f067529f2bb8d99d09c835afb7ab9669b0e1ea2c73c4064184c5589da333|tests=35of35_PASS|std_only=1|repo_modified=0|published=0|json=0
+DEPENDENCY|source=../omega-operator-catalog-v0/omega_operator_catalog.rs|sha256=883ca7ec964e609933c3cb9ac71d1f9fb02ade9f314f7902d0c0547dd3da6e1b|operators=40|families=8_RNQ+12_TRI+20_PI|floor_native_bits=6,8,10,12|json=0
+PATH1|tokens=LITERAL_u8,MATCH_distance_u16le_length_u16le|reference=RETAINED_OUTPUT_ONLY|modes=AUTO,LITERAL_ONLY,REQUIRE_MATCH|decode_mode_invariants=ENFORCED|json=0
+PATH2|kind=CHECKED_CRT|bits6=7x11|bits8=17x19|bits10=31x37|bits12=61x71|reject_noncanonical=1|reject_out_of_floor=1|exhaustive_all_floor_symbols=PASS|json=0
+PATH3|causal=STRICT_PRIOR_HISTORY_ONLY|symbol_type=u16|operators_evaluated_per_step=40|mixer=BOUNDED_INTEGER_ONLINE|mixer_slots=40|mixer_budget_bytes=80|entropy=BINARY_ARITHMETIC|null_residual=Z_XOR_CONSENSUS+CANONICA

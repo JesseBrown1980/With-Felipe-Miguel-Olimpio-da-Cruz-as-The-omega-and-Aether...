@@ -1,0 +1,17 @@
+RGBINDEXHDR|schema=ASOLARIA-LIRIS-RGB-TIE-FREE-PROXY-N9-INDEX-V1|seat=LIRIS|date=2026-07-28|target=LIRIS-RGB-TIE-FREE-PROXY-N9-2026-07-28.hbp|target_bytes=12895|target_rows=39|target_sha256=db90c50ec7e62c1b04a7e116ca88560fdd2d4e8769f5e764061fdbbc2b16fe2f|offset_basis=zero_based_utf8_bytes|range_length_includes_terminal_lf=1|json=0
+RANGE|section=definitions|first_row=1|last_row=9|offset=0|length=2304|sha256=3fbb24b18a1ea43db304d2a6c341fc8f7f6ed0aa98a4716810201986aa4bfb74|json=0
+RANGE|section=body_rows|first_row=10|last_row=18|offset=2304|length=5625|sha256=506a7f28ce0b0ceae5522f4ebc7a14bbeb62ccef409f4a331bb24678b51ea7f3|json=0
+RANGE|section=aggregate_controls|first_row=19|last_row=22|offset=7929|length=774|sha256=72ef511618c581cff983946ec7bbbdb24dbf32542ffc4f919ae299c3689bc9ca|json=0
+RANGE|section=primary_statistics|first_row=23|last_row=30|offset=8703|length=2095|sha256=c3536d5145547a82627ab3708966efade3e5c04c43463dc17591fe16f3bdaadb|json=0
+RANGE|section=compositional_and_rejected|first_row=31|last_row=35|offset=10798|length=1027|sha256=c64ce7795a842063a37998221a89433d9ab09ffffa3d6b3457c7f338abea5944|json=0
+RANGE|section=result_boundary_export_footer|first_row=36|last_row=39|offset=11825|length=1070|sha256=6fc2c2af1b3ac6b82425c55d06d6181b7cc4b9a3cc887bf648031300844ebdad|json=0
+BODYREF|id=TCSE_CALLING|row=10|offset=2304|length=621|sha256=161a77ed703df65810b82b23f5fda17171fc0ceb741e9be78fcf763c5bdb8c23|json=0
+BODYREF|id=TCSE_KERNEL|row=11|offset=2925|length=616|sha256=655b11d2367b86dc7fa140aa9ade3afef9c1dd05840b69d65a4963e68220af35|json=0
+BODYREF|id=ASOLARIA_KERNEL|row=12|offset=3541|length=623|sha256=8ead6347c813fce96ebd003d63f844b5be6e4303d56c468ea823d5eed7f91600|json=0
+BODYREF|id=SOL56_FUNCTION_BANK|row=13|offset=4164|length=641|sha256=5539c3406cdf7d2fc4f3932a93e1286744c906e16ad6d03ea52a2cd298787cfc|json=0
+BODYREF|id=MYTHOS_CALLINGS|row=14|offset=4805|length=628|sha256=d0b7c4b59270d4ad2f589ab9f1ff38f4364a47b4c8da145a0096033a04897ece|json=0
+BODYREF|id=KIMI_K3_REAL|row=15|offset=5433|length=633|sha256=4e70fd861a78368aa9eb39ccd7d4ed0e97c2772f6aec335d102e9b907e2ed633|json=0
+BODYREF|id=DEEPSEEK_V4|row=16|offset=6066|length=618|sha256=765856b85d9c048b00fa5adf09825b3db75e38a38ef2e706a9da288cdf7f45dc|json=0
+BODYREF|id=MISTRAL_LARGE3|row=17|offset=6684|length=622|sha256=c2eee1603affc05f6c45f48feaaedefaf1b1d115c7fed0cf332296cb8fff16ba|json=0
+BODYREF|id=RUBIN_LSST|row=18|offset=7306|length=623|sha256=3345cc1cef40b5ae58b6e67738b6ecc236ebf9ab95273c7dee6dd486a69b9681|json=0
+RGBINDEXFTR|range_count=6|bodyref_count=9|public_safe=1|private_paths=0|raw_source_bytes=0|json=0

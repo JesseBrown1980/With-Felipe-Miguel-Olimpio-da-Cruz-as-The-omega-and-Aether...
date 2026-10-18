@@ -1,0 +1,16 @@
+VAULTOBJ|path=receipts/matrix-min-01.hbi|kind=hbi|bytes=2894|sha256=054b6260354d8e78bcfaef52af3a16f2b36ea92f745b504af9715e1fcfcb5c5e|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=receipts/matrix-min-01.hbp|kind=hbp|bytes=1263|sha256=88f748625f0600d3eb9c1a60f8ca056b04b53bfd73c2efc42ba0e21120a327ed|pointer=pair:receipts/matrix-min-01.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=receipts/matrix-min-01.hbp|kind=range|bytes=358|sha256=2f2a1688f7d2df0cec8af91f81c62820e8c3acb10028b0ac17f3297b8f71fb90|pointer=receipts/matrix-min-01.hbi:1:0-358|verified=+1|reason=ok:hex_sha256+hex+sha256|json=0
+VAULTOBJ|path=receipts/matrix-min-01.hbp|kind=range|bytes=375|sha256=04f7068c35880bb9e8ec04d216da611610a81f359d36c52df44f9113a5f3ef6e|pointer=receipts/matrix-min-01.hbi:2:359-734|verified=+1|reason=ok:hex_sha256+hex+sha256|json=0
+VAULTOBJ|path=receipts/matrix-min-01.hbp|kind=range|bytes=380|sha256=a2ce7042975c48d287a218e4136c0ae16d99c4ef61da07b2d6a53f8bf8c8df3f|pointer=receipts/matrix-min-01.hbi:3:735-1115|verified=+1|reason=ok:hex_sha256+hex+sha256|json=0
+VAULTOBJ|path=receipts/matrix-min-01.hbp|kind=range|bytes=146|sha256=49817b525bb109814255ee63952cbced214636d378749bd0a5ae3230edcd859e|pointer=receipts/matrix-min-01.hbi:4:1116-1262|verified=+1|reason=ok:hex_sha256+hex+sha256|json=0
+VAULTOBJ|path=receipts/matrix-min-01.hbp|kind=index|bytes=1263|sha256=88f748625f0600d3eb9c1a60f8ca056b04b53bfd73c2efc42ba0e21120a327ed|pointer=receipts/matrix-min-01.hbi:1|verified=+1|reason=ok:row_sequence+rows|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=4|verified=4|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=1|files=4|objects=7|verified=7|failed=0|unresolved=0|json=0

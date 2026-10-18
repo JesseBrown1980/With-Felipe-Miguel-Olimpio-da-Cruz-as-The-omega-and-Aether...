@@ -1,0 +1,7 @@
+D22ADAPTERHDR|host=liris|tool=tools/behcs/d22-verb-adapter.mjs|component=architecture-component-2|purpose=thin-D22-verb-surface-over-existing-dialect-pair-core|json=0
+D22ADAPTERVERBS|verbs=tuple_to_english+english_to_tuple+ix_to_tuple+hilbert_to_human+crlt_merge+auto_transition_all_languages+namespace_walk|state=EXPOSED|json=0
+D22ADAPTEREXEC|implemented=tuple_to_english_for_json_or_omnilanguage+english_to_tuple_for_already_packet+hilbert_to_human_shallow_descriptor+crlt_merge_for_tuples+auto_transition_plan_matrix+namespace_walk|draft=plain_english_parse+IX_parse+fabric_endpoint_translation|json=0
+D22ADAPTERSAFETY|mutates=audit-hbp-append-only-when-implemented-pair-executes|mints=0|launches=0|usb_writes=0|engine_edits=0|external_calls=0|apex_T0=untouched|json=0
+D22ADAPTERVERIFY|required=node_check_adapter+node_test_adapter+adapter_selftest+full_pyramid|json=0
+D22ADAPTERSHA|adapter_sha256=9EAEB1F1EC6C48FB1318276EF0CA57EBE2D54BEEFF53814E66C871C6D070A320|test_sha256=5A39530B7D811A9E809626EF99C84C627575EECBF33803BD8953969FA16394DC|json=0
+D22ADAPTERFTR|state=F5_D22_THIN_VERB_ADAPTER_READY_FOR_BILATERAL_PULL|json=0

@@ -1,0 +1,15 @@
+VAULTOBJ|path=stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbi|kind=hbi|bytes=515|sha256=fd1252632b1c0acd7d1673e12d3bfd6afcd56f6596a1e1b7745a1d687e28b43c|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbp|kind=hbp|bytes=1208|sha256=376bb3256690cc8a1dca14c5a440512b00fa5ed5989dbd98c3997f15c0f077de|pointer=pair:stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbp|kind=file|bytes=1208|sha256=376bb3256690cc8a1dca14c5a440512b00fa5ed5989dbd98c3997f15c0f077de|pointer=stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbi:2:name|verified=+1|reason=ok:sha256|json=0
+VAULTOBJ|path=quantum-gravity-81-compact-receipt.json|kind=file|bytes=0|sha256=|pointer=stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbi:3:name|verified=0|reason=target_absent|json=0
+VAULTOBJ|path=quantum-gravity-81-full-CI-result.json|kind=file|bytes=0|sha256=|pointer=stones/2026-10-14-rainbow81/stone-seat3-81-quantum-gravity-2026-10-14.hbi:4:name|verified=0|reason=target_absent|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=3|verified=1|failed=0|unresolved=2|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=0:target_absent|count=2|json=0
+VAULTTOTAL|hbi=1|files=4|objects=5|verified=3|failed=0|unresolved=2|json=0

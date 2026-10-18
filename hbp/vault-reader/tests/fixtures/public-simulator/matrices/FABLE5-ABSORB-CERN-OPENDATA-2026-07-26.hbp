@@ -1,0 +1,7 @@
+CERNHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=da35b5b7b9c4dc13|prior=01ce1f623cb7f6d4|schema=ASOLARIA-ABSORB-PARTICLE-V1|archive=CERN_OPENDATA|api=opendata.cern.ch/api/records|queried=2026-07-26|tag=MEASURED|json=0
+CORPUS|records=80373|tag=MEASURED|json=0
+EXPERIMENT|cms+atlas+lhcb+alice+opera+phenix|counts=NOT_QUERIED|tag=UNRESOLVED|json=0
+ADDR|form=opendata.cern.ch/record/{n}|self_sectioning=1|bytes_fetched=0|json=0
+BAND|n=80373|alphabet=256|bands=313|remainder=245|json=0
+SECTION|law=records_are_the_functions_in_sections|unit=record_id|independently_fetchable=1|json=0
+FTR|receipt=7d773a62e8f493450796b41615ed4ca2|rows=7|json=0|hot_path=1

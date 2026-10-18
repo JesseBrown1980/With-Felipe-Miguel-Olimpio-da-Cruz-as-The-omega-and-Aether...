@@ -1,0 +1,9 @@
+TOURNAMENTHDR|schema=ASOLARIA-OMNIBIT-TOURNAMENT-RECORD-V1|date=2026-10-09|recorded_by=ACER-CLAUDE-FABLE5|operator=OP-JESSE|operator_direction=record_the_omnibit_tournament_on_github|seats=3|views_per_seat=2|vantages=6|json=0
+SEAT|seat=acer|branch=tournament/acer|head=46fd7652ed1bb2d8dc28ee60aff32853bb97d7ce|pr=1|declaration=config/seats/acer.json|receipt_status=PENDING_SEAT_RUN|normal_anti_run=PENDING|json=0
+SEAT|seat=liris|branch=tournament/liris|head=a70abcf23a571a4de046a1ad8a6e705196e4811a|pr=2|declaration=config/seats/liris.json|receipt_status=PENDING_SEAT_RUN|normal_anti_run=PENDING|json=0
+SEAT|seat=relic|branch=tournament/relic|head=cb6dcdac9458d38a76154a4fe70b6e2a62663aee|pr=3|declaration=config/seats/relic.json|receipt_status=MEASURED_GITHUB_CI_PUBLIC_FIXTURE|receipt=provenance/receipts/relic/RELIC-LANE-CI-2026-07-18.hbp|receipt_scope=A_B_ENGINE_FIELDS_NOT_NORMAL_ANTI_BINDING|normal_anti_run=PENDING_RELIC_SEAT_RUN|tests_run=17|json=0
+ENTRY|seat=acer|kind=research_cell|pr=9|head=a792c27515b4028190d3876b6b4cc901350d2707|receipt=provenance/receipts/acer-glyph-codec-v1/ACER-GLYPH-CODEC-V1-VERIFY.hbp|exact_restore=PASS|exact_replay=PASS|source_bytes=5536|archive_bytes=5916|archive_minus_source_bytes=380|compression=NEGATIVE_ON_FIXTURE|hutter=HOLD|json=0
+ENTRY|kind=toolchain_rule|pr=8|head=73929adc7a41901ac1611708cd8e58a2ccfac1fd|rule=rust_1.81_clippy_integer_ternary|json=0
+STANDING|scoreboard=NOT_SCORED|reason=no seat has run its NORMAL and ANTI views on its own matrix; no seat entry is comparable yet|winner=NONE|json=0
+INTEGRATION|declaration_collision=resolved|detail=all three lanes wrote config/active-seat.json; placed per seat under config/seats so no seat is named active in main|seat_branches_modified=0|json=0
+CLAIM|compression_claim=0|hutter_result=0|physical_claim=0|whole_wikipedia_replay=UNVERIFIED|json=0

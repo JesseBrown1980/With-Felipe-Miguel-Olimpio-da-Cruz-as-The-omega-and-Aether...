@@ -1,0 +1,6 @@
+# Fixture bytes are the evidence: no end-of-line conversion on any machine.
+tests/fixtures/** -text
+tests/expected/** -text
+corpus/** -text
+tests/cases/** -text
+DEPENDS.sha256 -text

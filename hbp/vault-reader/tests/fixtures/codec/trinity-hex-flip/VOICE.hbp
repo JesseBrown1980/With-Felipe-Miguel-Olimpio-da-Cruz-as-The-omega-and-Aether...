@@ -1,0 +1,5 @@
+!HBP-v0 message
+type=message
+[payload]
+VOICE|wake=hermes|transcript=open my run logs|json=0
+!HBP-v0 end

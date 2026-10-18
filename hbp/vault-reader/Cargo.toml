@@ -1,0 +1,23 @@
+[package]
+name = "hbp-vault-reader"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Read-only reader for HBI/HBP vault trees: pairs .hbi/.hbp/.sha256/.hex, resolves whole-file and byte-offset pointers, recomputes declared bytes/sha256/rows/AGT/chains. Integer only, no JSON."
+publish = false
+
+[workspace]
+
+[lib]
+name = "vault_reader"
+path = "src/lib.rs"
+
+[[bin]]
+name = "vault-read"
+path = "src/bin/vault-read.rs"
+
+[dependencies]
+asolaria-hbi-hbp = { path = "../vendor/asolaria-hbi-hbp", version = "0.1.0" }
+hbp = { path = "..", version = "0.1.0" }

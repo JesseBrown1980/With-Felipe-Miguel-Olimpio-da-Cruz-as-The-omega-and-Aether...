@@ -1,0 +1,8 @@
+D22ADAPTERINDEX|host=liris|target=d22-verb-adapter.hbp|tool=d22-verb-adapter.mjs|rows=7|json=0
+INDEXROW|row=1|kind=header|component=architecture-component-2|json=0
+INDEXROW|row=2|kind=verbs|count=7|json=0
+INDEXROW|row=3|kind=execution|implemented=5|draft=3|json=0
+INDEXROW|row=4|kind=safety|mutates=audit_hbp_append_only_when_pair_executes|mints=0|launches=0|usb_writes=0|json=0
+INDEXROW|row=5|kind=verify|required=node-check+node-test+self-test+full-pyramid|json=0
+INDEXROW|row=6|kind=sha|fields=adapter_sha256+test_sha256|json=0
+INDEXROW|row=7|kind=footer|state=F5_D22_THIN_VERB_ADAPTER_READY_FOR_BILATERAL_PULL|json=0

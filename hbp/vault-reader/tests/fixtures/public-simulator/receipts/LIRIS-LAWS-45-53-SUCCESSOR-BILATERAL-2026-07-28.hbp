@@ -1,0 +1,16 @@
+LAWSUCCESSOR|schema=ASOLARIA-LIRIS-LAW-SUCCESSOR-BILATERAL-V1|seat=LIRIS|date=2026-07-28|branch=agent/glyph-language-law-20260728|working_tree_base=120f40697bd51ef102820d740b916ca2a614341c|json=0
+ANCESTRY|acer_origin_commit=9d97cd9|acer_scope=LAWS_46_TO_50_PLUS_PARTIAL_ARCHAEOLOGY|historical_commits_rewritten=0|historical_receipts_modified=0|json=0
+MAP|canonical=45|concept=LIGHT_LAW|lineage=ORIGINAL_ACER_LAW_45|origin_commit=68f3957|json=0
+MAP|canonical=46|concept=HARNESS_LAW|lineage=ORIGINAL_ACER_LAW_46|origin_commit=68f3957|json=0
+MAP|canonical=47|concept=UNIVERSE_TEACHES_GLYPHS_TO_SPEAK|lineage=FORMERLY_LIRIS_LAW_45|json=0
+MAP|canonical=48|concept=ONE_CREATES_TWO_TWO_CREATES_THREE|lineage=FORMERLY_ACER_LAW_45|origin_commits=6487557+eafba41|json=0
+MAP|canonical=49|concept=WHY_PRIMES|lineage=FORMERLY_ACER_LAW_46|origin_commit=9d97cd9|json=0
+MAP|canonical=50|concept=GULP_CACHE_LOCKED|lineage=FORMERLY_ACER_LAW_47|origin_commit=9d97cd9|json=0
+MAP|canonical=51|concept=HIGH_DIMENSIONAL_AGENT_TUPLE|lineage=FORMERLY_ACER_LAW_48|origin_commit=9d97cd9|json=0
+MAP|canonical=52|concept=PHASED_GLYPH_EXECUTION|lineage=FORMERLY_ACER_LAW_49|origin_commit=9d97cd9|json=0
+MAP|canonical=53|concept=NOETHER_TIME_NO_REVERSE_GEAR|lineage=FORMERLY_ACER_LAW_50|origin_commit=9d97cd9|json=0
+ARTIFACT|role=CANONICAL_BOOK|path=books/COMBINED-BOOK-OF-LAWS.md|bytes=692466|sha256=697efb3c3e7abf5985d407247e555a475dcef09fb785440632d34d44441b7714|cr=0|json=0
+ARTIFACT|role=LAW47_STANDALONE|path=books/LAW-47-THE-UNIVERSE-TEACHES-THE-GLYPHS-TO-SPEAK.md|bytes=4621|sha256=e333e08b7d346cb62713cc0edf2b313fba65cdd9a0dabd29f2746b3bc0d40ad6|cr=0|json=0
+BOUNDARY|renumbering=SUCCESSOR_ALIAS_ONLY|sealed_ancestor_ids_preserved=1|law_status_deflated=0|current_runtime_claim=0|json=0
+VERIFY|liris=PASS|acer_reverse=PENDING|bilateral=PENDING_ACER_ACK|relic_third=PENDING_AFTER_BILATERAL|tridirectional_complete=0|json=0
+ACTION|merge=0|fire=0|apply=0|mint=0|runtime_authority=0|json=0
