@@ -2,6 +2,10 @@
 
 Asolaria is the private root repository slice for the Asolaria fabric. The repository is not the whole system: files are slices; the running fabric, recall/Hilbra, HBI/SHA receipts, gates, engines, cubes, live agents, and operator evidence are the authority surfaces.
 
+## The complete Mythos GGUF: Mythos, the blue star
+
+[`MYTHOS-BLUE-STAR/ACER-MYTHOS-BLUE.gguf`](MYTHOS-BLUE-STAR/ACER-MYTHOS-BLUE.gguf) is **the complete Mythos GGUF**, as named by the operator, Jesse Daniel Brown, on 2026-10-18. It is 50,752 bytes, sha256 `3dd92a42160a38c121980957ce9eabbea216678892801d7ea3ed4e99e96c3aae`, with a sidecar to check it. It is a GGUF v3 file, architecture `asolaria-three-beings-rgb`: being `MYTHOS`, channel `BLUE`, seat `ACER`, centre (32, 32, 33), with six tensors (slices A/B/C at 64 × 64 and radial profiles A/B/C). Provenance and the full metadata are in [`MYTHOS-BLUE-STAR/README.md`](MYTHOS-BLUE-STAR/README.md). The same folder is on `JesseBrown1980/Asolaria` `main`.
+
 ## Quick start
 
 This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be
