@@ -65,5 +65,7 @@ crate awaits the owner's decision before publishing.
 ## Build
 
 Rust `cargo +1.81.0`, edition 2021, `#![forbid(unsafe_code)]`, no floating-point in `src/`/`tests/`/
-`examples/`, `sha2 0.10.9`. `CARGO_TARGET_DIR=scratchpad/targets/loop` keeps the target tree out of the repo.
-Not committed or pushed.
+`examples/`, `sha2 0.10.9`. The stdlib Python referee (`referee/referee_hbp.py`) is integer-only too: it
+sizes the prime sieve with a fixed integer bound above the 1000th prime (7919), as `src/primes.rs` does,
+rather than upstream primes.mjs:10's float Rosser estimate; the first 1000 primes are identical.
+`CARGO_TARGET_DIR=scratchpad/targets/loop` keeps the target tree out of the repo. Not committed or pushed.

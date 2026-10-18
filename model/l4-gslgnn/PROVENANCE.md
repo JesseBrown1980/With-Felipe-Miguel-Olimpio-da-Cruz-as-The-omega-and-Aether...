@@ -272,6 +272,18 @@ weight is already in `gate/observed/src/score.rs` (`composite_e4`, slot `l4`, 15
 the value for that slot as `score_request(pid, content).score_e4`. Wiring it there is the
 integrator's step.
 
+Owner decision 2026-10-18 (OWNER-RULES 7.a amendment): L4 is to carry weight 0 — "something that
+doesn't calculate shouldn't propagate." The :4793 GSLGNN returns a near-constant 0.5292 (the same
+40-vs-315,209 imbalance that benches L2), so it carries no signal into the flow; at 0.15 it only
+adds a fixed bias to every score. L4 joins L1/L2 as a benched non-voter, and a class-weighted
+retrain that would make it calculate again is now optional, not owed. This is not absence: the
+checkpoint (9e50723b) and the `gslgnn_inference_server.py` server are present (on ACER / in cube
+9859b576). To keep rule 1 (the port never self-corrects ahead of the served source), the weight-0
+change is made at the source — dropping the `l4` entry in asolaria-score.mjs:156 lets the
+present-signals weighted mean renormalise to the remaining 85 on its own — and this port and its
+referee re-mirror it then (one line each + a fixture regen). Until that source edit lands,
+`composite_e4` here stays faithful at `l4` = 15: the decision is recorded, not yet applied.
+
 ## Referees
 
 | Tool | Needs | Writes; `--check` diffs |
