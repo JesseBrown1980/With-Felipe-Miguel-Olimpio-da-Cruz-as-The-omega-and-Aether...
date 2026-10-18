@@ -1,0 +1,8 @@
+CUBEHDR|name=FABLE5-SIDECAR-FIND-TOOL-aoom_find_files-2026-10-18|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=6|merkle_sha256=d995c354b6329f747cb64bdff897cfb69983814c885dfc21a132b47388cffe9d|note=read-only_find_by_size_hash_name|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=asolaria-os-on-metal/server.js|bytes=35622|sha256=95f38507fc74548a384453daad232ad0c8ba6345f08ba8817eaf3ed893c79ba6|json=0
+FILE|name=asolaria-os-on-metal/package.json|bytes=1123|sha256=abb5c6e3f690ebaac6ca99e0a5b8ecd833b246cb85e1ccc9e16ff7ddc50818ea|json=0
+FILE|name=test_find.mjs|bytes=1631|sha256=2821f57caed71d55156e19f54f030bef525592893e2b9b491ba0d83c4b15e3bb|json=0
+FILE|name=HOWTO-FIND-TOOL.md|bytes=3228|sha256=d66499b72f882fd0560920afc1073fd5788e4518947e78fd03c6b0deb046fc07|json=0
+FILE|name=FABLE5-FIND-TOOL-2026-10-18.hbp|bytes=1227|sha256=16977bced739c2560b97ccbd2e12c7cd8da07cbbb0fff04241baf1935b91041e|json=0
+FILE|name=FABLE5-FIND-TOOL-2026-10-18.hbp.sha256|bytes=98|sha256=3994841ef5eefd6d653192e58cefb221e54746bff506d5d4b69ee03ef8084a17|json=0
+CUBEFTR|merkle_sha256=d995c354b6329f747cb64bdff897cfb69983814c885dfc21a132b47388cffe9d|json=0

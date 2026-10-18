@@ -506,3 +506,13 @@ conjectures, and nothing here tests them.
   sha256 and size. `5c040e04…` and `653e3d9b…` differ in two records only: `COMBINED-BOOK-OF-LAWS.md`
   (115,083 B, `d7e2cb5c…`, then; 622,823 B now) and the previous `FABLE5-SELF-SEED-3078.hbi` the writer
   reads back (`a65c020a…` then; `5c040e04…` now). The other 36 inputs are the same files.
+- `FABLE5-SELF-SEED-TARGETS-BOOK-FOUND-SEARCH-C-2026-10-18/`: the book the `5c040e04` seed read,
+  `COMBINED-BOOK-OF-LAWS-v2-115083.md` (115,083 B, `d7e2cb5c…`, from
+  `D:\asolaria-absorb\ASOLARIA-UNIVERSE-SIMULATOR\books\lineage\`). It differs from the public lineage copy
+  (115,288 B, `3bb55978…`) in one line, 453: the public copy replaces "**NAMED, never run.**" with the
+  2026-07-28 status. The same 115,083-byte blob (`264e56d5`) is in USIM history at `f4c2e2b` (2026-07-27).
+  The older seed `a65c020a…` is not among USIM history's four 3,078-byte blobs, and ACER's C: roots
+  (202,396 files) hold no match; ACER's D: search was still running.
+- `FABLE5-SIDECAR-FIND-TOOL-aoom_find_files-2026-10-18/`: ACER's MCP server with the read-only finder
+  `aoom_find_files` (exact size, sha256 prefix or name, inside allow-listed roots set by
+  `AOOM_FIND_ROOTS`); its API keys come from the environment only.
