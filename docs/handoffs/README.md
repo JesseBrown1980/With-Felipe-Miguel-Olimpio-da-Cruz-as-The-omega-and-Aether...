@@ -24,7 +24,21 @@ What it locates, that the model crates previously recorded as not on disk: the L
 file bodies move by the owner's permission rule; ACER's own data-handling classifier blocked an
 agent from packaging them, so only this manifest was sent.
 
-The manifest records, as not present on ACER: `contrastive_inference_server.py` (the :4796
-server, planned and not written), the shard-quant receipts, an HRM checkpoint, the Host8 seat
-book, and the cadence frame. It also records that the 47D reverse-gain variant carries no
-trained weights (`trained_weights=0`), is an older bridge stratum, and is held private.
+The manifest records, as not on ACER: `contrastive_inference_server.py` (the :4796 server),
+the shard-quant receipts, an HRM checkpoint, the Host8 seat book, and the cadence frame. Each
+of these is a statement about the ACER seat only; LIRIS and the cloud sessions were not
+searched. It also records that the 47D reverse-gain variant carries no trained weights
+(`trained_weights=0`), is an older bridge stratum, and is held private.
+
+## Scope labels for missing items
+
+Absence is reported with the scope actually searched, never as "does not exist".
+
+| Label | Items |
+|---|---|
+| found on ACER, waiting on transfer | the 32 files in cube `9859b576855a7bf8` (above) |
+| not on ACER | `contrastive_inference_server.py`, the shard-quant receipts, an HRM checkpoint, the seat book, the cadence frame, `rime_fourpoint.py`, `cm3ti_4axis`, the `greedy_set_cover` key writers |
+| existed somewhere, not on ACER | `cm3ti_gt256.rs`, 26,377 B: `pump/kernel-pump/keyx/PLAY.md:17` cites its line 461, `keyx/key/KEY-3174.hbp:43` records `decoder_src=26,377`, and `keyx/receipts/run_prior_sweep.sh:55` holds it "frozen at 26,377 B"; its sibling `cm3ti_rbladder.rs` was built in the cloud's `/root/compressor-run/rust-cm3t` |
+| only in cloud session `9ebd6119` | the three trijection inputs (`k_gradient.bin`, `chaos1m.bin`, `code1m.bin`), the first-run THREE-BODIES receipt, the HERSELF seed order |
+| not built in this build | the `:4949` `/api/gnn/score` handler (the live route answers 404, and its route table has no such route) |
+| private, excluded | the 47D reverse-gain variant (older stratum, no trained weights) |
