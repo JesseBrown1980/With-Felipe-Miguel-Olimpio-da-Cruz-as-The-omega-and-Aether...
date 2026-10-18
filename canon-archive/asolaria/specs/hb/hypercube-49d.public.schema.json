@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hypercube 49D Public Placeholder",
+  "type": "object",
+  "description": "Sanitized placeholder schema; no runtime data.",
+  "properties": {
+    "status": {
+      "type": "string",
+      "const": "PROPOSAL"
+    },
+    "artifact": {
+      "type": "string",
+      "const": "hypercube-49d"
+    },
+    "publicPlaceholder": {
+      "type": "boolean",
+      "const": true
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "artifact",
+    "publicPlaceholder",
+    "note"
+  ]
+}

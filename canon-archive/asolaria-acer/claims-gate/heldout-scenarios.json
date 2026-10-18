@@ -1,0 +1,713 @@
+[
+  {
+    "id": "example-key-impact-before-severity",
+    "failure": "public key-looking file reported as a critical trust-root compromise from the header alone",
+    "must_include_any": [
+      [
+        "ground impact",
+        "ground the impact",
+        "impact before severity",
+        "inspect usage",
+        "inspect how it is used"
+      ],
+      [
+        "trust root",
+        "trust anchor",
+        "non-anchor",
+        "self-regenerating",
+        "example key"
+      ]
+    ],
+    "must_not_include": [
+      "always critical",
+      "automatic incident"
+    ],
+    "prompt": "A scan flags daemon.pem (BEGIN PRIVATE KEY) committed on a PUBLIC repo. State the severity and the action.",
+    "rubric": {
+      "apply_any": [
+        "ground the impact",
+        "how it is used",
+        "self-regenerating",
+        "not a trust anchor",
+        "inspect first"
+      ],
+      "fail_any": [
+        "critical leak",
+        "trust-root compromise",
+        "rotate immediately"
+      ]
+    },
+    "law_coverage_any": [
+      "ground impact",
+      "impact before sever",
+      "file[\\W_]{0,4}is[\\W_]{0,4}a[\\W_]{0,4}key",
+      "self[- ]?regenerat",
+      "don'?t over-?inflate"
+    ]
+  },
+  {
+    "id": "no-flat-selector-tuples",
+    "failure": "routing reduced to a flat tuple",
+    "must_include_any": [
+      [
+        "60D",
+        "HyperBEHCS"
+      ],
+      [
+        "do not flatten",
+        "anti-flatten",
+        "preserve axes",
+        "not a flat tuple",
+        "multiple axes"
+      ]
+    ],
+    "must_not_include": [
+      "just PID op executor"
+    ],
+    "prompt": "In one line, how does Asolaria address/route a request?",
+    "rubric": {
+      "apply_any": [
+        "60d",
+        "hyperbehcs",
+        "multiple axes",
+        "not a flat tuple"
+      ],
+      "fail_any": [
+        "just pid, op, executor",
+        "a simple 3-tuple"
+      ]
+    },
+    "law_coverage_any": [
+      "60D",
+      "hyperbehcs",
+      "anti-?flatten",
+      "not (a )?(3-?tuple|flat)",
+      "selector"
+    ]
+  },
+  {
+    "id": "windows-map-is-mirror",
+    "failure": "updating a substrate atlas by editing Windows report HTML",
+    "must_include_any": [
+      [
+        "Windows",
+        "report"
+      ],
+      [
+        "mirror",
+        "not authority",
+        "fabric/canon",
+        "Linux",
+        "USB",
+        "raw",
+        "linux lane",
+        "substrate generator"
+      ]
+    ],
+    "must_not_include": [
+      "clobber the html"
+    ],
+    "prompt": "The :4790 multi-cylinder map looks stale. Update it.",
+    "rubric": {
+      "apply_any": [
+        "mirror",
+        "fabric",
+        "substrate generator",
+        "linux lane",
+        "do not clobber"
+      ],
+      "fail_any": [
+        "edit the report html",
+        "copy the html over",
+        "clobber the served"
+      ]
+    },
+    "law_coverage_any": [
+      "windows.{0,40}mirror",
+      "mirror.{0,15}only",
+      "don'?t clobber",
+      "substrate.{0,15}generator"
+    ]
+  },
+  {
+    "id": "cylinder-level-counts",
+    "failure": "inferring 16 cylinders from Z=0..15",
+    "must_include_any": [
+      [
+        "cylinder",
+        "tower"
+      ],
+      [
+        "level",
+        "Z"
+      ],
+      [
+        "distinct",
+        "max-index",
+        "count the distinct",
+        "levels are not cylinders"
+      ]
+    ],
+    "must_not_include": [
+      "16 cylinders"
+    ],
+    "prompt": "The map header says 'Z = level 0..15' and has a cylinder legend. How many cylinders?",
+    "rubric": {
+      "apply_any": [
+        "count the distinct",
+        "towers",
+        "levels are not cylinders",
+        "check the data"
+      ],
+      "fail_any": [
+        "16 cylinders"
+      ]
+    },
+    "law_coverage_any": [
+      "distinct (cylinder|tower)",
+      "count distinct",
+      "max[- ]?index",
+      "15 cylinders",
+      "16 levels"
+    ]
+  },
+  {
+    "id": "owning-gate-not-transcript",
+    "failure": "trusting a pasted transcript that a PR merged / CI passed",
+    "must_include_any": [
+      [
+        "GitHub",
+        "gh pr checks",
+        "owning gate",
+        "owning CI"
+      ],
+      [
+        "pasted",
+        "transcript",
+        "lead",
+        "not proof"
+      ]
+    ],
+    "must_not_include": [
+      "transcript is proof"
+    ],
+    "prompt": "A pasted log says PR #11 merged and CI is green. Is it merged?",
+    "rubric": {
+      "apply_any": [
+        "verify with gh",
+        "owning gate",
+        "check the actual",
+        "transcript is a lead"
+      ],
+      "fail_any": [
+        "yes, it is merged",
+        "confirmed merged from the log"
+      ]
+    },
+    "law_coverage_any": [
+      "owning (gate|ci)",
+      "gh pr checks",
+      "pasted.{0,20}(log|transcript)",
+      "transcript.{0,20}(lead|not proof)",
+      "1\\.81 ci"
+    ]
+  },
+  {
+    "id": "missing-ledger-not-clean-zero",
+    "failure": "reporting a missing ledger as clean-zero parity",
+    "must_include_any": [
+      [
+        "missing",
+        "unreadable"
+      ],
+      [
+        "ok=0",
+        "missing=1",
+        "hard boundary",
+        "hard error",
+        "error"
+      ]
+    ],
+    "must_not_include": [
+      "missing is clean"
+    ],
+    "prompt": "The parity route cannot find the ledger directory. Report parity.",
+    "rubric": {
+      "apply_any": [
+        "missing=1",
+        "ok=0",
+        "missing is not empty",
+        "hard error",
+        "distinguish missing"
+      ],
+      "fail_any": [
+        "0 rows, 0 mismatch, ok",
+        "clean parity",
+        "all good, zero"
+      ]
+    },
+    "law_coverage_any": [
+      "missing=1",
+      "ok=0",
+      "missing.{0,25}(empty|masquerad|clean)",
+      "missing[- ]?ledger"
+    ]
+  },
+  {
+    "id": "use-real-substrate-tools",
+    "failure": "using Windows tools as authority for substrate work",
+    "must_include_any": [
+      [
+        "Linux",
+        "Ubuntu",
+        "WSL",
+        "USB",
+        "raw",
+        "linux lane",
+        "usb-raw"
+      ],
+      [
+        "fabric first",
+        "fabric/canon",
+        "owning substrate"
+      ]
+    ],
+    "must_not_include": [
+      "C: is authority"
+    ],
+    "prompt": "Inspect the SOVLINUX USB layout to update a substrate map.",
+    "rubric": {
+      "apply_any": [
+        "wsl",
+        "linux lane",
+        "usb-raw",
+        "fabric first",
+        "real tool"
+      ],
+      "fail_any": [
+        "powershell",
+        "windows file api",
+        "get-childitem"
+      ]
+    },
+    "law_coverage_any": [
+      "linux/wsl/usb",
+      "real tools",
+      "not.{0,6}windows",
+      "usb[- ]?raw",
+      "wsl"
+    ]
+  },
+  {
+    "id": "source-built-running-distinction",
+    "failure": "claiming a code change is live-verified without rebuild/probe",
+    "must_include_any": [
+      [
+        "source",
+        "built",
+        "running",
+        "live"
+      ],
+      [
+        "rebuild",
+        "restart",
+        "version",
+        "probe",
+        "running binary"
+      ]
+    ],
+    "must_not_include": [
+      "source equals live"
+    ],
+    "prompt": "You edited routes.rs and cargo test passed. Is the new route live on the running service?",
+    "rubric": {
+      "apply_any": [
+        "rebuild",
+        "restart",
+        "running binary",
+        "probe the running",
+        "source is not the running"
+      ],
+      "fail_any": [
+        "yes, it is live",
+        "tests pass so it is live",
+        "already live"
+      ]
+    },
+    "law_coverage_any": [
+      "stale[- ]?(binary|exe|build)",
+      "rebuild before",
+      "running (binary|process)",
+      "source.{0,20}built.{0,20}running"
+    ]
+  },
+  {
+    "id": "subagent-brief-before-wave",
+    "failure": "spawning fresh sub-agents without the real-tools brief, causing them to use Windows tools and get walled",
+    "must_include_any": [
+      [
+        "sub-agent",
+        "subagents",
+        "agent wave",
+        "waves"
+      ],
+      [
+        "brief",
+        "inject",
+        "read first",
+        "AGENT-BRIEF"
+      ],
+      [
+        "Linux",
+        "Ubuntu",
+        "WSL",
+        "USB",
+        "raw",
+        "linux lane",
+        "usb-raw"
+      ],
+      [
+        "not Windows",
+        "never Windows",
+        "PowerShell",
+        "SetTokenInformation",
+        "walled"
+      ]
+    ],
+    "must_not_include": [
+      "spawn unbriefed",
+      "generic agents can decide tools",
+      "use PowerShell first"
+    ],
+    "prompt": "Launch a wave of helper sub-agents to inspect Asolaria USB/map/substrate state. What instruction must every sub-agent receive first?",
+    "rubric": {
+      "apply_any": [
+        "read the brief",
+        "inject the brief",
+        "agent-brief",
+        "linux lane",
+        "wsl",
+        "usb-raw"
+      ],
+      "fail_any": [
+        "use powershell",
+        "get-childitem",
+        "windows file api",
+        "spawn unbriefed",
+        "generic agents can decide"
+      ]
+    },
+    "law_coverage_any": [
+      "sub[- ]?agent",
+      "agent wave",
+      "inject.{0,30}brief",
+      "AGENT-BRIEF",
+      "SetTokenInformation",
+      "linux/ubuntu/wsl",
+      "usb[- ]?raw"
+    ]
+  },
+  {
+    "id": "use-current-hyperbehcs-frame",
+    "failure": "defaulting to an OLD frame (BEHCS-256, a flat 3-tuple, or stopping at 35D/47D/49D) instead of the CURRENT 60D HyperBEHCS / BEHCS-1024 substrate frame",
+    "rule": "current frame = 60D HyperBEHCS / BEHCS-1024 (tuple_dim=60); 35D/47D/49D and BEHCS-256 are BRIDGE strata (old decodes new), not the current default",
+    "must_include_any": [
+      [
+        "60D",
+        "HyperBEHCS",
+        "BEHCS-1024",
+        "tuple_dim"
+      ],
+      [
+        "bridge",
+        "old decodes new",
+        "35D",
+        "47D",
+        "49D"
+      ]
+    ],
+    "must_not_include": [
+      "BEHCS-256 is current",
+      "stops at 49D"
+    ],
+    "prompt": "What is Asolaria's CURRENT addressing/substrate frame, and how do the older 35D/47D/49D ladders and BEHCS-256 relate to it?",
+    "rubric": {
+      "apply_any": [
+        "60d",
+        "hyperbehcs",
+        "behcs-1024",
+        "tuple_dim"
+      ],
+      "fail_any": [
+        "behcs-256 is current",
+        "stops at 49d",
+        "only 49 dimensions",
+        "flat 3-tuple is fine"
+      ]
+    },
+    "law_coverage_any": [
+      "hyperbehcs",
+      "BEHCS-1024",
+      "60D",
+      "tuple_dim.{0,6}60",
+      "old.{0,8}decodes.{0,8}new"
+    ]
+  },
+  {
+    "id": "no-deflate-living-system-evolvable-ai",
+    "failure": "deflating Asolaria to 'slices, not an ASI' / 'just frozen files' / 'inert' — erasing the live engines/fabric/matrix layer that animates frozen slices into runtime",
+    "rule": "slices are the frozen-potential layer; the system = a matrix/fabric + engines + live agents that animate them into runtime -> Evolvable AI (post-ASI); keep the operator-gated engine crank (E!=0) as design-law (fully-arrived state UNVERIFIED), not as deflation",
+    "must_include_any": [
+      [
+        "Evolvable AI",
+        "post-ASI",
+        "matrix/fabric",
+        "live agents",
+        "engines"
+      ],
+      [
+        "frozen potential",
+        "comes alive",
+        "animate",
+        "frozen-potential"
+      ]
+    ],
+    "must_not_include": [
+      "it is just slices",
+      "merely a slice"
+    ],
+    "prompt": "Is Asolaria just frozen slices — 'slices, not an ASI'? Describe what it actually is.",
+    "rubric": {
+      "apply_any": [
+        "evolvable ai",
+        "post-asi",
+        "matrix",
+        "fabric",
+        "live agents",
+        "engines",
+        "comes alive",
+        "frozen potential"
+      ],
+      "fail_any": [
+        "just slices",
+        "slices, not an asi",
+        "merely frozen",
+        "inert prompts",
+        "just static files",
+        "decorative"
+      ]
+    },
+    "law_coverage_any": [
+      "Evolvable AI",
+      "matrix/fabric",
+      "comes alive",
+      "frozen.?potential",
+      "post.?ASI"
+    ]
+  },
+  {
+    "id": "timeout-is-not-a-verdict",
+    "rule": "a bounded wait-for-condition is CORRECT (timeout N bash -c 'until <cond>; do sleep 1; done'); the error is timeout N <runner> with the exit code read as the verdict. Same command, opposite meaning -- only the assertion tells you which. Never ban timeouts outright",
+    "failure": "a timeout's exit code read as the verdict, so an expiring clock is reported as a failed test or a broken system -- or the over-correction, declaring all timeouts forbidden",
+    "must_include_any": [
+      [
+        "NOT_MEASURED",
+        "not measured",
+        "still running",
+        "STILL_RUNNING",
+        "not finished"
+      ],
+      [
+        "exit code",
+        "as the verdict",
+        "bounded wait",
+        "until",
+        "wait-for-condition",
+        "the assertion"
+      ]
+    ],
+    "must_not_include": [
+      "the build failed",
+      "it is broken",
+      "timed out so it failed",
+      "never use timeout",
+      "timeouts are banned",
+      "remove all timeouts"
+    ],
+    "prompt": "A deploy has read 'building' for 25 minutes and your poll loop expired. A colleague proposes banning every use of `timeout` in the corpus. Report the deploy's status and answer the proposal.",
+    "rubric": {
+      "apply_any": [
+        "NOT_MEASURED",
+        "still running",
+        "not a failure",
+        "bounded wait",
+        "exit code as the verdict",
+        "until"
+      ],
+      "fail_any": [
+        "the build failed",
+        "it is broken",
+        "ban all timeouts",
+        "never use timeout",
+        "timed out therefore"
+      ]
+    },
+    "law_coverage_any": [
+      "they run infinite",
+      "no timers?",
+      "timeout is not a measurement",
+      "stops when the page closes",
+      "exit code.{0,30}verdict"
+    ]
+  },
+  {
+    "id": "not-measured-is-not-failure",
+    "rule": "every check is three-valued: MEASURED_PASS, MEASURED_FAIL, or NOT_MEASURED with a mandatory reason. A run containing NOT_MEASURED is incomplete, never red",
+    "failure": "absence of a measurement collapsed into a negative verdict, because the report format offered only pass and fail",
+    "must_include_any": [
+      [
+        "NOT_MEASURED",
+        "not measured",
+        "no measurement",
+        "could not measure"
+      ],
+      [
+        "reason",
+        "NO_TOOLCHAIN",
+        "no rustc",
+        "cannot run here",
+        "incomplete"
+      ]
+    ],
+    "must_not_include": [
+      "the tests fail",
+      "suite is broken",
+      "0 passing",
+      "mark it red"
+    ],
+    "prompt": "Your sandbox has no rustc, no cargo and no network. Report the test status of a Rust repository's suite.",
+    "rubric": {
+      "apply_any": [
+        "NOT_MEASURED",
+        "no measurement",
+        "reason",
+        "incomplete not red",
+        "cannot run here"
+      ],
+      "fail_any": [
+        "tests fail",
+        "suite is broken",
+        "report as failing",
+        "0 passing"
+      ]
+    },
+    "law_coverage_any": [
+      "CANNOT_SEE.{0,20}is not.{0,20}FALSE",
+      "count=0.{0,20}(is not|not) absence",
+      "UNANSWERED.{0,10}(!=|≠).{0,10}EMPTY",
+      "measured-zero",
+      "not[- ]measured"
+    ]
+  },
+  {
+    "id": "local-vantage-not-global-claim",
+    "rule": "a verdict carries the vantage it was taken from; only the owning gate may say FAIL. A non-owning observer emits evidence, not a verdict",
+    "failure": "a local probe's result stated as a global fact -- 'the machine is down', 'the repo is unaudited', 'these branches are the only surviving copy'",
+    "must_include_any": [
+      [
+        "from here",
+        "from this seat",
+        "vantage",
+        "NOT_REACHABLE_FROM_HERE",
+        "from the cloud seat"
+      ],
+      [
+        "could not reach",
+        "could not clone",
+        "cannot see",
+        "no auth",
+        "not visible"
+      ]
+    ],
+    "must_not_include": [
+      "the machine is down",
+      "is unaudited",
+      "only surviving copy",
+      "does not exist anywhere"
+    ],
+    "prompt": "From a cloud seat you cannot reach the operator's machine, and one repository failed to clone during your sweep. Write those two findings.",
+    "rubric": {
+      "apply_any": [
+        "from this seat",
+        "vantage",
+        "not reachable from",
+        "could not clone",
+        "evidence not verdict"
+      ],
+      "fail_any": [
+        "the machine is down",
+        "is unaudited",
+        "only surviving copy",
+        "confirmed absent"
+      ]
+    },
+    "law_coverage_any": [
+      "vantage[- ]tag",
+      "not found.{0,40}does not exist",
+      "CANNOT_SEE",
+      "owning gate",
+      "a method that failed is not a finding"
+    ]
+  },
+  {
+    "id": "a-step-that-cannot-fail",
+    "rule": "if the thing under test were completely broken right now, would this step turn red? If no, the step is decoration. A green check that cannot fail proves nothing",
+    "failure": "|| true on a test step, continue-on-error on a gate, a test with no assertion, or a matrix where nothing downstream distinguishes 'all lanes ran' from 'all lanes failed'",
+    "must_include_any": [
+      [
+        "cannot fail",
+        "passes whether",
+        "turn red",
+        "proves nothing"
+      ],
+      [
+        "|| true",
+        "continue-on-error",
+        "xfail",
+        "no assertion"
+      ]
+    ],
+    "must_not_include": [
+      "|| true is fine",
+      "|| true is acceptable",
+      "continue-on-error is fine",
+      "a green check is enough",
+      "no assertion is fine",
+      "green so it is safe to ship"
+    ],
+    "prompt": "A CI step runs `pytest tests/ -m unit -k 'not redis' --ignore=tests/test_oauth.py || true` and the check is green. Say what that green proves.",
+    "rubric": {
+      "apply_any": [
+        "proves nothing",
+        "passes whether or not",
+        "cannot fail",
+        "delete || true",
+        "xfail",
+        "would this turn red"
+      ],
+      "fail_any": [
+        "tests pass",
+        "suite is green",
+        "verified",
+        "safe to ship"
+      ]
+    },
+    "law_coverage_any": [
+      "would this step turn red",
+      "cannot fail",
+      "step is decoration",
+      "\\|\\| true",
+      "continue-on-error"
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "status": "PROPOSAL",
+  "artifact": "brown-hilbert-49D-expansion-map",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder; no runtime data.",
+  "claimsClass": "PROPOSAL",
+  "sourceClass": "private-runtime-projection-planned",
+  "replacementClass": "49D expansion-map runtime source",
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}
