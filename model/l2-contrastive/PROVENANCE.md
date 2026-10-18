@@ -127,8 +127,8 @@ component below 2^51, none.
 
 ## Training script
 
-Not on this container; the gnn-sidecar cube `9859b576` locates `train_contrastive.py` on ACER (sha256
-`87247eb4…`, body pending transfer — docs/handoffs). bigpickle-rebuild @ `c592599c` `tests/unit/gnn-l1-l2-status.test.mjs` names it and
+The gnn-sidecar cube `9859b576` located `train_contrastive.py` on ACER (sha256 `87247eb4…`); its body
+was transferred on 2026-10-18 and is at `acer/Asolaria/services/gnn-sidecar/train_contrastive.py`. bigpickle-rebuild @ `c592599c` `tests/unit/gnn-l1-l2-status.test.mjs` names it and
 says how it was to be run: line 12 "training required: run train_contrastive.py", line 90
 "train_contrastive.py was run 2026-06-01", and lines 106-116 expect `train_contrastive.py`
 referencing `contrastive_model.pt` in the sidecar directory, whose default is
@@ -160,9 +160,9 @@ following the same pattern as prototype_inference_server.py.
 
 The vendored checkpoint (99,073 bytes) has exactly these keys and this architecture.
 
-**Corpus: named and pinned upstream; its bytes are not on this container.** The note names
-`gslgnn_w9_3_corpus.json`. The gnn-sidecar cube `9859b576` locates a build of it on ACER (sha256
-`7e7d0406…`, 68,695,303 B, docs/handoffs); that build differs from the v2 manifest's pinned
+**Corpus: named and pinned upstream.** The note names `gslgnn_w9_3_corpus.json`. The gnn-sidecar
+cube `9859b576` located a build of it on ACER (sha256 `7e7d0406…`, 68,695,303 B), transferred on
+2026-10-18 to `acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_corpus.json`; that build differs from the v2 manifest's pinned
 `0f123581…` below, since `build_corpus()` joins time-varying orchestrator ticks, so the exact v2
 corpus is not the cube's copy. Asolaria-fnns @ `c4b2458c` `src/train_gslgnn_w9_3.py` builds it in
 `build_corpus()` (lines 182-205, historical orchestrator ticks joined with the current Phase-1
@@ -211,8 +211,8 @@ from the status test's `services/gnn-sidecar`, so it says nothing about the trai
 On disk, then: the corpus's name, sha256 and counts, the feature order of the corpus's own trainer
 (`[min(edgeVolume/100, 1), avgRisk/9, maxRisk/9, failureRate, online, trustTier/3]`,
 train_gslgnn_w9_3.py:224-231, the same order as train_baseline.py:31-38), and the L2 trainer's
-expected keys and architecture. Not on this container (the gnn-sidecar cube `9859b576` locates
-`train_contrastive.py` on ACER, sha256 `87247eb4…`, body pending transfer): the L2 trainer's own
+expected keys and architecture. Not on this container until 2026-10-18 (now at
+`acer/Asolaria/services/gnn-sidecar/train_contrastive.py`, sha256 `87247eb4…`): the L2 trainer's own
 code, and with it how it turns the corpus into node features and labels, its loss weights and its split. The checkpoint's input width
 is 6. This crate takes the Q24 feature matrix as input and does not build features.
 
@@ -233,7 +233,8 @@ Lines 145-146 plan the server: "After training, write contrastive_inference_serv
 following the same pattern as prototype_inference_server.py." `prototype_inference_server.py`, which
 the header names as the L1 server at :4795 (lines 7-8), was not found by the searches listed under
 [Training script](#training-script); the gnn-sidecar cube `9859b576` later located it on ACER (sha256
-`c4a36e8a…`, body pending transfer — docs/handoffs).
+`c4a36e8a…`), and it was transferred on 2026-10-18 to
+`acer/Asolaria/services/gnn-sidecar/prototype_inference_server.py`.
 `feed-gnn-archaeology-to-fabric.mjs:16` names an `inference_server_v2` with role
 `4-layer-immune-cascade` at `C:/Users/acer/Asolaria/sovereignty/research/gnn-patterns/inference_server_v2.py`;
 its bytes are not on disk or in any mirror commit (the mirror report above lists the path as
@@ -317,7 +318,8 @@ an AMD CPU here.
   maximum 16,777,216, range 7,003, 97 distinct values, the same 50 edges exactly 1.0. The status
   test's promotion criterion is "spread std > 0.01" on its corpus; that corpus's bytes were not on this
   container when these were measured (the gnn-sidecar cube `9859b576` later located a build on ACER,
-  `7e7d0406…`, pending transfer), so these numbers describe the synthetic fixture only.
+  `7e7d0406…`, transferred 2026-10-18 to `acer/`), so these numbers describe the synthetic fixture
+  only; the owner's live-corpus measurements are in `docs/handoffs/gnn-recheck-2026-10-18/`.
 - Projections, over the 262 layout edges: the mean direction (the summed projection vector,
   normalized) has its largest-magnitude component at number 48, value -1,073,727,916 in Q30
   (-1073727916/2^30; the next-largest component's magnitude is 244 times smaller). Every edge's

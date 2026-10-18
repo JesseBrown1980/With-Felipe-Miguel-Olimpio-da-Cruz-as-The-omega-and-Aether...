@@ -29,7 +29,12 @@ What it locates, that the model crates previously recorded as not on disk: the L
 `prototype_inference_server.py`, the L4 server `gslgnn_inference_server.py`, the L2 trainer
 `train_contrastive.py`, and `hyperbehcsQuantSubstrate.js` (the slot-26 receipt producer). The
 file bodies move by the owner's permission rule; ACER's own data-handling classifier blocked an
-agent from packaging them, so only this manifest was sent.
+agent from packaging them, so at first only this manifest was sent.
+
+**Transferred 2026-10-18.** The owner's seat sent all 32 bodies in four zips (checkpoints 11, code
+14, corpus 1, ledgers 6). Every body matches this cube's size and sha256 (32/32), and each zip's
+`origin-cube` copy equals this manifest (`745d5a93…`). The bodies are at `acer/` under their ACER
+paths (`acer/README.md`); the zips' own manifests are in `cube-9859b576-transfer-2026-10-18/`.
 
 The manifest records, as not on ACER: `contrastive_inference_server.py` (the :4796 server),
 the shard-quant receipts, an HRM checkpoint, the Host8 seat book, and the cadence frame. Each
@@ -63,7 +68,7 @@ Absence is reported with the scope actually searched, never as "does not exist".
 
 | Label | Items |
 |---|---|
-| found on ACER, waiting on transfer | the 32 files in cube `9859b576855a7bf8` (above) |
+| found on ACER, transferred 2026-10-18 | the 32 files in cube `9859b576855a7bf8` (above), now at `acer/` (32/32 match their pins) |
 | not on ACER | `contrastive_inference_server.py`, the shard-quant receipts, an HRM checkpoint, the seat book, the cadence frame, `rime_fourpoint.py`, `cm3ti_4axis`, the `greedy_set_cover` key writers |
 | existed somewhere, not on ACER | `cm3ti_gt256.rs`, 26,377 B: `pump/kernel-pump/keyx/PLAY.md:17` cites its line 461, `keyx/key/KEY-3174.hbp:43` records `decoder_src=26,377`, and `keyx/receipts/run_prior_sweep.sh:55` holds it "frozen at 26,377 B"; its sibling `cm3ti_rbladder.rs` was built in the cloud's `/root/compressor-run/rust-cm3t` |
 | only in cloud session `9ebd6119` | the three trijection inputs (`k_gradient.bin`, `chaos1m.bin`, `code1m.bin`), the first-run THREE-BODIES receipt, the HERSELF seed order |

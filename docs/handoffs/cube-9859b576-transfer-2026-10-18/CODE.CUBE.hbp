@@ -1,0 +1,16 @@
+CUBEHDR|name=FABLE5-GNN-SIDECAR-CODE-cube9859b576-2026-10-18|origin_cube=9859b576855a7bf8|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=14|merkle_sha256=b0d2779b02e7c950c992c252c54afe757d2035d6c30415a085c3aa3c601e6c6a|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=gslgnn_inference_server.py|bytes=2911|sha256=8ac31eff0320a3bc0eb9a3c95ed8c271d93c5fbce907230ed2e76a390a01fc88|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/gslgnn_inference_server.py|json=0
+FILE|name=inference_server.py|bytes=2249|sha256=093917a704b0388e4527a57631edb7d4224310844d9c6938b411e90d40792609|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/inference_server.py|json=0
+FILE|name=prototype_inference_server.py|bytes=4609|sha256=c4a36e8aaf948044022eb9189fda7c5be86911dbabbdd1bbee29f71f96e486b5|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/prototype_inference_server.py|json=0
+FILE|name=start_inference.sh|bytes=59|sha256=48aaad3e72e4f1bf21e2e4f1f8ffd4ecb17d7f87f22b9e924409b8bd1cb14d87|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/start_inference.sh|json=0
+FILE|name=train_baseline.py|bytes=7127|sha256=df3dab508c39e6237ee34ccf8e9074cb83bd833bd0a51a7464e108411fbe5ee0|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/train_baseline.py|json=0
+FILE|name=train_contrastive.py|bytes=6156|sha256=87247eb4886495fbdad0af1dd4781caacefa98daafd8a72d16a184aa51201d1b|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/train_contrastive.py|json=0
+FILE|name=train_gslgnn_w9_3.py|bytes=14364|sha256=af694c1f6d3ea13b0b64f8763d2605f679b2d542ee9892135d5dbb41ce4fcef9|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/train_gslgnn_w9_3.py|json=0
+FILE|name=train_prototype.py|bytes=5355|sha256=d29373fc8104560e286c336fe772b4af82f9f47ca6dd748517a38db2c76e7d6d|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/train_prototype.py|json=0
+FILE|name=models/__init__.py|bytes=35|sha256=51b739fbc5851e391b90a917ee92062a97003f9428ec2167c49c7a76ff86bbc5|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/models/__init__.py|json=0
+FILE|name=models/contrastive_gnn.py|bytes=6249|sha256=349a30c02d558734618c2d9c69384a088b84664dfcb0f798b10553ac431201fb|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/models/contrastive_gnn.py|json=0
+FILE|name=models/gnn_baseline.py|bytes=2390|sha256=1dfa3343b1b1bac6e78bb8a698e360009f7966176aa68e6c8f4c110fcfb33b34|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/models/gnn_baseline.py|json=0
+FILE|name=models/gsl_gnn.py|bytes=9034|sha256=783b9b50d92ed8756270b87f5922d66a19972bfd51c1bc0d5ca0d5a483d22475|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/models/gsl_gnn.py|json=0
+FILE|name=models/prototype_gnn.py|bytes=5985|sha256=4edb9439c6367208a0cab4764c63c4127949f40275dc8427763314eef74598bc|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/models/prototype_gnn.py|json=0
+FILE|name=models/schemas.py|bytes=1700|sha256=490da322af4589a1eeca9ba361134838c65823ff2ea94dd3e8449823207e63c6|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/models/schemas.py|json=0
+CUBEFTR|name=FABLE5-GNN-SIDECAR-CODE-cube9859b576-2026-10-18|merkle_sha256=b0d2779b02e7c950c992c252c54afe757d2035d6c30415a085c3aa3c601e6c6a|json=0

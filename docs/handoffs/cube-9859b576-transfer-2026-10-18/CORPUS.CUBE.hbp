@@ -1,0 +1,3 @@
+CUBEHDR|name=FABLE5-GNN-SIDECAR-CORPUS-cube9859b576-2026-10-18|origin_cube=9859b576855a7bf8|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=1|merkle_sha256=d77665cfd21bce2ed812bdad275cca4f0d5272b504aed1fc0072153222e55bc4|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=gslgnn_w9_3_corpus.json|bytes=68695303|sha256=7e7d0406ec97af413a8181a7ba646b433e4d16bbaaaaf537c3e92afc422b199e|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_corpus.json|json=0
+CUBEFTR|name=FABLE5-GNN-SIDECAR-CORPUS-cube9859b576-2026-10-18|merkle_sha256=d77665cfd21bce2ed812bdad275cca4f0d5272b504aed1fc0072153222e55bc4|json=0

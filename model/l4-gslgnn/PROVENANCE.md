@@ -256,8 +256,8 @@ is the exact rendering `n/2^24` of the Q24 integer before it, and `toFixed(4)` v
   (`labelRatio` 0.99987); `test_accuracy` 0.99915, `test_precision` 0.99915, `test_recall` 1.0,
   `test_f1` 0.99958, 30 epochs. The v1 manifest: 97 nodes, 13,783 edges, 13,743 benign and 40
   suspicious; `test_accuracy` 0.98066, `test_precision` 0, `test_recall` 0.0. The corpus file
-  `gslgnn_w9_3_corpus.json` is not on this container; the gnn-sidecar cube `9859b576` locates a build
-  of it on ACER (sha256 `7e7d0406…`, 68,695,303 B, docs/handoffs), body pending transfer. That build
+  `gslgnn_w9_3_corpus.json`: the gnn-sidecar cube `9859b576` located a build of it on ACER (sha256
+  `7e7d0406…`, 68,695,303 B), transferred on 2026-10-18 to `acer/Asolaria/services/gnn-sidecar/`. That build
   differs from the v2 manifest's pinned `0f123581…` (`build_corpus()` joins time-varying orchestrator
   ticks), so the exact v2 corpus is not the cube's copy, and these metrics are not re-measured here.
 - `gsl.threshold` is 0.5 exactly (float32 0x3f000000), the value gsl_gnn.py:48 initialises; it

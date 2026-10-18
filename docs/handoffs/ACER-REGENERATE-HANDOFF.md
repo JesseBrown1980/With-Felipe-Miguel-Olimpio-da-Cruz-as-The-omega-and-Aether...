@@ -9,6 +9,12 @@ From the cloud session, to Claude Code on ACER (Windows), working for the owner,
 > the L1/L2 composite-weight question is CLOSED (no weight exists; benched), and L4's weight is an
 > owner decision of 2026-10-18 (weight 0). The find-and-send / regenerate-and-send items below — the
 > cube `9859b576` bodies especially — still stand.
+>
+> **Update, later on 2026-10-18.** P1 is applied: the owner's seat dropped `l4` from the served
+> scorer's `WEIGHTS` (receipt `FABLE5-SCORER-L4-WEIGHT0`), and `gate/observed` mirrors it. P2 is
+> delivered: all 32 bodies of cube `9859b576` arrived in four zips, each body matches its cube pin
+> (32/32), and they are at `acer/` under their ACER paths. Items 6, 7, 8, 9, 10 and the `verbs.hbp`
+> part of item 12 are **RECEIVED**.
 
 ## 1. Why this handoff, and the rules
 
@@ -105,13 +111,13 @@ item's priority, the **higher** of the two is used; the per-item notes keep both
 | 3 | HIGH | `ASOLARIA-KERNEL-3174.bin` #36 (`kernel-key`) | codex target #36 (key body) | body on ACER `D:\asolaria-absorb\kernel-pump\key\` | 3,174 B · `f075f5c6…5663b0ca` |
 | 4 | HIGH | `ASOLARIA-HERSELF-KEY-3174.bin` #12 + tie order (`herself-key`) | codex target #12 (key body; tie order is non-file, see §5) | body on ACER `D:\asolaria-absorb\kernel-pump\`; also USIM public | 3,174 B · `925c818d…c59cc2d89` |
 | 5 | HIGH | star-shell producers + 3 star-shell-v4 FULL GGUFs (`star-shell`) | Adds up to **3** FULL GGUFs to the stack (task #2) | producers byte-identical in aether; 3 FULL GGUFs live-measured on ACER, producer not recorded; 4 >100 MB GGUFs on HF mirror | see item 5 |
-| 6 | HIGH | vote-quorum `queue`/`votes`/`outcomes`.ndjson (`vote-quorum`) | Ledger trio (task #17); 3 files | **bodies on ACER** `C:\HyperBEHCS\data\vote-quorum\` | see item 6 |
-| 7 | HIGH | `gslgnn_w9_3_corpus.json` (`gslgnn-corpus`) | L2 ContrastiveGNN + L4 GSLGNN (2 levels) | **body on ACER** `C:\Users\acer\Asolaria\services\gnn-sidecar\` | 68,695,303 B · `7e7d0406…` (manifest pins `0f123581…`) |
-| 8 | HIGH | `prototype_inference_server.py` :4795 (`l1-server`) | L1 PrototypeGNN serve path | **body on ACER** `C:\Users\acer\Asolaria\services\gnn-sidecar\` | 4,609 B · `c4a36e8a…f96e486b5` |
-| 9 | HIGH | `train_contrastive.py` (`l2-trainer`) | L2 trainer | **body on ACER** `C:\Users\acer\Asolaria\services\gnn-sidecar\` | 6,156 B · `87247eb4…51201d1b` |
-| 10 | HIGH | `hyperbehcsQuantSubstrate.js` slot-26 (`quant-substrate`) | quants/hyperbehcs + quants/cubes slot-26; enables item 13 | **body on ACER** `C:\Users\acer\Asolaria\src\behcs\` | 6,893 B · `4dd0c2cb…eecaa0310b` |
+| 6 | HIGH | vote-quorum `queue`/`votes`/`outcomes`.ndjson (`vote-quorum`) | Ledger trio (task #17); 3 files | **RECEIVED** 2026-10-18 → `acer/HyperBEHCS/data/vote-quorum/` | see item 6 |
+| 7 | HIGH | `gslgnn_w9_3_corpus.json` (`gslgnn-corpus`) | L2 ContrastiveGNN + L4 GSLGNN (2 levels) | **RECEIVED** 2026-10-18 → `acer/Asolaria/services/gnn-sidecar/` | 68,695,303 B · `7e7d0406…` (manifest pins `0f123581…`) |
+| 8 | HIGH | `prototype_inference_server.py` :4795 (`l1-server`) | L1 PrototypeGNN serve path | **RECEIVED** 2026-10-18 → `acer/Asolaria/services/gnn-sidecar/` | 4,609 B · `c4a36e8a…f96e486b5` |
+| 9 | HIGH | `train_contrastive.py` (`l2-trainer`) | L2 trainer | **RECEIVED** 2026-10-18 → `acer/Asolaria/services/gnn-sidecar/` | 6,156 B · `87247eb4…51201d1b` |
+| 10 | HIGH | `hyperbehcsQuantSubstrate.js` slot-26 (`quant-substrate`) | quants/hyperbehcs + quants/cubes slot-26; enables item 13 | **RECEIVED** 2026-10-18 → `acer/Asolaria/src/behcs/` | 6,893 B · `4dd0c2cb…eecaa0310b` |
 | 11 | HIGH | `THREE-BODIES` first-run office receipt (`three-bodies-receipt`) | Unblocks **2** GGUFs: #28 FABLE-SLICES, #29 ANTI-FABLE-SLICES | only in cloud session 9ebd6119 (search ACER as backup) | 1,797 B · not recorded |
-| 12 | MED | Host8 `verbs.hbp` + seat book + cadence frame (`host8-seat`) | host8/federation boot (3 pieces) | `verbs.hbp` body on ACER; seat book + cadence frame not on ACER | see item 12 |
+| 12 | MED | Host8 `verbs.hbp` + seat book + cadence frame (`host8-seat`) | host8/federation boot (3 pieces) | `verbs.hbp` **RECEIVED** 2026-10-18 → `acer/HyperBEHCS/data/catalogs/`; seat book + cadence frame not on ACER | see item 12 |
 | 13 | MED | `shard-quant-receipts-latest.ndjson` (100 shards) (`shard-receipts`) | quants/cubes slot-26 fold over all 100 shards | not on ACER (regenerate from room-rotor) | 100 shards · not recorded |
 | 14 | MED | `DOUBLE-RAINBOW-OIL-3174.gguf` #10 — seed video + ffmpeg 8.1 (`double-rainbow`) | codex target #10 byte-exact regen (GGUF already verifies) | seed video + ffmpeg 8.1 (search ACER) | GGUF 3,174 B · `1b7f4097…`; video 7,832,497 B · `192f77f1…` |
 | 15 | MED | `ACER-THE-SPHERE.gguf` #33 generator (`sphere-gen`) | codex target #33 | GGUF public (USIM/HF); generator not recorded (search ACER) | GGUF 1,065,536 B · `958c457e…e8b2782ae` |
@@ -734,10 +740,10 @@ unrecorded original state. Listed for completeness, with the evidence both ways 
 - **L4 (owner decision, 2026-10-18, OWNER-RULES 7.a)**: L4's weight is to be **0** — the constant
   0.5292 carries no signal (at 0.15 it adds ~0.079 to every composite), so it joins L1/L2 as a benched
   non-voter. The change is made at the source (`asolaria-score.mjs:156`, drop the `l4` entry; the
-  present-signals mean renormalizes to 85), then the port re-mirrors it; until then the committed port
-  stays faithful at l4=0.15.
-- **Action**: none to retrieve — do not pick L1/L2 weights (none exist). The one ACER action is the
-  L4 source edit above (P1 of the owner's 2026-10-18 instructions).
+  present-signals mean renormalizes to 85), then the port re-mirrors it. **Applied 2026-10-18**:
+  receipt `FABLE5-SCORER-L4-WEIGHT0` (`WEIGHTS` now line 157); the served file is vendored at
+  `gate/observed/vendor/acer-scorer-2026-10-18/` and `gate/observed` mirrors it.
+- **Action**: none — do not pick L1/L2 weights (none exist); the L4 source edit is done.
 - **Evidence**: OWNER-RULES.md 7.a/7.b; `model/{l1-prototype,l2-contrastive,l4-gslgnn}/PROVENANCE.md`;
   `gate/observed/src/score.rs`; `docs/handoffs/gnn-recheck-2026-10-18/FABLE5-GNN-REST-MEASURED-2026-10-18.hbp`.
 

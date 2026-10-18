@@ -1,0 +1,37 @@
+{
+  "kind": "gslgnn_w9_3_seq47_manifest",
+  "substrate": "BEHCS-256",
+  "fabric_ruling": "BOTH_CURRENT_AND_HISTORICAL (acer council 192/234)",
+  "corpus_path": "C:\\Users\\acer\\Asolaria\\services\\gnn-sidecar\\gslgnn_w9_3_corpus.json",
+  "corpus_sha256": "0f1235818828b27d0e143385eb322733e784151bc8a2b8dc60855dc6f5e9699e",
+  "corpus_stats": {
+    "totalNodes": 109,
+    "totalEdges": 315249,
+    "benign": 40,
+    "suspicious": 315209,
+    "labelRatio": 0.9998731161716611,
+    "corpus": "BOTH_CURRENT_AND_HISTORICAL (acer-fabric-ruled 192/234)"
+  },
+  "checkpoint_path": "C:\\Users\\acer\\Asolaria\\services\\gnn-sidecar\\gslgnn_w9_3_seq47_v2.pt",
+  "checkpoint_sha256": "9e50723b10c9de5c27baa5bc9386340bf72f76bcae2877064a47e4627a86602c",
+  "model_class": "services/gnn-sidecar/models/gsl_gnn.py::GSLGNN",
+  "metrics": {
+    "test_accuracy": 0.9991540908813477,
+    "test_precision": 0.9991541194383353,
+    "test_recall": 1.0,
+    "test_f1": 0.9995768807649996,
+    "best_val_acc": 1.0,
+    "epochs": 30,
+    "train_size": 220674,
+    "val_size": 47287,
+    "test_size": 47288
+  },
+  "d11": "OBSERVED-acer-w9_3-trained-pending-bilateral-verify",
+  "constraints_honored": [
+    "C1 D11 honesty \u2014 not PROVEN until empirical 3-substrate seq=47",
+    "C2 NEVER-WIPE \u2014 no sovereignty USB / chain mutation",
+    "C3 daemon restart \u2014 sidecar reload required post-checkpoint",
+    "C4 bilateral bus dispatch sha + manifest before swap-in",
+    "C5 failed seq=47 = honor HOLD (seq=45 stays unconditional)"
+  ]
+}

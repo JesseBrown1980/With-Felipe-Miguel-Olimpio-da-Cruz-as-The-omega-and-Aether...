@@ -1,0 +1,13 @@
+CUBEHDR|name=FABLE5-GNN-SIDECAR-CHECKPOINTS-cube9859b576-2026-10-18|origin_cube=9859b576855a7bf8|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=11|merkle_sha256=f6efb0dd60a3f03dccc546c07c60d8a861e83b5f2f0a5bbef5611821fab30c73|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=baseline_model.pt|bytes=55599|sha256=a09993369d31ca73345914812e5226b513f5fb9092f43e487a2eafc8c3b621f5|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/baseline_model.pt|json=0
+FILE|name=contrastive_model.pt|bytes=99073|sha256=d371dbbf97ecee87846a87a1a57492e3c03d97168a9b5f5cfcc1fee411488eef|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/contrastive_model.pt|json=0
+FILE|name=contrastive_model_run2.pt|bytes=99073|sha256=048764063f6711be5f501f5f65155dc8d017c1106d99aecf2580ded2906ebe72|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/contrastive_model_run2.pt|json=0
+FILE|name=contrastive_model_run3.pt|bytes=99073|sha256=d371dbbf97ecee87846a87a1a57492e3c03d97168a9b5f5cfcc1fee411488eef|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/contrastive_model_run3.pt|json=0
+FILE|name=gslgnn_w9_3_seq47.pt|bytes=120356|sha256=6f82384ff2e313b1f34b48cca5c1c2bb3a8f9391bba54db7afbb36c5fda91ad5|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47.pt|json=0
+FILE|name=gslgnn_w9_3_seq47_manifest.json|bytes=1515|sha256=813b5cfdb50dea19e3a4d7ad9d3b3edc2b4d2147e0b0330d2114f73023b0b17a|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47_manifest.json|json=0
+FILE|name=gslgnn_w9_3_seq47_v2.pt|bytes=120495|sha256=9e50723b10c9de5c27baa5bc9386340bf72f76bcae2877064a47e4627a86602c|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47_v2.pt|json=0
+FILE|name=gslgnn_w9_3_seq47_v2_manifest.json|bytes=1556|sha256=9d183aeb8a8311b09a5e9599f7840cec61365fbe70465bb1089d14168bddfda1|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47_v2_manifest.json|json=0
+FILE|name=prototype_model.pt|bytes=73793|sha256=b4df990138ae215bbdda7c1fcf4902bc0a8cb72d9b7d8944eb965d0fc737dd22|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/prototype_model.pt|json=0
+FILE|name=prototype_model_run2.pt|bytes=73793|sha256=f9817037b888759ab8b1d1ff8d41b4aa4d3b0e790b70a5a73d659545527073b8|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/prototype_model_run2.pt|json=0
+FILE|name=prototype_model_run3.pt|bytes=73793|sha256=b4df990138ae215bbdda7c1fcf4902bc0a8cb72d9b7d8944eb965d0fc737dd22|acer_path=C:/Users/acer/Asolaria/services/gnn-sidecar/prototype_model_run3.pt|json=0
+CUBEFTR|name=FABLE5-GNN-SIDECAR-CHECKPOINTS-cube9859b576-2026-10-18|merkle_sha256=f6efb0dd60a3f03dccc546c07c60d8a861e83b5f2f0a5bbef5611821fab30c73|json=0
