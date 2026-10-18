@@ -26,6 +26,12 @@ read as content, so a differing digest over it gives `-1` (`tests/cases` `partly
 partial zero regions should read `0` is not decided here, see "Not decided"). Rows are rendered
 by the vendored `encode_row` and parsed by the vendored `parse_row`.
 
+In the code the trit is the owner's `Zero` (`Pos` = `+1`, `Nil` = `0`, `Neg` = `-1`) from
+`kernel/tribit` (asolaria-tribit@1292191), re-exported by `ternary` (crate `asolaria-ternary`,
+path dependency `../../ternary`) and by this crate as `vault_reader::Zero`. `render_trit` writes
+`Zero::direction()` as `+1`, `0` or `-1`. Owner rule relayed from the ACER seat: "reuse
+tribit/mod.rs, never reinvent" (`PROVENANCE.md`, "Trits as the owner's `Zero`").
+
 ## What is checked, and where each rule comes from
 
 | object (`kind`) | rule | upstream |

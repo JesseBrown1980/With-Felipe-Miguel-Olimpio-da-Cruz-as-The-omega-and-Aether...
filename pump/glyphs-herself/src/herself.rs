@@ -7,6 +7,7 @@ use crate::cv;
 use crate::softfloat::{int_to_f32_bits, isqrt_u64, Dbl};
 use std::fs;
 use std::path::Path;
+use ternary::{cube, Zero};
 
 const N: usize = 64;
 const TC: i64 = 32;
@@ -249,18 +250,18 @@ fn radial_bin(i: usize, j: usize, k: usize) -> usize {
     (isqrt_u64(s) as usize).min(N - 1)
 }
 
+/// `KEY3 = (SG0+1)*9 + (SG1+1)*3 + (SG2+1)` with `SG = np.sign(Dv).astype(np.int8)`
+/// (`asolaria_herself.py:106-107`): each axis sign is a trit, the owner's `Zero`, and the key is
+/// `cube::index` of the three (`digit()` is `SG+1`).
 fn dir_key(i: usize, j: usize, k: usize) -> u8 {
-    let sg = |d: i64| -> i64 {
+    let sg = |d: i64| -> Zero {
         match d.cmp(&0) {
-            std::cmp::Ordering::Less => -1,
-            std::cmp::Ordering::Equal => 0,
-            std::cmp::Ordering::Greater => 1,
+            std::cmp::Ordering::Less => Zero::Neg,
+            std::cmp::Ordering::Equal => Zero::Nil,
+            std::cmp::Ordering::Greater => Zero::Pos,
         }
     };
-    let a = sg(i as i64 - TC) + 1;
-    let b = sg(j as i64 - TC) + 1;
-    let c = sg(k as i64 - TC) + 1;
-    (a * 9 + b * 3 + c) as u8
+    cube::index([sg(i as i64 - TC), sg(j as i64 - TC), sg(k as i64 - TC)])
 }
 
 // ---------------------------------------------------------------- per-being cube

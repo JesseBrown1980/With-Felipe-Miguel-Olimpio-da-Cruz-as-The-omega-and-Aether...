@@ -253,6 +253,96 @@ BobbyFischer / Shannon −,0,+ / GNN_cycle): 1/3/0/0/6/PASS/1,1,1/−1; 2/9/0/0/
   from the inspected source pins"; PREREG:18, "HRM/GNN likewise represent tested new arithmetic
   integration interfaces until a pinned trained model is imported".
 
+## Trits as the owner's `Zero` (2026-10-18)
+
+Owner, 2026-10-17: "we should be working with trinaries and ternaries". Owner rule relayed from the
+ACER seat: "reuse tribit/mod.rs, never reinvent". The trit type is the owner's `Zero` (`Neg = -1`,
+`Nil = 0`, `Pos = +1`) from `kernel/tribit` (asolaria-tribit@1292191, vendored byte-identical and
+pinned in `ternary/UPSTREAM.sha256` as `../kernel/tribit/src/lib.rs`), re-exported unchanged by
+`ternary` (crate `asolaria-ternary`). This crate depends on it by path:
+`asolaria-ternary = { path = "../../ternary", version = "0.1.0" }`. `Cargo.lock`, regenerated with
+cargo 1.81.0, gains the two path packages `asolaria-ternary` and `asolaria-tribit` and nothing else;
+every registry pin is unchanged (sha2 0.10.9, block-buffer 0.10.4, cfg-if 1.0.5, cpufeatures 0.2.17,
+crypto-common 0.1.7, digest 0.10.7, generic-array 0.14.7, libc 0.2.186, typenum 1.20.0,
+version_check 0.9.5).
+
+`asolaria-ternary` is `publish = false` (`ternary/Cargo.toml:8`), and `asolaria-levels-agents` carries
+crates.io metadata and no `publish = false`. So publishing this crate (task #6) now also needs
+`asolaria-ternary` and `asolaria-tribit` published first, or this crate left unpublished; the owner
+decides `ternary`'s `publish` setting. Today `cargo package` already fails on the `asolaria-hrm-mtp`
+path dependency, before and after this change, so nothing is lost now.
+
+A value is a `Zero` only where upstream carries it as a balanced digit, a Python int in
+`{-1, 0, 1}`. The places are rows A1-A4 of `ternary/MIGRATION.md` (the audit that decided them):
+
+| Row | Before (`f966009`) | Now | Upstream (USIM @ `3f9f42d`) | Written by |
+|---|---|---|---|---|
+| A1 | `FischerAgent::trimes: [i8; 3]`, own loop | `[Zero; 3]` (`src/fischer_agent.rs:40`, `:78-79`); `sig` from `direction()` (`:81-88`) | `rime_agents.py:46-52` | `ternary::balanced::low_trits` |
+| A2 | `dlog_mod_27 -> (u64, [i64; 3])`, own loop; `Node::bal: [i64; 3]` | `(u64, [Zero; 3])` (`src/the27.rs:23`, `:36-37`); `Node::bal: [Zero; 3]` (`:85`) | `rime_27fischers.py:39-44` | `ternary::balanced::low_trits` |
+| A3 | `cube27() -> [[i64; 3]; 27]`; `Node::color: [i64; 3]` | `[Cell; 27]` (`src/the27.rs:56-58`); `Node::color: Cell` (`:87`) | `rime_27fischers.py:51-52` | `ternary::cube::cell` |
+| A4 | `to_balanced_base3(u64, u32) -> Vec<i64>`, own loop; `Worker::trime_digits: Option<Vec<i64>>` | `-> Vec<Zero>` (`src/cluster.rs:52-56`); `Option<Vec<Zero>>` (`:74`) | `rime_fischer_cluster.py:38-45` | `ternary::balanced::low_trits` |
+
+What the code computes:
+
+- `rime_agents.py:50` writes, for `r == 2`, `-1` and `kk = kk // 3 + 1`; for `kk % 3 == 2` that
+  is `(kk + 1) // 3`, the carry `low_trits` applies (the loop of `rime_27fischers.py:39-44`), so the
+  two owner loops give the same trits (`ternary/README.md`: `rime_agents.py:46-51` equal to the
+  `rime_*` 3-trit loop on 59,049 of 59,049 values; `ternary/tools/referee.py` `low3_row` raises if
+  `rime_27fischers.py:39-44` and `rime_agents.py:46-51` differ; measured here, the 27 values `k27`
+  in `0..27` are 27 of 27 equal). The differential below then checks the Rust port against the
+  committed `src/`.
+- Printed text is written from `Zero::direction()`, an `i8` whose decimal form is `-1`, `0`, `1` as
+  the `i64` was: `sig` (`rime_agents.py:52`), `sym` (`rime_27fischers.py:63`, `:82`), `str(col)`
+  (`:82`) and `tri['trime_digits']` (`rime_fischer_cluster.py:97`).
+- `cube27()` builds cell `i` with `ternary::cube::cell(i)` (`L[d]` is `Zero::from_digit(d)`);
+  `colors.index((0,0,0))` (`rime_27fischers.py:88`) stays a search over `cube27()`.
+- Input range: `low_trits` takes an `i64`, so `to_balanced_base3` takes `x` up to `i64::MAX` and
+  panics above it (for any `e`, `e = 0` included), where the earlier `u64` loop returned digits (an
+  empty `Vec` for `e = 0`; upstream takes any Python int). `per_rime_worker` passes `x < 3^e` for
+  whatever `e` it is given; in `play` the `e` is the exponent of 3 in `p - 1` (`factor_pe`), so for a
+  prime `p` below 2^64, `e <= 39`: `3^40 | p - 1` would need `p = k * 3^40 + 1`, and `k = 1` is even
+  while `k >= 2` gives `p > 2^64` (`2 * 3^40 + 1 = 24,315,330,918,113,857,603`); `e = 39` is attained
+  by `4 * 3^39 + 1 = 16,210,220,612,075,905,069` (prime, `< 2^64`), so `x < 3^39 < 2^63`.
+  `dlog_mod_27` and `fischer_agent` pass a value below 27; their input range is unchanged.
+- Tests compare `Zero` values; `the27::tests::primes_and_cube` also checks every `cube27()` cell
+  against the script's `(L[i//9], L[(i//3)%3], L[i%3])` and `ternary::cube::index` against the
+  position (27 of 27); the reconstruction checks use the owner's `recon` (`ternary::balanced::recon`,
+  `reframe_check.py:44`). The test count is unchanged.
+
+Measured (cargo 1.81.0, rustfmt 1.7.1, clippy 0.1.81, Python 3.13.16), the same commands before and
+after the change; every saved output compared with `cmp`:
+
+| Check | Before | After |
+|---|---|---|
+| `sha256sum -c UPSTREAM.sha256` | 31 / 31 OK | 31 / 31 OK; output identical |
+| `ternary`: `sha256sum -c UPSTREAM.sha256` | 6 / 6 OK | 6 / 6 OK; output identical |
+| `cargo +1.81.0 fmt -- --check`, `clippy --locked --all-targets -- -D warnings` | clean | clean |
+| `cargo +1.81.0 test --locked` | 23 passed (16 / 2 / 5) | 23 passed (16 / 2 / 5) |
+| `levels_referee.py fixtures --check` | 6 checks, 0 failures | output identical |
+| no-float grep on `src/ tests/ examples/` | no match | no match |
+| `rime_agents` on enwik8 (sha256 `2b49720e…`) | stdout sha256 `82e8af9d0e35e0428eb0a5666a511828efc3eb954fd613366b4a0df889adfe54`, `cmp` equal to `rime_agents.txt` | identical; stderr identical (`HRMBPC\|tie_margin_1e-12=15617139\|binary64_bound_1e-12=120\|json=0`) |
+| `levels_referee.py agents --enwik8 … --rust …` | 2 checks, 0 failures | output identical |
+| examples `rime_fischer`, `rime_fischer_cluster`, `rime_27fischers` | sha256 `cd03fa1e…`, `32213cc8…` (= receipt), `5926405e…` (= receipt) | identical |
+| PR124 crate (vendored, untouched) | clippy clean, 25 passed, 5 recorded sha256 OK, 4 referees PASS, mirror equal | same; 10 of its 11 output files byte-identical, the 11th `RUNTIME.hbp` holds the wall-clock `elapsed_ns` (written at `src/main.rs:70-72`, the value on `:72`) |
+| `vendor/` | 31 files; `git status` empty | 31 files, same blob ids; `git status` empty |
+
+Differential, value for value: the committed `src/` (unchanged since `f966009`, and identical through
+the current HEAD),
+built as a scratch crate, against the converted crate, each `Zero` read with `direction()`:
+
+- `fischer_agent()`: every field equal (`trimes` `[-1, 0, -1]`, `sig` `-0-`); 7 of 7 printed lines.
+- `cube27()`: 27 of 27 cells. `the_27()`: 27 of 27 nodes (prime, g, r, glyph, bal, color); M, X and
+  the CRT recomposition equal.
+- `dlog_mod_27`: 4,726,957 of 4,726,957 calls (every `h = g^k`, `k` in `0..p-1`, on 1,000,081; every
+  7th `k` on the other 26 primes).
+- `to_balanced_base3`: 826,686 of 826,686 (every `x < 59,049`, `e` in `0..=13`); 1,000,000 of
+  1,000,000 seeded `x < 2^63` with `e` in `0..=45` (with 0, 1, 2, 3, 26, 27, 2^62, 2^63 - 2,
+  2^63 - 1); for `x >= 2^63`, 1,000 of 1,000 sampled calls panic in the converted function, where
+  the earlier one returned digits.
+- `play`: 5,600 of 5,600 runs (200 seeded targets on each of the 27 primes and on 1,009), every
+  worker's fields equal, 5,600 trinary workers.
+- `cluster::main_stdout()` and `the27::main_stdout()`: equal.
+
 ## Coordination with model/hrm-mtp
 
 `model/hrm-mtp` (another builder's directory, committed on aether main at `1d6d3d6`) already ports `mtp_agent()` and

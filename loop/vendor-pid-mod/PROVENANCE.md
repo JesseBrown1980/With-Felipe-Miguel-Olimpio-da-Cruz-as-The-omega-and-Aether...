@@ -28,3 +28,5 @@ BUILD-CONTRACT rule 6 says to vendor only clean files, and the byte-identical re
 upstream tests (which use those vectors) rule out redaction. The file stays here unpublished until the
 owner decides: if the owner clears these tokens, it is vendored as is; otherwise this crate is dropped
 and reported as not brought in.
+
+Owner decision, 2026-10-18: "Publish as-is" — the operator first names, the `OP-<NAME>` role tokens and the operator-local paths may be published as written (OWNER-RULES 5; valid until 2027-10-18), so this crate is vendored as is.

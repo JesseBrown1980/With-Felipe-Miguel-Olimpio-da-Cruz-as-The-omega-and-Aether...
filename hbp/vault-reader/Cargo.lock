@@ -7,6 +7,17 @@ name = "asolaria-hbi-hbp"
 version = "0.1.0"
 
 [[package]]
+name = "asolaria-ternary"
+version = "0.1.0"
+dependencies = [
+ "asolaria-tribit",
+]
+
+[[package]]
+name = "asolaria-tribit"
+version = "0.1.0"
+
+[[package]]
 name = "hbp"
 version = "0.1.0"
 dependencies = [
@@ -18,5 +29,6 @@ name = "hbp-vault-reader"
 version = "0.1.0"
 dependencies = [
  "asolaria-hbi-hbp",
+ "asolaria-ternary",
  "hbp",
 ]

@@ -11,6 +11,7 @@ check (README "Not checked").
 |---|---|---|
 | asolaria-hbi-hbp @ dca3f45 (vendored, aether `hbp/vendor/asolaria-hbi-hbp`) | `src/lib.rs` blob 907bec401f17875a3352f6ce5368ce3389590729, sha256 d0354ccc84b5b66f1df2637b27ed75ec5bea475a1c0d000869fd37987386164a | `sha256_hex`, `agt` (107-111), `encode_row`/`parse_row` (117-187), `IdxPointer` (194-210), `ReceiptChain`/`verify_chain` (217-272) |
 | aether `hbp` (Rust port of bigpickle-rebuild `hbp-reader.mjs:118-156`, `hbp-emitter.mjs:28-111`) @ 85faeb1 | `src/reader.rs` blob ee13613f7bd936d06536ce223cc3f57702e8e43f, sha256 eaa3b510ace02f617df4e89282b702d629db5e42fff6d1b9015cf28c7b19ed50 (pinned in `DEPENDS.sha256`, checked by `tests/fixtures.rs` and `sha256sum -c DEPENDS.sha256`) | `verify_hbp` 204-271 with `js_is_space` 16-31, `read_sidecar` 155-161, `node_hex_decode` 172-185, `regex_capture_after` 187-202 (trinity; the referee mirrors these lines one by one); `write_hbp` (fixtures only) |
+| asolaria-tribit @ 1292191 (aether `kernel/tribit`, byte-identical, pinned in `ternary/UPSTREAM.sha256` as `../kernel/tribit/src/lib.rs`), re-exported unchanged by aether `ternary` (crate `asolaria-ternary` 0.1.0, lib `ternary`) | `src/lib.rs` blob f83acb31584c887f1502704a3a9bfcf8e619b64d, sha256 93c96b97f507d02c054372e992f01696aba50f7e431f7d66921b91ba13b9a7c0 | `Zero` 91-100 (`Neg = -1`, `Nil = 0`, `Pos = 1`), `direction` 110-113: the type of `Obj::verified` and the value `render_trit` writes |
 
 ## Lines copied
 
@@ -70,7 +71,8 @@ These are the reader's own rules, labelled so they are not read as the owner's:
 - The trit semantics (`+1`/`0`/`-1`) and its reason tokens, including: a byte range or index
   extent that runs past the end of its target reads 0 even when the present bytes check equal;
   "zero-filled" means every byte of the target or range is `0x00` (a partly zero-filled target is
-  read as content).
+  read as content). The trit is carried in the owner's `Zero` type (section "Trits as the
+  owner's `Zero`"); the rule that picks `+1`, `0` or `-1` is this reader's own.
 - File names keyed by their bytes (`OsStr::as_encoded_bytes`; UTF-8 as written with `\` doubled,
   other bytes as `\xHH`), so names that are not UTF-8 stay distinct.
 - The trinity check runs on walked files only (`sidecar_not_walked` when `X.sha256`/`X.hex`
@@ -147,3 +149,60 @@ handle (`OP-JESSE`) and machine seat names. The private mirror
 (`FABLE5HBIROW`, `HBI-OFFSET-V1`, `RGBINDEXHDR`, `row_hash_includes_lf`, `byte_end_exclusive`,
 `HBISTREAM`, `HBIHDR|`, `INDEXROW|`); it holds other `.hbi` files and no writer of these shapes.
 Nothing from it is copied.
+
+## Trits as the owner's `Zero` (2026-10-18)
+
+Owner, 2026-10-17: "we should be working with trinaries and ternaries". Owner rule relayed from the
+ACER seat: "reuse tribit/mod.rs, never reinvent". The `verified` trit is the owner's `Zero`
+(`Neg = -1`, `Nil = 0`, `Pos = +1`) from `kernel/tribit` (asolaria-tribit@1292191, pinned in
+`ternary/UPSTREAM.sha256`), re-exported unchanged by `ternary` (crate `asolaria-ternary`) and
+again by this crate as `vault_reader::Zero`. Dependency by path:
+`asolaria-ternary = { path = "../../ternary", version = "0.1.0" }`. `Cargo.lock` (version 3),
+updated with cargo 1.81.0 (`cargo metadata --offline`, which adds new packages without
+re-resolving), goes from 3 to 5 packages: it gains the two path packages `asolaria-ternary` and
+`asolaria-tribit`; it held no registry package before and holds none after. `Cargo.lock` sha256
+`e34a7730…a130` before, `5e25234c…6aff` after.
+
+This is row A9 of `ternary/MIGRATION.md`, a type reuse: no owner source carries this value (the
+rule that picks `+1`, `0` or `-1` is the reader's own, "Claude's choices" above), so no upstream
+semantics are involved, and every rendered byte stays the same.
+
+| Before (`50db484`) | Now |
+|---|---|
+| `src/lib.rs:33-50` local `pub enum Trit {Plus, Zero, Minus}`; `Trit::render` gives `"+1"` / `"0"` / `"-1"` | `src/lib.rs:33-34` `pub use ternary::Zero`; `:36-43` `render_trit(Zero)` matches `direction()`: `1` → `"+1"`, `0` → `"0"`, the remaining value `-1` → `"-1"` |
+| `Obj::verified: Trit` (`:60`) | `Obj::verified: Zero` (`:55`): `Plus` → `Pos`, `Zero` → `Nil`, `Minus` → `Neg` |
+| `Checks::verdict`, `verdict_extent` return `(Trit, String)` (`:107`, `:142`) | `(Zero, String)` (`:102`, `:137`) |
+| `Tally::add` slots `Plus` 1, `Minus` 2, `Zero` 3 (`:1939-1943`) | `Pos` 1, `Neg` 2, `Nil` 3 (`:1934-1938`) |
+
+- Public API: `vault_reader::Trit` and `Trit::render` are replaced by `vault_reader::Zero` and
+  `vault_reader::render_trit`; `Obj::verified` changes type. `Zero` derives `Clone, Copy,
+  PartialEq, Eq, Debug`, the set `Trit` derived. No other crate in the repository depends on
+  `hbp-vault-reader` (searched `vault_reader::` and `hbp-vault-reader` outside this directory in
+  `.rs`, `.toml`, `.py`, `.sh`, `.yml` files: 0 hits); in this crate only `src/lib.rs` names the
+  trit (`src/bin/vault-read.rs`, `tests/` and `examples/` read rows as text).
+- Trits in the committed outputs (`+1` / `-1` / `0`): `tests/expected/*.hbp` 357 `VAULTOBJ` rows,
+  251 / 20 / 86; the three-tree corpus, 946 objects, 934 / 6 / 6; the 11 `EXTRA` repositories,
+  1,100,288 objects, 1,100,278 / 2 / 8. All three values are rendered and counted in the tests.
+- Mutation check: each of three mutations of `src/lib.rs` fails
+  `every_fixture_root_matches_its_expected_rows` and `every_case_matches_its_expected_rows`:
+  `render_trit` writing `-1` as `"+1"`; the `Neg` and `Nil` tally slots swapped; the
+  `no_check_declared` verdict set to `Neg` in place of `Nil`. The file was restored to its sha256
+  and the 9 tests pass again.
+
+Measured (rustc/cargo 1.81.0, rustfmt 1.7.1, clippy 0.1.81, Python 3.13.16), the same commands
+before (HEAD `f67b300`; this directory unchanged since `50db484`) and after the change, with
+`CARGO_TARGET_DIR` in the scratchpad; every saved output compared with `cmp` (32 files, 0 differ):
+
+| Check | Before | After |
+|---|---|---|
+| `sha256sum -c UPSTREAM.sha256`; `-c DEPENDS.sha256` | 76 / 76 OK; 1 / 1 OK | the same |
+| `../vendor/asolaria-hbi-hbp`: `sha256sum -c UPSTREAM.sha256` | 7 / 7 OK | the same |
+| `ternary`: `sha256sum -c UPSTREAM.sha256` | 6 / 6 OK (the tribit source included) | the same |
+| `cargo +1.81.0 fmt --check`; `clippy --locked --all-targets -- -D warnings` | clean; clean | clean; clean |
+| `cargo +1.81.0 test --locked` | 9 passed (`fixtures` 6, `sha` 3) | 9 passed, same split |
+| `python3 -I -B referee/vault_referee.py --check` | 9 fixtures, `differing=0` | identical lines |
+| `vault-read` on the 8 fixture roots | 8 / 8 equal to `tests/expected/<root>.hbp` | 8 / 8, identical bytes |
+| three-tree corpus at the pinned commits (fetched as the CI step does) | Rust == referee == `corpus/VAULT-*.hbp`; `row_shapes` == `corpus/SHAPES-*.hbp` (3 / 3) | the same, identical bytes |
+| `EXTRA` repositories (local checkouts at the pinned commits) | 11 / 11 output sha256 equal to `corpus/CORPUS.hbp` `result_sha256` | 11 / 11, identical bytes |
+| sha256 of `tests/expected/*.hbp`, `corpus/*.hbp`, `tests/cases/CASES.hbp`, `FIXTURES-PROVENANCE.hbp` (19 files) | recorded | identical |
+| no-float grep (`src/ tests/ examples/`) | 0 hits | 0 hits |

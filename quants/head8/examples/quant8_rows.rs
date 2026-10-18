@@ -36,7 +36,7 @@ fn main() {
             hex(q.turbo.iter().map(|&t| t as u8)),
             hex(q.signs),
             hex(q.zeta),
-            hex(q.triple.iter().map(|&t| t as u8)),
+            hex(q.triple.iter().map(|t| t.direction() as u8)),
             hex(q.quad),
             hex(q.hist.iter().flat_map(|h| h.to_le_bytes())),
             q.vm_acc,

@@ -42,5 +42,24 @@ python3 -I ../../../../../tools/proxima_levels_referee.py --check "$T/out"
 The `rime_agents` example prints upstream's stdout, and on stderr one HBP row with the tie margin
 of the bpc line (see `PROVENANCE.md`, "Float in upstream's MTP and HRM lines").
 
+## Trits
+
+Where upstream carries a balanced-ternary digit as a Python int in `{-1, 0, 1}`, the port carries
+the owner's trit `Zero` (`Neg = -1`, `Nil = 0`, `Pos = +1`; `kernel/tribit`, asolaria-tribit@1292191),
+through the path dependency `asolaria-ternary` (`../../ternary`). This follows the owner, 2026-10-17:
+"we should be working with trinaries and ternaries", and the owner rule relayed from the ACER seat:
+"reuse tribit/mod.rs, never reinvent". The places are rows A1-A4 of `ternary/MIGRATION.md`:
+
+| Row | Rust | Upstream (USIM @ `3f9f42d`) | Written by |
+|---|---|---|---|
+| A1 | `fischer_agent::FischerAgent::trimes: [Zero; 3]` (`src/fischer_agent.rs:40`, filled `:78-79`; `sig` from `direction()` `:81-88`) | `players/rime_agents.py:46-52` | `ternary::balanced::low_trits` |
+| A2 | `the27::dlog_mod_27 -> (u64, [Zero; 3])` (`src/the27.rs:23`, `:36-37`), `Node::bal` (`:85`) | `players/rime_27fischers.py:39-44` | `ternary::balanced::low_trits` |
+| A3 | `the27::cube27() -> [Cell; 27]` (`src/the27.rs:56-58`), `Node::color: Cell` (`:87`) | `players/rime_27fischers.py:51-52` | `ternary::cube::cell` |
+| A4 | `cluster::to_balanced_base3 -> Vec<Zero>` (`src/cluster.rs:52-56`), `Worker::trime_digits` (`:74`) | `players/rime_fischer_cluster.py:38-45` | `ternary::balanced::low_trits` |
+
+Every printed line is unchanged: the printers write `Zero::direction()` (`-1`, `0`, `1`) where they
+wrote the integer. `to_balanced_base3` takes `x` up to `i64::MAX`, the input type of `low_trits`
+(see `PROVENANCE.md`, "Trits as the owner's `Zero`").
+
 Sources, blob ids, the files left out and why, and every measurement are in
 [`PROVENANCE.md`](PROVENANCE.md).

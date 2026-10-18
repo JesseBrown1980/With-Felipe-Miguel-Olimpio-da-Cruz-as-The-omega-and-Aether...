@@ -19,8 +19,20 @@ name = "asolaria-levels-agents"
 version = "0.1.0"
 dependencies = [
  "asolaria-hrm-mtp",
+ "asolaria-ternary",
  "sha2",
 ]
+
+[[package]]
+name = "asolaria-ternary"
+version = "0.1.0"
+dependencies = [
+ "asolaria-tribit",
+]
+
+[[package]]
+name = "asolaria-tribit"
+version = "0.1.0"
 
 [[package]]
 name = "block-buffer"

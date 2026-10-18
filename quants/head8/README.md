@@ -4,7 +4,8 @@ Integer-only Rust port of the owner's eight-stage large-message quant head, `qua
 ASOLARIA-AS-NEURAL-NETWORK `tools/behcs/quant-huge-message-benchmark.mjs`. It reproduces every
 stage's JavaScript output bit for bit: the 1,024 count-sketch accumulators, the eight channels,
 `scale`, the 3,200-byte tuple and both dot products. Crate `asolaria-quant-head8`, library
-`quant_head8`, no dependencies, `#![forbid(unsafe_code)]`, Rust 1.81, no `f32`/`f64`.
+`quant_head8`, `#![forbid(unsafe_code)]`, Rust 1.81, no `f32`/`f64`. One dependency:
+`asolaria-ternary` (path `../../ternary`), for the owner's trit `Zero` (see [Trits](#trits)).
 Dev-dependencies: `asolaria-l0-edge` (path `../../model/l0-edge`, for one cross-check) and
 `sha2` 0.10.9 (tests and examples).
 
@@ -24,7 +25,7 @@ Ids from `vendor/Algorithms-of-Asolaria/ASOLARIA-COMBINED-QUANT-REGISTRY-2026-07
 | 2 | `Q-TURBO-MAXABS-INT8-v1` | :57-58 `max` from `1e-12`; :67-69 `v = proj[j] / max`, `turbo[j] = Math.round(v * 127)` (Int8Array) | `Quant8::turbo`, `Quant8::scale` |
 | 3 | `Q-POLAR-SIGN-BITSET-v1` | :70 `if (v < 0) signs[j >> 3] \|= 1 << (j & 7)` | `Quant8::signs` |
 | 4 | `Q-ZETA-LOGMAG4-v1` | :71-72 `a < 1e-9 ? 15 : Math.min(15, -Math.log2(a) \| 0)` (Uint8Array) | `Quant8::zeta`, `log2::log2` |
-| 5 | `Q-TRIPLE-TERNARY-v1` | :73 `v > 0.33 ? 1 : (v < -0.33 ? -1 : 0)` | `Quant8::triple` |
+| 5 | `Q-TRIPLE-TERNARY-v1` | :62 `new Int8Array(D)`; :73 `v > 0.33 ? 1 : (v < -0.33 ? -1 : 0)` | `Quant8::triple` (`[ternary::Zero; D]`) |
 | 6 | `Q-QUADRUPLE-2BIT-v1` | :74 `v > 0.5 ? 3 : v > 0 ? 2 : v > -0.5 ? 1 : 0` | `Quant8::quad` |
 | 7 | `Q-JS-HIST256-v1` | :75 `hist[(q + 128) & 255] += 1` (Uint32Array) | `Quant8::hist` |
 | 8 | `Q-PRIMEPOWER-ACC-v1` | :35-49 `PPOW`; :76 `if (q !== 0) vmAcc += PPOW[j]` | `PPOW`, `Quant8::vm_acc` |
@@ -38,6 +39,29 @@ the `Float64Array` elements as `Number`s (their binary64 bit patterns).
 bytes and the 256 histogram counts as little-endian `u32`. As the vendored atlas states, "Triple,
 Quadruple, prime-power accumulation and `scale` are computed but are not included in that
 3,200-byte byte buffer"; `Quant8` returns all of them, as `quant8` does (:78).
+
+## Trits
+
+Owner, 2026-10-17: "we should be working with trinaries and ternaries". Owner rule relayed from
+the ACER seat: "reuse tribit/mod.rs, never reinvent". Stage 5 is the channel the owner's source
+carries as a trit: line 62 allocates `triple` as an `Int8Array` and line 73 stores only `1`, `-1`
+or `0` in it (the vendored atlas, row 5: "`{-1,0,+1}` threshold code"). `Quant8::triple` holds
+it as the owner's `Zero` (`Neg = -1`, `Nil = 0`, `Pos = +1`) from `kernel/tribit`
+(asolaria-tribit@1292191), which `ternary` re-exports unchanged; the place is row A7 of
+`ternary/MIGRATION.md`.
+
+| Where | What it does |
+|---|---|
+| `src/lib.rs:107` | `pub triple: [Zero; D]` (was `[i8; D]`) |
+| `src/lib.rs:288` | starts as `Zero::Nil`, the `Int8Array`'s initial 0 |
+| `src/lib.rs:307-313` | `Zero::Pos` when `v > 0.33`, else `Zero::Neg` when `v < -0.33`, else `Zero::Nil`: the same two comparisons as line 73 |
+| `tests/quant8.rs:71`, `examples/quant8_rows.rs:39` | print `Zero::direction() as u8`, the byte `t as u8` gave before (`01`, `ff`, `00`) |
+
+`tupleBuffer` (lines 81-86) does not include `triple`, so the tuple and its SHA-256 are the same
+bytes. The other channels keep the types the source gives them (`turbo` an `Int8Array` of
+`Math.round(v * 127)`, `signs`, `zeta` and `quad` `Uint8Array`s, `hist` a `Uint32Array`). Before
+and after the change every committed fixture, referee result and printed row is byte-identical
+(`PROVENANCE.md`, "Trits as the owner's `Zero`").
 
 ## How the JavaScript numbers are reproduced
 

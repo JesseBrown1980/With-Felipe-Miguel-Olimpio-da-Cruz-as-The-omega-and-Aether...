@@ -3,12 +3,16 @@
 //! the worker also writes `x mod 27` as balanced-ternary digits (`to_balanced_base3`, lines
 //! 38-45). Upstream runs the workers in a `multiprocessing.Pool` with one process per tower
 //! (lines 91-92); here each runs on its own scoped thread, and the results are read back in
-//! tower order as `pool.map` returns them.
+//! tower order as `pool.map` returns them. The balanced digits, Python ints in `{-1, 0, 1}`
+//! upstream, are the owner's trit `Zero` (`kernel/tribit`, through `ternary`), written by
+//! `ternary::balanced::low_trits`.
 
 use crate::pyfmt::{grouped, list, py_bool, tuple, Stdout};
 use crate::rime_fischer::{crt, factor_pe, seed_target};
 use crate::sphere::{is_prime, isqrt, pow_mod, primitive_root};
 use std::collections::HashMap;
+use ternary::balanced::low_trits;
+use ternary::Zero;
 
 /// `p` of `main()` (line 79).
 pub const P: u64 = 1_000_081;
@@ -41,19 +45,13 @@ pub fn bsgs(g: u64, h: u64, p: u64, order: u64) -> Option<u64> {
     None
 }
 
-/// `to_balanced_base3(x, e)` (lines 38-45): the `e` balanced-ternary digits of `x`, least
-/// significant first.
-pub fn to_balanced_base3(mut x: u64, e: u32) -> Vec<i64> {
-    let mut d = Vec::with_capacity(e as usize);
-    for _ in 0..e {
-        let mut r = (x % 3) as i64;
-        if r == 2 {
-            r = -1;
-            x += 1;
-        }
-        d.push(r);
-        x /= 3;
-    }
+/// `to_balanced_base3(x, e)` (lines 38-45): the `e` balanced-ternary digits of `x` as trits, least
+/// significant first. `low_trits` takes an `i64`, so `x` must be at most `i64::MAX` (panics above,
+/// for any `e`). `per_rime_worker` passes `x < 3^e`; in `play` the `e` is the exponent of 3 in
+/// `p - 1` (`factor_pe`), so for a prime `p` below 2^64, `e <= 39` and `x < 3^39 < 2^63`.
+pub fn to_balanced_base3(x: u64, e: u32) -> Vec<Zero> {
+    let mut d = vec![Zero::Nil; e as usize];
+    low_trits(i64::try_from(x).expect("x <= i64::MAX"), &mut d);
     d
 }
 
@@ -73,7 +71,7 @@ pub struct Worker {
     /// The base-`q` digits, least significant first.
     pub digits: Vec<u64>,
     /// `to_balanced_base3(x, e)` when `q == 3`, else `None`.
-    pub trime_digits: Option<Vec<i64>>,
+    pub trime_digits: Option<Vec<Zero>>,
 }
 
 /// `per_rime_worker((g, h, p, q, e))` (lines 47-58): one Fischer for the tower `q^e`.
@@ -158,10 +156,17 @@ pub fn main_stdout() -> String {
             "target g^{k_true:<7} -> nodes solve in parallel -> CRT k={k_played:<7} reached={}",
             py_bool(reached)
         ));
+        let trime: Vec<i8> = tri
+            .trime_digits
+            .as_deref()
+            .expect("q == 3")
+            .iter()
+            .map(|t| t.direction())
+            .collect();
         out.print(format!(
             "   TRINARY node (rime 27): base-3 digits {} = trime digits {}  ({} moves)",
             list(&tri.digits),
-            list(tri.trime_digits.as_deref().expect("q == 3")),
+            list(&trime),
             tri.moves
         ));
         for r in results.iter().filter(|r| r.q != 3) {
@@ -191,12 +196,13 @@ mod tests {
 
     #[test]
     fn balanced_digits() {
-        assert_eq!(to_balanced_base3(18, 3), vec![0, 0, -1]);
-        assert_eq!(to_balanced_base3(12, 3), vec![0, 1, 1]);
-        assert_eq!(to_balanced_base3(7 + 2 * 9, 3), vec![1, -1, 0]);
+        use Zero::{Neg, Nil, Pos};
+        assert_eq!(to_balanced_base3(18, 3), vec![Nil, Nil, Neg]);
+        assert_eq!(to_balanced_base3(12, 3), vec![Nil, Pos, Pos]);
+        assert_eq!(to_balanced_base3(7 + 2 * 9, 3), vec![Pos, Neg, Nil]);
         for x in 0..27u64 {
             let d = to_balanced_base3(x, 3);
-            let v: i64 = d.iter().zip([1i64, 3, 9]).map(|(a, b)| a * b).sum();
+            let v = ternary::balanced::recon(&d).expect("three trits");
             assert_eq!(v.rem_euclid(27) as u64, x);
         }
     }

@@ -16,4 +16,5 @@ path = "src/lib.rs"
 
 [dependencies]
 asolaria-hrm-mtp = { path = "../../model/hrm-mtp", version = "0.1.0" }
+asolaria-ternary = { path = "../../ternary", version = "0.1.0" }
 sha2 = "0.10.9"

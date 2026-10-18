@@ -4,16 +4,23 @@
 //! node `i` reads its residue's exponent modulo 27 on the 27-tower (`dlog_mod_27`, lines 34-45)
 //! as a glyph in `0..27` and three balanced-ternary digits, and colours it from the 3^3 cube
 //! (`cube27`, lines 51-52). The 27 residues are recombined by CRT (lines 46-50, 84).
+//!
+//! The script carries the digits `bal` and the cube coordinates as Python ints in `{-1, 0, 1}`
+//! (lines 39-44, 52); here they are the owner's trit `Zero` (`kernel/tribit`, through `ternary`):
+//! `bal` is written by `ternary::balanced::low_trits`, the cube is `ternary::cube::cell`.
 
 use crate::bignum::Big;
 use crate::cluster::bsgs;
 use crate::pyfmt::{py_bool, tuple, Stdout};
 use crate::sphere::{inv_mod, is_prime, pow_mod, primitive_root};
 use sha2::{Digest, Sha256};
+use ternary::balanced::low_trits;
+use ternary::cube::{cell, Cell};
+use ternary::Zero;
 
 /// `dlog_mod_27(g, h, p)` (lines 34-45): the exponent of `h` modulo 27 (`x`), and its three
-/// balanced-ternary digits, least significant first.
-pub fn dlog_mod_27(g: u64, h: u64, p: u64) -> (u64, [i64; 3]) {
+/// balanced-ternary digits as trits, least significant first.
+pub fn dlog_mod_27(g: u64, h: u64, p: u64) -> (u64, [Zero; 3]) {
     let n = p - 1;
     let (q, e) = (3u64, 3u32);
     let gamma = pow_mod(g, n / q, p);
@@ -25,17 +32,9 @@ pub fn dlog_mod_27(g: u64, h: u64, p: u64) -> (u64, [i64; 3]) {
         let d = bsgs(gamma, hj, p, q).expect("bsgs found the digit");
         x += d * q.pow(j);
     }
-    let mut bal = [0i64; 3];
-    let mut xx = x;
-    for slot in bal.iter_mut() {
-        let mut r = (xx % 3) as i64;
-        if r == 2 {
-            r = -1;
-            xx += 1;
-        }
-        *slot = r;
-        xx /= 3;
-    }
+    // lines 39-44
+    let mut bal = [Zero::Nil; 3];
+    low_trits(i64::try_from(x).expect("x < 27"), &mut bal);
     (x, bal)
 }
 
@@ -52,10 +51,10 @@ pub fn crt(rs: &[u64], ms: &[u64]) -> Big {
     x.rem(&big_m)
 }
 
-/// `cube27()` (lines 51-52): `(L[i//9], L[(i//3)%3], L[i%3])` for `L = [-1, 0, 1]`.
-pub fn cube27() -> [[i64; 3]; 27] {
-    let l = [-1i64, 0, 1];
-    core::array::from_fn(|i| [l[i / 9], l[(i / 3) % 3], l[i % 3]])
+/// `cube27()` (lines 51-52): `(L[i//9], L[(i//3)%3], L[i%3])` for `L = [-1, 0, 1]`, cell `i`
+/// being `ternary::cube::cell(i)`.
+pub fn cube27() -> [Cell; 27] {
+    core::array::from_fn(|i| cell(u8::try_from(i).expect("i < 27")))
 }
 
 /// `find_27_primes(mod=27, lo=1_000_000)` (lines 54-59).
@@ -83,9 +82,9 @@ pub struct Node {
     /// `glyph`.
     pub glyph: u64,
     /// `bal`, least significant first.
-    pub bal: [i64; 3],
+    pub bal: [Zero; 3],
     /// `colors[glyph % 27]`.
-    pub color: [i64; 3],
+    pub color: Cell,
 }
 
 /// What `main()` computes before printing.
@@ -132,8 +131,9 @@ pub fn the_27() -> The27 {
     The27 { nodes, m, x, back }
 }
 
-fn sym(t: i64) -> char {
-    match t {
+/// `sym = {-1: '-', 0: '0', 1: '+'}` (line 63).
+fn sym(t: Zero) -> char {
+    match t.direction() {
         -1 => '-',
         0 => '0',
         _ => '+',
@@ -164,7 +164,7 @@ pub fn main_stdout() -> String {
                 "  {:>4} {:>8} {:>11} {:>5}   {}{}{}",
                 i,
                 node.prime,
-                tuple(&node.color),
+                tuple(&node.color.map(Zero::direction)),
                 node.glyph,
                 sym(node.bal[2]),
                 sym(node.bal[1]),
@@ -179,7 +179,7 @@ pub fn main_stdout() -> String {
     ));
     let center_glyph = colors
         .iter()
-        .position(|c| *c == [0, 0, 0])
+        .position(|c| *c == [Zero::Nil; 3])
         .expect("(0,0,0) is in the cube");
     out.print(format!(
         "  the free 0 center: color (0,0,0) = glyph {center_glyph}; g^0 = 1 on every sphere (Law 0)"
@@ -212,8 +212,14 @@ mod tests {
         assert_eq!(ps[26], 1_005_913);
         assert!(ps.iter().all(|&p| is_prime(p) && (p - 1) % 27 == 0));
         let cube = cube27();
-        assert_eq!(cube[13], [0, 0, 0]);
-        assert_eq!(cube[16], [0, 1, 0]);
+        assert_eq!(cube[13], [Zero::Nil; 3]);
+        assert_eq!(cube[16].map(Zero::direction), [0, 1, 0]);
+        // `cube27()` as the script writes it (lines 51-52), and `colors.index` (line 88).
+        let l = [-1i8, 0, 1];
+        for (i, c) in cube.iter().enumerate() {
+            assert_eq!(c.map(Zero::direction), [l[i / 9], l[(i / 3) % 3], l[i % 3]]);
+            assert_eq!(usize::from(ternary::cube::index(*c)), i);
+        }
     }
 
     #[test]
@@ -223,7 +229,7 @@ mod tests {
         for k in [0u64, 1, 2, 26, 27, 77_777, 994_185, 1_000_079] {
             let (glyph, bal) = dlog_mod_27(g, pow_mod(g, k, p), p);
             assert_eq!(glyph, k % 27);
-            let v = bal[0] + 3 * bal[1] + 9 * bal[2];
+            let v = ternary::balanced::recon(&bal).expect("three trits");
             assert_eq!(v.rem_euclid(27) as u64, glyph);
         }
     }

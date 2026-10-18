@@ -123,3 +123,71 @@ run in the scratchpad, outside this crate, on 2026-10-17:
 4. The vendored tool's own `--run --sizes=1,8,64,256,1024,2048 --disk`, recorded in README.md.
 
 No Node file is part of this crate or its CI.
+
+## Trits as the owner's `Zero` (2026-10-18)
+
+Owner, 2026-10-17: "we should be working with trinaries and ternaries". Owner rule relayed from the
+ACER seat: "reuse tribit/mod.rs, never reinvent". The trit type is the owner's `Zero` (`Neg = -1`,
+`Nil = 0`, `Pos = +1`) from `kernel/tribit` (asolaria-tribit@1292191, vendored byte-identical and
+pinned in `ternary/UPSTREAM.sha256` as `../kernel/tribit/src/lib.rs`), re-exported unchanged by
+`ternary` (crate `asolaria-ternary`). This crate depends on it by path:
+`asolaria-ternary = { path = "../../ternary", version = "0.1.0" }`. `Cargo.lock` (version 3),
+updated with cargo 1.81.0 (`cargo metadata --offline`, which adds new packages without
+re-resolving), goes from 12 to 14 packages: it gains the two path packages `asolaria-ternary` and
+`asolaria-tribit` and nothing else; every registry pin is unchanged (block-buffer 0.10.4, cfg-if
+1.0.4, cpufeatures 0.2.17, crypto-common 0.1.7, digest 0.10.7, generic-array 0.14.7, libc 0.2.186,
+sha2 0.10.9, typenum 1.20.0, version_check 0.9.5). `Cargo.lock` sha256 `155b5350…f768` before,
+`cbd8019b…4c96` after.
+
+A value is a `Zero` only where upstream carries it as a trit. Here that is one place, row A7 of
+`ternary/MIGRATION.md` (the audit that decided it):
+
+| Row | Before (`f966009`) | Now | Upstream (`quant-huge-message-benchmark.mjs` @ `4cc7624f…`) |
+|---|---|---|---|
+| A7 | `Quant8::triple: [i8; D]` (`src/lib.rs:104`), set to `1` / `-1` / `0` at `:304-310` | `[Zero; D]` (`src/lib.rs:107`); starts as `Zero::Nil` (`:288`); `Zero::Pos` / `Zero::Neg` / `Zero::Nil` at `:307-313` | `:62` `const triple = new Int8Array(D)`; `:73` `triple[j] = v > 0.33 ? 1 : (v < -0.33 ? -1 : 0)` (registry `Q-TRIPLE-TERNARY-v1`) |
+
+What the code computes:
+
+- The two comparisons are the ones of line 73 (`v.gt(TRIPLE_EDGE)`, then `v.lt(-TRIPLE_EDGE)`, with
+  `TRIPLE_EDGE` the binary64 `0.33`); only the stored type changes. `Zero::direction()` returns the
+  `Int8Array` value, `1`, `-1` or `0`.
+- `tupleBuffer` (lines 81-86) concatenates turbo, signs, zeta and hist; it does not include
+  `triple`, so `tuple_buffer` and every tuple SHA-256 are the same bytes. `dotQ` (line 89) reads
+  `turbo` and `scale` only.
+- The two readers that print the triple, `tests/quant8.rs:71` and `examples/quant8_rows.rs:39`,
+  print `direction() as u8`, which is the byte `t as u8` printed from the `i8` (`01`, `ff`, `00`).
+- The public field type changes from `[i8; D]` to `[Zero; D]`; `Quant8` keeps its derives
+  (`Clone, Debug, PartialEq, Eq`, all of which `Zero` has). No other crate in the repository
+  depends on `asolaria-quant-head8` (searched for `asolaria-quant-head8` and `quant_head8` outside
+  this directory: 0 files); `quants/cubes` depends on `quants/hyperbehcs`, `model/l0-edge` and
+  `sha2` only.
+- The other channels keep the types the source gives them: `turbo` (`Int8Array` of
+  `Math.round(v * 127)`), `signs`, `zeta`, `quad` (`Uint8Array`), `hist` (`Uint32Array`).
+
+Trit counts in the triple channel (integer counts, `Neg` / `Nil` / `Pos`): the 14 `QUANT8` rows of
+`quant8-expected.hbp`, 773 / 12,804 / 759 of 14,336; the 12 `examples/quant8_rows` messages (1, 8,
+64, 256, 1,024 and 2,048 MB at seeds 12345 and 99999), 673 / 10,953 / 662 of 12,288. Mutation
+check: with the `Zero::Neg` branch changed to `Zero::Nil`, `tests/quant8.rs` fails at
+`zeta-edges triple` (the first fixture row holding a `-1`; it holds 6); the file was restored to
+its sha256 and the test passes again.
+
+Measured (rustc/cargo 1.81.0, rustfmt 1.7.1, clippy 0.1.81, Python 3.13.16), the same commands
+before (HEAD `f67b300`; this directory is unchanged since `f966009`) and after the change, with
+`CARGO_TARGET_DIR` in the scratchpad; every saved output compared with `cmp`:
+
+| Check | Before | After |
+|---|---|---|
+| `sha256sum -c UPSTREAM.sha256` | 6 / 6 OK | 6 / 6 OK |
+| `ternary`: `sha256sum -c UPSTREAM.sha256` | — | 6 / 6 OK (the tribit source included) |
+| sha256 of `tests/fixtures/number-vectors.hbp`, `quant8-expected.hbp` | `18cfcc3f…aea6a`, `0009983b…27d2` | identical |
+| `cargo +1.81.0 fmt --check`; `clippy --locked --all-targets -- -D warnings` | clean; clean | clean; clean |
+| `cargo +1.81.0 test --locked` | 27 passed (lib 14, `count_sketch` 3, `number` 3, `quant8` 4, `upstream` 3) | 27 passed, same split |
+| `python3 -I tools/referee.py --check` | `number-vectors.hbp` 18,176 rows `match=1`; `quant8-expected.hbp` 63 rows `match=1` | identical lines |
+| `referee.py --grid \| number_grid` | `cases=2000000\|differences=0` | identical line |
+| `referee.py --log2-grid \| number_grid` | `cases=1343524\|differences=0` | identical line |
+| `quant8_rows` over the 12 messages | 12 rows, sha256 `e32a777a…d175`; rows of 1, 8, 64 MB equal the fixture's 6 bench `QUANT8` rows; tuple SHA-256s at 256, 1,024, 2,048 MB equal those in "Node measurements" item 2 | `cmp` identical |
+| `quant_bench` (no `--run`) | 12 rows, sha256 `4204100d…d696` | `cmp` identical |
+| `quant_bench --run --sizes=1` | header row and `payload_kb=3.1` row as the CI step checks | same (timing fields vary run to run) |
+| no-float greps (`src/ tests/ examples/`; `tools/referee.py`) | 0 hits | 0 hits |
+
+The `DOT` rows (3) are checked by `tests/quant8.rs::dot_products_match_the_referee` in both runs.

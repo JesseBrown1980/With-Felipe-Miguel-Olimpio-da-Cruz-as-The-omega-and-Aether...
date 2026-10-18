@@ -30,22 +30,15 @@ pub const KINDS: [&str; 8] = [
     "hbi", "hbp", "trinity", "file", "range", "index", "chain", "center",
 ];
 
-/// Balanced trit: +1 every declared check equal, -1 a check differs on present bytes,
-/// 0 unresolved (absent or zero-filled bytes, outside the root, or nothing declared).
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Trit {
-    Plus,
-    Zero,
-    Minus,
-}
+/// The trit of `verified`: the owner's tribit `Zero` (`kernel/tribit`), re-exported by `ternary`.
+pub use ternary::Zero;
 
-impl Trit {
-    pub fn render(self) -> &'static str {
-        match self {
-            Trit::Plus => "+1",
-            Trit::Zero => "0",
-            Trit::Minus => "-1",
-        }
+/// The `verified=` text of a trit, from `Zero::direction()`: `+1`, `0` or `-1`.
+pub fn render_trit(t: Zero) -> &'static str {
+    match t.direction() {
+        1 => "+1",
+        0 => "0",
+        _ => "-1",
     }
 }
 
@@ -57,7 +50,9 @@ pub struct Obj {
     pub bytes: u64,
     pub sha256: String,
     pub pointer: String,
-    pub verified: Trit,
+    /// `Pos` (+1) every declared check equal, `Neg` (-1) a check differs on present bytes,
+    /// `Nil` (0) unresolved (absent or zero-filled bytes, outside the root, or nothing declared).
+    pub verified: Zero,
     pub reason: String,
 }
 
@@ -72,7 +67,7 @@ impl Obj {
                 ("bytes", &self.bytes.to_string()),
                 ("sha256", &self.sha256),
                 ("pointer", &self.pointer),
-                ("verified", self.verified.render()),
+                ("verified", render_trit(self.verified)),
                 ("reason", &self.reason),
             ],
         )
@@ -104,7 +99,7 @@ impl Checks {
         }
     }
 
-    fn verdict(&self, presence: Presence) -> (Trit, String) {
+    fn verdict(&self, presence: Presence) -> (Zero, String) {
         let mut tokens: Vec<String> = Vec::new();
         let trit;
         if !self.differ.is_empty() {
@@ -115,21 +110,21 @@ impl Checks {
                 Presence::ZeroFilled => Some("bytes_zero_filled"),
             };
             if let Some(m) = mark {
-                trit = Trit::Zero;
+                trit = Zero::Nil;
                 tokens.push(m.to_string());
             } else {
-                trit = Trit::Minus;
+                trit = Zero::Neg;
             }
             tokens.extend(self.differ.iter().cloned());
             tokens.extend(self.unresolved.iter().cloned());
         } else if !self.unresolved.is_empty() {
-            trit = Trit::Zero;
+            trit = Zero::Nil;
             tokens.extend(self.unresolved.iter().cloned());
         } else if !self.pass.is_empty() {
-            trit = Trit::Plus;
+            trit = Zero::Pos;
             tokens.push(format!("ok:{}", self.pass.join("+")));
         } else {
-            trit = Trit::Zero;
+            trit = Zero::Nil;
             tokens.push("no_check_declared".to_string());
         }
         tokens.extend(self.info.iter().cloned());
@@ -139,7 +134,7 @@ impl Checks {
     /// As `verdict`, for a declared extent (a byte range, or an index's rows): when fewer bytes
     /// are present than the extent declares (`short`), the result is 0 even if every check on
     /// the present bytes is equal (README: "shorter than declared" reads 0).
-    fn verdict_extent(&self, presence: Presence, short: bool) -> (Trit, String) {
+    fn verdict_extent(&self, presence: Presence, short: bool) -> (Zero, String) {
         if !short || !self.differ.is_empty() {
             return self.verdict(presence);
         }
@@ -151,7 +146,7 @@ impl Checks {
         let mut tokens = vec![mark.to_string()];
         tokens.extend(self.unresolved.iter().cloned());
         tokens.extend(self.info.iter().cloned());
-        (Trit::Zero, tokens.join("+"))
+        (Zero::Nil, tokens.join("+"))
     }
 }
 
@@ -921,7 +916,7 @@ impl Vault {
                 bytes: 0,
                 sha256: String::new(),
                 pointer: format!("pair:{rel}"),
-                verified: Trit::Zero,
+                verified: Zero::Nil,
                 reason: "hbp_absent".to_string(),
             });
         }
@@ -966,7 +961,7 @@ impl Vault {
             bytes: 0,
             sha256: String::new(),
             pointer: pointer.clone(),
-            verified: Trit::Zero,
+            verified: Zero::Nil,
             reason: why.to_string(),
         };
         let (Some(real), Some(data)) = (self.files.get(&hbp_rel), hbp) else {
@@ -1080,7 +1075,7 @@ impl Vault {
                 bytes: 0,
                 sha256: String::new(),
                 pointer,
-                verified: Trit::Zero,
+                verified: Zero::Nil,
                 reason: why.unwrap_or("target_absent").to_string(),
             };
         };
@@ -1320,7 +1315,7 @@ impl Vault {
             bytes: 0,
             sha256: String::new(),
             pointer: pointer.clone(),
-            verified: Trit::Zero,
+            verified: Zero::Nil,
             reason: why.to_string(),
         };
         let Some(t) = target else {
@@ -1475,7 +1470,7 @@ fn index_obj(hbi: &str, row: &Row, anchor: Option<&Anchor>, rows: &[Row]) -> Opt
             bytes: 0,
             sha256: String::new(),
             pointer,
-            verified: Trit::Zero,
+            verified: Zero::Nil,
             reason: "anchor_absent".to_string(),
         });
     };
@@ -1937,20 +1932,20 @@ struct Tally {
 impl Tally {
     fn add(&mut self, o: &Obj) {
         let slot = match o.verified {
-            Trit::Plus => 1,
-            Trit::Minus => 2,
-            Trit::Zero => 3,
+            Zero::Pos => 1,
+            Zero::Neg => 2,
+            Zero::Nil => 3,
         };
         if let Some(k) = KINDS.iter().position(|k| *k == o.kind) {
             self.kinds[k][0] += 1;
             self.kinds[k][slot] += 1;
         }
-        if o.verified != Trit::Plus {
+        if o.verified != Zero::Pos {
             for tok in o.reason.split('+') {
                 let head = tok.split(':').next().unwrap_or(tok);
                 *self
                     .reasons
-                    .entry(format!("{}:{head}", o.verified.render()))
+                    .entry(format!("{}:{head}", render_trit(o.verified)))
                     .or_default() += 1;
             }
         }

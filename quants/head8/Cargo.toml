@@ -14,6 +14,7 @@ name = "quant_head8"
 path = "src/lib.rs"
 
 [dependencies]
+asolaria-ternary = { path = "../../ternary", version = "0.1.0" }
 
 [dev-dependencies]
 asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }

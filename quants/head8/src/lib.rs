@@ -22,6 +22,8 @@ pub mod number;
 
 pub use number::Number;
 
+use ternary::Zero;
+
 /// `D` (line 18): the count-sketch width.
 pub const D: usize = 1024;
 
@@ -100,8 +102,9 @@ pub struct Quant8 {
     pub signs: [u8; D / 8],
     /// Zeta log-magnitude bucket 0..=15 (line 72).
     pub zeta: [u8; D],
-    /// Triple ternary code -1, 0, 1 (line 73).
-    pub triple: [i8; D],
+    /// Triple ternary code (line 73) as the owner's trit `ternary::Zero`: `Pos`, `Nil`, `Neg`
+    /// for the Int8Array's 1, 0, -1 (`Zero::direction` gives that value).
+    pub triple: [Zero; D],
     /// Quadruple 2-bit class 0..=3 (line 74).
     pub quad: [u8; D],
     /// Histogram of `(q + 128) & 255` (line 75).
@@ -282,7 +285,7 @@ pub fn quantize(proj: &[Number; D]) -> Quant8 {
         turbo: [0; D],
         signs: [0; D / 8],
         zeta: [0; D],
-        triple: [0; D],
+        triple: [Zero::Nil; D],
         quad: [0; D],
         hist: [0; 256],
         vm_acc: 0,
@@ -302,11 +305,11 @@ pub fn quantize(proj: &[Number; D]) -> Quant8 {
             ZETA_TOP.min((-log2::log2(a)).to_int32()) as u8
         };
         out.triple[j] = if v.gt(TRIPLE_EDGE) {
-            1
+            Zero::Pos
         } else if v.lt(-TRIPLE_EDGE) {
-            -1
+            Zero::Neg
         } else {
-            0
+            Zero::Nil
         };
         out.quad[j] = if v.gt(QUAD_EDGE) {
             3

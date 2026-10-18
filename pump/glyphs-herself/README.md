@@ -87,6 +87,28 @@ and the convolution, and 17 emulated operations x 1,024 cases against an integer
 - **body files (herself)**: Python `glob` skips names beginning with '.' for `*` and `**`, so
   hidden files are not read and hidden directories are not descended.
 
+## Trits: the direction key
+
+Owner, 2026-10-17: "we should be working with trinaries and ternaries"; owner rule relayed from
+the ACER seat: "reuse tribit/mod.rs, never reinvent". Both generators carry the per-axis sign of
+the voxel offset as a trit, `SG = np.sign(Dv).astype(np.int8)` (`np.int8` in `{-1, 0, 1}`), and
+key the 27 directions as `(SG0+1)*9 + (SG1+1)*3 + (SG2+1)`. The port carries that sign as the
+owner's trit `Zero` (`Neg = -1`, `Nil = 0`, `Pos = +1`; `kernel/tribit`, asolaria-tribit@1292191
+`src/lib.rs:93-128`), re-exported as `ternary::Zero` by the path dependency `asolaria-ternary`
+(`../../ternary`). `Zero::digit()` is `SG+1`.
+
+| place | owner line | trit | key |
+|---|---|---|---|
+| `src/herself.rs:253-265` `dir_key` | `asolaria_herself.py:106-107` (`SG`, `KEY3`) | `sg(d) -> Zero` per axis | `ternary::cube::index([sx, sy, sz])` |
+| `src/mythos.rs:311-319` `sign_key`, key `:336-338` | `pump_glyphs_mythos.py:123-124` (`SG`, `KEY`) | `sign_key(d) -> Zero` | `digit()*9 + digit()*3 + digit()` |
+
+The key stays a `u8` in `0..=26` and `cv::group_of` takes it as before. Measured 2026-10-18: on
+all 262,144 voxels both keys equal the previous integer code (262,144 of 262,144 each), and the
+GGUFs, every vector the referee checks and the 23 tests give the same results as before the change.
+These two places are the crate's rows A5 and A6 in `ternary/MIGRATION.md` section A; the test
+helper `tests/cv_float32.rs:11` builds the same key with `(d.signum() + 1) as u8` and is not one
+of those rows, so it is unchanged.
+
 ## Observed generator behaviour (reproduced, not altered)
 
 - `asolaria_herself.py` writes the GGUF at line 232, then stops at line 239 with

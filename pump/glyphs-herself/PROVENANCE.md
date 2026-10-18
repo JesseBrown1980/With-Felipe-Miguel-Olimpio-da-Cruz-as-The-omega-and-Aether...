@@ -13,6 +13,23 @@ they are part of the public release tree.
 
 `UPSTREAM.sha256` carries the same three checksums for `sha256sum -c`.
 
+## The trit type (`ternary::Zero`)
+
+The crate depends by path on `asolaria-ternary` (`../../ternary`, library `ternary`), which
+re-exports the owner's tribit unit from `../../kernel/tribit` (asolaria-tribit@1292191
+`src/lib.rs`, git blob `f83acb31584c887f1502704a3a9bfcf8e619b64d`, vendored byte-identical and
+pinned in `ternary/UPSTREAM.sha256`, sha256 `93c96b97…`). Nothing from it is copied here. Both are
+path crates with no dependencies of their own; `Cargo.lock` lists them and no third-party crate.
+
+`Zero` is used in two places, where the vendored generators carry the value as a trit
+(`SG = np.sign(Dv).astype(np.int8)`, values `{-1, 0, 1}`): `src/herself.rs:253-265` `dir_key`
+(`vendor/asolaria_herself.py:106-107`; key `ternary::cube::index`) and `src/mythos.rs:311-319`
+`sign_key` with the key at `:336-338` (`vendor/pump_glyphs_mythos.py:123-124`; key from
+`Zero::digit()`, which is `SG+1`). This follows the owner's line of 2026-10-17, "we should be
+working with trinaries and ternaries", and the owner rule relayed from the ACER seat, "reuse
+tribit/mod.rs, never reinvent" (`ternary/MIGRATION.md` rows A5 and A6). The key values, and
+therefore every output, are those of the generators' own lines, as before.
+
 ## Captured constant
 
 `src/mythos/kernel.rs` (`KERNEL_BITS`) holds the 65 IEEE binary64 values of

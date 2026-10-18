@@ -7,6 +7,7 @@ use crate::cv;
 use crate::softfloat::{fma, int_to_f32_bits, isqrt_u64, Dbl};
 use std::io::Write;
 use std::path::Path;
+use ternary::Zero;
 
 mod kernel;
 pub use kernel::KERNEL_BITS;
@@ -307,11 +308,13 @@ struct Geom {
     cnt: [u64; N],
 }
 
-fn sign_key(d: i64) -> u8 {
+/// One axis of `SG = np.sign(Dv).astype(np.int8)` (`pump_glyphs_mythos.py:123`): a trit, the
+/// owner's `Zero`; `digit()` is `SG+1` (`0/1/2`).
+fn sign_key(d: i64) -> Zero {
     match d.cmp(&0) {
-        std::cmp::Ordering::Less => 0,
-        std::cmp::Ordering::Equal => 1,
-        std::cmp::Ordering::Greater => 2,
+        std::cmp::Ordering::Less => Zero::Neg,
+        std::cmp::Ordering::Equal => Zero::Nil,
+        std::cmp::Ordering::Greater => Zero::Pos,
     }
 }
 
@@ -331,7 +334,8 @@ fn geometry() -> Geom {
                 let r = (radial as usize).min(N - 1);
                 ri[idx] = r as u8;
                 // KEY = (SG0+1)*9 + (SG1+1)*3 + (SG2+1)  (pump_glyphs_mythos.py:123-124)
-                let key = sign_key(dx) * 9 + sign_key(dy) * 3 + sign_key(dz);
+                let key =
+                    sign_key(dx).digit() * 9 + sign_key(dy).digit() * 3 + sign_key(dz).digit();
                 group[idx] = cv::group_of(radial, key);
                 cnt[r] += 1;
                 idx += 1;

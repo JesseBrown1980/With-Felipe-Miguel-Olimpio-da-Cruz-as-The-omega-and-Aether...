@@ -4,9 +4,12 @@
 //! players/rime_27fischers.py, and the four-agent run of rime_agents.py:166-170, which takes the
 //! MTP (Law 24) and HRM (Law 25) agents from `hrm_mtp::rime` (model/hrm-mtp).
 //!
-//! Every value is an integer. Printed lines are upstream's `print` lines, byte for byte. Upstream
-//! computes the MTP and HRM lines in binary64 (rime_agents.py:90, 125, 129); how the port renders
-//! them from integers, and the condition for the bpc line, are in [`rime_agents`].
+//! Every value is an integer. The balanced-ternary digits upstream carries as Python ints in
+//! `{-1, 0, 1}` (rime_agents.py:46-51, rime_27fischers.py:39-44 and 51-52,
+//! rime_fischer_cluster.py:38-45) are the owner's trit `ternary::Zero` (`kernel/tribit`).
+//! Printed lines are upstream's `print` lines, byte for byte. Upstream computes the MTP and HRM
+//! lines in binary64 (rime_agents.py:90, 125, 129); how the port renders them from integers, and
+//! the condition for the bpc line, are in [`rime_agents`].
 
 #![forbid(unsafe_code)]
 

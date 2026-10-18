@@ -14,5 +14,8 @@ path = "src/bin/pump.rs"
 name = "pump_glyphs_herself"
 path = "src/lib.rs"
 
+[dependencies]
+asolaria-ternary = { path = "../../ternary", version = "0.1.0" }
+
 [profile.release]
 opt-level = 3

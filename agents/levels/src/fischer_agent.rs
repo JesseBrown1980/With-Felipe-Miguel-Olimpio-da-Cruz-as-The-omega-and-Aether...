@@ -5,7 +5,8 @@
 //!   `x^(n/3) == w3^t`, `w3 = g^(n/3)`.
 //! - level 27 (lines 39-52): `k mod 27` as three base-3 digits, each read after dividing out the
 //!   digits already found (`x * g^(-k27)` raised to `n/3^(i+1)`), then rewritten as three
-//!   balanced-ternary digits `{-1, 0, +1}`.
+//!   balanced-ternary digits `{-1, 0, +1}` (Python ints, lines 46-51), carried here as the owner's
+//!   trit `Zero` (`kernel/tribit`, through `ternary`) and written by `ternary::balanced::low_trits`.
 //! - level rime (lines 53-56): the code sets `k = 77777`, the exponent used to build `x` at line
 //!   35, and asserts `pow(g, k, p) == x`. The comment at lines 53-54 reads "the full discrete log
 //!   (all towers, CRT) — brute here is fine at demo scale; the cluster version is
@@ -14,6 +15,8 @@
 
 use crate::pyfmt::{py_bool, rule74};
 use crate::sphere::{is_prime, pow_mod, pow_mod_neg, primitive_root};
+use ternary::balanced::low_trits;
+use ternary::Zero;
 
 /// `p` (line 33).
 pub const P: u64 = 1_000_081;
@@ -33,8 +36,8 @@ pub struct FischerAgent {
     pub l3: u64,
     /// Level 27: `k27 = k mod 27` from the cascaded base-3 digits.
     pub k27: u64,
-    /// Level 27: the balanced-ternary digits `trimes`, least significant first.
-    pub trimes: [i8; 3],
+    /// Level 27: the balanced-ternary digits `trimes`, least significant first, as trits.
+    pub trimes: [Zero; 3],
     /// Level 27: `sig`, the digits written with `-`, `0`, `+`.
     pub sig: String,
     /// Level rime: `k`.
@@ -70,22 +73,14 @@ pub fn fischer_agent() -> FischerAgent {
         let d = third(e, w3, p);
         k27 += d * 3u64.pow(i);
     }
-    // balanced ternary (lines 46-51)
-    let mut trimes = [0i8; 3];
-    let mut kk = k27;
-    for slot in trimes.iter_mut() {
-        let r = kk % 3;
-        if r == 2 {
-            *slot = -1;
-            kk = kk / 3 + 1;
-        } else {
-            *slot = r as i8;
-            kk /= 3;
-        }
-    }
+    // balanced ternary (lines 46-51): for r == 2 the script writes -1 and sets kk = kk // 3 + 1,
+    // which is (kk + 1) // 3, the carry `low_trits` applies.
+    let mut trimes = [Zero::Nil; 3];
+    low_trits(i64::try_from(k27).expect("k27 < 27"), &mut trimes);
+    // line 52: {-1: '-', 0: '0', 1: '+'}[t]
     let sig: String = trimes
         .iter()
-        .map(|t| match t {
+        .map(|t| match t.direction() {
             -1 => '-',
             0 => '0',
             _ => '+',
@@ -139,7 +134,8 @@ mod tests {
         assert_eq!(a.l3, 2);
         assert_eq!(a.k27, 17);
         assert_eq!(a.k27, POINT_EXP % 27);
-        assert_eq!(a.trimes, [-1, 0, -1]);
+        assert_eq!(a.trimes, [Zero::Neg, Zero::Nil, Zero::Neg]);
+        assert_eq!(a.trimes.map(Zero::direction), [-1, 0, -1]);
         assert_eq!(a.sig, "-0-");
         assert!(a.invert_exact);
         // The level-3 third is the exponent mod 3 (x^(n/3) = w3^(k mod 3)).

@@ -3,5 +3,19 @@
 version = 3
 
 [[package]]
+name = "asolaria-ternary"
+version = "0.1.0"
+dependencies = [
+ "asolaria-tribit",
+]
+
+[[package]]
+name = "asolaria-tribit"
+version = "0.1.0"
+
+[[package]]
 name = "pump-glyphs-herself"
 version = "0.1.0"
+dependencies = [
+ "asolaria-ternary",
+]

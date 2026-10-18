@@ -68,7 +68,7 @@ fn check_channels(name: &str, q: &Quant8, want: &BTreeMap<&str, &str>) {
         ("turbo", hex_bytes(&q.turbo, |t| t as u8)),
         ("signs", hex_bytes(&q.signs, |s| s)),
         ("zeta", hex_bytes(&q.zeta, |z| z)),
-        ("triple", hex_bytes(&q.triple, |t| t as u8)),
+        ("triple", hex_bytes(&q.triple, |t| t.direction() as u8)),
         ("quad", hex_bytes(&q.quad, |c| c)),
         ("hist", hex_bytes(&hist, |h| h)),
         ("vm_acc", q.vm_acc.to_string()),
