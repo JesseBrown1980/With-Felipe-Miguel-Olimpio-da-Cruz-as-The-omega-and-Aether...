@@ -6,9 +6,10 @@
 //!
 //! JavaScript numbers are held exactly, as IEEE-754 binary64 bit patterns ([`JsNumber`]) or as
 //! [`l0_edge::jsnum::Dbl`]; no float type is used. The plane wrappers that call `enrichEnvelope`,
-//! `quantMetadata`, `AUTHORITY_FIELDS` or `encodeFrame` are not reproduced: those modules have no file
-//! on disk, and PROVENANCE.md lists where the owner registered them. The G3 reverse-gain plane is not
-//! here either: fnns README.md:109 reads "G3 source is withheld due to PII."
+//! `quantMetadata`, `AUTHORITY_FIELDS` or `encodeFrame` are not reproduced: those modules had no file
+//! on this container when this crate was built (copies arrived 2026-10-18 and sit in
+//! `planes/gnn-trio`), and PROVENANCE.md lists where the owner registered them. The G3 reverse-gain
+//! plane is not here either: fnns README.md:109 reads "G3 source is withheld due to PII."
 
 #![forbid(unsafe_code)]
 

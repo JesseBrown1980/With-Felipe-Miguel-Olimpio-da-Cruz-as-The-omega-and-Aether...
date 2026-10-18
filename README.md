@@ -10,7 +10,9 @@ by Asolaria in Asolaria's white rooms, and anything listed under any license is 
 everyone. Two pieces are other authors' and keep their own Apache-2.0 terms and notices: Sapient's HRM
 under `model/hrm-fork/vendor/HRM`, and the jsQR algorithm that `qr/qr-read-int` ports.
 
-The opening sentence above is the owner's, from `JesseBrown1980/Asolaria`'s README; that repository is
+The title, the opening sentence above and the four sections from "Canonical doctrine" through "Current
+boundary" are the owner's README from `JesseBrown1980/Asolaria` (at `f0622df`; commits by Jesse Daniel
+Brown and the owner's `acer` seat), carried verbatim: all 32 of its non-blank lines. That repository is
 public since 2026-10-18. "The private mirror" that PROVENANCE files cite is a clone of it, so every
 mirror commit they name can be read there. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
 1.81.0) and Python 3.11+; the `time/` and `eval/` checks also need Node 18+.
@@ -43,8 +45,10 @@ asolaria observe --events model/l0-edge/tests/fixtures/events.hbp cli/examples/o
 ```
 
 `score`, `l0_real`, `mark` and `reverse_risk` are the keys of the upstream hookwall observation
-row (asolaria-hookwall.mjs:48-51). The events file there is a SYNTHETIC fixture; with
-`actor=agent:rogue` and `target=svc:vault` the same envelope gives `score=0.7593` and PROCEED.
+row (asolaria-hookwall.mjs:48-51). `score` and `reverse_risk` are fixed-point integers at scale 10^4
+(2139/10000 and 7861/10000 here), computed with integer arithmetic only and printed the way JavaScript
+prints the upstream row. The events file there is a SYNTHETIC fixture; with `actor=agent:rogue` and
+`target=svc:vault` the same envelope gives `score=0.7593` (7593/10000) and PROCEED.
 
 Only exit code 0 means PROCEED. `cli/README.md` documents every command, the envelope keys and the
 honest scope: deterministic software policy over the values supplied (for `gate`, the scores too;
@@ -114,8 +118,8 @@ implementation existed, written fresh and honest. Full detail and provenance:
 | 3 — recovery Path 2 | `qprism/recovery/omega/` | checked **CRT** two-shadow reconstruction over coprime moduli |
 | 3 — combined throat | `qprism/recovery/throat/` | coordinator that selects Path 1 vs Path 2, cross-validates, gates on consent + a SHA consistency check, and **holds** rather than fabricates |
 | 3 — operator catalog | `qprism/recovery/catalog/` | the 40 exact-inverse byte permutations recovery Path 3 mixes over, published on its own |
-| time | `time/` | deterministic GF(2) fast-forward with a Python↔Node byte-identity cross-check (self-labels `SIMULATED`) |
-| 4/5 — control + watcher | `eval/` | pinned Q-PRISM control arms and N-Nest depth-3/7 watchers, vendored by Git blob identity; software simulation only — see [`eval/STATUS.md`](eval/STATUS.md) |
+| time | `time/` | deterministic GF(2) fast-forward with a Python↔Node byte-identity cross-check (self-labels `SIMULATED`); the owner's code, all 10 files byte-identical from `JesseBrown1980/asolaria-stone-to-moss@f032bc0:physical/` |
+| 4/5 — control + watcher | `eval/` | pinned Q-PRISM control arms and N-Nest depth-3/7 watchers, vendored by Git blob identity; `upstream_bridge.py`, `adversarial_watcher.py`, `forged_watcher.py` and `UPSTREAM-LOCK.json` are the owner's, byte-identical from `JesseBrown1980/asolaria-stone-to-moss@f032bc0:experiments/integration/seat1/` and `seat4/`; software simulation only — see [`eval/STATUS.md`](eval/STATUS.md) |
 | 5 — Fischer | `gate/fischer-eval/` | deterministic rule-table action gate (integer `cpl` → PROCEED/HOLD/ANALYZE/BLOCK/REFUTE); chess words are metaphor |
 | 5 — Hookwall | `gate/hookwall/` | tier table, deny tags, score thresholds and a caller→target tier policy, extracted from a larger kernel; comment-only edits except `crypto`, which completes the upstream Phase-2 plan with real Ed25519 (`ed25519-dalek`, `verify_strict`) — see its `PROVENANCE.md` |
 | 5 — composition | `gate/verdict/` | tighten-only merge of Hookwall, spawn gate, tier gate, Fischer and an input guard: strictest wins, nothing can loosen |
@@ -138,6 +142,16 @@ forward, the score, the gates and the CLI. It is Rust only, in process, over HBP
 text, SHA-256 and integers: no V8, JSON, HTTP or Python. Python and torch run only
 in the cold verification lane (CI referees and the torch parity harness). The
 Node and JSON already in `time/` and `eval/` are an existing cold lane.
+
+**Where float runs here.** It runs only inside the owner's code, unchanged, as the owner's integer
+rule keeps it. In `eval/`: the vendored Q-PRISM numpy/scipy simulation, and the owner's bridge,
+watcher and gate code around it: `eval/upstream_bridge.py:101,110,112-113` (influence 0.5, `float()`,
+the best-SNR pick), `:141-143` (`math.isfinite`, `math.isclose` with `rel_tol=1e-11`, `abs_tol=1e-12`),
+`:244` and `:250` (tamper offsets `snr+=0.12`, `P2_mW+=0.01`), `:305-313` (couplings 0.0 and 0.9,
+`p_value`, arm means) and `:356-357`; `eval/adversarial_watcher.py:16-17,98,159`; and
+`eval/vendor_gate.py:54-55,61`. In `slice_glyph_messaging.py:45`, `code_rate` is Python true division
+(exactly 1.0 on the padded input its `__main__` passes). `time/`, `prime_cylinder_expansion.py` and
+`gguf/make_manifest.py` use integer arithmetic only.
 
 **Integration status.** CI proves each crate builds and behaves as tested; a link
 between layers exists only where code calls code. These links are real code:
@@ -179,7 +193,7 @@ Asolaria is published, byte-identical, at three public homes that mirror each ot
 - Hugging Face — [Jessedbrown/asolaria-aether](https://huggingface.co/Jessedbrown/asolaria-aether)
 
 Each carries the same clean commit: the doctrine, the runnable slices
-(`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`),
+(`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`; the owner's, byte-identical from `JesseBrown1980/Asolaria` at `f0622df`),
 the Rust 1.81 kernels under `kernel/tribit/` (ternary core) and `kernel/behcs1024-60d/` (the verified 60D / BEHCS-1024 hash-coordinate collapse),
 the Q-PRISM stack under `qprism/` (representation + recovery paths + combined throat), the deterministic time harness under `time/`,
 the pinned control + watcher layer under `eval/`, the Layer-5 gates under `gate/`, and the Layer-6 scheduler and integer GNN under `proposals/` and `model/`.

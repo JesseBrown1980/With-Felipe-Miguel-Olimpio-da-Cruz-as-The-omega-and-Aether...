@@ -131,7 +131,9 @@ been set for this crate; that layout is an open question for the owner.
   double `1.0`, which `JSON.stringify` renders `1`. `src/route.rs` carries `gnn_weight` as an optional integer
   and emits `1` when absent; a non-integer weight has no form here.
 - cadence — `gnn-feedback-cadence-adjuster.mjs` computes on doubles; `src/cadence.rs` computes on `i128` with
-  floor division. The two agree while every intermediate value stays below 2^53 in magnitude.
+  floor division. The two agree while every intermediate value stays below 2^53 in magnitude. The earlier
+  float version of that file (x 0.8 / x 1.25, then `Math.round`) is a different formula. PROVENANCE.md gives
+  the counts of cadence values where its results differ (OWNER-RULES 7i).
 - string rules — `src/jstext.rs` reproduces JavaScript's `\s`/`trim()` set and UTF-16 `.length`.
   `toLowerCase()` uses Rust 1.81's Unicode 15.1 tables; V8 uses its ICU's tables, which can be a later
   Unicode version for characters added since.

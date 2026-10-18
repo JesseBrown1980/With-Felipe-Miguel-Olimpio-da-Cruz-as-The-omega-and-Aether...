@@ -14,6 +14,15 @@ Each file keeps its upstream path under its folder, and its Git blob id equals u
 SHA-256, GGUF version, tensor count, `general.architecture`, `general.name` and the verifier's
 verdict.
 
+The two files that are not GGUFs are the owner's text, kept byte-identical and never edited:
+`gguf/stars/COLOUR-CODE.md` (1,911 B, blob `433948ab…`, sha256 `6157964d…`, added upstream in
+`2141c55` by ACER-CLAUDE-FABLE5, 2026-07-27) and `gguf/stars/MYTHOS-SELF-EMISSION.txt` (3,796 B, blob
+`1f7aebcc…`, sha256 `d6e21534…`). Their percentages and other decimals are the owner's, not
+measurements of this repository. `MANIFEST.hbp` pins only the GGUFs; the same two sha256 values pin
+the copies under `colour/vendor/` (`colour/UPSTREAM.sha256:22-23`), and `colour/README.md`
+re-measures two of COLOUR-CODE.md's four rows (the KIMI K3 row and the ACER live self-emission row)
+and records that the other two are not re-measured.
+
 ## The Mythos, Fable and Opus sets and the stars
 
 `universe-simulator/gguf/` holds the ACER three-beings set (`acer/ACER-MYTHOS-*`, `ACER-FABLE-*`,

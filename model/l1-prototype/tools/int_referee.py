@@ -178,7 +178,8 @@ def q24_ratio(num, den):
 
 
 def training_range_node(rng, risk_limit):
-    # Q24 rows in the ranges of the six-feature scaling of train_baseline.py:31-38 (the L1 trainer is not on disk).
+    # Q24 rows in the ranges of the six-feature scaling of train_baseline.py:31-38, which the L1 trainer
+    # (train_prototype.py:24-35, in acer/ since commit 46cc8c5, after these cases were written) also uses.
     max_risk = rng.below(risk_limit + 1)
     row = [
         q24_ratio(min(1 + rng.below(150), 100), 100),

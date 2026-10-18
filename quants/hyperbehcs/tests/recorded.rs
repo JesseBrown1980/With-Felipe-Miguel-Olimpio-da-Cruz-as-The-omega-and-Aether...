@@ -60,8 +60,10 @@ fn strings(values: &[Number]) -> Vec<String> {
 /// `bits: 8`). Dimensions (lines 11-12), projection (18), turbo codes and metadata (25-26), polar
 /// codes and metadata (32-33) and triple codes (39) are reproduced. The receipt's fingerprints (20,
 /// 27, 34, 45) hash packets of another shape (`zeroPoint`, `radiusBits`/`angleBits`, lane objects)
-/// built by `src/behcs/hyperbehcsQuantSubstrate.js` (rotor:13-16), which no repository holds, so
-/// they are not compared; the core packets' own fingerprints are the ones Node gives.
+/// built by `src/behcs/hyperbehcsQuantSubstrate.js` (rotor:13-16). No repository on this container
+/// held that file when this test was written; it arrived from the ACER seat on 2026-10-18 and is
+/// not run here. So the fingerprints are not compared; the core packets' own fingerprints are the
+/// ones Node gives.
 #[test]
 fn recorded_shard_0000_receipt() {
     let v: Vec<Number> = [100u64, 9, 9, 8, 8, 8, 0, 4950]

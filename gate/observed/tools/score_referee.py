@@ -16,9 +16,10 @@ v22.22.0) src/base/ieee754.cc:1951-1962 (k_log1p) and 1973-2050 (log2), git blob
 e71b63fd7c17711e5dc04d9acc040be0aa0b7c40, over the binary64 emulation (the hardware double path with
 no FMA contraction, which x86-64 baseline code cannot emit). The exact arithmetic the referee
 compares against (shannon `exact`, the composite's exact value) is exact rationals
-(fractions.Fraction) over a fixed-point integer log2 held to 512 fractional bits; the closest the
-entropy comes to a rounding boundary over every row is reported, so the rounding is shown to be
-unambiguous.
+(fractions.Fraction) over a fixed-point integer log2 held to 512 fractional bits. Over every
+non-empty SHANNON row, the closest the exact efficiency times 10^4 comes to a half-integer (a
+toFixed(4) rounding half) is reported as shannon_closest_tie_e_minus_30, that distance in e4 units
+times 10^30, rounded down, so the rounding is shown to be unambiguous.
 """
 import hashlib
 import pathlib

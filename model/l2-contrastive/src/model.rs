@@ -28,7 +28,7 @@ const LN2_EXP: u128 = 3_196_577_161_300_663_915;
 const SIGMOID_SATURATION_Q48: u128 = 18 << (2 * FRAC_BITS);
 /// `F.normalize`'s `eps=1e-12` as the float32 the clamp applies: 9223372 * 2^-63.
 const EPS_SIGNIFICAND: u128 = 9_223_372;
-/// eps in Q48 is 9223372 / 2^15, about 281.47 units.
+/// eps in Q48 is 9223372 / 2^15 units (between 281 and 282).
 const EPS_Q48_SHIFT: u32 = 15;
 /// Any component of magnitude >= 282 (Q48) puts the norm above eps.
 const EPS_Q48_CEIL: u128 = 282;
@@ -202,7 +202,7 @@ fn divide_round(numerator: i128, denominator: i128) -> i64 {
 
 /// `F.normalize(v, p=2, dim=1, eps=1e-12)` = `v / max(||v||_2, eps)` (torch/nn/functional.py:6126-6127)
 /// of a Q48 vector, rounded half up to Q24 per component. Equal to the exact reference on the 126
-/// committed vectors; a vector with a component above 2^51 is rounded when scaled to 51 bits, so a
+/// committed vectors; a vector with a component of at least 2^51 is rounded when scaled to 51 bits, so a
 /// component at a half-unit tie there can be 1 unit away.
 fn normalize_q24(v_q48: &[i128; PROJECTION]) -> [i64; PROJECTION] {
     let max = v_q48.iter().map(|v| v.unsigned_abs()).max().unwrap_or(0);
@@ -291,7 +291,7 @@ mod tests {
     }
 
     #[test]
-    fn ln2_matches_the_decimal_constant() {
+    fn ln2_matches_the_integer_constant() {
         let line = MATH
             .lines()
             .find(|l| l.starts_with("CONST|name=LN2_Q62|"))
@@ -300,7 +300,7 @@ mod tests {
     }
 
     #[test]
-    fn sigmoid_matches_the_decimal_reference_exactly() {
+    fn sigmoid_matches_the_integer_reference_exactly() {
         let mut rows = 0;
         for line in MATH.lines().filter(|l| l.starts_with("SIGMOID|")) {
             let logit = integers(field(line, "logit_q48"))[0];
@@ -330,7 +330,7 @@ mod tests {
     }
 
     #[test]
-    fn normalize_matches_the_decimal_reference_exactly() {
+    fn normalize_matches_the_integer_reference_exactly() {
         let mut rows = 0;
         for line in MATH.lines().filter(|l| l.starts_with("NORMALIZE|")) {
             let v: [i128; PROJECTION] = integers(field(line, "v_q48"))

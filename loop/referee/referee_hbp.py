@@ -87,7 +87,8 @@ def sha8(s):
 # ---- primes.mjs:5-29 ----
 # Upstream primes.mjs:10 sizes the sieve with a float Rosser estimate; this referee, like the Rust port
 # (src/primes.rs), uses a fixed integer bound above the 1000th prime (7919), so the first 1000 primes are
-# identical with no float. The sieve stops at len(out) == n (7919 for n=1000), never reaching the bound.
+# identical with no float. For n <= 1229 (pi(10000)) the sieve stops at len(out) == n before the bound
+# (7919 for n=1000, the only call); for n >= 1230 it returns the 1229 primes below 10000.
 def sieve_first_n_primes(n):
     limit = 10000  # > p_1000 = 7919
     composite = [0] * (limit + 1)

@@ -26,7 +26,10 @@ commit, blob id and sha256.
   Rust and Python both give `c1e9c91073156144`, prefix `122.457.65.817.344.324`. The cross-colony
   pair `qprism_cube:7be9d49b3af31036 -> 5edd3a45544437d4` holds in both. On the cube's own 3,200-byte
   tuple the vendored transcode gives the same 2,560 symbols as the Python (stream sha256 `154d6294…`)
-  and recovers the tuple byte-identically. 81 prefix/injection pairs agree.
+  and recovers the tuple byte-identically. 81 prefix/injection pairs agree. Float runs in this cold
+  lane only inside the owner's code: `cube_absorb.py` and the owner's fixture-window generator (numpy
+  float64), which `tools/qprism_receipts.py` copies unchanged from the test file. The tool's own logic
+  adds none.
 - **Slot 25.** The 12 receipts in reductions `cubes/` (11 Drive ingests, 1 paper): every footer
   sha256 recomputes over its body (referee), and every content address (`cube10[..16] = handle8 =
   sha256_16`), both reduction ratios and all 120 catalog glyphs `g` + `sha256(word)[..8]` recompute
@@ -68,12 +71,17 @@ commit, blob id and sha256.
 
 ## Not brought in (evidence in PROVENANCE.md)
 
-`buildQuantizedSubstrateReceipt` (rotor:13-16, `src/behcs/hyperbehcsQuantSubstrate.js`), so the
+`buildQuantizedSubstrateReceipt` (rotor:13-16, `src/behcs/hyperbehcsQuantSubstrate.js`; the file
+arrived from the ACER seat on 2026-10-18 and sits at `acer/Asolaria/src/behcs/`, not run here), so the
 slot-26 receipt shape and its five fingerprints; the source texts of the 12 ingest receipts, so
 their `quant8` values; the slot-27 engines (`omni-shannon-v4-real.js`, `-v3-4d12.js`,
 `-v5-deep-cascade.js`, `run-deep-cascade-gated.js`, `omni-shannon.js` in asolaria-behcs-256 @
-818cc23 `tools/cube/`), Node CLIs that read operator-local state; GULP/SUPER-GULP frames (`gulp.mjs`, `super_gulp.mjs` import the
-absent `../bpi-codec.mjs` and `../quant-bus.mjs`); cube minting (`cube-builder.js`,
+818cc23 `tools/cube/`), Node CLIs that read operator-local state; GULP/SUPER-GULP frames (after-100B @ c59e2e6 `backend/gulp.mjs`
+and `backend/super_gulp.mjs` import `../bpi-codec.mjs` and `../quant-bus.mjs`; on 2026-10-18 no path
+with either name is in that repository's history, in the history of the 186 clones under
+`scratchpad/census/src` or in the private mirror's 132 refs; revolver-10k files with these names
+arrived from the owner on 2026-10-18 and are vendored in `planes/gnn-trio`, and it is not established
+here that they are the files these imports name); cube minting (`cube-builder.js`,
 `behcs1024-prism-overlay-mint.mjs`: JSON files with timestamps); `L0GnnScorer` (HTTP + JSON to
 :4792; aether runs L0 in `model/l0-edge`).
 

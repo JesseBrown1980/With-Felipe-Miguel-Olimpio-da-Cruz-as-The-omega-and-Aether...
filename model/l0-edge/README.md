@@ -88,8 +88,9 @@ of these the two scores lie on either side of a rounding midpoint `(k + 1/2) / 1
 Q24 units of it; the parity tool writes every pair whose torch score is within 32 units of a
 midpoint as a REQUEST row, and `tests/model.rs` counts them. Two things contribute: the forward's
 difference from torch, and the rounding of the score to Q24 before the fourth decimal (the
-float32 grid is finer than Q24 below 1/2: 20,454 float32 values in [0, 1) have a different fourth
-decimal from their Q24 rounding, all below 1/2; `tests/model.rs` counts them in integers).
+float32 grid is finer than Q24 below 1/2: 20,454 float32 values in [2^-15, 1) have a different
+fourth decimal from their Q24 rounding, all below 1/2, and below 2^-15 both give 0;
+`tests/model.rs` counts them in integers).
 
 Where the L0 e4 value differs, the composite can differ by one e4 unit. Example (the REQUEST
 case `e4_midpoint`): actor features (edge volume 88, avgRisk 803/100, maxRisk 9, failureRate

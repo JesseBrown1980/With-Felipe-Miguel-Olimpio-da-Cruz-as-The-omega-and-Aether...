@@ -3,7 +3,9 @@
 //! `HKW` / `HKG` frames it emits.
 //!
 //! The plane imports `enrichEnvelope` (`../quant-bus.mjs`) and `encodeFrame` (`../bpi-codec.mjs`),
-//! which are on no disk and in no repository history (WIRING-MAP section d item 2). Here
+//! which were not on this container or in its repository histories when this crate was built
+//! (WIRING-MAP section d item 2; README.md records the revolver-10k files with these names that
+//! arrived on 2026-10-18). Here
 //! `enrichEnvelope` is a [`QuantBus`] the operator supplies, and the plane returns the argument
 //! list it hands `encodeFrame` ([`FrameArgs`]) instead of an encoded frame. The grant envelope's
 //! `authority` object (:45) carries third-party data and is not reproduced: [`EnvelopeIn`] marks
@@ -50,7 +52,8 @@ pub struct EnvelopeOut {
     pub authority_quant: JsValue,
 }
 
-/// `enrichEnvelope` of `../quant-bus.mjs`, supplied by the operator (not on disk).
+/// `enrichEnvelope` of `../quant-bus.mjs`, supplied by the operator (not on this container when
+/// this crate was built).
 pub trait QuantBus {
     /// `enrichEnvelope(env)`.
     fn enrich_envelope(&mut self, env: &EnvelopeIn) -> EnvelopeOut;

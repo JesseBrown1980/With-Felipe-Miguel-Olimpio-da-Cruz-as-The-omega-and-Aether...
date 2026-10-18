@@ -88,7 +88,7 @@ There were no hits; the only numeric matches were dates.
 
 - The-colour-qr names the owner (pages.yml:3 "Jesse Daniel Brown"), his GitHub account, his
   machines ("acer") and his public repositories.
-- The USIM `key/*.bin` files are the owner's public 3.1 KB files. They contain no email address.
+- The 4 USIM `key/*.bin` files are the owner's public files of 3,174 B each. They contain no email address.
   `prior3174.bin` is the enwik8 slice `[90,000,000, 90,003,174)`, which is Wikipedia text
   (USIM `key/KEY-3174.hbp`).
 - The laws codexes are binary data: 256 distinct byte values each, order-0 entropy `h_x10000`

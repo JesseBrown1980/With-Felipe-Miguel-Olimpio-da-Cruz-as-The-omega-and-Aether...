@@ -7,9 +7,12 @@ Crate `asolaria-l2-contrastive`, library `l2_contrastive`, no dependencies,
 `#![forbid(unsafe_code)]`, Rust 1.81, no `f32`/`f64`.
 
 **Lane.** `src/` is hot lane: integers only, in process, with no Python, torch, Node, JSON or HTTP.
-`tools/` and the vendored upstream files are cold lane and run only in CI. Provenance, the evidence
-for the forward, the upstream consumers and the measured agreement are in
-[`PROVENANCE.md`](PROVENANCE.md).
+`tools/` and the vendored upstream files are cold lane: CI runs the three referees, and
+`tools/measurements.py` runs by hand. The tools compute in
+integers only; float runs only inside torch, which runs the vendored class with the float32
+checkpoint (the owner's float32 lane, unchanged), with inputs built as float32 bit patterns in
+integers and outputs read by bit pattern. Provenance, the evidence for the forward, the upstream
+consumers and the measured agreement are in [`PROVENANCE.md`](PROVENANCE.md).
 
 ## Modules
 
@@ -52,7 +55,7 @@ with a fixed-point sigmoid. It equals the exact integer reference (`tools/math_r
 1,511 committed logits, and next to a rounding tie it can be 1 unit away. `F.normalize` divides by `max(||v||, eps)` with
 `eps` the float32 of `1e-12`, as torch/nn/functional.py:6126-6127 does. The integer version equals
 an exact rational reference on 126 vectors, and at a half-unit tie in a vector whose largest Q48
-component is above 2^51 it can be 1 unit away. `PROVENANCE.md` has the measurements.
+component is at least 2^51 it can be 1 unit away. `PROVENANCE.md` has the measurements.
 
 ## Agreement with torch
 
@@ -62,7 +65,10 @@ input magnitude: `src/weights.rs` holds each float32 weight rounded to Q24, and 
 multiplies that rounding by the input. On the fixture's `mag` graphs, with features of both signs up
 to 2^K, the largest differences for K = 4, 8, 12, 16, 20 are 1, 1, 1, 3, 11 units for
 `probs[:, 1]` and 7, 7, 8, 80, 946 units for projections. The test allows 16 up to K = 8 and
-16 * 2^(K - 8) above that. `PROVENANCE.md` has a larger sweep and a float64 comparison.
+16 * 2^(K - 8) above that. `PROVENANCE.md` has a larger sweep and compares Rust and torch with an
+exact integer forward of the same class and float32 weights: the difference sits on the Rust side,
+from the weights' Q24 rounding, while torch stays within 1 (`probs[:, 1]`) and 3 (projections) units
+of the exact values on the fixture graphs.
 
 ## Fixtures
 
@@ -98,6 +104,11 @@ build the model the checkpoint was saved from. Before torch loads it sets
 `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, `OMP_NUM_THREADS=1` and `MKL_NUM_THREADS=1`,
 as model/l0-edge's tool does, so torch runs ATen's scalar kernels and oneMKL's single SSE2 code
 path. It compares its output with the committed file byte for byte; see `PROVENANCE.md`.
+
+`tools/measurements.py` is not a check and writes nothing into the crate: it re-measures, in integers,
+the numbers in `PROVENANCE.md` that no `--check` produces (`outputs`, `weights` and `ties` with
+`python3 -I`, `ties` also building a probe from copies of `src/` with cargo +1.81.0; `run2` and
+`exact` with the torch python, `exact` also with cargo).
 
 ## License
 

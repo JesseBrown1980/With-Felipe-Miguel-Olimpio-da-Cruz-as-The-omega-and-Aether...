@@ -2,7 +2,11 @@
 //!
 //! The upstream sieve sizes its upper bound with a float Rosser estimate (primes.mjs:10); this port
 //! uses a fixed integer bound above the 1000th prime (7919), so the produced first-1000 primes are
-//! identical while no float appears. The referee checks each `prime_at(i)` against the upstream sieve.
+//! identical while no float appears. The referee mirrors this sieve with the same integer bound and
+//! checks `prime_at` at indices 0, 1, 2, 10 and 999 through the emitted rows. The full 1000-prime list
+//! equals upstream primes.mjs's own `PRIMES`, run unchanged in Node (float runs there, at line 10):
+//! comma-joined sha256 `1b2a2bb15bc74f8503c255f50885cf72e8feb6cf05208714cc6ccc2adafbdc76`, a
+//! cold-lane check outside this directory.
 
 use std::sync::OnceLock;
 

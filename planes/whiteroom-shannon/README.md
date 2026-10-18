@@ -16,7 +16,7 @@ and its library is `whiteroom_shannon`.
 | `shannon_boot` | SH pipeline/shannon-boot.mjs:30-170 | `bootShannon`, the `shannon:gate:check` listener, `checkShannonGate` (LX-328/329/331/332/333), `selfTest`, and the `emitFixtureRestored` HBPv1 row with `row_hash = sha256(body)`. |
 | `whiteroom_consumer` | SH pipeline/whiteroom-consumer-index.mjs:14-215 | `isWhiteroomEnvelope`, `stableStringify` (used as the hash pre-image only), `deriveCubeAddress` (through `quant_cubes::consumer`), `buildDigestionEnvelope`, the poll reply's message list, and the `_tick` digest loop. |
 | `fabric_thinker` | BP src/fabric-thinker-gnn.mjs:27-184, src/fabric-thinker.mjs:75-105 | `pidQueryToGraph`, `descriptorInfer`, `realInfer`, and `realInferEnsemble` (L0 and L4, arithmetic mean). `hilbertEncode` comes from `model/hrm-mtp`. |
-| `hybrid_harness` | B256 src/gnn/hybrid-harness.js:7-58 | `shardPlan`, `runShard` (mean of 5 scorers, SHA-256 over `${id}:${lcr.toFixed(6)}`), and `runFanout`. Nothing on disk imports the upstream file, so the five scorers are caller inputs. |
+| `hybrid_harness` | B256 src/gnn/hybrid-harness.js:7-58 | `shardPlan`, `runShard` (mean of 5 scorers, SHA-256 over `${id}:${lcr.toFixed(6)}`), and `runFanout`. No file found on this container imports the upstream file, so the five scorers are caller inputs. |
 | `l0_request` | (glue) | Turns a two-node sha graph into the Q24 score of `l0_edge::model::score_pair`. This is the in-process stand-in for the POST to :4792. |
 | `jsvalue`, `jsnum_ext`, `sha` | ECMA-262 | JavaScript values and the language operations the lines above apply: truthiness, `String(v)`, `Number(v)`, `a > b`, `JSON.stringify` of a string, `Math.ceil`, and Q24 to binary64. `jsvalue::binary64` rounds an exact decimal to binary64 (ties to even, as ToNumber does) and prints `Number::toString` of the result, in integers; `JsNumber::from_text` accepts a text only when it is `String(x)` of the value it rounds to. |
 
@@ -68,17 +68,25 @@ therefore absent, and its `path` is `'FALLBACK'` (`allow` absent, :138).
 
 - The white-room smoke run with `--l0` (liris-whiteroom-engine.mjs:185-199;
   `cargo run --example whiteroom_smoke -- --l0`) gives 12 ticks: genius=10, mistake=2, live=10,
-  compacted=2. The two mistakes are room 5 (0.448405) and room 8 (0.003075). With the server model's
+  compacted=2. The two mistakes are room 5 (0.448405) and room 8 (0.003075), given as the seal's
+  `score.toFixed(6)` text of the Q24 score. With the server model's
   float32 scores, the same engine seals rooms 0-10 identically. Room 11 shows `score=0.965410` in
   process and `score=0.965409` from torch, so its sealed row and `row_hash` differ. Both runs give 10
   genius rooms.
 - Without `--l0`, the example prints the deterministic smoke run, byte-identical to
   `quants/cubes examples/whiteroom_smoke`: genius=0, mistake=12.
 
-## Inputs the operator supplies (not on disk, or third-party)
+## Inputs the operator supplies (not on this container when this crate was built, or third-party)
 
-- `enrichEnvelope` (`../quant-bus.mjs`) and `encodeFrame` (`../bpi-codec.mjs`) are on no disk
-  (WIRING-MAP section d item 2). The hookwall plane takes a `QuantBus` implementation and returns the
+- `enrichEnvelope` (`../quant-bus.mjs`) and `encodeFrame` (`../bpi-codec.mjs`). From
+  `pipeline/hookwall.mjs`, these paths name files at the root of Shannon-and-the-gnns-stage. When this
+  crate was built, neither file was in that repository or in the other clones on this container
+  (WIRING-MAP section d item 2). On 2026-10-18 no path with either name is in the history of the 186
+  clones under `scratchpad/census/src` (Shannon-and-the-gnns-stage @ 32f9670 among them) or in the
+  private mirror's 132 refs. Files with these names from revolver-10k arrived from the owner on
+  2026-10-18 and are vendored at `planes/gnn-trio/vendor/revolver-10k/src/`: `quant-bus.mjs:212`
+  exports `enrichEnvelope` and `bpi-codec.mjs:92` exports `encodeFrame`. It is not established here
+  that they are the files these imports resolve to. The hookwall plane takes a `QuantBus` implementation and returns the
   `encodeFrame` argument list (`FrameArgs`), not an encoded frame. The tests use a stand-in, named as
   one in `tests/hookwall_plane.rs`.
 - hookwall.mjs:45, the grant `authority` object, carries third-party data. `EnvelopeIn::quintuple_authority`
@@ -86,8 +94,8 @@ therefore absent, and its `path` is `'FALLBACK'` (`allow` absent, :138).
 - shannon-boot.mjs:118 (`approvedBy`) and :155 (`cosign=`) carry third-party data. They are arguments
   of `ShannonGate::self_test` and `fixture_restored_row` / `emit_fixture_restored`. The fixtures use
   `OPERATOR-SUPPLIED-APPROVER` / `OPERATOR-SUPPLIED-COSIGN`, so their `row_hash` values are not the
-  ones upstream's default call writes. No upstream receipt of that row was found on disk to pin
-  against.
+  ones upstream's default call writes. No upstream receipt of that row was found on this container to
+  pin against.
 - The Shannon profile file is JSON (shannon-boot.mjs:38-45). Reading and parsing it is the caller's
   job; `ProfileSource` carries the outcome (not found, parse error message, or the five fields read;
   a `null` document is outside the domain, below).
@@ -116,10 +124,11 @@ therefore absent, and its `path` is `'FALLBACK'` (`allow` absent, :138).
   be below 2^53 (the domain of `to_fixed6`).
 - JavaScript strings with unpaired surrogates are outside `JsValue`.
 
-## Not brought in (each would need code that is not on disk)
+## Not brought in (each would need code that was not on this container when this crate was built)
 
 - `quant-bus.mjs`, `bpi-codec.mjs` and the bus (`bus.register`) behind hookwall.mjs `wire(bus)`
-  (:94-97). None of them is on disk.
+  (:94-97). None of them was on this container when this crate was built. Revolver-10k copies of the
+  first two arrived on 2026-10-18 (above). The bus is not among them.
 - `../omniquant.mjs`, `../quant-bus.mjs` and the :4949 handler (WIRING-MAP section d items 1-2).
 - The L4 GSLGNN forward. It is not ported (INTEGRATION-CONTRACT section 0), so its reply is an input.
 - These are I/O edges, which the caller holds:
@@ -132,7 +141,7 @@ therefore absent, and its `path` is `'FALLBACK'` (`allow` absent, :138).
   file is vendored whole because `realInfer` composes `descriptorInfer`.
 - The `STATUS` object of fabric-thinker-gnn.mjs:216-226. It is descriptive and computes nothing.
 - Upstream's claim "L0 alone gives 99.13% on test graphs" (fabric-thinker-gnn.mjs:14) is not measured
-  here, and no evaluation code for it is on disk (WIRING-MAP section d item 16).
+  here, and no evaluation code for it was found on this container (WIRING-MAP section d item 16).
 
 The FED gnn-oracle white-room STORE verdict (`whiteroom_verdict`, servers/gnn-oracle/src/lib.rs:402-418)
 is a per-mille Rust counterpart: KEEP at `score_q >= 720`, COMPACT below. It is vendored by `host8/`

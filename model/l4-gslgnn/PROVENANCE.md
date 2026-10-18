@@ -10,10 +10,20 @@ parity harness runs the upstream server code, and the measured agreement and out
 | Lane | What runs there | Here |
 |---|---|---|
 | Hot (per request, in process) | Rust only, integers only: SHA-256 of the request strings, the input conversion, the forward, `toFixed(4)`. No Python, torch, Node, JSON or HTTP. | `src/` |
-| Cold (verification, CI only) | Stdlib Python referees, and torch + torch_geometric for the parity harness. | `tools/` |
+| Cold (verification, CI only) | Stdlib Python referees (`tools/quantize.py`, `tools/math_referee.py`), and torch + torch_geometric for the parity harness (`tools/model_parity.py`). | `tools/` |
 
 The vendored Python files are imported only by the cold-lane parity harness. Nothing in the hot lane
 reads the vendored checkpoint; `src/weights.rs` is generated from it without torch.
+
+The three tools compute in integers only (Python integers and exact integer ratios; no float, no
+decimal). Float runs only inside torch: on the owner's code and trained float32 checkpoint, run
+unchanged (the staged server's `MODEL`; its own `gsl` module, called with no edges, for the attention
+mask, gsl_gnn.py:63-77; `key_transform` and `query_transform` for the probe's attention scores;
+`torch.sigmoid(threshold)` for the `LAYOUT` row, gsl_gnn.py:77), and in `torch.rand` for the probe's
+uniform inputs. Every float32 the harness sends torch is built from a bit pattern rounded in integers
+(to binary64, then float32, nearest with ties to even: what `torch.tensor(..., dtype=torch.float32)`
+makes of a Python float, including the doubles `byte / 255` of asolaria-score.mjs:113), and every torch
+output is read back by its float32 bit pattern.
 
 ## Vendored upstream files
 
@@ -114,9 +124,9 @@ Integer arithmetic: Q24 values with i128 accumulation and one round-half-up per 
 Adjacency entries are held in Q25, so `0.5 * count` and `0.5 * attention` are exact;
 the two row-normalised products are computed as exact weighted means, each rounded once. The
 attention score `q . k` stays in exact Q48 and is divided by 11863283 * 2^-21 with one rounding; the
-sigmoid is the fixed-point sigmoid equal to a 60-digit decimal reference (1,811 rows). The mask
-compares the attention and `sigmoid(threshold)` each rounded to Q24; in [0.5, 1), where
-`sigmoid(threshold)` = 0.62246 lies, float32 values are exactly the Q24 grid, and
+sigmoid is the fixed-point sigmoid equal to an exact reference decided from integer bounds (1,811
+rows). The mask compares the attention and `sigmoid(threshold)` each rounded to Q24; in [0.5, 1), where
+`sigmoid(threshold)` = 10443135/2^24 lies, float32 values are exactly the Q24 grid, and
 `sigmoid_q24(0.5)` = 10443135 is torch's float32 result 0x3f1f597f. For two classes
 `softmax(logits)[1]` is the sigmoid of the exact Q48 difference `logits[1] - logits[0]`. The original
 branch uses the normalisation coefficients `round(2^32 / sqrt(d_s * d_t))` of `model/l0-edge`.
@@ -168,14 +178,21 @@ pinned kernels): its `MODEL` has the same state dict as the vendored server's, b
 torch_geometric's `GCNConv`, and probs[:, 1] is bit-identical on all 205 `GRAPH` and `BOUNDARY`
 rows of `tests/fixtures/expected-model.hbp`. The port therefore matches both server versions.
 
+The ACER cube `9859b576` copy in this repository (`acer/Asolaria/services/gnn-sidecar/`, commit
+`46cc8c5`, pinned in `acer/UPSTREAM.sha256`) holds `gslgnn_inference_server.py`, `models/__init__.py`,
+`models/gsl_gnn.py` and `gslgnn_w9_3_seq47_v2.pt` beside the server, byte-identical to the four vendored
+files (the same sha256 values), in exactly the layout `tools/model_parity.py` stages. It also holds the
+v1 checkpoint `gslgnn_w9_3_seq47.pt` (sha256 `6f82384f…`) that `tools/model_parity.py --probe` reads.
+
 `tools/model_parity.py` copies the four vendored files, after checking their sha256, into
 one temporary directory in that layout (server, `models/__init__.py`, `models/gsl_gnn.py`, and the
 checkpoint beside the server) and imports the server module there, so its lines 13-36 run unchanged
 and its `MODEL` is the object compared. This staging is a cold-lane arrangement; no upstream file is
 changed. The harness sets `sys.dont_write_bytecode` before any import, so no `__pycache__` is written
 beside staged or vendored sources. It does not run the HTTP handler: per graph it mirrors lines 51-54
-(`torch.tensor(nodes, dtype=torch.float32)`, `torch.tensor(edges, dtype=torch.long).t().contiguous()`,
-`MODEL(x, edge_index)` under `no_grad`), and per request asolaria-score.mjs:112-113, 127-128.
+(the float32 `x` that `torch.tensor(nodes, dtype=torch.float32)` makes, built from integer-rounded bits;
+`torch.tensor(edges, dtype=torch.long).t().contiguous()`; `MODEL(x, edge_index)` under `no_grad`), and
+per request asolaria-score.mjs:112-113, 127-128.
 
 The harness pins `ATEN_CPU_CAPABILITY=avx2` and `MKL_ENABLE_INSTRUCTIONS=AVX2` before importing torch
 and runs one thread. Measured on an AVX-512 host: without the pin, the `BOUNDARY` rows move with the
@@ -193,9 +210,18 @@ both torch environments on this host (`scratchpad/torchvenv`, `scratchpad/ci-tor
 | Rust attention mask vs torch's `attention > sigmoid(threshold)` (`src/model.rs` unit test) | 3,616 entries of the 125 graphs (598 set) | all equal |
 | Rust `score_request` vs the mirrored request (`tests/model.rs`) | 64 pid/content pairs (incl. empty strings, non-ASCII UTF-8) | `request_nodes` equal on all; max \|rust - torch\| = 1 Q24 unit; `toFixed(4)` equal on all 64 (all `5292`); no mask entry set, in torch or here |
 | `BOUNDARY` rows: 16 inputs around each of 5 float32 crossings of the mask entry (0, 1) | 80 inputs | the mask here differs from torch's at 12 (from 1 step before to 4 steps after torch's crossing); every score within 9 Q24 units |
-| Fixed-point sigmoid vs Python `decimal` at 60 digits | 1,811 logits | all equal |
-| `byte_input_q24` vs `struct` float32 of `byte / 255` | 256 bytes | all equal |
+| Fixed-point sigmoid vs `tools/math_referee.py` (integer bounds on `e^-t`, each row decided) | 1,811 logits | all equal |
+| `byte_input_q24` vs the referee's float32 of the binary64 `byte / 255` (both roundings on integers) | 256 bytes | all equal |
 | `weights.rs` vs `tools/quantize.py --check` | 28,259 weights, 23 module paths | equal |
+
+The `GRAPH` inputs are Q24 integers that the harness sends torch as the float32 of `q / 2^24`. For 78 of
+the 3,696 `GRAPH` inputs of the committed file (27 graphs; the second and third features, `avgRisk/9`
+and `maxRisk/9`, of the train-layout nodes, at values above 2^24 Q24 units) `q` needs more than 24
+significant bits, so torch receives its float32 rounding, 1 Q24 unit away for 70 of them and 2 for 8,
+while the port receives `q` as written in `x`; the 393-edge comparison above (max 1 Q24 unit) includes
+them. The other 3,618 `GRAPH` inputs, all 960 `BOUNDARY` inputs and all 768 `REQUEST` inputs are float32
+values exactly. The fixture's header line 2 says "GRAPH/BOUNDARY send them as float32 q / 2^24
+(exact)"; the fixture is kept byte-identical here, so that line is unchanged.
 
 Fresh-seed re-runs (`tools/model_parity.py --seed N --out FILE`, then
 `cargo run --example parity -- FILE`), not committed:
@@ -218,44 +244,76 @@ found 256 crossings (16,384 inputs); the mask here differs from torch's at 514, 
 score differs by at most 1 Q24 unit where the masks agree and by at most 10 where they differ. Both are
 cold-lane scratch measurements, not committed. The
 width of the disagreement window follows from the Q24 rounding of the `key_transform` and `query_transform`
-weights and from torch's float32 rounding of the scores; on request inputs (`byte / 255`) the
-attention score `q . k / sqrt(32)` measured 0.004 to 0.133 over 2,000 seeded requests (a cold-lane
-scratch measurement on the served `MODEL`, not committed), below the threshold 0.5, and no mask entry
-was set; the 64 fixture requests assert the same in torch and here.
+weights and from torch's float32 rounding of the scores. On request inputs (`byte / 255`) the
+attention score `q . k / sqrt(32)` stays far below the threshold 0.5 (8,388,608 Q24 units): over the
+500 probe requests of seed 4793 (`tools/model_parity.py --probe`, below), the 2,000 entries are 158,635
+to 2,029,627 Q24 units (Q24 of the exact `q_i . k_j / (11863283 * 2^-21)` of the served `MODEL`'s
+float32 keys and queries), and no mask entry is set; the 64 fixture requests assert no mask entry, in
+torch and here. This replaces an earlier scratch range over 2,000 requests whose seed was not recorded.
 
 ## Measured outputs of the served checkpoint
 
-Scores below are Q24 integers (`floor(float32 * 2^24 + 1/2)`, the measurement); a parenthesised decimal
-is the exact rendering `n/2^24` of the Q24 integer before it, and `toFixed(4)` values (`0.5292`, `0.5291`,
-`0.0000`) are the e4 outputs.
+Scores below are Q24 integers, `floor(f * 2^24 + 1/2)` of the float32 `f` computed in integers from its bit
+pattern (scale 2^24; the measurement). A parenthesised decimal is `n/2^24` of the Q24 integer `n` before
+it, rounded half up to 7 decimals, computed exactly from the integer. `toFixed(4)` values (`0.5292`,
+`0.5291`, `0.0000`) are the e4 outputs. A float32 written `m * 2^e` is its exact value, with its bits in hex.
 
 - Every request scored: over the 64 fixture requests, `scores[0]` is 8,877,767 to 8,877,785 Q24 units
   in torch (0.5291561 to 0.5291572) and 8,877,767 to 8,877,786 in Rust. The smallest, 8,877,767, is 103
   Q24 units above 8,877,664, the first Q24 integer above the `toFixed(4)` boundary 0.52915 (exact Q24
-  value 8,877,663 + 16928/20000), below which `toFixed(4)` would give `0.5291`.
+  value 8,877,663 + 529/625), below which `toFixed(4)` would give `0.5291`.
   `signals.l4` is `0.5292` on every request measured.
-- The fixture graphs (inputs up to 2^29 Q24 units, i.e. 32.0, masks set and unset): probs[:, 1] from
+- The fixture graphs (inputs up to 2^29 Q24 units, i.e. 32, masks set and unset): probs[:, 1] from
   8,877,586 to 8,878,792 Q24 units (0.5291454 to 0.5292172) in torch.
-- The wiring map's probe (`universe/WIRING-MAP.md:338-349`, `universe/tools/l4_probe.py`) feeds the
-  served `MODEL` 500 seeded score requests and 500 uniform inputs per checkpoint. Re-run for this crate
-  against copies of the vendored files and read as Q24 (`floor(float32 * 2^24 + 1/2)`, the
-  `model_parity.py` conversion), the served `MODEL`'s `scores[0]` were, for v2: over the 500 score
-  requests, 8,877,762 to 8,877,790 Q24 units (0.5291559 to 0.5291575), 28 distinct values, each
-  `toFixed(4)` = `0.5292`; over the 500 uniform inputs, 8,877,763 to 8,877,788 Q24 units (0.5291559 to
-  0.5291574), 26 distinct values, each `0.5292`. For v1: 0 Q24 units on all 500 of both sets, 1 distinct
-  value, each `toFixed(4)` = `0.0000` (every float32 score in [-2^-25, 2^-25)). The integer facts are
-  identical in both torch environments (`scratchpad/torchvenv`, `scratchpad/ci-torch-venv`) and with or
-  without the `ATEN_CPU_CAPABILITY=avx2` / `MKL_ENABLE_INSTRUCTIONS=AVX2` pin.
+- The wiring map's probe inputs, re-run in integers by
+  `tools/model_parity.py --probe ../../acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47.pt`. The
+  probe and its map are `universe/tools/l4_probe.py` (sha256 `4885ff78…`) and
+  `universe/WIRING-MAP.md:338-349` on this container's scratchpad, not in this repository; their recipe:
+  `random.Random(4793)` draws 500 pid/content pairs (pid `%016x` or `BH.HOOKWALL.%016X` of 64 random
+  bits, content 1 to 199 printable ASCII characters), sent as the request of asolaria-score.mjs:112-113,
+  127; then per checkpoint, v2 before v1, the same generator seeds 500 `torch.rand` inputs of 2 to 11
+  nodes with edge `[[0, 1]]`. v2 is the staged server's `MODEL`. v1 is not served and not vendored
+  here; its bytes (sha256 `6f82384f…`) are staged under the file name server line 18 reads, so the
+  server's own lines 21-36 build, remap, load and `eval()` it. On all 1,000 inputs of each checkpoint
+  the scores are float32 bit-identical to those of the probe's own copy of lines 21-36 (`l4_probe.py`
+  `build`), in both torch environments. `scores[0]`, with the attention mask (no entry set in any set)
+  and the attention score of each entry (Q24 of the exact `q_i . k_j / (11863283 * 2^-21)` of torch's
+  float32 keys and queries; the threshold 0.5 is 8,388,608):
+  - v2, 500 score requests: 8,877,762 to 8,877,790 Q24 units (0.5291559 to 0.5291575), 28 distinct
+    values (28 distinct float32), each `toFixed(4)` = `0.5292`; 0 of 2,000 mask entries set; attention
+    scores 158,635 to 2,029,627.
+  - v2, 500 uniform inputs: 8,877,763 to 8,877,788 Q24 units (0.5291559 to 0.5291574), 26 distinct
+    values (26 distinct float32), each `0.5292`; 0 of 26,131 mask entries set; attention scores -85,615
+    to 2,256,108.
+  - v1, 500 score requests: 0 Q24 units on every one (1 distinct value), each `toFixed(4)` = `0.0000`;
+    the 500 float32 scores are all distinct, from 11443580 * 2^-119 (`0fae9d7c`) to 13713152 * 2^-53
+    (`30d13f00`); 0 of 2,000 mask entries set; attention scores -1,628,452 to 828,784.
+  - v1, 500 uniform inputs: 0 Q24 units on every one, each `0.0000`; the 500 float32 scores are all
+    distinct, from 15038789 * 2^-113 (`12e57945`) to 10143413 * 2^-53 (`309ac6b5`); 0 of 24,639 mask
+    entries set; attention scores -1,645,223 to 1,029,709.
+
+  Every v1 score is positive and below 2^-29, which is why its Q24 value and `toFixed(4)` are 0 on every
+  input while its float32 values differ on every input. All of these figures are identical in both
+  torch environments (`scratchpad/torchvenv`, `scratchpad/ci-torch-venv`) and with or without the
+  `ATEN_CPU_CAPABILITY=avx2` / `MKL_ENABLE_INSTRUCTIONS=AVX2` pin, except the float32 bits of v1's score
+  requests: without the pin they run from 11443668 * 2^-119 (`0fae9dd4`) to 13713178 * 2^-53
+  (`30d13f1a`), still 500 distinct, with the same Q24 values, `toFixed(4)` values and mask.
 - Upstream's notes on this output: asolaria-score.mjs:28 "may still return degenerate 0.5292 score
   until corpus rebalancing — honest provenance tracked", and line 31 (`L4_STATUS.note`) "process alive,
   now queried alongside L0. May show dead-constant 0.5292 until corpus rebalance.", with
   `rebalance_when: 'retrain spread std > 0.01 on balanced corpus'` (line 32). The server's response
   carries `"disclosure": "label-rule-learnability not generalization; fit-for-body-tally-scoring"`
   (line 61).
-- The v2 manifest: corpus 109 nodes, 315,249 edges, 40 benign and 315,209 suspicious
-  (`labelRatio` 0.99987); `test_accuracy` 0.99915, `test_precision` 0.99915, `test_recall` 1.0,
-  `test_f1` 0.99958, 30 epochs. The v1 manifest: 97 nodes, 13,783 edges, 13,743 benign and 40
-  suspicious; `test_accuracy` 0.98066, `test_precision` 0, `test_recall` 0.0. The corpus file
+- The v2 manifest (`manifests/gslgnn_w9_3_seq47_v2_manifest.json`, sha256 `65324379…`), quoted as
+  upstream wrote it: `corpus_stats` `"totalNodes": 109`, `"totalEdges": 315249`, `"benign": 40`,
+  `"suspicious": 315209`, `"labelRatio": 0.9998731161716611`; `metrics` `"test_accuracy":
+  0.9991540908813477`, `"test_precision": 0.9991541194383353`, `"test_recall": 1.0`, `"test_f1":
+  0.9995768807649996`, `"epochs": 30`. The v1 manifest (`manifests/gslgnn_w9_3_seq47_manifest.json`,
+  sha256 `cff92f43…`): `"totalNodes": 97`, `"totalEdges": 13783`, `"benign": 13743`, `"suspicious": 40`,
+  `"labelRatio": 0.0029021258071537403`; `"test_accuracy": 0.9806576371192932`, `"test_precision": 0`,
+  `"test_recall": 0.0`, `"test_f1": 0`, `"epochs": 30`. Each `labelRatio` is the printed binary64 of
+  suspicious / totalEdges, 315,209/315,249 and 40/13,783 (checked in integers: each printed decimal is
+  within half a binary64 unit in the last place of that ratio's binary64 rounding). The corpus file
   `gslgnn_w9_3_corpus.json`: the gnn-sidecar cube `9859b576` located a build of it on ACER (sha256
   `7e7d0406…`, 68,695,303 B), transferred on 2026-10-18 to `acer/Asolaria/services/gnn-sidecar/`. That build
   differs from the v2 manifest's pinned `0f123581…` (`build_corpus()` joins time-varying orchestrator
@@ -263,8 +321,12 @@ is the exact rendering `n/2^24` of the Q24 integer before it, and `toFixed(4)` v
 - `gsl.threshold` is 0.5 exactly (float32 0x3f000000), the value gsl_gnn.py:48 initialises; it
   reaches the forward only through the mask comparison.
 - gsl_gnn.py's docstring states "Accuracy: 96.66% (+4.79% over baseline) - BEST PERFORMING MODEL",
-  "ROC-AUC: 99.70%", "False Positive Rate: 1.5%" (lines 7-10). No evaluation code or log for those
-  figures is on disk.
+  "ROC-AUC: 99.70%", "False Positive Rate: 1.5%" (lines 7-10); Asolaria-fnns README.md:44-45 calls these
+  "repository-reported training results". An evaluation run or log that produced them is not in
+  Asolaria-fnns @ `c4b2458c`, asolaria-behcs-256 @ `818cc235` or the ACER cube `9859b576` copy in
+  `acer/` (each searched on this container for `96.66` and `99.70`: the hits are this docstring, that
+  README passage and Asolaria-fnns `docs/PRE-ASOLARIA-HEALTHCARE-GNN-PROVENANCE-AND-PATH2-2026-07-11.md:27`,
+  and three behcs-256 `data/agent-index/` notes that restate the figures).
 
 ## Composite weight
 
@@ -297,8 +359,21 @@ so no composite is an exact half (measured: 0 of 50,000).
 
 | Tool | Needs | Writes; `--check` diffs |
 |---|---|---|
-| `tools/quantize.py` | stdlib | `src/weights.rs`, from the checkpoint read by a restricted unpickler (only `collections.OrderedDict`, `torch._utils._rebuild_tensor_v2`, `torch.FloatStorage`) |
-| `tools/math_referee.py` | stdlib | `tests/fixtures/expected-math.hbp` (`LN2_Q62`, `SQRT32_F32`, 1,811 `SIGMOID`, 256 `BYTE` rows) |
-| `tools/model_parity.py` | torch 2.14.1+cpu, torch_geometric 2.8.1 | `tests/fixtures/expected-model.hbp` (`LAYOUT`, 125 `GRAPH`, 64 `REQUEST`, 80 `BOUNDARY` rows) |
+| `tools/quantize.py` | stdlib | `src/weights.rs`, from the checkpoint read by a restricted unpickler (only `collections.OrderedDict`, `torch._utils._rebuild_tensor_v2`, `torch.FloatStorage`); each weight is decoded from its float32 bits in integers |
+| `tools/math_referee.py` | stdlib | `tests/fixtures/expected-math.hbp` (`LN2_Q62`, `SQRT32_F32`, 1,811 `SIGMOID`, 256 `BYTE` rows), each decided from integer bounds or rounded on integers |
+| `tools/model_parity.py` | torch 2.14.1+cpu, torch_geometric 2.8.1 | `tests/fixtures/expected-model.hbp` (`LAYOUT`, 125 `GRAPH`, 64 `REQUEST`, 80 `BOUNDARY` rows); `--probe V1_CHECKPOINT` prints the probe rows above and writes nothing |
 
 Every data file these tools write is HBP text; no JSON is read or written.
+
+`tools/math_referee.py` computed its references with Python `decimal` at 60 digits, `32 ** 0.5` and
+`byte / 255` in binary64 until 2026-10-18; it now uses integers only: `ln 2` from the series
+`sum 1/(k * 2^k)` and `e^-t` from a Taylor series and 16 squarings, each with integer lower and upper
+bounds at 128 bits and more until both round to the same Q24 value (all 1,811 `SIGMOID` rows and
+`LN2_Q62` are decided at 128 bits), `math.isqrt` for `sqrt(32)`, and integer round-to-nearest-even for
+the binary64 and float32 roundings. Regenerated, all 2,069 data rows of `expected-math.hbp` are
+byte-identical to the committed rows; the one changed line is header line 3, which named the method
+("Python decimal at 60 digits", now "decided from integer bounds"). `tools/quantize.py` (float32 bits
+decoded in integers) and `tools/model_parity.py` (inputs built from integer-rounded bits, outputs read
+as bits, the mask read from the served `gsl` module) regenerate `src/weights.rs` and
+`expected-model.hbp` byte-identical, and the harness's `--seed` output for seeds `0x1234567`,
+`0xC0FFEE`, `0x4793` and `0x51F15E` is byte-identical to the earlier float-built harness's.

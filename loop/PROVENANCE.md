@@ -58,9 +58,12 @@ The byte-identical vendored reductions kernel is the separate crate `vendor-pid-
 ## Privacy
 
 No third-party personal data was copied into these ports (comments cite `file:line` only; the owner's
-own name is not reproduced in code). The byte-identical `vendor-pid-mod/src/pid-mod.rs` carries personal
-data of someone other than the owner; its `PROVENANCE.md` cites the lines without quoting them, and the
-crate awaits the owner's decision before publishing.
+own name is not reproduced in code). The byte-identical `vendor-pid-mod/src/pid-mod.rs` carries an
+operator-local user-directory path and `OP-<NAME>` role tokens of an operator other than the owner (and
+the owner's own role token); its `PROVENANCE.md` cites the lines without quoting them. By the owner's
+decision of 2026-10-18 ("Publish as-is"; OWNER-RULES 5, valid until 2027-10-18) the operator first
+names, `OP-<NAME>` role tokens and operator-local paths are published as written, with no surnames
+added; see `vendor-pid-mod/PROVENANCE.md` and `README.md`.
 
 ## Build
 
@@ -68,4 +71,4 @@ Rust `cargo +1.81.0`, edition 2021, `#![forbid(unsafe_code)]`, no floating-point
 `examples/`, `sha2 0.10.9`. The stdlib Python referee (`referee/referee_hbp.py`) is integer-only too: it
 sizes the prime sieve with a fixed integer bound above the 1000th prime (7919), as `src/primes.rs` does,
 rather than upstream primes.mjs:10's float Rosser estimate; the first 1000 primes are identical.
-`CARGO_TARGET_DIR=scratchpad/targets/loop` keeps the target tree out of the repo. Not committed or pushed.
+`CARGO_TARGET_DIR=scratchpad/targets/loop` keeps the target tree out of the repo.

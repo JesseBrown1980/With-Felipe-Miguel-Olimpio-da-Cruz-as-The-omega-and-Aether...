@@ -48,7 +48,12 @@ ECMAScript string operations the upstream lines rely on (UTF-16 `slice`/`charCod
 
 The forward-gate score crosses this lane in e4 units (1/10000), the unit of the tree's SCORE lane
 (`gate/observed`). The hookwall forward gate threshold is 7200 (upstream `score >= 0.72`); the mock
-agent's `k/1000` enters as `10k`, and a score from another lane as `Math.floor(score * 10000)` in binary64.
+agent's `k/1000` enters as `10k`. A binary64 score in [0, 1] from another lane enters as the floor of
+its product with 10000 after that product is rounded to 53 bits, nearest-even, on the integer mantissa
+(the value V8's `Math.floor(score * 10000)` gives, float running in that lane). That is `>= 7200`
+exactly when the score's bit pattern is `>= 0x3FE70A3D70A3D70A` (binary64 0.72 =
+6485183463413514 / 2^53), as upstream's `score >= 0.72`; the floor of the exact, unrounded product is
+7199 at that score (see `src/dispatcher.rs`).
 
 ## Build and check
 

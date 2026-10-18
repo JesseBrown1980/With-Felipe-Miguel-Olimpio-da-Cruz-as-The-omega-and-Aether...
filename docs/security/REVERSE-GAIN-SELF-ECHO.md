@@ -3,8 +3,8 @@
 Operator: Jesse Daniel Brown. Finding recorded 2026-10-18.
 
 This document is published on purpose. It is the mitigation: a builder who reads it does not
-rebuild the mistake it describes. The one thing it does not contain is the per-adversary
-identifier set itself — not because the mechanism is secret (it is spelled out in full below),
+hard-code identifiers into the set expecting the plane to find people. The one thing it does not
+contain is the per-adversary identifier set itself — not because the mechanism is secret (it is spelled out in full below),
 but because the set is the only part that is contact data rather than method, and the method is
 what protects future systems, not the data.
 
@@ -49,7 +49,7 @@ Belief that it can find people comes from feeding it the answer and then asking 
 ## Why the set is not shipped, and why that is the safe choice
 
 Because the set is input, embedding real identifiers in it and publishing the file does two
-things, both bad and neither useful:
+things:
 
 - It grants no capability. A reader learns nothing about how to find anyone; the method above is
   the whole method, and it finds no one.
@@ -65,7 +65,7 @@ This is the same boundary the stack already draws for other operator-supplied gr
 Shannon-stage `antecedents` value and the cosign chain head are supplied, not shipped). A future
 builder who instead hard-codes real identifiers into this set, expecting "find people"
 capability, gets no capability and creates the exposure. Writing the mechanism down here is what
-stops that: the flaw is disclosed in full, and the data that would be the harm is kept out.
+stops that: the mechanism is published in full, and the data that would be the harm is kept out.
 
 ## What is in the repository
 

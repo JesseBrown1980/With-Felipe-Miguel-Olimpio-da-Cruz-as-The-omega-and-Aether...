@@ -106,8 +106,10 @@ targetDimension 5000. That is 77 runs of each quant plus 77 reconstructions. Lis
   sha256 of each fingerprint preimage) and the recorded shard-0000 receipt (below).
 - `python3 -I tools/referee.py --grid 500000 | examples/grid`: 5,500,000 lines, 0 differences
   (add, sub, mul, div, sqrt, Math.round, Number::toString, atan2, acos, sin, cos: 500,000 each;
-  inputs include random bit patterns, subnormals, specials and sin/cos arguments up to 1.8e308).
-  Generating the 500,000 grid took 2 min 49 s of CPU time; `--check` takes about 3 s.
+  inputs include random bit patterns, subnormals, specials and sin/cos arguments up to the largest
+  finite binary64 value, bit pattern 0x7FEFFFFFFFFFFFFF).
+  Generating the 500,000 grid took 2 min 49 s of CPU time. `--check` takes about 3 s of wall time
+  (whole seconds, as host context; no figure here depends on it).
 - Cold oracle, run in scratch space and not part of this directory (float appears there only
   inside Node: the owner's file run unchanged, and V8's own arithmetic and `Math` results printed by
   a review harness): Node v22.22.0 (V8 12.4.254.21-node.33) executing the
@@ -162,8 +164,10 @@ The receipt's fingerprints (`e6f9b1e70d83c377`, `aeb89437d368a39c`, `bcedf0fa35d
 `9083f572b7853c75`, lines 20, 27, 34, 45, and `payloadFingerprint` `24c347a1008e5e3e`, line 56)
 hash packets of another shape: its metadata adds
 `zeroPoint` (26), `radiusBits`/`angleBits` (33) and lane objects with bits 4/8/8 (40-44), written by
-`buildQuantizedSubstrateReceipt` of `src/behcs/hyperbehcsQuantSubstrate.js` (rotor:13-16), which no
-repository holds. They cannot be compared with this crate's packets, whose fingerprints on that
+`buildQuantizedSubstrateReceipt` of `src/behcs/hyperbehcsQuantSubstrate.js` (rotor:13-16). When this
+was written (committed f966009, 2026-10-18 01:10 UTC), that file was not in any repository on this container or in the private
+mirror; it arrived from the ACER seat on 2026-10-18 (see "Not brought in"). The fingerprints cannot be
+compared with this crate's packets, whose fingerprints on that
 input are `7537cbc978efdf3d`, `d00ff9cd55610664`, `2924d8a9cfab3c1d` and `41b742e1c3318458` in both
 Rust and Node.
 
@@ -171,8 +175,8 @@ Rust and Node.
 
 - `turboQuant`, `polarQuant` and `tripleQuant` call `Math.min(...raw)` / `Math.max(...raw)` /
   `Math.max(...radii)` (core:96-97, 131, 169), passing every element as a call argument. Under
-  Node v22.22.0 with its default stack these raise `RangeError` from about 125,000 (turbo),
-  250,000 (polar) and 375,000 (triple) elements. The exact first length depends on the stack in
+  Node v22.22.0 with its default stack these raise `RangeError` once the array is long enough. The
+  first length that throws depends on the stack in
   use at the call: with one fresh `node` process per probe calling the function at top level
   (a scratch harness, not in this directory), turbo throws from 125,527, polar from 251,033 and
   triple from 376,531, in 8 of 8 processes at each of those lengths and 0 of 8 one element below;
@@ -199,16 +203,28 @@ Rust and Node.
   under `scratchpad/census/src` for the four algorithm strings finds it, beside the vendored core,
   QUANT8DEFS and reductions `cubes/TENSOR-COLLAPSE-MECHANISMS-PIPES-CONTROLS-acer.md`). The
   builder that shaped it, `src/behcs/hyperbehcsQuantSubstrate.js` (`buildQuantizedSubstrateReceipt`, rotor:13-16), and
-  the full `shard-quant-receipts-latest.ndjson` it was extracted from are in no repository on disk,
-  not in any of the 132 refs of the private mirror (`git rev-list --objects --all`), and not on
-  this disk (`find / -name 'shard-quant-receipts*'`: none), so the receipt's packet shape and its
+  the full `shard-quant-receipts-latest.ndjson` it was extracted from were, when this section was
+  written (committed f966009, 2026-10-18 01:10 UTC), in no repository on this container, not in any of the 132 refs of the private
+  mirror (`git rev-list --objects --all`), and not on this container's filesystem
+  (`find / -name 'shard-quant-receipts*'`: none), so the receipt's packet shape and its
   five fingerprints are not reproduced. Other hits of the earlier search (every repository under
   `scratchpad/census/src` and `/home/user`, the mirror's refs, the Algorithms-of-Asolaria
   registry, lattice, atlas and measured addendum) are source, call sites and descriptions
   (QUANT8DEFS lines 3-6; mirror branch `acer/formula-corpus-pid-registration-2026-06-19` file
   `ALGORITHMS-PID-REGISTRATION-WAVE2-ACER-2026-06-19.hbp` lines 80, 151-161, 230, 464, 836, which
   register these formulas and cite `C:/Users/acer/Asolaria/src/behcs/hyperbehcsRepresentationAlgorithms.js`
-  and `A12-OMNIQUANT-RUST/src/jl.rs`, neither of which is in any repository or the mirror).
+  and `A12-OMNIQUANT-RUST/src/jl.rs`; at that search neither was in those repositories or the
+  mirror).
+- **Delivered since, from the ACER seat (2026-10-18, after that commit).** `hyperbehcsQuantSubstrate.js` (6,893 B, blob
+  9a857b3e…; `buildQuantizedSubstrateReceipt` at :119) is committed in this repository at
+  `acer/Asolaria/src/behcs/` (46cc8c5). It is committed again, with `hyperbehcsRepresentationAlgorithms.js`
+  (blob b4e3ef76…), under
+  `docs/handoffs/acer-post60d-2026-10-18/FABLE5-REGEN-ITEM8-HYPERBEHCS-HOME-AND-QUANT-2026-10-18/quant/src/behcs/`
+  (98731f8). Neither file is ported or run here yet, so the receipt's packet shape and its five
+  fingerprints are still not reproduced by this crate. Searched again on 2026-10-18:
+  `shard-quant-receipts-latest.ndjson` and `jl.rs` are not on this container (`find /` by name), and
+  no path with either name is in the history of the 186 clones under `scratchpad/census/src` or the
+  mirror's 132 refs.
 - `buildFastPacket` (core:215-237) and `benchmark`/`timedLoop` (core:251-306) are outside slots
   9-12. `benchmark` times `JSON.parse`/`JSON.stringify` with `process.hrtime` and has no
   reproducible output; `buildFastPacket` hashes `JSON.stringify(input)` of arbitrary objects.

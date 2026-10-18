@@ -40,7 +40,7 @@ The same bytes are also at these upstream paths (same git blob id):
 | Upstream | Ported to | Notes |
 |---|---|---|
 | `extractNodeFeatures` (gnnDataExport.js:25-64) | `src/features.rs` `extract_node_features` | Map insertion order; ids `event.actor?.id \|\| "unknown"`; type at first sight; `Math.round` on the binary64 quotient via `src/jsnum.rs`. |
-| `build_node_features` scaling (train_baseline.py:26-39) | `src/features.rs` `model_input_q24` | `[min(vol/100,1), avgRisk/9, maxRisk/9, failureRate, online, trustTier/3]` in Q24, round half up. `build_node_features` rounds the same ratios to float32 (`np.array(..., dtype=np.float32)`, line 39); the Q24 inputs are rounded from the exact ratio instead. For example trustTier 1/3 is 5,592,405.5 Q24 units in float32 and 5,592,405 in Q24, and Q24 values of 1 or more are rounded again to float32 in the server's tensor (inference_server.py:24). `tools/model_parity.py` runs torch on both inputs; see [Measured agreement](#measured-agreement). |
+| `build_node_features` scaling (train_baseline.py:26-39) | `src/features.rs` `model_input_q24` | `[min(vol/100,1), avgRisk/9, maxRisk/9, failureRate, online, trustTier/3]` in Q24, round half up. `build_node_features` rounds the same ratios to float32 (`np.array(..., dtype=np.float32)`, line 39); the Q24 inputs are rounded from the exact ratio instead. For example trustTier 1/3 is 11,184,811/2 Q24 units in float32 and 5,592,405 in Q24, and Q24 values of 1 or more are rounded again to float32 in the server's tensor (inference_server.py:24). `tools/model_parity.py` runs torch on both inputs; see [Measured agreement](#measured-agreement). |
 | `baseline_model.pt` (float32 state dict) | `src/weights.rs` | `floor(w * 2^24 + 1/2)` per weight, written by `tools/quantize.py` without torch; `conv*.lin.bias` loads as `conv*.bias` (inference_server.py:11). |
 | `EdgeLevelGNN.forward` (gnn_baseline.py:43-67) as inference_server.py:9-13 builds it and line 24 calls it | `src/model.rs` `edge_scores`, `score_pair` | See [Which forward is ported](#which-forward-is-ported-and-why). |
 | JavaScript `Math.round`, `toFixed`, `+ * /` on numbers | `src/jsnum.rs` `Dbl` | Exact binary64 values and roundings, integers only. |
@@ -99,23 +99,26 @@ a scratch copy, against the exact values of `tools/sigmoid_referee.py`):
 |---|---|---|
 | the 1,511 SIGMOID rows over [-20, 20] | 0 | 0 |
 | the 736 boundary rows (logits within 2^-32 of a half, below) | 20 (for example logit_q48 `-2903085619798773` gives 556 where the exact rounding is 557) | 0 |
-| a scratch hunt (not committed): 60,000 Q48 logits on the step-1 lattice next to `ln((k + 1/2) / (2^24 - k - 1/2)) 2^48` (`floor(c / step) step` and the next lattice point, both signs) for 15,000 `k` (5,000 below 16,000, 5,000 within 16,000 of 2^24 - 1, 5,000 below 2^24; the generator of `tools/jsnum_referee.py` seeded `0x48554E54`) | 1,582 | 0 |
-| the same hunt on the step-10 lattice | 248 | 0 |
+| a scratch hunt (not committed; rebuilt only from the seed and construction recorded here, not from a committed fixture): 60,000 Q48 logit rows on the step-1 lattice next to `ln((k + 1/2) / (2^24 - k - 1/2)) 2^48` (`floor(c / step) step` and the next lattice point, both signs) for 15,000 `k` (5,000 below 16,000, 5,000 within 16,000 of 2^24 - 1, 5,000 below 2^24; the generator of `tools/jsnum_referee.py` seeded `0x48554E54`). They hold 49,576 distinct logits: 12,394 distinct `k` once `k` and `2^24 - 1 - k` are counted as one, since both give the same four logits | 1,582 rows (1,186 distinct logits) | 0 |
+| the same hunt on the step-10 lattice (60,000 rows, 49,576 distinct logits; 5,062 of them also on the step-1 list) | 248 rows (188 distinct logits) | 0 |
 
-Every one of those 1,850 cases is 1 unit off, and in every one the exact `2^24 sigmoid(t)` lies
-within 2^-39 of a half. `src/model.rs` keeps the series-only rounding as a test helper and pins the
-20 (`series_rounding_alone_is_one_off_on_20_of_the_736_boundary_rows`). The L1 review measured
-the same series code in `model/l1-prototype`: 3,590 of 59,992 near-tie logits (step 1) and 624 of
-59,992 (step 10) one unit off, every one within 2^-39 of a tie.
+Every one of those 1,850 rows (1,246 distinct logits) is 1 unit off (925 rows one unit above the
+exact rounding, 925 one unit below), and in every one the exact `2^24 sigmoid(t)` lies within
+2^-39 of a half (the closest within 2^-50). `src/model.rs` keeps the series-only rounding as a test helper and pins the 20
+(`series_rounding_alone_is_one_off_on_20_of_the_736_boundary_rows`). The L1 review measured the
+same series code in `model/l1-prototype`: 3,590 of 59,992 near-tie logits (step 1) and 624 of
+59,992 (step 10) one unit off, every one within 2^-39 of a tie. Those two counts are quoted from
+that review; its 59,992-logit set is not in this repository or on this container, so they are not
+re-measured here.
 
 No model score in the fixtures changes: the Rust score of every PAIR, GRAPH and REQUEST row of
 `expected-model.hbp` (3,273 + 3,338 = 6,611 scores) is the same before and after.
 
-**Duplicated code.** `TIE_WINDOW_BITS` and its doc comment, and `round_near_half`,
-`exp_exceeds`, `exp_series_bounds`, `big_scale`, `big_mul_small`, `big_add` and `big_cmp`, are
-copied from `model/l1-prototype/src/model.rs` @ HEAD `f67b300` (git blob
-`3af5631475877b168629fe8585419309db99e354`, lines 29-31 and 189-309), as is `sigmoid_q24` itself
-(lines 191-211, identical code; its doc comment is this crate's); the test
+**Duplicated code.** `TIE_WINDOW_BITS` and its doc comment (lines 29-31), and `sigmoid_q24`,
+`round_near_half`, `exp_exceeds`, `exp_series_bounds`, `big_scale`, `big_mul_small`, `big_add` and
+`big_cmp` (lines 191-309, identical code; `sigmoid_q24`'s doc comment is this crate's), are copied
+from `model/l1-prototype/src/model.rs` @ HEAD `f67b300` (git blob
+`3af5631475877b168629fe8585419309db99e354`); the test
 `exp_exceeds_doubles_the_precision_until_the_sums_decide` is copied from lines 364-374 of the
 same file. Two doc numbers are written as integer ratios here (`53/1000` for `0.053`, and
 `0 < q e - p < 17 / 10^21`, checked in integers, for `1.6e-20`). This crate takes no dependency
@@ -134,7 +137,7 @@ to the last 736 SIGMOID rows of `model/l1-prototype/tests/fixtures/expected-int.
 | Rust `score_pair` vs the server `MODEL`, torch fed the Q24 inputs and the float32 inputs of `train_baseline.build_node_features` (`tests/model.rs`, REQUEST rows) | 3,338 two-node requests: 2 fixed pairs (`e4_midpoint`, and `search`, found by a local search over two-node requests) and the 3,336 of 100,000 fixed-seed request pairs whose torch score is within 32 Q24 units of a `toFixed(4)` rounding midpoint | max \|rust - torch\| = 15 Q24 units (case `search`: Rust 8,045,661, torch 8,045,646) |
 | `+score.toFixed(4)` of Rust vs of the torch float32 output (gate/observed `tests/e2e.rs`) | 174 fixture request pairs, torch fed either input | 174 equal for both |
 | `+score.toFixed(4)` of Rust vs of the torch float32 output (`tests/model.rs`) | 100,000 fixed-seed request pairs (edge volume 1 to 150, max risk 0 to 21, total risk and failures events can give, tier 1 to 3) | differ by one e4 unit in 34 (torch fed the Q24 inputs) and in 38 (torch fed the `build_node_features` inputs); torch's two inputs differ in 10 |
-| `+f.toFixed(4)` vs `q24_to_e4` of the Q24 rounding of `f`, every float32 `f` in [2^-15, 1) (`tests/model.rs`, in integers) | all float32 values near the 10,000 midpoints | 20,454 differ, all below 1/2 (the float32 grid is finer than Q24 there) |
+| `+f.toFixed(4)` vs `q24_to_e4` of the Q24 rounding of `f`, every float32 `f` in [2^-15, 1) (`tests/model.rs`, in integers) | all float32 values near the 10,000 midpoints | 20,454 differ, all below 1/2 (the float32 grid is finer than Q24 there); below 2^-15 both give 0 (`2 10^4 < 2^15`, and the Q24 rounding is at most 2^9, whose e4 value is 0) |
 | `sigmoid_q24` vs the exact `floor(2^24 sigmoid(t) + 1/2)` of `tools/sigmoid_referee.py` (integer series brackets), `src/model.rs` tests | 2,247 logits: 1,511 over [-20, 20] (equal to the former 60-digit `decimal` rows, byte for byte) and 736 within 2^-32 of a half | all equal; the series step alone is one unit off on 20 of the 736 |
 | `LN2_Q62` vs `floor(2^62 ln 2 + 1/2)` of `tools/sigmoid_referee.py` | 1 | equal |
 | `extract_node_features` vs `tools/features_referee.py` | 336 events, 42 nodes | all fields equal |

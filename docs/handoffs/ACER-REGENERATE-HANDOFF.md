@@ -742,12 +742,12 @@ unrecorded original state. Listed for completeness, with the evidence both ways 
   l1/l2 field and the composite omits them; on ACER `git log -S 'l1:'` over `asolaria-score.mjs` finds
   no commit ever adding one, and Fischer's seven GNN layers are G1-G4, L0, L4, Shannon (never L1/L2);
   and the live-corpus recheck (`docs/handoffs/gnn-recheck-2026-10-18/`, 0/4 pass `std>0.01`) measures
-  L1 a constant (AUC 1/2) and L2 AUC 0.5218 — benched for the training corpus, not for a missing
-  constant.
+  L1 a constant (AUC 1/2) and L2 AUC 13,158,080/25,216,720 (the receipt prints 0.521800) — benched
+  for the training corpus, not for a missing constant.
 - **L4 (owner decision, 2026-10-18, OWNER-RULES 7.a)**: L4's weight is to be **0** — the constant
-  0.5292 carries no signal (at 0.15 it adds ~0.079 to every composite), so it joins L1/L2 as a benched
-  non-voter. The change is made at the source (`asolaria-score.mjs:156`, drop the `l4` entry; the
-  present-signals mean renormalizes to 85), then the port re-mirrors it. **Applied 2026-10-18**:
+  0.5292 carries no signal (at 0.15 it adds 79,380/1,000,000 to every composite; recheck receipt: `adds_about_0.079`),
+  so it joins L1/L2 as a benched non-voter. The change is made at the source (`asolaria-score.mjs:156`, drop the
+  `l4` entry; the present-signals mean renormalizes to 85), then the port re-mirrors it. **Applied 2026-10-18**:
   receipt `FABLE5-SCORER-L4-WEIGHT0` (`WEIGHTS` now line 157); the served file is vendored at
   `gate/observed/vendor/acer-scorer-2026-10-18/` and `gate/observed` mirrors it.
 - **Action**: none — do not pick L1/L2 weights (none exist); the L4 source edit is done.

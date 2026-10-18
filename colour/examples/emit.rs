@@ -8,8 +8,9 @@ use colour::{colorpid, rainbow27v2, stars};
 use sha2::{Digest, Sha256};
 use std::{env, fs, path::Path, process::ExitCode};
 
-/// The referee's 42-byte digest record of one colour (`referee/colour_referee.py:352-356`,
-/// `<BBddddd`: rainbow12, sphere27, h, s, v, s*v, blast_radius). A check format, not upstream output.
+/// The referee's 42-byte digest record of one colour (`referee/colour_referee.py:615-619`,
+/// `<BBddddd` as bit patterns: rainbow12, sphere27, h, s, v, s*v, blast_radius). A check
+/// format, not upstream output.
 fn colorpid_record(c: [u8; 3]) -> [u8; 42] {
     let (h, s, v) = colorpid::hsv(c);
     let mut out = [0u8; 42];

@@ -1,8 +1,15 @@
 """Cold-lane receipts for registry slot 21 (needs numpy). Runs the owner's own Python,
 Q-PRISM @ b4a21a2 `qprism/cube_absorb.py`, from aether's existing byte-identical copy
-`eval/vendor/qprism-control` (git blob 542d6573; nothing is copied here), on the fixture window of
-Q-PRISM `tests/test_cube_absorb.py:10-13`, and writes `tests/fixtures/qprism-receipts.hbp` for
-`tests/qprism.rs` to check the vendored Rust contract against.
+`eval/vendor/qprism-control` (git blob 542d6573; cube_absorb.py is not copied here), on the fixture
+window of Q-PRISM `tests/test_cube_absorb.py:10-13`, and writes `tests/fixtures/qprism-receipts.hbp`
+for `tests/qprism.rs` to check the vendored Rust contract against.
+
+Float runs here only in the owner's code. `_fixture_window` is the owner's test lines 10-13 copied
+unchanged (lines 11-13 byte for byte, line 10 plus a comment): numpy float64 (np.sin, np.linspace,
+np.pi, rng.uniform, rng.standard_normal). The `absorb_window(..., window_start_s=12.5)` call in rows()
+is the owner's test line 33, and cube_absorb.py computes with numpy float on it. This tool's own
+logic adds no float. Its rows carry the owner's functions' output as text, including the float text
+`win_start_s=12.5|win_dur_s=0.0` that the owner's `hbp_row()` writes.
 
   python3 -I tools/qprism_receipts.py --write | --check
 """
@@ -40,7 +47,7 @@ def rows():
     out.append("FIXTURE|seed=1|T=25|F=64|feat_sha16=%s|tuple_sha16=%s|tuple_sha256=%s|json=0"
                % (ch.feature_digest, ch.tuple_sha16, hashlib.sha256(tup).hexdigest()))
     out.append("TUPLE|hex=%s|json=0" % tup.hex())
-    # "12.5" is the text aee7e2c:131's round(float(12.5), 3) renders; written as text so this tool does no float.
+    # "12.5" is the text aee7e2c:131's round(float(12.5), 3) renders; written here as that text, not recomputed.
     old = "qprism/cube/%s/%s/%s/%s/%s" % ("bcbl190626/SpanishBCBL", "S5", "1", "12.5", ch.feature_digest)
     out.append("DOCROW|node=%s|handle8=%s|glyph=%s|json=0" % (old, handle8(old), glyphword(old)))
     out.append("CURRENT|node=%s|handle8=%s|tuple8=%s|source_sha256=%s|source8=%s|glyph=%s|bh_prefix=%s|json=0"

@@ -1,6 +1,7 @@
 //! tests/fixtures/hookwall.hbp: the Shannon-stage hookwall plane (pipeline/hookwall.mjs:9-87),
 //! step by step on one plane's counters, with the referee's TEST STAND-IN for `enrichEnvelope`
-//! (quant-bus.mjs is on no disk; the stand-in is not upstream behaviour).
+//! (quant-bus.mjs was not on this container when this crate was built; the stand-in is not
+//! upstream behaviour).
 
 mod common;
 

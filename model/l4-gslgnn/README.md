@@ -7,9 +7,11 @@ asolaria-score sends it. Crate `asolaria-l4-gslgnn`, library `l4_gslgnn`, one de
 `#![forbid(unsafe_code)]`, Rust 1.81, no `f32`/`f64`.
 
 **Lane.** `src/` is hot lane: per request, in process, Q24 integers and SHA-256, no Python, torch,
-Node, JSON or HTTP. `tools/` and `vendor/` are cold lane: they verify the port in CI. Provenance, the
-forward and why it is the served one, how the harness runs the server's own code, the measured
-agreement and the measured outputs are in [`PROVENANCE.md`](PROVENANCE.md).
+Node, JSON or HTTP. `tools/` and `vendor/` are cold lane: they verify the port in CI. The tools compute
+in integers only; float runs only inside torch, on the owner's server code and trained float32
+checkpoint, and the harness builds every torch input from integer-rounded float32 bits and reads every
+output back by its bits. Provenance, the forward and why it is the served one, how the harness runs the
+server's own code, the measured agreement and the measured outputs are in [`PROVENANCE.md`](PROVENANCE.md).
 
 ## Modules
 
@@ -35,22 +37,27 @@ agreement and the measured outputs are in [`PROVENANCE.md`](PROVENANCE.md).
 
 ## What the served checkpoint computes
 
-Measured with the server's own `MODEL` (torch 2.14.1+cpu, torch_geometric 2.8.1) and with this port:
+Measured with the server's own `MODEL` (torch 2.14.1+cpu, torch_geometric 2.8.1) and with this port,
+as Q24 integers (scale 2^24, read from the float32 bits); a decimal in parentheses is `n/2^24` rounded
+half up to 7 decimals, computed exactly from the integer:
 
-- On the 64 fixture requests `scores[0]` is 0.5291561 to 0.5291572 in torch (8,877,767 to 8,877,785
-  Q24 units) and 8,877,767 to 8,877,786 Q24 units here; `toFixed(4)` gives `0.5292` on every one, in
-  both. The smallest value is 103 Q24 units above 0.52915, where it would turn to `0.5291`.
-- On the 125 fixture graphs (inputs up to 32.0) probs[:, 1] is 0.5291454 to 0.5292172.
+- On the 64 fixture requests `scores[0]` is 8,877,767 to 8,877,785 Q24 units in torch (0.5291561 to
+  0.5291572) and 8,877,767 to 8,877,786 Q24 units here; `toFixed(4)` gives `0.5292` on every one, in
+  both. The smallest value is 103 Q24 units above 8,877,664, the first Q24 integer above 0.52915, below
+  which it would turn to `0.5291`.
+- On the 125 fixture graphs (inputs up to 2^29 Q24 units, i.e. 32) probs[:, 1] is 8,877,586 to 8,878,792
+  Q24 units (0.5291454 to 0.5292172).
 - Upstream's note, asolaria-score.mjs:31: "May show dead-constant 0.5292 until corpus rebalance." The v1
-  checkpoint (`gslgnn_w9_3_seq47.pt`, not served) gives 0.0000 on every probed input
-  (`universe/WIRING-MAP.md:343-346`, re-run for this crate).
+  checkpoint (`gslgnn_w9_3_seq47.pt`, not served) gives 0 Q24 units and `toFixed(4)` `0.0000` on every
+  probed input, while its 500 float32 scores per input set are all distinct and all in (0, 2^-29)
+  (`tools/model_parity.py --probe`, the wiring map's probe inputs; see `PROVENANCE.md`).
 
 ## Fixtures
 
 | File | Written by | Content |
 |---|---|---|
 | `src/weights.rs` | `tools/quantize.py` (stdlib) | the checkpoint's 28,259 float32 weights as Q24, read without torch; refuses any other key list or module-path list |
-| `tests/fixtures/expected-math.hbp` | `tools/math_referee.py` (stdlib) | `LN2_Q62`; `SQRT32_F32` (11863283 * 2^-21); 1,811 `SIGMOID` rows (decimal, 60 digits); 256 `BYTE` rows (float32 of `byte / 255`) |
+| `tests/fixtures/expected-math.hbp` | `tools/math_referee.py` (stdlib) | `LN2_Q62`; `SQRT32_F32` (11863283 * 2^-21); 1,811 `SIGMOID` rows (exact, decided from integer bounds); 256 `BYTE` rows (float32 of the binary64 `byte / 255`, rounded on integers) |
 | `tests/fixtures/expected-model.hbp` | `tools/model_parity.py` (torch) | the `LAYOUT` row; 125 graphs, 393 edges (attention mask and float32 probs[:, 1]); 64 requests (pid and content, inputs, mask, `scores[0]`, `toFixed(4)`); 80 inputs around 5 crossings of the attention threshold |
 
 The graphs and requests are SYNTHETIC, from fixed seeds: node features of byte / 255, of the
@@ -73,7 +80,7 @@ A fresh-seed run (`tools/model_parity.py --seed N --out FILE`, then
 `cargo +1.81.0 run --locked --example parity -- FILE`) on seeds `0x1234567`, `0xC0FFEE` and `0x4793`
 gave max diffs of 1 (graphs), 1 (requests, `toFixed(4)` all equal) and 6, 10, 5 (threshold
 crossings). A 600-search hunt for inputs at the threshold found 2,820 inputs around 235 crossings; the
-mask differs at 512 of them and the score there by at most 13 Q24 units (7.7e-7). Those 512 reach both
+mask differs at 512 of them and the score there by at most 13 Q24 units (13/2^24). Those 512 reach both
 ends of its 12-input window; a second hunt with a 64-input window found 16,384 inputs around 256
 crossings, the mask differing at 514 (up to 12 float32 steps after torch's crossing) and the score there
 by at most 10 Q24 units; see `PROVENANCE.md`.
@@ -97,6 +104,8 @@ checkpoint into a temporary directory in the layout the server imports from, imp
 there (its own lines build, remap, load and `eval()` the model), asserts that torch_geometric's
 `GCNConv` is in use, and compares its output with the committed file byte for byte. It pins
 `ATEN_CPU_CAPABILITY=avx2`, `MKL_ENABLE_INSTRUCTIONS=AVX2` and one thread.
+`tools/model_parity.py --probe ../../acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47.pt` prints the
+integer facts of the wiring map's probe inputs for the v2 and v1 checkpoints and writes nothing.
 
 ## License
 

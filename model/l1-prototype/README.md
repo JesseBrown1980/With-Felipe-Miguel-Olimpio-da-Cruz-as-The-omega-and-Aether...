@@ -7,7 +7,8 @@ Rust 1.81, no `f32`/`f64`.
 
 **Lane.** `src/` is hot lane: per request, in process, Q24 integers, no Python, torch, Node, JSON or HTTP.
 `tools/` and `vendor/` are cold lane: they verify the port in CI. Provenance, the forward choice, the measured
-agreement and what is not on disk are in [`PROVENANCE.md`](PROVENANCE.md).
+agreement and what the searches before the gnn-sidecar cube did not find (with the scope searched) are in
+[`PROVENANCE.md`](PROVENANCE.md).
 
 **Integers.** The three tools use integer arithmetic only: `tools/quantize.py` reads each float32 weight of the
 checkpoint by its bit pattern, and `tools/int_referee.py` decides the sigmoid from integer lower and upper bounds.

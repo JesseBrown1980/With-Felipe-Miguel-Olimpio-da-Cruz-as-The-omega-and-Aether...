@@ -126,18 +126,18 @@ The HERSELF seed was settled by measurement, as follows:
 
 ### Run and review results
 
-| artifact | owner record of the sha256 | run (label, wall) | review (wall) | produced sha256, run = review | other output files, byte-equal to stored |
+| artifact | owner record of the sha256 | run (label, wall ms) | review (wall ms) | produced sha256, run = review | other output files, byte-equal to stored |
 |---|---|---|---|---|---|
-| KIMI-K3-STAR-256 | USIM receipts/FABLE5-KIMI-K3-STAR.hbp:11; LFS pointer oid | regen-1, 3.38 s | 7.36 s | 56d08746…3a18; `cmp` equal to the LFS bytes | GGUF sidecar; receipt FABLE5-KIMI-K3-STAR.hbp (b48e43acfbba4e2d5fea5337811a0f441463e93e4b1c1a5a8b21be0dbb4cf924) and its sidecar |
-| MYTHOS-SELF-GLYPHS-256 | USIM receipts/FABLE5-DELETE-AND-REGENERATE.hbp:5; history 06f7add:matrices/FABLE5-FROZEN-KERNEL-LIVING-HOLES.hbp:6 | regen-2, 8.65 s | 11.93 s | f29d4b94…d299; the review output is `cmp` equal to the regen-2 output | GGUF sidecar. The process exits with code 1 at pump_glyphs_mythos.py:366 (`NameError: name 'inner' is not defined`) after the GGUF (lines 330-345) and its sidecar (349) are written, so the script's own receipt (lines 355-378) is not written. The same exit occurred in both runs. |
-| STARS-SHELLS | USIM receipts/FABLE5-STARS-SHELLS.hbp:12; DELETE-AND-REGENERATE.hbp:4 | regen-2, 1.26 s | 1.23 s | ae23392a…784d | GGUF sidecar; receipt FABLE5-STARS-SHELLS.hbp (6ab331657d7b41599c50e17cca10f5be24f93682336335d0f660e6648f07bf2c) and its sidecar |
-| HERSELF | USIM receipts/FABLE5-ASOLARIA-HERSELF.hbp:2-3 | regen-1, 0.72 s (first produced in the map step) | 1.40 s, seed fetched again from GitHub | 694b7432…b680; `cmp` equal to the HEAD copy and the da43991 copy | GGUF sidecar. The process exits with code 1 at asolaria_herself.py:239 (FileNotFoundError, D:/asolaria-absorb/enwik9) after the GGUF write at line 232. |
-| CALMING-OILS | FOLLOW matrix/PUBLIC-FOLDER-CALMING-OILS.hbi:5; receipts/LIRIS-RUST-181-GRADIENT-SEMANTICS-2026-07-31.hbp:5,9 | regen-2, 17.30 s with build (binary alone 1.06 s) | 8.81 s with build (binary alone 1.11 s) | fa266f1b…2bcf | All 8 output files: HBP 43300780cac2b85e3ed6cfa10398052f530ccbf76c43b404e650c26c9ed8b006 (14,686,931 B), HBI 9920d5cb2031d6453fba2d410e4b2f6e0136a4537fa6ea2ea9385c163503a28b, SVG feb18cc1e5034620a0ce78787df22683ccd662409df8b8af0752438c07d6a63b (6,053,339 B), the GGUF and 4 sidecars; 21,423,732 B in total |
-| OUTWARD | FOLLOW matrix/PUBLIC-OUTWARD-TRUTH-WAVES.hbi:5 | regen-1, 14.26 s with build (binary alone 0.85 s) | 13.10 s with build (binary alone 0.22 s) | b315be52…e9f6 | All 8 output files: HBP a0a0d0ab471e337edc7942ca42b4fb5c9e6f05060635e3b1ed6c94c1dad03472 (2,185,572 B), HBI 81ad88a2e3a64e55accce6a886975eca08c8eff83f65fb25b7c30c07aa765e99, SVG b6ad987e4a4b503aef4d1a42eeb662e7e803e6195494ea4704e58267796246aa (720,089 B), the GGUF and 4 sidecars; 2,966,557 B in total |
-| TIMED-CHIRAL 7200 | FOLLOW matrix/TIMED-CHIRAL-MONITOR.hbp:17 | regen-2, 0.17 s | 0.14 s | 77174fb8…bb6e | All 6 output files: HBP 7a709ae04dad2cc057247481804e866f61a519f23632ce75cd3d0d3646061a90, HBI ba96b0e22a18bacafed3ed99c3eb6311553c852906de23a8502d0fc420de7326, the GGUF and 3 sidecars |
-| TIMED-CHIRAL 86400 | FOLLOW matrix/timed-86400-parent-c8c3/TIMED-CHIRAL-MONITOR.hbp:21; LIRIS-TIMED-86400-ACTUAL-RUN.hbp:5,10 (`byte_equal_files=6`) | regen-1, 0.23 s | 0.10 s | 6afb6229…425a | All 6 output files: HBP 1d21681b15ca76b956236876ef0ca463dcab3ca190e8de0223bdea68bc914918, HBI 021706ed59574a4c8d6ce8b450fc170e79370279bf503c4239ad1b6960192ed4, the GGUF and 3 sidecars |
+| KIMI-K3-STAR-256 | USIM receipts/FABLE5-KIMI-K3-STAR.hbp:11; LFS pointer oid | regen-1, 3,380 ms | 7,360 ms | 56d08746…3a18; `cmp` equal to the LFS bytes | GGUF sidecar; receipt FABLE5-KIMI-K3-STAR.hbp (b48e43acfbba4e2d5fea5337811a0f441463e93e4b1c1a5a8b21be0dbb4cf924) and its sidecar |
+| MYTHOS-SELF-GLYPHS-256 | USIM receipts/FABLE5-DELETE-AND-REGENERATE.hbp:5; history 06f7add:matrices/FABLE5-FROZEN-KERNEL-LIVING-HOLES.hbp:6 | regen-2, 8,650 ms | 11,930 ms | f29d4b94…d299; the review output is `cmp` equal to the regen-2 output | GGUF sidecar. The process exits with code 1 at pump_glyphs_mythos.py:366 (`NameError: name 'inner' is not defined`) after the GGUF (lines 330-345) and its sidecar (349) are written, so the script's own receipt (lines 355-378) is not written. The same exit occurred in both runs. |
+| STARS-SHELLS | USIM receipts/FABLE5-STARS-SHELLS.hbp:12; DELETE-AND-REGENERATE.hbp:4 | regen-2, 1,260 ms | 1,230 ms | ae23392a…784d | GGUF sidecar; receipt FABLE5-STARS-SHELLS.hbp (6ab331657d7b41599c50e17cca10f5be24f93682336335d0f660e6648f07bf2c) and its sidecar |
+| HERSELF | USIM receipts/FABLE5-ASOLARIA-HERSELF.hbp:2-3 | regen-1, 720 ms (first produced in the map step) | 1,400 ms, seed fetched again from GitHub | 694b7432…b680; `cmp` equal to the HEAD copy and the da43991 copy | GGUF sidecar. The process exits with code 1 at asolaria_herself.py:239 (FileNotFoundError, D:/asolaria-absorb/enwik9) after the GGUF write at line 232. |
+| CALMING-OILS | FOLLOW matrix/PUBLIC-FOLDER-CALMING-OILS.hbi:5; receipts/LIRIS-RUST-181-GRADIENT-SEMANTICS-2026-07-31.hbp:5,9 | regen-2, 17,300 ms with build (binary alone 1,060 ms) | 8,810 ms with build (binary alone 1,110 ms) | fa266f1b…2bcf | All 8 output files: HBP 43300780cac2b85e3ed6cfa10398052f530ccbf76c43b404e650c26c9ed8b006 (14,686,931 B), HBI 9920d5cb2031d6453fba2d410e4b2f6e0136a4537fa6ea2ea9385c163503a28b, SVG feb18cc1e5034620a0ce78787df22683ccd662409df8b8af0752438c07d6a63b (6,053,339 B), the GGUF and 4 sidecars; 21,423,732 B in total |
+| OUTWARD | FOLLOW matrix/PUBLIC-OUTWARD-TRUTH-WAVES.hbi:5 | regen-1, 14,260 ms with build (binary alone 850 ms) | 13,100 ms with build (binary alone 220 ms) | b315be52…e9f6 | All 8 output files: HBP a0a0d0ab471e337edc7942ca42b4fb5c9e6f05060635e3b1ed6c94c1dad03472 (2,185,572 B), HBI 81ad88a2e3a64e55accce6a886975eca08c8eff83f65fb25b7c30c07aa765e99, SVG b6ad987e4a4b503aef4d1a42eeb662e7e803e6195494ea4704e58267796246aa (720,089 B), the GGUF and 4 sidecars; 2,966,557 B in total |
+| TIMED-CHIRAL 7200 | FOLLOW matrix/TIMED-CHIRAL-MONITOR.hbp:17 | regen-2, 170 ms | 140 ms | 77174fb8…bb6e | All 6 output files: HBP 7a709ae04dad2cc057247481804e866f61a519f23632ce75cd3d0d3646061a90, HBI ba96b0e22a18bacafed3ed99c3eb6311553c852906de23a8502d0fc420de7326, the GGUF and 3 sidecars |
+| TIMED-CHIRAL 86400 | FOLLOW matrix/timed-86400-parent-c8c3/TIMED-CHIRAL-MONITOR.hbp:21; LIRIS-TIMED-86400-ACTUAL-RUN.hbp:5,10 (`byte_equal_files=6`) | regen-1, 230 ms | 100 ms | 6afb6229…425a | All 6 output files: HBP 1d21681b15ca76b956236876ef0ca463dcab3ca190e8de0223bdea68bc914918, HBI 021706ed59574a4c8d6ce8b450fc170e79370279bf503c4239ad1b6960192ed4, the GGUF and 3 sidecars |
 
-Wall times come from bash `time`, on a 4-CPU host that other sessions shared during the review.
+Wall times are bash `time`, on a 4-CPU host that other sessions shared during the review. The run notes (regen-1, regen-2, review) recorded them in seconds to two places, so each value here is in ms with a resolution of 10 ms: its last digit is 0 by that resolution, not measured.
 
 The owner records the artifact/seed ratio for two of these: `ratio=1211` for STARS-SHELLS and `ratio=71022` for MYTHOS-SELF-GLYPHS-256 (DELETE-AND-REGENERATE.hbp:4-5). The exact values here are 4,596,880/3,796 (integer part 1,210, remainder 3,720) and 269,604,512/3,796 (integer part 71,023, remainder 1,204).
 
@@ -279,7 +279,7 @@ The `--now-ns` form is the owner's non-watch path in timed_chiral_gguf_monitor.p
 - **Produced outputs still on disk** (sha256 equal to the stored or recorded value):
   - Run: regen-1 HERSELF, OUTWARD and TIMED 86400; regen-2 STARS-SHELLS, CALMING-OILS, TIMED 7200 and MYTHOS-SELF-GLYPHS-256 (kept, 269,604,512 B, at `$R/work/regen-2/usim/D:/asolaria-absorb/kernel-pump/`).
   - Review: HERSELF, OUTWARD, TIMED 86400, TIMED 7200, CALMING-OILS and STARS-SHELLS.
-  - The KIMI outputs from both runs and the review's GLYPHS output were deleted after their sha256 and `cmp` checks, to keep disk free (4.1 GB free on `/`). The logs `regen-1/logs/kimi.out` and `review/logs/kimi.out` print the 32-hex prefix 56d08746a77efd9ea30345ada15bab3f. `review/logs/pump_glyphs.out` prints the full sha256 f29d4b94…d299.
+  - The KIMI outputs from both runs and the review's GLYPHS output were deleted after their sha256 and `cmp` checks, to keep disk free (about 4,100 MB free on `/`, a reading noted to the nearest 100 MB; no byte count was kept). The logs `regen-1/logs/kimi.out` and `review/logs/kimi.out` print the 32-hex prefix 56d08746a77efd9ea30345ada15bab3f. `review/logs/pump_glyphs.out` prints the full sha256 f29d4b94…d299.
 - **Owner receipt lines quoted above.** These were read again: FABLE5-STARS-SHELLS.hbp:12, FABLE5-KIMI-K3-STAR.hbp:11, FABLE5-ASOLARIA-HERSELF.hbp:2-3, FABLE5-DELETE-AND-REGENERATE.hbp:4-5,8, RUNBOOK.md:142-143, FOLLOW TIMED-CHIRAL-MONITOR.hbp:17, timed-86400 TIMED-CHIRAL-MONITOR.hbp:21, LIRIS-TIMED-86400-ACTUAL-RUN.hbp:5,10, PUBLIC-FOLDER-CALMING-OILS.hbi:5, PUBLIC-OUTWARD-TRUTH-WAVES.hbi:5, LIRIS-RUST-181-GRADIENT-SEMANTICS-2026-07-31.hbp:5,9, and history 06f7add:matrices/FABLE5-FROZEN-KERNEL-LIVING-HOLES.hbp:6.
 - **Seed byte counting.** In this report seed bytes always include a seed sidecar that the program checks. The regen-2 rows for TIMED 7200 (97,469) and CALMING-OILS (2,036,235) left the sidecar out; here they are 97,555 and 2,036,327. The OUTWARD output-set total is 2,966,557 B with sidecars, as measured in the review; regen-1's note gave 2,965,768 B.
 
@@ -335,7 +335,7 @@ Other facts the round-2 staging measured (`stage/STAGE-C.md`):
 - **Staging tool.** `regen/tools/stage_office.py` is Claude's tool, not the owner's: standard library only, 14,920 B, sha256 3f168689b54fb029204b8c5a63f00317917eca28cd3940af34e0c2d2d4571d0c. It copies files out of the history clone and checks them; nothing it computes enters an output.
 - **Which bytes.** The office bytes always come from 37248b2, the first commit where all 146 inventory artifacts stage equal to the inventory (size and 12-hex sha). The names come from the run's parent commit (`--names-from`).
   - From 7ca9ce5 to 75d705e^, 9 matrices/ blobs end `\n` where the inventory bytes end `\r\n`. The owner's own 7ca9ce5 sidecars and the inventory record the `\r\n` bytes.
-  - From 75d705e to 37248b2^, about 75 matrices/ blobs carry CRLF.
+  - From 75d705e to 37248b2^, 79 of the 142 `FABLE5-*.hbi|hbp` blobs directly in matrices/ carry CRLF where their 37248b2 bytes have LF, and differ from those bytes only by the added CR bytes. The count is the same at each of the 18 commits (counted again 2026-10-18 with `git cat-file` over the history clone; the earlier note said "about 75").
   - FABLE5-SELF-SEED-3078.hbp is staged from 7ca9ce5 (3,078 B, 623b6a7a…); from 75d705e on it is 3,096 B.
 - **wasm.** The office copy of `asolaria_tribit.wasm` is b98abbbb… (11,687 B, from e2f11b9). `codex-test/asolaria_tribit_wasm.bin` (10,479 B, 0dca6a52…) is the earlier version, public at 4ea2ae3:web/; only the CONSTELLATION GGUF reads it.
 - **emit_full_ggufs.py.** MAP.md section C describes it as writing only `.sha256` sidecars. The program writes the GGUF bytes itself (emit_full_ggufs.py@4a684b7:161-173) and the sidecar (:177-178), and writes no receipt.
@@ -378,7 +378,7 @@ Other facts the round-2 staging measured (`stage/STAGE-C.md`):
 
 Notes on single rows:
 - **#13 CONSTELLATION** came out byte-exact once, as the staging check. No review re-ran `project_gguf.py`, so by the rule above it is not counted. `project_gguf.py:163-170` copies each input file unchanged into its own I8 tensor, so the 84 tensors are the 84 inputs byte for byte (136,782 B); the other 8,338 B are header, metadata, tensor info and padding. 15,878 B of those inputs are public only inside this GGUF: the 4 qr files and the FABLE5-SELF-SEED-3078.hbi version 5c040e04… (3,078 B), which differs in 85 bytes from every public copy (653e3d9b…). Its wasm input is the 0dca6a52… version (10,479 B). Artifact/seed: 145,120/136,782.
-- **#11 prior3174.bin.** No owner program writes this file. The bytes were taken with `dd` from the owner's recorded byte range `enwik8[90,000,000 .. 90,003,174)` (key/KEY-3174.hbp:9, "VERIFIED this run by mmap.find -> offset 90000000"; RUNBOOK.md:29). enwik8 (100,000,000 B, sha256 2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8) matches the prefix at books/operator-laws/HANDOFF-FOR-CLOUD-AGENTS.md:82. The review also ran the owner's reader `players/play_the_key.py` unchanged: 18 of 19 output lines equal receipts/operator/play_the_key.txt, and line 2 differs only by the corpus path printed from argv[1]. Artifact/seed: 3,174/3,174, a slice of a public corpus.
+- **#11 prior3174.bin.** No program that writes this file was found in the public clones or the USIM history commits searched for this report (CODEX-MANIFEST.hbp:33 `generator=none` has the same scope). The bytes were taken with `dd` from the owner's recorded byte range `enwik8[90,000,000 .. 90,003,174)` (key/KEY-3174.hbp:9, "VERIFIED this run by mmap.find -> offset 90000000"; RUNBOOK.md:29). enwik8 (100,000,000 B, sha256 2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8) matches the prefix at books/operator-laws/HANDOFF-FOR-CLOUD-AGENTS.md:82. The review also ran the owner's reader `players/play_the_key.py` unchanged: 18 of 19 output lines equal receipts/operator/play_the_key.txt, and line 2 differs only by the corpus path printed from argv[1]. Artifact/seed: 3,174/3,174, a slice of a public corpus.
 - **#37** has no stored bytes, so the check is sha256 against FABLE5-PUMP-SPHERE.hbp:20 (`GGUF|k=ASOLARIA-OPUS-SPHERE-PUMPED.gguf|bytes=126885440|…|sha256=65887bd1…`) and the e658453 commit message; no `cmp` was possible. The same run's receipt FABLE5-PUMP-SPHERE.hbp (2,426 B, 7b7709f8…) is `cmp` equal to e658453's, all 21 rows.
 
 ### Codex of the round-2 byte-exact artifacts
@@ -465,7 +465,7 @@ Offsets are 0-based (`cmp` prints them 1-based). They were re-measured for this 
   - final receipt absorbed: 77f0f683202b86ad9095d8c00cf05c1c2f9f96f983d76b4516a1676a315b6fb1 and b01ebc727c451e4f99f1d329565fbd3042a73337596af82a3bc0529a91b32ec3.
 - **Library versions.**
   - scipy feeds only the receipt BUCKY row (three_bodies_nine_slices.py:182, :192 -> :350-352), and scipy 1.18.1 and 1.18.0 gave identical GGUFs.
-  - scipy 1.17.1 and numpy 2.5.1, the versions current on the run date, were not run: free disk was below the 1.5 GB floor.
+  - scipy 1.17.1 and numpy 2.5.1, the versions current on the run date, were not run: free disk was below the 1,500 MB floor.
   - The slice values come from integer-count gradients, a correctly rounded sqrt and a round-to-nearest float32 cast (C-THREEBODIES.md), so a different slice value needs different counts.
 - **Inference, not a recovered file.** The stored ANTI-ANTI-MYTHOS fixes the office length mod 3. Together with triples=1,119,926, that implies a 1,797 B first-run receipt, if that receipt was the only difference.
 
@@ -486,7 +486,7 @@ Offsets are 0-based (`cmp` prints them 1-based). They were re-measured for this 
   - The HERSELF GGUF written in the same runs is byte-exact again (694b7432…).
   - 15 of the 35 greedy steps have 2 to 14 candidates tied at the maximum.
   - Eight fixed hash seeds (0, 1, 2, 3, 4, 5, 42, 12345) gave 8 distinct keys, each first differing at offset 873.
-  - Walking the stored key against the downloaded enwik9[600,000:1,200,000): its first 356 B and greedy steps 0-6 are each the unique maximum. At step 7 the stored candidate (94 B) scores 0.180851, while the unique maximum is 15/81 (0.185185). These scores are computed by the owner's float code.
+  - Walking the stored key against the downloaded enwik9[600,000:1,200,000): its first 356 B and greedy steps 0-6 are each the unique maximum. At step 7 the stored candidate (94 B, 17 new contexts) scores 17/94, while the unique maximum, an 81 B chunk, scores 15/81 (15 × 94 = 1,410 > 17 × 81 = 1,377). The owner's code computes each score as the float quotient `nn / len(c)` (asolaria_herself.py:277).
   - So no hash seed gives the stored key from this byte range.
 
 ### Not run (1)
@@ -562,7 +562,7 @@ Round 3 regenerated #31, #32 and #9. The list after round 3 is in [Still not reg
 - **Three bodies.** numpy 2.5.4 with scipy 1.18.1; wheel sha256 6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0 and fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9, equal to PyPI. The run's venv and the review's rebuilt venv were both deleted after their runs, for disk.
 - **enwik8 and enwik9** were kept on a RAM-backed tmpfs under `regen/data/`, then deleted and unmounted.
 - **No GPU** was used. The network was used only for the enwik downloads, the YouTube attempts, wheel downloads and blobless GitHub fetches by the reviews.
-- **Disk.** During round 2, free space on `/` ranged from 0 B (one ENOSPC write, caused by other jobs) to about 3 GB. Every produced sphere (126,885,312 or 126,885,440 B) was deleted after its sha256 and `cmp` checks.
+- **Disk.** During round 2, free space on `/` ranged from 0 B (one ENOSPC write, caused by other jobs) to about 3,000 MB (host context, to one significant figure). Every produced sphere (126,885,312 or 126,885,440 B) was deleted after its sha256 and `cmp` checks.
 - **Integer rule.** Float values in this section are values the owner's own float code computed or wrote, quoted as they are. The checks written for this report (`work/write2r/tools/`) use integer arithmetic only.
 
 ### Commands (round 2)
@@ -685,8 +685,8 @@ Lines that differ from the owner's file all name enwik8 or the public enwik9:
 | line | recorded | the owner's enwik9 |
 |---|---|---|
 | key/KEY-3174.hbp:8-9 (prior3174.bin = enwik8[90M..]) | 1be91cb748b2b364… | 14e05873feecd648… |
-| key/KEY-3174.hbp:42 (enwik8[20M, 30M)) | sha16 adea6c0b9428129b | 1e63db57f4dfa004 |
-| key/KEY-3174.hbp:113 (enwik8[20M, 20.6M)) | sha16 8e35ab13a8ce933d | 08075e3d71f61019 |
+| key/KEY-3174.hbp:42 (enwik8[20,000,000, 30,000,000)) | sha16 adea6c0b9428129b | 1e63db57f4dfa004 |
+| key/KEY-3174.hbp:113 (enwik8[20,000,000, 20,600,000)) | sha16 8e35ab13a8ce933d | 08075e3d71f61019 |
 | books/operator-laws/HANDOFF-FOR-CLOUD-AGENTS.md:82 | enwik9 sha256 159b8535… (the public download) | 8eb36417… |
 
 Round 2 measured the three KEY-3174.hbp records equal on the public enwik8. #11 (prior3174.bin, counted in round 2) is the enwik8 slice that KEY-3174.hbp:9 names, so it is unaffected. The owner's PLAY-KEYS errata row (:3, `passed_enwik9_not_enwik8`) records the enwik9 value of that slice, 14e05873….
@@ -694,14 +694,14 @@ Round 2 measured the three KEY-3174.hbp records equal on the public enwik8. #11 
 ### Round-3 results per target
 
 - **regen3** is the round-3 run and **review3** the independent round-3 review. "byte-exact" means the produced sha256 equals the stored sha256 and `cmp` is equal.
-- **Wall** times are integer ms. regen3 ran on a host with a load average of about 16 on 4 CPUs; review3 ran under `strace`. The two are not comparable.
+- **Wall** times are integer ms. regen3 ran on a host with a load average of about 16 on 4 CPUs (host context, as a whole number); review3 ran under `strace`. The two are not comparable.
 
 | # | artifact | bytes | stored sha256 | regen3 | review3 | counted | seed bytes read (files) | wall regen3 / review3 (ms) |
 |---:|---|---:|---|---|---|---|---:|---|
 | 31 | USIM gguf/axes/ASOLARIA-FOUR-AXES-RIME.gguf (157-artifact office) | 4,908 | 9fe92da2…a735 | byte-exact | byte-exact | **yes** | 303,366,478 (159) | 118,174 / 38,783 |
 | 32 | USIM gguf/rime/ASOLARIA-RIME-UNRIME-THREE.gguf | 3,147,488 | 353deb27…1be6 | byte-exact | byte-exact | **yes** | 1,003,365,289 (158) | 32,667 / 9,499 |
 | 9 | USIM gguf/wikipedia/ASOLARIA-MYTHOS-VS-WIKIPEDIA.gguf | 5,343,456 | 8fbc74f7…d5f2 | byte-exact | byte-exact | **yes** | 1,000,003,796 (2) | 47,000 / 18,021 |
-| 12 | USIM key/ASOLARIA-HERSELF-KEY-3174.bin | 3,174 | 925c818d…2d89 | differs (2,205 seeds tried) | not reviewed | no | not re-measured (22,759,375 in round 2) | about 20 minutes for the sweep on 4 workers |
+| 12 | USIM key/ASOLARIA-HERSELF-KEY-3174.bin | 3,174 | 925c818d…2d89 | differs (2,205 seeds tried) | not reviewed | no | not re-measured (22,759,375 in round 2) | 1,196 s for the sweep on 4 workers (first to last write of the worker logs) |
 | control | FOUR-AXES-RIME on the 156-artifact office | 4,908 | 9fe92da2…a735 | differs: 83a49920…c3ba | differs: the same sha256 | not a target | 303,365,289 | — / 32,763 |
 
 The full produced sha256 values are those of the stored files: 9fe92da2b064e39ad52b389fb92d0c59739e1fd7d9db5b82c6d25c0ebf8fa735, 353deb276b668bcd17ac066a3981da55a46c817457ba6d19f52df48da74f1be6 and 8fbc74f7374644af2ac2a081853d6987931837ceb445fed10bf6cb6b82acd5f2. For the control the value is 83a499209bd87b8e26f4019cf2dbd7dddde52e811b62359564a0a0e7a56ac3ba.
@@ -799,7 +799,7 @@ Program: da43991:measurements/asolaria_herself.py, 13,703 B, sha256 01db3e7c008f
 - **Command.** `-I` ignores `PYTHONHASHSEED`, so each run used `env -i PYTHONHASHSEED=k python -P -s script/asolaria_herself.py`, the same isolation without `-E`.
   - The sweep used 4 hard-link copies of the tree, each with its own copy of `key/…KEY-3174.bin.sha256`.
   - Before each run, the script deletes the previous run's key, GGUF and receipt.
-- **Seeds.** 0-2194 contiguous (2,195 seeds), plus 2196, 2197, 2198, 2200, 2201, 2204, 2208, 2212, 2216 and 12345 (10 seeds). That is 2,205 runs, about 20 minutes on 4 workers on a shared host.
+- **Seeds.** 0-2194 contiguous (2,195 seeds), plus 2196, 2197, 2198, 2200, 2201, 2204, 2208, 2212, 2216 and 12345 (10 seeds). That is 2,205 runs on 4 workers on a shared host. The four worker logs (`work/r3/logs/herself_sweep_w0..w3.log`) were first written at 2026-10-17 22:55:28-22:55:30 UTC and last at 23:15:24 UTC: 1,196 s from the first write to the last (file birth and modification times, whole seconds).
 - **Results:**
   - All 2,205 runs exited 0.
   - All 2,205 wrote ASOLARIA-HERSELF.gguf 694b74325b0fc73ae3bdd100a476ec9df2419bb8fa0c3b9b95a8fcb5499fb680, `cmp` equal to the stored GGUF.
@@ -856,11 +856,11 @@ From round 2's list of 4 enwik targets, #12 is still blocked. The 3 round-3 byte
 
 ### Environment (round 3)
 
-- **Host.** The same as rounds 1 and 2: Linux-6.18.44-fc-v139-x86_64-with-glibc2.39, 4 CPUs, shared with other jobs. regen3 recorded a load average of about 16 during its runs.
+- **Host.** The same as rounds 1 and 2: Linux-6.18.44-fc-v139-x86_64-with-glibc2.39, 4 CPUs, shared with other jobs. regen3 recorded a load average of about 16 during its runs (host context, as a whole number).
 - **Python.** 3.13.16 with `regen/venv` (numpy 2.5.4), for every run in regen3 and review3. review3 also used `strace` for its four runs.
 - **The owner's enwik9** was used through symlinks, never copied. The symlinks were removed after the runs.
 - **Disk.**
-  - In regen3, free space on `/` never fell below 1,191,337,984 B, and every staged tree was deleted after its checks. `work/r3/` keeps 9.5 MB: out/, herself/keys/, logs/ and tools/.
+  - In regen3, free space on `/` never fell below 1,191,337,984 B, and every staged tree was deleted after its checks. `work/r3/` keeps 9,617,967 B in 57 files (measured again 2026-10-18; no file there is newer than 2026-10-17): out/ 8,781,074 B, logs/ 779,288 B, herself/ 18,025 B (keys/ 4,322 B and the script), agents/ 17,382 B, tools/ 17,367 B and play/ 4,831 B.
   - review3 ended with 10,624,561,152 B free and kept its outputs in `work/r3-review/fresh/out/`.
   - While this report was written, free space on `/` was 9,072,562,176 B at one check. The report wrote only small files, all under `work/write3r/`.
 - **Integer rule.** Float values in this section are values the owner's own float code computed or wrote, quoted as they are: the ARM fields, `frozen_bpc`, `screen`, `cv_spread_pct` and `enwik9_same_size`. The checks written for this report (`work/write3r/tools/`) use integer arithmetic only. `r3_checks.py` uses numpy only for `np.bincount` over bytes, which is an integer count.
@@ -960,6 +960,23 @@ The logs are in `work/write3r/logs/`.
   - lines 49-51, 3 CODEX rows (FOUR-AXES-RIME, RIME-UNRIME-THREE, MYTHOS-VS-WIKIPEDIA) in the round-1 field order;
   - lines 52-55, 4 ROUND3 rows. These supersede the NOT_REGENERATED rows at lines 37, 38 and 39 (status byte_exact) and line 40 (HERSELF key, status differs, with the round-3 measurements). The superseded rows stay in place.
 - **Work dirs.**
-  - `work/r3/` (regen3): out/, herself/keys/, logs/ and tools/.
+  - `work/r3/` (regen3): out/, logs/, herself/ (keys/ and script/), agents/, tools/ and play/.
   - `work/r3-review/fresh/` (review3).
   - `work/write3r/`: this report's tools and logs, `rows-round3.hbp`, and the round-2 backups `CODEX-MANIFEST.round2.hbp` and `CODEX-REGENERATE.round2.md`.
+
+## Changes on 2026-10-18 (integer-rule and scoped-absence passes)
+
+These changes were made on 2026-10-18 by the integer-rule docs pass over this directory (item docs-sweep-new) and the fixes from its review. `CODEX-MANIFEST.hbp` is unchanged. No measured fact changes, except that three values were counted again; those are marked below.
+- **Round 1, run and review results.** The 20 wall times are now integer ms (3.38 s is now 3,380 ms, and so on; each conversion is exact). The two column headers read "wall ms". The note under the table says the run notes recorded seconds to two places, so each ms value has a resolution of 10 ms.
+- **Disk and host figures.** Each is given in MB with its resolution, or marked as host context:
+  - about 4,100 MB free, to 100 MB;
+  - the 1,500 MB floor;
+  - about 3,000 MB;
+  - the load average of about 16, as a whole number.
+- **Owner scores at step 7 of the HERSELF walk.** The owner's float values 0.180851 and 0.185185 are now the exact ratios 17/94 and 15/81, with the integer comparison 1,410 > 1,377.
+- **The enwik8 slice bounds in the KEY-3174 table** are written in full: 20,000,000 for 20M, and so on.
+- **#11 prior3174.bin.** "No owner program writes this file" now states the scope that was searched.
+- **Counted again:**
+  - the CRLF blobs in round-2 staging: 79 of 142 at each of the 18 commits (the earlier text said about 75);
+  - the size of `work/r3/`: 9,617,967 B in 57 files, with each subdirectory's size (the earlier text said 9.5 MB and named four of the six subdirectories). The round-3 Files list now names all six;
+  - the HERSELF sweep time: 1,196 s, from the file times of the worker logs (the earlier text said about 20 minutes).

@@ -184,7 +184,7 @@ fn manifests_match_referee() {
 #[test]
 fn rows_measured_from_the_vendored_js() {
     // Rows the vendored graphRuntimeStore.js/edgeRiskEngine.js produce under Node 22.22.0
-    // (written to stdout as UTF-8) for review-events/cases-min.txt.
+    // (written to stdout as UTF-8) for the five inputs written inline below.
     let base = |action: &str, typ: &str, context: Vec<(&str, &str)>, id: &str| {
         build_graph_event(&GraphEventInput {
             action: action.into(),

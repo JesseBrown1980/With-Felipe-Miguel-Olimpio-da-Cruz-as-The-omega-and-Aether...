@@ -1,5 +1,5 @@
 //! `score` against tests/fixtures/expected-score.hbp, which tools/score_referee.py writes from
-//! Python binary64 mirrors of asolaria-score.mjs.
+//! mirrors of asolaria-score.mjs over an integer emulation of binary64 (JavaScript numbers).
 
 use asolaria_hookwall::hookwall::HookTier;
 use asolaria_hookwall::spawn_gate::{spawn_gate_verdict, SpawnGateInput};

@@ -43,6 +43,30 @@ person. Its row writes (:82-113) are not ported (BOUNDARIES.md).
 Files referenced by `packages/super-gulp-tier3-consumer/src/consumer.mjs` / `promoter.mjs` contain Windows
 paths and the vantage identifiers `acer` and `Liris` (device/vantage names, not private persons).
 
+### The cadence adjuster's comment and the measurement beside it (OWNER-RULES 7i)
+
+`gnn-feedback-cadence-adjuster.mjs:15-17` reads: "The multipliers were already exact rationals -- 0.8 = 4/5
+and 1.25 = 5/4 -- so integers lose nothing: every single step reproduces the float result exactly (verified
+over the whole legal cadence range)."
+
+The float version is the earlier file at the same path, private mirror commit 80bf516, blob
+971f2452b8308d6ba29f08274929bd79c5b99048. Its step is `current_ms * 0.8` or `current_ms * (1 / 0.8)`, then
+`Math.round` and the clamp to [5,000, 60,000] (:11-12, :59-64). The integer step here (:81, :84, ported in
+`src/cadence.rs`) rounds up: `floor((ms * 4 + 4) / 5)` and `floor((ms * 5 + 3) / 4)`.
+
+Measured on 2026-10-18 with integer arithmetic only, over every cadence value ms = 5,000..60,000 (55,001
+values). The arithmetic uses exact rationals: binary64(0.8) = 3602879701896397/2^52, binary64(1 / 0.8) = 5/4,
+each product is rounded to binary64 with ties to even, and `Math.round(x)` = floor(x + 1/2). The next
+interval of the round-up step differs from the float version's on these counts:
+
+| step | round-up vs float | round-half-up `floor((2*ms*N + D) / (2*D))` vs float |
+|---|---|---|
+| speed-up, x 4/5 | 21,500 of 55,001 | 0 of 55,001 |
+| slow-down, x 5/4 | 10,750 of 55,001 | 0 of 55,001 |
+
+Owner decision (OWNER-RULES 7i, 2026-10-18): "Int not float." The integer round-up version is the
+reference. Neither `asolaria-behcs-256` nor `src/cadence.rs` changes.
+
 ## bigpickle-rebuild @ c592599c8f3d000b07cd5f4218b7d6b24d49d7d5
 
 Whole file (git blob id = upstream blob id):
@@ -61,10 +85,15 @@ Read for the port, not vendored:
 |---|---|---|---|
 | src/universal-route.mjs | 876ca02933e95cc6454e11e20b6104baeb9b9a00 | 35–81, 105–178 (defaults, class sets, `dualEmitObservation` rows) | src/route.rs |
 
-`universal-route.mjs` holds no host or address literal. It is not vendored because it carries a collaborator's
-first name as a fix-series label 10 times: in comments at :39, :50, :56, :61, :73, in the `Error` text at
-:127, and in `STATUS.canon_refs` at :219-222. The port reproduces one of these byte for byte: the :127 error
-message that `dualEmitObservation` throws when a `pixel_screenshot` emit has no `backendRowPid` (:125-129),
-label included. That message appears in `src/route.rs`, `tools/referee.py` and `tests/fixtures/route.hbp`, and
-nowhere else in this crate. Whether this error text is carried as upstream writes it is an owner decision;
-until then it is reproduced exactly.
+`universal-route.mjs` holds no host or address literal. It was left out of `vendor/` because it carries a
+collaborator's first name as a fix-series label 10 times: in comments at :39, :50, :56, :61, :73, in the `Error`
+text at :127, and in `STATUS.canon_refs` at :219-222. The label is the operator name "Dan" (`Dan-fix #1`,
+`dan_hookwall_modernization_…`); the file carries no surname. The port reproduces one of these byte for byte:
+the :127 error message that `dualEmitObservation` throws when a `pixel_screenshot` emit has no `backendRowPid`
+(:125-129), label included. That message appears in `src/route.rs` (:68), `tools/referee.py` (:691) and 2 rows
+of `tests/fixtures/route.hbp`, and in no other file of this crate. The owner's operator-name authorization of
+2026-10-18 (OWNER-RULES 5, valid until 2027-10-18) covers this operator's first name and the name-derived
+identifiers as they are written in the owner's files. The error text therefore stays as upstream writes it,
+and the owner decision this paragraph used to leave open is made. This pass adds no vendored file, so
+`universal-route.mjs` is still read, not vendored. Under the same authorization it can be vendored
+byte-identical (blob 876ca029…).

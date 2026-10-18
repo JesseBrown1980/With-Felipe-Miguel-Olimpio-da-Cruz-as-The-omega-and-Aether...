@@ -88,19 +88,27 @@ The owner's recheck of L0/L1/L2/L4 on the training corpus `gslgnn_w9_3_corpus.js
 `FABLE5-GNN-L1L2-RECHECK-NO-SHELL-2026-10-18.hbp` (`ac460602…`). The check script and raw rows stay
 in the ACER scratchpad (per the receipt header); only the measured receipts are vendored.
 
-What it measured (gate `std > 0.01`: **0 of 4 pass**):
+What it measured (the receipt's gate `std > 0.01`: **0 of 4 pass**):
 
-| Model | output on the corpus | AUC (exact pair counts) | served vs trained |
+| Model | output on the corpus (receipt) | AUC as exact pair counts (`auc2_num/auc2_den`) | served vs trained (receipt) |
 |---|---|---|---|
-| L0 | 0–0.032, std 0.00645 | 0.1304 trained / 0.3261 served | differs on 54,812 edges (max 0.0317), 0 flips at 0.5 |
-| L1 | one constant `0.9999749660491943` | exactly ½ | identical (saturated) |
-| L2 | 0.99994–0.99998, 12 values | **0.5218 as trained** | no server; a PyG shim would differ on 260,410 |
-| L4 | 0.5291568–0.5292310, 11 values | 0.2228 | identical |
+| L0 | 0–0.032, std 0.00645 | 3,288,720 / 25,216,720 trained; 8,222,700 / 25,216,720 served | differs on 54,812 edges (max 0.0317), 0 flips at 0.5 |
+| L1 | one constant `0.9999749660491943` | 12,608,360 / 25,216,720 = exactly ½ | identical (saturated) |
+| L2 | 0.99994–0.99998, 12 values | **13,158,080 / 25,216,720 as trained** | no server; a PyG shim would differ on 260,410 |
+| L4 | 0.5291568–0.5292310, 11 values | 5,618,300 / 25,216,720 | identical |
 
-Recorded beside, not over: the earlier L2 figure (AUC 0.609, range 0.99996–1.0) is the PyG
-would-serve shim path, not the as-trained stub. L0's earlier std 0.026–0.257 was on the
-scorer-input grain; 0.00645 here is on the w9_3 corpus — a different input, not a contradiction (L0
-was trained on `data/gnn-training-export-20260315.json`, so its w9_3 AUC is cross-dataset).
+The denominator is 2 × 40 × 315,209 benign/suspicious pairs; a pair counts 2 when the suspicious
+edge scores above the benign one and 1 on a tie (the receipt's `ORIENT` row reads an AUC below ½ as
+suspicious edges scoring below benign). The output ranges, `std` and `max_abs_diff` values are the
+receipt's own, printed by its float script on ACER; they are quoted, not re-measured here. The
+receipt prints the four AUCs as 0.130418 / 0.326081, 0.500000, 0.521800 and 0.222801.
+
+Recorded beside, not over: the earlier L2 figure (AUC 15,350,038 / 25,216,720, which the receipt's
+`CORRECTION_BESIDE` row gives as 0.609; range 0.99996–1.0) is the PyG would-serve shim path, not the
+as-trained stub. L0's earlier std 0.026–0.257 was on the scorer-input grain; 0.00645 here is on the
+w9_3 corpus (both values from the receipt's `GRAIN_NOTE` row) — a different input, not a
+contradiction (L0 was trained on `data/gnn-training-export-20260315.json`, so its w9_3 AUC is
+cross-dataset).
 
 Root causes (MEASURED): the trainers split in index order 70/15/15 with no shuffle, and all 40
 benign edges sit at indices 315169–315222 (after the train/val boundary), so `benign_in_train = 0`;
@@ -112,7 +120,8 @@ training and serving.
 
 Bearing on the decisions: this is the empirical side of the benching. None of L1/L2/L4 calculates (0
 of 4 pass the spread gate), so weight/count 0 is the right state (OWNER-RULES 7.a/7.b); L4's constant
-0.5292 at weight 0.15 adds ~0.079 to every composite, which is the weight-0 rationale. The `L4CONST`
+0.5292 at weight 0.15 adds 0.15 × 0.5292 = 79,380/1,000,000 to every composite (the receipt's `ORIENT`
+row: `adds_about_0.079`), which is the weight-0 rationale. The `L4CONST`
 note (0.5292 = single-class train + 30 steps from ~0.5) is the owner's conjecture, measurable by
 replaying `train_gslgnn` with per-step logging.
 
@@ -153,17 +162,20 @@ class-balanced cross-entropy, a shuffled 70/15/15 cut taken separately per class
 What the receipt measured (torch 2.13.0+cpu, PyG 2.7.0): split 28/6/6 benign, 220,646 / 47,281 /
 47,282 suspicious, `split_sha16=27152b521ce28662`.
 
-| Model | checkpoint (sha256) | std on the corpus | AUC train / val / test | test benign caught at 0.5 | test false alarms at 0.5 | `scores_sha16` |
+| Model | checkpoint (sha256) | std on the corpus (receipt) | AUC train / val / test (pair counts n/n) | test benign caught at 0.5 | test false alarms at 0.5 | `scores_sha16` |
 |---|---|---|---|---|---|---|
 | L1 | `prototype_model_strat_2026-10-18.pt` (`dc8ea195…`) | 0.0119466 | 1 / 1 / 1 | 6/6 | 1/47,282 | `38b043191a5e62e2` |
 | L2 | `contrastive_model_strat_2026-10-18.pt` (`fe9b3a8e…`) | 0.0119465 | 1 / 1 / 1 | 6/6 | 1/47,282 | `8bc74ee31839acab` |
 | L4 | `gslgnn_w9_3_strat_2026-10-18.pt` (`23e44abf…`) | 0.0119452 | 1 / 1 / 1 | 6/6 | 1/47,282 | `993cb532f9944bbf` |
 
 All three clear the `std > 0.01` gate, which the trained checkpoints did not (0 of 4 in the recheck
-above). Each checkpoint reloads strictly and gives identical scores. The receipt keeps its own
-correction beside its `GATECEILING` row: 0.011264 is the std of a *perfect* 0/1 classifier at 40 of
-315,249 (√(p(1−p))), not a maximum; the observed 0.01195 is higher because the few false alarms add
-spread. Its `SCOPE` row: AUC 1.0 means separable within this corpus, not generalization.
+above). The std values are the receipt's, from its float script; the AUCs are its exact pair counts
+(12,356,176 / 12,356,176, 567,372 / 567,372 and 567,384 / 567,384). Each checkpoint reloads strictly
+and gives identical scores. The receipt keeps its own correction beside its `GATECEILING` row: its
+0.011264 is the std of a *perfect* 0/1 classifier at 40 of 315,249, exactly √(40 × 315,209) / 315,249,
+not a maximum; its observed 0.01195 is higher because the few false alarms add spread. Its `SCOPE`
+row: `auc_1.0` (25,216,720 / 25,216,720 on the corpus) means separable within this corpus, not
+generalization.
 
 Checked from the cloud side, recorded beside the `SCOPE` row: the split rebuilds here exactly
 (`split_sha16` 27152b521ce28662, match). The receipt gives the reason as held-out benign edges sitting
@@ -259,7 +271,7 @@ Both machines, measured:
 | Scoring with `MKL_ENABLE_INSTRUCTIONS=AVX2 MKL_CBWR=AVX2` | — | **9/9 match ACER's receipt**, under both torch/PyG pairs |
 | Which library moves the bits | MKL forced to SSE4.2 moves all three; oneDNN and ATen forced down move none | MKL alone restores ACER's bits; ATen alone and oneDNN alone do not; PyG version no effect |
 | MKL capped to SSE4.2 (no `MKL_CBWR`) | L1 `bab3c351…`, L2 `5a6ac21c…`, L4 `56a52781…` | L1 `bab3c351…` (same), L2 `b4cdc6bc…`, L4 `defa07f7…` (differ) |
-| Size of the drift | ≤ 27 edges, ≤ 51 ULP, ≤ 2.3e-10, 0 decisions flipped | AVX-512 vs AVX2: L2 9 edges ≤ 10 ULP, L4 32 edges ≤ 22 ULP, 0 flipped; 40/40 benign caught either way |
+| Size of the drift | ≤ 27 edges, ≤ 51 ULP (the receipt's `max_abs` ≤ 2.3e-10), 0 decisions flipped | AVX-512 vs AVX2: L2 9 edges ≤ 10 ULP, L4 32 edges ≤ 22 ULP, 0 flipped; 40/40 benign caught either way |
 | Retraining, 4 threads | bytes differ run to run, counts identical | bytes differ in all 6 runs, counts identical |
 | Retraining, 1 thread + `use_deterministic_algorithms` | identical twice: `9166cdbe…` `be3ba29f…` `7a920ac4…` | identical 4 times: `549aab5c…` `d9430791…` `2d0c02f8…` |
 | Same recipe across machines, MKL pinned (step 4c) | identical to its unpinned recipe runs (the reference; receipt now `c4116334…`, relayed) | **differs** from ACER's; the step's conjecture is refuted |
@@ -287,7 +299,10 @@ The 200 ns figure is not in `BROWN-HILBERT.md` (checked on both machines). Its s
 comment in bigpickle's `asolaria-loop.mjs` (lines 4 and 34, per the receipt; that file is not in this
 repository), the owner's voice transcripts in
 `COMBINED-BOOK-OF-LAWS.md` (lines 2751, 3558, 3683: "200 nano second per thread"), and the map's
-emitter row. Single thread, medians:
+emitter row. Single thread, medians, in integer ns: ACER's are the receipt's `ns_per_op_median`
+(its two JS rows print one decimal place and are rounded here), the cloud's are `ps_per_op_median`
+from `CLOUD-ROWS.hbp` rounded to the nearest ns, halves up ((ps + 500) / 1000), and its JS rows the
+JS bench's one-place values rounded the same way:
 
 | Unit | ACER i5-8300H (no SHA hardware) | Cloud Xeon (SHA hardware) |
 |---|---|---|
@@ -307,18 +322,21 @@ from `seed`, all end on `ded30f877db06882`. The bench's `fnv1a64` row times `fnv
 
 So the native hash is within the 200 ns class on both machines, and host8's `sha16` is slower only
 because it formats each of the 32 digest bytes with `format!`. The table-hex form gives the same
-bytes 6.4× (ACER) to 10.5× (cloud) faster.
+bytes in 473 ns instead of 3,014 ns on ACER (the receipt's `speedup_vs_host8=6.4x`) and in 165,937 ps
+instead of 1,748,554 ps on the cloud.
 
 Checked from the cloud side, recorded beside the receipt: the bench's chained unit
-(`pid = sha16(pid + "|agent")`) is not host8's mint — the `|agent` rule appears nowhere in host8-serve
-— and its raw-hash and `fnv1a64` rows are not per-request host8 work. What each :5088 route runs per
+(`pid = sha16(pid + "|agent")`) is not host8's mint — the `|agent` rule is not in the vendored
+host8-serve sources (`host8/vendor/federation-1024/servers/host8-serve/src/`, 4 files) — and its
+raw-hash and `fnv1a64` rows are not per-request host8 work. What each :5088 route runs per
 seat is `tuple60d` then `resolve_instance_pid` (main.rs:624-661: two or three `sha16` plus string
 building), reached from `/summon`, `/launch-plan`, `/summon-batch`, `/shadow-parity` and
-`/replay-prep`. No native per-request "200 ns emitter" exists in the Rust host; the kernel's spawn
+`/replay-prep`. Those vendored sources have no native per-request "200 ns emitter"; the kernel's spawn
 path is a counter. `host8/examples/instance_pid_bench.rs` (added here) times that mint through the
-compiled byte-identical slice, with the bench's own harness: on the cloud, **5.77 µs** per seat as
-written and **1.44 µs** with table hex (5.85 and 1.69 µs with the served binary's build profile),
-identical on 1,000,001 mints, PID digest `4fa68d74…`. ACER can run the same example for its row.
+compiled byte-identical slice, with the bench's own harness: on the cloud, **5,768,533 ps** per seat
+as written and **1,444,609 ps** with table hex (5,853,570 and 1,687,945 ps with the served binary's
+build profile; `ps_per_op_median`, the middle of 3 runs, in `CLOUD-ROWS.hbp`), identical on
+1,000,001 mints, PID digest `4fa68d74…`. ACER can run the same example for its row.
 
 The table-hex change is proposed, not applied: host8-serve is upstream (federation-1024), so it
 belongs there first, with `sha16_matches_node_crypto` and the Rust 1.81 gate, and aether re-vendors
@@ -350,9 +368,13 @@ code, and the seat's guess that later commits explain a difference is not needed
 | trit encode, 64-bit PID → 41 trits | 79 ns | 126 ns |
 | trit decode, 41 trits → PID | 216 ns | 308 ns |
 | binary PID emit (`sha16(hex16(pid) + "\|agent")`, no allocation) | 278 ns | 89 ns |
-| ternary PID emit, as the bench writes it (unpack, emit, repack) | 599 ns | 543 ns |
+| ternary PID emit, as the bench writes it (unpack, emit, repack) | 600 ns | 543 ns |
 | **ternary PID emit kept as `TritWord`** (cloud probe `cloud/direct.rs`) | **304 ns** | **70 ns** |
-| `prism` + `unprism` seal, K = 27 | 23 µs | 12.5 µs |
+| `prism` + `unprism` seal, K = 27 | 23,253 ns | 12,456 ns |
+
+Integer ns: `ps_per_op_median` rounded to the nearest ns, halves up ((ps + 500) / 1000). ACER:
+invocation 1 of `PROOF-RAW-NANOSECONDS.log` (invocation 2 gives 79, 216, 281, 598 and 22,894 ns),
+and for the `TritWord` row ACER's later direct probe (304,122 ps, below); cloud: `cloud/CLOUD-ROWS.hbp`.
 
 Read beside the sheet. `TritWord::pack` stores the base-3 value of its digits (`kernel/tribit/src/
 lib.rs:258-269`), so the 41-trit word of a PID is the PID's own integer — the bench's own gate
@@ -362,8 +384,8 @@ Holding the PID as `TritWord(pid)` and unpacking digits only where a consumer re
 lanes, a glyph) gives the same word on 100,001/100,001 steps and the same 41 trits on 100,000/100,000,
 at the binary cost; no change to the canonical kernel is needed for that. Two scope notes kept beside
 the sheet: the chained emit (`"|agent"`) is the office chain rule, not host8's per-seat mint (that is
-`tuple60d` + `resolve_instance_pid`, 1.44–5.85 µs above), and the hash under both lanes is binary
-SHA-256 — a ternary-native hash is not what was measured.
+`tuple60d` + `resolve_instance_pid`, 1,444,609–5,853,570 ps above), and the hash under both lanes
+is binary SHA-256 — a ternary-native hash is not what was measured.
 
 ## Shadow cats in aether (2026-10-18)
 
@@ -418,6 +440,11 @@ recorded file hash; its `.hbp` trailer `3c4780ed…` equals USIM `books/CHAIN-TO
 release profile the owner names there (`:431`); at opt-level 0 one byte differs, from `powi(6)` folded at
 build time versus computed at run time. The owner's rule on number types is quoted in `main.rs:22-23`:
 "the system needs int for trit calculations and float for binary"; the README lists every `f64` line.
+That `f64` code is the owner's and runs as written, an owner float lane. The delivered copies here
+carry the same bytes: `FABLE5-SHADOWCAT-REMADE-BYTE-EXACT-2026-10-18/src/main.rs`, `bin/verify.rs` and
+`bin/callingchain.rs` equal `shadowcat/src/` (sha256 `c3105169…`, `20f6a8d7…`, `50be643c…`), and so
+does `acer-shadowcat-sha256-2026-10-18/src/bin/verify.rs`. Those four files have 71 lines that name
+`f64` or a float method (31, 14, 12 and 14), kept as delivered.
 
 **Matrix in colour** (`colour/matrix-in-colour/`). All 66 files of `asolaria-matrix-in-colour` @
 `7035def`, unchanged (66/66 blob ids, 62/62 ACER sums, 27/27 sidecars). `verify-frames.py` is ported to
@@ -443,15 +470,19 @@ limits (radius √27 M; −2M to +7M edge-on) are exact. These are known theorem
 (three-distance theorem, icosahedral group, Euler's formula, cycle rank, Bardeen's shadow). Points where
 a record says more than the arithmetic: the three-gap bound holds for any stride, coprime or not (as the
 owner's own later sweep shows); 31 is the number of independent cycles (the cycle space has 2^31
-elements); the "pole-on" table was computed at 15°, and exactly on the axis the shadow is round; the
-0.05 % at zero spin is a sampling artifact. Law 34 and the buckyball inside a black hole are recorded as
-conjectures, and nothing here tests them.
+elements); the "pole-on" table was computed at 15°, and exactly on the axis the shadow is round. At
+zero spin the record prints an edge-on spread of 0.0500 % (`RUN-2026-07-26.txt` section [6]; the
+program computes a = 0 as a = 10^-6); an exact replica of its 4,000-step sample gives that row with the
+first endpoint left out, 0.0000 at four places with all 4,001 samples, and the exact zero-spin shadow
+is a circle of radius √27 M (`cloud/maths/logs/check_kerr.log`, [B1]). Law 34 and the buckyball
+inside a black hole are recorded as conjectures, and nothing here tests them.
 
 **Items 2-5.**
 - Step 4d (ACER): one thread, deterministic algorithms and the MKL AVX2 pin give the same three
   checkpoints as the unpinned deterministic run (`9166cdbe…`, `be3ba29f…`, `7a920ac4…`); with the default 4
-  threads the bytes change run to run. ACER's TritWord rows (encode 79.3 ns, decode 216.1 ns, ternary
-  emit 598.5-599.8 ns) match the proof sheet; the 70 ns direct probe is
+  threads the bytes change run to run. ACER's TritWord rows (printed as `ns=79.3`, `ns=216.1` and
+  `ns=598.5-599.8`) match the proof sheet's raw rows (79,307 / 79,252 ps, 216,128 / 216,119 ps and
+  599,783 / 598,472 ps); the 70 ns direct probe is
   `proof-nanoseconds-ternary-2026-10-18/cloud/direct.rs` in this repository.
 - Keys: the HERSELF key writer is `asolaria_herself.py` (already here); the CONSTELLATION and KERNEL
   key writers are not on ACER. The KERNEL key has two recorded versions: `FABLE5-KERNEL-FED.hbp`
@@ -476,25 +507,29 @@ conjectures, and nothing here tests them.
   22 tie choices read off the stored key it outputs `cce4f1e8…` byte-exact, which shows the tie order is
   the only open detail, not a regeneration from the seed alone.
 - Generators: the SPHERE, TIMEFIX and THREE-BODIES first-run items are not on ACER (writers' relatives
-  and the final THREE-BODIES receipt were sent; all were already public in USIM). The 1.8499 baseline in
-  `FABLE5-PLAY-KEYS-ENWIK9.hbp` is not printed by `rime_bpc.py`: it is the `cm3ti-gt256` run in USIM
-  `receipts/operator/prior-test.log` (payload 2,285,979 B + decoder source 26,377 B = 2,312,356 B over
-  10,000,000 bytes), and the 26,377-byte decoder is `cm3ti_gt256.rs`, still not found.
+  and the final THREE-BODIES receipt were sent; all were already public in USIM). The baseline that
+  `FABLE5-PLAY-KEYS-ENWIK9.hbp` records as 1.8499 is not printed by `rime_bpc.py`: it is the
+  `cm3ti-gt256` run in USIM `receipts/operator/prior-test.log` (payload 2,285,979 B + decoder source
+  26,377 B = 2,312,356 B over 10,000,000 bytes, so 18,498,848 bits per 10,000,000 bytes), and the
+  26,377-byte decoder is `cm3ti_gt256.rs`, which is not on ACER (scope table above).
 
 **Round 2 from ACER** (`FABLE5-REGEN-MASTER-AND-ROUND2-RECEIPTS-2026-10-18/`, with the batch receipt
 `FABLE5-REGEN-BATCH-2026-10-18.hbp`; each folder below passes its own `sha256sum -c`).
 - `FABLE5-REGEN-DIRECT-PROBE-ON-ACER-2026-10-18/`: ACER compiled `proof-nanoseconds-ternary-2026-10-18/cloud/direct.rs`
   unchanged against its own tribit kernel (`50e4cb85…`, through a two-line shim crate) with Rust 1.81: parity
-  100,001/100,001 words and 100,000/100,000 41-trit digits; the bench form (unpack, emit, repack) 698.6 ns,
-  the `TritWord` direct form 304.1 ns, median of 3 runs, one thread, i5-8300H. The difference from the
-  cloud's 70 ns is the SHA-256 under the emit: the cloud Xeon has SHA instructions, the i5 does not.
+  100,001/100,001 words and 100,000/100,000 41-trit digits; the bench form (unpack, emit, repack)
+  698,646 ps, the `TritWord` direct form 304,122 ps (`ps_per_op_median`, the middle of 3 runs), one
+  thread, i5-8300H. The difference from the cloud's 70,457 ps is the SHA-256 under the emit: the cloud
+  Xeon has SHA instructions, the i5 does not.
 - `FABLE5-REGEN-SELF-SEED-3078-ACER-653e3d9b-2026-10-18/`: ACER holds `FABLE5-SELF-SEED-3078.hbi` only as
   `653e3d9b…` (three copies), not the `5c040e04…` version the CONSTELLATION GGUF holds. Its writer,
   `emit-self-seed-binary.py`, takes the 38 largest files of several office globs plus 7 laws files, so
   its output depends on what the office held when it ran.
 - KERNEL key: the body beside the sidecar on ACER is `202ff2f0…` (the FED version), so that sidecar holds;
   ACER keeps both versions, and the public one is `f075f5c6…`.
-- No recorded `PYTHONHASHSEED` or tie order exists for the HERSELF or CONSTELLATION key runs.
+- ACER's round-2 receipt records no `PYTHONHASHSEED` and no tie order for the HERSELF or
+  CONSTELLATION key runs, over the receipts, `KEY-3174.hbp`, `asolaria_herself.py` and ACER's absorb
+  `.py`/`.hbp`/`.md`/`.sh` files it searched (`FABLE5-REGEN-ROUND2-2026-10-18.hbp:9`).
 - `FABLE5-REGEN-RELEASED-4-RULE-7M-2026-10-18/`: the four HyperBEHCS files held for the owner's word,
   released by the owner ("Release all 4"); 0 credential hits.
 - `FABLE5-REGEN-FED-KERNEL-3174-202ff2f0-2026-10-18/`: the FED version of the KERNEL key

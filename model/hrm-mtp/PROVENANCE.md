@@ -262,7 +262,7 @@ has no counterpart in bigpickle-rebuild. It imports the Falcon lib (lines 36-38)
 per sampled node (line 97). Its inputs are the feed `D:/PID-Registration-Office/fabric-feed/
 supervisors-fabric-feed-2026-06-10.hbp` (line 33; the script exits 2 without it, line 43) and
 `preExistenceNode` from the ASOLARIA-AS-NEURAL-NETWORK repository (lines 25-29, 39). The feed is not
-in any repository on disk, so the script's run cannot be reproduced here; it is not vendored (line 27
+in any repository on this container, so the script's run cannot be reproduced here; it is not vendored (line 27
 holds a Windows user-profile path). The two functions it calls are ported here.
 
 ## HRM trained weights

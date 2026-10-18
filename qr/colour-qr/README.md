@@ -124,7 +124,7 @@ same result on every plane (240 of 240, "Resampled copies"). They differ here:
   -2147483648,0, contiguous "1 / 1", and saves `B`×10 then `A`×10 (sha256 dc55361ddb4a4fe3…).
   Rust gives keys 0, 2147483648, contiguous 1/2147483649, and `A`×10 then `B`×10 (sha256
   91d64712ba9d8b96…). Both QR reads return the same text for both planes; the two differ in
-  `take`. Below 2^31 the two indices are equal (2^31 chunks × 2,100 B is about 4.5 TB).
+  `take`. Below 2^31 the two indices are equal (2^31 chunks × 2,100 B is 4,509,715,660,800 B).
 - **Alpha 0.** Measured on the wiki_qr fixture rewritten as RGBA with alpha 0 on every pixel:
   the page's file path (`createImageBitmap`, canvas, `getImageData`, index.html:10282-10287)
   hands `take` R, G, B and A all 0 on all 308,025 pixels, so the page reads "no symbol in this

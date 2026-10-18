@@ -9,8 +9,10 @@
 //!
 //! Not ported: `buildQuantizedSubstrateReceipt` (`rotor:13-16` requires it from
 //! `src/behcs/hyperbehcsQuantSubstrate.js`), which shapes the receipt object and computes its
-//! five fingerprints. No branch tip of the owner's reachable repositories and no commit of the
-//! git stores on this disk holds that path (PROVENANCE.md, "Not brought in"). The rest of the
+//! five fingerprints. When this crate was built, no branch tip of the owner's reachable
+//! repositories and no commit of the git stores on this container held that path; the file
+//! arrived from the ACER seat on 2026-10-18 and is not run here (PROVENANCE.md, "Not brought
+//! in"). The rest of the
 //! rotor writes JSON descriptors to `D:\` and is not on the quant path.
 
 use std::collections::HashMap;

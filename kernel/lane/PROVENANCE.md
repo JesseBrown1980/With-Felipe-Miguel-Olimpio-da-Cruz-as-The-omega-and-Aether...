@@ -136,7 +136,7 @@ Every vendored file and block was read and grepped for e-mail addresses, phone n
 - An envelope of 513-1024 bytes in the slot fails every `run()` receive into its 512-byte buffer. `dispatch_dequeue_bytes` restores the slot (envelope/mod.rs:208-211). The 32nd failure emits `SOS!`, whose send is refused because the slot is still occupied. Then comes `sys_exit(2)`.
 - `sys_gnn_infer` writes `0` (`RoutingDecision::Local`) and returns `Ok(1)` for every input, because the model is not loaded (gnn/mod.rs:125-130). `aggregate_verdict` returns `Hold`, and `rank_top_n` returns items in input order with scores 1000, 999, and so on.
 - `sys_tier_query` maps `_big-pickle-quarantine` to Hidden, `sovlinux` to Shadow, `vault/secret/` to Secret, `stealth/` to Stealth and `restricted/` to Restricted (case-insensitive), and everything else to Public. An empty path, a NUL or non-UTF-8 input gives `Invalid`.
-- Release build on this host (x86_64, 4 CPUs, load average about 2). Each figure is the median of 7 rounds (elapsed ns / iterations, integer); the range covers 3 runs:
+- Release build on this host (x86_64, 4 CPUs, load average about 2: host context, as a whole number). Each figure is the median of 7 rounds (elapsed ns / iterations, integer); the range covers 3 runs:
 
   | Operation | Time |
   |---|---|

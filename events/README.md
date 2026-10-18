@@ -19,16 +19,21 @@ are percent-escaped exactly as that parser decodes them.
   manifests go to `graph-runtime-manifests.ndjson` (`graphRuntimeStore.js:8,206`).
 
 Upstream bytes are pinned under `vendor/legacy/` (`UPSTREAM.sha256`); see `PROVENANCE.md` for what is
-and is not brought in, the boundary producers, and measured parity.
+and is not brought in, the boundary producers, and measured parity. One measured input class differs
+from the served JS: two domains cut by the 40-unit clip at different high surrogates (JS risk 4, port
+risk 0), because HBP rows are UTF-8 and the port writes U+FFFD for the lone surrogate. The 800-case
+corpus does not reach that class (`PROVENANCE.md`, the UTF-16 bullet and Measured).
 
 ## Lanes
 
 Hot lane (per request): Rust only, integers and HBP text. No Node, V8, JSON, HTTP or Python. The
 NDJSON store from `graphRuntimeStore.js` is not ported — the Rust producer writes the HBP row.
 
-Cold lane (CI only): `tools/events_referee.py`, a stdlib-only mirror of the upstream JS, writes the
-expected EVENT rows (`tests/fixtures/expected-events.hbp`) and a test-only MANIFEST parity record per
-manifest (`tests/fixtures/expected-manifests.hbp`), and `--check`s them.
+Cold lane (verification only): `tools/events_referee.py`, a stdlib-only, integer-only mirror of the
+upstream JS, writes the expected EVENT rows (`tests/fixtures/expected-events.hbp`) and a test-only
+MANIFEST parity record per manifest (`tests/fixtures/expected-manifests.hbp`), and `--check`s them.
+Its CI job is drafted but not yet merged into `scripts/check-all.sh` or `.github/workflows/gate.yml`;
+until then the commands below are run by hand (`PROVENANCE.md`, Measured).
 
 ## Build and verify
 

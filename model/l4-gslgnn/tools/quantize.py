@@ -3,7 +3,8 @@
 
 The checkpoint is a torch zip; data.pkl is unpickled with a restricted Unpickler that resolves only
 collections.OrderedDict, torch._utils._rebuild_tensor_v2 and torch.FloatStorage, and each tensor's bytes are
-read from <archive>/data/<key> as little-endian float32. Each weight becomes floor(w * 2^24 + 1/2), exactly.
+read from <archive>/data/<key> as little-endian float32 bit patterns. Each weight becomes floor(w * 2^24 + 1/2),
+computed from its sign, exponent and significand bits in integers (no float is formed).
 The state dict's keys and its _metadata module paths must be exactly those of GSLGNN(6, 64) built with
 torch_geometric's GCNConv (gsl_gnn.py:17-19, 109-135): conv*.lin.weight with conv*.bias and an aggr_module per
 conv. gslgnn_inference_server.py:24-35 loads such a checkpoint with every key unchanged.
@@ -18,7 +19,6 @@ import pickle
 import struct
 import sys
 import zipfile
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CHECKPOINT = ROOT / "vendor" / "fnns" / "models" / "gslgnn_w9_3_seq47_v2.pt"
@@ -141,7 +141,7 @@ class CheckpointUnpickler(pickle.Unpickler):
         raw = self.archive.read(f"{self.prefix}/data/{key}")
         if len(raw) != 4 * numel:
             raise pickle.UnpicklingError(f"storage {key} holds {len(raw)} bytes, expected {4 * numel}")
-        return Storage(struct.unpack(f"<{numel}f", raw))
+        return Storage(struct.unpack(f"<{numel}I", raw))
 
 
 def load_state_dict(path):
@@ -173,8 +173,17 @@ def check_layout(state):
         raise SystemExit("QUANTIZE|refused=module_versions")
 
 
-def q24(value):
-    return math.floor(Fraction(value) * (1 << FRAC_BITS) + Fraction(1, 2))
+def q24(bits):
+    # floor(w * 2^24 + 1/2) for the float32 w with these bits: w = sign * significand * 2^exponent exactly.
+    sign, field, fraction = bits >> 31, (bits >> 23) & 0xFF, bits & 0x7F_FFFF
+    if field == 0xFF:
+        raise SystemExit(f"QUANTIZE|refused=not_finite|bits={bits:08x}")
+    significand, exponent = (fraction, -149) if field == 0 else (fraction | 1 << 23, field - 150)
+    value = -significand if sign else significand
+    shift = exponent + FRAC_BITS
+    if shift >= 0:
+        return value << shift
+    return ((value << 1) + (1 << -shift)) >> (1 - shift)
 
 
 def render_row(values, indent):

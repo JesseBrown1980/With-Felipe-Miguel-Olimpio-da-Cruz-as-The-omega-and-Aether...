@@ -2,7 +2,7 @@
 """Referee for the Rust port in src/: mirrors edgeRiskEngine.js and the graphRuntimeStore.js
 event/manifest builders line by line (behcs-256@818cc235), and writes the HBP EVENT rows the
 Rust producer must match (one per buildGraphEvent) and a MANIFEST parity record per
-buildActionManifest (a test-only record; upstream never feeds manifests to gnnDataExport.js).
+buildActionManifest (test-only; gnnDataExport.js@818cc235 reads only graph-runtime-events.ndjson).
 
 No args: (re)write tests/fixtures/{events-input,expected-events,expected-manifests}.hbp.
 --check:  regenerate in memory and diff against those committed fixtures; non-zero on any drift.

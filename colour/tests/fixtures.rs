@@ -203,8 +203,9 @@ fn colorpid_fixture() {
     assert_rows("colorpid.hbp", &rows);
 }
 
-/// The referee's 42-byte digest record of one colour (`referee/colour_referee.py:352-356`,
-/// `<BBddddd`: rainbow12, sphere27, h, s, v, s*v, blast_radius). A check format, not upstream output.
+/// The referee's 42-byte digest record of one colour (`referee/colour_referee.py:615-619`,
+/// `<BBddddd` as bit patterns: rainbow12, sphere27, h, s, v, s*v, blast_radius). A check
+/// format, not upstream output.
 fn colorpid_record(c: [u8; 3]) -> [u8; 42] {
     let (h, s, v) = colorpid::hsv(c);
     let mut out = [0u8; 42];
@@ -221,7 +222,7 @@ fn colorpid_record(c: [u8; 3]) -> [u8; 42] {
 
 /// The ColorPID values `omni_hotel.py:51-69` prints for `PID0..PID{n-1}` (occupied rainbow12 and
 /// sphere27 classes, `dist(PID0, PID500)` to one decimal, the first maximum of `saturation`), in the
-/// referee's `OMNI` row (`referee/colour_referee.py:389-396`); upstream prints them as text.
+/// referee's `OMNI` row (`referee/colour_referee.py:743-753`); upstream prints them as text.
 fn omni_row(n: usize) -> String {
     let colors: Vec<(String, [u8; 3])> = (0..n)
         .map(|i| {

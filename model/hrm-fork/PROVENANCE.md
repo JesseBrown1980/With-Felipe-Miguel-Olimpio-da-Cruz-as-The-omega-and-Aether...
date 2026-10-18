@@ -257,7 +257,8 @@ E9|system=mix|archive_bytes=236419493|bpc=1.8914|roundtrip_exact=1|sha=159b85351
 
 Both archive sizes equal the receipt's mix rows exactly, and both restore byte-exact. The rows are
 committed in `tests/fixtures/hp-mix-enwik.hbp`. Wall times were taken with `date +%s` on a 4-core
-container shared with other jobs (load average about 9), so they are not speed figures for hp_mix.
+container shared with other jobs (load average about 9: host context, as a whole number), so they
+are not speed figures for hp_mix.
 `decoder_src` in the receipt (12,918) is the size of the `7e6c865` blob (section 1); this build prints
 13,074, the size of the vendored `f91bb2c` blob.
 

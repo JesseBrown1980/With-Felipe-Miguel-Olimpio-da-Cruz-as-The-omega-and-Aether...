@@ -1,6 +1,6 @@
 # exact references from tools/math_referee.py (stdlib); do not edit
 # SQRT32_F32 = float32(32 ** 0.5) = significand * 2^-shift
-# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits
+# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, decided from integer bounds
 # BYTE q24 = floor(float32(byte / 255) * 2^24 + 1/2)
 CONST|name=LN2_Q62|value=3196577161300663915
 CONST|name=SQRT32_F32|significand=11863283|shift=21

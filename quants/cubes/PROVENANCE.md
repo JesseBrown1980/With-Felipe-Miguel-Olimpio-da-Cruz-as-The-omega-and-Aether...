@@ -69,7 +69,9 @@ copy. Q-PRISM lines 101-128 and 265-273 sit inside range 55-296 here and are als
 ## Used in place, not copied
 
 - aether `eval/vendor/qprism-control/qprism/cube_absorb.py` (blob 542d6573…, equal to QP
-  b4a21a2), run by `tools/qprism_receipts.py` with numpy (cold lane).
+  b4a21a2), run by `tools/qprism_receipts.py` with numpy (cold lane). Float runs there only inside
+  the owner's code: `cube_absorb.py` and the fixture-window generator of `tests/test_cube_absorb.py:10-13`
+  (blob f8099ab1…), whose lines 11-13 and line 33 the tool copies unchanged (numpy float64).
 - aether `quants/hyperbehcs` (slots 9-12) and `model/l0-edge` (`jsnum::Dbl`), path dependencies.
 
 ## Read but not vendored (receipts that carry private data, or JSON)
@@ -87,7 +89,7 @@ document ids; `ingest-google-to-cube.mjs` carries the address at line 40 and a D
 
 **`buildQuantizedSubstrateReceipt`.** `rotor:13-16` requires it from
 `src/behcs/hyperbehcsQuantSubstrate.js` under the rotor's `ROOT` (two directories above the
-script). Measured 2026-10-18:
+script). Measured 2026-10-18, before this file's commit f966009 (01:10 UTC):
 
 - Branch tips: 238 repository names of the owner's account (census list plus the account's
   repository listing), 237 reachable by `git clone` (not reachable: `my-history9`). A blobless
@@ -104,6 +106,12 @@ script). Measured 2026-10-18:
   `buildQuantizedSubstrateReceipt user:JesseBrown1980` and also 0 for
   `globalRoomAddress user:JesseBrown1980`, which `liris-sector-emitter.mjs:31` (vendored here)
   defines.
+- Delivered since (2026-10-18, after that commit): the ACER seat transferred
+  `hyperbehcsQuantSubstrate.js` (6,893 B, blob 9a857b3e…; `buildQuantizedSubstrateReceipt` at :119).
+  It is committed in this repository at `acer/Asolaria/src/behcs/` (46cc8c5, 10:20 UTC) and again
+  under `docs/handoffs/acer-post60d-2026-10-18/FABLE5-REGEN-ITEM8-HYPERBEHCS-HOME-AND-QUANT-2026-10-18/quant/src/behcs/`
+  (98731f8). This crate does not run it yet, so the slot-26 receipt shape and its five fingerprints
+  are still not reproduced here.
 
 **Slot 27 engines.** Located in asolaria-behcs-256 @ 818cc235 (`main` of the public repository,
 `git ls-remote` 2026-10-18), `tools/cube/`. Each sets its root to an operator-local Windows

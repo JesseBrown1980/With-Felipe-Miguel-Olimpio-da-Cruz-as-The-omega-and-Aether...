@@ -103,9 +103,13 @@ pub struct Gate {
 }
 
 /// Forward gate (room-dispatcher.mjs:136-141) on a score in e4 units, the tree's SCORE-lane unit. The
-/// mock score `k/1000` enters as `10k` (`10k >= 7200` exactly when `k/1000 >= 0.72`). A score from
-/// another lane enters as `Math.floor(score * 10000)` in binary64, which is `>= 7200` exactly when
-/// `score >= 0.72`; a rounded conversion (`toFixed(4)`) maps 0.71996 to 7200.
+/// mock score `k/1000` enters as `10k` (`10k >= 7200` exactly when `k/1000 >= 0.72`). A binary64 score
+/// `s` in [0, 1] from another lane enters as the floor of `s * 10000` after that product is rounded to
+/// 53 bits, nearest-even, on the integer mantissa (the value V8's `Math.floor(score * 10000)` gives,
+/// float running in that lane). That is `>= 7200` exactly when the bit pattern of `s` is
+/// `>= 0x3FE7_0A3D_70A3_D70A` (binary64 `0.72` = 6485183463413514 / 2^53), i.e. when upstream's
+/// `score >= 0.72` holds. The floor of the exact, unrounded product is 7199 at that `s`; a `toFixed(4)`
+/// conversion maps binary64 `0.71996` to 7200.
 pub fn hookwall_gate(score_e4: u32) -> Gate {
     if score_e4 >= HOOKWALL_PASS_THRESHOLD_E4 {
         Gate {

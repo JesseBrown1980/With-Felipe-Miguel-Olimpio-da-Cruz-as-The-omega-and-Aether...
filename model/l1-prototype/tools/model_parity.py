@@ -8,10 +8,11 @@ keys the torch_geometric GCNConv layout lacks and which it does not expect (LAYO
 with the key rename of behcs-256 services/gnn-sidecar/inference_server.py:11 (VARIANT row: its forward's float32
 bits against the fallback model's on every fixture edge). Every case of tools/int_referee.py goes through the
 fallback model in eval mode: encode_nodes, get_edge_embeddings, compute_prototype_distances and forward
-(prototype_gnn.py:65-132). KERNEL_ENV is set before torch loads, as model/l0-edge/tools/model_parity.py does, so
-every x86-64 host runs the same kernels. Float runs only inside torch (the owner's float32 lane): this tool builds
-each input tensor from float32 bit patterns made with integer arithmetic, reads every output by its bit pattern
-and converts it with integer arithmetic (tools/quantize.py float32_units).
+(prototype_gnn.py:65-132). KERNEL_ENV is set before torch loads, as model/l0-edge/tools/model_parity.py does,
+overriding the caller's values of those variables; --check was measured to pass under the caller environments
+PROVENANCE.md lists (Measured agreement), on one Intel AVX-512 host. Float runs only inside torch (the owner's
+float32 lane): this tool builds each input tensor from float32 bit patterns made with integer arithmetic, reads
+every output by its bit pattern and converts it with integer arithmetic (tools/quantize.py float32_units).
 Writes tests/fixtures/expected-model.hbp; --check regenerates it in memory and diffs. --sweep prints, without
 writing anything, the two forwards compared on random graphs at growing input scales (SWEEP rows, fixed seed).
 Run: <torch venv>/bin/python -I tools/model_parity.py [--check | --sweep]

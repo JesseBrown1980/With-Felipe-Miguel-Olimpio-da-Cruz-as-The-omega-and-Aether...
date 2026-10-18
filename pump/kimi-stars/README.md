@@ -88,8 +88,8 @@ need.
   seeds both programs take. Six `kimi-k3` seeds: random 3,110 B; repeated 81-byte records
   (`GC tie_ge_tau=20`); every triple of an 8-step grid twice (10,416 voxels per being, every
   radial bin occupied); 3,000 B of `0x80` (all triples tied, `tot` 0, empty cubes, `RIMED`
-  zeros); red-only (two empty beings); and a 300,000 B body whose 64 triples repeat about 1,560
-  times each (counts above 255 clipped, shell 7). Three `stars-shells` seeds: random 3,796 B
+  zeros); red-only (two empty beings); and a 300,000 B body of 100,000 triples over 64 distinct
+  values, each repeating 1,478 to 1,668 times (counts above 255 clipped, shell 7). Three `stars-shells` seeds: random 3,796 B
   (stops at round 4), 30 B (stops at round 5) and 3,000 B over 8 byte values. The tenth, a random
   80 B `kimi-k3` seed, is taken by neither: `divide_kimi_k3.py` exits with status 1 (`TypeError`
   from `~kept_mask`, `:65`), the pump exits with status 2, and neither writes a file.

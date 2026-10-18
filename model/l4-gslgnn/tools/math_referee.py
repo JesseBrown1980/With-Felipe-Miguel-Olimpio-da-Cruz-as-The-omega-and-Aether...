@@ -1,26 +1,32 @@
 #!/usr/bin/env python3
 """Writes tests/fixtures/expected-math.hbp: exact references for the scalar steps of src/model.rs and src/lib.rs.
 
-CONST LN2_Q62: floor(ln 2 * 2^62 + 1/2), Python decimal at 60 digits.
-CONST SQRT32_F32: the float32 of the Python scalar 32 ** 0.5 (gsl_gnn.py:71, keys.shape[1] == 32), which torch
-uses as the divisor of a float32 tensor, as significand * 2^-shift.
-SIGMOID rows: floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits; for two classes,
-softmax(logits)[1] (gsl_gnn.py:211-214) is the sigmoid of logits[1] - logits[0].
-BYTE rows: floor(f * 2^24 + 1/2) for f the float32 of the double byte / 255, the conversion that
-asolaria-score.mjs:113 (binary64 division) and gslgnn_inference_server.py:51 (torch.float32) apply.
+Integer arithmetic only: no float, no decimal. Each irrational reference is decided from integer lower and upper
+bounds at a working precision that doubles until both bounds round to the same integer.
+CONST LN2_Q62: floor(ln 2 * 2^62 + 1/2), from ln 2 = sum over k >= 1 of 1 / (k * 2^k).
+CONST SQRT32_F32: the float32 of the binary64 32 ** 0.5 (gsl_gnn.py:71, keys.shape[1] == 32), which torch uses as
+the divisor of a float32 tensor, as significand * 2^-shift; sqrt from math.isqrt, each rounding nearest-even.
+SIGMOID rows: floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, e^-t bounded by a Taylor series and squarings;
+for two classes, softmax(logits)[1] (gsl_gnn.py:211-214) is the sigmoid of logits[1] - logits[0].
+BYTE rows: floor(f * 2^24 + 1/2) for f the float32 of the binary64 byte / 255, the conversion that
+asolaria-score.mjs:113 (binary64 division) and gslgnn_inference_server.py:51 (torch.float32) apply; both roundings
+to nearest, ties to even, done on integers.
 Stdlib only. --check regenerates in memory and diffs.
 """
 import math
 import pathlib
-import struct
 import sys
-from decimal import ROUND_FLOOR, Decimal, localcontext
-from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 EXPECTED = ROOT / "tests" / "fixtures" / "expected-math.hbp"
 FRAC_BITS = 24
 LOGIT_BITS = 48
+BINARY64_BITS = 53
+FLOAT32_BITS = 24
+FLOAT32_EXPONENTS = (-126, 127)  # unbiased exponents of the normal float32 values
+START_PRECISION = 128
+MAX_PRECISION = 1 << 14
+HALVINGS = 16  # e^y = (e^(y / 2^16))^(2^16)
 
 
 class Lcg:
@@ -33,12 +39,134 @@ class Lcg:
         return (self.state >> 11) % bound
 
 
+def ceil_div(num, den):
+    return -((-num) // den)
+
+
+def round_bits(n, sticky, bits):
+    # n + f (0 <= f < 1, sticky = f > 0) to `bits` significant bits, nearest, ties to even: (m, shift), m * 2^shift.
+    drop = n.bit_length() - bits
+    if drop <= 0:
+        if sticky:
+            raise SystemExit("MATH_REFEREE|refused=rounding|reason=too few bits")
+        return n, 0
+    m, rest, half = n >> drop, n & ((1 << drop) - 1), 1 << (drop - 1)
+    if rest > half or (rest == half and (sticky or m & 1)):
+        m += 1
+        if m == 1 << bits:
+            m, drop = m >> 1, drop + 1
+    return m, drop
+
+
+def ratio_to_float(num, den, bits):
+    # num / den (both positive) to `bits` significant bits, nearest, ties to even: (m, e), the value m * 2^e.
+    shift = bits + 2 - (num.bit_length() - den.bit_length())
+    if shift >= 0:
+        quotient, rest = divmod(num << shift, den)
+    else:
+        quotient, rest = divmod(num, den << -shift)
+    m, drop = round_bits(quotient, rest != 0, bits)
+    return m, drop - shift
+
+
+def sqrt_to_float(n, bits):
+    # sqrt(n) for an integer n > 0 to `bits` significant bits, nearest, ties to even: (m, e), the value m * 2^e.
+    shift = max(0, 2 * (bits + 2) - n.bit_length() + 2)
+    shift += shift & 1
+    root = math.isqrt(n << shift)
+    m, drop = round_bits(root, root * root != n << shift, bits)
+    return m, drop - shift // 2
+
+
+def to_float32(m, e):
+    # The float32 of the binary64 m * 2^e (m < 2^53), nearest, ties to even; refuses outside the normal range.
+    m, drop = round_bits(m, False, FLOAT32_BITS)
+    e += drop
+    if not FLOAT32_EXPONENTS[0] <= m.bit_length() - 1 + e <= FLOAT32_EXPONENTS[1]:
+        raise SystemExit("MATH_REFEREE|refused=float32_range")
+    return m, e
+
+
+def q24_of(m, e):
+    # floor(m * 2^e * 2^24 + 1/2) for m >= 0.
+    k = e + FRAC_BITS
+    if k >= 0:
+        return m << k
+    return ((m << 1) + (1 << -k)) >> (1 - k)
+
+
+def exp_bounds(num, den_bits, precision):
+    # (low, high) with low <= e^(num / 2^den_bits) * 2^precision <= high: the Taylor series of e^r for
+    # r = num / 2^(den_bits + HALVINGS), |r| < 1/2, with its tail bounded by 2 |r|^k / k!, then HALVINGS squarings.
+    r_bits = den_bits + HALVINGS
+    if abs(num) >= 1 << (r_bits - 1):
+        raise SystemExit("MATH_REFEREE|refused=exp_range")
+    one = 1 << precision
+    low = high = 0
+    k, power, factorial = 0, 1, 1
+    while True:
+        den = factorial << (r_bits * k)
+        low += (power * one) // den
+        high += ceil_div(power * one, den)
+        k += 1
+        power *= num
+        factorial *= k
+        tail = ceil_div(2 * abs(power) * one, factorial << (r_bits * k))
+        if tail <= 1:
+            low, high = low - tail, high + tail
+            break
+    if low <= 0:
+        raise SystemExit("MATH_REFEREE|refused=exp_bounds")
+    for _ in range(HALVINGS):
+        low = (low * low) >> precision
+        high = ceil_div(high * high, one)
+    return low, high
+
+
 def exact_sigmoid_q24(logit_q48):
-    with localcontext() as ctx:
-        ctx.prec = 60
-        t = Decimal(logit_q48) / Decimal(1 << LOGIT_BITS)
-        p = Decimal(1) / (Decimal(1) + (-t).exp())
-        return int((p * (1 << FRAC_BITS) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
+    # q = floor(2^24 / (1 + E) + 1/2), E = e^-t, decreasing in E; decided when both bounds of E give one q.
+    precision = START_PRECISION
+    while precision <= MAX_PRECISION:
+        low, high = exp_bounds(-logit_q48, LOGIT_BITS, precision)
+        one = 1 << precision
+
+        def q24(e_scaled):
+            return ((one << (FRAC_BITS + 1)) + one + e_scaled) // ((one + e_scaled) << 1)
+
+        if q24(low) == q24(high):
+            return q24(low)
+        precision <<= 1
+    raise SystemExit(f"MATH_REFEREE|refused=undecided|logit_q48={logit_q48}")
+
+
+def ln2_q62():
+    # ln 2 = sum 1 / (k * 2^k); the terms after k = K sum to less than 1 / ((K + 1) * 2^K).
+    precision = START_PRECISION
+    while precision <= MAX_PRECISION:
+        one = 1 << precision
+        low = sum(one // (k << k) for k in range(1, precision + 1))
+        high = sum(ceil_div(one, k << k) for k in range(1, precision + 1)) + ceil_div(one, (precision + 1) << precision)
+        q_low = ((low << 62) + (one >> 1)) >> precision
+        q_high = ((high << 62) + (one >> 1)) >> precision
+        if q_low == q_high:
+            return q_low
+        precision <<= 1
+    raise SystemExit("MATH_REFEREE|refused=undecided|ln2")
+
+
+def sqrt32_f32():
+    m, e = to_float32(*sqrt_to_float(32, BINARY64_BITS))
+    while m % 2 == 0:
+        m, e = m >> 1, e + 1
+    if e > 0:
+        raise SystemExit("MATH_REFEREE|refused=sqrt32")
+    return m, -e
+
+
+def byte_q24(byte):
+    if byte == 0:
+        return 0
+    return q24_of(*to_float32(*ratio_to_float(byte, 255, BINARY64_BITS)))
 
 
 def sigmoid_logits(rng):
@@ -56,29 +184,6 @@ def sigmoid_logits(rng):
     return logits
 
 
-def ln2_q62():
-    with localcontext() as ctx:
-        ctx.prec = 60
-        return int((Decimal(2).ln() * (1 << 62) + Decimal("0.5")).to_integral_value(rounding=ROUND_FLOOR))
-
-
-def float32(value):
-    return struct.unpack("<f", struct.pack("<f", value))[0]
-
-
-def sqrt32_f32():
-    divisor = Fraction(float32(32 ** 0.5))
-    shift = divisor.denominator.bit_length() - 1
-    if divisor.denominator != 1 << shift:
-        raise SystemExit("MATH_REFEREE|refused=sqrt32")
-    return divisor.numerator, shift
-
-
-def byte_q24(byte):
-    value = Fraction(float32(byte / 255))
-    return math.floor(value * (1 << FRAC_BITS) + Fraction(1, 2))
-
-
 def render():
     significand, shift = sqrt32_f32()
     rows = [
@@ -91,7 +196,7 @@ def render():
     header = (
         "# exact references from tools/math_referee.py (stdlib); do not edit\n"
         "# SQRT32_F32 = float32(32 ** 0.5) = significand * 2^-shift\n"
-        "# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, Python decimal at 60 digits\n"
+        "# SIGMOID q24 = floor(2^24 / (1 + e^-t) + 1/2), t = logit_q48 / 2^48, decided from integer bounds\n"
         "# BYTE q24 = floor(float32(byte / 255) * 2^24 + 1/2)\n"
     )
     summary = f"sigmoid={len(logits)}|bytes=256|sqrt32_f32={significand}/2^{shift}"

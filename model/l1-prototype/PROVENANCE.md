@@ -3,7 +3,8 @@
 This crate ports the trained L1 PrototypeGNN, with the weights of its run-1 checkpoint
 `prototype_model.pt`, into integer-only Rust. This file records where every upstream byte came
 from, which forward is ported and why, the measured agreement with the upstream class, the
-scalars upstream code derived from the model's output, and what is not on disk.
+scalars upstream code derived from the model's output, and what the searches before the gnn-sidecar cube did not
+find, with the scope each one searched.
 
 ## Lanes
 
@@ -88,12 +89,29 @@ own features. The L0 server, behcs-256 `services/gnn-sidecar/inference_server.py
 `3089da1d249f0eb76bb79e03a446714636474980`), renames `conv*.lin.bias` to `conv*.bias` and loads L0's checkpoint
 into torch_geometric `GCNConv`. For L1 the server file `prototype_inference_server.py` (sha256 `c4a36e8a…`, pinned by the
 gnn-sidecar cube `9859b576`) was transferred from ACER on 2026-10-18 and is at
-`acer/Asolaria/services/gnn-sidecar/prototype_inference_server.py` (see [Not on disk](#not-on-disk)); upstream records a rekey as the pending load path, bigpickle
-`src/fabric-thinker-gnn.mjs:15-16`: "When L1/L2/L4 also load (state_dict rekey pending), the full 4-layer immune
-cascade activates". Measured with the same rename (torch 2.14.1+cpu, torch_geometric 2.8.1, the kernel pin below;
-the `VARIANT` row of `tests/fixtures/expected-model.hbp`, which `tools/model_parity.py --check` regenerates): the
-checkpoint loads into the torch_geometric `GCNConv` model with no missing or unexpected keys, and that model's
-`forward` gives the same float32 bits as the fallback model, `0x3f7ffe5c`, on all 816 fixture edges.
+`acer/Asolaria/services/gnn-sidecar/prototype_inference_server.py` (see
+[Searched before the gnn-sidecar cube](#searched-before-the-gnn-sidecar-cube)). It builds
+`PrototypeGNN(node_input_dim=6, hidden_dim=64, num_classes=2, num_prototypes_per_class=3)` (line 50), tries a strict
+`load_state_dict` (line 53) and, on `RuntimeError`, loads `normalize_state_dict_keys` of the checkpoint (lines 54-55),
+which keeps every key the model has and renames `.lin.bias` to `.bias`, or `.bias` to `.lin.bias`, where the model has
+the renamed key (lines 29-47). With torch_geometric importable the strict load is refused (the torch_geometric `LAYOUT`
+row); measured with that function taken unchanged from the file (torch 2.14.1+cpu, torch_geometric 2.8.1), its 9 keys
+equal the `VARIANT` row's renamed keys in order, with the same tensors, and load with 0 missing and 0 unexpected keys.
+With torch_geometric unimportable the strict load succeeds into the fallback `GCNConv` (the first `LAYOUT` row). The
+server imports `models/prototype_gnn.py` from its own directory (lines 22-23). ACER's copy (sha256 `4edb9439…`, in
+`acer/Asolaria/services/gnn-sidecar/models/`) adds the method `get_edge_embeddings_from_nodes` (lines 80-84) and drops
+one trailing space (line 73); every other line equals the vendored file, as `acer/README.md` records. The owner
+seat's recheck records the serving environment on ACER, in their words
+(`docs/handoffs/gnn-recheck-2026-10-18/FABLE5-GNN-L1L2-RECHECK-NO-SHELL-2026-10-18.hbp:9`):
+`PyG_installed_win_py313=1(torch_2.13.0+cpu)`, `shim=servers_rename_lin.bias_to_bias`,
+`effect_with_PyG=L0+L1_served_WITH_message_passing_they_never_trained_with`,
+`serving_interpreter=CANNOT_SEE(l0_4792_logs_empty)`, tagged `MEASURED_code+CONJECTURE_env`. Upstream also records
+a rekey as the pending load path, bigpickle `src/fabric-thinker-gnn.mjs:15-16`: "When L1/L2/L4 also load
+(state_dict rekey pending), the full 4-layer immune cascade activates". Measured with the same rename (torch
+2.14.1+cpu, torch_geometric 2.8.1, the kernel pin below; the `VARIANT` row of `tests/fixtures/expected-model.hbp`,
+which `tools/model_parity.py --check` regenerates): the checkpoint loads into the torch_geometric `GCNConv` model
+with no missing or unexpected keys, and that model's `forward` gives the same float32 bits as the fallback model,
+`0x3f7ffe5c`, on all 816 fixture edges.
 `tools/model_parity.py --sweep` (300 random graphs of 2-9 nodes per scale `s`, features uniform in `[-s, s)` with at
 most 24 significant bits, seed `0x4e4b`) gives equal `forward` bits at every tested `s` up to `2^28` (1, `2^8`,
 `2^16`, `2^24`, `2^27`, `2^28`). At `s = 2^29`, 12 of 1,757 edges differ, by at most 2 Q24 units; the largest
@@ -141,13 +159,36 @@ The sigmoid is written for this stack, not upstream. Its first step is the range
 `model/l0-edge/src/model.rs` (`exp_neg`, `sigmoid_q24`; private there, so repeated here rather than reached through a
 dependency). That series is within 12 units of `2^-62` of `e^-|t|` (at most 18 terms, each rounded to half a unit, and
 `LN2_Q62` off by less than `3464/2^16` of a unit per octave: `LN2_Q62 - 2^62 ln 2` lies between `3463/2^16` and
-`3464/2^16`, from the integer bounds of `tools/int_referee.py`; every error measured, over 252,154 inputs that include
-each octave boundary, is below 4 units), so its quotient is within `2^-34` of `2^24 sigmoid(t)`. When the quotient
-lies within `2^-32` of a half, `sigmoid_q24` decides the side exactly from lower and upper sums of the series of
-`e^|t|`, at 128 bits and doubling until the sums decide, so it returns `floor(2^24 sigmoid(t) + 1/2)` for every logit.
-The series step alone (as `model/l0-edge/src/model.rs` has it at commit `f67b300`, and as this crate had it before
-the exact step) gives a value 1 away from that on 20 of the 736 boundary rows below; for example, logit_q48
-`-2903085619798773`, where `2^24 sigmoid` is `556 + 1/2 + 31891840/2^64` (floor at Q64), gives 556.
+`3464/2^16`, from the integer bounds of `tools/int_referee.py`), so its quotient is within `2^-34` of
+`2^24 sigmoid(t)`. Measured here with integers only (a scratch script, not committed, that mirrors `exp_neg` and
+brackets `2^62 e^-y` between integer lower and upper sums of the series of `e^y`; its mirror of the series step gives
+the fixture's value on 2,427 of the 2,447 `SIGMOID` rows, and the other 20 are the 20 boundary rows named below), the
+error `exp_neg(m) - 2^62 e^(-m / 2^62)`, in units of `2^-62`, on three input sets:
+
+- 1,949 distinct inputs: the 1,924 that the `SIGMOID` rows of `tests/fixtures/expected-int.hbp` give with
+  `|logit_q48| <= 18 * 2^48` (one of them is exactly `18 * 2^48`, which `sigmoid_q24` still evaluates; it saturates
+  only above), and the 26 octave boundaries `k * LN2_Q62` for `k = 0..25`, which share input 0 with them. The largest
+  error lies between `187874/2^16` and `187875/2^16` (between 2 and 3 units); 14 inputs are at 2 units or more and none
+  at 3. On the 26 boundaries the largest lies between `1731/2^16` and `1732/2^16`, and over each boundary with its
+  neighbours within 2 (128 inputs) between `63804/2^16` and `63805/2^16`.
+- 22,000 inputs uniform in `[0, 18 * 2^62]`, the whole range `sigmoid_q24` passes to `exp_neg` (`Lcg(0x5EED)` of
+  `tools/int_referee.py`, each candidate `below(2^34) << 33 | below(2^33)`, kept when at most `18 * 2^62`; 39,064
+  candidates drawn): the largest lies between `232439/2^16` and `232440/2^16` (between 3 and 4 units); 38 inputs are
+  at 2 units or more, 4 at 3 or more, none at 4.
+- 22,000 inputs in the first octave `[0, LN2_Q62)`, where no octave shift divides the series error (the same
+  generator, each candidate `below(2^34) << 28 | below(2^28)`, kept when below `LN2_Q62`; 31,722 candidates drawn): the
+  largest lies between `287219/2^16` and `287220/2^16` (between 4 and 5 units); 1,010 inputs are at 2 units or more,
+  63 at 3 or more, 1 at 4 or more.
+
+Every measured error is within the 12-unit bound. An earlier version of this file reported every error below 4 units
+over 252,154 inputs that included each octave boundary; that input set is not in this repository, and the
+first-octave set above has one input above 4 units.
+
+When the quotient lies within `2^-32` of a half, `sigmoid_q24` decides the side exactly from lower and upper sums of
+the series of `e^|t|`, at 128 bits and doubling until the sums decide, so it returns `floor(2^24 sigmoid(t) + 1/2)`
+for every logit. The series step alone (as `model/l0-edge/src/model.rs` has it at commit `f67b300`, and as this
+crate had it before the exact step) gives a value 1 away from that on 20 of the 736 boundary rows below; for example,
+logit_q48 `-2903085619798773`, where `2^24 sigmoid` is `556 + 1/2 + 31891840/2^64` (floor at Q64), gives 556.
 `tools/int_referee.py` checks the sigmoid against the exact value on 2447 logits: 1711 over `[-20, 20]` and 736 whose
 exact value lies within `2^-32` of a half (Q48 logits next to `ln((k + 1/2) / (2^24 - k - 1/2))`, on the integer
 lattice and on multiples of 10, both signs). It computes in integers only: lower and upper bounds of `2^p e^|t|` from
@@ -164,9 +205,10 @@ generated weights).
 ## Measured agreement
 
 Fixtures: 48 two-node graphs and 96 graphs of 2-9 nodes with self loops and duplicate edges, 816 edges; inputs in
-the ranges of the six-feature scaling (train_baseline.py:31-38) and, in every fourth case, signed values up to
-`2^40` (Q24). Every input has at most 24 significant bits, so torch receives it exactly; the harness sends each
-as its float32 bit pattern.
+the ranges of the six-feature scaling (train_baseline.py:31-38; ACER's L1 trainer, `train_prototype.py:24-35`, which
+reached this repository after the fixture was written, builds the same six features) and, in every fourth case,
+signed values up to `2^40` (Q24). Every input has at most 24 significant bits, so torch receives it exactly; the
+harness sends each as its float32 bit pattern.
 
 | Comparison | Result |
 |---|---|
@@ -182,12 +224,13 @@ compares byte for byte, and torch's float32 results depend on the CPU kernels it
 model/l0-edge/tools/model_parity.py does, the tool sets `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`,
 `OMP_NUM_THREADS=1` and `MKL_NUM_THREADS=1` before torch loads (ATen's scalar kernels, oneMKL's SSE2-only Conditional
 Numerical Reproducibility code path, one thread), and the file's header names them. On the x86-64 AVX-512 host that
-wrote the file (torch 2.14.1+cpu, torch_geometric 2.8.1, Python 3.13.16), `--check` passes with the caller's
-environment unset or set to `MKL_ENABLE_INSTRUCTIONS=AVX2` (with and without `ATEN_CPU_CAPABILITY=default`),
-`ATEN_CPU_CAPABILITY=default`, `MKL_ENABLE_INSTRUCTIONS=SSE4_2` or `AVX512`, `ATEN_CPU_CAPABILITY=avx2` or `avx512`,
-`MKL_CBWR=AVX2`, or `OMP_NUM_THREADS=4 MKL_NUM_THREADS=3` (20 runs: these 10 environments in two separate torch
-2.14.1+cpu environments). Before the pin, the committed file (written with torch's default selection) passed
-`--check` with the caller's environment unset or set to `ATEN_CPU_CAPABILITY=default`, and failed with
+wrote the file (an Intel Xeon at 2.10GHz, 4 CPUs; torch 2.14.1+cpu, torch_geometric 2.8.1, Python 3.13.16),
+`--check` passes with the caller's environment unset or set to `MKL_ENABLE_INSTRUCTIONS=AVX2` (with and without
+`ATEN_CPU_CAPABILITY=default`), `ATEN_CPU_CAPABILITY=default`, `MKL_ENABLE_INSTRUCTIONS=SSE4_2` or `AVX512`,
+`ATEN_CPU_CAPABILITY=avx2` or `avx512`, `MKL_CBWR=AVX2`, or `OMP_NUM_THREADS=4 MKL_NUM_THREADS=3` (20 runs: these
+10 environments in two separate torch 2.14.1+cpu environments). Before the pin, the committed file (written with
+torch's default selection) passed `--check` with the caller's environment unset or set to
+`ATEN_CPU_CAPABILITY=default`, and failed with
 `MKL_ENABLE_INSTRUCTIONS=AVX2`, with or without `ATEN_CPU_CAPABILITY=default` (`first_diff_line=19`, the `PAIR` row of
 case 11). The pinned file differs from that one in 5 of its 6,144 `h_q24` values, each by 1 Q24 unit, in the `PAIR`
 rows of cases 11 (2 values), 27, 35 and 43 (1 each), all cases with inputs up to `2^40`, and in 3 header lines (the
@@ -247,19 +290,45 @@ if self.num_classes == 2:
     return probs[:, 1]  # Return anomaly probability
 ```
 
-Every scalar any upstream code on disk derives from a PrototypeGNN output:
+Below is every scalar derived from a PrototypeGNN output in the upstream code searched on this container. The search
+(2026-10-18) looked for `PrototypeGNN`, `prototype_inference_server` and `4795` in at least the code files of the
+repositories under `/home/user`, the 80 distinct trees of the private mirror's 132 refs, `acer/` as landed in commit
+`46cc8c5`, bigpickle-rebuild @ `c592599c` and AI-healthCare-project @ `e0048c0a`; its other hits were copies of the
+model file, documentation and registration rows, other services on port 4795, and those digits inside a MAC-prefix
+table.
 
 - behcs-256 `src/gnn/hybrid-harness.js:32-33` (blob `14863cbf4d375c608172b01f97bb4d9396f44f5e`), the `prototype`
   scorer slot of a five-scorer mean: `const [o, r, g, c, p] = await Promise.all([omni(id), reverse(id), gsl(id), contrastive(id), prototype(id)]);`
   `const lcr = (o + r + g + c + p) / 5;`. The scorer is a parameter, "(agent_id) => Promise<score in [0,1]>" with a
-  default of `h[0] / 255` of a sha256 (lines 19-23, 28); no caller of `runFanout` or `runShard` is on disk.
+  default of `h[0] / 255` of a sha256 (lines 19-23, 28). No caller of `runFanout` or `runShard` is in the repositories
+  under `/home/user`, the private mirror's 132 refs or `acer/` on this container (searched 2026-10-18; the only file
+  naming them is `hybrid-harness.js` itself).
+- ACER `services/gnn-sidecar/prototype_inference_server.py` (sha256 `c4a36e8a…`, in
+  `acer/Asolaria/services/gnn-sidecar/`), the :4795 server: `scores = MODEL(x, edge_index).reshape(-1).tolist()`
+  (line 95), returned per edge as `"scores": [float(v) for v in scores]` (line 98) with the disclosure
+  `"score = P(anomaly); threshold 0.5 recommended"` (lines 106-110); the server applies no threshold itself. The
+  same response carries `"checkpoint_sha256_first16": "0ffa2bfaa6f7a281"` (line 103; the header comment at line 6
+  gives the same value), and the `prototype_model.pt` beside it, like the checkpoint pinned here, has a sha256
+  beginning `b4df990138ae215b`; none of the 9 `.pt` files in `acer/Asolaria/services/gnn-sidecar/` has a sha256
+  beginning `0ffa2bfaa6f7a281`. The owner seat's recheck row, in their words
+  (`FABLE5-GNN-L1L2-RECHECK-NO-SHELL-2026-10-18.hbp:11`):
+  `CHECKSUM|L1_server_claims_sha16=0ffa2bfaa6f7a281|L1_file_sha16=b4df990138ae215b|verdict=STALE_HARDCODED`.
+- ACER `services/gnn-sidecar/train_prototype.py` (sha256 `d29373fc…`, in `acer/Asolaria/services/gnn-sidecar/`), the
+  L1 trainer: every tenth epoch `pred = (model(node_features, edge_index) > 0.5).float()` (line 108) gives `val_acc`
+  over the edges `train_end:val_end` (109), and after training the same threshold (117) gives the test accuracy,
+  precision, recall and F1 over the edges from `val_end` (118-126). The split is by index order, `train_end =
+  int(n * 0.7)` and `val_end = int(n * 0.85)` (64-65), with the training batches permuted only within `0:train_end`
+  (75, 79); the loss is `criterion = nn.CrossEntropyLoss()` with no class weight (69). The owner seat's recheck rows,
+  in their words (same file, lines 5-6): `SPLIT|trainers=train_prototype.py+train_contrastive.py+train_gslgnn_w9_3.py|split=index_order_70_15_15_no_shuffle|consequence=L1_L2_L4_trained_on_single_class`
+  and `LOSS|...|L1=CrossEntropyLoss_no_weight|...`.
 - `AI-healthCare-project` @ `e0048c0a` (the model's origin; `MODEL_TYPE` `"prototype"` builds it at
   `backend/anomaly_detector/service.py:41-49`, blob `a6454ddb93e8edd3edba37043c42baeb125ae700`). That service is
   configured with `MODEL_INPUT_DIM: int = 16`, `MODEL_HIDDEN_DIM: int = 32` and
   `NUM_CLASSES: int = int(os.getenv("NUM_CLASSES", "4"))` (`config.py:21-24`, blob
-  `a0d670156b7615888ca0e0340e9bc9d350318a9a`), and its checkpoint loading is commented out (`service.py:104-107`),
-  so it never ran these run-1 weights. With the default of 4 classes, `forward` returns the `[num_edges, 4]`
-  probabilities (prototype_gnn.py:130-132), which `service.py:198-206` routes to its multi-class branch.
+  `a0d670156b7615888ca0e0340e9bc9d350318a9a`). At `e0048c0a` its checkpoint loading is commented out
+  (`service.py:104-107`), so that commit does not load these run-1 weights. With the default of 4 classes, `forward`
+  returns the `[num_edges, 4]` probabilities (prototype_gnn.py:130-132), which `service.py:198-206` routes to its
+  multi-class branch.
   - `api.py` (blob `f6b7e68934151ac172ffecf178b9dac7b6556fbc`) takes `scores = model(x, edge_index)` (line 50) and,
     per event, `score = scores_list[i]` (line 64): `is_anomaly = score > settings.ANOMALY_THRESHOLD` (line 65) with
     `ANOMALY_THRESHOLD: float = os.getenv("ANOMALY_THRESHOLD", 0.8)` (`config.py:34`);
@@ -281,19 +350,22 @@ Every scalar any upstream code on disk derives from a PrototypeGNN output:
 
 No composite weight is set here; the owner states it (OWNER-RULES 7b).
 
-## Not on disk
+## Searched before the gnn-sidecar cube
 
 Resolved since by the gnn-sidecar cube `9859b576` (verified 32/32, docs/handoffs): the cube located
-`prototype_inference_server.py` (sha256 `c4a36e8a…`) and the prototype trainer `train_prototype.py`
-(sha256 `25969b29…`) on ACER in `C:/Users/acer/Asolaria/services/gnn-sidecar/`. Their bodies were
-transferred on 2026-10-18 and are in `acer/Asolaria/services/gnn-sidecar/` (all 32 cube files match
-their pins). The first two rows below are therefore found, not missing. The table is the pre-cube
-search record.
+`prototype_inference_server.py` (sha256 `c4a36e8a…`, handoff pid `4fa3807d…`) and the prototype trainer
+`train_prototype.py` (sha256 `d29373fc…`, handoff pid `25969b29…`) on ACER in
+`C:/Users/acer/Asolaria/services/gnn-sidecar/`. Their bodies were transferred on 2026-10-18 and are in
+`acer/Asolaria/services/gnn-sidecar/` (all 32 cube files match their pins). The first two rows below are therefore
+found. The trainer also answers the third: it reads `gslgnn_w9_3_corpus.json` from its own directory (line 14; a file
+of that name, 68,695,303 bytes, is in `acer/Asolaria/services/gnn-sidecar/`) and builds the six node features of
+`train_baseline.py:31-38` (lines 24-35). The table is the record of the search made before the cube, with the scope
+that search covered in its last column.
 
-| Missing | Where it should be, with evidence | Searched |
+| Not found before the cube | Where it should be, with evidence | Searched |
 |---|---|---|
 | `prototype_inference_server.py` (:4795) | `C:/Users/acer/Asolaria/services/gnn-sidecar/` per bigpickle `tests/unit/gnn-l1-l2-status.test.mjs:7-8, 20, 48-77` ("inference server written at prototype_inference_server.py (:4795)", `PORT = 4795`); the private mirror's `federation-remake-1024/servers/host8-serve/intake/ACER-DAEMON-SUPERVISOR-REGISTRATION.hbp:34` (branch `acer/daemon-supervisor-registration-2026-06-18` @ `15848d60`, blob `5801b6b8`) registers `name=gnn-sidecar-L1-prototype ... port=4795 ... status=DARK ... path=C:/Users/acer/Asolaria/services/gnn-sidecar/prototype_inference_server.py` | behcs-256, bigpickle-rebuild, Shannon-and-the-gnns-stage, fnns, federation-1024, every repository under `/home/user`, every ref and the full history of the private mirror, GitHub code search `prototype_inference_server user:JesseBrown1980` (0 results) |
-| The L1 trainer | Same sidecar directory (the status test names `train_contrastive.py` for L2 at lines 106-117 and 129-131; no L1 trainer name appears anywhere) | as above, plus `train_prototype` |
+| The L1 trainer | Same sidecar directory (the status test names `train_contrastive.py` for L2 at lines 106-117 and 129-131; no L1 trainer name appeared in the status test or in the places of the last column) | as above, plus `train_prototype` |
 | L1 training corpus file and input features | The run-1 manifest names no corpus. fnns `README.md:59-61`, the note under the checkpoint table that lists L1, gives the training corpus as "315,209 suspicious / 315,249 total — only 40 benign nodes", without naming the L1 trainer, the corpus file or the features. The status test gives the L2 trainer's corpus as `gslgnn_w9_3_corpus.json` (line 133), whose node features `train_gslgnn_w9_3.py:225-233` builds with the six-feature scaling of `train_baseline.py:31-38` | as above |
 
 ## Referees

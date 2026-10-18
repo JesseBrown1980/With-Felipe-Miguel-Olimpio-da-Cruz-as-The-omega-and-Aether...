@@ -154,8 +154,9 @@ and the placeholders `PID-SRC-60D` / `PID-DST-60D` (611). No file from the priva
   `audit_replay_row`, the private `hex_lower`) is in the carried lines 16-514. It was run once in
   scratch on the whole upstream file with the command at its line 10 (`rustc +1.81.0 --test`):
   6 passed of 6.
-- **E9 corpus.** Not re-run: `enwik9.zip` is on disk, unpacking needs about 1 GB and the container
-  had about 2.5 GB free. `examples/rung.rs` takes any file.
+- **E9 corpus.** Not re-run: `enwik9.zip` is on this container, unpacking writes enwik9's
+  1,000,000,000 B, and the container had about 2,500 MB free then (host context, to two significant
+  figures). `examples/rung.rs` takes any file.
 - **Further ladder rungs.** The owner documents state the 43+ level ladder as CANON; these
   repositories hold no code for rungs beyond 6/8/10-bit symbols and the 60D reshape.
 

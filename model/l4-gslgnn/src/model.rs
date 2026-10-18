@@ -498,7 +498,7 @@ mod tests {
     }
 
     #[test]
-    fn sigmoid_matches_the_decimal_reference_exactly() {
+    fn sigmoid_matches_the_exact_reference() {
         let mut rows = 0;
         for line in MATH.lines().filter(|l| l.starts_with("SIGMOID|")) {
             let want = int(line, "q24");
@@ -535,7 +535,7 @@ mod tests {
         assert_eq!(gcn_coefficient(1, 1), 1 << 32);
         assert_eq!(gcn_coefficient(1, 4), 1 << 31);
         assert_eq!(gcn_coefficient(2, 2), 1 << 31);
-        // round(2^32 / sqrt(2)) and round(2^32 / sqrt(3)), from Python decimal at 60 digits.
+        // round(2^32 / sqrt(2)) and round(2^32 / sqrt(3)), from integer isqrt and a half test.
         assert_eq!(gcn_coefficient(1, 2), 3_037_000_500);
         assert_eq!(gcn_coefficient(3, 1), 2_479_700_525);
         let d = MAX_EDGES as u64 + 1;

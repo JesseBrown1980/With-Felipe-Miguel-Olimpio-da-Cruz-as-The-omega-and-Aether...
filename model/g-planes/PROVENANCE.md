@@ -44,8 +44,18 @@ functions. The fixture also checks the selfTest walk at glsm.mjs:148-159.
 The owner's registration file is on the private mirror branch `acer/formula-corpus-pid-registration-2026-06-19`
 @ fe6b629baddbdf54d7cf6901cbf68df8a55d0493, `ALGORITHMS-PID-REGISTRATION-WAVE2-ACER-2026-06-19.hbp` (blob
 66f8caa5a72d73f3688fb07b1291983b9fe41871). That commit is not an ancestor of the mirror's a876e21. The paths below
-are the paths it registers on the acer machine. No file with these names exists in any clone on disk or in
-the mirror's history.
+are the paths it registers on the acer machine. When this file was written (2026-10-17), no file with these
+names was in the clones on this container or in the private mirror's history.
+
+Searched again on 2026-10-18. No path named `gnn-reverse-gain.mjs`, `omniquant.mjs`, `quant-bus.mjs` or
+`bpi-codec.mjs` is in the history of the 186 repository clones under `scratchpad/census/src` or in the 132 refs
+of the private mirror. Files named `omniquant.mjs`, `quant-bus.mjs` and `bpi-codec.mjs` arrived from the owner
+on 2026-10-18 (OWNER-RULES 7j) as an extract, not from a committed ref. They are vendored byte-identical at
+`planes/gnn-trio/vendor/revolver-10k/src/` (blobs 5852c36b…, c420b046… and a42fb071…), and `planes/gnn-trio/src/`
+ports them to integer Rust. This crate does not use them, and it is not established here that they are the
+versions the registration's line ranges describe. The G3 file `gnn-reverse-gain.mjs` (sha256 0e381f92…,
+`planes/gnn-trio/PROVENANCE.md`) is held by the owner under OWNER-RULES 7j, and its MASK_GLYPHS set is not
+published. `planes/gnn-trio` reimplements the G3 algorithm and tests it against a synthetic set.
 
 - **G3 reverse-gain plane.** fnns README.md:109 reads "G3 source is withheld due to PII." README.md:27 lists
   "G3 reverse-gain | deception inversion (sign × jlMagnitude) | in-process :4949". README.md:70-72 lists its
@@ -65,7 +75,9 @@ the mirror's history.
   (line 824).
 - **bpi-codec.mjs** (`encodeFrame`): the registration names `packages\revolver-10k\src\bpi-codec.mjs:25-72` for
   "hilbertAddress (6-glyph base-1024)" (line 269). No registration line names `encodeFrame`.
-- **The :4949 `/api/gnn/score` handler** (asolaria-score.mjs:36-70 queries it) has no file on disk or in the mirror.
+- **The :4949 `/api/gnn/score` handler** (asolaria-score.mjs:36-70 queries it): no file for it is in the clones
+  on this container or in the private mirror (searched 2026-10-17). OWNER-RULES 4a records that the live request
+  returns 404 and that no route is registered for it.
 - **G1 `mineEdge`** (gnn-edge-mining.mjs:66-98) and **G2 `mineForward`** (gnn-forward-genius.mjs:70-127) need
   `enrichEnvelope`, `AUTHORITY_FIELDS` and `quantMetadata`. Registrations: lines 821 and 822. **G4 `glsmEmit`**
   (glsm.mjs:80-126) needs `enrichEnvelope` and `encodeFrame`.

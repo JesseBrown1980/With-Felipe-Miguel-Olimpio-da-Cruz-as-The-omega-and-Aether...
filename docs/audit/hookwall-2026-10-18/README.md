@@ -129,7 +129,8 @@ owner's live ledger.
    composite adds it as a forward ("genius") signal, so risky histories are promoted. aether reproduces
    the upstream definition exactly (`gate/observed/README.md:75-88`). Keep, invert (`1 − L0`), or bench.
 2. **A spread gate for voting.** L0 votes at 0.30 while failing `std > 0.01` on the ACER corpus
-   (std 0.00645). Whether "calculates" becomes a runtime gate on voting.
+   (the recheck receipt's `std` 0.00645, from its float script). Whether "calculates" becomes a
+   runtime gate on voting.
 3. **An absent GNN may not raise the score.** Today a missing L0 re-weights the composite upward and
    can PROCEED with no GNN input. Fail closed (HOLD when no GNN is observed), or keep the upstream rule.
 4. **What the signature covers.** The events that drive L0 are unsigned. Sign them with the envelope,

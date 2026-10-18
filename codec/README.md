@@ -144,7 +144,8 @@ Every GGUF matched its manifest row, and for every one both `white_hole_emit` an
 | All | 31 | 602,444,562 | 3,213,038,356 | 5.333334 |
 
 Each 6-byte block becomes four `u64` residues (32 bytes), so `packet_bytes` = 32 × ceil(n / 6) + 12
-and the ratio is 32 / 6 = 5.333333 plus the effect of the padded last block and the 12-byte capsule.
+and the ratio is 32/6 = 16/3 (5.333333 truncated to 6 places) plus the effect of the padded last
+block and the 12-byte capsule.
 `white_hole_emit` with `[0, 1]` reads two of the four residue streams (half of `shadow_bytes`). Each
 residue is below its modulus; the largest modulus, 33,554,467, is just above 2^25 = 33,554,432.
 In memory the packet is larger than the object for every GGUF: 5.333333 to 5.343636 times its size,

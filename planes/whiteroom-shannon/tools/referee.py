@@ -1040,7 +1040,8 @@ def harness_fixture():
 
 
 def standin_enrich(env):
-    """Test stand-in for quant-bus.mjs enrichEnvelope (not on disk); the Rust test implements the same."""
+    """Test stand-in for quant-bus.mjs enrichEnvelope (not on this container when this crate was built);
+    the Rust test implements the same."""
     triple = "" if env["room_id"] % 3 == 0 else f"T{env['room_id']}:{env['granted']}"
     authority = ("A" + env["intent_sha16"][0:4]) if env["quintuple_authority"] else UNDEF
     return {"intent_sha16": env["intent_sha16"], "triple_quant": triple, "authority_quant": authority}

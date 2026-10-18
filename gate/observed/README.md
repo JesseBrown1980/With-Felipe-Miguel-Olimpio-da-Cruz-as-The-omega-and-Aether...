@@ -29,7 +29,7 @@ to regenerate the expected fixture.
 |---|---|---|
 | L0 reading | `l0_edge::observe_pair(events, actor, target)`: node features of the request's actor (node 0) and target (node 1) from the events, edge `[[0, 1]]`; `None` when either id never appears | asolaria-score.mjs:121-122; inference_server.py:24 |
 | `signals.l0` | the reading's e4 value, when present | asolaria-score.mjs:122 |
-| `signals.l4`, `g1`, `g2`, `g3` | absent: this stack has no L4 or :4949 fabric service | asolaria-score.mjs:126-138 |
+| `signals.l4`, `g1`, `g2`, `g3` | absent: `observe` sets them to `None` (src/lib.rs:79-82); this crate calls no L4 model (the repo's L4 port, `model/l4-gslgnn`, is not one of its dependencies) and no :4949 fabric service | asolaria-score.mjs:126-138 |
 | `signals.shannon` | `shannon_e4(payload)` | asolaria-score.mjs:86-95, 141 |
 | `signals.baseline` | `sha_baseline_e4(pid, payload)` | asolaria-score.mjs:98-101, 145 |
 | composite | `composite_e4(signals)`: weights `l0 .30, g1 .10, g2 .10, g3 .10, shannon .15, baseline .10` over the present signals, in that order, divided by their summed weight, `toFixed(4)`; binary64 throughout, via `l0_edge::jsnum`. `l4` is a reported signal with no weight (the owner's 2026-10-18 edit; before it, `l4 .15`) | served asolaria-score.mjs:151-164 (`vendor/acer-scorer-2026-10-18/`) |
@@ -39,7 +39,7 @@ to regenerate the expected fixture.
 | Fischer `composite` | JavaScript `String` of the composite (`0.85`, `1`, `0`) | |
 | Fischer `l0_real` | the L0 reading is present | asolaria-score.mjs:173 |
 | Fischer `shannon_q`, `shannon_above` | `shannon_e4 / 10` and `shannon_e4 % 10 != 0` | |
-| Fischer `g4_state` | `UNKNOWN`: G4 comes from the :4949 fabric, which this stack does not have | bigpickle-rebuild@c592599 src/fischer-kernel.mjs:253 default |
+| Fischer `g4_state` | `UNKNOWN` (src/lib.rs:93): G4 comes from the :4949 fabric, which `observe` does not query | bigpickle-rebuild@c592599 src/fischer-kernel.mjs:253 default |
 
 The spawn gate PROCEEDs on `forward_score_q >= 720 && reverse_risk_q <= 280`; with the two
 roundings above that holds exactly when `reverseGain(composite).promoted` holds at four decimals,
@@ -91,8 +91,16 @@ Other measurements:
 
 - Composite: for all 174 fixture pairs it equals the upstream expression
   `((0 + l0 * .30) + s * .15 + b * .10) / ((.30 + .15) + .10)` in binary64, where the summed
-  weight is `0x3FE1999999999999` (0.5499999999999999). Against the referee, 50,000 random signal
-  sets covering all seven signals present or absent: all equal.
+  weight is `0x3FE1999999999999`, exactly 4953959590107545/2^53 (JavaScript prints it as
+  `0.5499999999999999`, the shortest decimal that rounds to it). Against the referee, 50,000 signal
+  sets over the 32 present/absent patterns of `l0`, `l4`, `g1`, `g2`, `g3`, with `shannon` and
+  `baseline` always present (25,010 of the sets carry `l4`, which has no weight): all equal. The
+  binary64 composite equals the half-up rounding of the exact rational weighted mean in all
+  50,000, and none of the 50,000 is an exact `toFixed(4)` half: with `l4` unweighted, every summed
+  weight is an odd number of twentieths (shannon 3 + baseline 2 + even optional weights), so an
+  exact half cannot occur. With the pre-edit weights (`l4 .15`), the referee at commit ba67ff8
+  built 2,000 exact-half sets, and its binary64 composite rounded unlike the exact value on 1,337
+  of its 50,000.
 - Shannon: computed in binary64 as asolaria-score.mjs:86-95 computes it, with `Math.log2` ported
   from V8 12.4.254.21 `src/base/ieee754.cc:1951-2050` (`k_log1p`, `log2`), assuming no FMA
   contraction, which x86-64 baseline code cannot emit. Over 20,247 inputs (lengths 0 to 2000,
@@ -100,10 +108,17 @@ Other measurements:
   JavaScript in all 20,247; `log2` equals the referee's mirror of V8's bit for bit on 4,096
   arguments. The JavaScript value equals the exact-arithmetic rounding — exact rationals
   (fractions.Fraction) over a fixed-point integer log2 held to 512 fractional bits — in 20,242 of
-  the 20,247; over the 59,076 distinct log2 arguments the closest the entropy comes to a
-  `toFixed(4)` rounding half is 166,661,281,510,894,334 at scale 10^-30 (a fixed-point integer), so
-  the rounding is unambiguous. The host C library's `math.log2` is not compared to the V8 port here:
-  reproducing that comparison needs `math.log2`, a float function the integer rule excludes.
+  the 20,247. Over the 20,202 non-empty inputs (the other 45 are empty: score 0, no
+  `p * log2(p)` term), the closest the exact efficiency H / log2(12), times 10^4, comes to a
+  half-integer (a `toFixed(4)` rounding half) is 166,661,281,510,894,334 x 10^-30, rounded down
+  (in e4 units; in units of the efficiency it is x 10^-34), so the rounding is unambiguous. Those
+  inputs pass 59,076 distinct `c / total` arguments to `Math.log2`. The host C library's `log2`
+  against the V8 port, as measured by the retired float referee (commit cbdd721, the parent of
+  ba67ff8: `tools/score_referee.py` calling Python's `math.log2`, glibc 2.39 here) on these same
+  20,247 rows (its SHANNON rows are byte-identical to the current ones): it gives a different
+  value from V8's for 202 of the 59,076 arguments and changes 0 of the 20,247 Shannon values. The
+  integer referee does not recompute this; a re-run needs either that float call or an integer
+  port of the host library's `log2` onto the binary64 emulation, as V8's `log2` is ported here.
 - Baseline and reverse gain: 1,506 baselines and all 10,001 reverse gains equal.
 - Chain: for the 174 fixture pairs, `observe`'s L0 reading equals `score_pair` of the torch-fed
   inputs, and its e4 value equals `+score.toFixed(4)` of the torch float32 output, for torch fed
