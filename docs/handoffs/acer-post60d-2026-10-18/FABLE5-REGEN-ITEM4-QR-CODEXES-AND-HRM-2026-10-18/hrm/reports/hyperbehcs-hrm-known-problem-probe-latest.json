@@ -1,0 +1,891 @@
+{
+  "ok": true,
+  "schema": "hyperbehcs.hrm_known_problem_probe.v1",
+  "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+  "run_id": "hyperbehcs-hrm-known-problem-probe-20260516",
+  "generated_at": "2026-05-16T11:10:46.993Z",
+  "status": "known_problem_encoded_hrm_runtime_blocked",
+  "answer": "not_solved_by_hrm_model_runtime_blocked_baseline_checker_solved_known_maze",
+  "sources": {
+    "descriptor_adapter_fingerprint": "f069d3c9203af884",
+    "hrm_runtime_gate_fingerprint": "c2ecb9ff7191abd2",
+    "hrm_root": "D:/Asolaria-HRM",
+    "runtime_gate_verdict": "blocked_runtime_dependencies_not_ready"
+  },
+  "problem": {
+    "id": "maze_5x5_shortest_path_known_001",
+    "domain": "maze_shortest_path",
+    "source": "local_known_probe_in_hrm_advertised_domain",
+    "grid": [
+      "S..#.",
+      "##.#.",
+      "...#.",
+      ".###.",
+      "....G"
+    ],
+    "expected_shortest_path_length": 12,
+    "expected_path": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ]
+  },
+  "descriptor_row": {
+    "schema": "hyperbehcs.hrm_known_problem_probe.row.v1",
+    "problem_id": "maze_5x5_shortest_path_known_001",
+    "domain": "maze_shortest_path",
+    "puzzle_identifier": 980324,
+    "inputs": [
+      1,
+      3,
+      4,
+      5,
+      5,
+      6,
+      5,
+      6,
+      6,
+      5,
+      6,
+      5,
+      5,
+      5,
+      5,
+      6,
+      5,
+      5,
+      6,
+      6,
+      6,
+      5,
+      5,
+      5,
+      5,
+      5,
+      7,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "labels": [
+      1,
+      8,
+      8,
+      8,
+      8,
+      5,
+      5,
+      5,
+      5,
+      8,
+      5,
+      5,
+      8,
+      8,
+      8,
+      5,
+      5,
+      8,
+      5,
+      5,
+      5,
+      5,
+      8,
+      8,
+      8,
+      8,
+      8,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "descriptor_only": true,
+    "quant_unchanged": true,
+    "hardware_mutations": 0,
+    "cpu_affinity_changes": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0,
+    "route_mutations": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "process_starts": 0,
+    "executor_executions": 0,
+    "cleanup_actions": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0,
+    "input_length": 64,
+    "label_length": 64,
+    "fingerprint": "7890b0c23c469c1d"
+  },
+  "baseline_checker": {
+    "solver": "local_bfs_shortest_path_checker",
+    "solved": true,
+    "shortest_path_length": 12,
+    "path": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "expected_length_matches": true,
+    "expected_path_matches": true,
+    "descriptor_only": true
+  },
+  "hrm_attempt": {
+    "attempted": false,
+    "solved": false,
+    "runtime_ready": false,
+    "model_execution_allowed": false,
+    "reason": "hrm_runtime_gate_blocks_model_execution_no_torch_checkpoint_or_runtime_promotion",
+    "descriptor_adapter_status": "hrm_descriptor_adapter_ready_no_runtime_execution",
+    "runtime_gate_verdict": "blocked_runtime_dependencies_not_ready",
+    "descriptor_only": true
+  },
+  "quant_receipt": {
+    "schema": "hyperbehcs.quantized_substrate_receipt.v1",
+    "substrate_id": "storage_c_drive",
+    "source_layer": "hrm_known_problem_probe",
+    "vector_dimension": 6,
+    "target_dimension": 4,
+    "algorithms": {
+      "johnson_lindenstrauss_projection": {
+        "id": "johnson_lindenstrauss_projection",
+        "algorithm": "johnson-lindenstrauss-achlioptas-sparse.v1",
+        "seed": "HYP-HRM-KNOWN-PROBLEM-PROBE:f069d3c9203af884:c2ecb9ff7191abd2:maze_5x5_shortest_path_known_001",
+        "sourceDimensions": 6,
+        "source_dimension": 6,
+        "targetDimensions": 4,
+        "target_dimension": 4,
+        "projection": [
+          0,
+          0.071428571428,
+          0,
+          -0.857142857143
+        ],
+        "projected_vector": [
+          0,
+          0.071428571428,
+          0,
+          -0.857142857143
+        ],
+        "projectedVector": [
+          0,
+          0.071428571428,
+          0,
+          -0.857142857143
+        ],
+        "values": [
+          0,
+          0.071428571428,
+          0,
+          -0.857142857143
+        ],
+        "metadata": {
+          "source_dimension": 6,
+          "distribution": "sqrt(3),0,-sqrt(3) with probabilities 1/6,2/3,1/6",
+          "scale": 0.5,
+          "hash": "sha256(seed|row|col)"
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "990ce04901277cae"
+      },
+      "turbo_quant": {
+        "id": "turbo_quant",
+        "algorithm": "turbo-uniform-quant.v1",
+        "dimension": 6,
+        "codes": [
+          21,
+          21,
+          21,
+          0,
+          0,
+          255
+        ],
+        "quantized": [
+          21,
+          21,
+          21,
+          0,
+          0,
+          255
+        ],
+        "quantized_values": [
+          21,
+          21,
+          21,
+          0,
+          0,
+          255
+        ],
+        "dequantized": [
+          0.988235294109,
+          0.988235294109,
+          0.988235294109,
+          0,
+          0,
+          11.999999999895
+        ],
+        "dequantized_values": [
+          0.988235294109,
+          0.988235294109,
+          0.988235294109,
+          0,
+          0,
+          11.999999999895
+        ],
+        "metadata": {
+          "bits": 8,
+          "min": 0,
+          "max": 12,
+          "scale": 0.047058823529,
+          "zeroPoint": 0,
+          "levels": 256,
+          "maxCode": 255
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "a4f84784b5cb65e9"
+      },
+      "polar_quant": {
+        "id": "polar_quant",
+        "algorithm": "polar-pair-quant.v1",
+        "dimension": 6,
+        "pairCount": 3,
+        "codes": [
+          [
+            30,
+            32
+          ],
+          [
+            21,
+            0
+          ],
+          [
+            255,
+            64
+          ]
+        ],
+        "rows": [
+          {
+            "radius": 1.414213562373,
+            "angle": 0.785398163397,
+            "r": 1.414213562373,
+            "theta": 0.785398163397,
+            "code": [
+              30,
+              32
+            ]
+          },
+          {
+            "radius": 1,
+            "angle": 0,
+            "r": 1,
+            "theta": 0,
+            "code": [
+              21,
+              0
+            ]
+          },
+          {
+            "radius": 12,
+            "angle": 1.570796326795,
+            "r": 12,
+            "theta": 1.570796326795,
+            "code": [
+              255,
+              64
+            ]
+          }
+        ],
+        "pairs": [
+          {
+            "radius": 1.414213562373,
+            "angle": 0.785398163397,
+            "r": 1.414213562373,
+            "theta": 0.785398163397,
+            "code": [
+              30,
+              32
+            ]
+          },
+          {
+            "radius": 1,
+            "angle": 0,
+            "r": 1,
+            "theta": 0,
+            "code": [
+              21,
+              0
+            ]
+          },
+          {
+            "radius": 12,
+            "angle": 1.570796326795,
+            "r": 12,
+            "theta": 1.570796326795,
+            "code": [
+              255,
+              64
+            ]
+          }
+        ],
+        "polar_rows": [
+          {
+            "radius": 1.414213562373,
+            "angle": 0.785398163397,
+            "r": 1.414213562373,
+            "theta": 0.785398163397,
+            "code": [
+              30,
+              32
+            ]
+          },
+          {
+            "radius": 1,
+            "angle": 0,
+            "r": 1,
+            "theta": 0,
+            "code": [
+              21,
+              0
+            ]
+          },
+          {
+            "radius": 12,
+            "angle": 1.570796326795,
+            "r": 12,
+            "theta": 1.570796326795,
+            "code": [
+              255,
+              64
+            ]
+          }
+        ],
+        "metadata": {
+          "radiusBits": 8,
+          "angleBits": 8,
+          "maxRadius": 12,
+          "radiusScale": 0.047058823529,
+          "angleScaleRadians": 0.024639942381,
+          "centers": {
+            "radius": "code * radiusScale",
+            "angleRadians": "code * angleScaleRadians"
+          }
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "e6dad10f66e3d3b9"
+      },
+      "triple_quant": {
+        "id": "triple_quant",
+        "algorithm": "triple-spherical-quant.v1",
+        "dimension": 6,
+        "tripleCount": 2,
+        "codes": [
+          [
+            37,
+            78,
+            32
+          ],
+          [
+            255,
+            0,
+            0
+          ]
+        ],
+        "lanes": [
+          {
+            "id": "coarse",
+            "name": "coarse",
+            "bits": 4,
+            "role": "fast_cpu_gpu_placement_hint"
+          },
+          {
+            "id": "medium",
+            "name": "medium",
+            "bits": 8,
+            "role": "balanced_receipt_transport"
+          },
+          {
+            "id": "fine",
+            "name": "fine",
+            "bits": 8,
+            "role": "reviewable_fallback_precision"
+          }
+        ],
+        "levels": [
+          {
+            "id": "coarse",
+            "name": "coarse",
+            "bits": 4,
+            "role": "fast_cpu_gpu_placement_hint"
+          },
+          {
+            "id": "medium",
+            "name": "medium",
+            "bits": 8,
+            "role": "balanced_receipt_transport"
+          },
+          {
+            "id": "fine",
+            "name": "fine",
+            "bits": 8,
+            "role": "reviewable_fallback_precision"
+          }
+        ],
+        "metadata": {
+          "radiusBits": 8,
+          "thetaBits": 8,
+          "phiBits": 8,
+          "maxRadius": 12,
+          "radiusScale": 0.047058823529,
+          "thetaScaleRadians": 0.012319971191,
+          "phiScaleRadians": 0.024639942381,
+          "centers": {
+            "radius": "code * radiusScale",
+            "thetaRadians": "code * thetaScaleRadians",
+            "phiRadians": "code * phiScaleRadians"
+          }
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "fd12e57e6c0ee77b"
+      }
+    },
+    "descriptor_only": true,
+    "software_receipt_only": true,
+    "asolaria_os_receipt": true,
+    "leworld_model_receipt": false,
+    "pixel_receipt": false,
+    "hardware_mutations": 0,
+    "cpu_affinity_changes": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0,
+    "route_mutations": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "process_starts": 0,
+    "executor_executions": 0,
+    "cleanup_actions": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0,
+    "receipt": {
+      "receiptId": "hyperbehcs-representation-receipt.v1",
+      "descriptor_only": true,
+      "descriptorOnly": true,
+      "software_only": true,
+      "softwareOnly": true,
+      "seed": "HYP-HRM-KNOWN-PROBLEM-PROBE:f069d3c9203af884:c2ecb9ff7191abd2:maze_5x5_shortest_path_known_001",
+      "payloadFingerprint": "82c26cd1922b3ab4",
+      "authorityCounters": {
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0
+      },
+      "authority_counters": {
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0
+      },
+      "hardware_mutations": 0,
+      "route_mutations": 0,
+      "provider_calls": 0,
+      "mcp_tool_calls": 0,
+      "runtime_authority_grants": 0,
+      "fingerprint": "e3812593b215a099"
+    }
+  },
+  "counts": {
+    "problem_rows": 1,
+    "descriptor_encoded": 1,
+    "baseline_solved": 1,
+    "hrm_model_attempted": 0,
+    "hrm_model_solved": 0,
+    "runtime_ready": 0,
+    "model_execution_allowed": 0,
+    "quant_processing_reduced": 0,
+    "hardware_mutations": 0,
+    "cpu_affinity_changes": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0,
+    "route_mutations": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "process_starts": 0,
+    "executor_executions": 0,
+    "cleanup_actions": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0
+  },
+  "boundary": {
+    "descriptor_only": true,
+    "known_problem_probe_only": true,
+    "quant_pipeline_mutated": false,
+    "quant_processing_reduced": false,
+    "torch_import_allowed": false,
+    "python_execution_allowed": false,
+    "checkpoint_load_allowed": false,
+    "model_execution_allowed": false,
+    "training_allowed": false,
+    "live_agent_spawn_allowed": false,
+    "runtime_promotion_allowed": false,
+    "grants_authority": false,
+    "hardware_mutations": 0,
+    "cpu_affinity_changes": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0,
+    "route_mutations": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "process_starts": 0,
+    "executor_executions": 0,
+    "cleanup_actions": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0
+  },
+  "shannon_symbols": [
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "KNOWN_PROBLEM_ROWS",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "4e0fc450d72b7c1a"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "DESCRIPTOR_ENCODED",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "b6db5697e72ea5f4"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "BASELINE_SOLVED",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "10e2d062101364f0"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "HRM_MODEL_ATTEMPTED",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "2a3d95872e31b44d"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "HRM_MODEL_SOLVED",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "3a7fc30b5313beb1"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "RUNTIME_READY",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "b267ba57048a1f36"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "MODEL_EXECUTION_ALLOWED",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "a7e7f0e97080091f"
+    },
+    {
+      "schema": "hyperbehcs.hrm_known_problem_probe.shannon_symbol.v1",
+      "task_id": "HYP-HRM-KNOWN-PROBLEM-PROBE",
+      "symbol": "QUANT_PROCESSING_REDUCED",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "6f84ddca5dec08d7"
+    }
+  ],
+  "fingerprint": "c6c61c5f43d38124"
+}

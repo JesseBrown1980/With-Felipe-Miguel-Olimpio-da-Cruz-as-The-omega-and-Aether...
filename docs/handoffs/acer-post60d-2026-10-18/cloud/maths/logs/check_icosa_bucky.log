@@ -1,0 +1,47 @@
+[A] icosahedron built combinatorially
+  vertices                                                     record=12           mine=12           MATCH
+  edges                                                        record=30           mine=30           MATCH
+  all degrees 5                                                record=True         mine=True         MATCH
+  triangles                                                    record=20           mine=20           MATCH
+
+[B] the six: every automorphism enumerated, rotations kept by face orientation
+  triangle orientation consistent (orientable)                 record=True         mine=True         MATCH
+  |Aut(icosahedron graph)| = |Ih|                              record=120          mine=120          MATCH
+  rotations |I|                                                record=60           mine=60           MATCH
+    rotation element orders: {1: 1, 2: 15, 3: 20, 5: 24}
+  five-fold axes (cyclic subgroups of order 5)                 record=6            mine=6            MATCH
+  three-fold axes                                              record=10           mine=10           MATCH
+  two-fold axes                                                record=15           mine=15           MATCH
+  class equation 1 + 6*4 + 10*2 + 15*1                         record=60           mine=60           MATCH
+    non-negative (c5,c3,c2) with 1+4c5+2c3+c2 = 60: 240 solutions; the program's
+    sum check therefore cannot pick out (6,10,15) on its own
+
+[C] buckyball = truncated icosahedron, built as the 60 darts (u,v) of the icosahedron
+  V                                                            record=60           mine=60           MATCH
+  E                                                            record=90           mine=90           MATCH
+  pentagons                                                    record=12           mine=12           MATCH
+  hexagons                                                     record=20           mine=20           MATCH
+  F                                                            record=32           mine=32           MATCH
+  Euler V - E + F                                              record=2            mine=2            MATCH
+  degree check: every degree 3 and 3V = 2E                     record=True         mine=True         MATCH
+  incidence 5P + 6H = 2E                                       record=180          mine=180          MATCH
+  every edge on exactly two faces                              record=True         mine=True         MATCH
+  connected components                                         record=1            mine=1            MATCH
+  cycle rank E - V + c                                         record=31           mine=31           MATCH
+  GF(2) rank of the 32 face cycles (= dim of cycle space)      record=31           mine=31           MATCH
+    cycle space has 2**31 = 2147483648 elements; the 32 face cycles alone are 32 distinct
+    cycles, so 31 is a basis size (independent chains), not a count of distinct chains
+    independence: (P,H)=(13,19) passes Euler (2) but incidence gives 179 != 180
+                  (P,H)=(0,30)  passes incidence (180) but Euler gives 0 != 2
+
+[D] symmetry of the buckyball graph itself
+  |Aut(C60 graph)|                                             record=120          mine=120          MATCH
+  C60 face orientation consistent                              record=True         mine=True         MATCH
+  C60 rotations                                                record=60           mine=60           MATCH
+  C60 five-fold axes                                           record=6            mine=6            MATCH
+  C60 three-fold axes                                          record=10           mine=10           MATCH
+  C60 two-fold axes                                            record=15           mine=15           MATCH
+  each five-fold axis passes through exactly 2 pentagons       record=True         mine=True         MATCH
+    other sixes in the object: every hexagonal face has 6 edges (20 such faces)
+
+FAILS: 0 []

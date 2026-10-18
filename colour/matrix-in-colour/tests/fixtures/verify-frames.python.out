@@ -1,0 +1,22 @@
+frame                           px   mean_rgb  nonzero  distinct         grid_sha16
+matrix-min-01.png      1024x1024          117     9998      9998   4d411f7cc8d681e2 
+matrix-min-02.png      1024x1024          119     9998      9998   cbf441008eac1011 CHANGED
+matrix-min-03.png      1024x1024          121     9998      9999   250ad18411b7888e CHANGED
+matrix-min-04.png      1024x1024          121     9998      9998   e561912f3e84e3d8 CHANGED
+matrix-min-05.png      1024x1024          122     9998     10000   4d327faa50d44a35 CHANGED
+matrix-min-06.png      1024x1024          122     9998      9997   6e2fe375dd13ed3d CHANGED
+matrix-min-07.png      1024x1024          122     9998      9997   6e2fe375dd13ed3d IDENTICAL<-BLIND
+matrix-min-08.png      1024x1024          122     9998     10000   5d6213ac8807d53f CHANGED
+matrix-min-09.png      1024x1024          122     9998      9999   80c9b28312e21cb8 CHANGED
+matrix-min-10.png      1024x1024          122     9998      9998   5aa1d723a48ca927 CHANGED
+
+frames                      : 10
+every frame grid distinct   : False  <- some frames identical
+mean cell brightness trend  : [117, 119, 121, 121, 122, 122, 122, 122, 122, 122]
+monotonic non-decreasing    : True
+rooms lit (of 10000)        : 9998 at final frame
+distinct cell colours       : 9998 at final frame
+
+CORRECTED FOLD (for future runs): fold room->colour->DEPTH, not room->colour.
+The depth witness that DID work all along is each frame's own photo_sha256,
+which changed every minute and is already in INDEX.hbp.

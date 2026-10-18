@@ -1,0 +1,12 @@
+CUBEHDR|name=FABLE5-SHADOWCAT-ACER-10-FILES-NOT-IN-AETHER-2026-10-18|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=10|merkle_sha256=3c2ba202bb11c68c8f328f2274eb93c28eb1002f126f29dd70e259194c122b37|note=src=D:/asolaria-absorb/shadowcat_aether_has_0/10_byte-identical|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=shadowcat/LAW-34-BROWN-SCHRODINGER.md|bytes=11886|sha256=c513c9c5c13dfbe5129260cfc8b0bd9af7fe59ea4297654fb0af0630f73229ab|json=0
+FILE|name=shadowcat/RUN-2026-07-26.txt|bytes=6740|sha256=8f1fed06c9174802fd0b98d920e60fe856815684b056ba7dd5c53db71ca0e1d8|json=0
+FILE|name=shadowcat/SHADOWCAT-TEST-RESULTS.md|bytes=17105|sha256=2ae5dab4c9d68692eff2a964586f3a8955ea03765e63fb674f842812b639a55b|json=0
+FILE|name=shadowcat/THREEGAP-2026-07-26.txt|bytes=1769|sha256=5ba8ef34937989979b2dfdca5089c662096a70f6e42b1d57dff6b480e68f0a62|json=0
+FILE|name=shadowcat/VERIFY-2026-07-26.txt|bytes=975|sha256=468ad7f9bf88a7c2e0a3b964cda04bd9ee2cb1256f9fffa50d0477ceb46be0ea|json=0
+FILE|name=shadowcat/callingchain.rs|bytes=16604|sha256=50be643c09977a35ea01f7a0d55719ea4ff4905fe04854002529df8902c941c1|json=0
+FILE|name=shadowcat/main.rs|bytes=24374|sha256=c3105169b65cdea49745e0461f59a619d7ad08b832232b75b1c0d40bbbe64d22|json=0
+FILE|name=shadowcat/sha256.rs|bytes=4900|sha256=6a6a9c83860b383fa7110c6f438c797c968dccd20007d2572b65c65db60c4fe9|json=0
+FILE|name=shadowcat/threegap.rs|bytes=5831|sha256=4c5526b3e8ad159324d8ce8251ac2f86319ab9e277c9fa0b56b264933a1f5389|json=0
+FILE|name=shadowcat/verify.rs|bytes=6792|sha256=20f6a8d7831867d3ff1ac8fae64786ee1f5463fec2c1f21033d16d6dfead6a59|json=0
+CUBEFTR|merkle_sha256=3c2ba202bb11c68c8f328f2274eb93c28eb1002f126f29dd70e259194c122b37|json=0

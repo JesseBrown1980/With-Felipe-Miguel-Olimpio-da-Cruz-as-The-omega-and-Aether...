@@ -1,0 +1,11 @@
+{
+ "giant": "ASOLARIA-MYTHOS-SPHERE-PUMPED.gguf",
+ "giant_bytes": 126885312,
+ "piece": 3174,
+ "pieces": 39976,
+ "carried": 39976,
+ "dropped": 0,
+ "distinct": 8731,
+ "tied": 31484,
+ "mean_ctx_per_byte": 0.0013569263171007775
+}

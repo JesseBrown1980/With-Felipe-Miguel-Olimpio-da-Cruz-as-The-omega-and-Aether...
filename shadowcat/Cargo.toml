@@ -1,0 +1,31 @@
+[package]
+name = "shadowcat"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The owner's SHADOWCAT gear engine with its verify, callingchain and threegap programs, kept byte-identical, and the reproduction of their 2026-07-26 run records"
+keywords = ["shadowcat", "three-gap", "sha256", "hbp", "integer"]
+categories = ["mathematics"]
+
+# The five .rs files under src/ are the owner's, kept byte-identical, so the lints they trip are
+# allowed here by name instead of by attributes in the files. Every other warning still denies.
+[lints.rust]
+unsafe_code = "forbid"
+# src/main.rs:215,217: `Drive::pulsar` and `Drive::turns_per_second` are written, never read.
+dead_code = "allow"
+
+[lints.clippy]
+# src/main.rs:171: `c2 * (2 - 1)`, the last term of the class equation.
+identity_op = "allow"
+# src/main.rs:405-406: the coprimality loop indexes RIME_AXES by `i` and `j`.
+needless_range_loop = "allow"
+# src/main.rs:433, src/bin/callingchain.rs:204,237: column headings passed as `{}` arguments.
+print_literal = "allow"
+
+# The owner's runs used the release profile (USIM books/CHAIN-TOPOLOGY.md:431). At opt-level 0
+# `C_LIGHT.powi(6)` (src/bin/callingchain.rs:116) is computed at run time one ULP lower than the
+# value LLVM folds at compile time, which changes callingchain.hbp tag 0x30 and its trailer.
+# opt-level 3 here makes the binaries `cargo test` runs print and write what `--release` does.
+[profile.dev]
+opt-level = 3

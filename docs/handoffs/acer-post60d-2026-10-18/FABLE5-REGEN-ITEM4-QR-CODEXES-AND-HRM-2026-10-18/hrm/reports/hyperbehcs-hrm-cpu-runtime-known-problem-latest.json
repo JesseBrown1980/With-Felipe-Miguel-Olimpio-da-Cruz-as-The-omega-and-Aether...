@@ -1,0 +1,969 @@
+{
+  "ok": true,
+  "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.v1",
+  "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+  "run_id": "hyperbehcs-hrm-cpu-runtime-known-problem-20260516",
+  "generated_at": "2026-05-16T11:37:59.449Z",
+  "status": "hrm_cpu_known_problem_solved_bounded_smoke",
+  "answer": "tiny_hrm_cpu_runtime_solved_known_maze_after_bounded_local_training",
+  "sources": {
+    "descriptor_adapter_fingerprint": "f069d3c9203af884",
+    "hrm_runtime_gate_fingerprint": "c2ecb9ff7191abd2",
+    "hrm_runtime_gate_verdict": "blocked_runtime_dependencies_not_ready",
+    "hrm_root": "D:/Asolaria-HRM"
+  },
+  "problem": {
+    "id": "maze_5x5_shortest_path_known_001",
+    "domain": "maze_shortest_path",
+    "grid": [
+      "S..#.",
+      "##.#.",
+      "...#.",
+      ".###.",
+      "....G"
+    ],
+    "expected_shortest_path_length": 12,
+    "expected_path": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ]
+  },
+  "runtime": {
+    "python_executable": "D:/Asolaria-HRM/.venv/Scripts/python.exe",
+    "torch_version": "2.12.0+cpu",
+    "device": "cpu",
+    "cuda_available": false,
+    "flash_attention_cpu_shim": true,
+    "official_checkpoint_loaded": false,
+    "external_dataset_downloaded": false,
+    "wandb_mode": "disabled"
+  },
+  "model": {
+    "kind": "tiny_hrm_cpu_smoke_overfit",
+    "source_class": "models.hrm.hrm_act_v1@HierarchicalReasoningModel_ACTV1",
+    "parameter_count": 58850,
+    "config": {
+      "batch_size": 1,
+      "seq_len": 25,
+      "puzzle_emb_ndim": 0,
+      "num_puzzle_identifiers": 1,
+      "vocab_size": 10,
+      "H_cycles": 1,
+      "L_cycles": 1,
+      "H_layers": 1,
+      "L_layers": 1,
+      "hidden_size": 32,
+      "expansion": 2,
+      "num_heads": 4,
+      "pos_encodings": "learned",
+      "halt_max_steps": 1,
+      "halt_exploration_prob": 0,
+      "forward_dtype": "float32"
+    }
+  },
+  "training": {
+    "bounded_local_training": true,
+    "steps_requested": 260,
+    "solved_at_step": 12,
+    "trace": [
+      {
+        "step": 241,
+        "loss": 0.0005552548682317138,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 242,
+        "loss": 0.0005524908192455769,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 243,
+        "loss": 0.0005497790407389402,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 244,
+        "loss": 0.0005470626638270915,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 245,
+        "loss": 0.0005443890113383532,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 246,
+        "loss": 0.0005417393404059112,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 247,
+        "loss": 0.0005390800070017576,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 248,
+        "loss": 0.000536473176907748,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 249,
+        "loss": 0.0005338710034266114,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 250,
+        "loss": 0.0005312927532941103,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 251,
+        "loss": 0.0005287143867462873,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 252,
+        "loss": 0.000526207615621388,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 253,
+        "loss": 0.0005236864672042429,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 254,
+        "loss": 0.0005211891839280725,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 255,
+        "loss": 0.0005186917842365801,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 256,
+        "loss": 0.000516227912157774,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 257,
+        "loss": 0.0005138115375302732,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 258,
+        "loss": 0.0005113903898745775,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 259,
+        "loss": 0.0005089884507469833,
+        "token_accuracy": 1,
+        "exact": true
+      },
+      {
+        "step": 260,
+        "loss": 0.0005066102603450418,
+        "token_accuracy": 1,
+        "exact": true
+      }
+    ]
+  },
+  "hrm_runtime_result": {
+    "hrm_model_attempted": true,
+    "hrm_model_solved": true,
+    "predicted_path": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "predicted_shortest_path_length": 12,
+    "expected_path_mask_matches": true,
+    "expected_path_cell_set_matches": true,
+    "expected_path_order_matches": false,
+    "final_tokens": [
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      5,
+      6,
+      6,
+      5,
+      5,
+      5,
+      6,
+      6,
+      5,
+      6,
+      6,
+      6,
+      6,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "label_tokens": [
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      5,
+      6,
+      6,
+      5,
+      5,
+      5,
+      6,
+      6,
+      5,
+      6,
+      6,
+      6,
+      6,
+      5,
+      5,
+      5,
+      5,
+      5
+    ]
+  },
+  "elapsed_ms": 8129.095,
+  "quant_receipt": {
+    "schema": "hyperbehcs.quantized_substrate_receipt.v1",
+    "substrate_id": "storage_d_drive",
+    "source_layer": "hrm_cpu_runtime_known_problem",
+    "vector_dimension": 7,
+    "target_dimension": 4,
+    "algorithms": {
+      "johnson_lindenstrauss_projection": {
+        "id": "johnson_lindenstrauss_projection",
+        "algorithm": "johnson-lindenstrauss-achlioptas-sparse.v1",
+        "seed": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM:f069d3c9203af884:c2ecb9ff7191abd2:maze_5x5_shortest_path_known_001",
+        "sourceDimensions": 7,
+        "source_dimension": 7,
+        "targetDimensions": 4,
+        "target_dimension": 4,
+        "projection": [
+          -0.862205594105,
+          -0.003811357527,
+          -0.862190878439,
+          0.000014715666
+        ],
+        "projected_vector": [
+          -0.862205594105,
+          -0.003811357527,
+          -0.862190878439,
+          0.000014715666
+        ],
+        "projectedVector": [
+          -0.862205594105,
+          -0.003811357527,
+          -0.862190878439,
+          0.000014715666
+        ],
+        "values": [
+          -0.862205594105,
+          -0.003811357527,
+          -0.862190878439,
+          0.000014715666
+        ],
+        "metadata": {
+          "source_dimension": 7,
+          "distribution": "sqrt(3),0,-sqrt(3) with probabilities 1/6,2/3,1/6",
+          "scale": 0.5,
+          "hash": "sha256(seed|row|col)"
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "993befcac3162a50"
+      },
+      "turbo_quant": {
+        "id": "turbo_quant",
+        "algorithm": "turbo-uniform-quant.v1",
+        "dimension": 7,
+        "codes": [
+          0,
+          0,
+          0,
+          1,
+          255,
+          0,
+          0
+        ],
+        "quantized": [
+          0,
+          0,
+          0,
+          1,
+          255,
+          0,
+          0
+        ],
+        "quantized_values": [
+          0,
+          0,
+          0,
+          1,
+          255,
+          0,
+          0
+        ],
+        "dequantized": [
+          0,
+          0,
+          0,
+          230.78431372549,
+          58849.99999999995,
+          0,
+          0
+        ],
+        "dequantized_values": [
+          0,
+          0,
+          0,
+          230.78431372549,
+          58849.99999999995,
+          0,
+          0
+        ],
+        "metadata": {
+          "bits": 8,
+          "min": 0,
+          "max": 58850,
+          "scale": 230.78431372549,
+          "zeroPoint": 0,
+          "levels": 256,
+          "maxCode": 255
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "6ebeec2a92d80fa5"
+      },
+      "polar_quant": {
+        "id": "polar_quant",
+        "algorithm": "polar-pair-quant.v1",
+        "dimension": 7,
+        "pairCount": 4,
+        "codes": [
+          [
+            0,
+            32
+          ],
+          [
+            1,
+            64
+          ],
+          [
+            255,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "rows": [
+          {
+            "radius": 1.414213562373,
+            "angle": 0.785398163397,
+            "r": 1.414213562373,
+            "theta": 0.785398163397,
+            "code": [
+              0,
+              32
+            ]
+          },
+          {
+            "radius": 260.001923069811,
+            "angle": 1.566950191914,
+            "r": 260.001923069811,
+            "theta": 1.566950191914,
+            "code": [
+              1,
+              64
+            ]
+          },
+          {
+            "radius": 58850,
+            "angle": 0,
+            "r": 58850,
+            "theta": 0,
+            "code": [
+              255,
+              0
+            ]
+          },
+          {
+            "radius": 0,
+            "angle": 0,
+            "r": 0,
+            "theta": 0,
+            "code": [
+              0,
+              0
+            ]
+          }
+        ],
+        "pairs": [
+          {
+            "radius": 1.414213562373,
+            "angle": 0.785398163397,
+            "r": 1.414213562373,
+            "theta": 0.785398163397,
+            "code": [
+              0,
+              32
+            ]
+          },
+          {
+            "radius": 260.001923069811,
+            "angle": 1.566950191914,
+            "r": 260.001923069811,
+            "theta": 1.566950191914,
+            "code": [
+              1,
+              64
+            ]
+          },
+          {
+            "radius": 58850,
+            "angle": 0,
+            "r": 58850,
+            "theta": 0,
+            "code": [
+              255,
+              0
+            ]
+          },
+          {
+            "radius": 0,
+            "angle": 0,
+            "r": 0,
+            "theta": 0,
+            "code": [
+              0,
+              0
+            ]
+          }
+        ],
+        "polar_rows": [
+          {
+            "radius": 1.414213562373,
+            "angle": 0.785398163397,
+            "r": 1.414213562373,
+            "theta": 0.785398163397,
+            "code": [
+              0,
+              32
+            ]
+          },
+          {
+            "radius": 260.001923069811,
+            "angle": 1.566950191914,
+            "r": 260.001923069811,
+            "theta": 1.566950191914,
+            "code": [
+              1,
+              64
+            ]
+          },
+          {
+            "radius": 58850,
+            "angle": 0,
+            "r": 58850,
+            "theta": 0,
+            "code": [
+              255,
+              0
+            ]
+          },
+          {
+            "radius": 0,
+            "angle": 0,
+            "r": 0,
+            "theta": 0,
+            "code": [
+              0,
+              0
+            ]
+          }
+        ],
+        "metadata": {
+          "radiusBits": 8,
+          "angleBits": 8,
+          "maxRadius": 58850,
+          "radiusScale": 230.78431372549,
+          "angleScaleRadians": 0.024639942381,
+          "centers": {
+            "radius": "code * radiusScale",
+            "angleRadians": "code * angleScaleRadians"
+          }
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "f623dbb8290ad32c"
+      },
+      "triple_quant": {
+        "id": "triple_quant",
+        "algorithm": "triple-spherical-quant.v1",
+        "dimension": 7,
+        "tripleCount": 3,
+        "codes": [
+          [
+            0,
+            78,
+            32
+          ],
+          [
+            255,
+            128,
+            64
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "lanes": [
+          {
+            "id": "coarse",
+            "name": "coarse",
+            "bits": 4,
+            "role": "fast_cpu_gpu_placement_hint"
+          },
+          {
+            "id": "medium",
+            "name": "medium",
+            "bits": 8,
+            "role": "balanced_receipt_transport"
+          },
+          {
+            "id": "fine",
+            "name": "fine",
+            "bits": 8,
+            "role": "reviewable_fallback_precision"
+          }
+        ],
+        "levels": [
+          {
+            "id": "coarse",
+            "name": "coarse",
+            "bits": 4,
+            "role": "fast_cpu_gpu_placement_hint"
+          },
+          {
+            "id": "medium",
+            "name": "medium",
+            "bits": 8,
+            "role": "balanced_receipt_transport"
+          },
+          {
+            "id": "fine",
+            "name": "fine",
+            "bits": 8,
+            "role": "reviewable_fallback_precision"
+          }
+        ],
+        "metadata": {
+          "radiusBits": 8,
+          "thetaBits": 8,
+          "phiBits": 8,
+          "maxRadius": 58850.57433874371,
+          "radiusScale": 230.786566034289,
+          "thetaScaleRadians": 0.012319971191,
+          "phiScaleRadians": 0.024639942381,
+          "centers": {
+            "radius": "code * radiusScale",
+            "thetaRadians": "code * thetaScaleRadians",
+            "phiRadians": "code * phiScaleRadians"
+          }
+        },
+        "descriptor_only": true,
+        "descriptorOnly": true,
+        "software_only": true,
+        "softwareOnly": true,
+        "authority_grants": [],
+        "authorityGrants": [],
+        "authorityCounters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "authority_counters": {
+          "hardware_mutations": 0,
+          "route_mutations": 0,
+          "provider_calls": 0,
+          "mcp_tool_calls": 0,
+          "runtime_authority_grants": 0
+        },
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0,
+        "fingerprint": "57bf67b9d2b62626"
+      }
+    },
+    "descriptor_only": true,
+    "software_receipt_only": true,
+    "asolaria_os_receipt": true,
+    "leworld_model_receipt": false,
+    "pixel_receipt": false,
+    "hardware_mutations": 0,
+    "cpu_affinity_changes": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0,
+    "route_mutations": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "process_starts": 0,
+    "executor_executions": 0,
+    "cleanup_actions": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0,
+    "receipt": {
+      "receiptId": "hyperbehcs-representation-receipt.v1",
+      "descriptor_only": true,
+      "descriptorOnly": true,
+      "software_only": true,
+      "softwareOnly": true,
+      "seed": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM:f069d3c9203af884:c2ecb9ff7191abd2:maze_5x5_shortest_path_known_001",
+      "payloadFingerprint": "b09d3f0fef8a827f",
+      "authorityCounters": {
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0
+      },
+      "authority_counters": {
+        "hardware_mutations": 0,
+        "route_mutations": 0,
+        "provider_calls": 0,
+        "mcp_tool_calls": 0,
+        "runtime_authority_grants": 0
+      },
+      "hardware_mutations": 0,
+      "route_mutations": 0,
+      "provider_calls": 0,
+      "mcp_tool_calls": 0,
+      "runtime_authority_grants": 0,
+      "fingerprint": "2f9ac3ed8233d7b3"
+    }
+  },
+  "counts": {
+    "problem_rows": 1,
+    "python_executions": 1,
+    "process_starts": 1,
+    "torch_imports": 1,
+    "hrm_model_attempted": 1,
+    "hrm_model_solved": 1,
+    "bounded_cpu_training_runs": 1,
+    "bounded_cpu_training_steps": 260,
+    "official_checkpoint_loads": 0,
+    "external_dataset_downloads": 0,
+    "cuda_used": 0,
+    "quant_processing_reduced": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "route_mutations": 0,
+    "cleanup_actions": 0,
+    "hardware_mutations": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0
+  },
+  "boundary": {
+    "descriptor_only": false,
+    "bounded_local_cpu_smoke_only": true,
+    "official_checkpoint_result": false,
+    "production_runtime_promotion_allowed": false,
+    "quant_pipeline_mutated": false,
+    "quant_processing_reduced": false,
+    "hookwall_candidate_only": true,
+    "grants_authority": false,
+    "hardware_mutations": 0,
+    "cpu_affinity_changes": 0,
+    "gpu_kernel_launches": 0,
+    "gpu_driver_mutations": 0,
+    "remote_writes": 0,
+    "adb_actions": 0,
+    "scrcpy_actions": 0,
+    "device_file_writes": 0,
+    "route_mutations": 0,
+    "provider_calls": 0,
+    "mcp_tool_calls": 0,
+    "process_starts": 1,
+    "executor_executions": 0,
+    "cleanup_actions": 0,
+    "runtime_authority_grants": 0,
+    "production_promotions": 0
+  },
+  "shannon_symbols": [
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "HRM_CPU_PROBE_ROWS",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "9cf073560cb80317"
+    },
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "HRM_MODEL_ATTEMPTED",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "9a7b99e4409426d7"
+    },
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "HRM_MODEL_SOLVED",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "c9b604baed03cf0a"
+    },
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "BOUNDED_CPU_TRAINING_RUNS",
+      "value": 1,
+      "bits": 1,
+      "fingerprint": "3efc689237742724"
+    },
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "OFFICIAL_CHECKPOINT_LOADS",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "5c2c743fa6db0ffb"
+    },
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "QUANT_PROCESSING_REDUCED",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "6f84ddca5dec08d7"
+    },
+    {
+      "schema": "hyperbehcs.hrm_cpu_runtime_known_problem.shannon_symbol.v1",
+      "task_id": "HYP-HRM-CPU-RUNTIME-KNOWN-PROBLEM",
+      "symbol": "RUNTIME_AUTHORITY_GRANTS",
+      "value": 0,
+      "bits": 0,
+      "fingerprint": "e80655f5340642ca"
+    }
+  ],
+  "fingerprint": "75c4e452d225df9f"
+}

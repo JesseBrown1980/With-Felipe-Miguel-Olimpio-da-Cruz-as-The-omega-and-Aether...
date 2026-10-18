@@ -368,7 +368,8 @@ using to run the QR codes." Where shadow cats are in this repository:
 
 | Where | What |
 |---|---|
-| `acer-shadowcat-sha256-2026-10-18/` | The shadowcat program as ACER sent it: `src/sha256.rs` (4,900 B, `6a6a9c83…`, integer FIPS 180-4, "the addressing primitive for the whole constellation") and `src/bin/verify.rs`, with the run record `VERIFY-2026-07-26.txt`. Rebuilt here with rustc 1.81.0, `verify.rs` prints the record byte-identical (21 lines). |
+| `shadowcat/` | The whole shadowcat program: all 10 files of ACER's `D:\asolaria-absorb\shadowcat\`, unchanged, built with Rust 1.81. Every output with a recorded hash reproduces byte-exact here and on ACER (see "Post-60D deliveries" below). ACER's inventory of that folder holds no QR code; the owner's statement above is kept beside that finding. |
+| `acer-shadowcat-sha256-2026-10-18/` | The first shadowcat delivery: `src/sha256.rs` (4,900 B, `6a6a9c83…`, integer FIPS 180-4, "the addressing primitive for the whole constellation") and `src/bin/verify.rs`, with the run record `VERIFY-2026-07-26.txt`. Rebuilt here with rustc 1.81.0, `verify.rs` prints the record byte-identical (21 lines). |
 | `qr/colour-qr`, `qr/qr-read-int` | The QR process: payload → 2,100-byte indexed chunks → base64 → one ordinary QR per RGB plane → split the planes → integer jsQR read → reassemble → SHA-256. `acer-shadowcat-sha256-2026-10-18/cloud/qr_roundtrip.sh` runs it on 9 payloads and checks each with shadowcat's `sha256.rs`: the 4 laws codexes (3,200 B), the 4 keys of 3,174 B and the whole `ASOLARIA-CONSTELLATION.gguf` (145,120 B, 24 codes) all come back byte-exact, and shadowcat's digest equals coreutils' on every output (`cloud/CLOUD-ROWS.hbp`). |
 | `planes/gnn-trio/src/sha256.rs:3` | Names shadowcat's `sha256.rs` as the SHA-256 the estate adopts. The five SHA-256 files written for aether switch to it after the digests are shown identical (listed in the shadowcat `PROVENANCE.md`). |
 | `pump/kernel-pump/ACER-MYTHOS-ASOLARIA-GPT6-SHADOW-CATS-CALLINGS.txt` (5,176 B) | ACER's synchronized callings: GPT6 SHADOW CATS is the shared centre that the MYTHOS and ASOLARIA trijections read across. |
@@ -383,3 +384,81 @@ already pins: `books/SHADOWCAT-TEST-RESULTS.md`, `books/lineage/SHADOWCAT-17105.
 `books/BOOKS-OF-SHADOWS.md`, `tools/shadow_net.py` and `tools/shadow_tunnel_3x3x3.py`. Its
 `measurements/pump_wave.py:63-67` reads the laws `.qr` codexes and `D:/asolaria-absorb/shadowcat/LAW-34-BROWN-SCHRODINGER.md`
 from the same ACER folder the `sha256.rs` came from.
+
+## Post-60D deliveries (2026-10-18)
+
+`acer-post60d-2026-10-18/`: what ACER sent after the owner named "the 3 most important post 60 d
+discovery groups", each folder kept as delivered (`sha256sum -c SHA256SUMS` passes in every one),
+plus `cloud/` (added here).
+
+| Folder | Files | What it is | Where it is used |
+|---|---|---|---|
+| `FABLE5-SHADOWCAT-ACER-10-FILES-NOT-IN-AETHER-2026-10-18/` | CUBE + SUMS (10/10) | the delivery manifest of `D:\asolaria-absorb\shadowcat\` | bodies in `shadowcat/` |
+| `FABLE5-SHADOWCAT-REMADE-BYTE-EXACT-2026-10-18/` | 17/17 | ACER's rebuild at `/root/_horizon/shadowcat`, rustc 1.81.0, WSL Linux | second machine for `shadowcat/` |
+| `FABLE5-MATRIX-IN-COLOUR-62-FILES-NOT-IN-AETHER-2026-10-18/` | CUBE + SUMS (62/62) | `asolaria-matrix-in-colour` @ `7035def`, GitHub blob ids checked | bodies in `colour/matrix-in-colour/vendor/` |
+| `FABLE5-AETHER-COMPARISON-RECEIPT-2026-10-18/` | 9/9 | ACER's comparison of aether @ `4646e9f` with four sources | rechecked in `cloud/recheck/` |
+| `FABLE5-REGEN-P5-GNN-BRIDGE-AND-PREDICTIONS-2026-10-18/` | CUBE + SUMS (2/2) | P5: the bridge (`21e06399…`) and the predictions ledger (`70541242…`) | the host8 bridge port (in progress) |
+| `FABLE5-REGEN-ITEM2-MEASUREMENT-ROWS-2026-10-18/` | 5/5 | ACER's step 4d and TritWord rows | tables above |
+| `FABLE5-REGEN-ITEM3-KEY-WRITERS-3174-2026-10-18/` | 15/15 | key writers and their recipes | below |
+| `FABLE5-REGEN-ITEM4-QR-CODEXES-AND-HRM-2026-10-18/` | 41/41 | the four `laws/*.qr` originals, their four readers, and ACER's HRM integration files | below |
+| `FABLE5-REGEN-ITEM5-GENERATORS-AND-INPUTS-2026-10-18/` | 18/18 | generators and inputs ACER found for the open codex targets | below |
+
+**Shadowcat** (`shadowcat/`). The 10 owner files sit in the program's own layout (`src/main.rs`,
+`src/sha256.rs`, `src/bin/{verify,threegap,callingchain}.rs`, records in `records/`), with a Cargo.toml
+written here (ACER's rebuild wrote the same package, no dependencies). Built with rustc 1.81.0:
+`shadowcat` stdout equals `RUN-2026-07-26.txt`, `threegap` equals `THREEGAP-2026-07-26.txt`, `verify`
+equals `VERIFY-2026-07-26.txt`, and `shadowcat.hbp` (415 B, `7ccf5b1c…`, trailer `87632318…`) and
+`shadowcat.hbi` (294 B, `82b52dce…`) equal the hashes in `SHADOWCAT-TEST-RESULTS.md:358-359`. ACER's
+rebuild gives the same bytes, so these outputs are reproduced on two machines. `callingchain` has no
+recorded file hash; its `.hbp` trailer `3c4780ed…` equals USIM `books/CHAIN-TOPOLOGY.md:435`, in the
+release profile the owner names there (`:431`); at opt-level 0 one byte differs, from `powi(6)` folded at
+build time versus computed at run time. The owner's rule on number types is quoted in `main.rs:22-23`:
+"the system needs int for trit calculations and float for binary"; the README lists every `f64` line.
+
+**Matrix in colour** (`colour/matrix-in-colour/`). All 66 files of `asolaria-matrix-in-colour` @
+`7035def`, unchanged (66/66 blob ids, 62/62 ACER sums, 27/27 sidecars). `verify-frames.py` is ported to
+integer Rust 1.81 and prints the same 1,529 bytes as the script on all 10 frames. The frames are pictures
+of the 100 × 100 room lattice (one 9 × 9 cell per room), not colour QR codes: the integer QR reader finds
+no symbol in any of the 30 planes. Frames 06 and 07 are the same file, as the repository's own
+`CORRECTION` records (minute 6 ran over its deadline).
+
+**Comparison recheck** (`cloud/recheck/CLOUD-RECHECK.hbp`, 112 rows by content). ACER's byte claims
+hold at its snapshot `4646e9f`. Seven rows read differently at `d203721`: three shadowcat files that
+`d203721` added, and four "same name, different bytes" rows that share only a file name (the
+matrix-in-colour `README.md`, `README.md.sha256` and `.gitattributes`, and shadowcat `main.rs`). Of the
+three Asolaria files that differ, all are real versions of the same file: aether's root `README.md` and
+`.gitattributes` began as Asolaria's blobs, and `slice_glyph_messaging.py` was changed by the
+integer-rule pass to compute its code rate as a `Fraction` (both print the same output).
+
+**Maths check** (`cloud/maths/`, integers and exact fractions only, the owner's code not run). Every
+whole-number result recomputes: the three Rime axes are prime and pairwise coprime (closure
+9,406,320,487 turns), all 30 gap rows and all 21 sweep counts match, the buckyball's rotation group has
+6 five-fold, 10 three-fold and 15 two-fold axes, the buckyball graph has 60 vertices, 90 edges, 32 faces
+and 31 independent cycles, spheres tubed along a graph give E − V + 1 holes, and the two Kerr shadow
+limits (radius √27 M; −2M to +7M edge-on) are exact. These are known theorems the structure sits on
+(three-distance theorem, icosahedral group, Euler's formula, cycle rank, Bardeen's shadow). Points where
+a record says more than the arithmetic: the three-gap bound holds for any stride, coprime or not (as the
+owner's own later sweep shows); 31 is the number of independent cycles (the cycle space has 2^31
+elements); the "pole-on" table was computed at 15°, and exactly on the axis the shadow is round; the
+0.05 % at zero spin is a sampling artifact. Law 34 and the buckyball inside a black hole are recorded as
+conjectures, and nothing here tests them.
+
+**Items 2-5.**
+- Step 4d (ACER): one thread, deterministic algorithms and the MKL AVX2 pin give the same three
+  checkpoints as the unpinned deterministic run (`9166cdbe…`, `be3ba29f…`, `7a920ac4…`); with the default 4
+  threads the bytes change run to run. ACER's TritWord rows (encode 79.3 ns, decode 216.1 ns, ternary
+  emit 598.5-599.8 ns) match the proof sheet; the 70 ns direct probe is
+  `proof-nanoseconds-ternary-2026-10-18/cloud/direct.rs` in this repository.
+- Keys: the HERSELF key writer is `asolaria_herself.py` (already here); the CONSTELLATION and KERNEL
+  key writers are not on ACER. The KERNEL key has two recorded versions: `FABLE5-KERNEL-FED.hbp`
+  (`202ff2f0…`, sphere descriptions) and `FABLE5-KERNEL-STREAMED-K3.hbp` (`f075f5c6…`, K3's own bytes),
+  and the public key file is the second. ACER's sidecar beside the key names the first.
+- QR codexes: ACER's four `laws/*.qr` originals are byte-identical to aether's fixtures, which were cut
+  from the CONSTELLATION GGUF's tensors. With the originals in hand, codex target #13 can be rerun from
+  inputs that are not the GGUF itself (in progress). The program that wrote the `.qr` files and a trained
+  HRM checkpoint are not on ACER (`D:/Asolaria-HRM` is a clone of `sapientinc/HRM` with no checkpoint).
+- Generators: the SPHERE, TIMEFIX and THREE-BODIES first-run items are not on ACER (writers' relatives
+  and the final THREE-BODIES receipt were sent; all were already public in USIM). The 1.8499 baseline in
+  `FABLE5-PLAY-KEYS-ENWIK9.hbp` is not printed by `rime_bpc.py`: it is the `cm3ti-gt256` run in USIM
+  `receipts/operator/prior-test.log` (payload 2,285,979 B + decoder source 26,377 B = 2,312,356 B over
+  10,000,000 bytes), and the 26,377-byte decoder is `cm3ti_gt256.rs`, still not found.

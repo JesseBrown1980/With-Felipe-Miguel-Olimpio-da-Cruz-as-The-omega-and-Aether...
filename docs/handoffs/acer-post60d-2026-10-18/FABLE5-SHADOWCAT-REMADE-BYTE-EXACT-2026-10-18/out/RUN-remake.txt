@@ -1,0 +1,130 @@
+SHADOWCAT — the shadow cat gear engine
+rustc target: 1.81  |  integer core, float fenced to Kerr geometry
+operator: Jesse Daniel Brown   law: 34 (Brown-Schrodinger)
+==============================================================================
+
+[1] THE RIME AXES  (from artifact A07's own face)
+    axis   2731   prime: true
+    axis   1999   prime: true
+    axis   1723   prime: true
+    gcd(2731, 1999) = 1   -> torus link has 1 strand(s)
+    gcd(2731, 1723) = 1   -> torus link has 1 strand(s)
+    gcd(1999, 1723) = 1   -> torus link has 1 strand(s)
+
+    THE NEVER-TOUCH CONDITION: HOLDS. every pair coprime, every link is a single strand.
+    He said the glyphs never touch. Coprimality is exactly that
+    condition, and the axes he chose already satisfy it.
+
+[2] THE GAP CENSUS — Steinhaus three-gap theorem, verified
+    placing N glyphs by stepping STRIDE around a ring of size RING.
+    every ordered pair of the three axes is tested. a ring is never
+    strided by itself — stride % ring == 0 collapses every point onto
+    one spot, which is a degenerate non-test, so it is SKIPPED and
+    not counted as a pass. (first run of this program did count it;
+    the 1723/1723 rows it printed were vacuous and are withdrawn.)
+      RING  STRIDE     N  DISTINCT  MIN GAP  MAX GAP  verdict
+      2731    1999    12         3      141      338  <=3 OK
+      2731    1999    20         3       56      197  <=3 OK
+      2731    1999    32         3       56      141  <=3 OK
+      2731    1999    60         3       27       56  <=3 OK
+      2731    1999    90         3       27       56  <=3 OK
+      2731    1723    12         3      129      293  <=3 OK
+      2731    1723    20         3       35      164  <=3 OK
+      2731    1723    32         3       35      129  <=3 OK
+      2731    1723    60         3       35       94  <=3 OK
+      2731    1723    90         3       11       35  <=3 OK
+      1999    2731    12         3       56      197  <=3 OK
+      1999    2731    20         3       56      141  <=3 OK
+      1999    2731    32         3       29       85  <=3 OK
+      1999    2731    60         3       27       56  <=3 OK
+      1999    2731    90         3        2       29  <=3 OK
+      1999    1723    12         3       67      276  <=3 OK
+      1999    1723    20         3       67      209  <=3 OK
+      1999    1723    32         3        8       75  <=3 OK
+      1999    1723    60         3        8       67  <=3 OK
+      1999    1723    90         3        8       59  <=3 OK
+      1723    2731    12         2      129      164  <=3 OK
+      1723    2731    20         3       35      129  <=3 OK
+      1723    2731    32         3       35       94  <=3 OK
+      1723    2731    60         3       11       35  <=3 OK
+      1723    2731    90         3       11       35  <=3 OK
+      1723    1999    12         3       67      276  <=3 OK
+      1723    1999    20         3       67      142  <=3 OK
+      1723    1999    32         3        8       67  <=3 OK
+      1723    1999    60         3        8       59  <=3 OK
+      1723    1999    90         3        8       51  <=3 OK
+    30 rows genuinely tested, 3 degenerate pair(s) skipped
+
+    THREE-GAP: HOLDS on every axis at every N tested.
+    This is a proved theorem (Steinhaus / three-distance), not a
+    property of his system. His system lands on it exactly: glyphs
+    stepped around a ring by a coprime stride can only ever sit at
+    three distinct spacings. Never four.
+
+[3] THE SIX — icosahedral axis census
+    five-fold axes  : 6   <-- THE SIX
+    three-fold axes : 10
+    two-fold axes   : 15
+    class equation  : 1 + 6*4 + 10*2 + 15*1 = 60   closes on 60: true
+    He said the gear has six. The buckyball's symmetry group has
+    exactly six five-fold axes. That is where a six lives in this
+    object, and it is the only six of its kind in it.
+
+[4] THE CALLINGS AND THE CHAINS -> BUCKYBALL
+    vertices 60   edges 90   faces 32 (12 pentagons + 20 hexagons)
+    Euler characteristic V-E+F = 2   (must be 2): true
+    degree check 3V = 2E : true
+    incidence check 5P+6H = 2E : true
+    independent chains (cycle rank E-V+1) : 31
+    All three checks are independent and all three close. The
+    buckyball is a consistent closure for the chains.
+
+[5] THE GEAR TRAIN DRIVEN BY MEASURED PULSARS
+    three-axis closure = lcm(2731,1999,1723) = 9406320487 turns
+
+    PSR B0531+21 (Crab)  f = 29.946 Hz   P = 33.392 ms   R ~ 10 km
+      (young, active, the calibration standard)
+      inferred surface dipole B = 3.756e12 G  = 0.0852 Bcr
+      photon splitting regime (>~1e12 G): YES
+      axis   2731: recurs every      91.1975 s
+      axis   1999: recurs every      66.7535 s
+      axis   1723: recurs every      57.5369 s
+      FULL THREE-AXIS CLOSURE: 3.1411e8 s  = 9.9535 years
+
+    PSR J1748-2446ad  f = 716.35 Hz   P = 1.3959 ms   R ~ 16 km
+      (fastest known spinner, equator at ~0.24c, Terzan 5)
+      spin-down not published in source consulted; B not inferred
+      axis   2731: recurs every       3.8124 s
+      axis   1999: recurs every       2.7905 s
+      axis   1723: recurs every       2.4052 s
+      FULL THREE-AXIS CLOSURE: 1.3131e7 s  = 0.4161 years
+
+[6] THE SHAPE QUESTION — Kerr shadow vs spin (float section)
+    established GR: a = 0 gives a CIRCLE of radius sqrt(27) = 5.1962 M
+         a      r_min      r_max       mean       spread
+    0.0000     5.1949     5.1975     5.1962      0.0500%
+    0.2000     5.1831     5.1962     5.1922      0.2523%
+    0.5000     5.1162     5.1978     5.1712      1.5779%
+    0.8000     4.9481     5.2109     5.1280      5.1257%
+    0.9000     4.8379     5.2296     5.1086      7.6668%
+    0.9900     4.6188     5.2933     5.0994     13.2267%
+    0.9999     4.5117     5.3405     5.1157     16.2017%
+
+    equatorial view (i = 90 deg) is where deformation is largest.
+    now the same black holes seen down the spin axis:
+         a      r_min      r_max       mean       spread
+    0.0000     5.1961     5.1962     5.1962      0.0001%
+    0.5000     5.1192     5.1258     5.1239      0.1303%
+    0.9000     4.9051     4.9393     4.9283      0.6938%
+    0.9999     4.8026     4.8621     4.8429      1.2287%
+
+    THE SAME BLACK HOLE IS ROUND OR NOT ROUND DEPENDING ON SPIN
+    AND ON WHERE YOU STAND. That part of his claim is established
+    physics. The parameter is spin and viewing angle. Whether a
+    density gradient reshapes it into a buckyball is HIS conjecture
+    and this program does not test it.
+
+==============================================================================
+EMITTED  shadowcat.hbp  415 bytes   (binary, no JSON)
+EMITTED  shadowcat.hbi  294 bytes   (index)
+SHA256   8763231837629f9461e8ec5e7a26d1c5e1cfc3ff16aa3f019e085bc51b23b987

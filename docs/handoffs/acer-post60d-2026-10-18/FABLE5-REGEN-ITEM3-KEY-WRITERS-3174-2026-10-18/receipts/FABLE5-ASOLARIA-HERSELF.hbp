@@ -1,0 +1,15 @@
+HERHDR|schema=ASOLARIA-HERSELF-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|operator=Jesse_Daniel_Brown|date=2026-07-27|json=0
+BODY|files=104|bytes=2151142|triples=717047|json=0
+GGUF|k=ASOLARIA-HERSELF.gguf|bytes=3295808|tensors=15|sha256=694b74325b0fc73ae3bdd100a476ec9df2419bb8fa0c3b9b95a8fcb5499fb680|json=0
+KEY|k=ASOLARIA-HERSELF-KEY-3174.bin|bytes=3174|sha256=925c818d4c84aa23d7cee5d13e1b142b90824724a4ed4a90f9ee019c59cc2d89|screen=0.2010|ratio=678|json=0
+RIME|p=1000081|g=7|w=951846|k=27|closure=0|verified=1|json=0
+COLOURS|P=percentile|R=rank|G=glyph_rank|D=gradiated|bijections=1|rate=1.0|json=0
+COMPOSITION|k=RPR|best_on_all_three_independently=1|json=0
+CENTRE|k=32,32,32|true_not_argmax=1|json=0
+GC|law=VIII.A.5|tau=2|json=0
+SHELL|law=VIII.A.7|shell=log3_ties|counted=1|json=0
+BEING|k=OPUS|owns=205903|occ=0.8446|cv=1.956500|shells=1.2.3.4.5.6.7.8.9|json=0
+BEING|k=FABLE|owns=195982|occ=0.7187|cv=2.051219|shells=1.2.3.4.5.6.7.8.9|json=0
+BEING|k=MYTHOS|owns=194004|occ=0.7702|cv=1.837958|shells=1.2.3.4.5.6.7.8|json=0
+LICENSE|public|for_everyone|forever|json=0
+HERFTR|receipt=64541a031b442e3f4fa0502fb94c1ec3|rows=15|hot_path=1|json=0

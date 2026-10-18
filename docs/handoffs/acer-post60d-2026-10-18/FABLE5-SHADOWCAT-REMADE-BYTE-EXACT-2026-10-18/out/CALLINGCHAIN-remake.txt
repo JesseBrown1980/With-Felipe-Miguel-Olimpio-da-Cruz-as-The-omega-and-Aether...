@@ -1,0 +1,115 @@
+CALLINGCHAIN — stacked black holes, chain topology
+rustc 1.81 | integer topology core, float fenced to SI density
+operator: Jesse Daniel Brown
+==============================================================================
+
+[0] THE CORRECTION THIS PROGRAM MAKES TO SHADOWCAT
+    SHADOWCAT measured the SHADOW: the optical projection on the
+    observer's sky. Its deformation is set by spin and viewing angle.
+    That is correct and it is not what he asked about.
+    He asked about the HORIZON: the shape of the object itself.
+    Horizon TOPOLOGY is a different quantity with a different
+    controlling parameter, and it is what this program computes.
+
+[1] THE GENUS LAW  — spheres merged along a chain
+    place a sphere at every node, a tube along every calling.
+    chi = 2V - 2E   and   chi = 2 - 2g   =>   g = E - V + 1
+    so the GENUS of the merged object and the CYCLE RANK of the
+    chain graph are the same integer. one theorem, both halves.
+
+    verifying the law against surfaces whose genus is known:
+    CONFIGURATION                  V    E    g    chi  SHAPE                consistent
+    one sphere alone               1    0    0      2  SPHERE               yes
+    two joined by one tube         2    1    0      2  SPHERE               yes
+    one sphere, one handle         1    1    1      0  TORUS (doughnut)     yes
+    TWO TOUCHING IN A LOOP         2    2    1      0  TORUS (doughnut)     yes
+    theta graph                    2    3    2     -2  genus-2 (two holes)  yes
+    tetrahedron K4                 4    6    3     -4  genus-3              yes
+    cube graph Q3                  8   12    5     -8  high genus           yes
+    complete graph K5              5   10    6    -10  high genus           yes
+
+    GENUS LAW: verified on every configuration with an independently known genus.
+
+[2] HIS LADDER, COMPUTED
+    "a black hole with this triangle spinning sphere will make a
+     perfect sphere ... the spheres touch and turn into a doughnut
+     shape ... many, many black holes chained together ... rearrange
+     themselves into the different forms"
+
+    HOLES CALLNGS  GENUS     chi   SHAPE                  his word for it
+        1       0      0       2   SPHERE                 "a perfect sphere"
+        2       1      0       2   SPHERE                 still one sphere — merged, no hole
+        2       2      1       0   TORUS (doughnut)       "the spheres touch -> DOUGHNUT"
+        3       3      1       0   TORUS (doughnut)       closed chain of three
+        5       5      1       0   TORUS (doughnut)       closed chain of five
+       12      12      1       0   TORUS (doughnut)       closed chain of twelve
+       12      18      7     -12   high genus             chain with branchings
+       20      30     11     -20   high genus             dodecahedral chain
+       60      90     31     -60   high genus             THE BUCKYBALL CHAIN
+
+    THE TWO KEY ROWS:
+      2 holes / 2 callings -> genus 1  ->  a DOUGHNUT.
+        his sentence, computed. two spheres that touch along a closed
+        loop are a torus. this is not an analogy, it is the genus.
+      60 holes / 90 callings -> genus 31
+        the SAME 31 that SHADOWCAT reported as the chain count.
+        chains and holes are one number. that was not designed in;
+        it is forced by chi = 2V - 2E.
+
+[3] THE DENSITY GRADIENT — where I was wrong
+    rho(M) = M / ((4/3) pi r_s^3)  with  r_s = 2GM/c^2
+           = 3 c^6 / (32 pi G^3 M^2)
+    the mass cancels once and returns squared in the denominator.
+    SO AVERAGE DENSITY FALLS AS 1/M^2. bigger means LESS dense.
+    he said "one that's not so densely gradient" is the chained,
+    more massive one. that direction is correct and I dismissed it.
+
+    OBJECT                     M (Msun)      r_s (km)   rho (kg/m^3)
+    stellar-mass BH             1.000e1      2.9533e1      1.8429e17
+    Cygnus X-1 class            2.100e1      6.2020e1      4.1788e16
+    GW150914 remnant            6.200e1      1.8311e2      4.7941e15
+    intermediate-mass           1.000e5      2.9533e5       1.8429e9
+    Sgr A* (Milky Way)          4.297e6      1.2690e7       9.9807e5
+    M87* (EHT imaged)           6.500e9     1.9197e10      4.3618e-1
+
+    REFERENCE DENSITIES, for scale:
+    nuclear saturation          2.3000e17 kg/m^3   -> a BH of this density weighs    8.9512e0 Msun
+    the Sun (mean)               1.4080e3 kg/m^3   -> a BH of this density weighs    1.1440e8 Msun
+    liquid water                 1.0000e3 kg/m^3   -> a BH of this density weighs    1.3575e8 Msun
+    air at sea level             1.2250e0 kg/m^3   -> a BH of this density weighs    3.8786e9 Msun
+    ISM molecular cloud        1.0000e-18 kg/m^3   -> a BH of this density weighs   4.2928e18 Msun
+
+    READ THAT LAST COLUMN. a black hole as dense as WATER weighs
+    1.358e8 solar masses — an ordinary supermassive black hole.
+    M87*, which the Event Horizon Telescope photographed, has an
+    average density of 0.4362 kg/m^3 — LESS DENSE THAN AIR.
+    the biggest ones are the thinnest. that is his gradient, and it
+    is exact, not approximate.
+
+[4] THE LINE — DRAWN EXPLICITLY SO NOBODY CAN SAY IT WAS BLURRED
+    PROVED HERE (exact integer topology, no physics assumed):
+      * spheres merged along a graph give genus E - V + 1
+      * two spheres joined along a closed loop give a TORUS
+      * the buckyball chain gives genus 31, the same 31 as the
+        independent-chain count. one integer, two readings.
+    ESTABLISHED IN THE LITERATURE (cited, not derived here):
+      * merging black hole horizons are generically predicted to
+        pass through a toroidal phase. Bohn, Kidder, Teukolsky,
+        Phys. Rev. D 94, 064009 (2016), arXiv:1606.00436.
+      * Hawking's theorem: a STATIONARY horizon in 4 dimensions
+        must be a sphere. so in 4D the doughnut is transient only.
+      * in 5 dimensions the black ring is a genuine stationary
+        solution with horizon topology S^1 x S^2 — a permanent
+        doughnut. Emparan & Reall, arXiv:hep-th/0110260.
+    EXACT ARITHMETIC (this program):
+      * black hole average density falls as 1/M^2
+    HIS, AND NOT TESTED BY ANY OF THE ABOVE:
+      * that real black holes stack into calling chains at all
+      * that the chain arranges itself as a buckyball
+      * that Kerr rotation IS the calling chain
+    those three are the conjecture. everything above them is not.
+
+==============================================================================
+EMITTED  callingchain.hbp  147 bytes
+EMITTED  callingchain.hbi  86 bytes
+SHA256   3c4780edd1f82b7819bb5fba56cc8ecdd27cdd1b763c6754d30a261970ad4d33

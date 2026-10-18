@@ -1,0 +1,25 @@
+[package]
+name = "asolaria-matrix-in-colour"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The owner's matrix-in-colour photographs with their harness in Rust: verify-frames.py in integers, sidecars, .hbi rows and the frame chain"
+keywords = ["colour", "png", "harness", "integer", "hbp"]
+categories = ["multimedia::images"]
+
+[lib]
+name = "matrix_in_colour"
+path = "src/lib.rs"
+
+[[bin]]
+name = "verify-frames"
+path = "src/bin/verify-frames.rs"
+
+[dependencies]
+png = { version = "=0.17.16", default-features = false }
+sha2 = { version = "=0.10.9", default-features = false }
+
+# The PNG, deflate and SHA-256 crates run optimised under `cargo test` so the frame tests stay short.
+[profile.dev.package."*"]
+opt-level = 3

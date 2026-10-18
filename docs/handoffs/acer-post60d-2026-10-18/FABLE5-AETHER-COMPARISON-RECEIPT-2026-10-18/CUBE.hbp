@@ -1,0 +1,11 @@
+CUBEHDR|name=FABLE5-AETHER-COMPARISON-RECEIPT-2026-10-18|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=9|merkle_sha256=6470273999d285240c29f145ff4b47b32a7859be0e83b182454f77c16fd677d5|note=exact_git_blob_comparison|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=COMPARISON.md|bytes=2077|sha256=94f3171c18947f2b3348c3168a2a482c161f00b0295c0bc532266a6ebc0a5034|json=0
+FILE|name=FABLE5-AETHER-COMPARISON-2026-10-18.hbp|bytes=17181|sha256=5b415315d1618d0af3abc343039b523c881eb977e1fbefa16b72cec69a9aace1|json=0
+FILE|name=FABLE5-AETHER-COMPARISON-2026-10-18.hbp.sha256|bytes=106|sha256=f723ba24b37d31165fa602d1a4cc218401b4bac7efa96020c00203bf359954eb|json=0
+FILE|name=diff3/asolaria/README.md|bytes=5003|sha256=9b83cb72d9dc61dd0ff944713238e939497da59a7a55c8e71eb10a5256af4d25|json=0
+FILE|name=diff3/asolaria/.gitattributes|bytes=125|sha256=661b4b5778a7590800874c3f3d0c1ffcf9d7e7ae65ae0e6f43b699190da28a21|json=0
+FILE|name=diff3/asolaria/slice_glyph_messaging.py|bytes=3292|sha256=8ef98c21535a23520b80b7f424eaa3bf702880866ca720f59aff9683dced29cf|json=0
+FILE|name=diff3/aether/README.md|bytes=15162|sha256=dd26a7eb3827b1fa3657500121fa4fc4841b5e75dacc03dbaeff6ef57c02030e|json=0
+FILE|name=diff3/aether/.gitattributes|bytes=308|sha256=6b0538bd1e82b93b9003a50565b0180c32421558f193b3635f40c10a7c5e275f|json=0
+FILE|name=diff3/aether/slice_glyph_messaging.py|bytes=3476|sha256=2c24baa6f729c8fd2702e6ffc6f182e098decfa34a290da16b5abf7b04557cf3|json=0
+CUBEFTR|merkle_sha256=6470273999d285240c29f145ff4b47b32a7859be0e83b182454f77c16fd677d5|json=0

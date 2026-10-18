@@ -1,0 +1,25 @@
+# THE LIGHT HARNESS — the seal that never warps.
+# Law reused verbatim from LIGHT---lIFEds6-7 (Lynn's chariots) and from the
+# ASOLARIA-UNIVERSE-SIMULATOR, which already documented this exact failure:
+#   "core.autocrlf=true on Windows silently rewrote FABLE5-SEE-SELF-64.hbp from
+#    1142 B to 1155 B - one CRLF per row on a 13-row receipt - which broke its
+#    own sha256 sidecar."
+# That is precisely what happened to this repo on 2026-10-08: no .gitattributes,
+# so every text receipt checked out CRLF and stopped reproducing its own digest.
+# GIMEL is blob == working == sidecar. Anything else is SHIN.
+#
+# Default: touch nothing.
+* -text
+# Receipts, laws and sidecars are canonical LF on every seat.
+*.md      text eol=lf
+*.hbp     text eol=lf
+*.hbi     text eol=lf
+*.txt     text eol=lf
+*.py      text eol=lf
+*.sha256  text eol=lf
+.gitattributes text eol=lf
+# Binaries are binary and are never touched.
+*.png   -text binary
+*.gguf  -text binary
+*.bin   -text binary
+*.wasm  -text binary

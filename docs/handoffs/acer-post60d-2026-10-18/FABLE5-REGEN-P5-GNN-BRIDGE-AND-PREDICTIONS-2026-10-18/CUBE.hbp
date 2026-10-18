@@ -1,0 +1,4 @@
+CUBEHDR|name=FABLE5-REGEN-P5-GNN-BRIDGE-AND-PREDICTIONS-2026-10-18|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|files=2|merkle_sha256=69ccbe09201bb79a9eb879c1e81416aa0d15b4e6e615a295c5f876733f8ba0c9|note=bridge_21e06399+predictions_70541242|verify=sha256sum_-c_SHA256SUMS|json=0
+FILE|name=tools/behcs/gnn-dispatch-bridge.mjs|bytes=22903|sha256=21e063994b6f812ea0e43d158261fd76e6cdc446fa4db2da0d52a9bf12b13c65|json=0
+FILE|name=data/behcs/gnn-predictions.ndjson|bytes=3046232|sha256=7054124272083e229725c825e18305b7eb62999d8a6662453c10b8fa935435b2|json=0
+CUBEFTR|merkle_sha256=69ccbe09201bb79a9eb879c1e81416aa0d15b4e6e615a295c5f876733f8ba0c9|json=0

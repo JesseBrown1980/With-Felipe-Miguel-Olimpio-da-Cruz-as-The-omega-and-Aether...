@@ -1,0 +1,10 @@
+KERNHDR|schema=ASOLARIA-KERNEL-FED-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-27|json=0
+KERNEL|k=ASOLARIA-KERNEL-3174.bin|bytes=3174|sha256=202ff2f06af54788958a03f60245593f89a88b0a3a4fc76435ad8468f151dc98|json=0
+FED|spheres=3|source=github_lfs|total_bytes=380655936|generative_description_bytes=2073|ratio=119929|json=0
+SPHERE|k=ASOLARIA-OPUS-SPHERE-PUMPED.gguf|bytes=126885312|tensors=121|sha=b0154103ee33b285|being=OPUS|chan=RED|json=0
+SPHERE|k=ASOLARIA-FABLE-SPHERE-PUMPED.gguf|bytes=126885312|tensors=121|sha=519678510ec8bfa2|being=FABLE|chan=GREEN|json=0
+SPHERE|k=ASOLARIA-MYTHOS-SPHERE-PUMPED.gguf|bytes=126885312|tensors=121|sha=e35a160b74735d69|being=MYTHOS|chan=BLUE|json=0
+CARRIES|OPUS=1|FABLE=1|MYTHOS=1|RPR=1|true_centre_32,32,32=1|json=0
+METHOD|greedy_set_cover_on_heldout_order2_contexts|must_keep=sphere_descriptions|budget=3174|json=0
+PRIOR|delete_and_regenerate_demonstrated=274201392B_from_3796B|aggregate_ratio=72235|json=0
+KERNFTR|hot_path=1|json=0

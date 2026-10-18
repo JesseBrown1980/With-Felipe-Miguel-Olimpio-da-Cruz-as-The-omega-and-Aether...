@@ -1,0 +1,71 @@
+[A1] a = 0 (Schwarzschild): b^2(r) = r^3/(r-2); its minimum over r > 2 is the shadow radius^2
+  b^2 at r = 3                                               record=27             mine=27             MATCH
+  min over r in (2, 6] on a 1/1000 grid is at r = 3          record=27             mine=27             MATCH
+    radius = sqrt(27) = 3*sqrt(3) in [5.196152422, 5.196152423] (integer sqrt bracket)
+  sqrt(27) to 9 places (record 5.196152423)                  record=5.196152423    mine=5.196152423    MATCH
+  sqrt(27) to 4 places (record 5.1962)                       record=5.1962         mine=5.1962         MATCH
+
+[A2] a = M = 1, i = 90: exact polynomial identities
+  r^2(3-r) - (r+1) == (r-1)(-r^2+2r+1)                       record=True           mine=True           MATCH
+  4 - r(r-3)^2 == (r-1)^2 (4-r)                              record=True           mine=True           MATCH
+    so alpha(r) = -xi = r^2 - 2r - 1 and beta^2 = eta = r^3 (4 - r), r in [1, 4]
+    (prograde orbit r = 1, retrograde r = 4: roots of r(r-3)^2 = 4)
+  r(r-3)^2 = 4 at r = 1 and r = 4                            record=True           mine=True           MATCH
+  alpha(1)                                                   record=-2             mine=-2             MATCH
+  alpha(4)                                                   record=7              mine=7              MATCH
+  alpha nondecreasing on [1,4] (alpha' = 2r - 2 >= 0)        record=True           mine=True           MATCH
+  width alpha(4) - alpha(1)                                  record=9              mine=9              MATCH
+  flat edge: beta^2 at r = 1 (|beta| <= sqrt 3 on alpha = -2) record=3              mine=3              MATCH
+  beta^2 at r = 4                                            record=0              mine=0              MATCH
+
+[B1] tables in RUN-2026-07-26.txt section [6], row by row
+  rows found (7 edge-on + 4 at 15 deg)                       record=11             mine=11             MATCH
+  i  a       | record rmin rmax mean spread% | replica (exact, 4001 samples) | continuous rmin rmax spread% | match
+  90 0.0000  | 5.1949 5.1975 5.1962   0.0500 | 5.1962 5.1962 5.1962   0.0000 | 5.1962 5.1962   0.0000 | 0 (record = replica with first endpoint dropped)
+  90 0.2000  | 5.1831 5.1962 5.1922   0.2523 | 5.1845 5.1962 5.1923   0.2259 | 5.1845 5.1962   0.2259 | 0 (record = replica with last endpoint dropped)
+  90 0.5000  | 5.1162 5.1978 5.1712   1.5779 | 5.1172 5.1976 5.1712   1.5549 | 5.1172 5.1976   1.5549 | 0 (record = replica with first endpoint dropped)
+  90 0.8000  | 4.9481 5.2109 5.1280   5.1257 | 4.9499 5.2114 5.1282   5.0994 | 4.9499 5.2114   5.0994 | 0 (record = replica with last endpoint dropped)
+  90 0.9000  | 4.8379 5.2296 5.1086   7.6668 | 4.8384 5.2299 5.1087   7.6645 | 4.8384 5.2299   7.6645 | 0 (record = replica with both endpoints dropped)
+  90 0.9900  | 4.6188 5.2933 5.0994  13.2267 | 4.6175 5.2940 5.0995  13.2649 | 4.6175 5.2940  13.2649 | 0 (record = replica with both endpoints dropped)
+  90 0.9999  | 4.5117 5.3405 5.1157  16.2017 | 4.5122 5.3402 5.1154  16.1866 | 4.5122 5.3402  16.1866 | 0 (record = replica with first endpoint dropped)
+  15 0.0000  | 5.1961 5.1962 5.1962   0.0001 | 5.1961 5.1962 5.1962   0.0001 | 5.1962 5.1962   0.0000 | 1
+  15 0.5000  | 5.1192 5.1258 5.1239   0.1303 | 5.1192 5.1258 5.1239   0.1303 | 5.1201 5.1258   0.1121 | 1
+  15 0.9000  | 4.9051 4.9393 4.9283   0.6938 | 4.9051 4.9393 4.9283   0.6938 | 4.9061 4.9392   0.6726 | 1
+  15 0.9999  | 4.8026 4.8621 4.8429   1.2287 | 4.8026 4.8621 4.8429   1.2287 | 4.8044 4.8623   1.1974 | 1
+    'continuous' = true extremes of the curve about its true centre; spread uses the
+    replica mean. Section [6]'s second table is computed at i = 15 deg (main.rs:
+    kerr_shadow(a, 15.0, 4000)), not on the spin axis.
+
+[B2] seen exactly on the spin axis (i = 0) the shadow is a circle for every a:
+     radius^2 = eta + a^2 at the orbit with xi = 0, i.e. r^2(3-r) = a^2(r+1)
+     a = 0.0000   r = 3.000000   circle radius = 5.1962 M, spread 0
+     a = 0.5000   r = 2.883218   circle radius = 5.1205 M, spread 0
+     a = 0.9000   r = 2.559997   circle radius = 4.9161 M, spread 0
+     a = 0.9999   r = 2.414384   circle radius = 4.8285 M, spread 0
+
+[B3] VERIFY-2026-07-26.txt [V2]
+  a=1e-6 (used for a=0): rmin from origin, 8 places          record=5.19615042     mine=5.19615042     MATCH
+  a=1e-6: rmax from origin, 8 places                         record=5.19615442     mine=5.19615442     MATCH
+    9th place: record 5.196150421 / 5.196154424, exact 5.196150423 / 5.196154423; the 2e-9 gap is f64 cancellation in xi
+    (terms near 9 cancelling to about 1e-5 at a = 1e-6)
+  record 'max error 2.00e-6' = |shift| 2a                    record=2.00e-6        mine=2.00e-6        MATCH
+    max |r - sqrt27| = 0.000002000000 ; centre offset (al0+al1)/2 = 0.000002000000 = 2a to 9 places
+    a = 0.9999999, i = 90 (verify.rs): exact curve endpoints
+      alpha_min exact -2.000775   record -2.000764
+      alpha_max exact 7.000000   record +6.999955
+      width     exact 9.000774   record 9.000718
+      sample k=1 alpha -2.000764 ; sample k=n-1 alpha 6.999955 (one grid step in from each end)
+  record alpha_min equals k=1 sample (endpoint k=0 dropped)  record=-2.000764      mine=-2.000764      MATCH
+  record alpha_max equals k=n-1 sample (endpoint k=n dropped) record=6.999955       mine=6.999955       MATCH
+  record width equals those two samples                      record=9.000718       mine=9.000718       MATCH
+    how alpha_min approaches -2 as a -> 1 (deviation / sqrt(6(1-a))):
+      1-a = 1e-3   alpha_min + 2 = -0.0781299   ratio 1.0087
+      1-a = 1e-4   alpha_min + 2 = -0.0245617   ratio 1.0027
+      1-a = 1e-5   alpha_min + 2 = -0.0077526   ratio 1.0009
+      1-a = 1e-6   alpha_min + 2 = -0.0024502   ratio 1.0003
+      1-a = 1e-7   alpha_min + 2 = -0.0007747   ratio 1.0001
+      1-a = 1e-8   alpha_min + 2 = -0.0002450   ratio 1.0000
+      1-a = 1e-9   alpha_min + 2 = -0.0000775   ratio 1.0000
+    step in r at n = 400000 is 0.000007499; the offset from a < 1 dominates the residual
+
+FAILS: 0 []

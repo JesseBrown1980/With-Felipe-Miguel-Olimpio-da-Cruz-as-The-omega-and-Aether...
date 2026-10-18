@@ -1,0 +1,42 @@
+[A] closure and per-axis recurrence = turns / spin frequency (exact rationals)
+  three-axis closure (turns)                           record=9406320487   mine=9406320487   MATCH
+  Crab axis 2731 recurs every (s)                      record=91.1975      mine=91.1975      MATCH
+  Crab axis 1999 recurs every (s)                      record=66.7535      mine=66.7535      MATCH
+  Crab axis 1723 recurs every (s)                      record=57.5369      mine=57.5369      MATCH
+  J1748-2446ad axis 2731 recurs every (s)              record=3.8124       mine=3.8124       MATCH
+  J1748-2446ad axis 1999 recurs every (s)              record=2.7905       mine=2.7905       MATCH
+  J1748-2446ad axis 1723 recurs every (s)              record=2.4052       mine=2.4052       MATCH
+  Crab full closure (s)                                record=3.1411e8     mine=3.1411e8     MATCH
+  Crab full closure (years, 365.25 d)                  record=9.9535       mine=9.9535       MATCH
+  J1748 full closure (s)                               record=1.3131e7     mine=1.3131e7     MATCH
+  J1748 full closure (years)                           record=0.4161       mine=0.4161       MATCH
+  J1748 closure in months (record: 'five months')      record=5.0          mine=5.0          MATCH
+  spin ratio 716.35/29.946 (record ~23.9)              record=23.9         mine=23.9         MATCH
+  closure-years ratio equals spin ratio exactly        record=True         mine=True         MATCH
+
+[B] the stated periods against 1/f
+  Crab 1000/f (ms) vs input P = 33.392                 record=33.392       mine=33.393       DIFF (inputs, not a computed claim)
+  J1748 1000/f (ms) vs input P = 1.3959                record=1.3959       mine=1.3960       DIFF (inputs, not a computed claim)
+    1000/29.946 = 33.39344 ms; the f and P pair in main.rs differ in the 4th digit
+    (consistent with f being 29.9469.. truncated to 29.946); recurrences use f only
+
+[C] Crab surface dipole B = 3.2e19 * sqrt(P * Pdot), Pdot = -fdot / f^2
+    Pdot = 4.1260e-13 s/s
+  B (G), 4 significant digits                          record=3.756e12     mine=3.756e12     MATCH
+  B bracket agrees at 3 decimals                       record=3.756e12     mine=3.756e12     MATCH
+  B / Bcr (Bcr = 4.41e13 G)                            record=0.0852       mine=0.0852       MATCH
+  B above 1e12 G                                       record=True         mine=True         MATCH
+  B below 0.3 Bcr                                      record=True         mine=True         MATCH
+
+[D] J1748-2446ad equatorial speed at the stated radius bound R < 16 km
+  v/c at R = 16 km (upper bound), 2 decimals           record=0.24         mine=0.24         MATCH
+    v/c in [0.240217, 0.240217]; an upper bound, since R < 16 km is a bound
+
+[E] shadowcat.hbp / .hbi sizes from the format in main.rs (header, TLV, sha trailer)
+  records emitted                                      record=22           mine=22           MATCH
+  shadowcat.hbp bytes                                  record=415          mine=415          MATCH
+  shadowcat.hbi bytes                                  record=294          mine=294          MATCH
+    note: record section 8 labels tag 0x21 'vertices'; main.rs writes the group order
+    there (60); the value is the same number, the label is not
+
+FAILS: 0 []

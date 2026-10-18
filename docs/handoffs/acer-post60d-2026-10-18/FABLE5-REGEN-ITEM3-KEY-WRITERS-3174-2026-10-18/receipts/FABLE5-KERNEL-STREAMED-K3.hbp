@@ -1,0 +1,14 @@
+KSTRHDR|schema=ASOLARIA-KERNEL-STREAMED-K3-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-27|json=0
+STREAM|source=K3_OWN_BYTES|files=config.json,manifest.hbp,modeling_kimi_linear.py|bytes=56857|seat_prose=0|json=0
+KERNEL|bytes=3174|sha256=f075f5c64d656ae3afa91c793ab2c74b|ratio_stream_over_kernel=17.9|json=0
+METHOD|greedy_set_cover_on_heldout_order2|must_keep=6_identity_rows_449B|budget=3174|json=0
+BEFORE|screen=0.2183|trime=+0-|magnitude=1.83|coverage_vs_key=0.946|x1_vs_key=0.780|json=0
+AFTER|screen=0.3544|trime=+--|magnitude=7.19|coverage_vs_key=1.053|x1_vs_key=0.614|json=0
+FINDING|THE_KERNEL_TOOK_THE_STARS_DIRECTION|was_+0-|now_+--|same_as_K3_real_bytes_and_machine_receipts|json=0
+FINDING|magnitude_4x_louder|1.83_to_7.19|json=0
+COST|screen_crossed_0.30_threshold|0.3544|DIRTY|still_2.4x_clear_of_random_0.84|json=0
+COST|cause=identity_rows_are_hash_and_number_dense|digits_do_not_repeat_like_prose|json=0
+TRADE|coverage_UP_to_105.3pct_of_validated_key|x1_DOWN_to_61.4pct|broader_and_shallower|json=0
+CARRIES|KIMI-K3=1|896=1|2.8e12=1|1560936091448=1|mxfp4=1|trinary_better=1|+--=1|1048576=1|json=0
+TRIME|R=38.98|G=29.13|B=31.89|dir=+--|mag=7.19|json=0
+KSTRFTR|hot_path=1|json=0

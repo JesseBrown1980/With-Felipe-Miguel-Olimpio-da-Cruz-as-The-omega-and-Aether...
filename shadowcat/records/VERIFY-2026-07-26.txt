@@ -1,0 +1,21 @@
+SHADOWCAT VERIFICATION
+==============================================================================
+
+[V1] SHA-256 vs published FIPS 180-4 / NIST test vectors
+    "" (empty)                         MATCH
+    "abc"                              MATCH
+    abcdbcdecdefdefgefgh... (56 bytes) MATCH
+    abcdefghbcdefghicdef... (112 bytes) MATCH
+    1,000,000 x 'a'                    MATCH
+    same, streamed in 7-byte chunks    MATCH
+
+[V2] Kerr shadow vs the two closed-form limits in the literature
+    a=0  radius should be sqrt(27) = 5.196152423
+         computed rmin 5.196150421  rmax 5.196154424   max error 2.00e-6   OK
+    a->M, i=90  alpha should span exactly [-2M, +7M]
+         computed alpha_min -2.000764  (OK)
+         computed alpha_max +6.999955  (OK)
+         width 9.000718 M  (literature: 9 M)
+
+==============================================================================
+VERIFICATION: ALL CHECKS PASS. the sha256 primitive and the Kerr geometry are sound.

@@ -1,0 +1,93 @@
+[A] primality and pairwise gcd of the axes (trial division, Euclid)
+  is_prime(2731)                                             record=True           mine=True           MATCH
+  is_prime(1999)                                             record=True           mine=True           MATCH
+  is_prime(1723)                                             record=True           mine=True           MATCH
+  gcd(2731,1999)                                             record=1              mine=1              MATCH
+  gcd(2731,1723)                                             record=1              mine=1              MATCH
+  gcd(1999,1723)                                             record=1              mine=1              MATCH
+  3*2731 == 2**13 + 1 (2731 is a Wagstaff prime; not claimed) record=True           mine=True           MATCH
+
+[B] what coprimality means, checked exhaustively for 2<=p<=400, 1<=q<p
+    lemma: the first p glyphs k*q mod p (k=0..p-1) are all distinct <=> gcd(p,q)=1
+    and the number of distinct positions is p/gcd(p,q)
+  lemma counterexamples over 79800 (p,q) pairs               record=0              mine=0              MATCH
+    torus-link note: the gcd(p,q) components of the (p,q) torus link are the level
+    sets q*x - p*y = c/d (mod 1), c = 0..d-1, which are pairwise disjoint; so on the
+    torus gcd>1 gives several parallel strands that still never touch each other.
+  orbit of stride 1999 on ring 2731 covers ring              record=2731           mine=2731           MATCH
+  orbit of stride 1723 on ring 2731 covers ring              record=2731           mine=2731           MATCH
+  orbit of stride 1723 on ring 1999 covers ring              record=1999           mine=1999           MATCH
+
+[C] lcm / product / hex of the three-axis closure
+  lcm(2731,1999,1723)                                        record=9406320487     mine=9406320487     MATCH
+  product 2731*1999*1723                                     record=9406320487     mine=9406320487     MATCH
+  0x0230A90F67                                               record=9406320487     mine=9406320487     MATCH
+
+[D] the 30-row gap table, row by row against RUN-2026-07-26.txt
+  rows found in record                                       record=30             mine=30             MATCH
+     2731  1999  12  record d=3 min=141  max=338   mine d=3 min=141  max=338   1
+     2731  1999  20  record d=3 min=56   max=197   mine d=3 min=56   max=197   1
+     2731  1999  32  record d=3 min=56   max=141   mine d=3 min=56   max=141   1
+     2731  1999  60  record d=3 min=27   max=56    mine d=3 min=27   max=56    1
+     2731  1999  90  record d=3 min=27   max=56    mine d=3 min=27   max=56    1
+     2731  1723  12  record d=3 min=129  max=293   mine d=3 min=129  max=293   1
+     2731  1723  20  record d=3 min=35   max=164   mine d=3 min=35   max=164   1
+     2731  1723  32  record d=3 min=35   max=129   mine d=3 min=35   max=129   1
+     2731  1723  60  record d=3 min=35   max=94    mine d=3 min=35   max=94    1
+     2731  1723  90  record d=3 min=11   max=35    mine d=3 min=11   max=35    1
+     1999  2731  12  record d=3 min=56   max=197   mine d=3 min=56   max=197   1
+     1999  2731  20  record d=3 min=56   max=141   mine d=3 min=56   max=141   1
+     1999  2731  32  record d=3 min=29   max=85    mine d=3 min=29   max=85    1
+     1999  2731  60  record d=3 min=27   max=56    mine d=3 min=27   max=56    1
+     1999  2731  90  record d=3 min=2    max=29    mine d=3 min=2    max=29    1
+     1999  1723  12  record d=3 min=67   max=276   mine d=3 min=67   max=276   1
+     1999  1723  20  record d=3 min=67   max=209   mine d=3 min=67   max=209   1
+     1999  1723  32  record d=3 min=8    max=75    mine d=3 min=8    max=75    1
+     1999  1723  60  record d=3 min=8    max=67    mine d=3 min=8    max=67    1
+     1999  1723  90  record d=3 min=8    max=59    mine d=3 min=8    max=59    1
+     1723  2731  12  record d=2 min=129  max=164   mine d=2 min=129  max=164   1
+     1723  2731  20  record d=3 min=35   max=129   mine d=3 min=35   max=129   1
+     1723  2731  32  record d=3 min=35   max=94    mine d=3 min=35   max=94    1
+     1723  2731  60  record d=3 min=11   max=35    mine d=3 min=11   max=35    1
+     1723  2731  90  record d=3 min=11   max=35    mine d=3 min=11   max=35    1
+     1723  1999  12  record d=3 min=67   max=276   mine d=3 min=67   max=276   1
+     1723  1999  20  record d=3 min=67   max=142   mine d=3 min=67   max=142   1
+     1723  1999  32  record d=3 min=8    max=67    mine d=3 min=8    max=67    1
+     1723  1999  60  record d=3 min=8    max=59    mine d=3 min=8    max=59    1
+     1723  1999  90  record d=3 min=8    max=51    mine d=3 min=8    max=51    1
+  rows matching (ring,stride,N,distinct,min,max)             record=30             mine=30             MATCH
+  degenerate pairs skipped (stride % ring == 0)              record=3              mine=3              MATCH
+  record 'rows tested'                                       record=30             mine=30             MATCH
+  record 'pairs skipped'                                     record=3              mine=3              MATCH
+  3-gap rows in table with max = min + mid                   record=29             mine=29             MATCH
+  rows with exactly 2 distinct gaps                          record=1              mine=1              MATCH
+
+[E] the N = 2..400 sweep, three ways (brute force, closed form) vs THREEGAP-2026-07-26.txt
+  sweep blocks found in record                               record=3              mine=3              MATCH
+  rime x rime instances                                      record=2394           mine=2394           MATCH
+  rime x rime exactly 1                                      record=0              mine=0              MATCH
+  rime x rime exactly 2                                      record=90             mine=90             MATCH
+  rime x rime exactly 3                                      record=2304           mine=2304           MATCH
+  rime x rime more than 3                                    record=0              mine=0              MATCH
+  rime x rime strong form holds                              record=2304           mine=2304           MATCH
+  rime x rime closed form vs brute force disagreements       record=0              mine=0              MATCH
+  control x control instances                                record=11571          mine=11571          MATCH
+  control x control exactly 1                                record=3642           mine=3642           MATCH
+  control x control exactly 2                                record=1423           mine=1423           MATCH
+  control x control exactly 3                                record=6506           mine=6506           MATCH
+  control x control more than 3                              record=0              mine=0              MATCH
+  control x control strong form holds                        record=6506           mine=6506           MATCH
+  control x control closed form vs brute force disagreements record=0              mine=0              MATCH
+  rime x control instances                                   record=7182           mine=7182           MATCH
+  rime x control exactly 1                                   record=0              mine=0              MATCH
+  rime x control exactly 2                                   record=789            mine=789            MATCH
+  rime x control exactly 3                                   record=6393           mine=6393           MATCH
+  rime x control more than 3                                 record=0              mine=0              MATCH
+  rime x control strong form holds                           record=6393           mine=6393           MATCH
+  rime x control closed form vs brute force disagreements    record=0              mine=0              MATCH
+  TOTAL instances                                            record=21147          mine=21147          MATCH
+  TOTAL 3-gap instances                                      record=15203          mine=15203          MATCH
+  TOTAL strong form                                          record=15203          mine=15203          MATCH
+    control pairs (ring,stride) that are NOT coprime and still obey <=3 gaps: 5
+
+FAILS: 0 []

@@ -1,0 +1,5 @@
+{"schema":"hyperbehcs.hrm_d_drive.shannon_symbol.v1","task_id":"HYP-HRM-D-ABSORB","symbol":"HRM_SOURCE_FILES","value":26,"bits":5,"fingerprint":"b62187227895bb8f"}
+{"schema":"hyperbehcs.hrm_d_drive.shannon_symbol.v1","task_id":"HYP-HRM-D-ABSORB","symbol":"HRM_DEPENDENCY_GATES","value":12,"bits":4,"fingerprint":"d1ea2388fe347714"}
+{"schema":"hyperbehcs.hrm_d_drive.shannon_symbol.v1","task_id":"HYP-HRM-D-ABSORB","symbol":"HRM_MODULE_BINDINGS","value":4,"bits":3,"fingerprint":"a490310c42aeecee"}
+{"schema":"hyperbehcs.hrm_d_drive.shannon_symbol.v1","task_id":"HYP-HRM-D-ABSORB","symbol":"HRM_ROTOR_PLANE_BINDINGS","value":10000,"bits":14,"fingerprint":"d0a37b9da30ecc77"}
+{"schema":"hyperbehcs.hrm_d_drive.shannon_symbol.v1","task_id":"HYP-HRM-D-ABSORB","symbol":"RUNTIME_AUTHORITY_GRANTS","value":0,"bits":0,"fingerprint":"e80655f5340642ca"}

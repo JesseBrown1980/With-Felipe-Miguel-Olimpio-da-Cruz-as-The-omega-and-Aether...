@@ -1,0 +1,26 @@
+[A] callingchain.rs 'known' table: genus from cellular homology, not from E - V + 1
+  configuration                              V   E  record b0,b1,b2 genus  E-V+1  match
+  one sphere alone                           1   0  0      1,0,1    0      0      1
+  two joined by one tube                     2   1  0      1,0,1    0      0      1
+  one sphere, one handle                     1   1  1      1,2,1    1      1      1
+  TWO TOUCHING IN A LOOP                     2   2  1      1,2,1    1      1      1
+  theta graph                                2   3  2      1,4,1    2      2      1
+  tetrahedron K4                             4   6  3      1,6,1    3      3      1
+  cube graph Q3                              8  12  5      1,10,1   5      5      1
+  complete graph K5                          5  10  6      1,12,1   6      6      1
+  ladder 1 hole / 0 callings                 1   0  0      1,0,1    0      0      1
+  ladder 2 / 1                               2   1  0      1,0,1    0      0      1
+  ladder 2 / 2 doughnut                      2   2  1      1,2,1    1      1      1
+  ladder 3 / 3                               3   3  1      1,2,1    1      1      1
+  ladder 5 / 5                               5   5  1      1,2,1    1      1      1
+  ladder 12 / 12                            12  12  1      1,2,1    1      1      1
+  ladder 12 / 18 (hexagonal prism graph)    12  18  7      1,14,1   7      7      1
+  ladder 20 / 30 dodecahedral               20  30  11     1,22,1   11     11     1
+  ladder 60 / 90 buckyball                  60  90  31     1,62,1   31     31     1
+
+[B] the program's 'consistent(v, e)' test is an algebraic identity
+  2V - 2E == 2 - 2(E - V + 1) for every integer V, E in [-50, 50]: True
+  so 'consistent' can never be false, and the 'expected genus' column equals E - V + 1;
+  the table in callingchain.rs cannot fail. The independent check is [A] above.
+
+FAILS: 0 []

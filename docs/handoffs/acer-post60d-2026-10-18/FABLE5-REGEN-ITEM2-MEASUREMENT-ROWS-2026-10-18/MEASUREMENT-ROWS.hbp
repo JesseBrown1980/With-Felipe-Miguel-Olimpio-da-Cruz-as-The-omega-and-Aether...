@@ -1,0 +1,8 @@
+MEASUREHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|for=aether_item2|cpu=i5-8300H_AVX2|os=Windows11|torch=2.13.0+cpu|pyg=2.7.0|rust=1.81.0|json=0
+STEP4D|recipe=retrain_det_wrapper.py(unchanged)+sealed_trainer_c66ca57d+1_thread+use_deterministic_algorithms+MKL_ENABLE_INSTRUCTIONS=AVX2+MKL_CBWR=AVX2|L1_ckpt=9166cdbe430e5b555839ed8468f61b1cb1b7affc55b741b6189ec3809272af67|L2_ckpt=be3ba29f802067e8de606d820e9ad0f5468bbd576989cf1a298ad433644c3691|L4_ckpt=7a920ac47fe5eb8d9dc4a933509a12899ffc27c8800b0be5586545450669aee3|equals_unpinned_deterministic=3/3|unpinned_runs=2|counts=auc_1.0_all_splits+6/6+1/47282|source_receipt=FABLE5-GNN-RETRAIN-REPRO-2026-10-18.hbp|tag=MEASURED|json=0
+STEP4D_CONTEXT|default_4_threads=bytes_differ_run_to_run(L4_21_vs_20_unique)|deterministic_1_thread=identical_x2|tag=MEASURED|json=0
+TRITWORD|unit=trit_encode_u64_to_41_trits(TritWord::pack)|ns=79.3|ops_per_s=12.6M|tag=MEASURED|json=0
+TRITWORD|unit=trit_decode_41_trits_to_u64(TritWord::unpack)|ns=216.1|tag=MEASURED|json=0
+TRITWORD|unit=TERNARY_pid_emit(trits_in_trits_out)|ns=598.5-599.8|tag=MEASURED|json=0
+TRITWORD_DIRECT|cloud_probe=cloud/direct.rs_measured_70ns|acer_has_that_source=0|closest_acer_row=encode_79.3ns|exact_probe_on_acer=PENDING_send_direct.rs|tag=MEASURED+PENDING|json=0
+TRITWORD_CONTEXT|tribit=kernel/core/src/tribit/mod.rs_sha256_50e4cb85|bench_bin_sha256=c0a7d494ef8fbe6f|proof_zip=FABLE5-PROOF-NANOSECONDS-TERNARY-2026-10-18.zip|json=0

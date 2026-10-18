@@ -1,0 +1,36 @@
+[A] LAW-34 section 5 ladder: width x4, index +3, index = 3*(log4 width - 3)
+  256 = 4^4, index 3                                         record=True           mine=True           MATCH
+  1024 = 4^5, index 6                                        record=True           mine=True           MATCH
+  4096 = 4^6, index 9                                        record=True           mine=True           MATCH
+  16384 = 4^7, index 12                                      record=True           mine=True           MATCH
+  65536 = 4^8, index 15                                      record=True           mine=True           MATCH
+  successive widths x4                                       record=True           mine=True           MATCH
+  successive indices +3                                      record=True           mine=True           MATCH
+    the '3 / 27 / 2187 / 6561 ladder' is 3^[1, 3, 7, 8]: exponents [1, 3, 7, 8], steps [2, 4, 1]
+    no 3-6-9 step pattern appears in those exponents; the 'same spine' claim is a naming
+
+[B] LAW-34 section 3: Mandelstam s + t + u = sum of the four masses squared
+  identity failures over 2000 integer momentum sets          record=0              mine=0              MATCH
+    independent invariants with fixed masses, n external momenta: n(n-3)/2 ->
+    2->2 (n=4): 2 ; 2->3 (n=5): 5. 'Two coordinates exhaust it' holds for 2->2 only
+
+[C] callingchain.rs section 3: mean density inside r_s, rho = 3 c^6 / (32 pi G^3 M^2)
+  M / ((4/3) pi r_s^3) == 3c^6/(32 pi G^3 M^2) (pi factored out) record=True           mine=True           MATCH
+  rho(2M) == rho(M) / 4 exactly                              record=True           mine=True           MATCH
+    stellar-mass BH    M = 1.000e1   Msun  r_s = 2.9533e1 km  rho in [1.8429e17, 1.8429e17] kg/m^3
+    Cygnus X-1 class   M = 2.100e1   Msun  r_s = 6.2020e1 km  rho in [4.1788e16, 4.1788e16] kg/m^3
+    GW150914 remnant   M = 6.200e1   Msun  r_s = 1.8311e2 km  rho in [4.7941e15, 4.7941e15] kg/m^3
+    intermediate-mass  M = 1.000e5   Msun  r_s = 2.9533e5 km  rho in [1.8429e9, 1.8429e9] kg/m^3
+    Sgr A*             M = 4.297e6   Msun  r_s = 1.2690e7 km  rho in [9.9807e5, 9.9807e5] kg/m^3
+    M87*               M = 6.500e9   Msun  r_s = 1.9197e10 km  rho in [4.3618e-1, 4.3618e-1] kg/m^3
+  M87* mean density below air at sea level (1.225 kg/m^3)    record=True           mine=True           MATCH
+    a BH of mean density nuclear saturation 2.3e17 weighs 8.9512e0 Msun
+    a BH of mean density the Sun 1408             weighs 1.1440e8 Msun
+    a BH of mean density water 1000               weighs 1.3575e8 Msun
+  water-density BH lies in the supermassive range 1e6..1e10 Msun record=True           mine=True           MATCH
+    a BH of mean density air 1.225                weighs 3.8786e9 Msun
+    a BH of mean density molecular cloud 1e-18    weighs 4.2928e18 Msun
+    note: (4/3) pi r_s^3 is a coordinate convention, as the source says ('Euclidean ball');
+    the 1/M^2 law is exact for that definition
+
+FAILS: 0 []

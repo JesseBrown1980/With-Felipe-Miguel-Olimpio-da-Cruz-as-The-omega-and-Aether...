@@ -1,0 +1,45 @@
+THREE-GAP THEOREM — EXHAUSTIVE VERIFICATION
+weak form: at most 3 distinct gaps
+strong form: when 3, the largest equals the sum of the other two
+==============================================================================
+
+N swept from 2 to 400 inclusive, every value, no sampling.
+
+  THE RIME AXES  {2731, 1999, 1723}, all ordered pairs
+    instances tested        2394
+    exactly 1 distinct gap  0
+    exactly 2 distinct gaps 90
+    exactly 3 distinct gaps 2304
+    MORE than 3             0   <-- must be 0
+    of the 3-gap cases, max == min + mid:  2304 / 2304   (ALL)
+
+  CONTROL MODULI {97, 233, 512, 1000, 4096, 9973}, all ordered pairs
+    instances tested        11571
+    exactly 1 distinct gap  3642
+    exactly 2 distinct gaps 1423
+    exactly 3 distinct gaps 6506
+    MORE than 3             0   <-- must be 0
+    of the 3-gap cases, max == min + mid:  6506 / 6506   (ALL)
+
+  CROSS: rime rings strided by control values
+    instances tested        7182
+    exactly 1 distinct gap  0
+    exactly 2 distinct gaps 789
+    exactly 3 distinct gaps 6393
+    MORE than 3             0   <-- must be 0
+    of the 3-gap cases, max == min + mid:  6393 / 6393   (ALL)
+
+==============================================================================
+TOTAL instances            21147
+TOTAL 3-gap instances      15203
+TOTAL satisfying max=min+mid 15203
+
+VIOLATIONS: NONE.
+weak form holds in all 21147 instances.
+strong form holds in all 15203 three-gap instances.
+
+Note the control moduli: 512, 1000 and 4096 are NOT prime and
+share factors with several strides. The theorem holds there too,
+which is correct — three-gap needs no coprimality. Coprimality is
+what Theorem 1 (never-touch) needs. The two are separate results
+and this sweep confirms they are separate.

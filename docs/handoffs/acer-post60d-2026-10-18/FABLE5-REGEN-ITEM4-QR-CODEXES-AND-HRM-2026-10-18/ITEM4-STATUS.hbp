@@ -1,0 +1,7 @@
+ITEM4HDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|json=0
+QR|file=asolaria-corpus.txt.qr|bytes=3200|sha256=2b4ba9df637796eee75e7db9b51b0b6f70c9055ff3c00c6c95d3ff7dbe838934|header=none_high_entropy|json=0
+QR|file=code-corpus.txt.qr|bytes=3200|sha256=c20c783922639c53103317665c06b9bbe2fc163ec0d2ddb66d59ed6b9f8925cd|header=none_high_entropy|json=0
+QR|file=fotoC.bin.qr|bytes=3200|sha256=d5e3d34b7e47c97bb5485ebe194298950dd4d1589df9a8f05851a5463b326912|header=none_high_entropy|json=0
+QR|file=wiki.qr|bytes=3200|sha256=3e2570928edf8648809b290716e7f0f2d75b93e38b0951d18aeba91671ca4b19|header=none_high_entropy|json=0
+NOT_ON_ACER|item=qr_codex_writer|evidence=no_write_site_for_.qr_in_any_code_root+acer_scripts_only_READ_laws/*.qr(pump_wave+build_between+project_gguf+absorb_all)|owner_says=HRM_models_make_the_colour-gradient_QR_keys|status=CANNOT_SEE_on_ACER|json=0
+NOT_ON_ACER|item=trained_HRM_checkpoint|evidence=D:/Asolaria-HRM=clone_of_github.com/sapientinc/HRM_no_.pt/.ckpt/.safetensors+tools_report_checkpoint_downloads=0+official_checkpoint_loads=0|acer_has=HRM_source(public_upstream)+asolaria-integration+tiny_CPU_smoke_config|status=CANNOT_SEE_on_ACER|json=0

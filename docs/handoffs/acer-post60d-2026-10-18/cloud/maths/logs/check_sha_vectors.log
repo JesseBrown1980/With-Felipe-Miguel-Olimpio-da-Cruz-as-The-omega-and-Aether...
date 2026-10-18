@@ -1,0 +1,6 @@
+  (empty)                          0 bytes  MATCH
+  abc                              3 bytes  MATCH
+  abcdbcdecdefdefgefgh...         56 bytes  MATCH
+  abcdefghbcdefghicdef...        112 bytes  MATCH
+  aaaaaaaaaaaaaaaaaaaa...    1000000 bytes  MATCH
+  vectors: 5  FAILS: 0

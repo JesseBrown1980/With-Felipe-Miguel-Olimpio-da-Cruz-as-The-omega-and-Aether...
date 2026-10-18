@@ -1,0 +1,59 @@
+{
+  "_what_this_is": "ONE real shard-quant cube receipt (annotated extract) from the live 10k RoomRotor. Source: D:/Asolaria-HyperBEHCS-10000-RoomRotor/hyperbehcs-carry-quant-10000/quant/shard-quant-receipts-latest.ndjson (line 1, shard-0000). This is HOW 100 rooms fold into ONE cube. There are 100 such cubes = the whole 10k layer. Read-only extract; duplicate alias keys in the raw row trimmed for readability; values are verbatim.",
+  "schema": "hyperbehcs.d_drive_10000_room.shard_quant_receipt.v1",
+  "shard_id": "shard-0000",
+  "room_count": 100,
+  "_fold": "100 rooms (each an 8-dim vector) -> ONE shard cube via 4 codecs below",
+  "receipt": {
+    "schema": "hyperbehcs.quantized_substrate_receipt.v1",
+    "substrate_id": "storage_d_drive",
+    "source_layer": "hyperbehcs_10000_room_rotor",
+    "vector_dimension": 8,
+    "target_dimension": 4,
+    "seed": "HYP-D-10000-ROOM-ROTOR:shard-0000",
+    "algorithms": {
+      "johnson_lindenstrauss_projection": {
+        "_role": "dimensionality reduction 8 -> 4 (sparse random projection)",
+        "algorithm": "johnson-lindenstrauss-achlioptas-sparse.v1",
+        "projection": [0.883159333634, 0.00297360045, 0.000174917674, -0.004372941837],
+        "metadata": { "distribution": "sqrt(3),0,-sqrt(3) with probabilities 1/6,2/3,1/6", "scale": 0.5, "hash": "sha256(seed|row|col)" },
+        "fingerprint": "e6f9b1e70d83c377"
+      },
+      "turbo_quant": {
+        "_role": "uniform 8-bit quant -> tightest binary cube form (8 code bytes)",
+        "algorithm": "turbo-uniform-quant.v1",
+        "codes": [5, 0, 0, 0, 0, 0, 0, 255],
+        "metadata": { "bits": 8, "min": 0, "max": 4950, "scale": 19.411764705882, "zeroPoint": 0, "levels": 256, "maxCode": 255 },
+        "fingerprint": "aeb89437d368a39c"
+      },
+      "polar_quant": {
+        "_role": "polar (radius,angle) pair quant -> 4 code pairs",
+        "algorithm": "polar-pair-quant.v1",
+        "codes": [[5, 4], [1, 29], [1, 32], [255, 64]],
+        "metadata": { "radiusBits": 8, "angleBits": 8, "maxRadius": 4950, "radiusScale": 19.411764705882, "angleScaleRadians": 0.024639942381 },
+        "fingerprint": "bcedf0fa35ddfb71"
+      },
+      "triple_quant": {
+        "_role": "spherical triple quant with multi-precision lanes (coarse/medium/fine)",
+        "algorithm": "triple-spherical-quant.v1",
+        "codes": [[5, 120, 4], [1, 78, 32], [255, 128, 64]],
+        "lanes": [
+          { "id": "coarse", "bits": 4, "role": "fast_cpu_gpu_placement_hint" },
+          { "id": "medium", "bits": 8, "role": "balanced_receipt_transport" },
+          { "id": "fine", "bits": 8, "role": "reviewable_fallback_precision" }
+        ],
+        "fingerprint": "9083f572b7853c75"
+      }
+    },
+    "descriptor_only": true,
+    "software_receipt_only": true,
+    "asolaria_os_receipt": true,
+    "pixel_receipt": false,
+    "hardware_mutations": 0,
+    "process_starts": 0,
+    "provider_calls": 0,
+    "runtime_authority_grants": 0,
+    "payloadFingerprint": "24c347a1008e5e3e"
+  },
+  "_honesty": "descriptor_only + software_only + 0 authority/hardware/process counters = a REPRESENTATION receipt, not a live run. Referential: the seed + sha256(seed|row|col) rule + fingerprints let the codes be recomputed/verified; the cube POINTS into recomputable structure, it is not lossless infinite compression."
+}

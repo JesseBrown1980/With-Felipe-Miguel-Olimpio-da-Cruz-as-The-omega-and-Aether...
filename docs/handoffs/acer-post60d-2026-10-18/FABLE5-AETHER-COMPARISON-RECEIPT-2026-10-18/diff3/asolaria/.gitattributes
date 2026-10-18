@@ -1,0 +1,4 @@
+.gitattributes text eol=lf
+docs/receipts/*.hbp text eol=lf
+docs/receipts/*.md text eol=lf
+docs/receipts/*.sha256 text eol=lf

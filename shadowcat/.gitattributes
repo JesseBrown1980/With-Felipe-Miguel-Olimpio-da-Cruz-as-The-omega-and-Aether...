@@ -1,0 +1,3 @@
+# Keeps the bytes UPSTREAM.sha256 pins on a core.autocrlf=true checkout of this folder alone.
+# Inside aether the root .gitattributes line "* -text" already does the same.
+* -text

@@ -1,0 +1,7 @@
+REMAKEHDR|what=shadowcat.hbp+shadowcat.hbi_remade_from_ACER_sources|operator=just_use_those_byte_exact_hashes_to_remake_them|toolchain=rustc_1.81.0(eeb90cda1_2024-09-04)_WSL_Linux_x86_64|path=/root/_horizon/shadowcat(original)|sources_unchanged=10/10|reconstructed=Cargo.toml_only(no_deps)|E=0|json=0
+REMAKE|file=shadowcat.hbp|bytes=415|sha256=7ccf5b1c240e796b8ef653ca89269620505c01ff9bd49f20480e9e40722842d1|recorded_2026-07-26=same|match=1|tag=MEASURED|json=0
+REMAKE|file=shadowcat.hbi|bytes=294|sha256=82b52dce49b411624fb683ea1b1eb86d808b6977e401bbe3e6c3627f49c666d7|recorded_2026-07-26=same|match=1|tag=MEASURED|json=0
+REMAKE|hbp_trailer=8763231837629f9461e8ec5e7a26d1c5e1cfc3ff16aa3f019e085bc51b23b987|recorded=same|match=1|tag=MEASURED|json=0
+REMAKE|logs=RUN+VERIFY+THREEGAP|identical_to_2026-07-26_originals=3/3|differing_lines=0|tag=MEASURED|json=0
+REMAKE|callingchain.hbp=147B+callingchain.hbi=86B|recorded_hash=NONE|status=new_output_not_a_verified_remake|json=0
+NOTE|row=SRCPARITY|meaning=compared_two_different_hash_formulas|is_parity_check=0|disregard=1|json=0
