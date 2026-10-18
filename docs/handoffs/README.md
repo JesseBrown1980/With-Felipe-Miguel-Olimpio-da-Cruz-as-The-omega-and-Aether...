@@ -516,3 +516,9 @@ conjectures, and nothing here tests them.
 - `FABLE5-SIDECAR-FIND-TOOL-aoom_find_files-2026-10-18/`: ACER's MCP server with the read-only finder
   `aoom_find_files` (exact size, sha256 prefix or name, inside allow-listed roots set by
   `AOOM_FIND_ROOTS`); its API keys come from the environment only.
+- `FABLE5-SEED-SEARCH-10-FILES-3078B-C-ROOTS-2026-10-18/` (manifest and search output only): the ten
+  3,078-byte files on ACER's C: roots are 4 copies of the current seed (`653e3d9b…`), 2 of
+  `FABLE5-FOLD-ALL-SEEDS-3078.hbp` (`3327d908…`), 2 of the federation `kernel/core/build.rs`
+  (`239feada…`), one README (`f3253cfa…`) and one Rust incremental-build object file (`fc18faa7…`). None
+  is the older seed `a65c020a…`. The bodies are not stored again here: the first eight are already in
+  public repositories, and the last two are not part of the seed's inputs.
