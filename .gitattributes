@@ -1,3 +1,6 @@
+# Every file is checked out exactly as stored, on every OS (no CRLF conversion), so the
+# sha256 pins and sha256sum -c checks hold on a Windows clone with core.autocrlf=true.
+* -text
 .gitattributes text eol=lf
 docs/receipts/*.hbp text eol=lf
 docs/receipts/*.md text eol=lf
