@@ -8,7 +8,11 @@ This repository is public. The code is MIT-licensed; crates marked "MIT OR Apach
 used under `LICENSE-APACHE`. The owner's grant (2026-10-18): everything here was made by the owner or
 by Asolaria in Asolaria's white rooms, and anything listed under any license is free and public to
 everyone. Two pieces are other authors' and keep their own Apache-2.0 terms and notices: Sapient's HRM
-under `model/hrm-fork/vendor/HRM`, and the jsQR algorithm that `qr/qr-read-int` ports. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
+under `model/hrm-fork/vendor/HRM`, and the jsQR algorithm that `qr/qr-read-int` ports.
+
+The opening sentence above is the owner's, from `JesseBrown1980/Asolaria`'s README; that repository is
+public since 2026-10-18. "The private mirror" that PROVENANCE files cite is a clone of it, so every
+mirror commit they name can be read there. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
 1.81.0) and Python 3.11+; the `time/` and `eval/` checks also need Node 18+.
 
 ```sh

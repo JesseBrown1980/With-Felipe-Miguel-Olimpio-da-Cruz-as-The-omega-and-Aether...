@@ -53,8 +53,11 @@ Verified here 2026-10-18 against the sent zip: the cube sidecar checks, and all 
 match their cube sha256 (46/46). Independent scan of the bodies: no real credentials (the one
 `BEGIN PRIVATE KEY` is a phrase inside a held-out test-scenario prompt in
 `heldout-scenarios.json`, with no key material), the only emails are the owner org's own seats
-(`@jbrowndevelopmentllc.com`), and every IPv4 is private or loopback. The GitHub repo
-`JesseBrown1980/Asolaria` is private, so 18 of the 46 files are not in its public mirror.
+(`@jbrowndevelopmentllc.com`), and every IPv4 is private or loopback. The receipt records
+`JesseBrown1980/Asolaria` as private (its `VISIBILITY` row), with 28 of the 46 files tracked there and
+18 never on GitHub. The owner made that repository public on 2026-10-18 (GitHub reports `public`),
+so the 28 are public there; all 46 bodies are tracked in this repository under `canon-archive/`
+(46/46 by sha256), so every one of them is public here.
 
 This manifest records those documents and pins them. aether records them as provenance; it does
 not load them as active agent instructions. Several of them (`00-TOP-AGENT-PRECOMMAND.md`, the
