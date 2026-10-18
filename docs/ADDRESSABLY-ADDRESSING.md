@@ -76,22 +76,88 @@ bus, and ACER's Windows sandbox, which stopped a GNN/FNN level-growth run near 1
 > infinite messaging, and the Omega hotel and the Omni hotel allow for particles to talk to each
 > other." (OPERATOR)
 
-The Brown-Hilbert hotel is in the records of section 2. For the other two, the operator points to two
-repos (OPERATOR). Neither uses the word "hotel"; this is what each one defines, in its own words.
+> "The Brown Hilbert rooms are for omnibits. They're for all bits. Omnibits. And the Omega rooms are
+> for special bits. So we needed an Omni hotel for all the Omni bits to be able to talk to each other,
+> and Omega hotels at every level, at every end level, so that everything could talk to everything
+> like a giant simulator grid. Everything has its own special little communication boxes, and they
+> all have their own division and distribution. And that means that free-floating functions can fly
+> through them and interact with each little hotel room." (OPERATOR)
 
-- **Omni: `Omni-Asolaria-ASI-OS-Matrix-Fabric` @ `2b4193f`.** One slice lives at every level of the
-  matrix at once, because every level translator is a bijection and the translators form a groupoid:
+The Brown-Hilbert hotel is in the records of section 2. The other two are below, each with what its
+records define and where the records stop.
+
+**The Omni hotel.**
+
+- `Omni-Asolaria-ASI-OS-Matrix-Fabric` @ `2b4193f`: one slice lives at every level of the matrix at
+  once, because every level translator is a bijection and the translators form a groupoid:
   *"translators `T_ij` with `T_ji∘T_ij = id` and `T_jk∘T_ij = T_ik` make translation omnidirectional
   and path-independent across the whole ladder."* (README, "Prism/Comb 0-loss", CANON; the 256↔1024
-  rung is MEASURED there.) ACER's records also name "OmniHotel" as stage 12 of the OMNI
-  constellation, on Liris evidence whose roster hash is still under bilateral HOLD (ACER memory,
+  rung is MEASURED there.)
+- The OmniHotel as code, in the universe simulator (`ASOLARIA-UNIVERSE-SIMULATOR-…` @ `3f9f42d`,
+  `engines/omni_hotel.py:5-6`): *"room-sector substrate — 12 lanes x 100 shards
+  (ROOM-SECTOR-SUBSTRATE-CANON), Hilbert-Hotel rooms that extend without repacking."* The file is a
+  minimal port and does not yet do what its docstring says: the rooms are fixed at 1,200 and
+  `assign()` writes a room without checking whether it is held (lines 27-30). Its own demo of 2,000
+  guests ends with 975 rooms held and 1,025 guests overwritten, at most 7 keys sent to one room
+  (MEASURED on the cloud, recounted in integers by a second run). Collisions going outward are taken
+  from the records of section 2, not from this file. Its ColorPID half, which
+  `books/LAW-59-STREAM-THE-GENERATOR-NOT-THE-GENERATED.md:60` cites, uses floats.
+- ACER's records name "OmniHotel" as stage 12 of the OMNI constellation, on Liris evidence whose
+  roster hash is still under bilateral HOLD (ACER memory,
   `correction_rime_affirmative_claims_sector_counts_system_models_2026_07_24.md:140-142`).
-- **Omega: `asolaria-omega-omnibit-tournament` @ `dad4647`.** The Omega ledger: 27 shared binding
-  commitments that unify into one Omega root, with an `omega_slot` in every cube address
-  (`src/asolaria_tournament/relic_engine.py`, `OmegaLedger` and `CubeAddress`). The three seats,
-  Acer, Liris and Relic, keep their files, corpora and hardware private and meet only through what git
-  carries: *"reviewed code, derived commitments, allowlisted receipts, public fixtures, and explicit
-  Omega bindings."* (README, "Tournament topology")
+
+**The Omega hotels: the Omega system of Aether and Asolaria.**
+
+> "The Omega Rust components. That's what it should be called, the Omega system of Aether and
+> Asolaria." (OPERATOR, 2026-10-18)
+
+The four components and their contract are in `asolaria-omega-omnibit-tournament` @ `dad4647`, the
+same commit and the same 75 files on GitHub and on Hugging Face
+(`Jessedbrown/asolaria-omega-omnibit-tournament`), and byte-identical in aether (MEASURED):
+
+| Component | Upstream (`reference/`, `provenance/receipts/`) | In aether | Tests on Rust 1.81 |
+|---|---|---|---|
+| Omega floor codec | `omega-floor-codec-v0/omega_floor_codec_v0.rs` | `qprism/recovery-omega-codecs/` | 11 of 11 |
+| Omega hyper codec integration | `omega-hyper-codec-integration-v0/omega_hyper_codec_v0.rs` | `qprism/recovery-omega-codecs/` | 34 of 34 |
+| Omega operator catalog | `omega-operator-catalog-v0/omega_operator_catalog.rs` | `qprism/recovery/catalog/` | 18 of 18 |
+| Omega path 1-2-3 | `omega-path123-v0/omega_path123.rs` | `qprism/recovery/omega/` | 35 of 35 |
+| Contract | `omega-floor-codec-contract-v0/INTEGRATED-OMEGA-FLOOR-CODEC-CONTRACT.hbp` | `qprism/recovery-omega-codecs/` | |
+| Receipts | `omega-floor/OMEGA-FLOOR-CODEC-V0-VERIFY`, `path123/OMEGA-PATH123-COMPONENT` (`.hbp`, `.hbi`) | `vectors/` of the two crates | |
+
+The hyper and path 1-2-3 counts include the catalog's 18 tests, which both compile in. Clippy denies
+every warning except four upstream lints that are allowed so the bytes stay unedited; float
+arithmetic is denied and the sources have no float. The floor self-test reproduces its receipt row
+byte for byte. CI runs all of it (`omega-codecs`, `qprism-recovery`, `omega-operator-catalog` in
+`gate.yml`).
+
+There is an Omega at every level. The contract chains the floors:
+`floor64_seed=COMPILED_DOMAIN_GENESIS`, `floor256_seed=OMEGA64`, `floor1024_seed=OMEGA256`,
+`floor4096_seed=OMEGA1024`, `final_commit=OMEGA4096`, with `child_carries_parent_omega_bytes=1`
+(line 8). The same functions act at every level: *"all 40 catalog operators at every floor"*
+(`omega_hyper_codec_v0.rs:4`), 8 cube directions, 12 sectors and 20 icosahedral lenses, each one
+exactly invertible. They are the nearest thing in code to the free-floating functions above (a
+reading, not a record).
+
+Where the records stop:
+- An Omega here is a commitment and a seed, not a room yet:
+  `omega_is_commitment_and_seed_not_learned_state=1` (contract line 9).
+- The Omega hotels are recorded as capacity: `HOTELS|omnihotels=ADDRESSED|omega_hotels=POSSIBLE`
+  (universe simulator, `receipts/LIRIS-COLOR-QR-OIL-DEVICE-ENGINE-2026-07-29.hbp:10`). Its device
+  chain runs `OMNIHOTELS -> POSSIBLE_OMEGA_HOTELS -> AETHER_INTERFACES`, and the law says
+  *"`POSSIBLE_OMEGA_HOTELS` remains possible capacity."* (`books/LAW-COLOR-QR-2D-DEVICE-ENGINE.md:75-83`)
+- Path 1-2-3 is not yet wired into the hyper codec. Its self-test prints `path123=PENDING` and
+  `whole_monty=0`, and CI checks that line exactly.
+- The floor receipt was made on rustc 1.96.0, outside the operator's rule. On 1.81.0 the same 11 tests
+  pass and the self-test line is identical.
+
+Who made it: Relic and Liris, with Codex (OPERATOR). The git record shows the four sources entering
+the tournament in one commit, `ec399b0` (2026-07-18, author `acer`), and the source ledger records
+the 1.81.0 test run under both Liris (`MEASURED_LIRIS`) and ACER (`provenance/SOURCE-LEDGER.hbp:25-26`).
+The three seats, Acer, Liris and Relic, keep their files, corpora and hardware private and meet only
+through what git carries: *"reviewed code, derived commitments, allowlisted receipts, public
+fixtures, and explicit Omega bindings."* (README, "Tournament topology"). In Relic's lane, the Omega
+ledger unifies 27 shared binding commitments into one Omega root, with an `omega_slot` in every cube
+address (`src/asolaria_tournament/relic_engine.py`, `OmegaLedger` and `CubeAddress`).
 
 ## 4. Why the Host8 handle was retired as an identity
 
@@ -108,10 +174,19 @@ lossless infinite compression."* (`Omni-Asolaria-ASI-OS-Matrix-Fabric` README, "
 
 The structured Brown-Hilbert address does not collide; a truncated handle of it can. What the
 operator stopped using is the Host8 handle **as an identity** (OPERATOR, 2026-10-18, said in reply to
-the point that the 8-byte handle can collide). Identity moved to the system of the
-`Metatagging-data-for-a-Quantum-universe` repo (OPERATOR), whose seed tags every particle with its
-own metadata: *"`ParticleID` (e.g. `E123`) → **PID**: every agent, slice, room, receipt is
-content-addressed (BEHCS-1024)."* (`docs/WHAT-THIS-SEED-BECAME-2026-07-03.md:11`)
+the point that the 8-byte handle can collide). In the operator's words, *"the meta tagging, the
+quantum universe repo replaced host 8"* (OPERATOR, 2026-10-18). That repo's seed tags every particle
+with its own metadata; its mapping table takes `ParticleID` (e.g. `E123`) to *"**PID** — every
+agent, slice, room, receipt is content-addressed (BEHCS-1024)"*
+(`Metatagging-data-for-a-Quantum-universe` @ `99f9c52`, `docs/WHAT-THIS-SEED-BECAME-2026-07-03.md:11`).
+The replacement is the operator's statement; the Metatagging records themselves list host8 `:5088`
+serving alongside the PID fabric on 2026-07-03 (same file, line 21).
+
+The same bound applies to the PID. As the seed computes it, a PID is also a 64-bit cut of a
+SHA-256, `"AGT-" + sha256(state)[:16 hex]` (`metatag_v2_behcs.py:29-30`, `:58-60`), the same width
+as the Host8 handle. What it names is the particle's full state, and that state is the identity; two
+different states can share a PID, with even odds once about five billion PIDs exist. So rule 2 below
+holds for PIDs as it does for Host8.
 
 The `host8-serve` server itself is still running. On 2026-10-18 ACER's process list showed
 `host8-serve.exe` behind ASI OS (`asolaria-asi-os.exe`, `:4600`), and ACER's records describe it as
