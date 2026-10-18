@@ -1,0 +1,17 @@
+[package]
+name = "asolaria-kernel-lane-core"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Byte-identical kernel/core modules of asolaria-federation-1024 that the kernel boot lane reaches (syscall surface, hookwall, cosign chain, envelope slot, tier, GNN shim, bus fabric, sign gate)"
+
+[lib]
+crate-type = ["rlib"]
+path = "src/lib.rs"
+
+[dependencies]
+# The upstream workspace declaration (kernel/Cargo.toml:31), unchanged. The other upstream workspace
+# dependencies (ed25519-dalek, zeroize, crossbeam-queue) are used by none of these modules.
+sha2 = { version = "0.10", default-features = false }

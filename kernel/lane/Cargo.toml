@@ -1,0 +1,23 @@
+[package]
+name = "asolaria-kernel-lane"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Kernel boot lane of asolaria-federation-1024 as an in-process host simulation: init envelope REPL with the hook_context table, sys_hookwall_pre/post with caller_pid 0, cosign chain, and the BOOTPID/BOOTTIME/BOOTPROJ/BOOTDRIVER rows"
+build = "build.rs"
+
+[workspace]
+resolver = "2"
+members = ["core"]
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+# Upstream `kernel/boot/src/init.rs` names this crate `asolaria_kernel_core`; the rename keeps it verbatim.
+asolaria_kernel_core = { package = "asolaria-kernel-lane-core", path = "core", version = "0.1.0" }
+# Upstream `project_60d` + tuple `sha256` (hwinv.rs:99-101,147-262), byte-identical in that crate.
+asolaria-behcs1024-60d = { path = "../behcs1024-60d", version = "0.1.0" }
+sha2 = { version = "0.10", default-features = false }

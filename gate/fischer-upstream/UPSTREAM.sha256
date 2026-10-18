@@ -1,0 +1,3 @@
+555f2d22097073d6c5d894d6e57d4fb6c1bf6bf2ab8c151de9070ee8c1160e8d  vendor/federation-1024/servers/fischer-eval/Cargo.toml
+ee0a89ee9e32a764aa23ece56f302fd2526603496f6308e0262c5ad0da798bdb  vendor/federation-1024/servers/fischer-eval/src/lib.rs
+831621aaece59580cae736c34ff0b6ab7b689b2fd989ce7cebbd7e76aa5b24ee  vendor/federation-1024/servers/fischer-eval/src/main.rs

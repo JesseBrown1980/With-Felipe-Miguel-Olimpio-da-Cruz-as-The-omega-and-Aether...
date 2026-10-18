@@ -1,0 +1,70 @@
+KLANE|source=asolaria-federation-1024@dc1da1a9|pci=ACER-HWINV-BUILD-BOOT-PROOF-2026-07-07.hbp:PCI_QEMU|clock=ACER-DEVICE-TIME-60D-BOOT-PROOF-2026-07-08.hbp:BOOTTIME|json=0
+SERIAL|  hwinv . PCI enumeration (0xCF8/0xCFC, read-only)
+SERIAL|  PCI 00:00.0  8086:29c0 class=06:00
+SERIAL|  PCI 00:01.0  1234:1111 class=03:00
+SERIAL|  PCI 00:02.0  8086:10d3 class=02:00
+SERIAL|  PCI 00:1f.0  8086:2918 class=06:01
+SERIAL|  PCI 00:1f.2  8086:2922 class=01:06
+SERIAL|  PCI 00:1f.3  8086:2930 class=0c:05
+SERIAL|  hwinv . PCI scan complete
+SERIAL|  BOOTPID|device_pid=d0162de451e51b30|device_pid_full=d0162de451e51b30057822213aa3187125480e0f30e4b2f69c2c9ac14ba8b4e9|hw_tuple_pid_full=22063f895e14fa5f39f98ce10ce24bfe62c43a66f40a7ec9b20aa2058bbf06a9|hw_devices=6|rst_vmd=0|storage=1|colony=acer|behcs=1024|dims=60|derived_from=60d_coordinate|coord_prefix=979.310.131.995.978.505|e=0|fire=0|json=0
+SERIAL|  BOOTTIME|utc=2026-07-08T13:24:48Z|tsc=10722597973|src=cmos_rtc+tsc|e=0|json=0
+SERIAL|  BOOTPROJ|boot_pid=74d289e1bdbefd66|device_pid=d0162de451e51b30|utc=2026-07-08T13:24:48Z|volatile=1|stable_ref=device_pid|e=0|fire=0|json=0
+SERIAL|  BOOTDRIVER|driver=intel-rst-vmd|match=8086:282A|device_pid=d0162de451e51b30|boot_pid=74d289e1bdbefd66|utc=2026-07-08T13:24:48Z|status=NOT_APPLICABLE|no_8086:282A_on_this_device|writes=0|e=0|fire=0|json=0
+PIDCURRENT|sys_pid_current=e00b1a465d6dcb50
+CONSOLE|ty=PING|recv=50494e4701000000000000000000000000000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1|reply=504f4e4702000000000000000000000000000000000000000000000000000000
+CONSOLE|ty=VERS|recv=5645525303000000000000000000000000000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1|reply=564552530400000000000000302e322e302d7068617365332d73636166666f6c64
+CONSOLE|ty=PIDA|recv=5049444105000000000000000000000000000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1|reply=50494441060000000000000041534f4c415249412d46454445524154494f4e2d52454d414b452d313032342d5049442d323032362d30352d3131
+XCHG|ty=EXEC|recv=4558454307000000000000000000000000000000000000000000000000000000|hook=0203|hvd=02030101000000000000000000485644|cosign_appends=1|reply=454552520800000000000000696e76616c696400000000000000000000000000
+XCHG|ty=INIT|recv=494e495409000000000000000000000000000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1|reply=554e4b4e0a00000000000000494e495400000000000000000000000000000000
+RUN|call=init_ready|recv=-|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1
+RUN|call=run_step|recv=494e4954000000000000000050cb6d5d461a0be0000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1
+RUN|call=run_step|recv=554e4b4e0100000000000000494e495400000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1
+RUN|call=run_step|recv=554e4b4e0200000000000000554e4b4e00000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1
+RUN|call=producer_send|len=32|result=Exhausted
+EXECRUN|call=producer_send|len=44|result=ok
+EXECRUN|call=run_step|recv=45584543000000000000000050494e4707000000000000000000000000000000000000000000000000000000|hook=0203|hvd=02030101000000000000000000485644|cosign_appends=1
+EXECRUN|call=run_step|recv=50494e4707000000000000000000000000000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1
+EXECRUN|call=bus_read|env=504f4e4702000000000000000000000000000000000000000000000000000000|seq_after=3
+SHTDRUN|call=producer_send|len=32|result=ok
+SHTDRUN|call=run_step|recv=5348544400000000000000000000000000000000000000000000000000000000|hook=090a|hvd=090a0101000000000000000000485644|cosign_appends=1|sys_cosign_append=Invalid
+SHTDRUN|call=bus_read|env=46494e490100000000000000696e69742d73687574646f776e00000000000000
+EXHAUST|sent_len=600|send=ok|recv_failed=31|recv_err=Invalid|step32=Exhausted|bus_len=600|bus_type=42494778|seq_after=2
+COSIGN|row_hex=-|len=0|sys_cosign_append=Invalid|cosign_appends=0
+COSIGN|row_hex=696e69742d73687574646f776e|len=13|sys_cosign_append=Invalid|cosign_appends=0
+COSIGN|row_hex=787878787878787878787878787878|len=15|sys_cosign_append=Invalid|cosign_appends=0
+COSIGN|row_hex=78787878787878787878787878787878|len=16|sys_cosign_append=ok|cosign_appends=1
+COSIGN|row_hex=636f6e736f6c652d72657365742d72657175657374|len=21|sys_cosign_append=ok|cosign_appends=1
+GNN|input=726f7574652d6d65|out_len=4|ret=1|out0=00
+GNN|input=-|out_len=0|ret=Invalid
+GNNTOPN|items=a.b.c.d|n=3|ranked=a:1000.b:999.c:998
+GNNAGG|in_favor=50|total=100|verdict=Hold
+TIER|path_hex=-|sys_tier_query=Invalid
+TIER|path_hex=610062|sys_tier_query=Invalid
+TIER|path_hex=fffe|sys_tier_query=Invalid
+TIER|path_hex=433a2f61736f6c617269612d616365722f5f6269672d7069636b6c652d71756172616e74696e652f78|sys_tier_query=Hidden
+TIER|path_hex=2f6d6e742f534f564c494e55582f78|sys_tier_query=Shadow
+TIER|path_hex=7661756c742f7365637265742f6b|sys_tier_query=Secret
+TIER|path_hex=782f7661756c742f7365637265742f79|sys_tier_query=Secret
+TIER|path_hex=612f737465616c74682f62|sys_tier_query=Stealth
+TIER|path_hex=612f526573747269637465642f62|sys_tier_query=Restricted
+TIER|path_hex=646f63732f726561646d652e6d64|sys_tier_query=Public
+LABEL|levels=-|resolve_label=cbf29ce484222325
+LABEL|levels=0|resolve_label=08328807b4eb6fed
+LABEL|levels=1.2.3|resolve_label=b9e326cfa27e0e9d
+LABEL|levels=1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023.1023|resolve_label=ab99166d341a51ad
+LABEL|levels=1024|resolve_label=GlyphOutOfRange
+LABEL|levels=1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1|resolve_label=LabelTooDeep
+SIGNGATE|signer=seed11|verify_with=own-key|tags=safe|envvars=-|sig_valid=1|deny_clean=1|allow_rescued=0|admitted=1|reason=admitted-clean
+SIGNGATE|signer=seed11|verify_with=own-key|tags=drift-detected|envvars=-|sig_valid=1|deny_clean=0|allow_rescued=0|admitted=0|reason=deny-tag-matched-no-allow-rescue
+SIGNGATE|signer=seed11|verify_with=own-key|tags=drift-detected|envvars=ASOLARIA_VIRUS_SCANNER|sig_valid=1|deny_clean=0|allow_rescued=1|admitted=1|reason=deny-tag-matched-but-allow-rescued
+SIGNGATE|signer=seed11|verify_with=other-key|tags=safe|envvars=-|sig_valid=0|deny_clean=1|allow_rescued=0|admitted=0|reason=signature-invalid
+HEALTH|body_hex=484f5354384b45524e454c7c76657273696f6e3d302e322e302d7068617365332d73636166666f6c647c616e63686f725f7069643d41534f4c415249412d46454445524154494f4e2d52454d414b452d313032342d5049442d323032362d30352d31317c7365727665725f6c6962733d357c6a736f6e3d300a|kver=0.2.0-phase3-scaffold|kanchor=ASOLARIA-FEDERATION-REMAKE-1024-PID-2026-05-11|kernel_up=1
+HEALTH|body_hex=-|kver=-|kanchor=-|kernel_up=0
+HEALTHSPLIT|body_hex=484f5354384b45524e454c7c76657273696f6e3d610d0a484f5354384b45524e454c7c616e63686f725f7069643d620d0a|kver_hex=61|kanchor_hex=62|kernel_up=1
+HEALTHSPLIT|body_hex=484f5354384b45524e454c7c76657273696f6e3d610d|kver_hex=610d|kanchor_hex=2d|kernel_up=1
+HEALTHSPLIT|body_hex=484f5354384b45524e454c7c76657273696f6e3d610d484f5354384b45524e454c7c616e63686f725f7069643d62|kver_hex=610d484f5354384b45524e454c|kanchor_hex=62|kernel_up=1
+HEALTHSPLIT|body_hex=484f5354384b45524e454c7c76657273696f6e3d0b|kver_hex=0b|kanchor_hex=2d|kernel_up=1
+HEALTHSPLIT|body_hex=0b484f5354384b45524e454c7c76657273696f6e3d76|kver_hex=2d|kanchor_hex=2d|kernel_up=1
+HEALTHSPLIT|body_hex=484f5354384b45524e454c7c76657273696f6e3d61c28562e280a8631c7c616e63686f725f7069643d0c|kver_hex=61c28562e280a8631c|kanchor_hex=0c|kernel_up=1
+HEALTHSPLIT|body_hex=780a484f5354384b45524e454c7c76657273696f6e3d760a0a484f5354384b45524e454c7c76657273696f6e3d770d0d0a|kver_hex=770d|kanchor_hex=2d|kernel_up=1

@@ -1,0 +1,33 @@
+[package]
+name = "asolaria-gate-fischer-upstream"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Owner's upstream Fischer evaluator (FED servers/fischer-eval @dc1da1a9), vendored byte-identical and compiled as the primary piped path"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["policy", "gate", "integer", "hbp"]
+categories = ["command-line-utilities", "algorithms"]
+
+[workspace]
+resolver = "2"
+exclude = ["vendor"]
+
+# The crate compiles the byte-identical upstream sources directly from vendor/.
+# The vendored Cargo.toml beside them is carried for provenance (sha256-pinned in
+# UPSTREAM.sha256); this manifest is the active build manifest. Lib name matches the
+# upstream crate so the vendored main.rs `use asolaria_server_fischer_eval::...` resolves.
+[lib]
+name = "asolaria_server_fischer_eval"
+path = "vendor/federation-1024/servers/fischer-eval/src/lib.rs"
+
+[[bin]]
+name = "fischer-eval-host8"
+path = "vendor/federation-1024/servers/fischer-eval/src/main.rs"
+
+[[bin]]
+name = "upstream-fixture"
+path = "src/bin/upstream_fixture.rs"
+
+[dependencies]

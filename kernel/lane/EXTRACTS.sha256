@@ -1,0 +1,12 @@
+9a2a24be0389c9d39aa27b2c8c5457691947cf02895d1ebad2d170517ca2140e  asolaria-asi-os@457159d6 src/main.rs:361-375
+f8b3720ca5179a22e86375f60309bf57952cdd454f97056af665652a12b3155c  federation-1024@dc1da1a9 kernel/boot/src/bootproj.rs:12-38
+b8c6da12d7a55470f7523c7f5b51c0b4b163b4c68bcffd3b206af17659194e51  federation-1024@dc1da1a9 kernel/boot/src/driver_rst_vmd.rs:18-39
+de7c6c58d55c6ae8cfa439dbf5bc419c70b9b0268151e3b69ee596b6a754e297  federation-1024@dc1da1a9 kernel/boot/src/hwinv.rs:103-145
+c8dcdff9bbac51f293af9e1590e71ad6f484112db55e6c71166f110d84f40835  federation-1024@dc1da1a9 kernel/boot/src/hwinv.rs:280-313
+63213fb90c4a614c43406cf0603adb74c0a9a5343792ca780ef2872077354597  federation-1024@dc1da1a9 kernel/boot/src/hwinv.rs:51-93
+66a22aab9cb21a2e82581129e0488590d0da401cf0a60fa1cc8d2c9bf48c3a9a  federation-1024@dc1da1a9 kernel/boot/src/hwinv.rs:95-96
+e2a56941351f7b3357f13a588ef224c78f33fad12f8bb0cec670311b6a7e2836  federation-1024@dc1da1a9 kernel/boot/src/rtc.rs:162-167
+41ea9b9c7fc4f46be542395f0d7e08853d3672e290a6670637110da40ebaa11d  federation-1024@dc1da1a9 kernel/boot/src/rtc.rs:174-208
+22353915b37163ef769093f115862808a881740a3b5489aa503c7b48a877f730  federation-1024@dc1da1a9 kernel/boot/src/rtc.rs:57-80
+962130917e37191bc2de2cb2abc8ccb36487fe2cd2f09b0509251dccefb362fe  federation-1024@dc1da1a9 kernel/core/src/lib.rs:14-35
+ca0be990e14f76abde1926b5599a660b4ff77f626aaecdf0e3230a19432818c5  federation-1024@dc1da1a9 kernel/core/src/lib.rs:72-105
