@@ -1,0 +1,22 @@
+# Synthetic example mask-glyph set for the G3 reverse-gain plane.
+#
+# This is a DEMO FIXTURE, not intelligence. Every token below is opaque and
+# obviously synthetic so it cannot be mistaken for, or collide with, anyone's
+# real data. Contact-shaped tokens use only reserved forms: RFC 2606 example.com
+# for email, and the NANP fictional 555-0100..555-0199 block for phone numbers.
+#
+# It exists so the plane runs out of the box with no setup. To score against your
+# own per-adversary identifier set, point the GNN_REVERSE_MASK_SET environment
+# variable at a newline-delimited file of your identifiers; that set is loaded at
+# runtime and is never part of this published artifact. See the README and
+# docs/security/REVERSE-GAIN-SELF-ECHO.md.
+#
+# Lines beginning with '#' and blank lines are ignored. One identifier per line.
+synthetic-adversary-0001
+synthetic-adversary-0002
+example-mask-token-a
+synthetic-mask-01@example.com
+phone-synthetic-1-555-0101
+example-vpn-profile-synthetic-01
+demo-workspace-profile-synthetic
+synthetic-persona-name-0001

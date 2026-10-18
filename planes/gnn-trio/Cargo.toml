@@ -1,0 +1,25 @@
+[package]
+name = "asolaria-gnn-trio"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+# UNLICENSED: this crate vendors the owner's revolver-10k source bytes, which carry no
+# license. Per OWNER-RULES 7h, ports that vendor UNLICENSED owner code are marked UNLICENSED
+# and left out of crates.io publishing (see publish = false below and PROVENANCE.md).
+license = "UNLICENSED"
+publish = false
+description = "The public, runnable G-plane trio: the G3 reverse-gain sign-flip scorer as an integer Rust port with a synthetic default mask set and a runtime override, the G1/G2/G4 argument-only cores via asolaria-g-planes, and the clean revolver-10k composition files vendored as the owner's float/Node lane"
+keywords = ["gnn", "reverse-gain", "integer", "port"]
+categories = ["algorithms"]
+
+[lib]
+name = "gnn_trio"
+path = "src/lib.rs"
+
+[[example]]
+name = "trio"
+path = "examples/trio.rs"
+
+[dependencies]
+asolaria-g-planes = { path = "../../model/g-planes", version = "0.1.0" }
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }

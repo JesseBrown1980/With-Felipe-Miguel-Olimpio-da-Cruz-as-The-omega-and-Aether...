@@ -1,0 +1,25 @@
+# gnn-trio referee fixture — integer mirror over synthetic inputs only.
+# RVGN: G3 reverse-gain sign flip. VEC: omniquant vector_from_envelope.
+# AUTH: quant-bus authority_quant. FRAME: bpi-codec encode_frame.
+RVGN|glyph=synthetic-adversary-0001|units=25|digits=1|mask=1|sign=-1|score=c004000000000000
+RVGN|glyph=synthetic-honest-leak-0001|units=25|digits=1|mask=0|sign=1|score=4004000000000000
+RVGN|glyph=synthetic-honest-leak-0002|units=712|digits=3|mask=0|sign=1|score=3fe6c8b439581062
+RVGN|glyph=example-mask-token-a|units=1|digits=0|mask=1|sign=-1|score=bff0000000000000
+RVGN|glyph=synthetic-mask-01@example.com|units=10000|digits=0|mask=1|sign=-1|score=c0c3880000000000
+RVGN|glyph=phone-synthetic-1-555-0101|units=333|digits=2|mask=1|sign=-1|score=c00aa3d70a3d70a4
+RVGN|glyph=example-vpn-profile-synthetic-01|units=1|digits=3|mask=1|sign=-1|score=bf50624dd2f1a9fc
+RVGN|glyph=demo-workspace-profile-synthetic|units=65535|digits=0|mask=1|sign=-1|score=c0efffe000000000
+RVGN|glyph=not-in-the-set-honest|units=9999|digits=4|mask=0|sign=1|score=3fefff2e48e8a71e
+RVGN|glyph=another-honest-glyph|units=2|digits=0|mask=0|sign=1|score=4000000000000000
+VEC|room_id=42|port_outer=50042|port_inner=7777|elapsed_ms=1234|stdout_len=256|ok=1|ts_ms=1715000000000|job_seq=99|b0=4045000000000000|b1=40e86f4000000000|b2=40be610000000000|b3=4093480000000000|b4=4070000000000000|b5=3ff0000000000000|b6=4278f4df73e00000|b7=4058c00000000000
+VEC|room_id=7|port_outer=50007|port_inner=7000|elapsed_ms=50|stdout_len=8|ok=1|ts_ms=1715000001000|job_seq=100|b0=401c000000000000|b1=40e86ae000000000|b2=40bb580000000000|b3=4049000000000000|b4=4020000000000000|b5=3ff0000000000000|b6=4278f4df741e8000|b7=4059000000000000
+VEC|room_id=0|port_outer=0|port_inner=0|elapsed_ms=0|stdout_len=0|ok=0|ts_ms=0|job_seq=0|b0=0000000000000000|b1=0000000000000000|b2=0000000000000000|b3=0000000000000000|b4=0000000000000000|b5=0000000000000000|b6=0000000000000000|b7=0000000000000000
+AUTH|on=op_jesse,shannon,hermes|mask=1011000000000000
+AUTH|on=quintuple,fabric|mask=0000000000000011
+AUTH|on=connor|mask=0000000010000000
+AUTH|on=not-a-field|mask=0000000000000000
+AUTH|on=|mask=0000000000000000
+FRAME|tag=RVGN|n=3|f0=g|f1=+1|f2=2.5|want=RVGN%7Cg%7C+1%7C2.5%7C82c9c54a
+FRAME|tag=FAOR|n=3|f0=opencode-bp|f1=42|f2=rev-abc|want=FAOR%7Copencode-bp%7C42%7Crev-abc%7Cbee14d8d
+FRAME|tag=T|n=1|f0=a%7Cb|want=T%7Ca\%7Cb%7C5ee42302
+FRAME|tag=HBP|n=2|f0=x\y|f1=z|want=HBP%7Cx\\y%7Cz%7C287b87e0
