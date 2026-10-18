@@ -326,10 +326,16 @@ rows of two invocations with the sha256 of the source, binary and `tribit/mod.rs
 `#[path]`: 41 trits per PID (3^40 < 2^64 ≤ 3^41), the ternary PID equal to the binary one on 100,001
 chained steps, exact trit round trips, and an exact K = 27 `prism`/`unprism` seal on 10,000.
 
-ACER's `kernel/core/src/tribit/mod.rs` (`50e4cb85…`) is not in this repository; the cloud ran the
-bench with aether's `kernel/tribit` (`asolaria-tribit`, same `Zero`/`TritWord`/`prism`/`unprism`/`K`/`P`
-API) in its place — the import line is the only change (`cloud/main.rs.import-swap.diff`) — and every
-gate passed with the same counts.
+The cloud first ran the bench with aether's `kernel/tribit` (`asolaria-tribit`) in place of ACER's
+`#[path]` file — the import line is the only change (`cloud/main.rs.import-swap.diff`) — and every
+gate passed with the same counts. The owner's seat then sent the exact file
+(`acer-tribit-mod-rs-fb7e786-2026-10-18/`: `kernel/core/src/tribit/mod.rs`, sha256 `50e4cb85…`, blob
+`5d3e834e…`, 538 lines, `JesseBrown1980/asolaria-os` @ `fb7e786` on `acer/tribit-mtp-compact-core-2026-10-08`,
+whose live tip is now `b992d6e`). Measured here: aether's `kernel/tribit/src/lib.rs` is that file
+plus a 7-line crate header (`cfg_attr(not(test), no_std)`, `forbid(unsafe_code)`, a comment) — from
+line 8 on it hashes to `50e4cb85…` and blob `5d3e834e…` — so the first run used the same kernel
+code, and the seat's guess that later commits explain a difference is not needed. With the
+`#[path]` pointed at the sent file, the bench passes `clippy -D warnings` and every gate again.
 
 | Unit (median, 1 thread) | ACER i5-8300H | Cloud Xeon |
 |---|---|---|

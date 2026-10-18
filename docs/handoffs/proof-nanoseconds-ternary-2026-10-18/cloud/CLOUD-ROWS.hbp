@@ -17,3 +17,11 @@ CLOUD|NATIVEBENCH|unit=tribit_prism+unprism_seal(K=27,exact)|n=200000|runs=3|ps_
 CLOUD|DIRECTPARITY|steps=100001|tritword_equal=100001|all_41_trits_equal=100000/100000|json=0
 CLOUD|NATIVEBENCH|unit=TERNARY_pid_emit(bench_form,unpack+repack)|n=2000000|runs=3|ps_per_op_min=509087|ps_per_op_median=513087|ops_per_s_median=1948985|threads=1|json=0
 CLOUD|NATIVEBENCH|unit=TERNARY_pid_emit(TritWord_direct,same_trits)|n=2000000|runs=3|ps_per_op_min=70006|ps_per_op_median=70457|ops_per_s_median=14193018|threads=1|json=0
+TRIBITIDENTITY|acer_mod_rs_sha256=50e4cb85f3b8cf91f9e6b162f990eb51e5f984661259563a21188f3a1d560da0|acer_blob=5d3e834e3073478bfb518f952c4c31fd1b9544c0|aether_kernel_tribit_lib_rs=acer_mod_rs+7_line_crate_header(cfg_attr_no_std,forbid_unsafe_code,comment)|lib_rs_lines_8_on_sha256=50e4cb85|lib_rs_lines_8_on_blob=5d3e834e|so=the_earlier_cloud_run_used_the_same_kernel_code|tag=MEASURED_cloud|json=0
+CLOUD_EXACT_PATH|TRITRANGE|pid_bits=64|trits=41|3^41=36472996377170786403
+CLOUD_EXACT_PATH|TRITPARITY|steps=100001|ternary_pid_equals_binary_pid=100001|json=0
+CLOUD_EXACT_PATH|TRITSEAL|pids=10000|unprism(prism(lanes))==lanes=10000|json=0
+CLOUD_EXACT_PATH|NATIVEBENCH|unit=trit_encode_u64_to_41_trits(TritWord)|n=10000000|ps_per_op_median=124525
+CLOUD_EXACT_PATH|NATIVEBENCH|unit=trit_decode_41_trits_to_u64|n=10000000|ps_per_op_median=359292
+CLOUD_EXACT_PATH|NATIVEBENCH|unit=binary_pid_emit(sha16,no_alloc)|n=2000000|ps_per_op_median=84843
+CLOUD_EXACT_PATH|NATIVEBENCH|unit=TERNARY_pid_emit(trits_in_trits_out,sha16,no_alloc)|n=2000000|ps_per_op_median=572627
