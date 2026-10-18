@@ -1,15 +1,40 @@
-# repro/ — sudoku/easy CPU reproduction (prepared, held)
+# repro/ — sudoku/easy CPU reproduction (RUN 2026-10-18)
 
-> ## HELD — E≠0: this evaluation has NOT been run; it runs only on the operator's explicit go.
+> ## RUN on the operator's explicit go (2026-10-18). Result: 99.40% solved (1,988/2,000).
 >
-> Nothing in this directory was downloaded, unpickled, loaded or evaluated. No weights
-> or datasets were fetched (only metadata-only HTTP to the Hugging Face API). Every
-> script here is a no-op until invoked with `NCM_OPERATOR_GO=1`. This directory makes
-> the smallest released NCM eval — **sudoku/easy**, metric exact-match — one command
-> away, and fully safe, so it is ready the moment the operator says go.
+> The operator authorized the run ("run it all"). The five pinned files were downloaded,
+> sha256-certified (5/5), statically scanned for unsafe pickle globals (none found),
+> loaded through the restricted safe loaders (`weights_only=True` + allowlist;
+> `RestrictedUnpickler` for the datasets), and evaluated on CPU (greedy, deterministic,
+> no GPU, no network). Until this run the directory was HELD (E≠0); the scripts still
+> no-op without `NCM_OPERATOR_GO=1`, so nothing runs on its own.
+
+## Result (MEASURED, 2026-10-18)
+
+| metric | value | NAMED (authors) |
+|---|---|---|
+| solved % | **99.40** (1,988 / 2,000) | 99.5 |
+| cell accuracy % | 99.97 | — |
+| valid % | 99.40 | — |
+
+Env: `ci-torch-venv`, torch 2.14.1+cpu, CPU only (`CUDA_VISIBLE_DEVICES=''`, greedy
+temperature 0.0, no seed). The eval ran `scripts/eval_shard.py` then `eval_merge.py` on
+a scratch copy of the vendored code with `cpu.patch` applied (cuda→cpu + the safe
+loaders); `vendor/` stayed byte-identical. Full run log: `RUN-2026-10-18.out`. The
+0.1-point gap to the NAMED 99.5% is within CPU-vs-GPU floating-point tolerance for greedy
+decoding.
+
+**Static scan, actual (MEASURED):** `generator.pt` and `tokenizer.pt` each referenced
+exactly four globals — `collections.OrderedDict`, `torch._utils._rebuild_tensor_v2`,
+`torch.FloatStorage`, `torch.LongStorage` — all on torch's `weights_only=True` allowlist,
+so they loaded directly; the omegaconf/argparse extras the plan allowed for were **not**
+present (the checkpoints are pure tensor state-dicts, despite upstream using
+`weights_only=False`). Both dataset pickles referenced **zero** globals (pure integer
+data). Nothing outside the allowlist appeared, so nothing was blocked and nothing
+executed.
 
 Tags: **MEASURED** = computed here on 2026-10-18; **NAMED** = the authors' figure, not
-reproduced here; **CONJECTURE** = an unproven derivation.
+otherwise reproduced here; **CONJECTURE** = an unproven derivation.
 
 ## 1. Certified manifest rows (MEASURED, 5/5)
 

@@ -1,0 +1,24 @@
+OK   sha256 ckpt/sudoku/easy/generator.pt
+OK   sha256 ckpt/sudoku/easy/tokenizer.pt
+OK   gitoid ckpt/sudoku/easy/config.yaml
+OK   sha256 data/sudoku/easy/puzzles.pickle
+OK   sha256 data/sudoku/easy/solutions.pickle
+ALL VERIFIED (5/5 present)
+[run] python: /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/ci-torch-venv/bin/python (torch 2.14.1+cpu)
+[run] generation shard (CPU, 1 shard)
+VQVAE, Total parameter count: 14.90M
+VQVAE, Non embedding parameter count: 14.87M
+NCP Transformer, Total parameter count: 25.46M
+NCP Transformer, Non embedding parameter count: 25.32M
+  shard0 0/2000
+  shard0 1280/2000
+shard 0: 2000 -> eval/sudoku-easy/shard_0.pkl
+[run] merge + score (exact match)
+
+merged 1 shards -> 2000 sudoku-easy outputs
+
+ solved %  solved  cell %  valid %
+    99.40 1988/2000   99.97    99.40
+[run] done. Authors' NAMED sudoku-easy solve rate is 99.5% (not reproduced until this prints).
+
+[exited with code 0]
