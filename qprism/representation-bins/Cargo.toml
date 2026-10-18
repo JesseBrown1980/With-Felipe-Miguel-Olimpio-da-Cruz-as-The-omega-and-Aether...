@@ -1,0 +1,26 @@
+[package]
+name = "asolaria-qprism-representation-bins"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "Q-PRISM representation binaries folder-calming-oils and outward-truth-waves, with a referee that regenerates the stored object sets from their 3D-tree seeds and compares byte-for-byte. Integer-only."
+repository = "https://github.com/JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS"
+readme = "README.md"
+publish = false
+
+[[bin]]
+name = "folder-calming-oils"
+path = "src/bin/folder-calming-oils.rs"
+
+[[bin]]
+name = "outward-truth-waves"
+path = "src/bin/outward-truth-waves.rs"
+
+[dependencies]
+rust_qprism_181 = { package = "asolaria-qprism-representation", path = "../representation", version = "0.1.0" }
+
+[profile.release]
+overflow-checks = true
+lto = true
+codegen-units = 1
