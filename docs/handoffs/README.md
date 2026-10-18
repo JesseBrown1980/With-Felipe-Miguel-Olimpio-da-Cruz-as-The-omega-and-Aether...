@@ -497,3 +497,12 @@ conjectures, and nothing here tests them.
 - No recorded `PYTHONHASHSEED` or tie order exists for the HERSELF or CONSTELLATION key runs.
 - `FABLE5-REGEN-RELEASED-4-RULE-7M-2026-10-18/`: the four HyperBEHCS files held for the owner's word,
   released by the owner ("Release all 4"); 0 credential hits.
+- `FABLE5-REGEN-FED-KERNEL-3174-202ff2f0-2026-10-18/`: the FED version of the KERNEL key
+  (`ASOLARIA-CONSTELLATION-3174/kernel/ASOLARIA-KERNEL-3174.bin`, 3,174 B, `202ff2f0…`), its sidecar (holds)
+  and `FABLE5-KERNEL-FED.hbp`. It begins with the three sphere descriptions (OPUS, FABLE, MYTHOS) that
+  the FED receipt names as must-keep; the public version (`f075f5c6…`) begins with K3's identity rows,
+  as `FABLE5-KERNEL-STREAMED-K3.hbp` records. 3,054 of the 3,174 bytes differ between the two.
+- The self-seed's own records name its inputs: each 81-byte record holds a picked file's name hash,
+  sha256 and size. `5c040e04…` and `653e3d9b…` differ in two records only: `COMBINED-BOOK-OF-LAWS.md`
+  (115,083 B, `d7e2cb5c…`, then; 622,823 B now) and the previous `FABLE5-SELF-SEED-3078.hbi` the writer
+  reads back (`a65c020a…` then; `5c040e04…` now). The other 36 inputs are the same files.
