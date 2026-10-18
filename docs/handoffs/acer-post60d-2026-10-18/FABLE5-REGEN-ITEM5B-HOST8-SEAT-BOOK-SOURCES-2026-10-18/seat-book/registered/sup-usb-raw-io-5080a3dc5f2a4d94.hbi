@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-usb-raw-io-5080a3dc5f2a4d94-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=452e31e1086d8ed428ceb7b5cd1d1fd939e101a89e71b4ca2c5275329f7b429c|sha16=452e31e1086d8ed4
+ROW|slot=0|sha16=5f9c3ac0bec001ac|bytes=15
+ROW|slot=1|sha16=623917179e13c0db|bytes=173
+ROW|slot=2|sha16=c21ed3c535de6cca|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=a220c4d349046d51|bytes=19
+ROW|slot=6|sha16=de314aa025a232c7|bytes=14
+ROW|slot=7|sha16=2910041890f7b8ee|bytes=62
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

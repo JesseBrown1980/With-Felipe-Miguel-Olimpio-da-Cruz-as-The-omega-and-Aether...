@@ -1,0 +1,13 @@
+NAME|HERMES-SPINDLE-PID-05
+PID|11353396e461d9a9|birth=2026-06-09T21:28:36.238Z|authority=APEX_HUMAN_JESSE_BROWN_quintuple_fire_full_systems_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1422
+LAYER|hermes-spindle
+CLASS|agentterms_named_agent
+GLYPH_BEHCS1024|918
+GLYPH_BEHCS5|1
+SECTOR|hermes-spindle
+ROLE|hermes_spindle_lane_05
+SOURCE|agentterms_surface_5054_2026-06-09
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:28:36.238Z|registrar_note=agentterms_named_agents_chief_executes_examined_registrar_plan
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=fire_full_systems_mapping_first_2026-06-09|sign=I_Jesse_Brown_APEX_human_quintuple_authorize
+STATUS|CANONICAL|registry_office_agentterms_sweep

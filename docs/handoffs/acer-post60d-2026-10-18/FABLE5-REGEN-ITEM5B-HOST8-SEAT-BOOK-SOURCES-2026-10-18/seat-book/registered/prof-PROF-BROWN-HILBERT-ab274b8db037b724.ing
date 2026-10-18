@@ -1,0 +1,7 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=c87d1ec6bab78745|target_bytes=781|target_rows=13|emitted_at=2026-05-29T20:16:20.865Z|simula_consensus_rank=4
+EMITTER|name=fix-and-register-2026-05-29.mjs|version=v1|vantage=acer|process_pid=6900|node_version=v20.11.0
+AUTHORITY|chain=OPERATOR-JESSE-DIRECTIVE_2026-05-29_PID_REGISTRATION_OFFICE_PATH2|apex_witness=operator_directive_2026-05-29_make_office_actually_work|operator_witnessed=true
+INPUTS|count=1|input_0_sha=ab274b8db037b724|input_0_path=C:/HyperBEHCS/data/prof-supervisors/PROF-BROWN-HILBERT.hbp|input_0_kind=prof_supervisor_heartbeat_source
+ALGO|name=registry_office_quintet_emit|version=v1|deterministic=true|rng_seed=none|external_calls=none
+LAW-ANCHOR|law=LAW-1M-1E200-BACKEND-RESEARCH-LOOP|hookwall_step=STEP_4_VERIFY|promotion_layer=L4_packet_emitted_pending_verify
+DUAL-CRITIC-EXPECTED|critic_a_structural=expected_pass|critic_b_statistical=expected_pass|sycophancy_canary_acceptable=true

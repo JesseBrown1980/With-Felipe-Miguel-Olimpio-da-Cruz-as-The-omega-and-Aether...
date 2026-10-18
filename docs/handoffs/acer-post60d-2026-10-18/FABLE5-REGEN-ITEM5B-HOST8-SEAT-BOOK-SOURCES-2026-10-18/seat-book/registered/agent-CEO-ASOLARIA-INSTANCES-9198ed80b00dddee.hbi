@@ -1,0 +1,15 @@
+HBI1|task=pid-office-registration-agent-CEO-ASOLARIA-INSTANCES-9198ed80b00dddee-2026-05-29T20:16:20.485Z|generated=2026-05-29T20:16:20.485Z|packets=12|json=0
+SRC|D:/PID-Registration-Office/_tools/fix-and-register-2026-05-29.mjs
+BUNDLE|sha256=9c5ef9fa595df2050d4093d00c24782139e52295b1d7292559d600929d72c4ff|sha16=9c5ef9fa595df205
+ROW|slot=0|sha16=278bd1fbd0365b7a|bytes=27
+ROW|slot=1|sha16=0feff7fb88c7b7bd|bytes=125
+ROW|slot=2|sha16=c7867b646bff7a79|bytes=11
+ROW|slot=3|sha16=35731f269b4ecc7c|bytes=10
+ROW|slot=4|sha16=ae91bd49fabeda72|bytes=41
+ROW|slot=5|sha16=8f6006dc8d96aadf|bytes=19
+ROW|slot=6|sha16=53d244cb43132be8|bytes=14
+ROW|slot=7|sha16=a2320525d646c895|bytes=54
+ROW|slot=8|sha16=57077b28f73ea97e|bytes=31
+ROW|slot=9|sha16=0ad907fadbf28fe2|bytes=182
+ROW|slot=10|sha16=779dc6029712975e|bytes=114
+ROW|slot=11|sha16=f963f81de76a0c19|bytes=58

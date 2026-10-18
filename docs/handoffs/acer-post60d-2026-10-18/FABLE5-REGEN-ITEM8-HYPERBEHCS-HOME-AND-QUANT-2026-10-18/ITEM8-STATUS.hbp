@@ -1,0 +1,5 @@
+ITEM8HDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|home=C:/HyperBEHCS|shipped=README+AGENT.md+AGENT.hbp+lib/+bin/+store/100-pid-roster-W113.*+quant_family|json=0
+HELD|file=bin/asolaria-vote-quorum-daemon.py+bin/__pycache__/asolaria-vote-quorum-daemon.cpython-313.pyc|why=operator_held_item(vote_quorum_daemon_source)|json=0
+HELD|file=bin/asolaria-google-enterprise-citizen-daemon.py+bin/google-38tb-integration-readiness.md+bin/v47-g-mint-and-fire.py|why=contains_operator_own_gmail|release=operator_word|json=0
+HELD|file=bin/emit-catalogs-batch-3.mjs|why=contains_GCP_service-account_id(my-first-project)|release=operator_word|json=0
+CREDENTIAL_LISTED_NOT_COPIED|file=C:/Users/acer/Asolaria/data/gateway-auth-tokens.json|bytes=411|holds=live_role_tokens|action=ROTATE_FIRST|copied=0|json=0

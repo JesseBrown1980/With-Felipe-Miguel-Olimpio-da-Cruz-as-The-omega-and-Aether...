@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-behcs_1024_atlas-7e2da90c331958c1-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=1a8df005ec69648fb1d66c8a8c3b73659615a495e478c0076e2f605216e62105|sha16=1a8df005ec69648f
+ROW|slot=0|sha16=bc288fe313b22306|bytes=21
+ROW|slot=1|sha16=bbdc0d066daacdcb|bytes=173
+ROW|slot=2|sha16=844c6da611da7a58|bytes=11
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=1930e5837c3e855b|bytes=19
+ROW|slot=6|sha16=128983adc86f66c4|bytes=14
+ROW|slot=7|sha16=a530363a65c07896|bytes=68
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

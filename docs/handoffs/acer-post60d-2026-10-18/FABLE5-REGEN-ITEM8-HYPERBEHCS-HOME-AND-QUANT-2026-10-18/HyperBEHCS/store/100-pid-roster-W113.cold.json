@@ -1,0 +1,906 @@
+{
+  "wave": "W113-100-PID-STARTUP-PROMPT-CONSULT-2026-05-21",
+  "count": 100,
+  "roster": [
+    {
+      "level": "L0",
+      "role": "SPECIAL-OP-JESSE",
+      "blast": "meta-orchestration-fabric-apex",
+      "sup": "operator-special",
+      "h": "H12D3",
+      "room": 4819,
+      "pid": "AGT-L0-SPECIAL-OP-JESSE-H12D3"
+    },
+    {
+      "level": "L1",
+      "role": "OP-JESSE",
+      "blast": "root-authority-acer-vantage",
+      "sup": "operator",
+      "h": "H0520",
+      "room": 1312,
+      "pid": "AGT-L1-OP-JESSE-H0520"
+    },
+    {
+      "level": "L1",
+      "role": "OP-RAYSSA",
+      "blast": "parallel-apex-liris-vantage",
+      "sup": "operator",
+      "h": "H1CBE",
+      "room": 7358,
+      "pid": "AGT-L1-OP-RAYSSA-H1CBE"
+    },
+    {
+      "level": "L1",
+      "role": "OP-FELIPE",
+      "blast": "game-subsection-aether-vantage",
+      "sup": "operator",
+      "h": "H0F17",
+      "room": 3863,
+      "pid": "AGT-L1-OP-FELIPE-H0F17"
+    },
+    {
+      "level": "L2",
+      "role": "GAC",
+      "blast": "circle-of-fire-1-of-6",
+      "sup": "gac",
+      "h": "H12F8",
+      "room": 4856,
+      "pid": "AGT-L2-GAC-H12F8"
+    },
+    {
+      "level": "L2",
+      "role": "GAC",
+      "blast": "circle-of-fire-2-of-6",
+      "sup": "gac",
+      "h": "H05DA",
+      "room": 1498,
+      "pid": "AGT-L2-GAC-H05DA"
+    },
+    {
+      "level": "L2",
+      "role": "GAC",
+      "blast": "circle-of-fire-3-of-6",
+      "sup": "gac",
+      "h": "H23B4",
+      "room": 9140,
+      "pid": "AGT-L2-GAC-H23B4"
+    },
+    {
+      "level": "L2",
+      "role": "GAC",
+      "blast": "circle-of-fire-4-of-6",
+      "sup": "gac",
+      "h": "H187C",
+      "room": 6268,
+      "pid": "AGT-L2-GAC-H187C"
+    },
+    {
+      "level": "L2",
+      "role": "GAC",
+      "blast": "circle-of-fire-5-of-6",
+      "sup": "gac",
+      "h": "H0928",
+      "room": 2344,
+      "pid": "AGT-L2-GAC-H0928"
+    },
+    {
+      "level": "L2",
+      "role": "GAC",
+      "blast": "circle-of-fire-6-of-6",
+      "sup": "gac",
+      "h": "H2619",
+      "room": 9753,
+      "pid": "AGT-L2-GAC-H2619"
+    },
+    {
+      "level": "L3",
+      "role": "CHIEF-ASOLARIA",
+      "blast": "chief-asolaria-federation-spine",
+      "sup": "chief",
+      "h": "H2621",
+      "room": 9761,
+      "pid": "AGT-L3-CHIEF-ASOLARIA-H2621"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-liris-mirror",
+      "sup": "council",
+      "h": "H0D70",
+      "room": 3440,
+      "pid": "AGT-L3-COUNCIL-H0D70"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-falcon-federation",
+      "sup": "council",
+      "h": "H1426",
+      "room": 5158,
+      "pid": "AGT-L3-COUNCIL-H1426"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-aether-game-watch",
+      "sup": "council",
+      "h": "H014D",
+      "room": 333,
+      "pid": "AGT-L3-COUNCIL-H014D"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-sovereignty",
+      "sup": "council",
+      "h": "H18D2",
+      "room": 6354,
+      "pid": "AGT-L3-COUNCIL-H18D2"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-build-proof",
+      "sup": "council",
+      "h": "H22EC",
+      "room": 8940,
+      "pid": "AGT-L3-COUNCIL-H22EC"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-security",
+      "sup": "council",
+      "h": "H1723",
+      "room": 5923,
+      "pid": "AGT-L3-COUNCIL-H1723"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-compute-gnn",
+      "sup": "council",
+      "h": "H2030",
+      "room": 8240,
+      "pid": "AGT-L3-COUNCIL-H2030"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-federation-comms",
+      "sup": "council",
+      "h": "H009F",
+      "room": 159,
+      "pid": "AGT-L3-COUNCIL-H009F"
+    },
+    {
+      "level": "L3",
+      "role": "COUNCIL",
+      "blast": "council-emergent",
+      "sup": "council",
+      "h": "H01B2",
+      "room": 434,
+      "pid": "AGT-L3-COUNCIL-H01B2"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-cube_cubed_sealer-A",
+      "sup": "sup-of-sup",
+      "h": "H11F6",
+      "room": 4598,
+      "pid": "AGT-L4-SUP-OF-SUP-H11F6"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-cube_cubed_sealer-B",
+      "sup": "sup-of-sup",
+      "h": "H0EC6",
+      "room": 3782,
+      "pid": "AGT-L4-SUP-OF-SUP-H0EC6"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-gaia-A",
+      "sup": "sup-of-sup",
+      "h": "H0676",
+      "room": 1654,
+      "pid": "AGT-L4-SUP-OF-SUP-H0676"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-gaia-B",
+      "sup": "sup-of-sup",
+      "h": "H0C66",
+      "room": 3174,
+      "pid": "AGT-L4-SUP-OF-SUP-H0C66"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-helm-A",
+      "sup": "sup-of-sup",
+      "h": "H2210",
+      "room": 8720,
+      "pid": "AGT-L4-SUP-OF-SUP-H2210"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-helm-B",
+      "sup": "sup-of-sup",
+      "h": "H01F5",
+      "room": 501,
+      "pid": "AGT-L4-SUP-OF-SUP-H01F5"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-vector-A",
+      "sup": "sup-of-sup",
+      "h": "H042E",
+      "room": 1070,
+      "pid": "AGT-L4-SUP-OF-SUP-H042E"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-vector-B",
+      "sup": "sup-of-sup",
+      "h": "H0FF6",
+      "room": 4086,
+      "pid": "AGT-L4-SUP-OF-SUP-H0FF6"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-rook-A",
+      "sup": "sup-of-sup",
+      "h": "H1205",
+      "room": 4613,
+      "pid": "AGT-L4-SUP-OF-SUP-H1205"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-rook-B",
+      "sup": "sup-of-sup",
+      "h": "H2234",
+      "room": 8756,
+      "pid": "AGT-L4-SUP-OF-SUP-H2234"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-forge-A",
+      "sup": "sup-of-sup",
+      "h": "H05D4",
+      "room": 1492,
+      "pid": "AGT-L4-SUP-OF-SUP-H05D4"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-forge-B",
+      "sup": "sup-of-sup",
+      "h": "H2315",
+      "room": 8981,
+      "pid": "AGT-L4-SUP-OF-SUP-H2315"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-falcon-A",
+      "sup": "sup-of-sup",
+      "h": "H13E9",
+      "room": 5097,
+      "pid": "AGT-L4-SUP-OF-SUP-H13E9"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-falcon-B",
+      "sup": "sup-of-sup",
+      "h": "H0170",
+      "room": 368,
+      "pid": "AGT-L4-SUP-OF-SUP-H0170"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-livefree-A",
+      "sup": "sup-of-sup",
+      "h": "H0DE4",
+      "room": 3556,
+      "pid": "AGT-L4-SUP-OF-SUP-H0DE4"
+    },
+    {
+      "level": "L4",
+      "role": "SUP-OF-SUP",
+      "blast": "sup-of-sup-livefree-B",
+      "sup": "sup-of-sup",
+      "h": "H09BE",
+      "room": 2494,
+      "pid": "AGT-L4-SUP-OF-SUP-H09BE"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-1",
+      "sup": "cube_cubed_sealer",
+      "h": "H1E7A",
+      "room": 7802,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H1E7A"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-2",
+      "sup": "cube_cubed_sealer",
+      "h": "H1E7B",
+      "room": 7803,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H1E7B"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-3",
+      "sup": "cube_cubed_sealer",
+      "h": "H06B3",
+      "room": 1715,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H06B3"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-4",
+      "sup": "cube_cubed_sealer",
+      "h": "H1D34",
+      "room": 7476,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H1D34"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-5",
+      "sup": "cube_cubed_sealer",
+      "h": "H01AD",
+      "room": 429,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H01AD"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-6",
+      "sup": "cube_cubed_sealer",
+      "h": "H2625",
+      "room": 9765,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H2625"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-7",
+      "sup": "cube_cubed_sealer",
+      "h": "H0911",
+      "room": 2321,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H0911"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-CUBE_CUBED_SEALER",
+      "blast": "sup-cube_cubed_sealer-blast-8",
+      "sup": "cube_cubed_sealer",
+      "h": "H0879",
+      "room": 2169,
+      "pid": "AGT-L5-SUP-CUBE-CUBED-SEALER-H0879"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-1",
+      "sup": "gaia",
+      "h": "H2640",
+      "room": 9792,
+      "pid": "AGT-L5-SUP-GAIA-H2640"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-2",
+      "sup": "gaia",
+      "h": "H259F",
+      "room": 9631,
+      "pid": "AGT-L5-SUP-GAIA-H259F"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-3",
+      "sup": "gaia",
+      "h": "H0A81",
+      "room": 2689,
+      "pid": "AGT-L5-SUP-GAIA-H0A81"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-4",
+      "sup": "gaia",
+      "h": "H26CD",
+      "room": 9933,
+      "pid": "AGT-L5-SUP-GAIA-H26CD"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-5",
+      "sup": "gaia",
+      "h": "H0905",
+      "room": 2309,
+      "pid": "AGT-L5-SUP-GAIA-H0905"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-6",
+      "sup": "gaia",
+      "h": "H2355",
+      "room": 9045,
+      "pid": "AGT-L5-SUP-GAIA-H2355"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-7",
+      "sup": "gaia",
+      "h": "H1DCA",
+      "room": 7626,
+      "pid": "AGT-L5-SUP-GAIA-H1DCA"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-GAIA",
+      "blast": "sup-gaia-blast-8",
+      "sup": "gaia",
+      "h": "H0F11",
+      "room": 3857,
+      "pid": "AGT-L5-SUP-GAIA-H0F11"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-1",
+      "sup": "helm",
+      "h": "H080C",
+      "room": 2060,
+      "pid": "AGT-L5-SUP-HELM-H080C"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-2",
+      "sup": "helm",
+      "h": "H00FA",
+      "room": 250,
+      "pid": "AGT-L5-SUP-HELM-H00FA"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-3",
+      "sup": "helm",
+      "h": "H0A26",
+      "room": 2598,
+      "pid": "AGT-L5-SUP-HELM-H0A26"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-4",
+      "sup": "helm",
+      "h": "H1CCF",
+      "room": 7375,
+      "pid": "AGT-L5-SUP-HELM-H1CCF"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-5",
+      "sup": "helm",
+      "h": "H1A67",
+      "room": 6759,
+      "pid": "AGT-L5-SUP-HELM-H1A67"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-6",
+      "sup": "helm",
+      "h": "H2266",
+      "room": 8806,
+      "pid": "AGT-L5-SUP-HELM-H2266"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-7",
+      "sup": "helm",
+      "h": "H135F",
+      "room": 4959,
+      "pid": "AGT-L5-SUP-HELM-H135F"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-HELM",
+      "blast": "sup-helm-blast-8",
+      "sup": "helm",
+      "h": "H0A60",
+      "room": 2656,
+      "pid": "AGT-L5-SUP-HELM-H0A60"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-1",
+      "sup": "vector",
+      "h": "H040E",
+      "room": 1038,
+      "pid": "AGT-L5-SUP-VECTOR-H040E"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-2",
+      "sup": "vector",
+      "h": "H0782",
+      "room": 1922,
+      "pid": "AGT-L5-SUP-VECTOR-H0782"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-3",
+      "sup": "vector",
+      "h": "H05C6",
+      "room": 1478,
+      "pid": "AGT-L5-SUP-VECTOR-H05C6"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-4",
+      "sup": "vector",
+      "h": "H24D1",
+      "room": 9425,
+      "pid": "AGT-L5-SUP-VECTOR-H24D1"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-5",
+      "sup": "vector",
+      "h": "H0C8D",
+      "room": 3213,
+      "pid": "AGT-L5-SUP-VECTOR-H0C8D"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-6",
+      "sup": "vector",
+      "h": "H0633",
+      "room": 1587,
+      "pid": "AGT-L5-SUP-VECTOR-H0633"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-7",
+      "sup": "vector",
+      "h": "H1607",
+      "room": 5639,
+      "pid": "AGT-L5-SUP-VECTOR-H1607"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-VECTOR",
+      "blast": "sup-vector-blast-8",
+      "sup": "vector",
+      "h": "H1CEB",
+      "room": 7403,
+      "pid": "AGT-L5-SUP-VECTOR-H1CEB"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-1",
+      "sup": "rook",
+      "h": "H1F69",
+      "room": 8041,
+      "pid": "AGT-L5-SUP-ROOK-H1F69"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-2",
+      "sup": "rook",
+      "h": "H0751",
+      "room": 1873,
+      "pid": "AGT-L5-SUP-ROOK-H0751"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-3",
+      "sup": "rook",
+      "h": "H0A21",
+      "room": 2593,
+      "pid": "AGT-L5-SUP-ROOK-H0A21"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-4",
+      "sup": "rook",
+      "h": "H0275",
+      "room": 629,
+      "pid": "AGT-L5-SUP-ROOK-H0275"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-5",
+      "sup": "rook",
+      "h": "H26BD",
+      "room": 9917,
+      "pid": "AGT-L5-SUP-ROOK-H26BD"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-6",
+      "sup": "rook",
+      "h": "H0A6C",
+      "room": 2668,
+      "pid": "AGT-L5-SUP-ROOK-H0A6C"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-7",
+      "sup": "rook",
+      "h": "H14EF",
+      "room": 5359,
+      "pid": "AGT-L5-SUP-ROOK-H14EF"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-ROOK",
+      "blast": "sup-rook-blast-8",
+      "sup": "rook",
+      "h": "H1FC3",
+      "room": 8131,
+      "pid": "AGT-L5-SUP-ROOK-H1FC3"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-1",
+      "sup": "forge",
+      "h": "H215A",
+      "room": 8538,
+      "pid": "AGT-L5-SUP-FORGE-H215A"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-2",
+      "sup": "forge",
+      "h": "H1BC6",
+      "room": 7110,
+      "pid": "AGT-L5-SUP-FORGE-H1BC6"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-3",
+      "sup": "forge",
+      "h": "H11DB",
+      "room": 4571,
+      "pid": "AGT-L5-SUP-FORGE-H11DB"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-4",
+      "sup": "forge",
+      "h": "H06BE",
+      "room": 1726,
+      "pid": "AGT-L5-SUP-FORGE-H06BE"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-5",
+      "sup": "forge",
+      "h": "H0B14",
+      "room": 2836,
+      "pid": "AGT-L5-SUP-FORGE-H0B14"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-6",
+      "sup": "forge",
+      "h": "H1F80",
+      "room": 8064,
+      "pid": "AGT-L5-SUP-FORGE-H1F80"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-7",
+      "sup": "forge",
+      "h": "H20F0",
+      "room": 8432,
+      "pid": "AGT-L5-SUP-FORGE-H20F0"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FORGE",
+      "blast": "sup-forge-blast-8",
+      "sup": "forge",
+      "h": "H05A7",
+      "room": 1447,
+      "pid": "AGT-L5-SUP-FORGE-H05A7"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-1",
+      "sup": "falcon",
+      "h": "H0146",
+      "room": 326,
+      "pid": "AGT-L5-SUP-FALCON-H0146"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-2",
+      "sup": "falcon",
+      "h": "H014A",
+      "room": 330,
+      "pid": "AGT-L5-SUP-FALCON-H014A"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-3",
+      "sup": "falcon",
+      "h": "H235D",
+      "room": 9053,
+      "pid": "AGT-L5-SUP-FALCON-H235D"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-4",
+      "sup": "falcon",
+      "h": "H0EA1",
+      "room": 3745,
+      "pid": "AGT-L5-SUP-FALCON-H0EA1"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-5",
+      "sup": "falcon",
+      "h": "H1893",
+      "room": 6291,
+      "pid": "AGT-L5-SUP-FALCON-H1893"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-6",
+      "sup": "falcon",
+      "h": "H1179",
+      "room": 4473,
+      "pid": "AGT-L5-SUP-FALCON-H1179"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-7",
+      "sup": "falcon",
+      "h": "H0F82",
+      "room": 3970,
+      "pid": "AGT-L5-SUP-FALCON-H0F82"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-FALCON",
+      "blast": "sup-falcon-blast-8",
+      "sup": "falcon",
+      "h": "H0AE4",
+      "room": 2788,
+      "pid": "AGT-L5-SUP-FALCON-H0AE4"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-1",
+      "sup": "livefree",
+      "h": "H00BA",
+      "room": 186,
+      "pid": "AGT-L5-SUP-LIVEFREE-H00BA"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-2",
+      "sup": "livefree",
+      "h": "H131C",
+      "room": 4892,
+      "pid": "AGT-L5-SUP-LIVEFREE-H131C"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-3",
+      "sup": "livefree",
+      "h": "H1740",
+      "room": 5952,
+      "pid": "AGT-L5-SUP-LIVEFREE-H1740"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-4",
+      "sup": "livefree",
+      "h": "H2431",
+      "room": 9265,
+      "pid": "AGT-L5-SUP-LIVEFREE-H2431"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-5",
+      "sup": "livefree",
+      "h": "H1973",
+      "room": 6515,
+      "pid": "AGT-L5-SUP-LIVEFREE-H1973"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-6",
+      "sup": "livefree",
+      "h": "H0B87",
+      "room": 2951,
+      "pid": "AGT-L5-SUP-LIVEFREE-H0B87"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-7",
+      "sup": "livefree",
+      "h": "H0DA2",
+      "room": 3490,
+      "pid": "AGT-L5-SUP-LIVEFREE-H0DA2"
+    },
+    {
+      "level": "L5",
+      "role": "SUP-LIVEFREE",
+      "blast": "sup-livefree-blast-8",
+      "sup": "livefree",
+      "h": "H2645",
+      "room": 9797,
+      "pid": "AGT-L5-SUP-LIVEFREE-H2645"
+    }
+  ]
+}

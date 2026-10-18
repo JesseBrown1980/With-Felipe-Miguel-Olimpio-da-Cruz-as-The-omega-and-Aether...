@@ -1,0 +1,7 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=35a759233b8bcad0|target_bytes=822|target_rows=15|emitted_at=2026-06-30T23:06:52.800Z|simula_consensus_rank=4
+EMITTER|name=register-mcp-supervisors-2026-06-30.mjs|version=v1|vantage=acer|process_pid=16140|node_version=v24.13.1
+AUTHORITY|chain=OPERATOR-JESSE-DIRECTIVE_2026-06-30_register_supervisors_that_result_then_map|apex_witness=operator_directive_2026-06-30_absorb_register_map|operator_witnessed=true
+INPUTS|count=1|input_0_sha=f6d903a4b727b8c5|input_0_path=mcp-absorption-supervisor|input_0_kind=prof_supervisor_pid
+ALGO|name=registry_office_quintet_emit|version=v1|deterministic=true|rng_seed=none|external_calls=none
+LAW-ANCHOR|law=LAW-1M-1E200-BACKEND-RESEARCH-LOOP|hookwall_step=STEP_4_VERIFY|promotion_layer=L4_packet_emitted_pending_verify
+DUAL-CRITIC-EXPECTED|critic_a_structural=expected_pass|critic_b_statistical=expected_pass|sycophancy_canary_acceptable=true

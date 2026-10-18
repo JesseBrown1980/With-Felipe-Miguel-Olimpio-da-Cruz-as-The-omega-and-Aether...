@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-keystone-liris-71974a467f22ab1f-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=d88d553f27157f4812d522d33b363016ccdc6189e87c4cdf3582335947350919|sha16=d88d553f27157f48
+ROW|slot=0|sha16=8d950b633d42e988|bytes=19
+ROW|slot=1|sha16=2e214ff10ed6c30d|bytes=173
+ROW|slot=2|sha16=c52c76a622266887|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=655eb591bf69a98f|bytes=19
+ROW|slot=6|sha16=9279f0e7f1b51848|bytes=14
+ROW|slot=7|sha16=b348351017c86310|bytes=66
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

@@ -1,0 +1,7 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=7b5c7553f50c36e9|target_bytes=989|target_rows=14|emitted_at=2026-06-13T21:27:15.764Z|simula_consensus_rank=4
+EMITTER|name=register-slice-engine-law-2026-06-13.mjs|version=v1|vantage=acer|process_pid=10276|node_version=v24.13.1
+AUTHORITY|chain=OPERATOR-JESSE-DIRECTIVE_2026-06-13_crank_engines_register_SLICE-ENGINE-LAW|apex_witness=operator_directive_2026-06-13_crank_the_engines_orchestrate_the_cranks|operator_witnessed=true
+INPUTS|count=1|input_0_sha=3ba93da7443ee5d4|input_0_path=law-slice-engine-ack|input_0_kind=law_ack
+ALGO|name=registry_office_quintet_emit|version=v1|deterministic=true|rng_seed=none|external_calls=none
+LAW-ANCHOR|law=LAW-SLICE-ENGINE|hookwall_step=STEP_4_VERIFY|promotion_layer=L4_packet_emitted_pending_verify
+DUAL-CRITIC-EXPECTED|critic_a_structural=expected_pass|critic_b_statistical=expected_pass|sycophancy_canary_acceptable=true

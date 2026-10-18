@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Asolaria HyperBEHCS Heartbeat — System Pulse</title>
+<style>
+  :root {
+    --bg: #07090c;
+    --bg2: #0d1218;
+    --fg: #c8d4e0;
+    --muted: #5a6878;
+    --accent: #7ee787;
+    --accent-dim: #2b6a35;
+    --warn: #f0b429;
+    --bad:  #ff5c5c;
+    --grid: #1a2230;
+    --line-util: #7ee787;
+    --line-vram: #79c0ff;
+    --line-temp: #ffa657;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+    font: 13px/1.45 "JetBrains Mono","Cascadia Code","Consolas","Menlo",monospace; }
+  h1 { font-size: 15px; margin: 0; letter-spacing: 0.05em; color: var(--accent); }
+  h2 { font-size: 12px; margin: 0 0 6px 0; letter-spacing: 0.12em; text-transform: uppercase;
+       color: var(--muted); font-weight: 600; }
+  .wrap { padding: 14px 18px 40px 18px; max-width: 1600px; margin: 0 auto; }
+  .topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 18px;
+            padding: 10px 14px; background: var(--bg2); border: 1px solid var(--grid);
+            border-radius: 6px; margin-bottom: 14px; }
+  .topbar .field { display: flex; flex-direction: column; gap: 2px; min-width: 110px; }
+  .topbar .label { font-size: 10px; color: var(--muted); text-transform: uppercase;
+                   letter-spacing: 0.1em; }
+  .topbar .value { font-size: 14px; color: var(--fg); }
+  .topbar .value.mono { font-family: inherit; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+         margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px currentColor; }
+  .dot.ok  { background: var(--accent); color: var(--accent); }
+  .dot.bad { background: var(--bad);    color: var(--bad);    }
+  .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+  .panel { background: var(--bg2); border: 1px solid var(--grid); border-radius: 6px;
+           padding: 12px 14px; }
+  .charts { display: flex; flex-direction: column; gap: 12px; }
+  .chart-card .title { display: flex; justify-content: space-between; align-items: baseline;
+                       margin-bottom: 4px; }
+  .chart-card .title .stat { color: var(--muted); font-size: 11px; }
+  svg.chart { width: 100%; height: 110px; display: block; }
+  svg.chart .axis { stroke: var(--grid); stroke-width: 1; }
+  svg.chart .gridline { stroke: var(--grid); stroke-width: 0.5; stroke-dasharray: 2 3; }
+  svg.chart text { fill: var(--muted); font-size: 9px; font-family: inherit; }
+  svg.chart .area { fill-opacity: 0.08; }
+  .side { display: flex; flex-direction: column; gap: 12px; }
+  .health-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .health-cell { width: 22px; height: 22px; border-radius: 3px;
+                 background: var(--accent-dim); border: 1px solid var(--grid); }
+  .health-cell.bad { background: var(--bad); }
+  .health-cell.ok  { background: var(--accent); }
+  .summary table { width: 100%; border-collapse: collapse; }
+  .summary td { padding: 4px 6px; border-bottom: 1px dotted var(--grid); }
+  .summary td.k { color: var(--muted); width: 55%; text-transform: lowercase;
+                  letter-spacing: 0.04em; }
+  .summary td.v { color: var(--fg); text-align: right; font-feature-settings: "tnum"; }
+  .fp-list { list-style: none; margin: 0; padding: 0; max-height: 280px; overflow-y: auto; }
+  .fp-list li { display: flex; justify-content: space-between; padding: 3px 4px;
+                border-bottom: 1px dotted var(--grid); font-size: 12px; }
+  .fp-list li .fp { color: var(--accent); }
+  .fp-list li .fp.dupe { color: var(--bad); }
+  .fp-list li .ts { color: var(--muted); }
+  .gpu-line { display: flex; gap: 14px; flex-wrap: wrap; }
+  .gpu-line .pill { background: var(--grid); padding: 3px 8px; border-radius: 4px;
+                    font-size: 12px; }
+  .delta { color: var(--warn); margin-left: 6px; }
+  .delta.zero { color: var(--muted); }
+  .footer { color: var(--muted); font-size: 10px; text-align: center; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="topbar">loading…</div>
+
+  <div class="grid">
+    <div class="charts">
+      <div class="panel chart-card">
+        <div class="title"><h2>util %</h2><span class="stat" id="util-stat"></span></div>
+        <svg class="chart" id="chart-util" viewBox="0 0 800 110" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="panel chart-card">
+        <div class="title"><h2>vram used (MiB)</h2><span class="stat" id="vram-stat"></span></div>
+        <svg class="chart" id="chart-vram" viewBox="0 0 800 110" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="panel chart-card">
+        <div class="title"><h2>temp (C)</h2><span class="stat" id="temp-stat"></span></div>
+        <svg class="chart" id="chart-temp" viewBox="0 0 800 110" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="panel">
+        <h2>GPU lane (current)</h2>
+        <div class="gpu-line" id="gpu-line"></div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="panel">
+        <h2>daemon health — last 10 beats</h2>
+        <div class="health-row" id="health-row"></div>
+      </div>
+      <div class="panel">
+        <h2>fingerprint chain — last 10</h2>
+        <ul class="fp-list" id="fp-list"></ul>
+      </div>
+      <div class="panel summary">
+        <h2>summary</h2>
+        <table id="summary-table"></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer" id="footer"></div>
+</div>
+
+<script id="data" type="application/json">{"snapshot_at":"","counter":null,"loop_pid":null,"loop_alive":false,"substrate_size":0,"substrate_sha":null,"beats":[],"beat_count":0}</script>
+
+<script>
+(function () {
+  "use strict";
+  const COLORS = {
+    util: getCSS("--line-util"),
+    vram: getCSS("--line-vram"),
+    temp: getCSS("--line-temp"),
+  };
+
+  function getCSS(varName) {
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || "#7ee787";
+  }
+  function el(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g,
+    c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+  function fmtBytes(n) {
+    if (n == null) return "—";
+    if (n < 1024) return n + " B";
+    if (n < 1024*1024) return (n/1024).toFixed(1) + " KiB";
+    return (n/1024/1024).toFixed(2) + " MiB";
+  }
+  function fmtMs(ms) {
+    if (ms == null || !isFinite(ms)) return "—";
+    const s = Math.floor(ms/1000);
+    const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+    return (h?h+"h ":"") + (m||h?m+"m ":"") + sec + "s";
+  }
+  function loadData() {
+    try { return JSON.parse(el("data").textContent || "{}"); }
+    catch (e) { return { error: e.message, beats: [] }; }
+  }
+
+  function renderTopbar(s) {
+    const dot = s.loop_alive
+      ? '<span class="dot ok"></span>alive'
+      : '<span class="dot bad"></span>dead';
+    const sha = s.substrate_sha ? s.substrate_sha.slice(0, 8) : "—";
+    el("topbar").innerHTML = `
+      <div class="field"><span class="label">counter</span><span class="value mono">${esc(s.counter ?? "—")}</span></div>
+      <div class="field"><span class="label">beats loaded</span><span class="value mono">${esc(s.beat_count ?? (s.beats||[]).length)}</span></div>
+      <div class="field"><span class="label">loop pid</span><span class="value mono">${esc(s.loop_pid ?? "—")}</span></div>
+      <div class="field"><span class="label">loop</span><span class="value">${dot}</span></div>
+      <div class="field"><span class="label">substrate sha</span><span class="value mono">${esc(sha)}</span></div>
+      <div class="field"><span class="label">substrate size</span><span class="value mono">${esc(fmtBytes(s.substrate_size))}</span></div>
+      <div class="field"><span class="label">snapshot at</span><span class="value mono">${esc(s.snapshot_at || "—")}</span></div>
+    `;
+  }
+
+  function lineChart(svgId, beats, getter, color, opts) {
+    opts = opts || {};
+    const svg = el(svgId);
+    if (!svg) return;
+    svg.innerHTML = "";
+    const W = 800, H = 110, padL = 28, padR = 6, padT = 6, padB = 14;
+    const ns = "http://www.w3.org/2000/svg";
+    const xs = beats.map((b, i) => i);
+    const ys = beats.map(getter);
+    const validYs = ys.filter(y => typeof y === "number" && isFinite(y));
+    if (xs.length === 0 || validYs.length === 0) {
+      const t = document.createElementNS(ns, "text");
+      t.setAttribute("x", W/2); t.setAttribute("y", H/2);
+      t.setAttribute("text-anchor", "middle");
+      t.textContent = "no data";
+      svg.appendChild(t);
+      return;
+    }
+    let yMin = Math.min(...validYs);
+    let yMax = Math.max(...validYs);
+    if (opts.yMin != null) yMin = Math.min(yMin, opts.yMin);
+    if (opts.yMax != null) yMax = Math.max(yMax, opts.yMax);
+    if (yMax === yMin) { yMax = yMin + 1; }
+    const xMax = Math.max(1, xs.length - 1);
+    const sx = i => padL + (i / xMax) * (W - padL - padR);
+    const sy = v => padT + (1 - (v - yMin) / (yMax - yMin)) * (H - padT - padB);
+
+    for (let g = 0; g <= 3; g++) {
+      const y = padT + (g/3) * (H - padT - padB);
+      const ln = document.createElementNS(ns, "line");
+      ln.setAttribute("class", "gridline");
+      ln.setAttribute("x1", padL); ln.setAttribute("x2", W - padR);
+      ln.setAttribute("y1", y); ln.setAttribute("y2", y);
+      svg.appendChild(ln);
+      const val = yMax - (g/3) * (yMax - yMin);
+      const t = document.createElementNS(ns, "text");
+      t.setAttribute("x", 2); t.setAttribute("y", y + 3);
+      t.textContent = (Math.abs(val) >= 100 ? val.toFixed(0) : val.toFixed(1));
+      svg.appendChild(t);
+    }
+    let d = "", area = "M " + sx(0) + " " + (H - padB);
+    let started = false;
+    for (let i = 0; i < beats.length; i++) {
+      const y = ys[i];
+      if (typeof y !== "number" || !isFinite(y)) continue;
+      const X = sx(i), Y = sy(y);
+      d += (started ? " L " : "M ") + X.toFixed(2) + " " + Y.toFixed(2);
+      area += " L " + X.toFixed(2) + " " + Y.toFixed(2);
+      started = true;
+    }
+    area += " L " + sx(beats.length - 1) + " " + (H - padB) + " Z";
+    const a = document.createElementNS(ns, "path");
+    a.setAttribute("class", "area"); a.setAttribute("d", area); a.setAttribute("fill", color);
+    svg.appendChild(a);
+    const p = document.createElementNS(ns, "path");
+    p.setAttribute("d", d); p.setAttribute("fill", "none");
+    p.setAttribute("stroke", color); p.setAttribute("stroke-width", "1.5");
+    svg.appendChild(p);
+
+    if (beats.length) {
+      const first = beats[0].ts_iso || "", last = beats[beats.length-1].ts_iso || "";
+      const t1 = document.createElementNS(ns, "text");
+      t1.setAttribute("x", padL); t1.setAttribute("y", H - 2);
+      t1.textContent = first.slice(11, 19);
+      svg.appendChild(t1);
+      const t2 = document.createElementNS(ns, "text");
+      t2.setAttribute("x", W - padR); t2.setAttribute("y", H - 2);
+      t2.setAttribute("text-anchor", "end");
+      t2.textContent = last.slice(11, 19);
+      svg.appendChild(t2);
+    }
+  }
+
+  function safeGet(beat, path) {
+    let cur = beat;
+    for (const k of path) {
+      if (!cur || typeof cur !== "object") return undefined;
+      cur = cur[k];
+    }
+    return cur;
+  }
+
+  function statLine(beats, getter, unit) {
+    const vs = beats.map(getter).filter(v => typeof v === "number" && isFinite(v));
+    if (!vs.length) return "n=0";
+    const last = vs[vs.length - 1];
+    const min = Math.min(...vs), max = Math.max(...vs);
+    const avg = vs.reduce((a,b)=>a+b,0) / vs.length;
+    return `last ${last}${unit} · min ${min}${unit} · max ${max}${unit} · avg ${avg.toFixed(1)}${unit} · n=${vs.length}`;
+  }
+
+  function renderHealthRow(beats) {
+    const row = el("health-row");
+    row.innerHTML = "";
+    const last10 = beats.slice(-10);
+    for (const b of last10) {
+      const ok = !!(b.daemon_health && b.daemon_health.ok);
+      const div = document.createElement("div");
+      div.className = "health-cell " + (ok ? "ok" : "bad");
+      div.title = (b.ts_iso || "") + " · " + (ok ? "ok" : "bad");
+      row.appendChild(div);
+    }
+    if (!last10.length) row.textContent = "no beats";
+  }
+
+  function renderFpList(beats) {
+    const ul = el("fp-list");
+    ul.innerHTML = "";
+    const last10 = beats.slice(-10);
+    const seen = new Set();
+    const dupes = new Set();
+    for (const b of beats) {
+      if (!b.fingerprint) continue;
+      if (seen.has(b.fingerprint)) dupes.add(b.fingerprint);
+      seen.add(b.fingerprint);
+    }
+    for (const b of last10) {
+      const fp = b.fingerprint || "—";
+      const dupe = dupes.has(fp);
+      const li = document.createElement("li");
+      li.innerHTML = `<span class="ts">${esc((b.ts_iso || "").slice(11,19))} #${esc(b.beat_seq ?? "")}</span>
+                     <span class="fp ${dupe ? "dupe" : ""}">${esc(fp)}${dupe ? " (dupe)" : ""}</span>`;
+      ul.appendChild(li);
+    }
+    if (!last10.length) ul.innerHTML = "<li>no beats</li>";
+  }
+
+  function renderGpu(beats) {
+    const last = beats.length ? beats[beats.length - 1] : null;
+    const g = last && last.gpu_lane ? last.gpu_lane : {};
+    const wrap = el("gpu-line");
+    wrap.innerHTML = "";
+    const fields = [
+      ["name", g.name],
+      ["driver", g.driver_version],
+      ["pstate", g.pstate],
+      ["util%", g.util_pct],
+      ["vram", (g.vram_used_mib != null) ? (g.vram_used_mib + " / " + (g.vram_total_mib || "?") + " MiB") : null],
+      ["temp", (g.temp_c != null) ? (g.temp_c + " C") : null],
+      ["ok", g.ok === true ? "yes" : "no"],
+    ];
+    for (const [k, v] of fields) {
+      const pill = document.createElement("span");
+      pill.className = "pill";
+      pill.innerHTML = `<span style="color:var(--muted)">${esc(k)}</span> ${esc(v == null ? "—" : v)}`;
+      wrap.appendChild(pill);
+    }
+  }
+
+  function renderSummary(s, beats) {
+    if (!beats.length) {
+      el("summary-table").innerHTML = "<tr><td class='k'>no beats</td><td class='v'>—</td></tr>";
+      return;
+    }
+    const first = beats[0], last = beats[beats.length - 1];
+    const firstT = Date.parse(first.ts_iso || "") || null;
+    const lastT  = Date.parse(last.ts_iso  || "") || null;
+    const uptime_ms = (firstT && lastT) ? (lastT - firstT) : null;
+    let okGpu = 0, okSub = 0, withErr = 0;
+    const pstates = [];
+    for (const b of beats) {
+      const dh = b.daemon_health || {};
+      if (dh.gpu_path_ready) okGpu++;
+      if (dh.substrate_ready) okSub++;
+      if (b.error || dh.ok === false) withErr++;
+      const ps = safeGet(b, ["gpu_lane", "pstate"]);
+      if (typeof ps === "string" && ps[0] === "P") {
+        const n = parseInt(ps.slice(1), 10);
+        if (isFinite(n)) pstates.push(n);
+      }
+    }
+    const gpuReadyPct = (okGpu / beats.length * 100).toFixed(1);
+    const subReadyPct = (okSub / beats.length * 100).toFixed(1);
+    const avgPs = pstates.length ? ("P" + (pstates.reduce((a,b)=>a+b,0) / pstates.length).toFixed(2)) : "—";
+    const sizeDelta = (() => {
+      const sizes = beats.map(b => b.substrate_size).filter(x => typeof x === "number");
+      if (sizes.length < 2) return 0;
+      return sizes[sizes.length - 1] - sizes[0];
+    })();
+    const deltaStr = sizeDelta === 0 ? "0 (stable)" : (sizeDelta > 0 ? "+" + sizeDelta : String(sizeDelta));
+    const deltaClass = sizeDelta === 0 ? "delta zero" : "delta";
+
+    const rows = [
+      ["counter (live)",          s.counter ?? "—"],
+      ["beats loaded",            beats.length],
+      ["first beat",              (first.ts_iso || "").replace("T", " ").slice(0, 19)],
+      ["last beat",               (last.ts_iso || "").replace("T", " ").slice(0, 19)],
+      ["window uptime",           fmtMs(uptime_ms)],
+      ["gpu_path_ready %",        gpuReadyPct + "%"],
+      ["substrate_ready %",       subReadyPct + "%"],
+      ["beats with errors",       withErr],
+      ["avg pstate (window)",     avgPs],
+      ["substrate sha (snap)",    s.substrate_sha ? s.substrate_sha.slice(0, 16) + "…" : "—"],
+      ["substrate size (snap)",   fmtBytes(s.substrate_size)],
+      ["substrate size delta (window)", `<span class="${deltaClass}">${esc(deltaStr)}</span>`],
+    ];
+    el("summary-table").innerHTML = rows.map(([k, v]) =>
+      `<tr><td class="k">${esc(k)}</td><td class="v">${v}</td></tr>`).join("");
+  }
+
+  function render() {
+    const s = loadData();
+    const beats = Array.isArray(s.beats) ? s.beats : [];
+    renderTopbar(s);
+    lineChart("chart-util", beats, b => safeGet(b, ["gpu_lane","util_pct"]), COLORS.util, {yMin: 0, yMax: 100});
+    el("util-stat").textContent = statLine(beats, b => safeGet(b, ["gpu_lane","util_pct"]), "%");
+    lineChart("chart-vram", beats, b => safeGet(b, ["gpu_lane","vram_used_mib"]), COLORS.vram, {yMin: 0});
+    el("vram-stat").textContent = statLine(beats, b => safeGet(b, ["gpu_lane","vram_used_mib"]), " MiB");
+    lineChart("chart-temp", beats, b => safeGet(b, ["gpu_lane","temp_c"]), COLORS.temp, {});
+    el("temp-stat").textContent = statLine(beats, b => safeGet(b, ["gpu_lane","temp_c"]), "C");
+    renderHealthRow(beats);
+    renderFpList(beats);
+    renderGpu(beats);
+    renderSummary(s, beats);
+    el("footer").textContent =
+      "Asolaria HyperBEHCS Heartbeat Dashboard — W24B — static, self-contained, no daemon mutation.";
+  }
+  render();
+})();
+</script>
+</body>
+</html>

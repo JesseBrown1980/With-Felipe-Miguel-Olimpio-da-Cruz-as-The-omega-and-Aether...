@@ -1,0 +1,13 @@
+NAME|OP-AMY
+PID|f14033a527bae02f|birth=2026-05-29T20:16:20.485Z|authority=OP-JESSE-DANIEL-BROWN_Special_OP_2mo_window_+_Foundation_v3_LAW|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|905
+LAYER|operator
+CLASS|operator_class_agent
+GLYPH_BEHCS1024|933
+GLYPH_BEHCS5|1
+PROF-SOURCE|C:/HyperBEHCS/data/prof-supervisors/OP-AMY.hbp
+PROF_SOURCE_KIND|heartbeat_emitter
+ANCHOR_PID|ASOLARIA-PROF-SUPERVISOR-CONSTELLATION-PID-2026-05-22
+REGISTRAR|acer-vantage|registered_at=2026-05-29T20:16:20.485Z|registrar_note=new_registration_from_HyperBEHCS_prof_supervisors_directory
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=Make_PID_Registration_Office_actually_work_for_overlay_server_2026-05-29
+STATUS|CANONICAL|registry_office_entry_path2_fix_at_source

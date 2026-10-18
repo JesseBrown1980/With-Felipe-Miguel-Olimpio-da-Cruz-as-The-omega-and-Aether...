@@ -1,0 +1,1764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Asolaria Federation — Overnight Status (v8: v20+Audit-v4+Wake-Up)</title>
+<style>
+  :root {
+    --bg: #07090c;
+    --bg2: #0d1218;
+    --bg3: #11181f;
+    --fg: #c8d4e0;
+    --muted: #5a6878;
+    --accent: #7ee787;
+    --accent-dim: #2b6a35;
+    --warn: #f0b429;
+    --bad: #ff5c5c;
+    --info: #79c0ff;
+    --orange: #ffa657;
+    --purple: #d2a8ff;
+    --grid: #1a2230;
+    --forbidden: #6b1f1f;
+    --forbidden-fg: #ff8a8a;
+    --amber: #f0b429;
+    --amber-dim: #4a3a10;
+    --amber-glow: rgba(240,180,41,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+    font: 13px/1.45 "JetBrains Mono","Cascadia Code","Consolas","Menlo",monospace; }
+  h1 { font-size: 16px; margin: 0; letter-spacing: 0.05em; color: var(--accent); }
+  h2 { font-size: 12px; margin: 0 0 8px 0; letter-spacing: 0.12em; text-transform: uppercase;
+       color: var(--muted); font-weight: 600; }
+  .wrap { padding: 14px 18px 40px 18px; max-width: 1800px; margin: 0 auto; }
+  .topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 18px;
+            padding: 10px 14px; background: var(--bg2); border: 1px solid var(--grid);
+            border-radius: 6px; margin-bottom: 14px; }
+  .topbar .field { display: flex; flex-direction: column; gap: 2px; min-width: 110px; }
+  .topbar .label { font-size: 10px; color: var(--muted); text-transform: uppercase;
+                   letter-spacing: 0.1em; }
+  .topbar .value { font-size: 13px; color: var(--fg); }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+         margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px currentColor; }
+  .dot.ok  { background: var(--accent); color: var(--accent); }
+  .dot.bad { background: var(--bad);    color: var(--bad);    }
+  .dot.warn{ background: var(--warn);   color: var(--warn);   }
+  .dot.info{ background: var(--info);   color: var(--info);   }
+  .dot.amber { background: var(--amber); color: var(--amber); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--bg2); border: 1px solid var(--grid); border-radius: 6px;
+           padding: 12px 14px; min-height: 100px; }
+  .panel.full { grid-column: 1 / -1; }
+  .panel.seam { border-color: #2b6a35; box-shadow: 0 0 0 1px rgba(126,231,135,0.07) inset; }
+  .panel.doctrine { border-color: #2f4a6a; box-shadow: 0 0 0 1px rgba(121,192,255,0.07) inset; }
+  .panel.audit { border-color: var(--amber-dim);
+                 box-shadow: 0 0 0 1px rgba(240,180,41,0.10) inset; }
+  table { width: 100%; border-collapse: collapse; }
+  table th, table td { padding: 4px 6px; text-align: left; border-bottom: 1px dotted var(--grid);
+                       vertical-align: top; }
+  table th { color: var(--muted); font-weight: 600; font-size: 11px;
+             text-transform: uppercase; letter-spacing: 0.06em; }
+  table td.num { text-align: right; font-feature-settings: "tnum"; }
+  .pill { display: inline-block; padding: 1px 6px; border-radius: 3px;
+          font-size: 11px; background: var(--grid); color: var(--fg); }
+  .pill.green  { background: var(--accent-dim); color: var(--accent); }
+  .pill.yellow { background: #4a3a10; color: var(--warn); }
+  .pill.amber  { background: var(--amber-dim); color: var(--amber); }
+  .pill.red    { background: #4a1010; color: var(--bad); }
+  .pill.blue   { background: #10324a; color: var(--info); }
+  .pill.purple { background: #321040; color: var(--purple); }
+  .pill.orange { background: #4a2a10; color: var(--orange); }
+  .badge-decision { font-weight: bold; letter-spacing: 0.05em; padding: 2px 8px;
+                    border-radius: 4px; background: #10324a; color: var(--info);
+                    border: 1px solid #1f5278; font-size: 11px; }
+  .badge-decision.amber { background: var(--amber-dim); color: var(--amber);
+                          border: 1px solid var(--amber); }
+  .seam-status { display: flex; align-items: center; gap: 8px; font-size: 14px;
+                 padding: 6px 10px; border-radius: 4px; }
+  .seam-status.tested  { background: rgba(126,231,135,0.15); color: var(--accent);
+                          border: 1px solid var(--accent);
+                          box-shadow: 0 0 12px rgba(126,231,135,0.35); }
+  .seam-status.bridged { background: rgba(126,231,135,0.08); color: var(--accent);
+                          border: 1px solid var(--accent-dim); }
+  .seam-status.open    { background: rgba(240,180,41,0.08); color: var(--warn);
+                          border: 1px solid #4a3a10; }
+  .sev-NORMAL  { color: var(--accent); }
+  .sev-WARN    { color: var(--warn); }
+  .sev-ATTENTION { color: var(--orange); }
+  .sev-HOT     { color: var(--bad); }
+  .sev-CRITICAL{ color: var(--bad); font-weight: bold; }
+  .sev-UNKNOWN { color: var(--muted); }
+  .muted { color: var(--muted); }
+  .mono { font-family: inherit; }
+  .small { font-size: 11px; }
+  .kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 12px; }
+  .kv .k { color: var(--muted); }
+  .kv .v { color: var(--fg); font-feature-settings: "tnum"; }
+  ul.thin { margin: 4px 0 0 0; padding-left: 18px; font-size: 12px; }
+  ul.thin li { margin-bottom: 2px; }
+  .order { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .order .step { background: var(--grid); padding: 2px 6px; border-radius: 3px;
+                 font-size: 11px; color: var(--info); }
+  .order .arrow { color: var(--muted); align-self: center; }
+  .tids { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .tids .tid { background: var(--grid); color: var(--info); padding: 1px 6px;
+               border-radius: 3px; font-size: 11px; }
+  svg.chart { width: 100%; height: 90px; display: block; }
+  svg.chart .gridline { stroke: var(--grid); stroke-width: 0.5; stroke-dasharray: 2 3; }
+  svg.chart text { fill: var(--muted); font-size: 9px; font-family: inherit; }
+  .footer { color: var(--muted); font-size: 10px; text-align: center; margin-top: 20px; }
+  details { margin-top: 4px; }
+  details summary { cursor: pointer; color: var(--info); font-size: 11px; }
+  .ep-row { display: flex; gap: 10px; align-items: center; font-size: 12px;
+            padding: 3px 0; border-bottom: 1px dotted var(--grid); }
+  .ep-row .ep-path { flex: 1; color: var(--info); }
+  .seam-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+               margin-top: 10px; }
+  @media (max-width: 900px) { .seam-grid { grid-template-columns: 1fr; } }
+  .seam-card { background: var(--bg3); border: 1px solid var(--grid); border-radius: 4px;
+               padding: 8px 10px; }
+  .seam-card .num-big { font-size: 22px; font-weight: bold; color: var(--accent);
+                        font-feature-settings: "tnum"; }
+  .seam-card .num-big.warn { color: var(--warn); }
+  .seam-card .num-big.amber { color: var(--amber); }
+  .seam-card .num-big.bad { color: var(--bad); }
+  .seam-card .label { font-size: 10px; color: var(--muted); text-transform: uppercase;
+                      letter-spacing: 0.1em; }
+  /* 4-state model — horizontal pipeline */
+  .state4-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;
+                margin-top: 10px; }
+  @media (max-width: 900px) { .state4-row { grid-template-columns: 1fr; } }
+  .state4-cell { background: var(--bg3); border: 1px solid var(--grid); border-radius: 6px;
+                 padding: 10px 12px; position: relative; transition: all 0.2s ease; }
+  .state4-cell .state-name { font-size: 14px; font-weight: bold; letter-spacing: 0.08em; }
+  .state4-cell .state-glyph { font-size: 16px; margin-right: 6px; }
+  .state4-cell .state-meta { font-size: 10px; color: var(--muted); margin-top: 4px;
+                              text-transform: uppercase; letter-spacing: 0.06em; }
+  .state4-cell .state-note { font-size: 11px; color: var(--fg); margin-top: 4px;
+                              line-height: 1.35; }
+  .state4-cell.is-current { border-color: var(--accent);
+                            box-shadow: 0 0 14px rgba(126,231,135,0.45),
+                                        0 0 0 1px rgba(126,231,135,0.12) inset; }
+  .state4-cell.is-current .state-name { color: var(--accent); }
+  .state4-cell.is-past { opacity: 0.65; }
+  .state4-cell.is-past .state-name { color: var(--muted); }
+  .state4-cell.is-future { opacity: 0.5; border-style: dashed; }
+  .state4-cell.is-forbidden { border-color: var(--forbidden);
+                              background: linear-gradient(135deg, var(--bg3) 0%, #1c1010 100%);
+                              opacity: 0.9; }
+  .state4-cell.is-forbidden .state-name { color: var(--forbidden-fg);
+                                           text-decoration: line-through; }
+  .state4-cell.is-forbidden .state-note { color: var(--forbidden-fg); }
+  /* 3-state audit-mode row (amber-highlighted current = SHADOW-BLOCK) */
+  .state3-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+                margin-top: 10px; }
+  @media (max-width: 900px) { .state3-row { grid-template-columns: 1fr; } }
+  .state3-cell { background: var(--bg3); border: 1px solid var(--grid); border-radius: 6px;
+                 padding: 10px 12px; position: relative; transition: all 0.2s ease; }
+  .state3-cell .state-name { font-size: 14px; font-weight: bold; letter-spacing: 0.08em; }
+  .state3-cell .state-glyph { font-size: 16px; margin-right: 6px; }
+  .state3-cell .state-meta { font-size: 10px; color: var(--muted); margin-top: 4px;
+                              text-transform: uppercase; letter-spacing: 0.06em; }
+  .state3-cell .state-note { font-size: 11px; color: var(--fg); margin-top: 4px;
+                              line-height: 1.35; }
+  .state3-cell.is-current-amber { border-color: var(--amber);
+                                  background: linear-gradient(135deg, var(--bg3) 0%, #1f1808 100%);
+                                  box-shadow: 0 0 14px var(--amber-glow),
+                                              0 0 0 1px rgba(240,180,41,0.18) inset; }
+  .state3-cell.is-current-amber .state-name { color: var(--amber); }
+  .state3-cell.is-past { opacity: 0.65; }
+  .state3-cell.is-past .state-name { color: var(--muted); }
+  .state3-cell.is-forbidden { border-color: var(--forbidden);
+                              background: linear-gradient(135deg, var(--bg3) 0%, #1c1010 100%);
+                              opacity: 0.9; }
+  .state3-cell.is-forbidden .state-name { color: var(--forbidden-fg);
+                                           text-decoration: line-through; }
+  .state3-cell.is-forbidden .state-note { color: var(--forbidden-fg); }
+  .lock-icon { font-family: monospace; color: var(--forbidden-fg); margin-right: 4px; }
+  /* mini-strip pipeline arrow row */
+  .mini-strip { display: flex; align-items: center; gap: 6px; margin-top: 12px;
+                padding: 8px 10px; background: var(--bg3); border-radius: 4px;
+                border: 1px dotted var(--grid); overflow-x: auto; }
+  .mini-strip .stage { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px;
+                       border-radius: 12px; font-size: 11px; background: var(--grid);
+                       color: var(--muted); white-space: nowrap; }
+  .mini-strip .stage.is-current { background: var(--accent-dim); color: var(--accent);
+                                   font-weight: bold; }
+  .mini-strip .stage.is-current-amber { background: var(--amber-dim); color: var(--amber);
+                                         font-weight: bold; }
+  .mini-strip .stage.is-past { background: var(--grid); color: var(--accent); }
+  .mini-strip .stage.is-forbidden { background: #2a1010; color: var(--forbidden-fg); }
+  .mini-strip .arrow { color: var(--muted); }
+  /* doctrine banner */
+  .doctrine-banner { background: linear-gradient(135deg, #0c1722 0%, #11202e 100%);
+                     border: 1px solid #2f4a6a; border-radius: 6px; padding: 10px 14px;
+                     margin-top: 8px; }
+  .doctrine-banner .invariant { font-size: 14px; color: var(--info); font-style: italic;
+                                 line-height: 1.5; }
+  .doctrine-banner .decision { font-size: 11px; color: var(--muted); margin-top: 6px;
+                                text-transform: uppercase; letter-spacing: 0.1em; }
+  .audit-banner { background: linear-gradient(135deg, #1c1408 0%, #2a1f0c 100%);
+                  border: 1px solid var(--amber-dim); border-radius: 6px;
+                  padding: 8px 12px; margin-top: 8px; }
+  .audit-banner .decision { font-size: 11px; color: var(--amber); margin-top: 4px;
+                            text-transform: uppercase; letter-spacing: 0.1em; }
+  .law-list { list-style: none; padding: 0; margin: 8px 0 0 0; }
+  .law-list li { padding: 4px 8px; border-bottom: 1px dotted var(--grid);
+                 font-size: 12px; line-height: 1.45; }
+  .law-list li.law-cited { background: rgba(126,231,135,0.05);
+                            border-left: 2px solid var(--accent); padding-left: 8px; }
+  .law-list .law-num { display: inline-block; min-width: 48px; color: var(--info);
+                       font-weight: bold; }
+  .sub-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .sub-table th, .sub-table td { padding: 4px 8px; text-align: left;
+                                  border-bottom: 1px dotted var(--grid); font-size: 12px; }
+  .sub-table th { background: var(--bg3); color: var(--muted); font-weight: 600;
+                  text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
+  .sub-table td.num { text-align: right; font-feature-settings: "tnum"; }
+  /* Panel 11: pending-review queue (v5) */
+  .queue-table { width: 100%; border-collapse: collapse; margin-top: 8px;
+                 font-size: 11px; }
+  .queue-table th, .queue-table td { padding: 4px 6px; text-align: left;
+                                      border-bottom: 1px dotted var(--grid);
+                                      vertical-align: top; }
+  .queue-table th { background: var(--bg3); color: var(--muted); font-weight: 600;
+                    text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px;
+                    position: sticky; top: 0; }
+  .queue-table td.sha { color: var(--info); white-space: nowrap; }
+  .queue-table td.path { color: var(--fg); word-break: break-all; max-width: 360px; }
+  .queue-table tr:hover { background: rgba(126,231,135,0.04); }
+  .queue-hint { background: var(--bg3); border: 1px dotted var(--grid);
+                border-radius: 4px; padding: 8px 10px; margin-top: 10px;
+                font-size: 11px; color: var(--muted); }
+  .queue-hint code { background: var(--grid); color: var(--info);
+                     padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+  .freshness-stamp { display: inline-block; padding: 2px 8px; border-radius: 3px;
+                     background: var(--accent-dim); color: var(--accent);
+                     font-size: 10px; letter-spacing: 0.05em; margin-left: 8px;
+                     text-transform: none; }
+  .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;
+                font-size: 11px; }
+  .filter-bar button { background: var(--grid); color: var(--fg); border: 1px solid var(--grid);
+                       border-radius: 3px; padding: 3px 8px; cursor: pointer;
+                       font-family: inherit; font-size: 11px; }
+  .filter-bar button.active { background: var(--accent-dim); color: var(--accent);
+                              border-color: var(--accent); }
+  .filter-bar button:hover { border-color: var(--info); }
+
+  /* v6 (W32C) - Ledger barrier / reconciliation / concurrency panels */
+  .snapshot-status-badge { display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 4px; font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 700; border: 1px solid var(--grid);
+    background: var(--bg3); color: var(--muted); margin-left: 8px; }
+  .snapshot-status-badge .sdot { width: 8px; height: 8px; border-radius: 50%;
+    box-shadow: 0 0 6px currentColor; }
+  .snapshot-status-badge.complete { background: rgba(126,231,135,0.10);
+    color: var(--accent); border-color: var(--accent-dim); }
+  .snapshot-status-badge.complete .sdot { background: var(--accent); }
+  .snapshot-status-badge.partial { background: rgba(240,180,41,0.10);
+    color: var(--amber); border-color: var(--amber-dim); }
+  .snapshot-status-badge.partial .sdot { background: var(--amber); }
+  .snapshot-status-badge.stale { background: rgba(255,166,87,0.10);
+    color: var(--orange); border-color: #4a2a10; }
+  .snapshot-status-badge.stale .sdot { background: var(--orange); }
+  .snapshot-status-badge.race { background: rgba(255,92,92,0.10);
+    color: var(--bad); border-color: #4a1010;
+    box-shadow: 0 0 12px rgba(255,92,92,0.35); }
+  .snapshot-status-badge.race .sdot { background: var(--bad); }
+  .snapshot-status-badge.unknown { background: var(--bg3); color: var(--muted); }
+  .snapshot-status-badge.unknown .sdot { background: var(--muted); }
+  .panel.recon { border-color: #2f4a6a;
+    box-shadow: 0 0 0 1px rgba(121,192,255,0.07) inset; }
+  .panel.concur { border-color: #2b6a4a;
+    box-shadow: 0 0 0 1px rgba(126,231,135,0.06) inset; }
+  .panel.concur.fail { border-color: #6a2f2f;
+    box-shadow: 0 0 0 1px rgba(255,92,92,0.10) inset; }
+  .recon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 10px; }
+  @media (max-width: 900px) { .recon-grid { grid-template-columns: 1fr; } }
+  .recon-side { background: var(--bg3); border: 1px dotted var(--grid);
+    border-radius: 4px; padding: 8px 10px; }
+  .recon-side h3 { margin: 0 0 6px 0; font-size: 11px; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+  .recon-side table { width: 100%; }
+  .recon-side td.k { color: var(--muted); font-size: 11px; }
+  .recon-side td.v { text-align: right; font-feature-settings: "tnum";
+    font-size: 11px; }
+  .delta-row td { color: var(--orange); }
+  .delta-row td.k { color: var(--orange); }
+  .concur-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .concur-cell { flex: 1 1 220px; padding: 10px 12px; border-radius: 4px;
+    border: 1px solid var(--grid); background: var(--bg3);
+    display: flex; flex-direction: column; gap: 4px; }
+  .concur-cell.pass { border-color: var(--accent-dim);
+    background: rgba(126,231,135,0.04); }
+  .concur-cell.fail { border-color: #6a2f2f;
+    background: rgba(255,92,92,0.06); }
+  .concur-cell.pending { border-color: var(--amber-dim);
+    background: rgba(240,180,41,0.04); }
+  .concur-cell .scen-name { font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .concur-cell .scen-status { font-size: 16px; font-weight: 700; }
+  .concur-cell.pass .scen-status { color: var(--accent); }
+  .concur-cell.fail .scen-status { color: var(--bad); }
+  .concur-cell.pending .scen-status { color: var(--amber); }
+  .recon-banner { padding: 8px 12px; border-radius: 4px; margin-top: 8px;
+    border: 1px solid var(--grid); background: var(--bg3); font-size: 12px; }
+  .recon-banner.pass { border-color: var(--accent-dim);
+    background: rgba(126,231,135,0.06); color: var(--accent); }
+  .recon-banner.fail { border-color: #6a2f2f;
+    background: rgba(255,92,92,0.06); color: var(--bad); }
+  .recon-banner.pending { border-color: var(--amber-dim);
+    background: rgba(240,180,41,0.06); color: var(--amber); }
+
+  /* v7 (W34C) - CAS-fix verification + pre-classifier panels */
+  .panel.casfix { border-color: #2b5a6a;
+    box-shadow: 0 0 0 1px rgba(121,192,255,0.08) inset; }
+  .panel.preclass { border-color: #4a3a5a;
+    box-shadow: 0 0 0 1px rgba(210,168,255,0.08) inset; }
+  .cas-stats-row { display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin-top: 10px; }
+  .cas-stat-cell { background: var(--bg3); border: 1px solid var(--grid);
+    border-radius: 6px; padding: 10px 12px; }
+  .cas-stat-cell .label { font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; }
+  .cas-stat-cell .num-big { font-size: 22px; font-weight: bold;
+    color: var(--accent); font-feature-settings: "tnum"; margin-top: 4px; }
+  .cas-stat-cell .num-big.info { color: var(--info); }
+  .cas-stat-cell .num-big.amber { color: var(--amber); }
+  .cas-stat-cell .num-big.bad { color: var(--bad); }
+  .cas-stat-cell .num-big.muted { color: var(--muted); }
+  .cas-stat-cell .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .trial-bars { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap;
+    align-items: flex-end; min-height: 90px; padding: 8px;
+    background: var(--bg3); border: 1px dotted var(--grid); border-radius: 4px; }
+  .trial-bar-col { display: flex; flex-direction: column; align-items: center;
+    gap: 3px; min-width: 28px; }
+  .trial-bar-track { width: 18px; height: 70px; background: var(--grid);
+    border-radius: 2px; position: relative; overflow: hidden; }
+  .trial-bar-fill { position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--bad); transition: height 0.2s; }
+  .trial-bar-fill.converged { background: var(--accent); }
+  .trial-bar-label { font-size: 9px; color: var(--muted); }
+  .trial-bar-val { font-size: 10px; color: var(--fg);
+    font-feature-settings: "tnum"; }
+  .trial-bar-val.converged { color: var(--accent); font-weight: bold; }
+  .trial-bar-val.lost { color: var(--bad); }
+  .repro-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 10px; }
+  @media (max-width: 900px) { .repro-row { grid-template-columns: 1fr; } }
+  .repro-side { background: var(--bg3); border: 1px solid var(--grid);
+    border-radius: 6px; padding: 10px 12px; }
+  .repro-side h3 { margin: 0 0 6px 0; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .repro-side.defective h3 { color: var(--bad); }
+  .repro-side.fixed h3 { color: var(--accent); }
+  .repro-side .verdict { font-size: 13px; font-weight: bold; margin-top: 6px;
+    padding: 4px 8px; border-radius: 3px; text-align: center; }
+  .repro-side.defective .verdict { background: rgba(255,92,92,0.12);
+    color: var(--bad); border: 1px solid #6a2f2f; }
+  .repro-side.fixed .verdict { background: rgba(126,231,135,0.12);
+    color: var(--accent); border: 1px solid var(--accent-dim); }
+  /* Stacked-bar proposal distribution (Panel 15) */
+  .stacked-bar { display: flex; height: 28px; border-radius: 4px;
+    overflow: hidden; border: 1px solid var(--grid); margin-top: 10px;
+    background: var(--bg3); }
+  .stacked-seg { display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: bold; color: var(--bg);
+    transition: flex-grow 0.3s; overflow: hidden; white-space: nowrap;
+    min-width: 0; }
+  .stacked-seg.fp { background: var(--bad); }
+  .stacked-seg.tp { background: var(--accent); }
+  .stacked-seg.fphf { background: var(--amber); color: var(--bg); }
+  .stacked-seg.cv { background: var(--orange); color: var(--bg); }
+  .stacked-seg.ni { background: var(--info); color: var(--bg); }
+  .stacked-seg.empty { background: var(--grid); color: var(--muted); }
+  .stacked-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px;
+    font-size: 10px; }
+  .stacked-legend .lg { display: inline-flex; align-items: center; gap: 4px; }
+  .stacked-legend .swatch { display: inline-block; width: 10px; height: 10px;
+    border-radius: 2px; }
+  .stacked-legend .swatch.fp { background: var(--bad); }
+  .stacked-legend .swatch.tp { background: var(--accent); }
+  .stacked-legend .swatch.fphf { background: var(--amber); }
+  .stacked-legend .swatch.cv { background: var(--orange); }
+  .stacked-legend .swatch.ni { background: var(--info); }
+  .action-plan { background: linear-gradient(135deg, #0c1722 0%, #1c1532 100%);
+    border: 1px solid #4a3a5a; border-radius: 6px; padding: 10px 14px;
+    margin-top: 12px; font-size: 12px; line-height: 1.5; }
+  .action-plan .heading { font-size: 11px; color: var(--purple);
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+    margin-bottom: 6px; }
+  .action-plan code { background: var(--grid); color: var(--info);
+    padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+  .heuristic-fix-row { display: flex; gap: 10px; margin-top: 10px;
+    flex-wrap: wrap; align-items: stretch; }
+  .heuristic-fix-cell { flex: 1 1 200px; background: var(--bg3);
+    border: 1px solid var(--grid); border-radius: 6px; padding: 10px 12px; }
+  .heuristic-fix-cell .label { font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; }
+  .heuristic-fix-cell .num-big { font-size: 22px; font-weight: bold;
+    color: var(--info); font-feature-settings: "tnum"; margin-top: 4px; }
+  .heuristic-fix-cell .num-big.dropped { color: var(--accent); }
+  .heuristic-fix-cell .num-big.still { color: var(--amber); }
+  .arrow-drop { font-size: 24px; color: var(--accent); align-self: center;
+    padding: 0 8px; }
+  .sha-strip { font-family: inherit; font-size: 10px; color: var(--muted);
+    word-break: break-all; padding: 6px 8px; background: var(--bg3);
+    border: 1px dotted var(--grid); border-radius: 3px; margin-top: 8px; }
+  .sha-strip code { color: var(--info); }
+
+  /* v8 (W36B) — Audit v4 + Wake-Up Runbook panels */
+  .panel.auditv4 { border-color: #2b6a35;
+    box-shadow: 0 0 0 1px rgba(126,231,135,0.10) inset; }
+  .panel.wakeup { border-color: #5a4a2b;
+    box-shadow: 0 0 0 1px rgba(255,166,87,0.10) inset; }
+  .audit-green-badge { display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 6px; margin-top: 10px;
+    background: rgba(126,231,135,0.10); color: var(--accent);
+    border: 1px solid var(--accent-dim); font-weight: 600; font-size: 13px;
+    letter-spacing: 0.05em; }
+  .audit-green-badge .big { font-size: 18px; font-weight: 700; }
+  .audit-green-badge .dot { background: var(--accent); color: var(--accent); }
+  .findings-row { display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px; margin-top: 10px; }
+  .findings-cell { background: var(--bg3); border: 1px solid var(--grid);
+    border-radius: 6px; padding: 10px 12px; }
+  .findings-cell .label { font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; }
+  .findings-cell .num-big { font-size: 22px; font-weight: bold;
+    color: var(--accent); font-feature-settings: "tnum"; margin-top: 4px; }
+  .findings-cell .num-big.amber { color: var(--amber); }
+  .findings-cell .num-big.info { color: var(--info); }
+  .findings-cell .num-big.bad { color: var(--bad); }
+  .findings-cell .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .triage-strip { margin-top: 10px; padding: 8px 12px; border-radius: 4px;
+    background: var(--bg3); border: 1px dotted var(--grid);
+    font-size: 12px; color: var(--fg); }
+  .triage-strip .pill { margin-left: 6px; }
+  .wake-row { display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px; margin-top: 10px; }
+  .wake-cell { background: var(--bg3); border: 1px solid var(--grid);
+    border-radius: 6px; padding: 10px 12px; }
+  .wake-cell .label { font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; }
+  .wake-cell .num-big { font-size: 22px; font-weight: bold;
+    color: var(--info); font-feature-settings: "tnum"; margin-top: 4px; }
+  .wake-cell .num-big.amber { color: var(--amber); }
+  .wake-cell .num-big.green { color: var(--accent); }
+  .wake-cell .text-val { font-size: 13px; color: var(--fg); margin-top: 4px;
+    font-feature-settings: "tnum"; }
+  .quickstart-strip { margin-top: 10px; padding: 10px 14px; border-radius: 4px;
+    background: linear-gradient(135deg, #0c1722 0%, #1a1c0c 100%);
+    border: 1px solid #5a4a2b; }
+  .quickstart-strip .heading { font-size: 11px; color: var(--orange);
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+    margin-bottom: 4px; }
+  .quickstart-strip code { background: var(--grid); color: var(--accent);
+    padding: 2px 8px; border-radius: 3px; font-size: 13px;
+    font-weight: 600; }
+  .path-strip { font-family: inherit; font-size: 11px; color: var(--muted);
+    word-break: break-all; padding: 6px 8px; background: var(--bg3);
+    border: 1px dotted var(--grid); border-radius: 3px; margin-top: 8px; }
+  .path-strip code { color: var(--info); }
+  .lineage-v20-stamp { display: inline-block; padding: 2px 6px; border-radius: 3px;
+    background: rgba(210,168,255,0.15); color: var(--purple);
+    font-size: 10px; letter-spacing: 0.05em; margin-left: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="topbar">loading...</div>
+
+  <div class="grid">
+    <div class="panel full audit"><h2>Panel 10 - Audit Mode (OP-W30-SHADOW-BLOCK-FIRST) <span id="panel-10-fresh-stamp"></span> <span id="panel-10-snapshot-status"></span></h2><div id="panel-audit-mode">--</div></div>
+
+    <div class="panel full audit"><h2>Panel 11 - Shadow-Block Ledger - Pending Operator Review <span id="panel-11-fresh-stamp"></span></h2><div id="panel-pending-queue">--</div></div>
+
+    <div class="panel full recon"><h2>Panel 12 - Reconciliation Status (OP-W32-LEDGER-BARRIER-FIRST) <span id="panel-12-status"></span></h2><div id="panel-reconciliation">--</div></div>
+
+    <div class="panel full concur" id="panel-13-wrap"><h2>Panel 13 - Concurrency Test Results (W32B) <span id="panel-13-status"></span></h2><div id="panel-concurrency-test">--</div></div>
+
+    <div class="panel full casfix" id="panel-14-wrap"><h2>Panel 14 - CAS-Fix Verification (W33A) <span id="panel-14-status"></span></h2><div id="panel-cas-fix">--</div></div>
+
+    <div class="panel full preclass" id="panel-15-wrap"><h2>Panel 15 - Pre-classifier Suggestions (W34B) <span id="panel-15-status"></span></h2><div id="panel-preclassifier">--</div></div>
+
+    <div class="panel full seam"><h2>Panel 8 - Vocab Seam Status — T64 Bridge (AETHER High-Assurance)</h2><div id="panel-vocab-seam">--</div></div>
+
+    <div class="panel full doctrine"><h2>Panel 9 - AETHER Doctrine</h2><div id="panel-doctrine">--</div></div>
+
+    <div class="panel full"><h2>Panel 1 - Wave History (W17 - latest)</h2><div id="panel-waves">--</div></div>
+
+    <div class="panel"><h2>Panel 2 - PB-D Atlas 14/14 (T50-T63)</h2><div id="panel-pbd">--</div></div>
+    <div class="panel"><h2>Panel 3 - Heartbeat Live</h2><div id="panel-heartbeat">--</div></div>
+
+    <div class="panel"><h2>Panel 4 - GPU Thermal</h2><div id="panel-thermal">--</div></div>
+    <div class="panel"><h2>Panel 5 - Substrate + Daemon Health</h2><div id="panel-substrate">--</div></div>
+
+    <div class="panel full"><h2>Panel 6 - Open Operator-Witness Queue</h2><div id="panel-queue">--</div></div>
+
+    <div class="panel full"><h2>Panel 7 - 3D Map Lineage (v14 - v20) <span class="lineage-v20-stamp">+v18 +v19 +v20</span></h2><div id="panel-maps">--</div></div>
+
+    <div class="panel full auditv4" id="panel-16-wrap"><h2>Panel 16 - Audit v4 Results (W35B) <span id="panel-16-status"></span></h2><div id="panel-audit-v4">--</div></div>
+
+    <div class="panel full wakeup" id="panel-17-wrap"><h2>Panel 17 - Wake-Up Runbook (W35C) <span id="panel-17-status"></span></h2><div id="panel-wake-up">--</div></div>
+  </div>
+
+  <div class="footer" id="footer">unified-dashboard-built-v8.html - W36B - v20+Audit-v4+Wake-Up</div>
+</div>
+
+<script id="data" type="application/json">{}</script>
+<script>
+(function() {
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "class") e.className = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    if (children) (Array.isArray(children) ? children : [children]).forEach(function(c) {
+      if (c == null) return;
+      e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    });
+    return e;
+  }
+  function escapeHTML(s) { return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function clip(s, n) { s = String(s == null ? "" : s); return s.length > n ? s.slice(0, n) + "..." : s; }
+  function fmtBytes(n) {
+    if (n == null) return "-";
+    if (n < 1024) return n + " B";
+    if (n < 1024*1024) return (n/1024).toFixed(1) + " KB";
+    return (n/1024/1024).toFixed(2) + " MB";
+  }
+
+  var raw = document.getElementById("data").textContent.trim() || "{}";
+  var D;
+  try { D = JSON.parse(raw); } catch (e) {
+    document.body.innerHTML = "<pre style='color:#ff5c5c;padding:20px'>snapshot parse failed: "
+      + escapeHTML(e.message) + "</pre>"; return;
+  }
+
+  // Topbar
+  var tb = document.getElementById("topbar");
+  tb.innerHTML = "";
+  var hb = D.heartbeat || {};
+  var thermal = D.thermal || {};
+  var sub = D.substrate || {};
+  var vs = D.vocab_seam || {};
+  var ad = D.aether_doctrine || {};
+  var am = D.audit_mode || {};
+  function tbField(label, value, extraClass) {
+    var f = el("div", { class: "field" });
+    f.appendChild(el("div", { class: "label" }, label));
+    f.appendChild(el("div", { class: "value " + (extraClass || "") }, String(value)));
+    return f;
+  }
+  tb.appendChild(tbField("snapshot v8", (D.snapshot_at_v8 || D.snapshot_at_v7 || D.snapshot_at_v6 || D.snapshot_at_v5 || D.snapshot_at_v4 || D.snapshot_at_v3 || D.snapshot_at_v2 || D.snapshot_at || "?")
+    .replace("T"," ").replace("Z"," UTC")));
+  tb.appendChild(tbField("doctrine", "AETHER HIGH-ASSURANCE (" + (ad.laws_count || "?") + " laws)"));
+  // audit mode topbar cell
+  var auditCell = el("div", { class: "field" });
+  auditCell.appendChild(el("div", { class: "label" }, "audit mode"));
+  var av = el("div", { class: "value" });
+  var curMode = am.current_mode || "?";
+  var auditPillCls = (curMode === "AUDIT-ONLY") ? "blue"
+                   : (curMode === "SHADOW-BLOCK") ? "amber"
+                   : (curMode === "LIVE-BLOCK") ? "green"
+                   : "yellow";
+  av.appendChild(el("span", { class: "pill " + auditPillCls }, curMode));
+  auditCell.appendChild(av);
+  tb.appendChild(auditCell);
+  // CAS fix topbar cell (NEW v7)
+  var cf = D.cas_fix_v3 || {};
+  var casCell = el("div", { class: "field" });
+  casCell.appendChild(el("div", { class: "label" }, "cas-fix v3"));
+  var cv = el("div", { class: "value" });
+  if (cf.cas_failures != null) {
+    var pillCls = (cf.cas_failures === 0) ? "green" : "red";
+    cv.appendChild(el("span", { class: "pill " + pillCls },
+      String(cf.cas_failures) + " failures"));
+  } else {
+    cv.appendChild(el("span", { class: "pill yellow" }, "PENDING"));
+  }
+  casCell.appendChild(cv);
+  tb.appendChild(casCell);
+  tb.appendChild(tbField("waves W17-W26", (D.waves_present_count || 0) + " / "
+    + ((D.waves || []).length)));
+  tb.appendChild(tbField("PB-D scaffolded", (D.pb_d_atlas || []).length + " / 14"));
+  // Vocab seam topbar cell — promoted to current_state
+  var seamCell = el("div", { class: "field" });
+  seamCell.appendChild(el("div", { class: "label" }, "vocab seam"));
+  var sv = el("div", { class: "value" });
+  var seamState = vs.current_state || vs.status || "?";
+  var statusPill = (seamState === "TESTED") ? "green"
+                : (seamState === "BRIDGED") ? "green"
+                : (seamState === "OPEN") ? "yellow"
+                : (seamState === "COLLAPSED") ? "red"
+                : "yellow";
+  sv.appendChild(el("span", { class: "pill " + statusPill }, seamState));
+  seamCell.appendChild(sv);
+  tb.appendChild(seamCell);
+  var beatCell = el("div", { class: "field" });
+  beatCell.appendChild(el("div", { class: "label" }, "heartbeat"));
+  var bv = el("div", { class: "value" });
+  bv.appendChild(el("span", { class: "dot " + (hb.loop_alive ? "ok" : "bad") }));
+  bv.appendChild(document.createTextNode("beat " + (hb.counter == null ? "?" : hb.counter)
+    + " (pid " + (hb.loop_pid || "?") + ")"));
+  beatCell.appendChild(bv);
+  tb.appendChild(beatCell);
+  var thermCell = el("div", { class: "field" });
+  thermCell.appendChild(el("div", { class: "label" }, "gpu temp"));
+  var tv = el("div", { class: "value sev-" + (thermal.current_severity || "UNKNOWN") });
+  tv.textContent = (thermal.current_temp_c == null ? "?" : thermal.current_temp_c + "C")
+    + " " + (thermal.current_severity || "");
+  thermCell.appendChild(tv);
+  tb.appendChild(thermCell);
+  tb.appendChild(tbField("substrate", fmtBytes(sub.size) + " / "
+    + (sub.sha ? sub.sha.slice(0,8) : "?")));
+
+  // Panel 10: Audit Mode (preserved from v4)
+  (function() {
+    var c = document.getElementById("panel-audit-mode");
+    c.innerHTML = "";
+    if (!am || !am.current_mode) {
+      c.appendChild(el("div", { class: "muted small" },
+        "(audit_mode block not present in snapshot)"));
+      return;
+    }
+    var header = el("div");
+    header.style.display = "flex";
+    header.style.flexWrap = "wrap";
+    header.style.gap = "12px";
+    header.style.alignItems = "center";
+    header.appendChild(el("span", { class: "badge-decision amber" },
+      am.decision_code || "OP-W30-SHADOW-BLOCK-FIRST"));
+    header.appendChild(el("span", { class: "muted small" },
+      "decision_at " + (am.decision_at || "?")
+      + "  |  promotion gate: " + (am.promotion_to_live_block_gate || "?")));
+    c.appendChild(header);
+
+    var banner = el("div", { class: "audit-banner" });
+    banner.appendChild(el("div", null,
+      "Mode: ", el("span", { class: "pill amber" }, am.current_mode)));
+    banner.appendChild(el("div", { class: "decision" },
+      "AUDIT (observe) -> SHADOW-BLOCK (would-block recorded, NOT enforced) -> LIVE-BLOCK [FORBIDDEN]"));
+    c.appendChild(banner);
+
+    // 3-state row
+    var stateOrder = ["AUDIT-ONLY", "SHADOW-BLOCK", "LIVE-BLOCK-FORBIDDEN"];
+    var stateGlyphs = { "AUDIT-ONLY": "[A]", "SHADOW-BLOCK": "[S]", "LIVE-BLOCK-FORBIDDEN": "[X]" };
+    var hist = am.mode_history || [];
+    var historyMap = {};
+    hist.forEach(function(h) {
+      var m = /^(\S+)\s*@\s*(\S+)/.exec(h);
+      if (m) historyMap[m[1]] = m[2];
+    });
+    var curIdx = stateOrder.indexOf(am.current_mode);
+    if (curIdx < 0) curIdx = 1;
+    var row = el("div", { class: "state3-row" });
+    stateOrder.forEach(function(name, i) {
+      var cls = "state3-cell";
+      var isForbidden = (name === "LIVE-BLOCK-FORBIDDEN");
+      if (isForbidden) cls += " is-forbidden";
+      else if (i === curIdx) cls += " is-current-amber";
+      else if (i < curIdx) cls += " is-past";
+      var cell = el("div", { class: cls });
+      var hdrLine = el("div");
+      if (isForbidden) hdrLine.appendChild(el("span", { class: "lock-icon" }, "[LOCK]"));
+      hdrLine.appendChild(el("span", { class: "state-glyph" }, stateGlyphs[name] || ""));
+      hdrLine.appendChild(el("span", { class: "state-name" }, name));
+      cell.appendChild(hdrLine);
+      var meta = el("div", { class: "state-meta" });
+      var srcWave = historyMap[name];
+      if (isForbidden) meta.textContent = "status: " + (am.live_block_status || "FORBIDDEN-PER-OP-W30");
+      else if (srcWave) meta.textContent = "source: " + srcWave;
+      cell.appendChild(meta);
+      var noteText = "";
+      if (name === "AUDIT-ONLY") noteText = "Observations recorded; no would-block emitted.";
+      else if (name === "SHADOW-BLOCK") noteText = "Would-block decisions WRITTEN to ledger; NOT enforced.";
+      else if (name === "LIVE-BLOCK-FORBIDDEN") noteText = "Enforcement FORBIDDEN by OP-W30 until promotion gate satisfied.";
+      cell.appendChild(el("div", { class: "state-note" }, noteText));
+      if (i === curIdx && !isForbidden) {
+        var curPill = el("div"); curPill.style.marginTop = "6px";
+        curPill.appendChild(el("span", { class: "pill amber" }, "* CURRENT *"));
+        cell.appendChild(curPill);
+      }
+      if (isForbidden) {
+        var ban = el("div"); ban.style.marginTop = "6px";
+        ban.appendChild(el("span", { class: "pill red" }, "FORBIDDEN PER OP-W30"));
+        cell.appendChild(ban);
+      }
+      row.appendChild(cell);
+    });
+    c.appendChild(row);
+
+    // Mini-strip pipeline
+    var strip = el("div", { class: "mini-strip" });
+    stateOrder.forEach(function(name, i) {
+      var sc = "stage";
+      var isForbidden = (name === "LIVE-BLOCK-FORBIDDEN");
+      if (isForbidden) sc += " is-forbidden";
+      else if (i === curIdx) sc += " is-current-amber";
+      else if (i < curIdx) sc += " is-past";
+      var stage = el("span", { class: sc });
+      stage.appendChild(document.createTextNode((stateGlyphs[name] || "") + " " + name));
+      strip.appendChild(stage);
+      if (i < stateOrder.length - 1) strip.appendChild(el("span", { class: "arrow" }, " -> "));
+    });
+    c.appendChild(strip);
+
+    // Shadow ledger sub-table
+    var sl = am.shadow_ledger || {};
+    var ledgerHeader = el("div", { class: "muted small" });
+    ledgerHeader.style.marginTop = "12px";
+    ledgerHeader.textContent = "Shadow Ledger (" + (sl.ledger_exists ? "live" : "PENDING") + ")";
+    c.appendChild(ledgerHeader);
+    var lt = el("table", { class: "sub-table" });
+    var lthead = el("tr");
+    ["metric","value"].forEach(function(h) { lthead.appendChild(el("th", null, h)); });
+    lt.appendChild(el("thead", null, lthead));
+    var ltb = el("tbody");
+    [
+      ["total_entries", sl.total_entries],
+      ["would_block_count", sl.would_block_count],
+      ["pending_review_count", sl.pending_review_count],
+      ["true_positive_count", sl.true_positive_count],
+      ["false_positive_count", sl.false_positive_count],
+      ["confirmed_violation_count", sl.confirmed_violation_count],
+    ].forEach(function(r) {
+      var tr = el("tr");
+      tr.appendChild(el("td", { class: "small mono" }, r[0]));
+      var vCell = el("td", { class: "num small mono" });
+      if (r[0] === "would_block_count") {
+        vCell.appendChild(el("span", { class: "pill amber" }, String(r[1] == null ? 0 : r[1])));
+      } else if (r[0] === "pending_review_count") {
+        var n = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (n > 0 ? "yellow" : "green") }, String(n)));
+      } else if (r[0] === "true_positive_count") {
+        var n2 = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (n2 > 0 ? "green" : "yellow") }, String(n2)));
+      } else if (r[0] === "false_positive_count") {
+        var n3 = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (n3 > 0 ? "red" : "green") }, String(n3)));
+      } else {
+        vCell.appendChild(document.createTextNode(String(r[1] == null ? 0 : r[1])));
+      }
+      tr.appendChild(vCell);
+      ltb.appendChild(tr);
+    });
+    lt.appendChild(ltb);
+    c.appendChild(lt);
+
+    var gate = el("div");
+    gate.style.marginTop = "12px"; gate.style.padding = "8px 10px";
+    gate.style.background = "var(--bg3)"; gate.style.borderRadius = "4px";
+    gate.style.border = "1px dotted var(--grid)";
+    var gateLine = el("div", { class: "small" });
+    gateLine.appendChild(el("span", { class: "muted" }, "Promotion to LIVE-BLOCK requires: "));
+    gateLine.appendChild(document.createTextNode(am.promotion_to_live_block_gate || "?"));
+    gate.appendChild(gateLine);
+    var readyLine = el("div", { class: "small" });
+    readyLine.style.marginTop = "4px";
+    readyLine.appendChild(el("span", { class: "muted" }, "promotion_ready: "));
+    readyLine.appendChild(el("span", { class: "pill " + (am.promotion_ready ? "green" : "amber") },
+      am.promotion_ready ? "TRUE" : "FALSE"));
+    readyLine.appendChild(document.createTextNode("  |  live_block_status: "));
+    readyLine.appendChild(el("span", { class: "pill red" },
+      am.live_block_status || "FORBIDDEN-PER-OP-W30"));
+    gate.appendChild(readyLine);
+    c.appendChild(gate);
+  })();
+
+  // Panel 11: pending-review queue (preserved from v5)
+  (function() {
+    var c = document.getElementById("panel-pending-queue");
+    c.innerHTML = "";
+    var ls = D.ledger_summary || {};
+    var queue = (ls.pending_review_queue || []);
+    var stamp = ls.fresh_snapshot_at ? ls.fresh_snapshot_at.replace("T", " ").replace("Z", " UTC") : "?";
+    var s10 = document.getElementById("panel-10-fresh-stamp");
+    if (s10) s10.innerHTML = '<span class="freshness-stamp">FRESH ' + escapeHTML(stamp) + '</span>';
+    var s11 = document.getElementById("panel-11-fresh-stamp");
+    if (s11) s11.innerHTML = '<span class="freshness-stamp">FRESH ' + escapeHTML(stamp) + '</span>';
+
+    var chipsLine = el("div");
+    chipsLine.style.display = "flex"; chipsLine.style.flexWrap = "wrap";
+    chipsLine.style.gap = "8px"; chipsLine.style.alignItems = "center";
+    function chip(label, val, pillCls) {
+      var w = el("span");
+      w.appendChild(el("span", { class: "muted small" }, label + ": "));
+      w.appendChild(el("span", { class: "pill " + (pillCls || "blue") }, String(val)));
+      return w;
+    }
+    chipsLine.appendChild(chip("total_entries", ls.total_entries == null ? 0 : ls.total_entries, "blue"));
+    chipsLine.appendChild(chip("would_block", ls.would_block_count == null ? 0 : ls.would_block_count,
+      (ls.would_block_count > 0) ? "amber" : "green"));
+    chipsLine.appendChild(chip("pending_review", ls.pending_review_count == null ? 0 : ls.pending_review_count,
+      (ls.pending_review_count > 0) ? "yellow" : "green"));
+    chipsLine.appendChild(chip("true_positive", ls.true_positive_count == null ? 0 : ls.true_positive_count, "green"));
+    chipsLine.appendChild(chip("false_positive", ls.false_positive_count == null ? 0 : ls.false_positive_count,
+      (ls.false_positive_count > 0) ? "red" : "green"));
+    chipsLine.appendChild(chip("update_of markers", ls.update_of_marker_count == null ? 0 : ls.update_of_marker_count, "blue"));
+    chipsLine.appendChild(chip("raw_lines", ls.raw_line_count == null ? 0 : ls.raw_line_count, "blue"));
+    c.appendChild(chipsLine);
+
+    var t = el("table", { class: "queue-table" });
+    var thr = el("tr");
+    ["sha16", "wave", "artifact_path", "verdict", "would_block",
+     "review_status", "decision_code", "ts"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tbody = el("tbody");
+    if (queue.length === 0) {
+      var tr = el("tr");
+      var td = el("td", { class: "muted small" }, "(no pending entries)");
+      td.setAttribute("colspan", "8");
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    } else {
+      queue.forEach(function(r) {
+        var tr = el("tr");
+        tr.appendChild(el("td", { class: "sha" }, r.sha16 || ""));
+        var wave = "";
+        var m = /W(\d+[A-Z]?)/i.exec(r.artifact_path || "");
+        if (m) wave = "W" + m[1];
+        tr.appendChild(el("td", null, wave));
+        tr.appendChild(el("td", { class: "path" }, clip(r.artifact_path || "", 120)));
+        var vCell = el("td");
+        var vCls = (r.overall_verdict === "AETHER-VIOLATION") ? "amber"
+                 : (r.overall_verdict === "AETHER-COMPLIANT") ? "green" : "yellow";
+        vCell.appendChild(el("span", { class: "pill " + vCls }, r.overall_verdict || "?"));
+        tr.appendChild(vCell);
+        var wbCell = el("td");
+        wbCell.appendChild(el("span", { class: "pill " + (r.would_block ? "amber" : "green") },
+          r.would_block ? "TRUE" : "FALSE"));
+        tr.appendChild(wbCell);
+        var rsCell = el("td");
+        var rsCls = (r.review_status === "PENDING-REVIEW") ? "yellow"
+                  : (r.review_status === "TRUE-POSITIVE") ? "green"
+                  : (r.review_status === "FALSE-POSITIVE") ? "red"
+                  : (r.review_status === "CONFIRMED-VIOLATION") ? "red" : "blue";
+        rsCell.appendChild(el("span", { class: "pill " + rsCls }, r.review_status || "?"));
+        tr.appendChild(rsCell);
+        tr.appendChild(el("td", { class: "small mono" }, r.decision_code || "(none)"));
+        tr.appendChild(el("td", { class: "small mono muted" }, (r.ts_iso || "").slice(11, 19)));
+        tbody.appendChild(tr);
+      });
+    }
+    t.appendChild(tbody);
+    c.appendChild(t);
+
+    var note = el("div", { class: "muted small" });
+    note.style.marginTop = "6px";
+    note.textContent = "Showing top " + queue.length + " oldest PENDING entries (queue_limit="
+      + (ls.queue_limit || queue.length) + "). Total pending across ledger: "
+      + (ls.pending_review_count == null ? "?" : ls.pending_review_count) + ".";
+    c.appendChild(note);
+  })();
+
+  // Panel 8: Vocab Seam Status (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-vocab-seam");
+    c.innerHTML = "";
+    var header = el("div");
+    header.style.display = "flex"; header.style.flexWrap = "wrap";
+    header.style.gap = "12px"; header.style.alignItems = "center";
+    header.appendChild(el("span", { class: "badge-decision" }, vs.decision_code || "?"));
+    var cur = vs.current_state || "?";
+    var statusCls = (cur === "TESTED") ? "tested"
+                  : (cur === "BRIDGED") ? "bridged"
+                  : (cur === "OPEN") ? "open" : "open";
+    var statusBox = el("span", { class: "seam-status " + statusCls });
+    statusBox.appendChild(el("span", { class: "dot "
+      + (cur === "TESTED" || cur === "BRIDGED" ? "ok"
+         : cur === "OPEN" ? "warn" : "bad") }));
+    statusBox.appendChild(document.createTextNode(cur));
+    header.appendChild(statusBox);
+    c.appendChild(header);
+
+    var sg = el("div", { class: "seam-grid" });
+    function card(label, valueText, cls) {
+      var cd = el("div", { class: "seam-card" });
+      cd.appendChild(el("div", { class: "label" }, label));
+      cd.appendChild(el("div", { class: "num-big " + (cls || "") }, String(valueText)));
+      return cd;
+    }
+    sg.appendChild(card("ACTIVE VOCABULARIES",
+      vs.active_vocabularies == null ? "?" : vs.active_vocabularies));
+    sg.appendChild(card("LOSSY MAPPINGS",
+      vs.lossy_count == null ? "?" : vs.lossy_count,
+      (vs.lossy_count && vs.lossy_count > 0) ? "warn" : ""));
+    sg.appendChild(card("BIJECTIVE MAPPINGS",
+      vs.bijective_count == null ? "?" : vs.bijective_count));
+    c.appendChild(sg);
+
+    var kv = el("div", { class: "kv" });
+    kv.style.marginTop = "10px";
+    [
+      ["bridge_sha (last 8)", vs.bridge_sha_short || "(not yet emitted)"],
+      ["guardrail_status",   vs.guardrail_status || "?"],
+      ["regression smoke",   "pass=" + (vs.regression_smoke_pass || 0)
+        + " / fail=" + (vs.regression_smoke_fail || 0)],
+      ["collapse_forbidden", (vs.collapse_forbidden ? "TRUE" : "FALSE")
+        + "  |  cite: " + (vs.collapse_forbidden_cite || "?")],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      kv.appendChild(el("div", { class: "v mono" }, String(r[1])));
+    });
+    c.appendChild(kv);
+  })();
+
+  // Panel 9: AETHER Doctrine (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-doctrine");
+    c.innerHTML = "";
+    if (!ad || !ad.laws) {
+      c.appendChild(el("div", { class: "muted small" }, "(aether_doctrine block not present in snapshot)"));
+      return;
+    }
+    var banner = el("div", { class: "doctrine-banner" });
+    banner.appendChild(el("div", { class: "invariant" },
+      "\"" + (ad.primary_invariant || "") + "\""));
+    banner.appendChild(el("div", { class: "decision" },
+      "DECISION: " + (ad.decision_phrase || "?")));
+    c.appendChild(banner);
+
+    var meta = el("div", { class: "kv" });
+    meta.style.marginTop = "10px";
+    [
+      ["doctrine_canon_path", ad.doctrine_canon_path || "?"],
+      ["minted_wave",         ad.minted_wave || "?"],
+      ["minted_at",           ad.minted_at || "?"],
+      ["minter_pid",          ad.minter_pid || "?"],
+      ["laws_count",          ad.laws_count == null ? "?" : ad.laws_count],
+    ].forEach(function(r) {
+      meta.appendChild(el("div", { class: "k" }, r[0]));
+      meta.appendChild(el("div", { class: "v mono small" }, String(r[1])));
+    });
+    c.appendChild(meta);
+
+    var det = el("details");
+    det.setAttribute("open", "");
+    det.appendChild(el("summary", null,
+      "the " + (ad.laws_count || "?") + " laws (click to collapse)"));
+    var ul = el("ul", { class: "law-list" });
+    (ad.laws || []).forEach(function(law, i) {
+      var n = i + 1;
+      var liCls = (n === 1 || n === 6 || n === 9 || n === 10) ? "law-cited" : "";
+      var li = el("li", { class: liCls });
+      var text = law.replace(/^Law\s+\d+:\s*/, "");
+      li.appendChild(el("span", { class: "law-num" }, "Law " + n + ":"));
+      li.appendChild(document.createTextNode(" " + text));
+      ul.appendChild(li);
+    });
+    det.appendChild(ul);
+    c.appendChild(det);
+  })();
+
+  // Panel 1: Waves
+  (function() {
+    var c = document.getElementById("panel-waves");
+    c.innerHTML = "";
+    var t = el("table");
+    var thr = el("tr");
+    ["Wave","Fired","Headline","apex_cosign","size"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb_ = el("tbody");
+    (D.waves || []).forEach(function(w) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, "W" + w.wave));
+      tr.appendChild(el("td", { class: "small" }, w.fired || "-"));
+      tr.appendChild(el("td", { class: "small" }, w.exists ? clip(w.headline || "(no H1)", 110) : "(missing)"));
+      var ax = el("td", { class: "small" });
+      var apex = w.apex_cosign || "";
+      if (apex) apex.split("+").forEach(function(piece) {
+        piece = piece.trim();
+        if (!piece) return;
+        ax.appendChild(el("span", { class: "pill " + (piece.indexOf("PLAN-B") >= 0 ? "purple"
+          : piece.indexOf("WAVE") >= 0 ? "blue" : "green") }, clip(piece, 48)));
+        ax.appendChild(document.createTextNode(" "));
+      });
+      tr.appendChild(ax);
+      tr.appendChild(el("td", { class: "num small" }, w.exists ? fmtBytes(w.size) : "-"));
+      tb_.appendChild(tr);
+    });
+    t.appendChild(tb_);
+    c.appendChild(t);
+  })();
+
+  // Panel 2: PB-D
+  (function() {
+    var c = document.getElementById("panel-pbd");
+    c.innerHTML = "";
+    var t = el("table");
+    var thr = el("tr");
+    ["ID","Title","Wave","Status","Selftest"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb_ = el("tbody");
+    (D.pb_d_atlas || []).forEach(function(p) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, p.id));
+      tr.appendChild(el("td", { class: "small" }, clip(p.title, 36)));
+      tr.appendChild(el("td", { class: "small" }, p.scaffolded_wave));
+      var stCell = el("td", null);
+      stCell.appendChild(el("span", { class: "pill green" }, p.status));
+      tr.appendChild(stCell);
+      tr.appendChild(el("td", { class: "small num" }, p.selftest));
+      tb_.appendChild(tr);
+    });
+    t.appendChild(tb_);
+    c.appendChild(t);
+  })();
+
+  // Panel 3: Heartbeat
+  (function() {
+    var c = document.getElementById("panel-heartbeat");
+    c.innerHTML = "";
+    var kv = el("div", { class: "kv" });
+    [
+      ["counter", hb.counter],
+      ["loop_pid", hb.loop_pid],
+      ["loop_alive", hb.loop_alive ? "true" : "false"],
+      ["beat_count (tail)", hb.beat_count],
+      ["window first", hb.first_ts || "-"],
+      ["window last", hb.last_ts || "-"],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      kv.appendChild(el("div", { class: "v" }, String(r[1] == null ? "-" : r[1])));
+    });
+    c.appendChild(kv);
+  })();
+
+  // Panel 4: Thermal
+  (function() {
+    var c = document.getElementById("panel-thermal");
+    c.innerHTML = "";
+    var kv = el("div", { class: "kv" });
+    [
+      ["current temp", (thermal.current_temp_c == null ? "?" : thermal.current_temp_c + "C")],
+      ["severity", thermal.current_severity || "?"],
+      ["window N", thermal.window_n],
+      ["trend", thermal.trend || "?"],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      kv.appendChild(el("div", { class: "v" }, String(r[1] == null ? "-" : r[1])));
+    });
+    c.appendChild(kv);
+  })();
+
+  // Panel 5: Substrate + Daemon
+  (function() {
+    var c = document.getElementById("panel-substrate");
+    c.innerHTML = "";
+    var kv = el("div", { class: "kv" });
+    [
+      ["substrate sha", sub.sha ? sub.sha.slice(0, 32) + "..." : "?"],
+      ["substrate size", fmtBytes(sub.size)],
+      ["walker bypass", sub.walker_bypass ? "active" : "inactive"],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      kv.appendChild(el("div", { class: "v mono" }, String(r[1])));
+    });
+    c.appendChild(kv);
+  })();
+
+  // Panel 6: Operator queue
+  (function() {
+    var c = document.getElementById("panel-queue");
+    c.innerHTML = "";
+    var oq = D.operator_queue || {};
+    var sub1 = el("div");
+    sub1.appendChild(el("div", { class: "muted small" }, "TIER 0 keystrokes:"));
+    var ul1 = el("ul", { class: "thin" });
+    (oq.tier_0_witness || []).forEach(function(it) {
+      var li = el("li");
+      li.appendChild(el("span", { class: "pill yellow" }, it.id));
+      li.appendChild(document.createTextNode(" " + it.task));
+      ul1.appendChild(li);
+    });
+    sub1.appendChild(ul1);
+    c.appendChild(sub1);
+  })();
+
+  // Panel 7: Maps
+  (function() {
+    var c = document.getElementById("panel-maps");
+    c.innerHTML = "";
+    var t = el("table");
+    var thr = el("tr");
+    ["version","dir","json","voxel_count","sha256"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb_ = el("tbody");
+    (D.map_lineage || []).forEach(function(m) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, m.version));
+      tr.appendChild(el("td", null, el("span", { class: "dot " + (m.exists_dir ? "ok" : "bad") })));
+      tr.appendChild(el("td", null, el("span", { class: "dot " + (m.json_exists ? "ok" : "bad") })));
+      tr.appendChild(el("td", { class: "num" }, m.voxel_count == null ? "-" : String(m.voxel_count)));
+      tr.appendChild(el("td", { class: "small mono" }, m.sha ? clip(m.sha, 48) : "-"));
+      tb_.appendChild(tr);
+    });
+    t.appendChild(tb_);
+    c.appendChild(t);
+  })();
+
+  // ----- v6 panels (preserved) -----
+  (function() {
+    var slot = document.getElementById("panel-10-snapshot-status");
+    if (!slot) return;
+    var val = D.ledger_snapshot_status || "UNKNOWN-W32A-NOT-PRESENT";
+    var cls = "unknown";
+    if (val === "COMPLETE") cls = "complete";
+    else if (val === "PARTIAL") cls = "partial";
+    else if (val === "STALE") cls = "stale";
+    else if (val === "RACE-DETECTED") cls = "race";
+    var label = (val === "UNKNOWN-W32A-NOT-PRESENT")
+      ? "snapshot: PENDING (W32A absent)"
+      : ("snapshot: " + val);
+    slot.innerHTML = '<span class="snapshot-status-badge ' + cls + '">'
+                   + '<span class="sdot"></span>' + escapeHTML(label) + '</span>';
+  })();
+
+  // Panel 12: Reconciliation Status (preserved from v6)
+  (function() {
+    var c = document.getElementById("panel-reconciliation");
+    if (!c) return;
+    c.innerHTML = "";
+    var r = D.reconciliation || {};
+    var dash = r.dashboard_totals || {};
+    var recomp = r.recomputed_totals || {};
+    var deltas = r.deltas || {};
+    var hasRecomp = Object.keys(recomp).length > 0;
+    var w32aMissing = !hasRecomp && (String(r._status || "").toLowerCase().indexOf("absent") >= 0);
+
+    var slot12 = document.getElementById("panel-12-status");
+    if (slot12) {
+      var hcls, htext;
+      if (w32aMissing) { hcls = "partial"; htext = "PENDING (W32A absent)"; }
+      else if (r.pass) { hcls = "complete"; htext = "PASS"; }
+      else { hcls = "race"; htext = "FAIL"; }
+      slot12.innerHTML = '<span class="snapshot-status-badge ' + hcls + '">'
+                       + '<span class="sdot"></span>' + escapeHTML(htext) + '</span>';
+    }
+
+    var bannerCls = w32aMissing ? "pending" : (r.pass ? "pass" : "fail");
+    var banner = el("div", { class: "recon-banner " + bannerCls });
+    if (w32aMissing) banner.textContent = "Reconciliation PENDING - W32A reconcileLedger not yet present.";
+    else if (r.pass) banner.textContent = "Reconciliation PASS - recomputed totals match dashboard.";
+    else banner.textContent = "Reconciliation FAIL - see deltas.";
+    c.appendChild(banner);
+
+    var grid = el("div", { class: "recon-grid" });
+    function buildSide(title, totals) {
+      var box = el("div", { class: "recon-side" });
+      box.appendChild(el("h3", null, title));
+      var t = el("table"); var tb_ = el("tbody");
+      var keys = ["total_entries","would_block_count","pending_review_count",
+                  "true_positive_count","false_positive_count",
+                  "confirmed_violation_count","update_of_marker_count","raw_line_count"];
+      keys.forEach(function(k) {
+        var tr = el("tr");
+        if (deltas[k]) tr.className = "delta-row";
+        tr.appendChild(el("td", { class: "k" }, k));
+        tr.appendChild(el("td", { class: "v" }, String(totals[k] == null ? "-" : totals[k])));
+        tb_.appendChild(tr);
+      });
+      t.appendChild(tb_); box.appendChild(t); return box;
+    }
+    grid.appendChild(buildSide("Dashboard totals", dash));
+    grid.appendChild(buildSide("Recomputed totals (W32A)", hasRecomp ? recomp : {}));
+    c.appendChild(grid);
+  })();
+
+  // Panel 13: Concurrency Test Results (preserved from v6)
+  (function() {
+    var c = document.getElementById("panel-concurrency-test");
+    if (!c) return;
+    c.innerHTML = "";
+    var ct = D.concurrency_test || {};
+    var anyFail = (ct.scenario_A === "FAIL" || ct.scenario_B === "FAIL" || ct.scenario_C === "FAIL");
+    var allPass = (ct.scenario_A === "PASS" && ct.scenario_B === "PASS" && ct.scenario_C === "PASS");
+    var wrap = document.getElementById("panel-13-wrap");
+    if (wrap) { wrap.classList.remove("fail"); if (anyFail) wrap.classList.add("fail"); }
+    var slot13 = document.getElementById("panel-13-status");
+    if (slot13) {
+      var cls, lbl;
+      if (allPass) { cls = "complete"; lbl = "ALL PASS"; }
+      else if (anyFail) { cls = "race"; lbl = "FAIL"; }
+      else { cls = "partial"; lbl = ct.overall || "PENDING"; }
+      slot13.innerHTML = '<span class="snapshot-status-badge ' + cls + '">'
+                       + '<span class="sdot"></span>' + escapeHTML(lbl) + '</span>';
+    }
+    var row = el("div", { class: "concur-row" });
+    ["A","B","C"].forEach(function(letter) {
+      var s = ct["scenario_" + letter] || "PENDING";
+      var ccls = (s === "PASS") ? "pass" : (s === "FAIL") ? "fail" : "pending";
+      var cell = el("div", { class: "concur-cell " + ccls });
+      cell.appendChild(el("div", { class: "scen-name" }, "Scenario " + letter));
+      cell.appendChild(el("div", { class: "scen-status" }, s));
+      var hint = "";
+      if (letter === "A") hint = "writer-vs-reader race";
+      else if (letter === "B") hint = "concurrent-write barrier";
+      else if (letter === "C") hint = "snapshot-during-mutation";
+      cell.appendChild(el("div", { class: "muted small" }, hint));
+      row.appendChild(cell);
+    });
+    c.appendChild(row);
+  })();
+
+  // ===== v7 (W34C) - NEW Panel 14 + Panel 15 =====
+
+  // Panel 14: CAS-Fix Verification (W33A)
+  (function() {
+    var c = document.getElementById("panel-cas-fix");
+    if (!c) return;
+    c.innerHTML = "";
+    var cf = D.cas_fix_v3 || {};
+    var statusText = String(cf._status || "");
+    var pending = statusText.toLowerCase().indexOf("absent") >= 0
+               || statusText.toLowerCase().indexOf("pending") >= 0
+               || cf.commits == null;
+
+    // Header status badge
+    var slot14 = document.getElementById("panel-14-status");
+    if (slot14) {
+      var cls, lbl;
+      if (pending) { cls = "partial"; lbl = "PENDING (W33A absent)"; }
+      else if (cf.cas_failures === 0 && cf.defect_repro_v3_converged_count
+                 === cf.defect_repro_trial_count) {
+        cls = "complete"; lbl = "VERIFIED";
+      } else if ((cf.cas_failures || 0) > 0) {
+        cls = "race"; lbl = "FAIL (cas_failures>0)";
+      } else { cls = "partial"; lbl = "PARTIAL"; }
+      slot14.innerHTML = '<span class="snapshot-status-badge ' + cls + '">'
+                       + '<span class="sdot"></span>' + escapeHTML(lbl) + '</span>';
+    }
+
+    // Banner: state-of-fix summary
+    var bannerCls = pending ? "pending"
+                  : (cf.cas_failures === 0 ? "pass" : "fail");
+    var banner = el("div", { class: "recon-banner " + bannerCls });
+    if (pending) {
+      banner.textContent = "CAS-fix verification PENDING - W33A receipt absent.";
+    } else {
+      var trial = cf.defect_repro_trial_count || 10;
+      var v2c = cf.defect_repro_v2_converged_count;
+      var v3c = cf.defect_repro_v3_converged_count;
+      banner.textContent = "W32B defect reproduced (v2 converged " + v2c + "/" + trial
+        + " trials), W33A v3 CAS-fix CONVERGED " + v3c + "/" + trial
+        + " trials (commits=" + cf.commits + " retries=" + cf.retries
+        + " cas_failures=" + cf.cas_failures + ").";
+    }
+    c.appendChild(banner);
+
+    // Note: W32A barrier API stays unchanged; fix is sidecar v3
+    var apiNote = el("div", { class: "muted small" });
+    apiNote.style.marginTop = "6px";
+    apiNote.textContent = "W32A barrier API UNCHANGED. Fix is sidecar v3 "
+      + "(shadow_block_v3.py re-exports v2 surface + atomic-rename CAS commit "
+      + "via .cas.lock O_EXCL sibling).";
+    c.appendChild(apiNote);
+
+    // CAS stats row
+    var statsRow = el("div", { class: "cas-stats-row" });
+    function statCell(label, val, cls, sub) {
+      var cell = el("div", { class: "cas-stat-cell" });
+      cell.appendChild(el("div", { class: "label" }, label));
+      cell.appendChild(el("div", { class: "num-big " + (cls || "") },
+        String(val == null ? "?" : val)));
+      if (sub) cell.appendChild(el("div", { class: "sub" }, sub));
+      return cell;
+    }
+    statsRow.appendChild(statCell("commits", cf.commits, "info",
+      "atomic-rename successes"));
+    statsRow.appendChild(statCell("retries", cf.retries, "amber",
+      "CAS attempt retries"));
+    statsRow.appendChild(statCell("max_attempts", cf.max_attempts, "amber",
+      "(budget 100)"));
+    statsRow.appendChild(statCell("cas_failures",
+      cf.cas_failures, (cf.cas_failures === 0) ? "" : "bad",
+      (cf.cas_failures === 0) ? "ZERO failures" : "INVESTIGATE"));
+    c.appendChild(statsRow);
+
+    // Defect repro: 10-trial bar charts (side-by-side)
+    var trial = cf.defect_repro_trial_count || 10;
+    var expectedWriters = 5;
+    var reproWrap = el("div", { class: "repro-row" });
+
+    function reproSide(title, label, arr, cls) {
+      var box = el("div", { class: "repro-side " + cls });
+      box.appendChild(el("h3", null, title));
+      box.appendChild(el("div", { class: "muted small" }, label));
+      var bars = el("div", { class: "trial-bars" });
+      if (arr && arr.length) {
+        arr.forEach(function(v, i) {
+          var col = el("div", { class: "trial-bar-col" });
+          var track = el("div", { class: "trial-bar-track" });
+          var fillCls = (v === expectedWriters)
+            ? "trial-bar-fill converged" : "trial-bar-fill";
+          var fill = el("div", { class: fillCls });
+          fill.style.height = (100 * v / expectedWriters) + "%";
+          track.appendChild(fill);
+          col.appendChild(track);
+          var valCls = (v === expectedWriters)
+            ? "trial-bar-val converged" : "trial-bar-val lost";
+          col.appendChild(el("div", { class: valCls }, String(v)));
+          col.appendChild(el("div", { class: "trial-bar-label" }, "t" + (i+1)));
+          bars.appendChild(col);
+        });
+      } else {
+        bars.appendChild(el("div", { class: "muted small" },
+          "(no trial data — receipt absent or unparseable)"));
+      }
+      box.appendChild(bars);
+      var converged = (arr || []).filter(function(v) { return v === expectedWriters; }).length;
+      var verdictText;
+      if (!arr || !arr.length) {
+        verdictText = "PENDING";
+      } else if (converged === arr.length) {
+        verdictText = "CONVERGED " + converged + "/" + arr.length + " (writer_done_count=" + expectedWriters + ")";
+      } else {
+        verdictText = "LOST UPDATES (converged " + converged + "/" + arr.length + ")";
+      }
+      box.appendChild(el("div", { class: "verdict" }, verdictText));
+      return box;
+    }
+    reproWrap.appendChild(reproSide(
+      "W32A v2 (defective)",
+      "Per-trial writer_done_count (expected=" + expectedWriters + "). " + trial + " trials.",
+      cf.defect_repro_v2_lost,
+      "defective"));
+    reproWrap.appendChild(reproSide(
+      "W33A v3 (CAS-fixed)",
+      "Per-trial writer_done_count (expected=" + expectedWriters + "). " + trial + " trials.",
+      cf.defect_repro_v3_converged,
+      "fixed"));
+    c.appendChild(reproWrap);
+
+    // Module SHA strip
+    if (cf.fix_module_sha) {
+      var sha = el("div", { class: "sha-strip" });
+      sha.innerHTML = "fix_module_sha (shadow_block_v3.py): <code>"
+        + escapeHTML(cf.fix_module_sha) + "</code>";
+      c.appendChild(sha);
+    }
+    if (cf.receipt_path) {
+      var rp = el("div", { class: "queue-hint" });
+      rp.innerHTML = "<b>W33A receipt:</b> <code>"
+        + escapeHTML(cf.receipt_path) + "</code><br>"
+        + "<b>_status:</b> " + escapeHTML(cf._status || "?");
+      c.appendChild(rp);
+    }
+  })();
+
+  // Panel 15: Pre-classifier Suggestions (W34B) + audit-v2 heuristic fix (W34A)
+  (function() {
+    var c = document.getElementById("panel-preclassifier");
+    if (!c) return;
+    c.innerHTML = "";
+    var pc = D.preclassifier || {};
+    var af = D.audit_v2_heuristic_fix || {};
+
+    var pcPending = String(pc._status || "").toLowerCase().indexOf("absent") >= 0
+                 || pc.total_pending == null;
+    var afPending = String(af._status || "").toLowerCase().indexOf("absent") >= 0
+                 || (af.heuristic_flag_count_before == null
+                     && af.heuristic_flag_count_after == null);
+
+    // Header status badge
+    var slot15 = document.getElementById("panel-15-status");
+    if (slot15) {
+      var cls, lbl;
+      if (pcPending) { cls = "partial"; lbl = "PENDING (W34B absent)"; }
+      else { cls = "complete"; lbl = "READY"; }
+      slot15.innerHTML = '<span class="snapshot-status-badge ' + cls + '">'
+                       + '<span class="sdot"></span>' + escapeHTML(lbl) + '</span>';
+    }
+
+    // (a) W34A audit-v2 heuristic fix subsection
+    var afHeader = el("h3");
+    afHeader.style.margin = "0 0 6px 0"; afHeader.style.fontSize = "11px";
+    afHeader.style.color = "var(--info)";
+    afHeader.style.textTransform = "uppercase";
+    afHeader.style.letterSpacing = "0.1em";
+    afHeader.textContent = "(a) W34A Audit-v2 Heuristic Flag Drop";
+    c.appendChild(afHeader);
+    if (afPending) {
+      var afBan = el("div", { class: "recon-banner pending" });
+      afBan.textContent = "W34A receipt PENDING - heuristic-flag drop not yet measured "
+        + "(race-safe).";
+      c.appendChild(afBan);
+    } else {
+      var hRow = el("div", { class: "heuristic-fix-row" });
+      function hCell(label, val, cls) {
+        var cell = el("div", { class: "heuristic-fix-cell" });
+        cell.appendChild(el("div", { class: "label" }, label));
+        cell.appendChild(el("div", { class: "num-big " + (cls || "") },
+          String(val == null ? "?" : val)));
+        return cell;
+      }
+      hRow.appendChild(hCell("flags BEFORE", af.heuristic_flag_count_before,
+        "still"));
+      var arr = el("div", { class: "arrow-drop" }, "->");
+      hRow.appendChild(arr);
+      hRow.appendChild(hCell("flags AFTER", af.heuristic_flag_count_after,
+        (af.heuristic_flag_count_after === 0) ? "dropped" : "still"));
+      c.appendChild(hRow);
+    }
+    if (af.audit_v2_sha) {
+      var sh = el("div", { class: "sha-strip" });
+      sh.innerHTML = "audit_v2_sha: <code>" + escapeHTML(af.audit_v2_sha) + "</code>";
+      c.appendChild(sh);
+    }
+
+    // (b) W34B pre-classifier subsection
+    var pcHeader = el("h3");
+    pcHeader.style.margin = "14px 0 6px 0"; pcHeader.style.fontSize = "11px";
+    pcHeader.style.color = "var(--purple)";
+    pcHeader.style.textTransform = "uppercase";
+    pcHeader.style.letterSpacing = "0.1em";
+    pcHeader.textContent = "(b) W34B Pre-classifier Proposal Distribution";
+    c.appendChild(pcHeader);
+
+    if (pcPending) {
+      var pcBan = el("div", { class: "recon-banner pending" });
+      pcBan.textContent = "W34B receipt PENDING - pre-classifier proposals "
+        + "not yet generated (race-safe).";
+      c.appendChild(pcBan);
+    } else {
+      // Chips
+      var chipsLine = el("div");
+      chipsLine.style.display = "flex"; chipsLine.style.flexWrap = "wrap";
+      chipsLine.style.gap = "8px"; chipsLine.style.alignItems = "center";
+      function chip(label, val, pillCls) {
+        var w = el("span");
+        w.appendChild(el("span", { class: "muted small" }, label + ": "));
+        w.appendChild(el("span", { class: "pill " + (pillCls || "blue") },
+          String(val == null ? "?" : val)));
+        return w;
+      }
+      chipsLine.appendChild(chip("total_pending", pc.total_pending, "blue"));
+      chipsLine.appendChild(chip("FALSE-POSITIVE", pc.proposed_FP_count, "red"));
+      chipsLine.appendChild(chip("TRUE-POSITIVE", pc.proposed_TP_count, "green"));
+      chipsLine.appendChild(chip("FPHF", pc.proposed_FPHF_count, "amber"));
+      chipsLine.appendChild(chip("CONFIRMED-VIOLATION", pc.proposed_CV_count, "orange"));
+      chipsLine.appendChild(chip("NEEDS-INSPECTION", pc.proposed_NI_count, "blue"));
+      c.appendChild(chipsLine);
+
+      // Stacked-bar proposal distribution
+      var counts = {
+        fp: pc.proposed_FP_count || 0,
+        tp: pc.proposed_TP_count || 0,
+        fphf: pc.proposed_FPHF_count || 0,
+        cv: pc.proposed_CV_count || 0,
+        ni: pc.proposed_NI_count || 0,
+      };
+      var totalCount = counts.fp + counts.tp + counts.fphf + counts.cv + counts.ni;
+      var bar = el("div", { class: "stacked-bar" });
+      if (totalCount === 0) {
+        var empty = el("div", { class: "stacked-seg empty" }, "(no proposals)");
+        empty.style.flex = "1 0 100%";
+        bar.appendChild(empty);
+      } else {
+        ["fp","tp","fphf","cv","ni"].forEach(function(k) {
+          if (counts[k] > 0) {
+            var seg = el("div", { class: "stacked-seg " + k },
+              String(counts[k]));
+            seg.style.flex = counts[k] + " 0 0";
+            seg.title = k.toUpperCase() + ": " + counts[k];
+            bar.appendChild(seg);
+          }
+        });
+      }
+      c.appendChild(bar);
+
+      // Legend
+      var legend = el("div", { class: "stacked-legend" });
+      [
+        ["fp","FALSE-POSITIVE"],
+        ["tp","TRUE-POSITIVE"],
+        ["fphf","FALSE-POSITIVE-HEURISTIC-FLAG"],
+        ["cv","CONFIRMED-VIOLATION"],
+        ["ni","NEEDS-INSPECTION"],
+      ].forEach(function(p) {
+        var lg = el("span", { class: "lg" });
+        lg.appendChild(el("span", { class: "swatch " + p[0] }));
+        lg.appendChild(document.createTextNode(p[1] + " (" + (counts[p[0]] || 0) + ")"));
+        legend.appendChild(lg);
+      });
+      c.appendChild(legend);
+
+      // Action plan banner
+      var ap = el("div", { class: "action-plan" });
+      ap.innerHTML = '<div class="heading">OPERATOR ACTION PLAN</div>'
+        + '<div>operator can batch-approve <b>' + counts.fp
+        + ' FALSE-POSITIVE</b> in 1 command, '
+        + 'review <b>' + counts.fphf + ' FPHF</b> + '
+        + '<b>' + counts.ni + ' NI</b> individually, '
+        + 'and escalate <b>' + counts.cv + ' CONFIRMED-VIOLATION</b> + '
+        + '<b>' + counts.tp + ' TRUE-POSITIVE</b> to apex-cosign review.</div>'
+        + '<div style="margin-top:8px">Cross-link: '
+        + '<code>D:/AsolariaGuides/autopilot-overnight-2026-05-20/W31C-LEDGER-REVIEW/review_helper.py</code><br>'
+        + '<code>D:/AsolariaGuides/autopilot-overnight-2026-05-20/W34B-LEDGER-PRECLASSIFIER/preclassifier.py</code></div>'
+        + '<div style="margin-top:8px;font-size:11px;color:var(--muted)">'
+        + 'batch FALSE-POSITIVE: '
+        + '<code>python review_helper.py batch-mark --from-preclassifier '
+        + '--filter FALSE-POSITIVE --op-token OP-AETHER-HIGH-ASSURANCE-W34C</code></div>';
+      c.appendChild(ap);
+    }
+    if (pc.classifier_sha) {
+      var pcsh = el("div", { class: "sha-strip" });
+      pcsh.innerHTML = "classifier_sha: <code>" + escapeHTML(pc.classifier_sha) + "</code>";
+      c.appendChild(pcsh);
+    }
+    if (pc.receipt_path) {
+      var rp = el("div", { class: "queue-hint" });
+      rp.innerHTML = "<b>W34B receipt:</b> <code>"
+        + escapeHTML(pc.receipt_path) + "</code><br>"
+        + "<b>_status:</b> " + escapeHTML(pc._status || "?");
+      c.appendChild(rp);
+    }
+  })();
+
+  // ===== v8 (W36B) - NEW Panel 16 + Panel 17 =====
+
+  // Panel 16: Audit v4 Results (W35B)
+  (function() {
+    var c = document.getElementById("panel-audit-v4");
+    if (!c) return;
+    c.innerHTML = "";
+    var a4 = D.audit_v4 || {};
+    var statusText = String(a4._status || "");
+    var pending = statusText.toLowerCase().indexOf("absent") >= 0
+               || a4.artifacts_checked == null;
+
+    // Header status badge
+    var slot16 = document.getElementById("panel-16-status");
+    if (slot16) {
+      var cls, lbl;
+      if (pending) { cls = "partial"; lbl = "PENDING (W35B absent)"; }
+      else if (a4.drift_count === 0 && a4.law7_flag_count === 0) {
+        cls = "complete"; lbl = "ALL GREEN";
+      } else if ((a4.drift_count || 0) > 0 || (a4.law7_flag_count || 0) > 0) {
+        cls = "race"; lbl = "DRIFT/FLAGS DETECTED";
+      } else { cls = "partial"; lbl = "PARTIAL"; }
+      slot16.innerHTML = '<span class="snapshot-status-badge ' + cls + '">'
+                       + '<span class="sdot"></span>' + escapeHTML(lbl) + '</span>';
+    }
+
+    if (pending) {
+      var ban = el("div", { class: "recon-banner pending" });
+      ban.textContent = "W35B audit v4 PENDING - audit markdown absent "
+        + "(race-safe placeholder).";
+      c.appendChild(ban);
+      return;
+    }
+
+    // ALL GREEN badge
+    var badge = el("div", { class: "audit-green-badge" });
+    badge.appendChild(el("span", { class: "dot" }));
+    badge.appendChild(el("span", { class: "big" },
+      String(a4.artifacts_checked || "?")));
+    badge.appendChild(document.createTextNode(" artifacts checked"));
+    badge.appendChild(el("span", { class: "pill green" },
+      String(a4.drift_count == null ? "?" : a4.drift_count) + " drift"));
+    badge.appendChild(el("span", { class: "pill green" },
+      String(a4.law7_flag_count == null ? "?" : a4.law7_flag_count)
+      + " law-7 flags"));
+    c.appendChild(badge);
+
+    // Verdict line
+    if (a4.verdict_line) {
+      var vl = el("div", { class: "muted small" });
+      vl.style.marginTop = "8px";
+      vl.textContent = a4.verdict_line;
+      c.appendChild(vl);
+    }
+
+    // Findings row (per AETHER law 9 - exposed)
+    var fhdr = el("h3");
+    fhdr.style.margin = "14px 0 4px 0"; fhdr.style.fontSize = "11px";
+    fhdr.style.color = "var(--amber)";
+    fhdr.style.textTransform = "uppercase";
+    fhdr.style.letterSpacing = "0.1em";
+    fhdr.textContent = "Non-law-7 Findings Exposed (per AETHER law 9)";
+    c.appendChild(fhdr);
+
+    var fRow = el("div", { class: "findings-row" });
+    function fCell(label, val, cls, sub) {
+      var cell = el("div", { class: "findings-cell" });
+      cell.appendChild(el("div", { class: "label" }, label));
+      cell.appendChild(el("div", { class: "num-big " + (cls || "") },
+        String(val == null ? "?" : val)));
+      if (sub) cell.appendChild(el("div", { class: "sub" }, sub));
+      return cell;
+    }
+    var totalF = a4.non_law7_findings_total;
+    fRow.appendChild(fCell("total findings", totalF,
+      (totalF > 0) ? "amber" : "info",
+      "pre-existing v1 detector; NOT new drift"));
+    fRow.appendChild(fCell("law-6 (selftest-only)",
+      a4.findings_law6_count, "amber",
+      "no e2e regression cross-link"));
+    fRow.appendChild(fCell("law-9 (state-tokens)",
+      a4.findings_law9_count, "amber",
+      "STAGED/IN-FLIGHT/LANDED/RECEIPTED missing"));
+    c.appendChild(fRow);
+
+    // Triage status strip
+    var w36a = D.w36a_triage || null;
+    var ts = el("div", { class: "triage-strip" });
+    ts.appendChild(document.createTextNode("Triage status: "));
+    if (w36a && w36a._status && String(w36a._status).toLowerCase().indexOf("ok") >= 0) {
+      ts.appendChild(el("span", { class: "pill green" }, "W36A LANDED"));
+    } else {
+      ts.appendChild(el("span", { class: "pill amber" },
+        "PENDING W36A (race-safe placeholder if absent)"));
+    }
+    ts.appendChild(el("span", { class: "muted small" },
+      "  Operator decides per-finding; NOT auto-remediated (AETHER law 7)."));
+    c.appendChild(ts);
+
+    // snapshot_mismatch reconciliation re-cite
+    if (a4.snapshot_mismatch != null) {
+      var sm = el("div", { class: "muted small" });
+      sm.style.marginTop = "6px";
+      sm.appendChild(document.createTextNode("W32A reconcileLedger snapshot_mismatch: "));
+      sm.appendChild(el("span", { class: "pill "
+        + (a4.snapshot_mismatch ? "red" : "green") },
+        a4.snapshot_mismatch ? "TRUE (FAIL)" : "FALSE (PASS)"));
+      c.appendChild(sm);
+    }
+
+    // Path strip
+    if (a4.audit_path) {
+      var pp = el("div", { class: "path-strip" });
+      pp.innerHTML = "audit path: <code>" + escapeHTML(a4.audit_path)
+        + "</code>";
+      if (a4.audit_sha) {
+        pp.innerHTML += "<br>audit_sha: <code>"
+          + escapeHTML(a4.audit_sha.slice(0, 32)) + "...</code>";
+      }
+      c.appendChild(pp);
+    }
+  })();
+
+  // Panel 17: Wake-Up Runbook (W35C)
+  (function() {
+    var c = document.getElementById("panel-wake-up");
+    if (!c) return;
+    c.innerHTML = "";
+    var wu = D.wake_up_runbook || {};
+    var statusText = String(wu._status || "");
+    var pending = statusText.toLowerCase().indexOf("absent") >= 0
+               || (wu.runbook_dir == null && wu.witness_queue_count == null);
+
+    // Header status badge
+    var slot17 = document.getElementById("panel-17-status");
+    if (slot17) {
+      var cls, lbl;
+      if (pending) { cls = "partial"; lbl = "PENDING (W35C absent)"; }
+      else { cls = "complete"; lbl = "AVAILABLE"; }
+      slot17.innerHTML = '<span class="snapshot-status-badge ' + cls + '">'
+                       + '<span class="sdot"></span>' + escapeHTML(lbl) + '</span>';
+    }
+
+    if (pending) {
+      var ban = el("div", { class: "recon-banner pending" });
+      ban.textContent = "W35C wake-up runbook PENDING - directory absent "
+        + "(race-safe placeholder).";
+      c.appendChild(ban);
+      return;
+    }
+
+    // Quick start banner
+    var qs = el("div", { class: "quickstart-strip" });
+    qs.appendChild(el("div", { class: "heading" }, "Quick start"));
+    var qsl = el("div");
+    qsl.appendChild(document.createTextNode("Operator wake-up command: "));
+    qsl.appendChild(el("code", null, wu.quick_start || "python wake_up.py all"));
+    qs.appendChild(qsl);
+    c.appendChild(qs);
+
+    // Cells row
+    var row = el("div", { class: "wake-row" });
+    function wCell(label, val, cls, sub) {
+      var cell = el("div", { class: "wake-cell" });
+      cell.appendChild(el("div", { class: "label" }, label));
+      var nb = el("div", { class: "num-big " + (cls || "") },
+        String(val == null ? "?" : val));
+      cell.appendChild(nb);
+      if (sub) cell.appendChild(el("div", { class: "sub muted small" }, sub));
+      return cell;
+    }
+    function wText(label, val, sub) {
+      var cell = el("div", { class: "wake-cell" });
+      cell.appendChild(el("div", { class: "label" }, label));
+      cell.appendChild(el("div", { class: "text-val" },
+        String(val == null ? "?" : val)));
+      if (sub) cell.appendChild(el("div", { class: "sub muted small" }, sub));
+      return cell;
+    }
+    row.appendChild(wCell("witness queue",
+      wu.witness_queue_count,
+      (wu.witness_queue_count > 0) ? "amber" : "green",
+      "pending operator action"));
+    row.appendChild(wText("last sample at",
+      wu.sample_output_captured_at,
+      "captured in RECEIPT.md"));
+    row.appendChild(wCell("ledger pending",
+      wu.ledger_pending_count, "info",
+      "via W30A summarize_ledger"));
+    row.appendChild(wCell("FP (FALSE-POSITIVE)",
+      wu.preclass_fp_count, "green",
+      "W34B preclassifier"));
+    row.appendChild(wCell("TP (TRUE-POSITIVE)",
+      wu.preclass_tp_count, "amber",
+      "W34B preclassifier"));
+    row.appendChild(wCell("NI (NEEDS-INV.)",
+      wu.preclass_ni_count, "amber",
+      "W34B preclassifier"));
+    c.appendChild(row);
+
+    // Paths
+    var paths = el("div", { class: "path-strip" });
+    var lines = [];
+    if (wu.runbook_dir) lines.push(
+      "runbook dir: <code>" + escapeHTML(wu.runbook_dir) + "</code>");
+    if (wu.wake_up_py_path) lines.push(
+      "wake_up.py: <code>" + escapeHTML(wu.wake_up_py_path) + "</code>");
+    if (wu.wake_up_py_sha16) lines.push(
+      "wake_up.py sha16: <code>" + escapeHTML(wu.wake_up_py_sha16) + "</code>");
+    if (wu.runbook_md_path) lines.push(
+      "runbook.md: <code>" + escapeHTML(wu.runbook_md_path) + "</code>");
+    if (wu.quick_reference_path) lines.push(
+      "quick-reference.md: <code>"
+      + escapeHTML(wu.quick_reference_path) + "</code>");
+    paths.innerHTML = lines.join("<br>");
+    c.appendChild(paths);
+  })();
+
+  document.getElementById("footer").textContent =
+    "unified-dashboard-built-v8.html - W36B - v20+Audit-v4+Wake-Up - snapshot v8 "
+    + (D.snapshot_at_v8 || D.snapshot_at_v7 || D.snapshot_at || "?")
+    + " - audit_v4.drift=" + String((D.audit_v4||{}).drift_count)
+    + " law7=" + String((D.audit_v4||{}).law7_flag_count)
+    + " - witness_queue=" + String((D.wake_up_runbook||{}).witness_queue_count)
+    + " - sidecar PID AGT-VECTOR-VIZ_RENDER-W36B-DASHBOARD-V8-2026-05-21";
+})();
+</script>
+</body>
+</html>

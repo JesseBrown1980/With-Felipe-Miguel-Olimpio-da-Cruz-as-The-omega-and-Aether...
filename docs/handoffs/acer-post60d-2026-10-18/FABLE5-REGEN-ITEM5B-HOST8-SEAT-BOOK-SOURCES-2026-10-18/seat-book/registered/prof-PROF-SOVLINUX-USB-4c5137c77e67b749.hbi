@@ -1,0 +1,15 @@
+HBI1|task=all-sup-reg-4c5137c77e67b749|generated=2026-06-09T21:16:56.898Z|packets=12|json=0
+SRC|C:/Users/acer/Asolaria/tools/register-all-supervisors-2026-06-09.mjs
+BUNDLE|sha256=6570e436949a4c83782c5ae52172579d7d87603ebe615dfac1d2640c50ecd7b1|sha16=6570e436949a4c83
+ROW|slot=0|sha16=f1d756fa36309c9b|bytes=22
+ROW|slot=1|sha16=9d0c5f58e3eb69a4|bytes=197
+ROW|slot=2|sha16=6c71a0a9e040eea7|bytes=12
+ROW|slot=3|sha16=6e9c64e9251b1ad8|bytes=21
+ROW|slot=4|sha16=b1669fa7daed606f|bytes=31
+ROW|slot=5|sha16=41feedb9fbb451c4|bytes=19
+ROW|slot=6|sha16=de314aa025a232c7|bytes=14
+ROW|slot=7|sha16=8d80085dfc1290c4|bytes=22
+ROW|slot=8|sha16=25a4723e4db71d68|bytes=88
+ROW|slot=9|sha16=e7fca14613d18db4|bytes=140
+ROW|slot=10|sha16=34c3c8dbe540d9bd|bytes=148
+ROW|slot=11|sha16=bf55026805a6efca|bytes=53

@@ -1,0 +1,13 @@
+NAME|SDD-PID-SPACE-DECK-DRIVER
+PID|4d2e1766f5d04c38|birth=2026-06-09T21:28:36.238Z|authority=APEX_HUMAN_JESSE_BROWN_quintuple_fire_full_systems_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1403
+LAYER|agent
+CLASS|agentterms_named_agent
+GLYPH_BEHCS1024|870
+GLYPH_BEHCS5|3
+SECTOR|agent
+ROLE|multi_device_task_orchestrator
+SOURCE|agentterms_surface_5054_2026-06-09
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:28:36.238Z|registrar_note=agentterms_named_agents_chief_executes_examined_registrar_plan
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=fire_full_systems_mapping_first_2026-06-09|sign=I_Jesse_Brown_APEX_human_quintuple_authorize
+STATUS|CANONICAL|registry_office_agentterms_sweep

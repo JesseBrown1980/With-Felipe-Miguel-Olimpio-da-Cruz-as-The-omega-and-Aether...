@@ -1,0 +1,13 @@
+NAME|cluster_hyper_hermes_upstream_liris_mirror
+PID|bae986b068487c92|birth=2026-05-29T20:30:30.763Z|authority=OP-JESSE-DANIEL-BROWN_Special_OP_2mo_window_+_Foundation_v3_LAW|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|976
+LAYER|supervisor
+CLASS|hyperbehcs_supervisor_entity
+GLYPH_BEHCS1024|688
+GLYPH_BEHCS5|4
+PROF-SOURCE|C:\HyperBEHCS\data\prof-supervisors\cluster_hyper_hermes_upstream_liris_mirror.hbp
+PROF_SOURCE_KIND|heartbeat_emitter_ledger
+ANCHOR_PID|ASOLARIA-PROF-SUPERVISOR-CONSTELLATION-PID-2026-05-22
+REGISTRAR|acer-vantage|registered_at=2026-05-29T20:30:30.763Z|registrar_note=new_registration_district_b_HyperBEHCS_prof_supervisor_lazy_mint
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=DISTRICT-B_PID_office_registration_2026-05-29
+STATUS|CANONICAL|registry_office_entry_path2_fix_at_source

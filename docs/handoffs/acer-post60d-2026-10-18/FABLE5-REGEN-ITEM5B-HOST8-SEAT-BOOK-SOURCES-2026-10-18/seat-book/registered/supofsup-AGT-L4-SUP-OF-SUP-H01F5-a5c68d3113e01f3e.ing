@@ -1,0 +1,7 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=73cf58b265c38176|target_bytes=790|target_rows=12|emitted_at=2026-06-09T21:12:24.116Z|simula_consensus_rank=4
+EMITTER|name=register-supervisors-profs-2026-06-09.mjs|version=v1|vantage=acer|process_pid=24052|node_version=v22.13.1
+AUTHORITY|chain=OPERATOR-JESSE-DIRECTIVE_2026-06-09_register_profs_supervisors_NOW|apex_witness=I_Jesse_Brown_authorize_access_all_16_levels_17_engines_4_MCP_2026-06-09|operator_witnessed=true
+INPUTS|count=1|input_0_sha=a5c68d3113e01f3e|input_0_path=C:\HyperBEHCS\data\pid-supervisors\AGT-L4-SUP-OF-SUP-H01F5.hbp|input_0_kind=supervisor_prof_entity
+ALGO|name=registry_office_quintet_emit|version=v1|deterministic=true|rng_seed=none|external_calls=none
+LAW-ANCHOR|law=LAW-1M-1E200-BACKEND-RESEARCH-LOOP|hookwall_step=STEP_4_VERIFY|promotion_layer=L4_packet_emitted_pending_verify
+DUAL-CRITIC-EXPECTED|critic_a_structural=expected_pass|critic_b_statistical=expected_pass|sycophancy_canary_acceptable=true

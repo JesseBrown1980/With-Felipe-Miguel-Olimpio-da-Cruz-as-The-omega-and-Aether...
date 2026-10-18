@@ -1,0 +1,16 @@
+HBI1|task=pid-office-registration-servant-SERVANT-FALCON-3dd26eafaac44e29-2026-05-29T20:16:20.485Z|generated=2026-05-29T20:16:20.485Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/fix-and-register-2026-05-29.mjs
+BUNDLE|sha256=97167f654c8927e58590c78493b9eae47162908b3b7ee90cfa342fa59529d61e|sha16=97167f654c8927e5
+ROW|slot=0|sha16=37f2e9192adc53e1|bytes=19
+ROW|slot=1|sha16=2a2cbdbfaed522cd|bytes=173
+ROW|slot=2|sha16=182b2ecc75b0eb27|bytes=11
+ROW|slot=3|sha16=17b7e07215f592e5|bytes=13
+ROW|slot=4|sha16=15bdd7e2a8d976bf|bytes=23
+ROW|slot=5|sha16=271cd1c90b76e3b1|bytes=19
+ROW|slot=6|sha16=de314aa025a232c7|bytes=14
+ROW|slot=7|sha16=f913dc7ee188f44b|bytes=66
+ROW|slot=8|sha16=fd32ddd66506751b|bytes=34
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=4a8d60b212a3ed44|bytes=136
+ROW|slot=11|sha16=779dc6029712975e|bytes=114
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

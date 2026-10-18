@@ -1,0 +1,16 @@
+HBI1|task=usb-cart-reg-4e7c8934eb6b0d7a|generated=2026-06-09T21:32:42.009Z|packets=13|json=0
+SRC|register-usb-cartridge-2026-06-09.mjs
+BUNDLE|sha256=4ed5bb6a08d68d25c808d86ae18357fef7b52424a0b25444850f234d3a4e4bdc|sha16=4ed5bb6a08d68d25
+ROW|slot=0|sha16=1046ad790b606c13|bytes=27
+ROW|slot=1|sha16=37f3eeb56b96e7ee|bytes=165
+ROW|slot=2|sha16=07b5c8d3d0caa2e4|bytes=12
+ROW|slot=3|sha16=6ae59ebd4cbd66f4|bytes=9
+ROW|slot=4|sha16=79ea857f63cfe8e5|bytes=40
+ROW|slot=5|sha16=1361796486c631b1|bytes=19
+ROW|slot=6|sha16=de314aa025a232c7|bytes=14
+ROW|slot=7|sha16=8ec8faf581e76362|bytes=23
+ROW|slot=8|sha16=feec8300a928d750|bytes=32
+ROW|slot=9|sha16=f952f352bcf3de00|bytes=115
+ROW|slot=10|sha16=f5309c1a1e5b0a03|bytes=136
+ROW|slot=11|sha16=722d9fbf5a2b272f|bytes=160
+ROW|slot=12|sha16=9f24159263d65441|bytes=52

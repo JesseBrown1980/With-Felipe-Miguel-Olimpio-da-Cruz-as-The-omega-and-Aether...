@@ -1,0 +1,13 @@
+NAME|ROOM-SECTOR-SHARD-0025
+PID|c5ceda77bb7ec652|birth=2026-06-09T21:38:37.349Z|authority=APEX_HUMAN_JESSE_quintuple_fire_full_systems_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1528
+LAYER|room-sector-shard
+CLASS|substrate_root_or_room_sector
+GLYPH_BEHCS1024|631
+GLYPH_BEHCS5|0
+SECTOR|room-sector-shard
+ROLE|shard_0025_rooms_2500-2599_descriptor_only
+SOURCE|substrate_sector_final_sweep_2026-06-09|ask_the_fabric|infinite_nesting|prisms
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:38:37.349Z|registrar_note=substrate_roots_individual_items_lazy_mint_within_via_brown_hilbert
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=register_all_substrates_35TB_hidden_aether_github_rooms_2026-06-09|sign=I_Jesse_Brown_APEX_human_quintuple
+STATUS|CANONICAL|registry_office_substrate_sector_sweep

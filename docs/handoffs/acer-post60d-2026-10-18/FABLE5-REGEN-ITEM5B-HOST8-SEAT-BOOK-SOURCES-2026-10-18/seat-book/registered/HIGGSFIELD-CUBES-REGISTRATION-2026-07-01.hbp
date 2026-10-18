@@ -1,0 +1,37 @@
+HIGGSREGHDR|office=D:/PID-Registration-Office|source=higgsfield-mcp-absorption|date=2026-07-01|owner=PROF-MCP|cubes=12|json=0
+X3D|hilbert=1700|x=9|y=24|z=10|name=CUBE-HIGGS-SOUL-GENERATE|pid=e53ba4cf692b5aa4|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1700|name=CUBE-HIGGS-SOUL-GENERATE|pid=e53ba4cf692b5aa4|layer=ability-method-catalog|glyph_1024=676|glyph_5=1|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-SOUL-GENERATE:E53BA4CF692B|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=e53ba4cf692b5aa4|verb=soul_generate|server=higgsfield|desc=Higgsfield Soul: text -> high-aesthetic image (styles/presets)|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:soul_generate)
+X3D|hilbert=1701|x=0|y=0|z=17|name=CUBE-HIGGS-SOUL-LIST-STYLES|pid=d58ee4e1118c4314|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1701|name=CUBE-HIGGS-SOUL-LIST-STYLES|pid=d58ee4e1118c4314|layer=ability-method-catalog|glyph_1024=788|glyph_5=2|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-SOUL-LIST-STYLES:D58EE4E1118C|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=d58ee4e1118c4314|verb=soul_list_styles|server=higgsfield|desc=Soul style/preset catalog|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:soul_list_styles)
+X3D|hilbert=1702|x=19|y=29|z=11|name=CUBE-HIGGS-IMAGE-TO-VIDEO|pid=618ec5916203f040|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1702|name=CUBE-HIGGS-IMAGE-TO-VIDEO|pid=618ec5916203f040|layer=ability-method-catalog|glyph_1024=64|glyph_5=1|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-IMAGE-TO-VIDEO:618EC5916203|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=618ec5916203f040|verb=image_to_video|server=higgsfield|desc=DoP: still image + camera motion -> cinematic video|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:image_to_video)
+X3D|hilbert=1703|x=22|y=0|z=11|name=CUBE-HIGGS-TEXT-TO-VIDEO|pid=d05e13726cd50deb|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1703|name=CUBE-HIGGS-TEXT-TO-VIDEO|pid=d05e13726cd50deb|layer=ability-method-catalog|glyph_1024=491|glyph_5=4|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-TEXT-TO-VIDEO:D05E13726CD5|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=d05e13726cd50deb|verb=text_to_video|server=higgsfield|desc=text prompt -> generated video|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:text_to_video)
+X3D|hilbert=1704|x=16|y=9|z=23|name=CUBE-HIGGS-LIST-MOTIONS|pid=bb34a07d57cdc03b|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1704|name=CUBE-HIGGS-LIST-MOTIONS|pid=bb34a07d57cdc03b|layer=ability-method-catalog|glyph_1024=59|glyph_5=2|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-LIST-MOTIONS:BB34A07D57CD|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=bb34a07d57cdc03b|verb=list_motions|server=higgsfield|desc=camera-motion catalog (bullet-time, crash-zoom, dolly, crane, FPV, 360-orbit)|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:list_motions)
+X3D|hilbert=1705|x=29|y=30|z=26|name=CUBE-HIGGS-APPLY-MOTION|pid=8108b90a3e07386a|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1705|name=CUBE-HIGGS-APPLY-MOTION|pid=8108b90a3e07386a|layer=ability-method-catalog|glyph_1024=106|glyph_5=3|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-APPLY-MOTION:8108B90A3E07|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=8108b90a3e07386a|verb=apply_motion|server=higgsfield|desc=apply a named camera motion to a shot|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:apply_motion)
+X3D|hilbert=1706|x=18|y=11|z=28|name=CUBE-HIGGS-SPEAK|pid=20f04d6e88e179ed|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1706|name=CUBE-HIGGS-SPEAK|pid=20f04d6e88e179ed|layer=ability-method-catalog|glyph_1024=493|glyph_5=3|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-SPEAK:20F04D6E88E1|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=20f04d6e88e179ed|verb=speak|server=higgsfield|desc=Higgsfield Speak: image + audio/text -> talking avatar (lip-sync)|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:speak)
+X3D|hilbert=1707|x=11|y=23|z=26|name=CUBE-HIGGS-LIST-EFFECTS|pid=291274a99c4f09c0|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1707|name=CUBE-HIGGS-LIST-EFFECTS|pid=291274a99c4f09c0|layer=ability-method-catalog|glyph_1024=448|glyph_5=0|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-LIST-EFFECTS:291274A99C4F|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=291274a99c4f09c0|verb=list_effects|server=higgsfield|desc=VFX/effects catalog|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:list_effects)
+X3D|hilbert=1708|x=11|y=8|z=23|name=CUBE-HIGGS-APPLY-EFFECT|pid=f9008b30fdef1a86|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1708|name=CUBE-HIGGS-APPLY-EFFECT|pid=f9008b30fdef1a86|layer=ability-method-catalog|glyph_1024=646|glyph_5=3|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-APPLY-EFFECT:F9008B30FDEF|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=f9008b30fdef1a86|verb=apply_effect|server=higgsfield|desc=apply a named VFX effect|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:apply_effect)
+X3D|hilbert=1709|x=12|y=21|z=32|name=CUBE-HIGGS-UPSCALE|pid=33f6f9f972f325b9|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1709|name=CUBE-HIGGS-UPSCALE|pid=33f6f9f972f325b9|layer=ability-method-catalog|glyph_1024=441|glyph_5=4|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-UPSCALE:33F6F9F972F3|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=33f6f9f972f325b9|verb=upscale|server=higgsfield|desc=upscale generated video/image|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:upscale)
+X3D|hilbert=1710|x=28|y=1|z=31|name=CUBE-HIGGS-GET-STATUS|pid=2b7c7b0398bed520|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1710|name=CUBE-HIGGS-GET-STATUS|pid=2b7c7b0398bed520|layer=ability-method-catalog|glyph_1024=288|glyph_5=0|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-GET-STATUS:2B7C7B0398BE|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=2b7c7b0398bed520|verb=get_status|server=higgsfield|desc=poll an async generation job -> status/result|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:get_status)
+X3D|hilbert=1711|x=8|y=28|z=31|name=CUBE-HIGGS-LIST-GENERATIONS|pid=dffd289caa86d6b3|note=higgsfield-absorbed-cube-row_major_approx
+ATLAS-VOXEL|hilbert=1711|name=CUBE-HIGGS-LIST-GENERATIONS|pid=dffd289caa86d6b3|layer=ability-method-catalog|glyph_1024=691|glyph_5=4|registered_at=2026-07-01T00:00:00.000Z|behcs=BH1024:HIGGS-LIST-GENERATIONS:DFFD289CAA86|gate=describe=1|compile=0|interpret=0|fire=0|json=0
+CUBEDEF|pid=dffd289caa86d6b3|verb=list_generations|server=higgsfield|desc=list prior generations for the account|owner=PROF-MCP|content_addr=sha16(cube:higgsfield:list_generations)

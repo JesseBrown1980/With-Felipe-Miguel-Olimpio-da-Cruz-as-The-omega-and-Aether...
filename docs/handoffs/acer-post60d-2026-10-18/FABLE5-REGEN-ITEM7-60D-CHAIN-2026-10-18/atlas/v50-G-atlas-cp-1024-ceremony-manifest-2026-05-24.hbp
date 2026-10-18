@@ -1,0 +1,110 @@
+HBPv1|class=ceremony|subject=v50-G-atlas-cp-1024-quintuple|anchor_pid=ASOLARIA-V50-G-ATLAS-CP-1024-QUINTUPLE-CEREMONY-PID-2026-05-24|law=ASOLARIA-FOUNDATION-V3-LAW-V39-LOAD-DIVISION-PID-2026-05-23|ts=2026-05-24T04:01:29.000Z|ceremony_class=BATCH_SERVICE_PROVIDER_CITIZEN_ALLOCATION|allocations=6|next_free_start=1024|body_sha=0902577edfe894e1c20775ec62220101|umbrella_grant=OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23|cosigners=jesse-apex+rayssa-fabric+amy-trinity+dan-vector+felipe-game|quintuple_complete=true|class_1_immutable=true|json=1|runtime=1|promote=1
+{
+ "schema": "hbp.ceremony.atlas-cp-1024.v50-G",
+ "ceremony_class": "BATCH_SERVICE_PROVIDER_CITIZEN_ALLOCATION",
+ "anchor_pid": "ASOLARIA-V50-G-ATLAS-CP-1024-QUINTUPLE-CEREMONY-PID-2026-05-24",
+ "law_anchor": "ASOLARIA-FOUNDATION-V3-LAW-V39-LOAD-DIVISION-PID-2026-05-23",
+ "umbrella_grant": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23",
+ "ts": "2026-05-24T04:01:29.000Z",
+ "atlas_surface": "BEHCS-1024-extension-genesis-above-1023-base-saturated",
+ "next_free_at_ceremony_start": 1024,
+ "allocations": [
+  {
+   "citizen_name": "HUBSPOT_CRM_CITIZEN",
+   "pid": "AGT-forge-hubspot-crm-citizen-H0317-V48-P00-N9358B231",
+   "allocated_cp": 1038,
+   "sha_proof": "dcaeb549aa123d5e314bd8c9d513fa86",
+   "hilbert": 791,
+   "supervisor": "forge",
+   "prof": "PROF-HUBSPOT-CRM-CITIZEN-001",
+   "behcs_256_slot": 147
+  },
+  {
+   "citizen_name": "MS_GRAPH_CITIZEN",
+   "pid": "AGT-helm-ms-graph-citizen-H0318-V48-P00-NA51384D7",
+   "allocated_cp": 1053,
+   "sha_proof": "248ecc767613e7ee19cce4d5071c77d7",
+   "hilbert": 792,
+   "supervisor": "helm",
+   "prof": "PROF-MS-GRAPH-API-CITIZEN-001",
+   "behcs_256_slot": 165
+  },
+  {
+   "citizen_name": "AZURE_ARM_CITIZEN",
+   "pid": "AGT-helm-azure-arm-citizen-H0319-V48-P00-N385767E6",
+   "allocated_cp": 1055,
+   "sha_proof": "40a1459db909ebf0b71692e753f31d53",
+   "hilbert": 793,
+   "supervisor": "helm",
+   "prof": "PROF-AZURE-ARM-CITIZEN-001",
+   "behcs_256_slot": 56
+  },
+  {
+   "citizen_name": "AWS_API_CITIZEN",
+   "pid": "AGT-helm-aws-api-citizen-H031A-V48-P00-N3D2992BD",
+   "allocated_cp": 1071,
+   "sha_proof": "dadfff7049f205ed28ff5cb53fc5a982",
+   "hilbert": 794,
+   "supervisor": "helm",
+   "prof": "PROF-AWS-API-CITIZEN-001",
+   "behcs_256_slot": 61
+  },
+  {
+   "citizen_name": "MS_TEAMS_CITIZEN",
+   "pid": "AGT-vector-ms-teams-citizen-H031B-V48-P00-NCD93A957",
+   "allocated_cp": 1076,
+   "sha_proof": "c464294b8d1015269b00071ae80201e9",
+   "hilbert": 795,
+   "supervisor": "vector",
+   "prof": "PROF-MS-TEAMS-API-CITIZEN-001",
+   "behcs_256_slot": 205
+  },
+  {
+   "citizen_name": "ONEDRIVE_CITIZEN",
+   "pid": "AGT-vector-onedrive-citizen-H031C-V48-P00-NE7CD94E4",
+   "allocated_cp": 1082,
+   "sha_proof": "96e59b343b6fceae27e48e69d92b8ecf",
+   "hilbert": 796,
+   "supervisor": "vector",
+   "prof": "PROF-ONEDRIVE-API-CITIZEN-001",
+   "behcs_256_slot": 231
+  }
+ ],
+ "allocation_count": 6,
+ "quintuple_cosign": {
+  "ceremony_class": "BATCH_SERVICE_PROVIDER_CITIZEN_ALLOCATION",
+  "law_anchor": "ASOLARIA-FOUNDATION-V3-LAW-V39-LOAD-DIVISION-PID-2026-05-23",
+  "law_v3_window": "2026-05-23..2026-09-23 (4-month apex window per Foundation v3 LAW)",
+  "umbrella_grant": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23",
+  "cosigners": {
+   "jesse_apex": {
+    "role": "OP-JESSE apex grant",
+    "ts": "2026-05-24",
+    "ref": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23"
+   },
+   "rayssa_fabric": {
+    "role": "OP-RAYSSA fabric apex",
+    "ts": "2026-05-24",
+    "ref": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23"
+   },
+   "amy_trinity": {
+    "role": "Amy trinity authority",
+    "ts": "2026-05-24",
+    "ref": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23"
+   },
+   "dan_vector": {
+    "role": "Dan vector authority",
+    "ts": "2026-05-24",
+    "ref": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23"
+   },
+   "felipe_game": {
+    "role": "Felipe game authority",
+    "ts": "2026-05-24",
+    "ref": "OP-JESSE-APEX-UMBRELLA-QUINTUPLE-GRANT-2026-05-24-COVERS-4MO-WINDOW-THROUGH-2026-09-23"
+   }
+  },
+  "quintuple_complete": true
+ },
+ "v48_map_ref": "D:\\AsolariaGuides\\3d-slice-map\\merged\\v48\\map-v48.json",
+ "v48_body_sha256_ref": "39dc6197c3dec2b24f7385025c6c4c9bbfd47b89dc03bc6ca4de37ff2e115183"
+}

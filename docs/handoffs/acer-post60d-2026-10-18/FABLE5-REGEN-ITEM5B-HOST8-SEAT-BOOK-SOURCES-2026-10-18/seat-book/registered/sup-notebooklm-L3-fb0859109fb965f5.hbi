@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-notebooklm-L3-fb0859109fb965f5-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=7093f4cd66b6e83d065ecdd26d553b4124ccf1f02905cb1bcdde476d288e6871|sha16=7093f4cd66b6e83d
+ROW|slot=0|sha16=95523303a39319bb|bytes=18
+ROW|slot=1|sha16=6a7814661569af56|bytes=173
+ROW|slot=2|sha16=42519319b7bf3a5c|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=aca0604b4b6549b8|bytes=19
+ROW|slot=6|sha16=13623d3f6d85fcb6|bytes=14
+ROW|slot=7|sha16=07248582ffe67154|bytes=65
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

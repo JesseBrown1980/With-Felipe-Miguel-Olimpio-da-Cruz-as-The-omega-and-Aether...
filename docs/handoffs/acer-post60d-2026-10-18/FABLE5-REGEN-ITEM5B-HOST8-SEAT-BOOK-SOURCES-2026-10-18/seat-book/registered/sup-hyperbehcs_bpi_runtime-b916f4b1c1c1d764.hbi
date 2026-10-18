@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-hyperbehcs_bpi_runtime-b916f4b1c1c1d764-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=f7b92aba7100719a74208191db41bbe0f9e14a08a8e031fbc5452ebb60cbe89e|sha16=f7b92aba7100719a
+ROW|slot=0|sha16=041b4ae4f7e5f861|bytes=27
+ROW|slot=1|sha16=498da152583868f7|bytes=173
+ROW|slot=2|sha16=1335b3bf5df1d4e4|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=8bf79aa3bcac8945|bytes=19
+ROW|slot=6|sha16=9279f0e7f1b51848|bytes=14
+ROW|slot=7|sha16=95acc74d286b142b|bytes=74
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

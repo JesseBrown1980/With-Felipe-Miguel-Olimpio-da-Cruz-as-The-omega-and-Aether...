@@ -1,0 +1,12 @@
+NAME|AGT-L5-SUP-ROOK-H0A6C
+PID|c2259ca37f4e79a2|birth=2026-06-09T21:12:23.803Z|authority=OP-JESSE-DANIEL-BROWN_human_apex_authorize_all_16_levels_+_Foundation_v3_4mo_quintuple_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1317
+LAYER|sup-L5
+CLASS|level5_supervisor
+GLYPH_BEHCS1024|163
+GLYPH_BEHCS5|0
+SECTOR|sup-L5
+SOURCE|supervisor_prof_sweep_2026-06-09|origin=pid-supervisors
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:12:23.803Z|registrar_note=register_profs_supervisors_NOW_per_operator_human_apex_sign
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=register_profs_and_supervisors_in_office_NOW_2026-06-09|sign=I_Jesse_Brown_authorize_access_ALL_16_levels_17_language_engines_4_MCP
+STATUS|CANONICAL|registry_office_supervisor_prof_sweep

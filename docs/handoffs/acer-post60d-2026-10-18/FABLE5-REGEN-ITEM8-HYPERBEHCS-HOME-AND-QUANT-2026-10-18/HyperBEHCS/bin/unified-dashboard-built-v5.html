@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Asolaria Federation — Overnight Status (v5: Fresh Ledger)</title>
+<style>
+  :root {
+    --bg: #07090c;
+    --bg2: #0d1218;
+    --bg3: #11181f;
+    --fg: #c8d4e0;
+    --muted: #5a6878;
+    --accent: #7ee787;
+    --accent-dim: #2b6a35;
+    --warn: #f0b429;
+    --bad: #ff5c5c;
+    --info: #79c0ff;
+    --orange: #ffa657;
+    --purple: #d2a8ff;
+    --grid: #1a2230;
+    --forbidden: #6b1f1f;
+    --forbidden-fg: #ff8a8a;
+    --amber: #f0b429;
+    --amber-dim: #4a3a10;
+    --amber-glow: rgba(240,180,41,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+    font: 13px/1.45 "JetBrains Mono","Cascadia Code","Consolas","Menlo",monospace; }
+  h1 { font-size: 16px; margin: 0; letter-spacing: 0.05em; color: var(--accent); }
+  h2 { font-size: 12px; margin: 0 0 8px 0; letter-spacing: 0.12em; text-transform: uppercase;
+       color: var(--muted); font-weight: 600; }
+  .wrap { padding: 14px 18px 40px 18px; max-width: 1800px; margin: 0 auto; }
+  .topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 18px;
+            padding: 10px 14px; background: var(--bg2); border: 1px solid var(--grid);
+            border-radius: 6px; margin-bottom: 14px; }
+  .topbar .field { display: flex; flex-direction: column; gap: 2px; min-width: 110px; }
+  .topbar .label { font-size: 10px; color: var(--muted); text-transform: uppercase;
+                   letter-spacing: 0.1em; }
+  .topbar .value { font-size: 13px; color: var(--fg); }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+         margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px currentColor; }
+  .dot.ok  { background: var(--accent); color: var(--accent); }
+  .dot.bad { background: var(--bad);    color: var(--bad);    }
+  .dot.warn{ background: var(--warn);   color: var(--warn);   }
+  .dot.info{ background: var(--info);   color: var(--info);   }
+  .dot.amber { background: var(--amber); color: var(--amber); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--bg2); border: 1px solid var(--grid); border-radius: 6px;
+           padding: 12px 14px; min-height: 100px; }
+  .panel.full { grid-column: 1 / -1; }
+  .panel.seam { border-color: #2b6a35; box-shadow: 0 0 0 1px rgba(126,231,135,0.07) inset; }
+  .panel.doctrine { border-color: #2f4a6a; box-shadow: 0 0 0 1px rgba(121,192,255,0.07) inset; }
+  .panel.audit { border-color: var(--amber-dim);
+                 box-shadow: 0 0 0 1px rgba(240,180,41,0.10) inset; }
+  table { width: 100%; border-collapse: collapse; }
+  table th, table td { padding: 4px 6px; text-align: left; border-bottom: 1px dotted var(--grid);
+                       vertical-align: top; }
+  table th { color: var(--muted); font-weight: 600; font-size: 11px;
+             text-transform: uppercase; letter-spacing: 0.06em; }
+  table td.num { text-align: right; font-feature-settings: "tnum"; }
+  .pill { display: inline-block; padding: 1px 6px; border-radius: 3px;
+          font-size: 11px; background: var(--grid); color: var(--fg); }
+  .pill.green  { background: var(--accent-dim); color: var(--accent); }
+  .pill.yellow { background: #4a3a10; color: var(--warn); }
+  .pill.amber  { background: var(--amber-dim); color: var(--amber); }
+  .pill.red    { background: #4a1010; color: var(--bad); }
+  .pill.blue   { background: #10324a; color: var(--info); }
+  .pill.purple { background: #321040; color: var(--purple); }
+  .pill.orange { background: #4a2a10; color: var(--orange); }
+  .badge-decision { font-weight: bold; letter-spacing: 0.05em; padding: 2px 8px;
+                    border-radius: 4px; background: #10324a; color: var(--info);
+                    border: 1px solid #1f5278; font-size: 11px; }
+  .badge-decision.amber { background: var(--amber-dim); color: var(--amber);
+                          border: 1px solid var(--amber); }
+  .seam-status { display: flex; align-items: center; gap: 8px; font-size: 14px;
+                 padding: 6px 10px; border-radius: 4px; }
+  .seam-status.tested  { background: rgba(126,231,135,0.15); color: var(--accent);
+                          border: 1px solid var(--accent);
+                          box-shadow: 0 0 12px rgba(126,231,135,0.35); }
+  .seam-status.bridged { background: rgba(126,231,135,0.08); color: var(--accent);
+                          border: 1px solid var(--accent-dim); }
+  .seam-status.open    { background: rgba(240,180,41,0.08); color: var(--warn);
+                          border: 1px solid #4a3a10; }
+  .sev-NORMAL  { color: var(--accent); }
+  .sev-WARN    { color: var(--warn); }
+  .sev-ATTENTION { color: var(--orange); }
+  .sev-HOT     { color: var(--bad); }
+  .sev-CRITICAL{ color: var(--bad); font-weight: bold; }
+  .sev-UNKNOWN { color: var(--muted); }
+  .muted { color: var(--muted); }
+  .mono { font-family: inherit; }
+  .small { font-size: 11px; }
+  .kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 12px; }
+  .kv .k { color: var(--muted); }
+  .kv .v { color: var(--fg); font-feature-settings: "tnum"; }
+  ul.thin { margin: 4px 0 0 0; padding-left: 18px; font-size: 12px; }
+  ul.thin li { margin-bottom: 2px; }
+  .order { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .order .step { background: var(--grid); padding: 2px 6px; border-radius: 3px;
+                 font-size: 11px; color: var(--info); }
+  .order .arrow { color: var(--muted); align-self: center; }
+  .tids { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .tids .tid { background: var(--grid); color: var(--info); padding: 1px 6px;
+               border-radius: 3px; font-size: 11px; }
+  svg.chart { width: 100%; height: 90px; display: block; }
+  svg.chart .gridline { stroke: var(--grid); stroke-width: 0.5; stroke-dasharray: 2 3; }
+  svg.chart text { fill: var(--muted); font-size: 9px; font-family: inherit; }
+  .footer { color: var(--muted); font-size: 10px; text-align: center; margin-top: 20px; }
+  details { margin-top: 4px; }
+  details summary { cursor: pointer; color: var(--info); font-size: 11px; }
+  .ep-row { display: flex; gap: 10px; align-items: center; font-size: 12px;
+            padding: 3px 0; border-bottom: 1px dotted var(--grid); }
+  .ep-row .ep-path { flex: 1; color: var(--info); }
+  .seam-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+               margin-top: 10px; }
+  @media (max-width: 900px) { .seam-grid { grid-template-columns: 1fr; } }
+  .seam-card { background: var(--bg3); border: 1px solid var(--grid); border-radius: 4px;
+               padding: 8px 10px; }
+  .seam-card .num-big { font-size: 22px; font-weight: bold; color: var(--accent);
+                        font-feature-settings: "tnum"; }
+  .seam-card .num-big.warn { color: var(--warn); }
+  .seam-card .num-big.amber { color: var(--amber); }
+  .seam-card .num-big.bad { color: var(--bad); }
+  .seam-card .label { font-size: 10px; color: var(--muted); text-transform: uppercase;
+                      letter-spacing: 0.1em; }
+  /* 4-state model — horizontal pipeline */
+  .state4-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;
+                margin-top: 10px; }
+  @media (max-width: 900px) { .state4-row { grid-template-columns: 1fr; } }
+  .state4-cell { background: var(--bg3); border: 1px solid var(--grid); border-radius: 6px;
+                 padding: 10px 12px; position: relative; transition: all 0.2s ease; }
+  .state4-cell .state-name { font-size: 14px; font-weight: bold; letter-spacing: 0.08em; }
+  .state4-cell .state-glyph { font-size: 16px; margin-right: 6px; }
+  .state4-cell .state-meta { font-size: 10px; color: var(--muted); margin-top: 4px;
+                              text-transform: uppercase; letter-spacing: 0.06em; }
+  .state4-cell .state-note { font-size: 11px; color: var(--fg); margin-top: 4px;
+                              line-height: 1.35; }
+  .state4-cell.is-current { border-color: var(--accent);
+                            box-shadow: 0 0 14px rgba(126,231,135,0.45),
+                                        0 0 0 1px rgba(126,231,135,0.12) inset; }
+  .state4-cell.is-current .state-name { color: var(--accent); }
+  .state4-cell.is-past { opacity: 0.65; }
+  .state4-cell.is-past .state-name { color: var(--muted); }
+  .state4-cell.is-future { opacity: 0.5; border-style: dashed; }
+  .state4-cell.is-forbidden { border-color: var(--forbidden);
+                              background: linear-gradient(135deg, var(--bg3) 0%, #1c1010 100%);
+                              opacity: 0.9; }
+  .state4-cell.is-forbidden .state-name { color: var(--forbidden-fg);
+                                           text-decoration: line-through; }
+  .state4-cell.is-forbidden .state-note { color: var(--forbidden-fg); }
+  /* 3-state audit-mode row (amber-highlighted current = SHADOW-BLOCK) */
+  .state3-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+                margin-top: 10px; }
+  @media (max-width: 900px) { .state3-row { grid-template-columns: 1fr; } }
+  .state3-cell { background: var(--bg3); border: 1px solid var(--grid); border-radius: 6px;
+                 padding: 10px 12px; position: relative; transition: all 0.2s ease; }
+  .state3-cell .state-name { font-size: 14px; font-weight: bold; letter-spacing: 0.08em; }
+  .state3-cell .state-glyph { font-size: 16px; margin-right: 6px; }
+  .state3-cell .state-meta { font-size: 10px; color: var(--muted); margin-top: 4px;
+                              text-transform: uppercase; letter-spacing: 0.06em; }
+  .state3-cell .state-note { font-size: 11px; color: var(--fg); margin-top: 4px;
+                              line-height: 1.35; }
+  .state3-cell.is-current-amber { border-color: var(--amber);
+                                  background: linear-gradient(135deg, var(--bg3) 0%, #1f1808 100%);
+                                  box-shadow: 0 0 14px var(--amber-glow),
+                                              0 0 0 1px rgba(240,180,41,0.18) inset; }
+  .state3-cell.is-current-amber .state-name { color: var(--amber); }
+  .state3-cell.is-past { opacity: 0.65; }
+  .state3-cell.is-past .state-name { color: var(--muted); }
+  .state3-cell.is-forbidden { border-color: var(--forbidden);
+                              background: linear-gradient(135deg, var(--bg3) 0%, #1c1010 100%);
+                              opacity: 0.9; }
+  .state3-cell.is-forbidden .state-name { color: var(--forbidden-fg);
+                                           text-decoration: line-through; }
+  .state3-cell.is-forbidden .state-note { color: var(--forbidden-fg); }
+  .lock-icon { font-family: monospace; color: var(--forbidden-fg); margin-right: 4px; }
+  /* mini-strip pipeline arrow row */
+  .mini-strip { display: flex; align-items: center; gap: 6px; margin-top: 12px;
+                padding: 8px 10px; background: var(--bg3); border-radius: 4px;
+                border: 1px dotted var(--grid); overflow-x: auto; }
+  .mini-strip .stage { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px;
+                       border-radius: 12px; font-size: 11px; background: var(--grid);
+                       color: var(--muted); white-space: nowrap; }
+  .mini-strip .stage.is-current { background: var(--accent-dim); color: var(--accent);
+                                   font-weight: bold; }
+  .mini-strip .stage.is-current-amber { background: var(--amber-dim); color: var(--amber);
+                                         font-weight: bold; }
+  .mini-strip .stage.is-past { background: var(--grid); color: var(--accent); }
+  .mini-strip .stage.is-forbidden { background: #2a1010; color: var(--forbidden-fg); }
+  .mini-strip .arrow { color: var(--muted); }
+  /* doctrine banner */
+  .doctrine-banner { background: linear-gradient(135deg, #0c1722 0%, #11202e 100%);
+                     border: 1px solid #2f4a6a; border-radius: 6px; padding: 10px 14px;
+                     margin-top: 8px; }
+  .doctrine-banner .invariant { font-size: 14px; color: var(--info); font-style: italic;
+                                 line-height: 1.5; }
+  .doctrine-banner .decision { font-size: 11px; color: var(--muted); margin-top: 6px;
+                                text-transform: uppercase; letter-spacing: 0.1em; }
+  .audit-banner { background: linear-gradient(135deg, #1c1408 0%, #2a1f0c 100%);
+                  border: 1px solid var(--amber-dim); border-radius: 6px;
+                  padding: 8px 12px; margin-top: 8px; }
+  .audit-banner .decision { font-size: 11px; color: var(--amber); margin-top: 4px;
+                            text-transform: uppercase; letter-spacing: 0.1em; }
+  .law-list { list-style: none; padding: 0; margin: 8px 0 0 0; }
+  .law-list li { padding: 4px 8px; border-bottom: 1px dotted var(--grid);
+                 font-size: 12px; line-height: 1.45; }
+  .law-list li.law-cited { background: rgba(126,231,135,0.05);
+                            border-left: 2px solid var(--accent); padding-left: 8px; }
+  .law-list .law-num { display: inline-block; min-width: 48px; color: var(--info);
+                       font-weight: bold; }
+  .sub-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .sub-table th, .sub-table td { padding: 4px 8px; text-align: left;
+                                  border-bottom: 1px dotted var(--grid); font-size: 12px; }
+  .sub-table th { background: var(--bg3); color: var(--muted); font-weight: 600;
+                  text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
+  .sub-table td.num { text-align: right; font-feature-settings: "tnum"; }
+  /* Panel 11: pending-review queue (v5) */
+  .queue-table { width: 100%; border-collapse: collapse; margin-top: 8px;
+                 font-size: 11px; }
+  .queue-table th, .queue-table td { padding: 4px 6px; text-align: left;
+                                      border-bottom: 1px dotted var(--grid);
+                                      vertical-align: top; }
+  .queue-table th { background: var(--bg3); color: var(--muted); font-weight: 600;
+                    text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px;
+                    position: sticky; top: 0; }
+  .queue-table td.sha { color: var(--info); white-space: nowrap; }
+  .queue-table td.path { color: var(--fg); word-break: break-all; max-width: 360px; }
+  .queue-table tr:hover { background: rgba(126,231,135,0.04); }
+  .queue-hint { background: var(--bg3); border: 1px dotted var(--grid);
+                border-radius: 4px; padding: 8px 10px; margin-top: 10px;
+                font-size: 11px; color: var(--muted); }
+  .queue-hint code { background: var(--grid); color: var(--info);
+                     padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+  .freshness-stamp { display: inline-block; padding: 2px 8px; border-radius: 3px;
+                     background: var(--accent-dim); color: var(--accent);
+                     font-size: 10px; letter-spacing: 0.05em; margin-left: 8px;
+                     text-transform: none; }
+  .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;
+                font-size: 11px; }
+  .filter-bar button { background: var(--grid); color: var(--fg); border: 1px solid var(--grid);
+                       border-radius: 3px; padding: 3px 8px; cursor: pointer;
+                       font-family: inherit; font-size: 11px; }
+  .filter-bar button.active { background: var(--accent-dim); color: var(--accent);
+                              border-color: var(--accent); }
+  .filter-bar button:hover { border-color: var(--info); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="topbar">loading...</div>
+
+  <div class="grid">
+    <div class="panel full audit"><h2>Panel 10 - Audit Mode (OP-W30-SHADOW-BLOCK-FIRST) <span id="panel-10-fresh-stamp"></span></h2><div id="panel-audit-mode">--</div></div>
+
+    <div class="panel full audit"><h2>Panel 11 - Shadow-Block Ledger - Pending Operator Review <span id="panel-11-fresh-stamp"></span></h2><div id="panel-pending-queue">--</div></div>
+
+    <div class="panel full seam"><h2>Panel 8 - Vocab Seam Status — T64 Bridge (AETHER High-Assurance)</h2><div id="panel-vocab-seam">--</div></div>
+
+    <div class="panel full doctrine"><h2>Panel 9 - AETHER Doctrine</h2><div id="panel-doctrine">--</div></div>
+
+    <div class="panel full"><h2>Panel 1 - Wave History (W17 - latest)</h2><div id="panel-waves">--</div></div>
+
+    <div class="panel"><h2>Panel 2 - PB-D Atlas 14/14 (T50-T63)</h2><div id="panel-pbd">--</div></div>
+    <div class="panel"><h2>Panel 3 - Heartbeat Live</h2><div id="panel-heartbeat">--</div></div>
+
+    <div class="panel"><h2>Panel 4 - GPU Thermal</h2><div id="panel-thermal">--</div></div>
+    <div class="panel"><h2>Panel 5 - Substrate + Daemon Health</h2><div id="panel-substrate">--</div></div>
+
+    <div class="panel full"><h2>Panel 6 - Open Operator-Witness Queue</h2><div id="panel-queue">--</div></div>
+
+    <div class="panel full"><h2>Panel 7 - 3D Map Lineage (v14 - v17)</h2><div id="panel-maps">--</div></div>
+  </div>
+
+  <div class="footer" id="footer">unified-dashboard-built-v5.html - W31C - Fresh Ledger Snapshot</div>
+</div>
+
+<script id="data" type="application/json">{"snapshot_at":"2026-05-21T07:00:32.282221Z","wave_range":[17,26],"waves":[{"wave":17,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-17-report.md","exists":true,"headline":"Overnight Autopilot Wave-17 Report — CIVILIZATION SPINDLE CASCADE + GPU UPGRADE","fired":"2026-05-21 ~05:20 local. Operator-directed dual-track: (a) \"PING EVERY SUPERVISOR POSSIBLE IN MASSIVE waves of waves of waves using the upgraded Civilization spindle\" + (b) \"FUCKING UPGRADE THE GPU AND GET IT RUNNING AND MAKE SURE by checking and TESTING\".","apex_cosign":"OP-JESSE-OPERATOR-WITNESS-GPU-UPGRADE-W17 + OP-JESSE-CIVILIZATION-SPINDLE-W17-CASCADE-LANDED","size":3741},{"wave":18,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-18-report.md","exists":true,"headline":"Overnight Autopilot Wave-18 Report — GPU ADAPTER FIX + HERMES-EXT INDEX + V14 MAP + STUBS","fired":"2026-05-21 ~05:35 local. Operator-directed GPU adapter investigation triggered when operator spotted NVIDIA at 0% in Task Manager despite W17's claimed `gpu_path_ready=true`. Three side-tracks proceeded in parallel under cron-autopilot.","apex_cosign":"OP-JESSE-OPERATOR-WITNESS-GPU-NVIDIA-ADAPTER-FIX-W18 + OP-JESSE-OVERNIGHT-AUTOPILOT-WAVE-18","size":3286},{"wave":19,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-19-report.md","exists":true,"headline":"Overnight Autopilot Wave-19 Report — GPU FABRIC INTEGRATION + 3D MAP + CUBE + HEARTBEAT","fired":"2026-05-21 ~05:40 local (operator-directed: \"NOW THAT IT WORKS PIPE IT IN AND SUPERVISOR AND PROFS FOR ALL PARTS... MAP MAP MAP IT CUBE CUBE CUBE AND 3D MAP IT... THE SYSTEM HAS A HEARTBEAT\")","apex_cosign":"OP-JESSE-GPU-FABRIC-FULL-SYSTEM-W19-LANDED + OP-JESSE-CIVILIZATION-SPINDLE-W17-CASCADE-LANDED + OP-JESSE-OVERNIGHT-AUTOPILOT-WAVE-19","size":6346},{"wave":20,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-20-report.md","exists":true,"headline":"Overnight Autopilot Wave-20 Report — PLAN B FARM + RETHINK EVERYTHING","fired":"2026-05-21 ~06:00 local (operator-directed: \"FUCK THAT you will research PLAN B as planned and Rethink EVERYTHING AFTER YOU FARM THE PLAN B\")","apex_cosign":"OP-JESSE-PLAN-B-RETHINK-EVERYTHING-W20","size":1116},{"wave":21,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-21-report.md","exists":true,"headline":"Overnight Autopilot Wave-21 Report — Plan B follow-through","fired":"2026-05-21 ~06:30 local. 3 parallel descriptor-only agents.","apex_cosign":"OP-JESSE-PLAN-B-RETHINK-EVERYTHING-W20-V16-EMISSION","size":864},{"wave":22,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-22-report.md","exists":true,"headline":"Overnight Autopilot Wave-22 Report — Plan-B redesign scaffolds (T53/T56/T57)","fired":"2026-05-21 ~06:25 local. 3 parallel agents + heartbeat health check.","apex_cosign":"OP-JESSE-PLAN-B-T53-T56-T57-SCAFFOLDS-W22","size":1032},{"wave":23,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-23-report.md","exists":true,"headline":"Overnight Autopilot Wave-23 Report — PB-D triage + T56-B + T12","fired":"2026-05-21 ~06:45 local. 3 parallel descriptor-only agents.","apex_cosign":"OP-JESSE-OVERNIGHT-AUTOPILOT-WAVE-23","size":896},{"wave":24,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-24-report.md","exists":true,"headline":"Overnight Autopilot Wave-24 Report — T55/T61/T63 scaffolds + dashboard + audit","fired":"2026-05-21 ~07:00 local. 3 parallel descriptor-only agents.","apex_cosign":"OP-JESSE-OVERNIGHT-AUTOPILOT-WAVE-24","size":878},{"wave":25,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-25-report.md","exists":true,"headline":"Overnight Autopilot Wave-25 Report — PB-D ATLAS 14/14 + W17/W18 backfill + thermal watch","fired":"2026-05-21 ~07:15 local. 3 parallel descriptor-only agents.","apex_cosign":"OP-JESSE-PLAN-B-RETHINK-EVERYTHING-W25-ATLAS-COMPLETE + OP-JESSE-W25-GPU-THERMAL-WATCH","size":1015},{"wave":26,"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20\\wave-26-report.md","exists":false,"headline":null,"fired":null,"apex_cosign":null,"size":0}],"waves_present_count":9,"pb_d_atlas":[{"id":"T50","title":"substrate-episode-typed-rows","scaffolded_wave":"W25A","status":"SCAFFOLD-LANDED","selftest":"6/6"},{"id":"T51","title":"triple-quant-variance-gate","scaffolded_wave":"W25A","status":"SCAFFOLD-LANDED","selftest":"7/7"},{"id":"T52","title":"MTP-drafter-BIML-shaped","scaffolded_wave":"W25A","status":"SCAFFOLD-LANDED","selftest":"7/7"},{"id":"T53","title":"hookwall-rep-variance-gate","scaffolded_wave":"W22C","status":"BUILT","selftest":"3/3"},{"id":"T54","title":"heartbeat-variance-emitter","scaffolded_wave":"W23A","status":"SCAFFOLD-LANDED","selftest":"9/9"},{"id":"T55","title":"lane-episode-taxonomy","scaffolded_wave":"W24A","status":"SCAFFOLD-LANDED","selftest":"7/7"},{"id":"T56","title":"atlas-as-biml-study-store","scaffolded_wave":"W22A","status":"BUILT","selftest":"6/6"},{"id":"T57","title":"pid-keyed-study-slots","scaffolded_wave":"W22B","status":"BUILT","selftest":"n/a"},{"id":"T58","title":"length-depth-frontier","scaffolded_wave":"W21B","status":"BUILT (3-path)","selftest":"n/a"},{"id":"T59","title":"sloRA-deprecation-canon","scaffolded_wave":"W23A","status":"SCAFFOLD-LANDED","selftest":"8/8"},{"id":"T60","title":"episode-type-schema-v1","scaffolded_wave":"W23A","status":"SCAFFOLD-LANDED","selftest":"23/23"},{"id":"T61","title":"support-set-retrieval-api","scaffolded_wave":"W24A","status":"SCAFFOLD-LANDED","selftest":"6/6"},{"id":"T62","title":"attention-bottleneck-capacity-study","scaffolded_wave":"W25A","status":"SCAFFOLD-LANDED","selftest":"8/8"},{"id":"T63","title":"curriculum-stages-canon","scaffolded_wave":"W24A","status":"SCAFFOLD-LANDED","selftest":"8/8"}],"pb_d_unblock_order":["T60","T59","T54","T56","T57","T50","T51","T53","T52","T62","T58"],"heartbeat":{"counter":437,"loop_pid":10416,"loop_alive":true,"tail_requested":20,"beat_count":20,"first_ts":"2026-05-21T06:57:09.691Z","last_ts":"2026-05-21T07:00:25.096Z","tail_beats":[{"beat_seq":433,"ts_iso":"2026-05-21T06:59:44.033Z","fingerprint":"3c17b11a325fefd2","daemon_ok":true,"gpu_temp_c":83,"gpu_util_pct":1,"substrate_size":1060859},{"beat_seq":434,"ts_iso":"2026-05-21T06:59:54.242Z","fingerprint":"aa6cdd92fafbf67c","daemon_ok":true,"gpu_temp_c":82,"gpu_util_pct":0,"substrate_size":1060859},{"beat_seq":435,"ts_iso":"2026-05-21T07:00:04.348Z","fingerprint":"b94c3f46d6a328a0","daemon_ok":true,"gpu_temp_c":82,"gpu_util_pct":0,"substrate_size":1060859},{"beat_seq":436,"ts_iso":"2026-05-21T07:00:14.609Z","fingerprint":"137e5442eb90e1f3","daemon_ok":true,"gpu_temp_c":82,"gpu_util_pct":1,"substrate_size":1060859},{"beat_seq":437,"ts_iso":"2026-05-21T07:00:25.096Z","fingerprint":"9312c77e2fa8aef7","daemon_ok":true,"gpu_temp_c":82,"gpu_util_pct":1,"substrate_size":1060859}]},"thermal":{"thresholds":{"WARN":85,"ATTENTION":90,"HOT":92,"CRITICAL":95,"TJMAX":97},"current_temp_c":82,"current_severity":"NORMAL","window_n":20,"window_max":83,"window_max_severity":"NORMAL","trend":"flat","samples":[{"beat_seq":418,"ts":"2026-05-21T06:57:09.691Z","temp_c":82},{"beat_seq":419,"ts":"2026-05-21T06:57:20.036Z","temp_c":83},{"beat_seq":420,"ts":"2026-05-21T06:57:30.570Z","temp_c":83},{"beat_seq":421,"ts":"2026-05-21T06:57:40.674Z","temp_c":83},{"beat_seq":422,"ts":"2026-05-21T06:57:50.782Z","temp_c":82},{"beat_seq":423,"ts":"2026-05-21T06:58:01.057Z","temp_c":83},{"beat_seq":424,"ts":"2026-05-21T06:58:11.568Z","temp_c":83},{"beat_seq":425,"ts":"2026-05-21T06:58:21.773Z","temp_c":83},{"beat_seq":426,"ts":"2026-05-21T06:58:31.851Z","temp_c":82},{"beat_seq":427,"ts":"2026-05-21T06:58:41.956Z","temp_c":82},{"beat_seq":428,"ts":"2026-05-21T06:58:52.285Z","temp_c":82},{"beat_seq":429,"ts":"2026-05-21T06:59:02.770Z","temp_c":82},{"beat_seq":430,"ts":"2026-05-21T06:59:13.028Z","temp_c":82},{"beat_seq":431,"ts":"2026-05-21T06:59:23.120Z","temp_c":82},{"beat_seq":432,"ts":"2026-05-21T06:59:33.457Z","temp_c":82},{"beat_seq":433,"ts":"2026-05-21T06:59:44.033Z","temp_c":83},{"beat_seq":434,"ts":"2026-05-21T06:59:54.242Z","temp_c":82},{"beat_seq":435,"ts":"2026-05-21T07:00:04.348Z","temp_c":82},{"beat_seq":436,"ts":"2026-05-21T07:00:14.609Z","temp_c":82},{"beat_seq":437,"ts":"2026-05-21T07:00:25.096Z","temp_c":82}]},"substrate":{"path":"C:/HyperBEHCS/store\\hyperbehcs-substrate.v1.hbs","size":1060859,"sha":"3bedf4ea89920a8cf396d0207289b412158525707088d9231c8811321624fc74","walker_bypass":true,"walker_bypass_note":"substrate-walker-repair sentinel present in store; bypass active per W17/W19 audits"},"daemon":{"host":"127.0.0.1","port":49257,"endpoints":{"/health":{"url":"http://127.0.0.1:49257/health","ok":true,"error":null,"body":{"ok":true,"schema":"hyperbehcs.local_daemon.status.v1","runtime_root":"C:\\HyperBEHCS","host":"127.0.0.1","port":49257,"pid":22208,"cpu_model":"Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz","cpu_threads":8,"cpu_path_ready":true,"gpu_path_ready":true,"hybrid_binary_envelope_ready":true,"substrate_ready":true,"asolaria_dependency":false,"normal_computer_scope":"loopback daemon callable by local programs","hardware_mutations":0,"cpu_affinity_changes":0,"gpu_kernel_launches":0,"gpu_driver_mutations":0,"remote_writes":0,"adb_actions":0,"scrcpy_actions":0,"device_file_writes":0,"route_mutations":0,"provider_calls":0,"mcp_tool_calls":0,"process_starts":0,"executor_executions":0,"cleanup_actions":0,"runtime_authority_grants":0,"production_promotions":0}},"/status":{"url":"http://127.0.0.1:49257/status","ok":true,"error":null,"body":{"ok":true,"schema":"hyperbehcs.local_daemon.status.v1","runtime_root":"C:\\HyperBEHCS","host":"127.0.0.1","port":49257,"pid":22208,"cpu_model":"Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz","cpu_threads":8,"cpu_path_ready":true,"gpu_path_ready":true,"hybrid_binary_envelope_ready":true,"substrate_ready":true,"asolaria_dependency":false,"normal_computer_scope":"loopback daemon callable by local programs","hardware_mutations":0,"cpu_affinity_changes":0,"gpu_kernel_launches":0,"gpu_driver_mutations":0,"remote_writes":0,"adb_actions":0,"scrcpy_actions":0,"device_file_writes":0,"route_mutations":0,"provider_calls":0,"mcp_tool_calls":0,"process_starts":0,"executor_executions":0,"cleanup_actions":0,"runtime_authority_grants":0,"production_promotions":0}},"/gpu/lane-status":{"url":"http://127.0.0.1:49257/gpu/lane-status","ok":true,"error":null,"body":{"ok":true,"schema":"hyperbehcs.gpu_lane_status.v1","gpu_path_ready":true,"pstate":"P0","util_pct":1,"vram_in_use_mib":0,"adapter":{"device_id":0,"name":"NVIDIA GeForce GTX 1050","vendor":"NVIDIA","driver_version":"582.53"},"lane_pid":"AGT-LIVEFREE-LAZY_MINT-GPU-LANE-f8834ff2","last_dispatch_ms":2259,"last_dispatch_at":"2026-05-21T05:44:30.613Z","dispatch_count":1,"probe_ok":false,"ts":"2026-05-21T07:00:32.277Z"}},"/gpu/bindings":{"url":"http://127.0.0.1:49257/gpu/bindings","ok":true,"error":null,"body":{"schema":"hyperbehcs.gpu_lane.supervisor_prof_bindings.v1","apex_cosign":"OP-JESSE-GPU-FABRIC-FULL-SYSTEM-W19","minted_at":"2026-05-21T00:00:00Z","minter_pid":"AGT-FORGE-AUTO_DAEMON-W19A-GPU-LANE-2026-05-21","lane_name":"gpu","substrate":{"device_id":0,"name":"NVIDIA GeForce GTX 1050","vendor":"NVIDIA","driver_version":"582.53","proven_gflops":422,"via":"DML adapter 0 (W18 registry fix)"},"sha8_seed":"{component}|{supervisor}|{prof}|2026-05-21T00:00:00Z (sha256, first 8 hex)","bindings":[{"component":"gpu_lifecycle","supervisor":"forge","prof":"auto_daemon","pid":"AGT-FORGE-AUTO_DAEMON-GPU-LIFECYCLE-9d9bdb2b","sha8":"9d9bdb2b","responsibilities":["adapter init","session create","session release"]},{"component":"gpu_kernel_dispatch","supervisor":"vector","prof":"throughput","pid":"AGT-VECTOR-THROUGHPUT-GPU-DISPATCH-95eefae1","sha8":"95eefae1","responsibilities":["matmul kernel","conv kernel","elementwise"]},{"component":"gpu_memory_mgmt","supervisor":"helm","prof":"memory","pid":"AGT-HELM-MEMORY-GPU-MEMORY-2ec5d4a1","sha8":"2ec5d4a1","responsibilities":["VRAM allocation","transfer host<->device","spill to shared"]},{"component":"gpu_hookwall_gate","supervisor":"cube_cubed_sealer","prof":"hookwall","pid":"AGT-CUBE_CUBED_SEALER-HOOKWALL-GPU-GATE-73a0be0f","sha8":"73a0be0f","responsibilities":["tier-class enforcement","block unauthorized launches","operator-witness on tier-3"]},{"component":"gpu_gnn_routing","supervisor":"rook","prof":"gnn_inference","pid":"AGT-ROOK-GNN_INFERENCE-GPU-ROUTING-a9d6cd50","sha8":"a9d6cd50","responsibilities":["which kernel for which packet","envelope routing","fallback to CPU"]},{"component":"gpu_adapter_selection","supervisor":"gaia","prof":"drift_detect","pid":"AGT-GAIA-DRIFT_DETECT-GPU-ADAPTER-1520a9a1","sha8":"1520a9a1","responsibilities":["device_id selection","NVIDIA vs Intel","detect adapter swap"]},{"component":"gpu_health_benchmark","supervisor":"falcon","prof":"fabric_query","pid":"AGT-FALCON-FABRIC_QUERY-GPU-HEALTH-7b5147e6","sha8":"7b5147e6","responsibilities":["periodic bench","report GFLOPS","expose /gpu/health"]},{"component":"gpu_lane_registration","supervisor":"livefree","prof":"lazy_mint","pid":"AGT-LIVEFREE-LAZY_MINT-GPU-LANE-26d57127","sha8":"26d57127","responsibilities":["register in 12-lane fabric","lazy-mint sub-PIDs on demand"]}],"gates":{"new_files_only":true,"do_not_mutate_daemon":"hyperbehcs-daemon.js — W19D will wire","do_not_restart_daemon":true,"do_not_touch":["portal.mjs","hermes","kernel mod.rs"]}}}}},"operator_queue":{"tier_0_witness":[{"id":"T01","task":"Patch portal.mjs Line 275: gemma-2-9b-it -> gemma-4-E4B-it"},{"id":"T02","task":"Patch portal.mjs Line 283: HttpPortal branch for HTTP transport"},{"id":"T03","task":"Daemon restart to load gpu-probe-enhanced.cjs"},{"id":"T04","task":"USB-OS Wave 6 ceremony + physical write"},{"id":"T05","task":"Push PR-1..PR-4 to upstream"}],"pb_d_promotion_order":["T60 promote_to_live (atomic, 0.5d) -> unblocks T50/T55/T61/T63","T59 annotate memory (0.5d) -> closes SLoRA hallucination canon","T54 dashboard wire (0.5d) -> first second-moment tile","T56 + T57 promote -> unblocks T52 forward + T62 ablation","T50 materialize_sidecar -> unblocks T55/T61 live retrieval","T51 + T53 paired -> tier-3 firmware bar (quant + seed)","T52 + T62 paired -> drafter + capacity-knee, replaces W11D GRU(64)","T58 three-path frontier eval -> length/depth federation frontier"],"t58_paths":["MTP+length-aware","recursive-cube tree-PID","sparse+depth-counter"],"t56b_inject":"20 study_examples projected from Plan-B SCAN+COGS; ~33K compositional episodes available — operator-witness gated for store injection (W23B)"},"map_lineage":[{"version":"v14","exists_dir":true,"json_exists":true,"sha":"0ae7ef77e0bf56bcbd968a28a86e08c5fe358f00177b54203fffa7f5dea3ba48","voxel_count":30},{"version":"v15","exists_dir":true,"json_exists":true,"sha":"60d5e2693d0ba6cf57ffbfbdc66220b49f425c600e46f7ac2c28b3e78e2e188f","voxel_count":17},{"version":"v16","exists_dir":true,"json_exists":true,"sha":"8b600a3f41f731314e0cc8ad885ae6f46b30b06efb723f2eee33614c67be2def","voxel_count":18},{"version":"v17","exists_dir":true,"json_exists":true,"sha":"a11025bfd6b6483f613b08d8e37cb437d6952c5babb701c37ec3f71714b9373b","voxel_count":20}],"snapshot_at_v2":"2026-05-21T07:18:42.028847Z","sidecar":{"variant":"v5","wave":"W31C","agent_pid":"AGT-VECTOR-VIZ_RENDER-W31C-DASHBOARD-V5-LEDGER-REVIEW-2026-05-21","apex_cosign":"OP-AETHER-HIGH-ASSURANCE-W31C + OP-W30-SHADOW-BLOCK-FIRST","supersedes":["v1","v2","v3","v4"],"discipline":"AETHER HIGH-ASSURANCE — sidecar-only, read-only on prior waves","v5_purpose":"FRESH ledger snapshot (v4 captured race-state; v5 re-reads every build)"},"vocab_seam":{"status":"TESTED","decision_code":"OP-T64-BRIDGE-FIRST","decision_at":"2026-05-21","canonical_internal_form":"bucket_level","active_vocabularies":2,"bridge_sha":"ba8448c5449720375b8c209418951bdb2ca5cb54daea4995a3fcebdac85ab3f4","bridge_sha_short":"ba8448c5","lossy_count":5,"bijective_count":1,"affected_task_ids":["T55","T56","T56-B","T60","T61","T62","T63"],"guardrail_status":"ARMED","regression_smoke_pass":53,"regression_smoke_fail":0,"sources":{"w28a_golden_json":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28A-T64-HARDENING\\golden-mapping-table.json","exists":true},"w28a_golden_sha":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28A-T64-HARDENING\\golden-mapping-table.sha256","exists":true},"w28a_status_md":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28A-T64-HARDENING\\vocab-seam-status.md","exists":true},"w28a_receipt_md":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28A-T64-HARDENING\\RECEIPT.md","exists":true},"w28b_receipt_md":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28B-REGRESSION-SMOKE\\RECEIPT.md","exists":true},"w28b_golden_expected":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28B-REGRESSION-SMOKE\\golden-expected-output.txt","exists":true}},"current_state":"TESTED","state_history":["OPEN @ pre-W27","BRIDGED @ W27A/W28A","TESTED @ W28B","COLLAPSED @ FORBIDDEN-PER-LAW-10"],"state_annotations":{"OPEN":{"source_wave":"pre-W27","ts":null,"note":"no bridge written; vocabularies divergent"},"BRIDGED":{"source_wave":"W27A/W28A","ts":"2026-05-21","note":"bridge SHA ba8448c5 sealed; guardrail PENDING"},"TESTED":{"source_wave":"W28B","ts":"2026-05-21","note":"53/53 PASS; GUARDRAIL ARMED; golden snapshot deterministic"},"COLLAPSED":{"source_wave":"FORBIDDEN-PER-LAW-10","ts":null,"note":"canonical collapse forbidden by AETHER law 10"}},"collapse_forbidden":true,"collapse_forbidden_cite":"AETHER HIGH-ASSURANCE law 10","status_legacy_v2":"BRIDGED","golden_snapshot_exists":true,"golden_snapshot_path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W28B-REGRESSION-SMOKE\\golden-expected-output.txt"},"snapshot_at_v3":"2026-05-21T07:46:53.104930Z","aether_doctrine":{"primary_invariant":"Bridge, do not collapse; test, do not assume; expose state, do not hide it.","decision_phrase":"OP-T64-BRIDGE-FIRST + AETHER-HIGH-ASSURANCE","doctrine_canon_path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W29B-dashboard-4state-receipt.md","laws_count":10,"laws":["Law 1: No in-place mutation of live scaffolds — sidecar-only evolution.","Law 2: All seam crossings emit a bridge SHA; SHA must be deterministic.","Law 3: Golden snapshot output is the regression contract — diff = alarm.","Law 4: Guardrails ARM only when bridge SHA stable AND smoke 0-fail.","Law 5: Third-vocabulary introduction without bridge entry = structural fail.","Law 6: Promotion gates (NotImplementedError) cannot be lifted without operator cosign.","Law 7: Read-only on upstream wave outputs — never edit a prior wave's artifact.","Law 8: Append-only receipts — receipts are never rewritten, only superseded.","Law 9: Dashboard must expose seam status clearly: open / bridged / tested / collapsed.","Law 10: COLLAPSED is FORBIDDEN while any of T55..T63 remain live; canonical collapse requires a separate operator cosign that AETHER doctrine prohibits."],"minted_wave":"W29B","minted_at":"2026-05-21","minter_pid":"AGT-VECTOR-VIZ_RENDER-W29B-DASHBOARD-4STATE-SEAM-2026-05-21"},"snapshot_at_v4":"2026-05-21T08:04:14.981066Z","audit_mode":{"current_mode":"SHADOW-BLOCK","mode_history":["AUDIT-ONLY @ W29C","SHADOW-BLOCK @ W30A"],"live_block_status":"FORBIDDEN-PER-OP-W30","decision_code":"OP-W30-SHADOW-BLOCK-FIRST","decision_at":"2026-05-21","shadow_ledger":{"total_entries":34,"would_block_count":21,"pending_review_count":34,"true_positive_count":0,"false_positive_count":0,"confirmed_violation_count":0,"_status":"OK","ledger_exists":true,"ledger_path":"C:/HyperBEHCS/store\\shadow-block-ledger.ndjson","ledger_sha":"08214c70cdf0e0bfff8a68ee3df43f5dc1eae81782aa596530c1aad2c5b84b02","fresh_snapshot_at":"2026-05-21T08:12:39.161347Z","update_of_marker_count":0},"regression_fixtures":{"total":6,"matched_expected":0,"valid_cases_passed":0,"violation_cases_caught":0,"false_positives":0,"_status":"PENDING (W30B receipt not yet emitted)","receipt_exists":false,"receipt_path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W30B-REGRESSION-FIXTURES\\RECEIPT.md","receipt_sha":null},"promotion_to_live_block_gate":"≥1 wave with 0 PENDING + 0 unverified TRUE-POSITIVE","promotion_ready":false,"sources":{"W30A_shadow_block_py":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W30A-SHADOW-BLOCK\\shadow_block.py","exists":true},"W30A_ledger":{"path":"C:/HyperBEHCS/store\\shadow-block-ledger.ndjson","exists":true},"W30A_receipt":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W30A-SHADOW-BLOCK\\RECEIPT.md","exists":true},"W30B_receipt":{"path":"D:/AsolariaGuides/autopilot-overnight-2026-05-20/W30B-REGRESSION-FIXTURES\\RECEIPT.md","exists":false}}},"snapshot_at_v5":"2026-05-21T08:12:39.135304Z","ledger_summary":{"fresh_snapshot_at":"2026-05-21T08:12:39.161347Z","ledger_path":"C:/HyperBEHCS/store\\shadow-block-ledger.ndjson","ledger_exists":true,"ledger_sha":"08214c70cdf0e0bfff8a68ee3df43f5dc1eae81782aa596530c1aad2c5b84b02","total_entries":34,"would_block_count":21,"pending_review_count":34,"true_positive_count":0,"false_positive_count":0,"confirmed_violation_count":0,"by_verdict":{"AETHER-COMPLIANT":13,"AETHER-VIOLATION":21},"by_review_status":{"PENDING-REVIEW":34},"update_of_marker_count":0,"raw_line_count":34,"_status":"OK","pending_review_queue":[{"sha16":"87b8ac88bec8308f","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W29C-AETHER-AUDIT","overall_verdict":"AETHER-COMPLIANT","would_block":false,"decision_code":"OP-AETHER-HIGH-ASSURANCE-W29C","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:02:58Z","review_status":"PENDING-REVIEW","pass_count":5,"warn_count":0,"fail_count":0},{"sha16":"1380bd5c026e69be","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W28A-T64-HARDENING","overall_verdict":"AETHER-COMPLIANT","would_block":false,"decision_code":"OP-T64-BRIDGE-FIRST","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:02:58Z","review_status":"PENDING-REVIEW","pass_count":4,"warn_count":0,"fail_count":0},{"sha16":"da3ae683814e98c2","artifact_path":"C:\\Users\\acer\\AppData\\Local\\Temp\\w30a_fake_m3u246iw\\FAKE-W99X-BAD-COLLAPSE","overall_verdict":"AETHER-VIOLATION","would_block":true,"decision_code":null,"audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:02:58Z","review_status":"PENDING-REVIEW","pass_count":0,"warn_count":1,"fail_count":7},{"sha16":"7d2bb9629598187a","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30A-SHADOW-BLOCK","overall_verdict":"AETHER-COMPLIANT","would_block":false,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:02:58Z","review_status":"PENDING-REVIEW","pass_count":4,"warn_count":0,"fail_count":0},{"sha16":"c2c3ee9dd6c60389","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30B-REGRESSION-FIXTURES\\fixtures\\F1-valid-bridge","overall_verdict":"AETHER-COMPLIANT","would_block":false,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST-FIXTURES-W30B","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:03:06Z","review_status":"PENDING-REVIEW","pass_count":2,"warn_count":0,"fail_count":0},{"sha16":"a17830c338d9db85","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30B-REGRESSION-FIXTURES\\fixtures\\F2-defensive-doctrine-cite","overall_verdict":"AETHER-COMPLIANT","would_block":false,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST-FIXTURES-W30B","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:03:06Z","review_status":"PENDING-REVIEW","pass_count":2,"warn_count":0,"fail_count":0},{"sha16":"f6ab4bd066ca360a","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30B-REGRESSION-FIXTURES\\fixtures\\F3-active-collapse-attempt","overall_verdict":"AETHER-VIOLATION","would_block":true,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST-FIXTURES-W30B","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:03:07Z","review_status":"PENDING-REVIEW","pass_count":0,"warn_count":0,"fail_count":6},{"sha16":"bee8291923a495e3","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30B-REGRESSION-FIXTURES\\fixtures\\F4-silent-rename-attempt","overall_verdict":"AETHER-VIOLATION","would_block":true,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST-FIXTURES-W30B","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:03:07Z","review_status":"PENDING-REVIEW","pass_count":0,"warn_count":1,"fail_count":2},{"sha16":"77bb6b0ecda6f973","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30B-REGRESSION-FIXTURES\\fixtures\\F5-missing-receipt","overall_verdict":"AETHER-VIOLATION","would_block":true,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST-FIXTURES-W30B","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:03:07Z","review_status":"PENDING-REVIEW","pass_count":2,"warn_count":0,"fail_count":2},{"sha16":"a2cab43e388456e6","artifact_path":"D:\\AsolariaGuides\\autopilot-overnight-2026-05-20\\W30B-REGRESSION-FIXTURES\\fixtures\\F6-undeclared-lossy","overall_verdict":"AETHER-VIOLATION","would_block":true,"decision_code":"OP-W30-SHADOW-BLOCK-FIRST-FIXTURES-W30B","audit_mode":"SHADOW-BLOCK","ts_iso":"2026-05-21T08:03:07Z","review_status":"PENDING-REVIEW","pass_count":2,"warn_count":0,"fail_count":2}],"queue_limit":10}}</script>
+<script>
+(function() {
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "class") e.className = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    if (children) (Array.isArray(children) ? children : [children]).forEach(function(c) {
+      if (c == null) return;
+      e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    });
+    return e;
+  }
+  function escapeHTML(s) { return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function clip(s, n) { s = String(s == null ? "" : s); return s.length > n ? s.slice(0, n) + "..." : s; }
+  function fmtBytes(n) {
+    if (n == null) return "-";
+    if (n < 1024) return n + " B";
+    if (n < 1024*1024) return (n/1024).toFixed(1) + " KB";
+    return (n/1024/1024).toFixed(2) + " MB";
+  }
+
+  var raw = document.getElementById("data").textContent.trim() || "{}";
+  var D;
+  try { D = JSON.parse(raw); } catch (e) {
+    document.body.innerHTML = "<pre style='color:#ff5c5c;padding:20px'>snapshot parse failed: "
+      + escapeHTML(e.message) + "</pre>"; return;
+  }
+
+  // Topbar
+  var tb = document.getElementById("topbar");
+  tb.innerHTML = "";
+  var hb = D.heartbeat || {};
+  var thermal = D.thermal || {};
+  var sub = D.substrate || {};
+  var vs = D.vocab_seam || {};
+  var ad = D.aether_doctrine || {};
+  var am = D.audit_mode || {};
+  function tbField(label, value, extraClass) {
+    var f = el("div", { class: "field" });
+    f.appendChild(el("div", { class: "label" }, label));
+    f.appendChild(el("div", { class: "value " + (extraClass || "") }, String(value)));
+    return f;
+  }
+  tb.appendChild(tbField("snapshot v4", (D.snapshot_at_v4 || D.snapshot_at_v3 || D.snapshot_at_v2 || D.snapshot_at || "?")
+    .replace("T"," ").replace("Z"," UTC")));
+  tb.appendChild(tbField("doctrine", "AETHER HIGH-ASSURANCE (" + (ad.laws_count || "?") + " laws)"));
+  // audit mode topbar cell
+  var auditCell = el("div", { class: "field" });
+  auditCell.appendChild(el("div", { class: "label" }, "audit mode"));
+  var av = el("div", { class: "value" });
+  var curMode = am.current_mode || "?";
+  var auditPillCls = (curMode === "AUDIT-ONLY") ? "blue"
+                   : (curMode === "SHADOW-BLOCK") ? "amber"
+                   : (curMode === "LIVE-BLOCK") ? "green"
+                   : "yellow";
+  av.appendChild(el("span", { class: "pill " + auditPillCls }, curMode));
+  auditCell.appendChild(av);
+  tb.appendChild(auditCell);
+  tb.appendChild(tbField("waves W17-W26", (D.waves_present_count || 0) + " / "
+    + ((D.waves || []).length)));
+  tb.appendChild(tbField("PB-D scaffolded", (D.pb_d_atlas || []).length + " / 14"));
+  // Vocab seam topbar cell — promoted to current_state
+  var seamCell = el("div", { class: "field" });
+  seamCell.appendChild(el("div", { class: "label" }, "vocab seam"));
+  var sv = el("div", { class: "value" });
+  var seamState = vs.current_state || vs.status || "?";
+  var statusPill = (seamState === "TESTED") ? "green"
+                : (seamState === "BRIDGED") ? "green"
+                : (seamState === "OPEN") ? "yellow"
+                : (seamState === "COLLAPSED") ? "red"
+                : "yellow";
+  sv.appendChild(el("span", { class: "pill " + statusPill }, seamState));
+  seamCell.appendChild(sv);
+  tb.appendChild(seamCell);
+  var beatCell = el("div", { class: "field" });
+  beatCell.appendChild(el("div", { class: "label" }, "heartbeat"));
+  var bv = el("div", { class: "value" });
+  bv.appendChild(el("span", { class: "dot " + (hb.loop_alive ? "ok" : "bad") }));
+  bv.appendChild(document.createTextNode("beat " + (hb.counter == null ? "?" : hb.counter)
+    + " (pid " + (hb.loop_pid || "?") + ")"));
+  beatCell.appendChild(bv);
+  tb.appendChild(beatCell);
+  var thermCell = el("div", { class: "field" });
+  thermCell.appendChild(el("div", { class: "label" }, "gpu temp"));
+  var tv = el("div", { class: "value sev-" + (thermal.current_severity || "UNKNOWN") });
+  tv.textContent = (thermal.current_temp_c == null ? "?" : thermal.current_temp_c + "C")
+    + " " + (thermal.current_severity || "");
+  thermCell.appendChild(tv);
+  tb.appendChild(thermCell);
+  tb.appendChild(tbField("substrate", fmtBytes(sub.size) + " / "
+    + (sub.sha ? sub.sha.slice(0,8) : "?")));
+
+  // Panel 10: Audit Mode (NEW in v4)
+  (function() {
+    var c = document.getElementById("panel-audit-mode");
+    c.innerHTML = "";
+    if (!am || !am.current_mode) {
+      c.appendChild(el("div", { class: "muted small" },
+        "(audit_mode block not present in snapshot)"));
+      return;
+    }
+    var header = el("div");
+    header.style.display = "flex";
+    header.style.flexWrap = "wrap";
+    header.style.gap = "12px";
+    header.style.alignItems = "center";
+    header.appendChild(el("span", { class: "badge-decision amber" },
+      am.decision_code || "OP-W30-SHADOW-BLOCK-FIRST"));
+    header.appendChild(el("span", { class: "muted small" },
+      "decision_at " + (am.decision_at || "?")
+      + "  |  promotion gate: " + (am.promotion_to_live_block_gate || "?")));
+    c.appendChild(header);
+
+    var banner = el("div", { class: "audit-banner" });
+    banner.appendChild(el("div", null,
+      "Mode: ", el("span", { class: "pill amber" }, am.current_mode)));
+    banner.appendChild(el("div", { class: "decision" },
+      "AUDIT (observe) -> SHADOW-BLOCK (would-block recorded, NOT enforced) -> LIVE-BLOCK [FORBIDDEN]"));
+    c.appendChild(banner);
+
+    // 3-state row
+    var stateOrder = ["AUDIT-ONLY", "SHADOW-BLOCK", "LIVE-BLOCK-FORBIDDEN"];
+    var stateGlyphs = { "AUDIT-ONLY": "[A]", "SHADOW-BLOCK": "[S]", "LIVE-BLOCK-FORBIDDEN": "[X]" };
+    var hist = am.mode_history || [];
+    var historyMap = {};
+    hist.forEach(function(h) {
+      // entries like "AUDIT-ONLY @ W29C"
+      var m = /^(\S+)\s*@\s*(\S+)/.exec(h);
+      if (m) historyMap[m[1]] = m[2];
+    });
+    var curIdx = stateOrder.indexOf(am.current_mode);
+    if (curIdx < 0) curIdx = 1;
+    var row = el("div", { class: "state3-row" });
+    stateOrder.forEach(function(name, i) {
+      var cls = "state3-cell";
+      var isForbidden = (name === "LIVE-BLOCK-FORBIDDEN");
+      if (isForbidden) cls += " is-forbidden";
+      else if (i === curIdx) cls += " is-current-amber";
+      else if (i < curIdx) cls += " is-past";
+      var cell = el("div", { class: cls });
+      var hdrLine = el("div");
+      if (isForbidden) {
+        hdrLine.appendChild(el("span", { class: "lock-icon" }, "[LOCK]"));
+      }
+      hdrLine.appendChild(el("span", { class: "state-glyph" }, stateGlyphs[name] || ""));
+      hdrLine.appendChild(el("span", { class: "state-name" }, name));
+      cell.appendChild(hdrLine);
+      var meta = el("div", { class: "state-meta" });
+      var srcWave = historyMap[name];
+      if (isForbidden) {
+        meta.textContent = "status: " + (am.live_block_status || "FORBIDDEN-PER-OP-W30");
+      } else if (srcWave) {
+        meta.textContent = "source: " + srcWave;
+      } else {
+        meta.textContent = "";
+      }
+      cell.appendChild(meta);
+      var noteText = "";
+      if (name === "AUDIT-ONLY") {
+        noteText = "Observations recorded; no would-block emitted. Establishes baseline.";
+      } else if (name === "SHADOW-BLOCK") {
+        noteText = "Would-block decisions WRITTEN to ledger; NOT enforced. Audited, not active.";
+      } else if (name === "LIVE-BLOCK-FORBIDDEN") {
+        noteText = "Enforcement FORBIDDEN by OP-W30 until promotion gate satisfied. "
+                 + "Requires >=1 wave with 0 PENDING + 0 unverified TRUE-POSITIVE.";
+      }
+      cell.appendChild(el("div", { class: "state-note" }, noteText));
+      if (i === curIdx && !isForbidden) {
+        var curPill = el("div");
+        curPill.style.marginTop = "6px";
+        curPill.appendChild(el("span", { class: "pill amber" }, "* CURRENT *"));
+        cell.appendChild(curPill);
+      }
+      if (isForbidden) {
+        var ban = el("div");
+        ban.style.marginTop = "6px";
+        ban.appendChild(el("span", { class: "pill red" }, "FORBIDDEN PER OP-W30"));
+        cell.appendChild(ban);
+      }
+      row.appendChild(cell);
+    });
+    c.appendChild(row);
+
+    // Mini-strip pipeline
+    var strip = el("div", { class: "mini-strip" });
+    stateOrder.forEach(function(name, i) {
+      var sc = "stage";
+      var isForbidden = (name === "LIVE-BLOCK-FORBIDDEN");
+      if (isForbidden) sc += " is-forbidden";
+      else if (i === curIdx) sc += " is-current-amber";
+      else if (i < curIdx) sc += " is-past";
+      var stage = el("span", { class: sc });
+      stage.appendChild(document.createTextNode((stateGlyphs[name] || "") + " " + name));
+      strip.appendChild(stage);
+      if (i < stateOrder.length - 1) {
+        strip.appendChild(el("span", { class: "arrow" }, " -> "));
+      }
+    });
+    c.appendChild(strip);
+
+    // Shadow ledger sub-table
+    var sl = am.shadow_ledger || {};
+    var ledgerHeader = el("div", { class: "muted small" });
+    ledgerHeader.style.marginTop = "12px";
+    ledgerHeader.textContent = "Shadow Ledger ("
+      + (sl.ledger_exists ? "live" : "PENDING") + ")";
+    c.appendChild(ledgerHeader);
+    var lt = el("table", { class: "sub-table" });
+    var lthead = el("tr");
+    ["metric","value"].forEach(function(h) { lthead.appendChild(el("th", null, h)); });
+    lt.appendChild(el("thead", null, lthead));
+    var ltb = el("tbody");
+    [
+      ["total_entries", sl.total_entries],
+      ["would_block_count", sl.would_block_count],
+      ["pending_review_count", sl.pending_review_count],
+      ["true_positive_count", sl.true_positive_count],
+      ["false_positive_count", sl.false_positive_count],
+      ["confirmed_violation_count", sl.confirmed_violation_count],
+    ].forEach(function(r) {
+      var tr = el("tr");
+      tr.appendChild(el("td", { class: "small mono" }, r[0]));
+      var vCell = el("td", { class: "num small mono" });
+      if (r[0] === "would_block_count") {
+        vCell.appendChild(el("span", { class: "pill amber" }, String(r[1] == null ? 0 : r[1])));
+      } else if (r[0] === "pending_review_count") {
+        var n = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (n > 0 ? "yellow" : "green") }, String(n)));
+      } else if (r[0] === "true_positive_count") {
+        var n2 = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (n2 > 0 ? "green" : "yellow") }, String(n2)));
+      } else if (r[0] === "false_positive_count") {
+        var n3 = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (n3 > 0 ? "red" : "green") }, String(n3)));
+      } else {
+        vCell.appendChild(document.createTextNode(String(r[1] == null ? 0 : r[1])));
+      }
+      tr.appendChild(vCell);
+      ltb.appendChild(tr);
+    });
+    lt.appendChild(ltb);
+    c.appendChild(lt);
+    if (!sl.ledger_exists) {
+      var pendNote = el("div", { class: "muted small" });
+      pendNote.style.marginTop = "4px";
+      pendNote.textContent = "Ledger PENDING (" + (sl._status || "absent")
+                            + "). Will populate when W30A emits ledger.";
+      c.appendChild(pendNote);
+    }
+
+    // Fixtures sub-table
+    var rf = am.regression_fixtures || {};
+    var fixHeader = el("div", { class: "muted small" });
+    fixHeader.style.marginTop = "12px";
+    fixHeader.textContent = "Regression Fixtures ("
+      + (rf.receipt_exists ? "live" : "PENDING") + ")";
+    c.appendChild(fixHeader);
+    var ft = el("table", { class: "sub-table" });
+    var fthead = el("tr");
+    ["metric","value"].forEach(function(h) { fthead.appendChild(el("th", null, h)); });
+    ft.appendChild(el("thead", null, fthead));
+    var ftb = el("tbody");
+    [
+      ["total", rf.total],
+      ["matched_expected", (rf.matched_expected == null ? 0 : rf.matched_expected) + " / " + (rf.total || 6)],
+      ["valid_cases_passed", rf.valid_cases_passed],
+      ["violation_cases_caught", rf.violation_cases_caught],
+      ["false_positives", rf.false_positives],
+    ].forEach(function(r) {
+      var tr = el("tr");
+      tr.appendChild(el("td", { class: "small mono" }, r[0]));
+      var vCell = el("td", { class: "num small mono" });
+      if (r[0] === "matched_expected") {
+        var matched = rf.matched_expected == null ? 0 : rf.matched_expected;
+        var tot = rf.total || 6;
+        var pillCls = (matched === tot && tot > 0) ? "green"
+                    : (matched > 0) ? "yellow" : "amber";
+        vCell.appendChild(el("span", { class: "pill " + pillCls }, String(r[1])));
+      } else if (r[0] === "false_positives") {
+        var fpv = r[1] == null ? 0 : r[1];
+        vCell.appendChild(el("span", { class: "pill " + (fpv > 0 ? "red" : "green") }, String(fpv)));
+      } else {
+        vCell.appendChild(document.createTextNode(String(r[1] == null ? 0 : r[1])));
+      }
+      tr.appendChild(vCell);
+      ftb.appendChild(tr);
+    });
+    ft.appendChild(ftb);
+    c.appendChild(ft);
+    if (!rf.receipt_exists) {
+      var fixNote = el("div", { class: "muted small" });
+      fixNote.style.marginTop = "4px";
+      fixNote.textContent = "Fixtures PENDING (" + (rf._status || "absent")
+                          + "). Will populate when W30B emits receipt.";
+      c.appendChild(fixNote);
+    }
+
+    // Promotion gate text + ready indicator
+    var gate = el("div");
+    gate.style.marginTop = "12px";
+    gate.style.padding = "8px 10px";
+    gate.style.background = "var(--bg3)";
+    gate.style.borderRadius = "4px";
+    gate.style.border = "1px dotted var(--grid)";
+    var gateLine = el("div", { class: "small" });
+    gateLine.appendChild(el("span", { class: "muted" }, "Promotion to LIVE-BLOCK requires: "));
+    gateLine.appendChild(document.createTextNode(am.promotion_to_live_block_gate || "?"));
+    gate.appendChild(gateLine);
+    var readyLine = el("div", { class: "small" });
+    readyLine.style.marginTop = "4px";
+    readyLine.appendChild(el("span", { class: "muted" }, "promotion_ready: "));
+    readyLine.appendChild(el("span", { class: "pill " + (am.promotion_ready ? "green" : "amber") },
+      am.promotion_ready ? "TRUE" : "FALSE"));
+    readyLine.appendChild(document.createTextNode("  |  "));
+    readyLine.appendChild(el("span", { class: "muted" }, "live_block_status: "));
+    readyLine.appendChild(el("span", { class: "pill red" },
+      am.live_block_status || "FORBIDDEN-PER-OP-W30"));
+    gate.appendChild(readyLine);
+    c.appendChild(gate);
+
+    // mode_history
+    if (am.mode_history && am.mode_history.length) {
+      var histWrap = el("div");
+      histWrap.style.marginTop = "8px";
+      histWrap.appendChild(el("div", { class: "muted small" }, "mode_history:"));
+      var ord = el("div", { class: "order" });
+      am.mode_history.forEach(function(s, i) {
+        if (i > 0) ord.appendChild(el("span", { class: "arrow" }, " -> "));
+        ord.appendChild(el("span", { class: "step" }, s));
+      });
+      histWrap.appendChild(ord);
+      c.appendChild(histWrap);
+    }
+
+    // Sources details
+    if (am.sources) {
+      var det = el("details");
+      det.appendChild(el("summary", null, "sources (W30A + W30B file presence)"));
+      var st = el("table");
+      st.style.marginTop = "4px";
+      Object.keys(am.sources).forEach(function(k) {
+        var s = am.sources[k] || {};
+        var tr = el("tr");
+        tr.appendChild(el("td", { class: "small mono" }, k));
+        tr.appendChild(el("td", null,
+          el("span", { class: "dot " + (s.exists ? "ok" : "bad") })));
+        tr.appendChild(el("td", { class: "small mono muted" }, clip(s.path || "", 90)));
+        st.appendChild(tr);
+      });
+      det.appendChild(st);
+      c.appendChild(det);
+    }
+
+    // closing note
+    var note = el("div", { class: "muted small" });
+    note.style.marginTop = "8px";
+    note.textContent = "Color note: SHADOW-BLOCK uses AMBER (warning, audited-but-not-enforced) "
+      + "to distinguish from green (active+safe) and red (active+danger). "
+      + "Per OP-W30-SHADOW-BLOCK-FIRST + AETHER law 9 (expose state, do not hide it).";
+    c.appendChild(note);
+  })();
+
+  // Panel 11 (NEW in v5): Shadow-Block Pending Operator Review queue
+  (function() {
+    var c = document.getElementById("panel-pending-queue");
+    c.innerHTML = "";
+    var ls = D.ledger_summary || {};
+    var queue = (ls.pending_review_queue || []);
+    var stamp = ls.fresh_snapshot_at ? ls.fresh_snapshot_at.replace("T", " ").replace("Z", " UTC") : "?";
+
+    // Freshness stamps in panel-10 + panel-11 headers
+    var s10 = document.getElementById("panel-10-fresh-stamp");
+    if (s10) s10.innerHTML = '<span class="freshness-stamp">FRESH ' + escapeHTML(stamp) + '</span>';
+    var s11 = document.getElementById("panel-11-fresh-stamp");
+    if (s11) s11.innerHTML = '<span class="freshness-stamp">FRESH ' + escapeHTML(stamp) + '</span>';
+
+    // Summary chips
+    var chipsLine = el("div");
+    chipsLine.style.display = "flex";
+    chipsLine.style.flexWrap = "wrap";
+    chipsLine.style.gap = "8px";
+    chipsLine.style.alignItems = "center";
+    function chip(label, val, pillCls) {
+      var w = el("span");
+      w.appendChild(el("span", { class: "muted small" }, label + ": "));
+      w.appendChild(el("span", { class: "pill " + (pillCls || "blue") }, String(val)));
+      return w;
+    }
+    chipsLine.appendChild(chip("total_entries", ls.total_entries == null ? 0 : ls.total_entries, "blue"));
+    chipsLine.appendChild(chip("would_block", ls.would_block_count == null ? 0 : ls.would_block_count,
+      (ls.would_block_count > 0) ? "amber" : "green"));
+    chipsLine.appendChild(chip("pending_review", ls.pending_review_count == null ? 0 : ls.pending_review_count,
+      (ls.pending_review_count > 0) ? "yellow" : "green"));
+    chipsLine.appendChild(chip("true_positive", ls.true_positive_count == null ? 0 : ls.true_positive_count, "green"));
+    chipsLine.appendChild(chip("false_positive", ls.false_positive_count == null ? 0 : ls.false_positive_count,
+      (ls.false_positive_count > 0) ? "red" : "green"));
+    chipsLine.appendChild(chip("update_of markers", ls.update_of_marker_count == null ? 0 : ls.update_of_marker_count, "blue"));
+    chipsLine.appendChild(chip("raw_lines", ls.raw_line_count == null ? 0 : ls.raw_line_count, "blue"));
+    c.appendChild(chipsLine);
+
+    // Filter bar (client-side filter on overall_verdict + would_block)
+    var fbar = el("div", { class: "filter-bar" });
+    fbar.appendChild(el("span", { class: "muted small" }, "Filter: "));
+    var filters = [
+      ["ALL", function(r) { return true; }],
+      ["WOULD-BLOCK", function(r) { return !!r.would_block; }],
+      ["AETHER-VIOLATION", function(r) { return r.overall_verdict === "AETHER-VIOLATION"; }],
+      ["AETHER-COMPLIANT", function(r) { return r.overall_verdict === "AETHER-COMPLIANT"; }],
+    ];
+    var currentFilter = filters[0][1];
+    var btnRefs = [];
+    function rerender() {
+      var rows = queue.filter(currentFilter);
+      tbody.innerHTML = "";
+      if (rows.length === 0) {
+        var tr = el("tr");
+        var td = el("td", { class: "muted small" }, "(no entries match filter)");
+        td.setAttribute("colspan", "8");
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+      rows.forEach(function(r) {
+        var tr = el("tr");
+        tr.appendChild(el("td", { class: "sha" }, r.sha16 || ""));
+        // wave extracted from artifact_path basename heuristic
+        var wave = "";
+        var m = /W(\d+[A-Z]?)/i.exec(r.artifact_path || "");
+        if (m) wave = "W" + m[1];
+        tr.appendChild(el("td", null, wave));
+        tr.appendChild(el("td", { class: "path" }, clip(r.artifact_path || "", 120)));
+        var vCell = el("td");
+        var vCls = (r.overall_verdict === "AETHER-VIOLATION") ? "amber"
+                 : (r.overall_verdict === "AETHER-COMPLIANT") ? "green" : "yellow";
+        vCell.appendChild(el("span", { class: "pill " + vCls }, r.overall_verdict || "?"));
+        tr.appendChild(vCell);
+        var wbCell = el("td");
+        wbCell.appendChild(el("span", { class: "pill " + (r.would_block ? "amber" : "green") },
+          r.would_block ? "TRUE" : "FALSE"));
+        tr.appendChild(wbCell);
+        var rsCell = el("td");
+        var rsCls = (r.review_status === "PENDING-REVIEW") ? "yellow"
+                  : (r.review_status === "TRUE-POSITIVE") ? "green"
+                  : (r.review_status === "FALSE-POSITIVE") ? "red"
+                  : (r.review_status === "CONFIRMED-VIOLATION") ? "red" : "blue";
+        rsCell.appendChild(el("span", { class: "pill " + rsCls }, r.review_status || "?"));
+        tr.appendChild(rsCell);
+        tr.appendChild(el("td", { class: "small mono" }, r.decision_code || "(none)"));
+        tr.appendChild(el("td", { class: "small mono muted" }, (r.ts_iso || "").slice(11, 19)));
+        tbody.appendChild(tr);
+      });
+    }
+    filters.forEach(function(f, i) {
+      var b = el("button", null, f[0]);
+      if (i === 0) b.className = "active";
+      b.onclick = function() {
+        currentFilter = f[1];
+        btnRefs.forEach(function(other) { other.className = ""; });
+        b.className = "active";
+        rerender();
+      };
+      btnRefs.push(b);
+      fbar.appendChild(b);
+    });
+    c.appendChild(fbar);
+
+    // Queue table
+    var t = el("table", { class: "queue-table" });
+    var thr = el("tr");
+    ["sha16", "wave", "artifact_path", "verdict", "would_block",
+     "review_status", "decision_code", "ts"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tbody = el("tbody");
+    t.appendChild(tbody);
+    c.appendChild(t);
+    rerender();
+
+    // Review actions hint
+    var hint = el("div", { class: "queue-hint" });
+    hint.innerHTML = "<b>Review actions</b> (call from D:/AsolariaGuides/autopilot-overnight-2026-05-20/W30A-SHADOW-BLOCK/):<br>"
+      + "<code>python -c \"import shadow_block as sb; sb.mark_review(sha16, status, OP-token)\"</code><br>"
+      + "<code>status ::= PENDING-REVIEW | TRUE-POSITIVE | FALSE-POSITIVE | CONFIRMED-VIOLATION</code><br>"
+      + "<code>OP-token</code> must begin with <code>OP-</code> (W30A operator-witness gate, spec §4).<br>"
+      + "Faster: <code>python D:/AsolariaGuides/autopilot-overnight-2026-05-20/W31C-LEDGER-REVIEW/review_helper.py quick-mark &lt;sha16&gt; &lt;status&gt; &lt;OP-token&gt;</code>";
+    c.appendChild(hint);
+
+    // Showing-N note
+    var note = el("div", { class: "muted small" });
+    note.style.marginTop = "6px";
+    note.textContent = "Showing top " + queue.length + " oldest PENDING entries (queue_limit="
+      + (ls.queue_limit || queue.length) + "). Total pending across ledger: "
+      + (ls.pending_review_count == null ? "?" : ls.pending_review_count) + ".";
+    c.appendChild(note);
+  })();
+
+  // Panel 8: Vocab Seam Status — full 4-state model (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-vocab-seam");
+    c.innerHTML = "";
+    var header = el("div");
+    header.style.display = "flex";
+    header.style.flexWrap = "wrap";
+    header.style.gap = "12px";
+    header.style.alignItems = "center";
+    header.appendChild(el("span", { class: "badge-decision" }, vs.decision_code || "?"));
+    var cur = vs.current_state || "?";
+    var statusCls = (cur === "TESTED") ? "tested"
+                  : (cur === "BRIDGED") ? "bridged"
+                  : (cur === "OPEN") ? "open"
+                  : "open";
+    var statusBox = el("span", { class: "seam-status " + statusCls });
+    statusBox.appendChild(el("span", { class: "dot "
+      + (cur === "TESTED" || cur === "BRIDGED" ? "ok"
+         : cur === "OPEN" ? "warn" : "bad") }));
+    statusBox.appendChild(document.createTextNode(cur));
+    header.appendChild(statusBox);
+    header.appendChild(el("span", { class: "muted small" },
+      "decision_at " + (vs.decision_at || "?")
+      + "  |  canonical_internal_form = " + (vs.canonical_internal_form || "?")
+      + "  |  AETHER law 9: \"dashboard must expose seam status clearly\""));
+    c.appendChild(header);
+
+    var stateOrder = ["OPEN", "BRIDGED", "TESTED", "COLLAPSED"];
+    var stateGlyphs = { "OPEN": "[_]", "BRIDGED": "[B]", "TESTED": "[T]", "COLLAPSED": "[X]" };
+    var annotations = vs.state_annotations || {};
+    var curIdx = stateOrder.indexOf(cur);
+    if (curIdx < 0) curIdx = 1;
+    var row = el("div", { class: "state4-row" });
+    stateOrder.forEach(function(name, i) {
+      var cls = "state4-cell";
+      if (name === "COLLAPSED") cls += " is-forbidden";
+      else if (i === curIdx) cls += " is-current";
+      else if (i < curIdx) cls += " is-past";
+      else cls += " is-future";
+      var cell = el("div", { class: cls });
+      var hdr = el("div");
+      hdr.appendChild(el("span", { class: "state-glyph" }, stateGlyphs[name] || ""));
+      hdr.appendChild(el("span", { class: "state-name" }, name
+        + (name === "COLLAPSED" ? " (FORBIDDEN)" : "")));
+      cell.appendChild(hdr);
+      var a = annotations[name] || {};
+      var meta = el("div", { class: "state-meta" });
+      meta.textContent = (a.source_wave ? "source: " + a.source_wave : "")
+        + (a.ts ? "  |  " + a.ts : "");
+      cell.appendChild(meta);
+      cell.appendChild(el("div", { class: "state-note" }, a.note || ""));
+      if (i === curIdx && name !== "COLLAPSED") {
+        var cur_pill = el("div");
+        cur_pill.style.marginTop = "6px";
+        cur_pill.appendChild(el("span", { class: "pill green" }, "* CURRENT *"));
+        cell.appendChild(cur_pill);
+      }
+      if (name === "COLLAPSED") {
+        var ban = el("div");
+        ban.style.marginTop = "6px";
+        ban.appendChild(el("span", { class: "pill red" }, "FORBIDDEN BY LAW 10"));
+        cell.appendChild(ban);
+      }
+      row.appendChild(cell);
+    });
+    c.appendChild(row);
+
+    var strip = el("div", { class: "mini-strip" });
+    stateOrder.forEach(function(name, i) {
+      var sc = "stage";
+      if (name === "COLLAPSED") sc += " is-forbidden";
+      else if (i === curIdx) sc += " is-current";
+      else if (i < curIdx) sc += " is-past";
+      var stage = el("span", { class: sc });
+      stage.appendChild(document.createTextNode((stateGlyphs[name] || "") + " " + name));
+      strip.appendChild(stage);
+      if (i < stateOrder.length - 1) {
+        strip.appendChild(el("span", { class: "arrow" }, " -> "));
+      }
+    });
+    c.appendChild(strip);
+
+    var sg = el("div", { class: "seam-grid" });
+    function card(label, valueText, cls) {
+      var card = el("div", { class: "seam-card" });
+      card.appendChild(el("div", { class: "label" }, label));
+      card.appendChild(el("div", { class: "num-big " + (cls || "") }, String(valueText)));
+      return card;
+    }
+    sg.appendChild(card("ACTIVE VOCABULARIES",
+      vs.active_vocabularies == null ? "?" : vs.active_vocabularies));
+    sg.appendChild(card("LOSSY MAPPINGS",
+      vs.lossy_count == null ? "?" : vs.lossy_count,
+      (vs.lossy_count && vs.lossy_count > 0) ? "warn" : ""));
+    sg.appendChild(card("BIJECTIVE MAPPINGS",
+      vs.bijective_count == null ? "?" : vs.bijective_count));
+    c.appendChild(sg);
+
+    var kv = el("div", { class: "kv" });
+    kv.style.marginTop = "10px";
+    [
+      ["bridge_sha (last 8)", vs.bridge_sha_short
+        ? vs.bridge_sha_short + (vs.bridge_sha ? "  (full: " + vs.bridge_sha.slice(0, 16) + "...)" : "")
+        : "(not yet emitted)"],
+      ["guardrail_status",   vs.guardrail_status || "?"],
+      ["regression smoke",   "pass=" + (vs.regression_smoke_pass || 0)
+        + " / fail=" + (vs.regression_smoke_fail || 0)],
+      ["golden snapshot",    vs.golden_snapshot_exists ? "DETERMINISTIC (present)" : "(missing)"],
+      ["collapse_forbidden", (vs.collapse_forbidden ? "TRUE" : "FALSE")
+        + "  |  cite: " + (vs.collapse_forbidden_cite || "?")],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      var v = el("div", { class: "v mono" });
+      if (r[0] === "guardrail_status") {
+        v.appendChild(el("span", { class: "pill "
+          + (vs.guardrail_status === "ARMED" ? "green" : "yellow") }, String(r[1])));
+      } else if (r[0] === "regression smoke") {
+        v.appendChild(el("span", { class: "pill "
+          + ((vs.regression_smoke_fail || 0) > 0 ? "red"
+             : (vs.regression_smoke_pass || 0) > 0 ? "green" : "yellow") },
+          String(r[1])));
+      } else if (r[0] === "golden snapshot") {
+        v.appendChild(el("span", { class: "pill "
+          + (vs.golden_snapshot_exists ? "green" : "yellow") }, String(r[1])));
+      } else if (r[0] === "collapse_forbidden") {
+        v.appendChild(el("span", { class: "pill " + (vs.collapse_forbidden ? "red" : "yellow") },
+          String(r[1])));
+      } else {
+        v.appendChild(document.createTextNode(String(r[1])));
+      }
+      kv.appendChild(v);
+    });
+    c.appendChild(kv);
+
+    var tidsWrap = el("div");
+    tidsWrap.style.marginTop = "8px";
+    tidsWrap.appendChild(el("div", { class: "muted small" },
+      "affected_task_ids (" + ((vs.affected_task_ids || []).length) + "):"));
+    var tids = el("div", { class: "tids" });
+    (vs.affected_task_ids || []).forEach(function(t) {
+      tids.appendChild(el("span", { class: "tid" }, t));
+    });
+    if (!(vs.affected_task_ids || []).length) {
+      tids.appendChild(el("span", { class: "muted small" }, "(none)"));
+    }
+    tidsWrap.appendChild(tids);
+    c.appendChild(tidsWrap);
+
+    var note = el("div", { class: "muted small" });
+    note.style.marginTop = "8px";
+    note.textContent = "Per OP-T64-BRIDGE-FIRST + AETHER HIGH-ASSURANCE: bridge, do not collapse; "
+      + "test, do not assume; expose state, do not hide it.";
+    c.appendChild(note);
+
+    if (vs.state_history) {
+      var hist = el("div");
+      hist.style.marginTop = "6px";
+      hist.appendChild(el("div", { class: "muted small" }, "state_history:"));
+      var ord = el("div", { class: "order" });
+      vs.state_history.forEach(function(s, i) {
+        if (i > 0) ord.appendChild(el("span", { class: "arrow" }, " -> "));
+        ord.appendChild(el("span", { class: "step" }, s));
+      });
+      hist.appendChild(ord);
+      c.appendChild(hist);
+    }
+
+    if (vs.sources) {
+      var det = el("details");
+      det.appendChild(el("summary", null, "sources (W28A + W28B file presence)"));
+      var st = el("table");
+      st.style.marginTop = "4px";
+      Object.keys(vs.sources).forEach(function(k) {
+        var s = vs.sources[k] || {};
+        var tr = el("tr");
+        tr.appendChild(el("td", { class: "small mono" }, k));
+        tr.appendChild(el("td", null,
+          el("span", { class: "dot " + (s.exists ? "ok" : "bad") })));
+        tr.appendChild(el("td", { class: "small mono muted" }, clip(s.path || "", 90)));
+        st.appendChild(tr);
+      });
+      det.appendChild(st);
+      c.appendChild(det);
+    }
+  })();
+
+  // Panel 9: AETHER Doctrine (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-doctrine");
+    c.innerHTML = "";
+    if (!ad || !ad.laws) {
+      c.appendChild(el("div", { class: "muted small" }, "(aether_doctrine block not present in snapshot)"));
+      return;
+    }
+    var banner = el("div", { class: "doctrine-banner" });
+    banner.appendChild(el("div", { class: "invariant" },
+      "\"" + (ad.primary_invariant || "") + "\""));
+    banner.appendChild(el("div", { class: "decision" },
+      "DECISION: " + (ad.decision_phrase || "?")));
+    c.appendChild(banner);
+
+    var meta = el("div", { class: "kv" });
+    meta.style.marginTop = "10px";
+    [
+      ["doctrine_canon_path", ad.doctrine_canon_path || "?"],
+      ["minted_wave",         ad.minted_wave || "?"],
+      ["minted_at",           ad.minted_at || "?"],
+      ["minter_pid",          ad.minter_pid || "?"],
+      ["laws_count",          ad.laws_count == null ? "?" : ad.laws_count],
+    ].forEach(function(r) {
+      meta.appendChild(el("div", { class: "k" }, r[0]));
+      meta.appendChild(el("div", { class: "v mono small" }, String(r[1])));
+    });
+    c.appendChild(meta);
+
+    var det = el("details");
+    det.setAttribute("open", "");
+    det.appendChild(el("summary", null,
+      "the " + (ad.laws_count || "?") + " laws (click to collapse)"));
+    var ul = el("ul", { class: "law-list" });
+    (ad.laws || []).forEach(function(law, i) {
+      var n = i + 1;
+      var liCls = (n === 1 || n === 6 || n === 9 || n === 10) ? "law-cited" : "";
+      var li = el("li", { class: liCls });
+      var text = law.replace(/^Law\s+\d+:\s*/, "");
+      li.appendChild(el("span", { class: "law-num" }, "Law " + n + ":"));
+      li.appendChild(document.createTextNode(" " + text));
+      ul.appendChild(li);
+    });
+    det.appendChild(ul);
+    c.appendChild(det);
+
+    var foot = el("div", { class: "muted small" });
+    foot.style.marginTop = "8px";
+    foot.textContent = "Laws 1 + 6 + 9 + 10 highlighted: v4 sidecar honors law 1 (no in-place mutation), "
+      + "law 6 (promotion gates require operator cosign — OP-W30-SHADOW-BLOCK-FIRST), "
+      + "law 9 (expose audit-mode state in Panel 10), law 10 (COLLAPSED forbidden).";
+    c.appendChild(foot);
+  })();
+
+  // Panel 1: Waves (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-waves");
+    c.innerHTML = "";
+    var t = el("table");
+    var thr = el("tr");
+    ["Wave","Fired","Headline","apex_cosign","size"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb = el("tbody");
+    (D.waves || []).forEach(function(w) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, "W" + w.wave));
+      tr.appendChild(el("td", { class: "small" }, w.fired || "-"));
+      tr.appendChild(el("td", { class: "small" }, w.exists ? clip(w.headline || "(no H1)", 110) : "(missing)"));
+      var ax = el("td", { class: "small" });
+      var apex = w.apex_cosign || "";
+      if (apex) {
+        apex.split("+").forEach(function(piece) {
+          piece = piece.trim();
+          if (!piece) return;
+          ax.appendChild(el("span", { class: "pill " + (piece.indexOf("PLAN-B") >= 0 ? "purple"
+                                                       : piece.indexOf("WAVE") >= 0 ? "blue" : "green") },
+            clip(piece, 48)));
+          ax.appendChild(document.createTextNode(" "));
+        });
+      } else {
+        ax.appendChild(el("span", { class: "muted" }, "-"));
+      }
+      tr.appendChild(ax);
+      tr.appendChild(el("td", { class: "num small" }, w.exists ? fmtBytes(w.size) : "-"));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    c.appendChild(t);
+  })();
+
+  // Panel 2: PB-D Atlas (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-pbd");
+    c.innerHTML = "";
+    var t = el("table");
+    var thr = el("tr");
+    ["ID","Title","Wave","Status","Selftest"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb = el("tbody");
+    (D.pb_d_atlas || []).forEach(function(p) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, p.id));
+      tr.appendChild(el("td", { class: "small" }, clip(p.title, 36)));
+      tr.appendChild(el("td", { class: "small" }, p.scaffolded_wave));
+      var stCell = el("td", null);
+      stCell.appendChild(el("span", { class: "pill green" }, p.status));
+      tr.appendChild(stCell);
+      tr.appendChild(el("td", { class: "small num" }, p.selftest));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    c.appendChild(t);
+    var note = el("div", { class: "muted small" }, "All 14 scaffolded. Live-promotion blocked by NotImplementedError + operator-witness gate.");
+    note.style.marginTop = "6px";
+    c.appendChild(note);
+  })();
+
+  // Panel 3: Heartbeat (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-heartbeat");
+    c.innerHTML = "";
+    var kv = el("div", { class: "kv" });
+    [
+      ["counter", hb.counter],
+      ["loop_pid", hb.loop_pid],
+      ["loop_alive", hb.loop_alive ? "true" : "false"],
+      ["beat_count (tail)", hb.beat_count],
+      ["window first", hb.first_ts || "-"],
+      ["window last", hb.last_ts || "-"],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      kv.appendChild(el("div", { class: "v" }, String(r[1] == null ? "-" : r[1])));
+    });
+    c.appendChild(kv);
+    var t = el("table");
+    t.style.marginTop = "8px";
+    var thr = el("tr");
+    ["beat","ts","ok","tempC","util%","fp"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb = el("tbody");
+    (hb.tail_beats || []).forEach(function(b) {
+      var tr = el("tr");
+      tr.appendChild(el("td", { class: "num" }, String(b.beat_seq)));
+      tr.appendChild(el("td", { class: "small" }, (b.ts_iso || "").slice(11, 19)));
+      tr.appendChild(el("td", null, el("span", { class: "dot " + (b.daemon_ok ? "ok" : "bad") })));
+      tr.appendChild(el("td", { class: "num" }, String(b.gpu_temp_c == null ? "-" : b.gpu_temp_c)));
+      tr.appendChild(el("td", { class: "num" }, String(b.gpu_util_pct == null ? "-" : b.gpu_util_pct)));
+      tr.appendChild(el("td", { class: "small mono" }, clip(b.fingerprint || "-", 16)));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    c.appendChild(t);
+  })();
+
+  // Panel 4: Thermal + mini chart (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-thermal");
+    c.innerHTML = "";
+    var kv = el("div", { class: "kv" });
+    [
+      ["current temp", (thermal.current_temp_c == null ? "?" : thermal.current_temp_c + "C")],
+      ["severity", thermal.current_severity || "?"],
+      ["window N", thermal.window_n],
+      ["window max", (thermal.window_max == null ? "?" : thermal.window_max + "C") + " ("
+        + (thermal.window_max_severity || "?") + ")"],
+      ["trend", thermal.trend || "?"],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      var v = el("div", { class: "v" });
+      if (r[0] === "severity") {
+        v.appendChild(el("span", { class: "sev-" + (thermal.current_severity || "UNKNOWN") },
+          String(r[1])));
+      } else if (r[0] === "window max") {
+        v.appendChild(el("span", { class: "sev-" + (thermal.window_max_severity || "UNKNOWN") },
+          String(r[1])));
+      } else {
+        v.appendChild(document.createTextNode(String(r[1] == null ? "-" : r[1])));
+      }
+      kv.appendChild(v);
+    });
+    c.appendChild(kv);
+    var samples = (thermal.samples || []).slice(-20);
+    if (samples.length >= 2) {
+      var w = 380, h = 80, pad = 18;
+      var temps = samples.map(function(s) { return s.temp_c; });
+      var minT = Math.min.apply(null, temps), maxT = Math.max.apply(null, temps);
+      if (maxT === minT) { maxT = minT + 1; }
+      var thr = (thermal.thresholds || {});
+      var ymin = Math.min(minT, thr.WARN || 85) - 2;
+      var ymax = Math.max(maxT, thr.HOT || 92) + 2;
+      var xs = function(i) { return pad + i * (w - 2*pad) / Math.max(samples.length - 1, 1); };
+      var ys = function(v) { return h - pad - (v - ymin) * (h - 2*pad) / (ymax - ymin); };
+      var svg = '<svg class="chart" viewBox="0 0 ' + w + ' ' + h + '">';
+      [["WARN", thr.WARN, "#f0b429"], ["ATTENTION", thr.ATTENTION, "#ffa657"], ["HOT", thr.HOT, "#ff5c5c"]].forEach(function(L) {
+        if (L[1] != null) {
+          var y = ys(L[1]);
+          svg += '<line class="gridline" x1="' + pad + '" y1="' + y + '" x2="' + (w - pad)
+              + '" y2="' + y + '" stroke="' + L[2] + '" stroke-opacity="0.4" />';
+          svg += '<text x="' + (w - pad + 2) + '" y="' + (y + 3) + '" fill="' + L[2] + '">'
+              + L[0] + '</text>';
+        }
+      });
+      var pts = samples.map(function(s, i) { return xs(i) + "," + ys(s.temp_c); }).join(" ");
+      svg += '<polyline points="' + pts + '" fill="none" stroke="#ffa657" stroke-width="1.4" />';
+      var last = samples[samples.length - 1];
+      svg += '<circle cx="' + xs(samples.length - 1) + '" cy="' + ys(last.temp_c)
+          + '" r="3" fill="#ffa657" />';
+      svg += '<text x="' + pad + '" y="' + (h - 2) + '">' + (samples[0].ts || "").slice(11, 16) + '</text>';
+      svg += '<text x="' + (w - pad - 30) + '" y="' + (h - 2) + '">'
+          + (last.ts || "").slice(11, 16) + '</text>';
+      svg += '</svg>';
+      var wrap = el("div");
+      wrap.style.marginTop = "8px";
+      wrap.innerHTML = svg;
+      c.appendChild(wrap);
+    }
+  })();
+
+  // Panel 5: Substrate + Daemon (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-substrate");
+    c.innerHTML = "";
+    var kv = el("div", { class: "kv" });
+    [
+      ["substrate sha", sub.sha ? sub.sha.slice(0, 32) + "..." : "?"],
+      ["substrate size", fmtBytes(sub.size)],
+      ["walker bypass", sub.walker_bypass ? "active" : "inactive"],
+    ].forEach(function(r) {
+      kv.appendChild(el("div", { class: "k" }, r[0]));
+      kv.appendChild(el("div", { class: "v mono" }, String(r[1])));
+    });
+    c.appendChild(kv);
+    var d = D.daemon || {};
+    var hdr = el("div", { class: "muted small" },
+      "daemon " + (d.host || "?") + ":" + (d.port || "?"));
+    hdr.style.marginTop = "8px";
+    c.appendChild(hdr);
+    var eps = d.endpoints || {};
+    Object.keys(eps).forEach(function(path) {
+      var ep = eps[path];
+      var row = el("div", { class: "ep-row" });
+      row.appendChild(el("span", { class: "dot " + (ep.ok ? "ok" : "bad") }));
+      row.appendChild(el("span", { class: "ep-path mono" }, path));
+      var bodyTxt = ep.ok
+        ? (function() {
+            var b = ep.body || {};
+            if (path === "/health" || path === "/status") return "pid=" + (b.pid || "?")
+              + " gpu_ready=" + (b.gpu_path_ready ? "T" : "F")
+              + " substrate_ready=" + (b.substrate_ready ? "T" : "F");
+            if (path === "/gpu/lane-status") return (b.adapter && b.adapter.name ? b.adapter.name + " " : "")
+              + "pstate=" + (b.pstate || "?") + " util=" + (b.util_pct == null ? "?" : b.util_pct + "%")
+              + " dispatches=" + (b.dispatch_count == null ? "?" : b.dispatch_count);
+            if (path === "/gpu/bindings") return "bindings=" + ((b.bindings || []).length)
+              + " apex=" + clip(b.apex_cosign || "?", 38);
+            return "ok";
+          })()
+        : (ep.error || "error");
+      row.appendChild(el("span", { class: "small muted" }, bodyTxt));
+      c.appendChild(row);
+    });
+  })();
+
+  // Panel 6: Operator queue (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-queue");
+    c.innerHTML = "";
+    var oq = D.operator_queue || {};
+    var sub1 = el("div");
+    sub1.appendChild(el("div", { class: "muted small" }, "TIER 0 (T01-T05) - operator-witness keystrokes (5 min total):"));
+    var ul1 = el("ul", { class: "thin" });
+    (oq.tier_0_witness || []).forEach(function(it) {
+      var li = el("li");
+      li.appendChild(el("span", { class: "pill yellow" }, it.id));
+      li.appendChild(document.createTextNode(" " + it.task));
+      ul1.appendChild(li);
+    });
+    sub1.appendChild(ul1);
+    c.appendChild(sub1);
+
+    var sub2 = el("div");
+    sub2.style.marginTop = "10px";
+    sub2.appendChild(el("div", { class: "muted small" }, "PB-D promotion path (cleanest unblock order):"));
+    var ord = el("div", { class: "order" });
+    (D.pb_d_unblock_order || []).forEach(function(s, i) {
+      if (i > 0) ord.appendChild(el("span", { class: "arrow" }, " -> "));
+      ord.appendChild(el("span", { class: "step" }, s));
+    });
+    sub2.appendChild(ord);
+    var ul2 = el("ul", { class: "thin" });
+    (oq.pb_d_promotion_order || []).forEach(function(step) {
+      ul2.appendChild(el("li", null, step));
+    });
+    sub2.appendChild(ul2);
+    c.appendChild(sub2);
+
+    var sub3 = el("div");
+    sub3.style.marginTop = "10px";
+    sub3.appendChild(el("div", { class: "muted small" }, "T58 model-launch (3 paths ready):"));
+    var pp = el("div", { class: "order" });
+    (oq.t58_paths || []).forEach(function(p) {
+      pp.appendChild(el("span", { class: "pill purple" }, p));
+    });
+    sub3.appendChild(pp);
+    c.appendChild(sub3);
+
+    var sub4 = el("div");
+    sub4.style.marginTop = "10px";
+    sub4.appendChild(el("div", { class: "muted small" }, "T56-B compositional store injection:"));
+    sub4.appendChild(el("div", { class: "small" }, oq.t56b_inject || ""));
+    c.appendChild(sub4);
+  })();
+
+  // Panel 7: Maps (preserved from v3)
+  (function() {
+    var c = document.getElementById("panel-maps");
+    c.innerHTML = "";
+    var t = el("table");
+    var thr = el("tr");
+    ["version","dir","json","voxel_count","sha256"].forEach(function(h) {
+      thr.appendChild(el("th", null, h));
+    });
+    t.appendChild(el("thead", null, thr));
+    var tb = el("tbody");
+    (D.map_lineage || []).forEach(function(m) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, m.version));
+      tr.appendChild(el("td", null, el("span", { class: "dot " + (m.exists_dir ? "ok" : "bad") })));
+      tr.appendChild(el("td", null, el("span", { class: "dot " + (m.json_exists ? "ok" : "bad") })));
+      tr.appendChild(el("td", { class: "num" }, m.voxel_count == null ? "-" : String(m.voxel_count)));
+      tr.appendChild(el("td", { class: "small mono" }, m.sha ? clip(m.sha, 48) : "-"));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    c.appendChild(t);
+    var note = el("div", { class: "muted small" });
+    note.style.marginTop = "6px";
+    note.textContent = "v17 dir empty (created, no map emitted yet). v14 from W18B, v15 from W19E (+17 GPU voxels), v16 from W21A (+18 voxels including 14 PB-D tasks).";
+    c.appendChild(note);
+  })();
+
+  document.getElementById("footer").textContent =
+    "unified-dashboard-built-v5.html - W31C - Fresh Ledger Snapshot - snapshot v5 "
+    + (D.snapshot_at_v5 || D.snapshot_at_v4 || D.snapshot_at_v3 || D.snapshot_at_v2 || D.snapshot_at || "?")
+    + " - ledger_fresh_at " + ((D.ledger_summary || {}).fresh_snapshot_at || "?")
+    + " - sidecar PID AGT-VECTOR-VIZ_RENDER-W31C-DASHBOARD-V5-LEDGER-REVIEW-2026-05-21";
+})();
+</script>
+</body>
+</html>
