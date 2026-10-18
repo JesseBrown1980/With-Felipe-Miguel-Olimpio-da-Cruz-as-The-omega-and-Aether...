@@ -1,0 +1,5 @@
+HBIHDR|family=ABSORB_CERN|seat=8467a937cba309f7|seed=da35b5b7b9c4dc13|stamp=2026-07-26|json=0
+EMIT|family=ABSORB_CERN|name=cms|pid=3468840408b70173|omega=4c33c296a3196bcb57b9a69e131d976ba78978415ff8d536d5a301c0567c8213|status=ADDRESSED|json=0
+EMIT|family=ABSORB_CERN|name=atlas|pid=dbe2a573bf73ea9e|omega=595063b9bd3bd478352203efa0acbe7aea4d595f8c9de506c23473adfbe4d4b9|status=ADDRESSED|json=0
+EMIT|family=ABSORB_CERN|name=lhcb|pid=9f665b214401775c|omega=20ef134ec7775355dbbc0fcce539f3d72272bb3c352d396eb5e0f020331cc27e|status=ADDRESSED|json=0
+EMIT|family=ABSORB_CERN|name=alice|pid=142bc317b59199d4|omega=1adf8e28ff6c68951d49dbd43db464cfe067bd1b618287cd785545883431b444|status=ADDRESSED|json=0

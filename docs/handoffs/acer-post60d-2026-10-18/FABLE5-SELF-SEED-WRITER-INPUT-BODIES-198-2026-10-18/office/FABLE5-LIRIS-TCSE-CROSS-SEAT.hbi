@@ -1,0 +1,8 @@
+XSIHDR|schema=ASOLARIA-LIRIS-TCSE-CROSS-SEAT-INDEX-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|json=0
+OBJ|k=gguf|name=ASOLARIA-LIRIS-NULL-FISCHER-TCSE.gguf|bytes=2211180|sha=f6fcf7ab3033c2064db2ccc830f17091ee3fa60e30b1496a5746e7ed2983bec4|liris_match=1|json=0
+OBJ|k=kernel|name=ASOLARIA-LIRIS-NULL-FISCHER-TCSE-KERNEL-3174.bin|bytes=3174|sha=15a8a8c3bc1d3c08a5736b0b9d38e2103743cb47ba7dfd760b8b399f0d38cfd4|liris_match=1|json=0
+OBJ|k=slices|name=ASOLARIA-LIRIS-NULL-FISCHER-TCSE-SLICES.hbi|bytes=12385|sha=caf902221cc15918f008447bf3fa19672122262b1eb82aa0dbbaba0ae4f45d33|liris_match=1|json=0
+OBJ|k=handoff_hbp|name=LIRIS-TCSE-STAR-ABSORB-ACER-2026-07-27.hbp|bytes=7613|sha=74dbccf1a855fc27f9376efec05690436ec6c15066ea1eb89f85033dc7f8fc3a|liris_match=1|json=0
+OBJ|k=handoff_hbi|name=LIRIS-TCSE-STAR-ABSORB-ACER-2026-07-27.hbi|bytes=1803|sha=c955d5094a89eaae02f73f0a6fd484199fe9343addb141d99430901d97374d91|liris_match=1|json=0
+OBJ|k=receipt|name=LIRIS-NULL-FISCHER-TCSE-KERNEL-2026-07-27.hbp|bytes=12271|sha=19e553f1ba47f00b3777fe754b0c81212a40923db5bb2849d37a0cac89267ac9|liris_match=0|reason=post_path_fix|json=0
+XSIFTR|objects=6|sidecars_ok=6|wsl_verified=6|json=0

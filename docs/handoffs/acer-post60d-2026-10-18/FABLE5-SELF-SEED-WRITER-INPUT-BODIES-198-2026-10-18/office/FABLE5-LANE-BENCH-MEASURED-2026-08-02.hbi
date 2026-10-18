@@ -1,0 +1,9 @@
+HBIHDR|family=LANE_BENCH|seat=8467a937cba309f7|seed=0708a1343592a914|stamp=2026-08-02|json=0
+EMIT|family=LANE_BENCH|name=instrument|pid=82c7a9d53c8c3b89|omega=9b8674ba525acde35fc71a28ce7146ffdbcbdee7502e79e3e7c34b8cccf1dd9c|status=MEASURED|json=0
+EMIT|family=LANE_BENCH|name=durable-lane|pid=095ddd0f0493b2f0|omega=025e726d022eba3490d068c3e2987e75c69968b59956a09af4afe17f236ade9c|status=MEASURED|json=0
+EMIT|family=LANE_BENCH|name=hot-lane|pid=9195bdd05326a9b9|omega=93bfe273f96199ce68256d18ae1a5bebbb5b2fe68106e340be6a996312ed2ea0|status=MEASURED|json=0
+EMIT|family=LANE_BENCH|name=bridge-is-not-one-number|pid=e1dd0e967e998390|omega=e7f733aded3458d509625e01df65061d8c31a037299c59a3906eff155e921099|status=MEASURED|json=0
+EMIT|family=LANE_BENCH|name=independent-confirmation|pid=4d7e33c5f2be941c|omega=1be1f95ee3849691a7d3324bf820bd11a1c2e7188ce710db22e72f98f53e2c28|status=MEASURED|json=0
+EMIT|family=LANE_BENCH|name=void-readings|pid=800fe23221e65b9f|omega=882997ce32001789c908c589a9fea7b8a69c2f417221b41841ef549f3795b353|status=RETRACTED|json=0
+EMIT|family=LANE_BENCH|name=not-measured|pid=9177a295635d554b|omega=e233253f8d7a9253ae723f3541b0e03efbaa5f6f03305b83932256af28e1a9d9|status=SCOPED|json=0
+EMIT|family=LANE_BENCH|name=law-added|pid=0fbdad00bdaaae32|omega=1fa022b101a1903258908c29d9d3614b6818d8aa2c31d0ad129618fe5eb1bc1b|status=MEASURED|json=0

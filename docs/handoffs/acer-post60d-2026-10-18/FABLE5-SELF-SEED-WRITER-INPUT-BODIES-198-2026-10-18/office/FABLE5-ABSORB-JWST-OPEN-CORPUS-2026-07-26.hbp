@@ -1,0 +1,13 @@
+JWSTHDR|schema=ASOLARIA-ABSORB-SKY-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=de4a897a9a4d31c1|prior=139ec8bf14371180|date=2026-07-26|json=0
+SOURCE|archive=MAST|collection=JWST|api=mast.stsci.edu/api/v0/invoke|service=Mast.Caom.Filtered|queried=2026-07-26|tag=MEASURED|json=0
+CORPUS|observations=383224|public=350814|proprietary=32410|open_pct=91.54|tag=MEASURED|json=0
+PRODUCT|image=143018|spectrum=198432|other=41774|calib_L1=7|calib_L2=86951|tag=MEASURED|json=0
+ADDR|form=jwPPPPP-oOOO_sSOURCE_INSTRUMENT_FILTER-GRATING|example=jw01286-o007_s000216535_nirspec_f290lp-g395m|self_sectioning=1|photons_fetched=0|json=0
+INST|k=nircam|pid=69c852b2a8871c97|prime=2|modes=IMAGE+WFSS+CORON+GRISM|anchor=JWST-NIRCAM-P2|lanes=7|status=ADDRESSED|json=0
+INST|k=nirspec|pid=b2c007c2607e8742|prime=3|modes=MSA+IFU+FIXEDSLIT+BOTS|anchor=JWST-NIRSPEC-P3|lanes=7|status=ADDRESSED|json=0
+INST|k=miri|pid=00a9f021fdf8fe85|prime=5|modes=IMAGE+MRS+LRS+CORON|anchor=JWST-MIRI-P5|lanes=7|status=ADDRESSED|json=0
+INST|k=niriss|pid=fcc2a1aeca30fa10|prime=7|modes=IMAGE+SOSS+WFSS+AMI|anchor=JWST-NIRISS-P7|lanes=7|status=ADDRESSED|json=0
+INST|k=fgs|pid=fe1c6b3090bd31e4|prime=11|modes=GUIDER|anchor=JWST-FGS-P11|lanes=7|status=ADDRESSED|json=0
+BAND|space=public_obs|n=350814|alphabet=256|bands=1370|remainder=94|alt_alphabet=1024|bands1024=342|remainder1024=606|json=0
+SECTION|law=observations_are_the_functions_in_sections|unit=obs_id|independently_fetchable=1|via=MAST_CAOM_filtered_by_obs_id|json=0
+JWSTFTR|receipt=2e10be5a9c72cc6bf02ddfa97b67df16|rows=13|json=0|hot_path=1

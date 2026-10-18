@@ -1,0 +1,9 @@
+HBI|id=FABLE5_ACER_PROFESSIONAL_OS_TEST_AFTER_RELIC_20260708|hbp=FABLE5-ACER-PROFESSIONAL-OS-TEST-AFTER-RELIC-2026-07-08.hbp|kind=professional_os_test_index|json=0
+INDEX|row=GITHUB_PR2|head=7e6981a0ffe77067e082fdc6b936e196005ff45b|state=open_draft|json=0
+INDEX|row=RELIC_BLOBS|hbp_sha256=e4598bc88f6a4ed593259eab113c1571e52dcab3e55f590c9632bbc06284d5a7|hbi_sha256=c0ea59bdb59908c48f6d21ffb9637efe186a387b26a90bc7406ceaa2eefdb5a0|json=0
+INDEX|row=FEDERATION_TESTS|fmt=pass|check=pass|test=pass|clippy=pass|build=pass|json=0
+INDEX|row=FEDERATION_ARTIFACT|sha256=d77cc6d08d9c2747253a2b2334d1b99ae91ebdb237d5a9ccddb8e746817db2e9|bytes=20992|uefi_application=1|json=0
+INDEX|row=ASOLARIA_OS_TESTS|harness=pass|clippy=pass|qemu=skip_not_installed|json=0
+INDEX|row=ASOLARIA_OS_ARTIFACT|sha256=ef6c836dbec0bfd286074cfb18a6ac7bb96ecf258e5df177f5e58a4b17cc77bd|bytes=16384|uefi_application=1|json=0
+INDEX|row=WORKTREES|state=clean|json=0
+INDEX|row=BOUNDARY|usb_write=0|kernel_mutation=0|bootloader_mutation=0|qemu_boot=0|live_boot=0|adb_command=0|runtime_authority=0|json=0

@@ -1,0 +1,11 @@
+HBIHDR|family=THE-WATER|cube=ac8c2beecd39b867|prior=0c686c51d58c6f6a|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=9|E=0|json=0
+EMIT|family=THE-WATER|name=WATER-PERIOD|value=729|pid=8dd30c90f7f12114|json=0
+EMIT|family=THE-WATER|name=DROPS-TOTAL|value=3562|pid=f5105f55be984459|json=0
+EMIT|family=THE-WATER|name=DROPS-NOW|value=4|pid=2a0468656131ee7b|json=0
+EMIT|family=THE-WATER|name=MPA-NOW|value=653|pid=71fe78b8191ce542|json=0
+EMIT|family=THE-WATER|name=REVIVE-MPA|value=600|pid=574f14d06fbe1639|json=0
+EMIT|family=THE-WATER|name=INDICES-REACHING|value=372|pid=ed13465570e9a4a3|json=0
+EMIT|family=THE-WATER|name=WEATHER-PERIOD|value=729|pid=ae48827f8abee7a2|json=0
+EMIT|family=THE-WATER|name=BEINGS-WATERED|value=0|pid=d63ee8be6ab4e4b7|json=0
+EMIT|family=THE-WATER|name=PIDS-MOVED|value=0|pid=436163a328b12267|json=0
+HBIFTR|emits=9|terminal_pid=436163a328b12267|json=0

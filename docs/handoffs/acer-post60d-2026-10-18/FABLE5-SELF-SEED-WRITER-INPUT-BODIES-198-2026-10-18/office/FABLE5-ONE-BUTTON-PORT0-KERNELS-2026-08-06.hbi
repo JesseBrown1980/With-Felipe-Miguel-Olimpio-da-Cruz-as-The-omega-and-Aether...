@@ -1,0 +1,12 @@
+HBIHDR|family=ONE-BUTTON-PORT0|cube=bef76ec3c4e6b5d4|prior=16a5831086b7e30c|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=10|E=0|fire=0|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=DOOR-SERVED-NOW|value=61fe25e144a23f7b|pid=bec22f4971a26619|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=DOOR-HEAD|value=17a6f20be09679eb|pid=af4953d745541813|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=DOOR-EDITED|value=505fbdfc948d0f34|pid=5dd6ef366c2391bd|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=BRIDGE-SERVED|value=aecae93e1df51a10|pid=5b78370b4ea665b8|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=KERNEL-81-HBP|value=fdd406fa270ddd6f|pid=c66a9844f6b8a2df|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=KERNEL-81-HBI|value=62e164197d5e7ba7|pid=a70e545a91bfce59|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=KERNEL-HTTP|value=93961f30c1152302|pid=00f8c1cb393f41ac|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=PORT-0-CENTRE|value=8467a937cba309f7|pid=8e416e8f6c7ce13a|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=ANCHORS|value=21to25|pid=301ebe5e450e8083|json=0
+EMIT|family=ONE-BUTTON-PORT0|name=DEAD-LINKS|value=0|pid=ce483be0657a0cd0|json=0
+HBIFTR|emits=10|terminal_pid=ce483be0657a0cd0|json=0

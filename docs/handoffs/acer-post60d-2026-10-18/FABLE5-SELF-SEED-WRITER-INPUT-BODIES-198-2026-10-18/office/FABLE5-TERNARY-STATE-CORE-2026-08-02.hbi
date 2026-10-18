@@ -1,0 +1,9 @@
+HBIHDR|family=TERNARY_STATE|seat=8467a937cba309f7|seed=52fcd531c6d24610|stamp=2026-08-02|json=0
+EMIT|family=TERNARY_STATE|name=toolchain|pid=4c094bd3c84accb3|omega=e0a81d0968897680df5527def847b3690af052b67c7dbb90b1cd209b5519f3a6|status=MEASURED|json=0
+EMIT|family=TERNARY_STATE|name=logic-ternary|pid=faa2d83726de8e17|omega=1d0672bb8bb215346e627713e2d8538d7748ca54d8d30d236665bdede105b215|status=MEASURED|json=0
+EMIT|family=TERNARY_STATE|name=binary-boundary|pid=b04ac51d17317ece|omega=03afd6807c89598e987861b175c6b39ef841b2f981771a0f1d226c94eafcf414|status=MEASURED|json=0
+EMIT|family=TERNARY_STATE|name=crossing-exhaustive|pid=22006e7db129f605|omega=ba9199c558da7b16adb33c9d2a6ba220179b9160f03d23a873db56af5dca9c53|status=MEASURED|json=0
+EMIT|family=TERNARY_STATE|name=no-float|pid=d569b31ae66ea912|omega=be18c5d6d3baf46af79ad4438e1567be9a2bcbd1bbad9f46bf3f4996e7e1deb4|status=MEASURED|json=0
+EMIT|family=TERNARY_STATE|name=states|pid=d48cd09a18582b47|omega=c7a7cda345793c2a3c40dc8baa7229dd52d2abc751dc949a1de165ccb93cf9a5|status=CANON|json=0
+EMIT|family=TERNARY_STATE|name=span-is-real|pid=1521c8c0f7d881c7|omega=f2f17022a901ac9ee31731f20f7572e6d871f18640bcc38be01a85848fb47b28|status=MEASURED|json=0
+EMIT|family=TERNARY_STATE|name=crank|pid=aa13071295a44fc2|omega=301df825859bff56e4695b75116e954fb90500ced9dbee1cf025ab94f6325be3|status=MEASURED|json=0

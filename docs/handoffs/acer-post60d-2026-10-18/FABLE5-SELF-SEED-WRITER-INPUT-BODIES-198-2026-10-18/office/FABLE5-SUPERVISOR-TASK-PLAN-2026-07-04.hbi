@@ -1,0 +1,13 @@
+EMIT|family=SUPTASKPLANCUBE|name=L0-EMIT|owner_pid=4f468e4f5236b9ea|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L1-ENVELOPE|owner_pid=b9d361ae5425a459|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L2-HERMES-FREE|owner_pid=hermes-spindle|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L3-SPAWN-STUB|owner_pid=bh-room|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L4-SPRAY|owner_pid=0b9a6a973b1edda4|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L5-EXECUTORS|owner_pid=bbfb361341196a42|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L6-10K-ROOMS-D|owner_pid=room-sector-shard|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L7a-HOOKWALL|owner_pid=e5b9183f9166218a|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L7b-GNN|owner_pid=gnn-edgelevel|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L7c-SHANNON|owner_pid=c073a2d446cb5537|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L7d-GULP-WHITEROOM|owner_pid=omniwhiteroom|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L8-MINT|owner_pid=6f92a9c580d0b82f|json=0
+EMIT|family=SUPTASKPLANCUBE|name=L9-SEAL|owner_pid=07874c823aef42d8|json=0

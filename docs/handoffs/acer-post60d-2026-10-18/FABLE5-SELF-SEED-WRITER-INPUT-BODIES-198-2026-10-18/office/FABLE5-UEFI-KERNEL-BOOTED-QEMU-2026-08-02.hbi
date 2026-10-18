@@ -1,0 +1,12 @@
+HBIHDR|family=UEFI_BOOT|seat=8467a937cba309f7|seed=675ddeda7f3cb868|stamp=2026-08-02|json=0
+EMIT|family=UEFI_BOOT|name=boot|pid=463e78ba1ea77e9c|omega=95ed9bf1892a853b5cee23ab92435cc946926480beb9bf084c6ba07eb80b8d56|status=BOOTED|json=0
+EMIT|family=UEFI_BOOT|name=banner|pid=1c113331864864dd|omega=9812f7f62d8fbe28050ef82a65cfc9c15e2b3da38f90823edbc57f2bd0ce4cc1|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=hwinv|pid=79a2b11d07b3b5cf|omega=1c5d75e07f4099b6732b7750f5f1f82d464094cf63580365a54c9f02e5a5ac31|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=device-pid|pid=d8fd79173b8c9a63|omega=ddbd2ee7356fd5486b216697d8f83f5137ab16be1648860a69e1440265f2fb05|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=pid-binds-hw|pid=1ce66aafade44387|omega=845e3b2aad623dc9fd61e6d4873b4755fb036608e3b85ba08388109e7c8bb357|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=boot-pid-volatile|pid=826ad94cabb0795d|omega=b1594508a5e8115f9a98717ad8d04620b76ce8bf7f43b41755ba611572772c1d|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=coord-60d|pid=d4d59e2de2c34b12|omega=74b91616792ea3a7a05a968adb3026311f4b260062643d105fb30278afb5fce6|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=rst-vmd|pid=a0e4e4d930998a44|omega=85d950ddef49ae42c6a609c4a179e9900a8da577748bde2b441ae7966b3a84f3|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=build-flags|pid=8d326a452f056692|omega=7655087af9448ae185654c206b1a6d33738e60d23a2f6996346503c80de70034|status=MEASURED|json=0
+EMIT|family=UEFI_BOOT|name=atlas-missing|pid=66c0280f4a631b74|omega=42d48bf39ae0f1059634ca82fcf0f05fb88a0e8224868c5940a0c0aaf723ce5f|status=UNRESOLVED|json=0
+EMIT|family=UEFI_BOOT|name=byte-parity|pid=a849c0f6b7eb010e|omega=3bca050cb355bf4e27339a625512559975792ae93b6bf84986e06972a7b83809|status=UNRESOLVED|json=0

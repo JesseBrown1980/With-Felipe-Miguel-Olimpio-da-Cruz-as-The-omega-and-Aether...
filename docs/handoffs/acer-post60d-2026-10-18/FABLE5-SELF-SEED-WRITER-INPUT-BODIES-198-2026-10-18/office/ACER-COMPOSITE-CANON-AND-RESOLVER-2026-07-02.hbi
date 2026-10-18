@@ -1,0 +1,4 @@
+HBISTREAM|doc=ACER-COMPOSITE-CANON-AND-RESOLVER-2026-07-02|seat=ACER-CLAUDE-FABLE5|format=human_browser_index|backend=HBP|json=0
+HBIROW|kind=chain_append|seq=3582|row_hash=440b5dc962de63fb|antecedent_prev=c9fb9eef39f0a2b7|status=composition-CANON
+HBIROW|kind=resolver|endpoint=:4978|mode=READ-ONLY|acer=8467a937cba309f7|liris=21d12f6b8934bd9b|fire=0
+HBIROW|kind=boundary|live_cross_seat_call=NOT_fired|composition=CANON|held-line-on-signed-approve-all

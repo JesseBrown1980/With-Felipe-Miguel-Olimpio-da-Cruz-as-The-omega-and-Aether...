@@ -1,0 +1,7 @@
+HBIHDR|family=ABSORB_EOSDIS|seat=8467a937cba309f7|seed=4fefaf927c44a4a6|stamp=2026-07-26|json=0
+EMIT|family=ABSORB_EOSDIS|name=space|pid=693376fec40e3fff|omega=f8b7ec58c20b6fb39fd0de5eaf360c4d0c35386f6e2e30178546f51948453a92|status=ADDRESSED|json=0
+EMIT|family=ABSORB_EOSDIS|name=land|pid=e5547ebcc286fc61|omega=db7c1a068e17e85987f30d92dd0d9e2bd04a1347bc380c46cfeece75186d8658|status=ADDRESSED|json=0
+EMIT|family=ABSORB_EOSDIS|name=other|pid=c47c95af1c2f782e|omega=df930dc9f66e0d44c246cd9be6db8735ad67a617457debc0358b56d3b0b2e415|status=ADDRESSED|json=0
+EMIT|family=ABSORB_EOSDIS|name=water|pid=8be2f890cdeb1fac|omega=ff84c1fb340d88e75de432c2b6a4e10c224c954dd79bd0c8c2793eeef64213dc|status=ADDRESSED|json=0
+EMIT|family=ABSORB_EOSDIS|name=air|pid=2889177e8dc7aacc|omega=80f31c27bbb3e2dd836c0038aa070807686e8dc8ebdbd4e2add454b4784eba1c|status=ADDRESSED|json=0
+EMIT|family=ABSORB_EOSDIS|name=na|pid=cb6af6562032ddcb|omega=4c6f8f741f5117e357bbdb852da132f4dd3b5a8509cb6e66d04b51840e7e5eb0|status=ADDRESSED|json=0

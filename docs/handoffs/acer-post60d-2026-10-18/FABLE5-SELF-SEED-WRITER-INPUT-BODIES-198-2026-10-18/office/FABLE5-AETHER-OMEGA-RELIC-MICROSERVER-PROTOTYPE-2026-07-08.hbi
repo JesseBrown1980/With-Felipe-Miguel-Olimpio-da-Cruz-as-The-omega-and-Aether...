@@ -1,0 +1,8 @@
+HBI|id=FABLE5_AETHER_OMEGA_RELIC_MICROSERVER_PROTOTYPE_20260708|hbp=FABLE5-AETHER-OMEGA-RELIC-MICROSERVER-PROTOTYPE-2026-07-08.hbp|kind=relic_microserver_plan_index|json=0
+INDEX|row=LOCAL_GRAPH|url=http://127.0.0.1:8811/asolaria-memory-graph.html|status=200|bytes=233173|json=0
+INDEX|row=RELIC_USB|disk=PHYSICALDRIVE2|size_bytes=2097152000000|partitions=2|windows_fs_visible=0|json=0
+INDEX|row=TERMINAL|device=Samsung_notebook|ram_gb=4|class=OPERATOR_SUPPLIED|json=0
+INDEX|row=SERVICES|ssh=plan|http_api=plan|websocket=plan|hermes=plan|codex=plan|logs=plan|launch=0|json=0
+INDEX|row=KERNEL_BRIDGE|pr=2|head=10d698cb190b6629946c71781d72e284717cf474|json=0
+INDEX|row=AETHER_SCOPE|project_subsection=1|federation_governance_law=0|json=0
+INDEX|row=BOUNDARY|usb_write=0|kernel_mutation=0|bootloader_mutation=0|service_launch=0|runtime_authority=0|json=0

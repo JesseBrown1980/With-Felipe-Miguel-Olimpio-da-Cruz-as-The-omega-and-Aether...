@@ -1,0 +1,11 @@
+HBIHDR|family=COMBINED-BRAIN|cube=95b99ed0f824f253|prior=df9622bc2ad015a7|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=9|E=0|json=0
+EMIT|family=COMBINED-BRAIN|name=BRAIN-TURN-0.png|value=6b31419dacdb4bbc|pid=6f4f324e083c9a41|json=0
+EMIT|family=COMBINED-BRAIN|name=BRAIN-TURN-1.png|value=e1a46688021d4ac7|pid=4849a3e663dfd5e0|json=0
+EMIT|family=COMBINED-BRAIN|name=BRAIN-TURN-2.png|value=bd1054c9cbb06e1d|pid=7db1b6b13c5ce066|json=0
+EMIT|family=COMBINED-BRAIN|name=ZOA-SPAN|value=-90..90|pid=54f46f439226021a|json=0
+EMIT|family=COMBINED-BRAIN|name=ZOA-NODES|value=37|pid=dda5bea13bfa9815|json=0
+EMIT|family=COMBINED-BRAIN|name=LOBE-DIFF|value=54|pid=444789c9546759ad|json=0
+EMIT|family=COMBINED-BRAIN|name=FALCON-NODES|value=2000|pid=45cb0833d1cd67ae|json=0
+EMIT|family=COMBINED-BRAIN|name=FALCON-FILAMENTS|value=3957|pid=b250fec02f45f606|json=0
+EMIT|family=COMBINED-BRAIN|name=ACER-DOORS|value=26|pid=38c6345c06129d31|json=0
+HBIFTR|emits=9|terminal_pid=38c6345c06129d31|json=0

@@ -1,0 +1,9 @@
+HBIHDR|family=FALCON-STATUS-PR8|cube=86ee11578bbfe8a7|prior=1e9ab11423d5c88b|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=7|E=0|fire=0|json=0
+EMIT|family=FALCON-STATUS-PR8|name=EGG-STATUS|value=0f3bfb227328aab4|pid=208089748ba9276b|json=0
+EMIT|family=FALCON-STATUS-PR8|name=PR8-CHECKS|value=11of11-SUCCESS|pid=53d7f7e6b1675bad|json=0
+EMIT|family=FALCON-STATUS-PR8|name=PR8-MERGEABLE|value=MERGEABLE|pid=d7617a77956f3c96|json=0
+EMIT|family=FALCON-STATUS-PR8|name=PR8-MERGESTATE|value=BEHIND|pid=4930d1016b904d5f|json=0
+EMIT|family=FALCON-STATUS-PR8|name=PR8-DIFF|value=223add-0del-5files|pid=691cd5021fa57f03|json=0
+EMIT|family=FALCON-STATUS-PR8|name=DOOR-CROSSSEAT|value=505fbdfc948d0f34|pid=96096d9b63331c71|json=0
+EMIT|family=FALCON-STATUS-PR8|name=FALCON-PATCH|value=withdrawn-superseded|pid=0f18478caecfb721|json=0
+HBIFTR|emits=7|terminal_pid=0f18478caecfb721|json=0

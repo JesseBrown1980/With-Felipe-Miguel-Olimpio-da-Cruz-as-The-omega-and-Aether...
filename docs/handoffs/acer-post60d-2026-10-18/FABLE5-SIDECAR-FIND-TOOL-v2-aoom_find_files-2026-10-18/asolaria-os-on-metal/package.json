@@ -1,0 +1,25 @@
+{
+  "name": "asolaria-os-on-metal",
+  "version": "0.1.0",
+  "description": "MCP server fusing Asolaria-fabric + HyperHermes + Claude API + Codex CLI + Google API + kernels/microkernels + hookwall/GNN trio. Built 2026-05-23 per Wave-V47-C OP-JESSE apex (anchor ASOLARIA-V47-BLAST-RADIUS-FIRE-EVERYTHING-PID-2026-05-23). Embodies OS-ON-METAL equation: SOVLINUX-USB frozen-slice + HyperBEHCS thinking-engine + MTP + PID-crypto-token + Atlas-1024.",
+  "main": "server.js",
+  "type": "commonjs",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js",
+    "smoke": "node --check server.js && echo SMOKE-OK"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "zod": "^4.3.6"
+  },
+  "_provenance": {
+    "anchor_pid": "ASOLARIA-V47-BLAST-RADIUS-FIRE-EVERYTHING-PID-2026-05-23",
+    "wave": "V47-C-MCP-fusion-design-Claude-Codex-Google-Hermes",
+    "operator": "OP-JESSE-APEX",
+    "law_anchor": "ASOLARIA-FOUNDATION-V3-LAW-V39-LOAD-DIVISION-PID-2026-05-23",
+    "agent_pid": "AGT-helm-claude-v47-C-mcp-fusion-H02EA-V47C-P00-NV47C001"
+  }
+}

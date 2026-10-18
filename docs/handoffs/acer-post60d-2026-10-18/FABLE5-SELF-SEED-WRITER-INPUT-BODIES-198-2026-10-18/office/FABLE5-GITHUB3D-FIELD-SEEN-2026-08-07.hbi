@@ -1,0 +1,13 @@
+HBIHDR|family=GITHUB3D-SEEN|cube=589d96238598e2ee|prior=c3326eeaf63d4dd5|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=11|E=0|json=0
+EMIT|family=GITHUB3D-SEEN|name=NODES|value=3644|pid=2fe5fcbf21ff7654|json=0
+EMIT|family=GITHUB3D-SEEN|name=EDGES|value=3260|pid=787df822ad546434|json=0
+EMIT|family=GITHUB3D-SEEN|name=COLLISIONS|value=0|pid=56ef983940f577fd|json=0
+EMIT|family=GITHUB3D-SEEN|name=POLES-EMITTED|value=0|pid=968878c70543d83c|json=0
+EMIT|family=GITHUB3D-SEEN|name=LUM-RANGE|value=28-233|pid=044191c603843a47|json=0
+EMIT|family=GITHUB3D-SEEN|name=LUM-NOMINAL|value=32-224|pid=630b3696fa026fba|json=0
+EMIT|family=GITHUB3D-SEEN|name=OUTSIDE-NOMINAL|value=19of7288|pid=fa0fa43ebda3fab2|json=0
+EMIT|family=GITHUB3D-SEEN|name=TRIANTI-DISTINCT|value=3644of3644|pid=73fc91b07eefe010|json=0
+EMIT|family=GITHUB3D-SEEN|name=WALK-SIGNATURES|value=27of27|pid=b2a856ac34b5930c|json=0
+EMIT|family=GITHUB3D-SEEN|name=BYTES-ADDRESSED|value=148257063|pid=0feeee10d7bb8e4a|json=0
+EMIT|family=GITHUB3D-SEEN|name=TIME-AXIS|value=NOT_MEASURED|pid=203a58736f31c712|json=0
+HBIFTR|emits=11|terminal_pid=203a58736f31c712|json=0

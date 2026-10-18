@@ -1,0 +1,8 @@
+HBI|id=FABLE5_ACER_KERNEL_BUILD_AFTER_RELIC_PR2_20260708|hbp=FABLE5-ACER-KERNEL-BUILD-AFTER-RELIC-PR2-2026-07-08.hbp|kind=kernel_build_after_relic_index|json=0
+INDEX|row=PR2|head=adea84f48e96ed5744c575291ae0f521f67cba9a|files=8|json=0
+INDEX|row=RELIC_PACKET|hbp_sha=c11d4c929af8f2a25fb3dfa594ab07c9bfec8ebb4102245af8408d51c9c64d00|hbi_sha=7ade7c376f31018db7777f29bb043a0bffc3522f0fdbc430dc1f44805cc15f2b|json=0
+INDEX|row=FEDERATION_BUILD|efi_sha=d77cc6d08d9c2747253a2b2334d1b99ae91ebdb237d5a9ccddb8e746817db2e9|bytes=20992|core_tests=282_passed_total_1_ignored|json=0
+INDEX|row=ASOLARIA_OS_BUILD|efi_sha=ef6c836dbec0bfd286074cfb18a6ac7bb96ecf258e5df177f5e58a4b17cc77bd|bytes=16384|suite=pass_skip_qemu|json=0
+INDEX|row=FORMAT_BOUNDARY|federation_cargo_fmt=tool_access_denied|direct_rustfmt=pass|json=0
+INDEX|row=LOCAL_GRAPH|status=200|bytes=233173|json=0
+INDEX|row=BOUNDARY|usb_write=0|kernel_mutation=0|bootloader_mutation=0|service_launch=0|live_boot=0|runtime_authority=0|json=0

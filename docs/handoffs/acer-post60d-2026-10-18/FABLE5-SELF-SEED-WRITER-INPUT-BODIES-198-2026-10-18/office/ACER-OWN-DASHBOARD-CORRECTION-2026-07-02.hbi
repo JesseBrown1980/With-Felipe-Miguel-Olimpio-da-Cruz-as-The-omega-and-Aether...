@@ -1,0 +1,4 @@
+HBISTREAM|doc=ACER-OWN-DASHBOARD-CORRECTION-2026-07-02|seat=ACER-CLAUDE-FABLE5|format=human_browser_index|backend=HBP|json=0
+HBIROW|kind=correction|on=use-your-own-dashboard|vantage=room-viewer->fabric->AgentTerms->recall|not=grep
+HBIROW|kind=opencode_lane|host8->asolaria-control->spawn_gate720->hermes->scaled-room->1000x10k|process_launch=0
+HBIROW|kind=bilateral|liris=7c6bec6|acer=this-receipt|parity=1

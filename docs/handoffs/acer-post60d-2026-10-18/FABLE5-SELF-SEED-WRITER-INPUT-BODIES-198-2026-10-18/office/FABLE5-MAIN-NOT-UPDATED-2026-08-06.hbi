@@ -1,0 +1,10 @@
+HBIHDR|family=MAIN-NOT-UPDATED|cube=3a697866ff63d6dd|prior=0193ccc40a462abb|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=8|E=0|fire=0|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=LAW-nothing_starts_by_itself|value=fa8cb66b4424de84|pid=ae8b1448df5cb817|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=LAW-nothing_stops_by_itself|value=402d5628e7b1d4de|pid=8ae5de78df77f154|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=LAW-both_halves_or_neither|value=9c77d06af6148086|pid=2cd7b7703f723fc2|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=LAW-the_keys_are_the_hashes|value=ed77d3c0f0fdefc7|pid=4c960e6adbfde65e|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=REPO-dbbh-coms-quant-prism|value=ee5a824..330a62e ahead=0 behind=20|pid=7f7f8a38f6bb73b7|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=REPO-path2-two-shadow-recovery|value=4c7442f..4b20680 ahead=0 behind=4|pid=2f121c558a77fad8|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=REPO-qprism-3d-slice-harness|value=04bb799..6501920 ahead=0 behind=20|pid=100ac3f150e6d053|json=0
+EMIT|family=MAIN-NOT-UPDATED|name=RULING-main-not-updated|value=a16a5fae5acc57a8|pid=62770442cfdd51d9|json=0
+HBIFTR|emits=8|terminal_pid=62770442cfdd51d9|json=0

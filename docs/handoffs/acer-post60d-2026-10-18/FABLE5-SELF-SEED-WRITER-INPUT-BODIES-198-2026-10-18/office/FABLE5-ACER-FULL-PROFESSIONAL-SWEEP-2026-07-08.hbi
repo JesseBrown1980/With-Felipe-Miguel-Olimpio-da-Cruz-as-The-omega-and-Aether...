@@ -1,0 +1,8 @@
+HBI|id=FABLE5_ACER_FULL_PROFESSIONAL_SWEEP_20260708|hbp=FABLE5-ACER-FULL-PROFESSIONAL-SWEEP-2026-07-08.hbp|kind=professional_os_sweep_index|json=0
+INDEX|row=HYPERBECHS_PR2|state=merged|merge_commit=3f974e4b060d928a9777c26ae3253e01ef42af6a|json=0
+INDEX|row=ASOLARIA_OS_PR2|state=merged|head=0557d789b6db96bbe163a8c5669b8836a5a3e501|merge_commit=d70b6c2df899784711bd7383a7168a238f16313f|ci=success|json=0
+INDEX|row=ASOLARIA_OS_ARTIFACT|bytes=16384|sha256=a6bc45626d6b499372cb72d08d670f29fdc7ca48bbfbc650dbecb6cd510245f6|json=0
+INDEX|row=FEDERATION_PR42|state=open|head=69859625291c024f4198d9c4567bcbb292f80ea3|checks=5_success|required_reviews=5|reviews=0|json=0
+INDEX|row=LOCAL_BLOCKER|repo=federation|commit=e48cb2a|reason=token_missing_workflow_scope|json=0
+INDEX|row=LOCAL_BLOCKER|repo=asolaria-os|commit=1ab8393|reason=token_missing_workflow_scope|json=0
+INDEX|row=BOUNDARY|usb_write=0|bootloader_mutation=0|live_boot=0|qemu=0|adb_used=0|runtime_authority=0|json=0

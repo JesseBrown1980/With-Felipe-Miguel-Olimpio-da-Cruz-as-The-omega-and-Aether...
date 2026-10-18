@@ -1,0 +1,15 @@
+SENTHDR|schema=ASOLARIA-ABSORB-EARTH-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=ab824bafd9351c18|prior=8dcc443682daaa24|date=2026-07-26|json=0
+SOURCE|archive=COPERNICUS_SENTINEL|via=PUBLIC_STAC_MIRROR|api=earth-search.aws.element84.com/v1|auth_required=0|queried=2026-07-26|tag=MEASURED|json=0
+SUPERSEDES|prior_descriptor=FABLE5-ABSORB-ESA-COPERNICUS-2026-07-26|was=UNRESOLVED|now=MEASURED|route=public_stac_no_account_created|json=0
+CORPUS|sentinel_scenes=120066421|all_collections=131763829|collections=7|tag=MEASURED|json=0
+COLL|k=sentinel-2-l2a|pid=ff82b80c5e081efd|prime=2|items=46432810|anchor=STAC-SENTINEL-2-L2A-P2|lanes=7|status=ADDRESSED|json=0
+COLL|k=sentinel-2-l1c|pid=da0ba16157e1336a|prime=3|items=40436273|anchor=STAC-SENTINEL-2-L1C-P3|lanes=7|status=ADDRESSED|json=0
+COLL|k=sentinel-2-c1-l2a|pid=925f6d6e85ab6252|prime=5|items=29501458|anchor=STAC-SENTINEL-2-C1-L2A-P5|lanes=7|status=ADDRESSED|json=0
+COLL|k=landsat-c2-l2|pid=0103654b0e5ec171|prime=7|items=10249986|anchor=STAC-LANDSAT-C2-L2-P7|lanes=7|status=ADDRESSED|json=0
+COLL|k=sentinel-1-grd|pid=83a64f89d24525e5|prime=11|items=3695880|anchor=STAC-SENTINEL-1-GRD-P11|lanes=7|status=ADDRESSED|json=0
+COLL|k=naip|pid=759270e9387cbb23|prime=13|items=1420972|anchor=STAC-NAIP-P13|lanes=7|status=ADDRESSED|json=0
+COLL|k=cop-dem-glo-30|pid=8fc836b3dc76be08|prime=17|items=26450|anchor=STAC-COP-DEM-GLO-30-P17|lanes=7|status=ADDRESSED|json=0
+ADDR|form=stac_item_id|search=collections+bbox+datetime|self_sectioning=1|bytes_fetched=0|json=0
+BAND|space=sentinel_scenes|n=120066421|alphabet=256|bands=469009|remainder=117|json=0
+SECTION|law=scenes_are_the_functions_in_sections|unit=stac_item|independently_fetchable=1|via=stac_search|json=0
+SENTFTR|receipt=7400864c7edcb96a017a4f27a76f9c45|rows=15|json=0|hot_path=1

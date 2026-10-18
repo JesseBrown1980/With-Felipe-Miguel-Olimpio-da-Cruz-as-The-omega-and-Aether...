@@ -1,0 +1,11 @@
+HBIHDR|family=VERIFY-RESTORED|cube=1e9ab11423d5c88b|prior=4d528279b5faaf15|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=9|E=0|fire=0|json=0
+EMIT|family=VERIFY-RESTORED|name=VERIFY-JOB|value=restored-verbatim|pid=0b0db8a87b94d3da|json=0
+EMIT|family=VERIFY-RESTORED|name=NEEDS-KEYS|value=0|pid=6e6d65de48975ec4|json=0
+EMIT|family=VERIFY-RESTORED|name=CANCEL-IN-PROGRESS|value=false|pid=03d8f25162251240|json=0
+EMIT|family=VERIFY-RESTORED|name=PAGES-YML|value=6ab387c836cde245|pid=4ae39fda5aba358b|json=0
+EMIT|family=VERIFY-RESTORED|name=COMMIT|value=1a74b3e|pid=fd11ed6f73db376d|json=0
+EMIT|family=VERIFY-RESTORED|name=RUN|value=31132753084|pid=facd0bc07971310b|json=0
+EMIT|family=VERIFY-RESTORED|name=JOB-DEPLOY|value=success|pid=98fc270ee8863b5c|json=0
+EMIT|family=VERIFY-RESTORED|name=JOB-VERIFY|value=failure|pid=39ffb5ced7737fe1|json=0
+EMIT|family=VERIFY-RESTORED|name=DOOR|value=505fbdfc948d0f34|pid=e553fd0866d2d0d0|json=0
+HBIFTR|emits=9|terminal_pid=e553fd0866d2d0d0|json=0

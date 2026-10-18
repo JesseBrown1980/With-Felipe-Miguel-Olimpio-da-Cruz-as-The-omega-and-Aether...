@@ -1,0 +1,12 @@
+HBIHDR|family=COSMIC-WEB-CROWN|cube=1aed427355692d1c|prior=d1e6d36f2faed24d|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=10|E=0|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=SIDE|value=729|pid=b9dd30c96fd69f22|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=NODES|value=26|pid=49745eec4b26425d|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=RINGS|value=2|pid=c72f3b838a25f51b|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=PROTOFILAMENTS|value=13|pid=35dc48eebeec3419|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=LATERAL|value=26|pid=fac006f9367e77ce|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=AXIS-EDGES|value=26|pid=c1198266d3fdc423|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=THREE-START-BONDS|value=13|pid=10d36eeb3a5eacf1|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=SEAMS|value=2|pid=0ba176ec997e5b59|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=PNG|value=4e9c6a1d0f21a0a4|pid=54b6386f20a9805b|json=0
+EMIT|family=COSMIC-WEB-CROWN|name=PNG-BYTES|value=16717|pid=09bb08d3e5ff5a29|json=0
+HBIFTR|emits=10|terminal_pid=09bb08d3e5ff5a29|json=0

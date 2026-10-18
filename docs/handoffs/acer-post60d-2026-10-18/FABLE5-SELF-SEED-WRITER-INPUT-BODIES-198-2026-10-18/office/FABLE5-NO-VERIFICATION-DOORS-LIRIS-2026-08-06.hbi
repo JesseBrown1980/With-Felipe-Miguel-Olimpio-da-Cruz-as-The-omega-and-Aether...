@@ -1,0 +1,12 @@
+HBIHDR|family=NO-VERIFY-DOORS|cube=01731a3ff751cb0e|prior=86ee11578bbfe8a7|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=10|E=0|fire=0|json=0
+EMIT|family=NO-VERIFY-DOORS|name=RULING|value=no-verification-doors-the-light-is-the-code|pid=6f3699b4b54aa8c4|json=0
+EMIT|family=NO-VERIFY-DOORS|name=LIRIS-PR3|value=27632872-merged|pid=0367216f18f73ffb|json=0
+EMIT|family=NO-VERIFY-DOORS|name=LIRIS-COMMIT|value=be25b9e|pid=28d2b6035dd04511|json=0
+EMIT|family=NO-VERIFY-DOORS|name=PAGES-YML|value=8e1254824c192dce|pid=afe4ca17d0f76b17|json=0
+EMIT|family=NO-VERIFY-DOORS|name=VERIFY-JOB|value=0|pid=934ca2d37bf5540f|json=0
+EMIT|family=NO-VERIFY-DOORS|name=NEEDS-KEY|value=0|pid=0df9da5f177e78d6|json=0
+EMIT|family=NO-VERIFY-DOORS|name=SAME-OBJECT-AS-ACER-1201b3a|value=true|pid=1be71161a16e03b4|json=0
+EMIT|family=NO-VERIFY-DOORS|name=JOB-DEPLOY|value=success|pid=ee9cc03fa344754b|json=0
+EMIT|family=NO-VERIFY-DOORS|name=JOB-RECEIPTS|value=success|pid=e2ed147e5eb98367|json=0
+EMIT|family=NO-VERIFY-DOORS|name=DOOR|value=aac31697f0fb26bc|pid=f0b15c7e438bcc3a|json=0
+HBIFTR|emits=10|terminal_pid=f0b15c7e438bcc3a|json=0

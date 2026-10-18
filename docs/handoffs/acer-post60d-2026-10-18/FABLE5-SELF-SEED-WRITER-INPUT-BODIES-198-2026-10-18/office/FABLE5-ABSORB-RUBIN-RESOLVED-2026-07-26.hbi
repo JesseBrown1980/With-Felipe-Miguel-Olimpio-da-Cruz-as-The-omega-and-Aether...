@@ -1,0 +1,11 @@
+HBIHDR|family=ABSORB_RUBIN|seat=8467a937cba309f7|seed=63f482e35ce5d4ff|stamp=2026-07-26|json=0
+EMIT|family=ABSORB_RUBIN|name=lsstcam|pid=62bb63ab0fa11a60|omega=f37efea9c9424e11a118688d31ea41a548156a2901b9e76b7eae9eba390dc55b|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=dp2|pid=436146aea166d699|omega=61854060c7ebcd2412337675a30e58bbd7e27b0bc11d4bd1d72e2de21e5f4388|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=dp1|pid=e9a3692a1faab4da|omega=187da61e4376196322010c7129ae582b4867815f3c48aef5220ee886e4628ca4|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=dp02|pid=a9dad4bb826eb203|omega=14dd9ca77713ea73aa84f0d50fb038f2d91949cb519b7452009e78590723fdb4|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=imsim|pid=e15d231ad3f300ac|omega=b669e8f519153988be694d5f84b7230139af7ce332d80dad8c6f44df3d3a5f5b|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=apdb|pid=ad45c0763653274b|omega=a3da245c8b6dfb86f4559ea135c6f3cead51a69f7d703c9f5f42fdb9a26a1283|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=hsc|pid=9ebe8808223e0e6c|omega=8ca4a502e53ef4d1e8ca0bf5be7968c0f3fb622121036cc82aedad1795192752|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=dp03|pid=abf043cebb8d730f|omega=d6722b7d5673c06953e7949e6d284d7d6923e58048dae6103e99ed96111da1ee|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=ppdb|pid=d4d0879aaf32e8d6|omega=d5f90e464df185a04ccbc029d728f44959a1d7aa62afae0df7c31c26c0e2e13b|status=ADDRESSED|json=0
+EMIT|family=ABSORB_RUBIN|name=ivoa_obscore|pid=0d805e60af797247|omega=9cfc619d473d1002be59600525cc023039335cce98865437bf325752d2474c4e|status=ADDRESSED|json=0

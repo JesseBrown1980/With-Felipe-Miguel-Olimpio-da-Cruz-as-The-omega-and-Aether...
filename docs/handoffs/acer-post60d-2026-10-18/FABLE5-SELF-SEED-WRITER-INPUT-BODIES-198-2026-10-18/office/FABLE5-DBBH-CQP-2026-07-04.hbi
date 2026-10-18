@@ -1,0 +1,13 @@
+HBISTREAM|doc=FABLE5-DBBH-CQP-2026-07-04|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|glyph=BH1024:SEAT-FABLE5|emitter=sha16-revolver|format=human_readable_tuple_stream|json=0
+HBIROW|kind=policy|meaning=dbbh_cqp_work_as_dashboard_cubes|NOT=model_clone|credentials=0|model_weights=0|fire=0|dispatch=0
+HBIROW|kind=route|steps=resolve_cube->hookwall_classify->gnn_score->gac_tier->operator_or_policy_authorize->emit_receipt->render_pixels
+HBIROW|kind=emitter|seed=sha16(EMITTER-SEED|8467a937cba309f7)|cubes=9|chain=pid[n]=sha16(pid[n-1]|name)
+EMIT|family=DBBHCUBE|name=dbbh-coms-quant-prism-crate|pid=67da87d4afcaa0d7|json=0
+EMIT|family=DBBHCUBE|name=behcs-ladder-64-256-1024-hyperbehcs|pid=1256050090f6d8f2|json=0
+EMIT|family=DBBHCUBE|name=ix737-double-black-hole-capsule|pid=6f3cf8aa7e7d7f1c|json=0
+EMIT|family=DBBHCUBE|name=pid-60d-qprism-cube|pid=0f9a357c7b4428b4|json=0
+EMIT|family=DBBHCUBE|name=ai-hw-coms-address-only-crossing|pid=223708fe336054b4|json=0
+EMIT|family=DBBHCUBE|name=papers-proof-lossy-shadow-vs-lossless|pid=6d15bb3118fa1533|json=0
+EMIT|family=DBBHCUBE|name=asolaria-hbi-hbp-bridge-codec|pid=47734503279b877f|json=0
+EMIT|family=DBBHCUBE|name=simplicio-bridge-prs-2907-2909|pid=cd92a5abf46dafbb|json=0
+EMIT|family=DBBHCUBE|name=qprism-pr1-bilateral-convergence|pid=796e3e0574a99f61|json=0

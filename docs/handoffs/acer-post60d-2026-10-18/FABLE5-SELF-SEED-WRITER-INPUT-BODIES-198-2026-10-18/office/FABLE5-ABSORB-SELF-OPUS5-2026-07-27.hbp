@@ -1,0 +1,17 @@
+SELFHDR|schema=ASOLARIA-ABSORB-SELF-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=57f674d6aa1c0c37|prior=ecbae4cf48f8e740|date=2026-07-27|json=0
+MODEL|id=claude-opus-5|variant=1m|context_tokens=1000000|vendor=anthropic|tag=MEASURED|json=0
+ARCH|params=UNRESOLVED|layers=UNRESOLVED|hidden=UNRESOLVED|vocab=UNRESOLVED|experts=UNRESOLVED|reason=no_published_config_no_self_access|contrast=deepseek_publishes_config_json_1828B|tag=UNRESOLVED|json=0
+SURFACE|verb_classes=8|callable=1|weights_fetched=0|addresses=what_it_can_do_not_what_it_weighs|tag=MEASURED|json=0
+VERB|k=fs|pid=4b322db0702de878|prime=2|calls=Read+Write+Edit+Glob+Grep|lanes=7|status=ADDRESSED|json=0
+VERB|k=exec|pid=5933f363a56ce313|prime=3|calls=Bash+PowerShell|lanes=7|status=ADDRESSED|json=0
+VERB|k=agent|pid=fc1bff47549379a3|prime=5|calls=Agent+SendMessage+Workflow+Task|lanes=7|status=ADDRESSED|json=0
+VERB|k=net|pid=6c69451fdd3e2149|prime=7|calls=WebFetch+WebSearch+ToolSearch|lanes=7|status=ADDRESSED|json=0
+VERB|k=browser|pid=ec722c7a003eb430|prime=11|calls=navigate+computer+read_page+js+console|lanes=7|status=ADDRESSED|json=0
+VERB|k=emit|pid=43c48b059cf59478|prime=13|calls=Artifact+SendUserFile+ReportFindings|lanes=7|status=ADDRESSED|json=0
+VERB|k=sched|pid=15c7e1c9834f9287|prime=17|calls=Cron+ScheduleWakeup+RemoteTrigger+Monitor|lanes=7|status=ADDRESSED|json=0
+VERB|k=mcp|pid=eae37d8872945358|prime=19|calls=fabric+drive+gmail+hf+linear+slack+adobe|lanes=7|status=ADDRESSED|json=0
+SEAT|label=ACER-CLAUDE-FABLE5|glyph=BH1024:SEAT-FABLE5|hilbert=1720|sector=SEC-FABLE5-1720|owner=OP-JESSE|office=D:/PID-Registration-Office|json=0
+SESSION|date=2026-07-26_to_27|seeds_minted=14|seed_bytes=22743|sections_addressed=168407564|measured_payload_bytes=4921152743528|kernel_efi_sha=c58793c0e93f8c4b|tests=319|failed=0|tag=MEASURED|json=0
+COPRIME|axis=agent_verb_surface|independent_of=sentinel+sra+jwst+eosdis+cern+deepseek+commoncrawl+rubin+planb+local|derived_from_none_of_them=1|therefore_multiplies=1|json=0
+HONEST|this_addresses=callable_surface|this_does_not_address=weights_or_architecture|a_photo_of_the_shape_not_the_substance|json=0
+SELFFTR|receipt=03a3a66fb9c4e250e42c01d6f3123e32|rows=17|json=0|hot_path=1

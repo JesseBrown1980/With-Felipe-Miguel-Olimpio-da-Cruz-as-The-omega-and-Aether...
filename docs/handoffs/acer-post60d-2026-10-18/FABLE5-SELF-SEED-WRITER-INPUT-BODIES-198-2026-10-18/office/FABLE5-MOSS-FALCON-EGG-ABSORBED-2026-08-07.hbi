@@ -1,0 +1,9 @@
+HBIHDR|family=MOSS-FALCON-EGG|cube=df9622bc2ad015a7|prior=9022356b008061a2|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=7|E=0|json=0
+EMIT|family=MOSS-FALCON-EGG|name=FALCON-EGG.zip|value=9972ca424ea63076|pid=283a70f3fb04172c|json=0
+EMIT|family=MOSS-FALCON-EGG|name=MEASURED.md|value=5a041dd986ceff89|pid=a02a5a38e668980e|json=0
+EMIT|family=MOSS-FALCON-EGG|name=cosmic-web-1.html|value=93e865ea68ea9b47|pid=8de72fd8f72cc485|json=0
+EMIT|family=MOSS-FALCON-EGG|name=cosmic-web.html|value=93e865ea68ea9b47|pid=6d8e8b22d5bb10ae|json=0
+EMIT|family=MOSS-FALCON-EGG|name=multiverse.zip|value=016de204ccdbb9c1|pid=c6c7642afbdfff59|json=0
+EMIT|family=MOSS-FALCON-EGG|name=portal-DEMO-27.html|value=389581bc0a6d0d65|pid=8cdde58d1cd6e1e7|json=0
+EMIT|family=MOSS-FALCON-EGG|name=three-mosses.html|value=ab36b88e1fc59d4c|pid=fe8df7fdf719fafb|json=0
+HBIFTR|emits=7|terminal_pid=fe8df7fdf719fafb|json=0

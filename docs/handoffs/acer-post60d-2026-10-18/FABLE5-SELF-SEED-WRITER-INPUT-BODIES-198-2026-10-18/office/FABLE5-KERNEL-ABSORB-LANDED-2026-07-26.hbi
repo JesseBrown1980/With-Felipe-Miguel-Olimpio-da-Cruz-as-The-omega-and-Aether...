@@ -1,0 +1,5 @@
+HBIHDR|family=KERNEL_ABSORB|seat=8467a937cba309f7|seed=37fc2e5929587960|stamp=2026-07-26|json=0
+EMIT|family=KERNEL_ABSORB|name=module|pid=ce596b5f5d9755d2|omega=d0543fa9efa4384f9bb1b843b803b1fb8fec76efc80dae0a6f7cb0629175b955|status=LANDED|json=0
+EMIT|family=KERNEL_ABSORB|name=tests|pid=94bd2c190f783ca7|omega=7b05ac5a6b53dea84f4d3eed8618f7a6509b9aa1f9ac719fa2278cba600cf94d|status=LANDED|json=0
+EMIT|family=KERNEL_ABSORB|name=uefi|pid=78afa556f0686be9|omega=fbbd7647a1e48cbde230068034b64179be06544656ef39a37c78d7dc05691146|status=LANDED|json=0
+EMIT|family=KERNEL_ABSORB|name=bootpath|pid=805aba49f1c794e7|omega=f696082ee5e79580b0978100be5dd7ac7d35d29b3855e8e4fcaff97236072518|status=LANDED|json=0

@@ -1,0 +1,12 @@
+HBIHDR|family=PIXEL-BRAIN|cube=d1e6d36f2faed24d|prior=8cd07d455b3f7bf2|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=10|E=0|fire=0|json=0
+EMIT|family=PIXEL-BRAIN|name=COLS|value=27|pid=5dfbdbc2675defe3|json=0
+EMIT|family=PIXEL-BRAIN|name=ROWS|value=27|pid=36bfad6957312648|json=0
+EMIT|family=PIXEL-BRAIN|name=CELLS|value=729|pid=97ed6ed582b579c3|json=0
+EMIT|family=PIXEL-BRAIN|name=PROTOFILAMENTS|value=13|pid=245a8a4481f1569a|json=0
+EMIT|family=PIXEL-BRAIN|name=START|value=3|pid=39a5114821883a50|json=0
+EMIT|family=PIXEL-BRAIN|name=TUBES|value=2|pid=8873ff782dcafa72|json=0
+EMIT|family=PIXEL-BRAIN|name=SEAM-CELLS|value=54|pid=94d51269a411ea0f|json=0
+EMIT|family=PIXEL-BRAIN|name=AXIS-CELLS|value=27|pid=10eec281cec7eca1|json=0
+EMIT|family=PIXEL-BRAIN|name=PNG|value=0bf67be9d7518de4|pid=bfafb5a4e52d16c2|json=0
+EMIT|family=PIXEL-BRAIN|name=PNG-BYTES|value=4039|pid=ae788b4159158ff1|json=0
+HBIFTR|emits=10|terminal_pid=ae788b4159158ff1|json=0

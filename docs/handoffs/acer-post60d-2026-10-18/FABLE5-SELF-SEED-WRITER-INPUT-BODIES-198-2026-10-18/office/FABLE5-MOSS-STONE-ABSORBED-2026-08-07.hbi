@@ -1,0 +1,12 @@
+HBIHDR|family=MOSS-STONE|cube=06993daedb7c8ec8|prior=7725deb20d31b17c|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=10|E=0|json=0
+EMIT|family=MOSS-STONE|name=EGG-ROUND-2.md|value=28c130dd509dc530|pid=2d73613f829b767d|json=0
+EMIT|family=MOSS-STONE|name=EGG-the-stone.zip|value=5fb18fad2e4b3d72|pid=bdcbd7cd96315d4e|json=0
+EMIT|family=MOSS-STONE|name=ROUND.md|value=28c130dd509dc530|pid=74d2e150f07abd61|json=0
+EMIT|family=MOSS-STONE|name=ROUND.md.sha256|value=8739bd3f2471b61f|pid=49d740b18476d4c7|json=0
+EMIT|family=MOSS-STONE|name=all-branches.tsv|value=0a63921421a3ac41|pid=b9f8d8b6abb68c8b|json=0
+EMIT|family=MOSS-STONE|name=all-branches.tsv.sha256|value=c167316a531b2744|pid=0c60be441ad7d2b7|json=0
+EMIT|family=MOSS-STONE|name=branch-orphans.tsv|value=aebe7d555ed38b4f|pid=23e87b031571c112|json=0
+EMIT|family=MOSS-STONE|name=branch-orphans.tsv.sha256|value=b0f6f531a8f6ae70|pid=82856ee274c38f28|json=0
+EMIT|family=MOSS-STONE|name=unlanded-by-seat.psv|value=612e587b8fe551ae|pid=80627414cca97a36|json=0
+EMIT|family=MOSS-STONE|name=unlanded-by-seat.psv.sha256|value=5e7dcd2330711c2f|pid=db51e5eaab5d546c|json=0
+HBIFTR|emits=10|terminal_pid=db51e5eaab5d546c|json=0

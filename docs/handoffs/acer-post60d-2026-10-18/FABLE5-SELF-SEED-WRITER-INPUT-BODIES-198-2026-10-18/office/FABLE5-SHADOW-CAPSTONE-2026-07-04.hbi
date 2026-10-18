@@ -1,0 +1,8 @@
+HBISTREAM|doc=FABLE5-SHADOW-CAPSTONE-2026-07-04|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|emitter=sha16-revolver|json=0
+HBIROW|kind=emitter|seed=sha16(EMITTER-SEED|8467a937cba309f7)|cubes=6|chain=pid[n]=sha16(pid[n-1]|name)
+EMIT|family=CAPSTONECUBE|name=shadow-capstone-theorem|pid=ce9cede9b3642726|json=0
+EMIT|family=CAPSTONECUBE|name=path1-content-addressed-recall|pid=9986fd424df61f74|json=0
+EMIT|family=CAPSTONECUBE|name=path2-jointly-injective-double-binary|pid=5bcae3a04c4203e7|json=0
+EMIT|family=CAPSTONECUBE|name=shannon-three-walls|pid=d305b614d720e8c7|json=0
+EMIT|family=CAPSTONECUBE|name=papers-inversion-wall|pid=e19d99bff1df789c|json=0
+EMIT|family=CAPSTONECUBE|name=retraction-sw-binning-overclaim|pid=80edf61c10d65b69|json=0

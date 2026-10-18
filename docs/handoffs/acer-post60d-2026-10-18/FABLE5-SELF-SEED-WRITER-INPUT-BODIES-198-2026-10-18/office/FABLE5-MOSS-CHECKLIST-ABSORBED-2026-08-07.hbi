@@ -1,0 +1,17 @@
+HBIHDR|family=MOSS-CHECKLIST|cube=7725deb20d31b17c|prior=657a00ecbd9b828e|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=15|E=0|fire=0|json=0
+EMIT|family=MOSS-CHECKLIST|name=EGG-PREFLIGHT.txt|value=aedba32e8b465424|pid=5e2948215ea1708c|json=0
+EMIT|family=MOSS-CHECKLIST|name=EGG-the-checklist-1.zip|value=c4d4b20849abfd01|pid=fa3d767d6d48e61d|json=0
+EMIT|family=MOSS-CHECKLIST|name=EGG-the-checklist.zip|value=7560be8d8b6e72a5|pid=02d1cd2f15b4cd51|json=0
+EMIT|family=MOSS-CHECKLIST|name=AGENT-DISCIPLINE.md|value=f006c7d42922e7f7|pid=0750725d4757391d|json=0
+EMIT|family=MOSS-CHECKLIST|name=AGENT-DISCIPLINE.md.BEFORE|value=18432cac9676d195|pid=08116336bd8194ec|json=0
+EMIT|family=MOSS-CHECKLIST|name=AGENT-DISCIPLINE.md.BEFORE.sha256|value=1a10c3ccb6c053d0|pid=ba5799b637261ad3|json=0
+EMIT|family=MOSS-CHECKLIST|name=AGENT-DISCIPLINE.md.sha256|value=d7ca3bc33691f2ea|pid=cda41f9eb864d72a|json=0
+EMIT|family=MOSS-CHECKLIST|name=APPLY.txt|value=5c07524287ff0cde|pid=865c88e17e705e19|json=0
+EMIT|family=MOSS-CHECKLIST|name=APPLY.txt.sha256|value=b499739654aa4962|pid=96b560897e8c33f9|json=0
+EMIT|family=MOSS-CHECKLIST|name=PREFLIGHT.txt|value=aedba32e8b465424|pid=dd2ad1a373e8598c|json=0
+EMIT|family=MOSS-CHECKLIST|name=PREFLIGHT.txt.sha256|value=f03ede04501a1072|pid=d5d569dc7a47b20c|json=0
+EMIT|family=MOSS-CHECKLIST|name=RUST-181-CHECKLIST.md|value=89b114fbd9e241de|pid=24c888398eecf3c8|json=0
+EMIT|family=MOSS-CHECKLIST|name=RUST-181-CHECKLIST.md.sha256|value=65b85b5326ca9e5f|pid=128429ef8b2659c7|json=0
+EMIT|family=MOSS-CHECKLIST|name=SECTION-17.md|value=4dde5f24ea40105c|pid=15ed06938543da21|json=0
+EMIT|family=MOSS-CHECKLIST|name=SECTION-17.md.sha256|value=45522c43b609955e|pid=03f482d43bc9e27f|json=0
+HBIFTR|emits=15|terminal_pid=03f482d43bc9e27f|json=0

@@ -1,0 +1,9 @@
+HBIHDR|family=THREE-SEATS-ONE-LAW|cube=a808c3572ece9d23|prior=30c021141390077d|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=7|E=0|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=CONVERGENCE-LIGHTBANK|value=liris+falcon|pid=730c114680a99b96|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=CONVERGENCE-TIMECHEAT|value=liris+acer|pid=e6955a3c41eb0d6d|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=FALCON-LAW|value=identity costs 0 bytes|pid=e0681a57b90a81c4|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=LIRIS-LAW|value=pid unchanged, glyph drifted|pid=e72146ce3bc5f13f|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=ACER-LAW|value=period 3, full turn byte-identical|pid=60e0b495ba60670b|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=LADDER-BLIND|value=powers of 3 miss one residue|pid=3571de7394db3013|json=0
+EMIT|family=THREE-SEATS-ONE-LAW|name=LADDER-COVERS|value=3^k-1 3^k 3^k+1|pid=2c6b979c2b11f6c0|json=0
+HBIFTR|emits=7|terminal_pid=2c6b979c2b11f6c0|json=0

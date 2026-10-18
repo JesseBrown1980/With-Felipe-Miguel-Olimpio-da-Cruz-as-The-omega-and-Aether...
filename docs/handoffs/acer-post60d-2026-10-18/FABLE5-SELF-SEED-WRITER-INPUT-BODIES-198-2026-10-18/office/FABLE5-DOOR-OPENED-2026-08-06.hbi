@@ -1,0 +1,12 @@
+HBIHDR|family=DOOR-OPENED|cube=8d29ae28a3512ffb|prior=bef76ec3c4e6b5d4|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=10|E=0|fire=0|json=0
+EMIT|family=DOOR-OPENED|name=DOOR-SERVED|value=505fbdfc948d0f34|pid=035b3ad14e1fca65|json=0
+EMIT|family=DOOR-OPENED|name=DOOR-WAS|value=61fe25e144a23f7b|pid=e9f71728d785d992|json=0
+EMIT|family=DOOR-OPENED|name=DOOR-ANCHORS|value=25|pid=aa6bea317104787f|json=0
+EMIT|family=DOOR-OPENED|name=ONE-BUTTON|value=the-bridge-to-all-of-it|pid=07e21c82955a22e6|json=0
+EMIT|family=DOOR-OPENED|name=RUN-UNGATED|value=31131755549-success|pid=ad355c809dec1b78|json=0
+EMIT|family=DOOR-OPENED|name=RUN-POSTMERGE|value=31131904546-success|pid=c81bc8427706a4b6|json=0
+EMIT|family=DOOR-OPENED|name=PR2|value=b5483870-merged|pid=87cc39142c8cfc63|json=0
+EMIT|family=DOOR-OPENED|name=EGG-ROUND-1|value=de8a17821f7496ad|pid=aa6abfffd09cd7ab|json=0
+EMIT|family=DOOR-OPENED|name=EGG-GATE-REFUSED|value=5789754e9e13ef19|pid=5a1c2454f837beb2|json=0
+EMIT|family=DOOR-OPENED|name=PAGES-YML|value=8e1254824c192dce|pid=74c27003b9f46669|json=0
+HBIFTR|emits=10|terminal_pid=74c27003b9f46669|json=0

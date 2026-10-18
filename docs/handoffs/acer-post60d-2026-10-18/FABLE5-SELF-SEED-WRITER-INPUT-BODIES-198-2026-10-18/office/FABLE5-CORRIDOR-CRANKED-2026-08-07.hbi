@@ -1,0 +1,12 @@
+HBIHDR|family=CORRIDOR-CRANKED|cube=657a00ecbd9b828e|prior=2385a4ea0af2458f|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=10|E=1|fire=0|json=0
+EMIT|family=CORRIDOR-CRANKED|name=CORRIDOR-BLOCK|value=03a6c56717960916|pid=375458cfe4017887|json=0
+EMIT|family=CORRIDOR-CRANKED|name=REPOS-CRANKED|value=27|pid=61ffa843622abdbe|json=0
+EMIT|family=CORRIDOR-CRANKED|name=DOORS-200|value=27|pid=d5ab156916654022|json=0
+EMIT|family=CORRIDOR-CRANKED|name=DOORS-CARRYING|value=26|pid=af92edbc7a380759|json=0
+EMIT|family=CORRIDOR-CRANKED|name=DOORS-BUILDING|value=1|pid=ca605541a65b71f9|json=0
+EMIT|family=CORRIDOR-CRANKED|name=EXITS-BEFORE|value=37|pid=ca1376785744e1cd|json=0
+EMIT|family=CORRIDOR-CRANKED|name=EXITS-AFTER|value=739|pid=4a188ede0937f7f7|json=0
+EMIT|family=CORRIDOR-CRANKED|name=EXITS-PREDICTED|value=766|pid=bc08ebe9abecffe8|json=0
+EMIT|family=CORRIDOR-CRANKED|name=LAST-GATE|value=1938a9b-disarmed|pid=ff59c661a6ed8d02|json=0
+EMIT|family=CORRIDOR-CRANKED|name=MULTIVERSE|value=101b317800667f51|pid=e7c1ff729b85267a|json=0
+HBIFTR|emits=10|terminal_pid=e7c1ff729b85267a|json=0

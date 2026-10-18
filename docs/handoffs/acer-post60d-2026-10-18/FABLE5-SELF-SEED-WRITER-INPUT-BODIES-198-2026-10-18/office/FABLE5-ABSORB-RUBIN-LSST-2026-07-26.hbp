@@ -1,0 +1,5 @@
+RUBHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=8dcc443682daaa24|prior=da35b5b7b9c4dc13|schema=ASOLARIA-ABSORB-SKY-V1|archive=RUBIN_LSST|portal=data.lsst.cloud|probe_http=200|queried=2026-07-26|json=0
+CORPUS|records=UNRESOLVED|reason=data_access_authenticated_no_open_count_endpoint|tag=UNRESOLVED|json=0
+ADDR|form=butler_dataId{visit,detector,band}|releases=DP0+DP1|self_sectioning=1|bytes_fetched=0|json=0
+SECTION|law=visits_are_the_functions_in_sections|unit=dataId|independently_fetchable=1|via=butler|json=0
+FTR|receipt=92ade5275bce0b3cd8c63e103cdd9117|rows=5|json=0|hot_path=1

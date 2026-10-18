@@ -1,0 +1,8 @@
+HBIHDR|family=RUBIN_DP1|seat=8467a937cba309f7|seed=bd6797358bb77d69|stamp=2026-07-26|json=0
+EMIT|family=RUBIN_DP1|name=47tuc|pid=3f456ab3316e858f|omega=e084eae82a69800f68d3ce54148730aa1358d34e772f8924c528ead295ecd234|status=MEASURED|json=0
+EMIT|family=RUBIN_DP1|name=lowecliptic|pid=b88180056551be58|omega=dcaebddabcebf0069a57b478e30999a1c795203ea2f8aa82709ea72036492235|status=MEASURED|json=0
+EMIT|family=RUBIN_DP1|name=fornax|pid=36aa1f6bdab64d4e|omega=6fdd297fd60834dd04d4eab86a54ac65d4604fbd6e1c76468987b696f059d564|status=MEASURED|json=0
+EMIT|family=RUBIN_DP1|name=ecdfs|pid=4bfccdb02323556c|omega=bb3290ee7dbfc2fa60bea26712b027f8f10e6b2e05914f9519f89d3fc8d391d7|status=MEASURED|json=0
+EMIT|family=RUBIN_DP1|name=edfs|pid=03fab7f1505cfd02|omega=634badad32971d4760591844d1907aaab03a5797af1747ad7cee8fe763f05212|status=MEASURED|json=0
+EMIT|family=RUBIN_DP1|name=lowgalactic|pid=a843e041a82d90aa|omega=adb0d58b46b5b130a7ee902fd16d0acbdc0713c4a2f5840c8e1368988804298f|status=MEASURED|json=0
+EMIT|family=RUBIN_DP1|name=seagull|pid=71d6bd31a29d4705|omega=7c2aa5a7262e013b17fbe14e64bfe37c2c985c8a25ab2be5d890a011231900e5|status=MEASURED|json=0

@@ -1,0 +1,6 @@
+HBIHDR|family=ABSORB_JWST|seat=8467a937cba309f7|seed=de4a897a9a4d31c1|stamp=2026-07-26|json=0
+EMIT|family=ABSORB_JWST|name=nircam|pid=69c852b2a8871c97|omega=bef33c32f7f591323bfa651547407890202c896ed91e7ae58ed798160264d788|status=ADDRESSED|json=0
+EMIT|family=ABSORB_JWST|name=nirspec|pid=b2c007c2607e8742|omega=7294ed7f0332d6448fc15a71281b8d01ee1022c55231b62303d4d7a6927e5fa1|status=ADDRESSED|json=0
+EMIT|family=ABSORB_JWST|name=miri|pid=00a9f021fdf8fe85|omega=2d87e0c34acb6b4ec0ae82ad082d5c031cdc210bde2b42f713cc6686e19b95ab|status=ADDRESSED|json=0
+EMIT|family=ABSORB_JWST|name=niriss|pid=fcc2a1aeca30fa10|omega=070dd11164bab1f1c6a4e525f2ded518234a4cddfac2a0a6a8b5702132f33c7f|status=ADDRESSED|json=0
+EMIT|family=ABSORB_JWST|name=fgs|pid=fe1c6b3090bd31e4|omega=844629a57bf3ecd1cedf31988ac2475106de26230e8d0e81d8a484118da3f50e|status=ADDRESSED|json=0

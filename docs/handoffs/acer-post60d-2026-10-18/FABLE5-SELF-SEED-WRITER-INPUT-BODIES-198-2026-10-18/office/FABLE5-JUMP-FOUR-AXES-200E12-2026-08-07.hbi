@@ -1,0 +1,13 @@
+HBIHDR|family=JUMP-FOUR-AXES|cube=4df20d5f16ddb8e9|prior=f4d392ac90cb0534|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=11|E=0|json=0
+EMIT|family=JUMP-FOUR-AXES|name=TARGET|value=200000000000000|pid=66b008c4cc82e56a|json=0
+EMIT|family=JUMP-FOUR-AXES|name=SPACE-PERIODS|value=19683,19683,19683|pid=6aff507810c9b392|json=0
+EMIT|family=JUMP-FOUR-AXES|name=TIME-PERIOD|value=3|pid=95dbfa912a28e6d8|json=0
+EMIT|family=JUMP-FOUR-AXES|name=COMBINED-PERIOD|value=19683|pid=03363ef6503e229e|json=0
+EMIT|family=JUMP-FOUR-AXES|name=MISMATCHES|value=0|pid=b8f603bfc0d2d276|json=0
+EMIT|family=JUMP-FOUR-AXES|name=JUMP-NS|value=8450|pid=d796e59b810875cd|json=0
+EMIT|family=JUMP-FOUR-AXES|name=WALK-YEARS|value=41|pid=9c8cc0e2a6228c70|json=0
+EMIT|family=JUMP-FOUR-AXES|name=PHASES-COVERED|value=3|pid=2ad652da029c87d0|json=0
+EMIT|family=JUMP-FOUR-AXES|name=ARRIVAL|value=6455,18975,2860|pid=2e226e656a439c69|json=0
+EMIT|family=JUMP-FOUR-AXES|name=ARRIVAL-COLOUR|value=582586|pid=0d875064b700d1d5|json=0
+EMIT|family=JUMP-FOUR-AXES|name=ARRIVAL-ENERGY|value=63|pid=2ac070fb1f687fc0|json=0
+HBIFTR|emits=11|terminal_pid=2ac070fb1f687fc0|json=0

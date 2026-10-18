@@ -1,0 +1,8 @@
+HBIHDR|family=ABSORB_SENTINEL|seat=8467a937cba309f7|seed=ab824bafd9351c18|stamp=2026-07-26|json=0
+EMIT|family=ABSORB_SENTINEL|name=sentinel-2-l2a|pid=ff82b80c5e081efd|omega=3385d4aefd8ae4ebd38c242cc03e422d34f991f34e543de366c3c728d5d89422|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SENTINEL|name=sentinel-2-l1c|pid=da0ba16157e1336a|omega=16519a74f7291bd3e96d668aeaecf0cffeed7301ba474748feee1ce773dec565|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SENTINEL|name=sentinel-2-c1-l2a|pid=925f6d6e85ab6252|omega=a01ffb37745b8c000b194372d1aea88224812e1889f34a2d14ca3a99a50007b6|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SENTINEL|name=landsat-c2-l2|pid=0103654b0e5ec171|omega=4ca5eb37fe6eaacddb855b9736ff430b47a44bb30acc1369759a7c49594d29fd|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SENTINEL|name=sentinel-1-grd|pid=83a64f89d24525e5|omega=181d4c403ccf68c67614b65208045e87f53e782dccf03b40fe8d287fa215adc5|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SENTINEL|name=naip|pid=759270e9387cbb23|omega=8d3b6a02220f143c8c12dc054e438a6efd462a93b742e491c49d14177a27ac3d|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SENTINEL|name=cop-dem-glo-30|pid=8fc836b3dc76be08|omega=15597fad3ab56903395acdce2f30fe4f1168f8d02c9f44598e55eb708b794053|status=ADDRESSED|json=0

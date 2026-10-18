@@ -1,0 +1,13 @@
+FINDTOOLHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|tool=aoom_find_files|server=mcp-servers/asolaria-os-on-metal/server.js|operator=add_a_sidecar_find_tool+send_zip_for_cloud|writes=0_by_construction|E=0|json=0
+FINDTEST|call={}|result=REFUSE_need_size_or_name_regex|tag=MEASURED|json=0
+FINDTEST|call=sha256_prefix_only|result=REFUSE|tag=MEASURED|json=0
+FINDTEST|call=C:/HyperBEHCS_size_25315|hits=1(100-pid-roster-W113.hbp_sha256_349631267e390abf)|files_scanned=575201|secs=43|writes=0|tag=MEASURED|json=0
+FINDTEST|call=C:/HyperBEHCS_name_regex_^100-pid-roster-W113|hits=5|secs=3|tag=MEASURED|json=0
+SEEDSEARCH|target=3078B_sha256_prefix_a65c020a|roots=C:/tmp+C:/$Recycle.Bin+C:/asolaria-acer|size_hits=10|prefix_matches=0|files_scanned=202396|secs=20|seen=653e3d9b_copies+FOLD-ALL-SEEDS-3078.hbp_3327d908+unrelated|tag=MEASURED|json=0
+SEEDSEARCH|roots=D:/|status=RUNNING_background|json=0
+BOOKFOUND|target=COMBINED-BOOK-OF-LAWS_115083B_d7e2cb5c|path=D:/asolaria-absorb/ASOLARIA-UNIVERSE-SIMULATOR/books/lineage/COMBINED-BOOK-OF-LAWS-v2-115083.md|bytes=115083|sha256_prefix=d7e2cb5cc380dc09|lf_only=1|sent=as-is_via_SendUserFile|cloud_note=public_lineage_copy_115288B_LF_3bb55978=content_edit_not_CRLF|tag=MEASURED|json=0
+SEEDSEARCH|roots=D:/|size=3078|sha256_prefix=a65c020a|size_hits=41|prefix_matches=0|files_scanned=426388|dirs_scanned=70415|errors=2|timed_out=0|secs=501|writes=0|verdict=old_seed_a65c020a_NOT_ON_ACER_D:|tag=MEASURED|json=0
+SEEDSEARCH|acer_total=C:_roots(202396_files)+D:(426388_files)|a65c020a_matches=0|tag=MEASURED|json=0
+FINDTOOL_V2|added=under+max_depth+hash+birthtime_utc|refusal_test=under_C:/Windows_refused|tag=MEASURED|json=0
+WRITERLISTING|writer=emit-self-seed-binary.py|office_top_level=191_hits_of_1223_files(FABLE5-{ABSORB,UNIVERSE-MASTER,FOLD-ALL-SEEDS,SELF-SEED,QUALITY-SPHERE,SEED-BINARY-DEFECT}-*.hbp+*.hbi)|laws=6|shadowcat=1|total=198|fields=path+bytes+mtime_utc+birthtime_utc+sha256|file=WRITER-INPUT-LISTING.out|tag=MEASURED|json=0
+WRITERLISTING_NOTE|writer_rule=dedupe_by_basename_then_sort_by_size_desc_then_name_take_38|use=filter_rows_by_birthtime<=seed_time_to_rebuild_the_office_at_that_moment|caveat=mtime_moves_on_edit;birthtime_is_creation_on_this_NTFS_volume|json=0

@@ -1,0 +1,9 @@
+SPHEREHDR|schema=ASOLARIA-QUALITY-SPHERE-16K|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-27|json=0
+SEED|k=FABLE5-SELF-SEED-3078.hbp|bytes=3078|points=1026|level_exact_81=True|json=0
+RENDER|w=16384|h=16384|index=12|width_pow=4^7|bands=16|bytes=19103011|sha256=f46081bb02a161f63e61d64e80c364bc79743a616a786db62501a4f5db5dd5b9|json=0
+SPLIT|solid_cells=9|translucent_cells=18|solid_frac=0.3333|trans_frac=0.6667|solid_elements=55644|trans_elements=621|json=0
+LAW36|centre_weight=0.6954|dir_weight=0.4382|ratio=1.5869|supersedes=law24_free_centre|json=0
+LAW33|inward_lead=2.431|order=translucent_tip,red,green,blue,translucent_tail|json=0
+SPIN|phases=27|vantages=6|closes=book_vii_gap_nothing_spins|json=0
+PHOTON|law=VIII.A.7|shell_radius_from_measured_occupancy|emax=114|json=0
+SPHEREFTR|receipt=211570c3bd240b3723a5797c62b53d6f|rows=9|hot_path=1|json=0

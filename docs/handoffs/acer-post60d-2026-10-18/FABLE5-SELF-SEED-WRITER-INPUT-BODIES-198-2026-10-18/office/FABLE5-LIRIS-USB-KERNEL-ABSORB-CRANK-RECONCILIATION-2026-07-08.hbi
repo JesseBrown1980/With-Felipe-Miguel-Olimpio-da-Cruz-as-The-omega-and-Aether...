@@ -1,0 +1,10 @@
+HBI|id=FABLE5_LIRIS_USB_KERNEL_ABSORB_CRANK_RECONCILIATION_20260708|hbp=FABLE5-LIRIS-USB-KERNEL-ABSORB-CRANK-RECONCILIATION-2026-07-08.hbp|kind=cross_seat_liris_usb_kernel_crank_index|json=0
+INDEX|row=GITHUB_PR|repo=JesseBrown1980/asolaria-federation-1024|pr=42|head=30b423e34a576be0835b76715e60789ae6f76351|state=OPEN|checks=pass|json=0
+INDEX|row=LIRIS_WHITEROOM|sha256=c5ba4fdc422816af9e8349e91abeb07b024d8a5586e8c5290a54bb67f6bc186e|raw_usb_content_copied=0|json=0
+INDEX|row=LIRIS_KERNEL|sha256=f58d898ef6be8f521099d968c62755875dc7b9e639d2f7b3035fbb75aba3cb3d|perspectives=ACER,LIRIS,RELIC|json=0
+INDEX|row=LIRIS_CUBE_ABSORB|hbp_sha256=f231b014faeaf9266fbff10473c5435bf705a7480f0638818c1272c508986aba|hbi_sha256=299cb6d1589ca7a533262161db176fa94557f4473f2c977feab6087e162e15ea|fire=0|json=0
+INDEX|row=LIRIS_SAFE_CRANK|id=SAFECRANK-20260708T162203488Z|hbp_sha256=2c4997cb18ca801b470d0f0d2811cdc6f8df159dd0bf72bff1f79069efef3554|hbi_sha256=95422ba54131820edeac7ffdf11a8c26549870034115f25256702ba89eab1a94|artifact_sha256=62efd5d92f4ebf07fdb520fa95d0ffc5ac701f3a19b7423cef722bf76f4734b0|json=0
+INDEX|row=CRANK_RESULTS|points=1296|active=894|collapsed=48|latent=348|forbidden=6|density=69.0|shannon_agents=14|top_confidence=0.8707|healer=dry_run|json=0
+INDEX|row=TRANSCRIPT_SPLIT|hbi_preview_total_beats=36288|final_summary_total_beats=51840|collapse=0|json=0
+INDEX|row=ACER_USB_PROOF|drive=F|label=SOVLINUX|serial=0x741E5B79|manifest_sha256=2513df53bf7025179ad5c829cdbd2741dd101c753ab9d18d3deed96e9da36ab5|json=0
+INDEX|row=BOUNDARY|usb_write=0|kernel_mutation=0|daemon_restart=0|runtime_authority=0|live_voxels_claim=0|fire=0|json=0

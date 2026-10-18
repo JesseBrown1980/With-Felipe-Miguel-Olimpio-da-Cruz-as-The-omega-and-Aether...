@@ -1,0 +1,9 @@
+SSEEDHDR|writer=emit-self-seed-binary.py(60eda73a)|bodies=ACER_198(FABLE5-SELF-SEED-WRITER-INPUT-BODIES-198)|listing=WRITER-INPUT-LISTING.out|run=python3_-I_writer_unchanged_in_staged_office|json=0
+SSEEDDECODE|5c040e04_vs_653e3d9b=2_of_38_records_differ|rec0=COMBINED-BOOK-OF-LAWS.md(115083_d7e2cb5c_then;622823_d29bab0f_now)|rec10=FABLE5-SELF-SEED-3078.hbi(a65c020a_then;5c040e04_now)|json=0
+SSEEDCONTROL|cutoff=2026-07-27T16:06:42.913Z|book=d29bab0f(622823)|prev_seed=5c040e04|placed=89|out=653e3d9bd4c9a18e|byte_exact=1|json=0
+SSEEDFIRSTRUN|cutoff=2026-07-27T11:36:25.857Z|prev_seed=none|book_blob=a833739ffca8d1cc563950739b84d3b30408d25a|book_sha16=b93414c9bf902e49|out=f4e710ea487fa636|eq_a65c020a=0|json=0
+SSEEDFIRSTRUN|cutoff=2026-07-27T11:36:25.857Z|prev_seed=none|book_blob=a032e77698c63e5dc28d9d82f19dd6a22e7decd8|book_sha16=bb2f187d4f72c4a9|out=6a568ef17775713d|eq_a65c020a=0|json=0
+SSEEDFIRSTRUN|cutoff=2026-07-27T11:36:25.857Z|prev_seed=none|book_blob=264e56d5b44b84ab5c51c08c59eab4230e4c31c6|book_sha16=d7e2cb5cc380dc09|out=11fd81ef3194e07d|eq_a65c020a=0|json=0
+SSEEDFIRSTRUN|cutoff=2026-07-27T11:36:25.857Z|prev_seed=none|book_blob=16c60820b686e3e49e7d85dc6be3dc2455a2aa36|book_sha16=3bb55978c7c47c06|out=e8a5d232e0c06022|eq_a65c020a=0|json=0
+SSEEDSEARCH|a65c020a_on_acer=0(C:202396+D:426388_files)|in_usim_history=0(4_blobs_of_3078B)|json=0
+SSEEDFTR|5c040e04_needs=a65c020a(not_found)|653e3d9b_regenerates_from=office+book_d29bab0f+seed_5c040e04|json=0

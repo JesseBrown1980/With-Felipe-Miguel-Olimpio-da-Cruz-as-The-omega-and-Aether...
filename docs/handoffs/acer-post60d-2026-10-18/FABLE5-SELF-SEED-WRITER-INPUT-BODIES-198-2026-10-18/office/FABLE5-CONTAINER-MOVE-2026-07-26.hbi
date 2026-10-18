@@ -1,0 +1,7 @@
+HBIHDR|family=CONTAINER_MOVE|seat=8467a937cba309f7|seed=2ecc866486f6f586|stamp=2026-07-26|json=0
+EMIT|family=CONTAINER_MOVE|name=container-preserve-order|pid=c70e0a357769407c|omega=3fa25594e874f2bbe7378c9059c241842c9d1175d20152f100aaf0c5cc3c9980|status=ISSUED|json=0
+EMIT|family=CONTAINER_MOVE|name=rootfs-tar|pid=105b451ae06b77ad|omega=bb3d1c81badbd34f88af13d1c4a9132d27b3c5c794d0a948db32dd9c01032ee3|status=IN-FLIGHT|json=0
+EMIT|family=CONTAINER_MOVE|name=transport-desktop-bridge|pid=8665fec2711d0a3f|omega=bc78faca0805c5e6987bcf66d1e62065be9ee2a5a2e80a8030c14737060024f1|status=ISSUED|json=0
+EMIT|family=CONTAINER_MOVE|name=part-verify|pid=bb29945b6f4c0069|omega=5f7ddf7095c9de9d903b746a4db0d8ae2810ff0f8b389abc384f309b7264d15c|status=PENDING|json=0
+EMIT|family=CONTAINER_MOVE|name=wsl-import|pid=f077fb4d01ec8819|omega=0d1fe222d8dcf3f679f6cb902a7ee5e42798486307705a1be14d01ce11755730|status=PENDING|json=0
+EMIT|family=CONTAINER_MOVE|name=manual-emit|pid=c3c78b42063cad00|omega=6ae5d18e8028e1b0c34f1d116b386cf80e1c39f72f237984244e26c44f8b023d|status=DONE|json=0

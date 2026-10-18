@@ -1,0 +1,22 @@
+HBIHDR|family=MOSS-KERNEL|cube=41b3e9c2a9410dc6|prior=d76a59543eb1eea6|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=20|E=0|fire=0|json=0
+EMIT|family=MOSS-KERNEL|name=DNA-CHROMOSOMES|value=13|pid=4568d6aea8e89db2|json=0
+EMIT|family=MOSS-KERNEL|name=DNA-PROTEIN-CODING-GENES|value=16545|pid=a3ebde3e1999ecfa|json=0
+EMIT|family=MOSS-KERNEL|name=DNA-UNPLACED-SCAFFOLDS|value=2666|pid=01146627c6031b73|json=0
+EMIT|family=MOSS-KERNEL|name=DNA-ASSEMBLY|value=telomere-to-telomere, Copia-dominant centromeres|pid=fdd9b541282de1d7|json=0
+EMIT|family=MOSS-KERNEL|name=MOL-SCALDH21-CDNA-BP|value=1452|pid=8e2bc1bf1d965556|json=0
+EMIT|family=MOSS-KERNEL|name=MOL-SCALDH21-AA|value=483|pid=6a2ff57b4d09e757|json=0
+EMIT|family=MOSS-KERNEL|name=MOL-SCALDH21-KDA|value=53|pid=2f88a446dd3101b2|json=0
+EMIT|family=MOSS-KERNEL|name=MOL-SCALDH21-IDENTITY-PCT|value=97|pid=38e6c74567194ea5|json=0
+EMIT|family=MOSS-KERNEL|name=MOL-WATER-POTENTIAL-MPA|value=600|pid=cf9f5c819635b8f1|json=0
+EMIT|family=MOSS-KERNEL|name=RAD-LD50-16MIN-GY|value=2000|pid=5f53750c627e7bec|json=0
+EMIT|family=MOSS-KERNEL|name=RAD-HALF-LETHAL-GY|value=5000|pid=ab99029f95eb6b27|json=0
+EMIT|family=MOSS-KERNEL|name=RAD-PROMOTING-DOSE-GY|value=500|pid=b72c494fef8b4821|json=0
+EMIT|family=MOSS-KERNEL|name=RAD-BRANCHES-D60-AT-500GY|value=4.08+-0.21|pid=f0308f4989b70364|json=0
+EMIT|family=MOSS-KERNEL|name=RAD-REGEN-60D-PCT-AT-500GY|value=100|pid=101bad4760e7b51f|json=0
+EMIT|family=MOSS-KERNEL|name=RAD-SIM-MARS-REGEN-30D-PCT|value=100|pid=352cf2a10afae1c6|json=0
+EMIT|family=MOSS-KERNEL|name=ENV-MARS-SURFACE-GY-PER-YEAR|value=0.0766|pid=55069fa992e9822c|json=0
+EMIT|family=MOSS-KERNEL|name=CMP-HUMAN-LD50-GY|value=4.5|pid=e03c63339421fe81|json=0
+EMIT|family=MOSS-KERNEL|name=CMP-DEINOCOCCUS-NO-VIABILITY-LOSS-GY|value=5000|pid=c6de71ff6fc61130|json=0
+EMIT|family=MOSS-KERNEL|name=PHOTO-20260806_172006.jpg|value=8553d9858d8a250092aa97d834d18d27|pid=92d352692ebdea71|json=0
+EMIT|family=MOSS-KERNEL|name=PHOTO-20260806_172011.jpg|value=901fadcd551c9154209f37006f4eb431|pid=01e514be6885cf2e|json=0
+HBIFTR|emits=20|terminal_pid=01e514be6885cf2e|json=0

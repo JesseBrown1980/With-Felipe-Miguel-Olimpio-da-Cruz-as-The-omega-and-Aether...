@@ -1,0 +1,11 @@
+HBI|id=FABLE5_SOVLINUX_USB_DASHBOARD_ROUTE_SPLIT_20260708|hbp=FABLE5-SOVLINUX-USB-DASHBOARD-ROUTE-SPLIT-2026-07-08.hbp|kind=route_substrate_reconciliation_index|json=0
+INDEX|row=DASHBOARDCUBE|state=operator_screen_live|usb_panel=UNKNOWN|bus_protocol=DOWN|tests=33/33|json=0
+INDEX|row=FABRICROUTE|state=timeout_from_shell|routes=health,bus_health,canon_index,usb-file-manager,build-prep-usb,falcon-usb-readiness|json=0
+INDEX|row=SUBSTRATECUBE|device=General_UDisk_USB_Device|disk=2|size=2097150289920|partitions=2|json=0
+INDEX|row=USBVOLUME|drive=F|fs=exFAT_raw|label=SOVLINUX|serial=0x741E5B79|sector0_sha=e8f00ebe52eeef571ea13f565a9ee305710564ec9c78039a0171d9e4ec7281f7|json=0
+INDEX|row=USBVOLUME|drive=E|fs=zero_or_unreadable_raw|sector0_sha=076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560|json=0
+INDEX|row=READINDEX|quick_files=1441|quick_dirs=425|quick_bytes=58047087594|read_errors=0|max_depth=2|json=0
+INDEX|row=READINDEX_FULL|manifest=C:/tmp/acer-sovlinux-usb-full-20260708.ndjson|sha256=2513df53bf7025179ad5c829cdbd2741dd101c753ab9d18d3deed96e9da36ab5|files=21037|dirs=1833|bytes=75701785842|json=0
+INDEX|row=LIRIS_SAFE_CRANK|id=SAFECRANK-20260708T162203488Z|sha256=2c4997cb18ca801b470d0f0d2811cdc6f8df159dd0bf72bff1f79069efef3554|json=0
+INDEX|row=RELIC_OBSERVATION|device_visible=1|filesystem_readable=0|json=0
+INDEX|row=BOUNDARY|usb_write=0|copy=0|delete=0|format=0|partition_mutation=0|kernel_mutation=0|daemon_restart=0|runtime_authority=0|fire=0|json=0

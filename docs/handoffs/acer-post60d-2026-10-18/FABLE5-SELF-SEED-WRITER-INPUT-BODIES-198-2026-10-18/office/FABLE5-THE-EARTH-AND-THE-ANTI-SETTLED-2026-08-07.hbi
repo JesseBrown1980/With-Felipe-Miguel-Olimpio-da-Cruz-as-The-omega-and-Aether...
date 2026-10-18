@@ -1,0 +1,9 @@
+HBIHDR|family=THE-EARTH|cube=03f6f9029bdb2f51|prior=25bbf4665fcef7f9|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=7|E=0|json=0
+EMIT|family=THE-EARTH|name=ANTI-RELATION|value=inverse|pid=97797b4bff24ead4|json=0
+EMIT|family=THE-EARTH|name=SAME-ORBIT|value=20000 of 20000|pid=ccaae32d12a0f20e|json=0
+EMIT|family=THE-EARTH|name=GROUND-CELLS|value=282697|pid=6b8b910d9f11186c|json=0
+EMIT|family=THE-EARTH|name=MOSS|value=1763|pid=f78d33aeb702b3b2|json=0
+EMIT|family=THE-EARTH|name=STARS|value=1000|pid=f29b30407553b324|json=0
+EMIT|family=THE-EARTH|name=DROPS|value=4|pid=67a558f0ebf0207c|json=0
+EMIT|family=THE-EARTH|name=PNG|value=84b9b63c5c7f1907|pid=7924af661e3b7994|json=0
+HBIFTR|emits=7|terminal_pid=7924af661e3b7994|json=0

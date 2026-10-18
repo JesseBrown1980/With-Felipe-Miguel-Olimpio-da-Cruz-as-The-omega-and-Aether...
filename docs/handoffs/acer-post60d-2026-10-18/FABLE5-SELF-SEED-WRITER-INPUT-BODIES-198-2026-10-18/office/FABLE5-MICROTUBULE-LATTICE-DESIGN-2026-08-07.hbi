@@ -1,0 +1,12 @@
+HBIHDR|family=MICROTUBULE-DESIGN|cube=8cd07d455b3f7bf2|prior=589d96238598e2ee|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=10|E=0|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=PROTOFILAMENTS|value=13|pid=f612c81aaa98f6f5|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=START|value=3|pid=dc0678dd5717855c|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=SEAM-PER-TUBE|value=1|pid=acc6698e94e693f6|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=TUBES|value=2|pid=c855b69f90950fcf|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=DOORS|value=26|pid=49d3991aabe7917f|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=AXIS|value=asolaria-multiverse|pid=2ff713777542ca7f|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=CENTRIOLE|value=9x3=27|pid=64d2b206225ca4a5|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=KERNELS|value=81=3x27|pid=54bb27d82090c124|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=CURRENT-SEAMS|value=0|pid=9f090fed5ec5921d|json=0
+EMIT|family=MICROTUBULE-DESIGN|name=DESIGN-SEAMS|value=2|pid=a824ef4f7d68755c|json=0
+HBIFTR|emits=10|terminal_pid=a824ef4f7d68755c|json=0

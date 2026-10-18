@@ -1,0 +1,9 @@
+HBIHDR|family=PLAY-THE-MATRIX|cube=30c021141390077d|prior=ded6f091e3c28c86|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=7|E=0|json=0
+EMIT|family=PLAY-THE-MATRIX|name=TICKS|value=10000000000000|pid=15c7e52005331b41|json=0
+EMIT|family=PLAY-THE-MATRIX|name=PERIOD|value=3|pid=50e80531ae2b105e|json=0
+EMIT|family=PLAY-THE-MATRIX|name=RATE|value=7069069|pid=a050a24de13d83a3|json=0
+EMIT|family=PLAY-THE-MATRIX|name=SIM-YEARS|value=0|pid=0c6606dd3dea1d14|json=0
+EMIT|family=PLAY-THE-MATRIX|name=ADDRESSED-NS|value=3791|pid=8530f1afb531537c|json=0
+EMIT|family=PLAY-THE-MATRIX|name=ORDINALS|value=29|pid=c978ae886e4435a8|json=0
+EMIT|family=PLAY-THE-MATRIX|name=DISTINCT-STATES|value=2|pid=7e4b3f5d4ea951ed|json=0
+HBIFTR|emits=7|terminal_pid=7e4b3f5d4ea951ed|json=0

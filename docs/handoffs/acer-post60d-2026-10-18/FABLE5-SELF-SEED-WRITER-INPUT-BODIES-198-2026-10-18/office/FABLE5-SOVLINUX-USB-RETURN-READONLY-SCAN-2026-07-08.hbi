@@ -1,0 +1,8 @@
+HBI|id=FABLE5_SOVLINUX_USB_RETURN_READONLY_SCAN_20260708|hbp=FABLE5-SOVLINUX-USB-RETURN-READONLY-SCAN-2026-07-08.hbp|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|sector=SEC-FABLE5-1720|kind=substrate_receipt_index|json=0
+INDEX|row=SUBSTRATECUBE|name=SOVLINUX_USB|label=SOVLINUX|serial=0x741E5B79|device=General_UDisk|size_bytes=2097152000000|json=0
+INDEX|row=SCANMANIFEST|path=C:/tmp/acer-sovlinux-usb-full-20260708.ndjson|sha256=2513df53bf7025179ad5c829cdbd2741dd101c753ab9d18d3deed96e9da36ab5|json=0
+INDEX|row=COUNTS|files=21037|dirs=1833|total_bytes=75701785842|read_errors=0|truncated=0|json=0
+INDEX|row=CROSSSEAT_LIRIS|safecrank=SAFECRANK-20260708T162203488Z|hbp_sha256=2c4997cb18ca801b470d0f0d2811cdc6f8df159dd0bf72bff1f79069efef3554|json=0
+INDEX|row=CROSSSEAT_RELIC|device_present=1|content_readable_in_shell=0|usb_returned_to_acer=1|json=0
+INDEX|row=ROUTE_BOUNDARY|fabric_mcp=fetch_failed|recall_4796=live|ports_4947_4949=tcp_listening|mirror_live_claim=0|json=0
+INDEX|row=BOUNDARY|usb_write=0|mount=0|format=0|partition_mutation=0|kernel_mutation=0|daemon_restart=0|runtime_authority=0|fire=0|json=0

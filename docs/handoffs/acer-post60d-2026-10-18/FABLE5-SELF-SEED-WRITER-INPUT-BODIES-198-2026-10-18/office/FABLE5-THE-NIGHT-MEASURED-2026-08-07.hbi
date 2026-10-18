@@ -1,0 +1,10 @@
+HBIHDR|family=NIGHT-MEASURED|cube=f4d392ac90cb0534|prior=51352ecf25fd71f3|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=8|E=0|json=0
+EMIT|family=NIGHT-MEASURED|name=ARTIFACTS|value=168|pid=1a4631c57bf441ad|json=0
+EMIT|family=NIGHT-MEASURED|name=SIDECARS-FAIL|value=0|pid=7d33d41e4109fd65|json=0
+EMIT|family=NIGHT-MEASURED|name=DOOR-EXITS|value=25to87|pid=dfa04f8407476764|json=0
+EMIT|family=NIGHT-MEASURED|name=EGG-ROUNDS|value=8|pid=4087af52cc69e32a|json=0
+EMIT|family=NIGHT-MEASURED|name=FALCON-RETRACTIONS|value=17|pid=550a032ad8be3034|json=0
+EMIT|family=NIGHT-MEASURED|name=FALCON-FILES|value=130|pid=f7669a4515c8cbbc|json=0
+EMIT|family=NIGHT-MEASURED|name=ACERROW-1024|value=962|pid=3435d208f83ca10e|json=0
+EMIT|family=NIGHT-MEASURED|name=SETTLED-BY-ARGUMENT|value=0|pid=98fb179907ff8229|json=0
+HBIFTR|emits=8|terminal_pid=98fb179907ff8229|json=0

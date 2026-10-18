@@ -1,0 +1,6 @@
+CCHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=01ce1f623cb7f6d4|prior=c7c67dc6cbec1b7a|schema=ASOLARIA-ABSORB-WEB-V1|archive=COMMON_CRAWL|api=index.commoncrawl.org/collinfo.json|queried=2026-07-26|tag=MEASURED|json=0
+CORPUS|snapshots=125|oldest=CC-MAIN-2008-2009|newest=CC-MAIN-2026-25|distinct_years=17|span=2008_to_2026|tag=MEASURED|json=0
+ADDR|form=CC-MAIN-{YYYY}-{WW}|per_snapshot=warc+wat+wet|self_sectioning=1|bytes_fetched=0|json=0
+BAND|n=125|alphabet=256|bands=0|remainder=125|note=smaller_than_one_band|json=0
+SECTION|law=snapshots_are_the_functions_in_sections|unit=crawl_id|independently_fetchable=1|via=cdx_index|json=0
+FTR|receipt=cbad5903b3382fafd614230f2cf4db14|rows=6|json=0|hot_path=1

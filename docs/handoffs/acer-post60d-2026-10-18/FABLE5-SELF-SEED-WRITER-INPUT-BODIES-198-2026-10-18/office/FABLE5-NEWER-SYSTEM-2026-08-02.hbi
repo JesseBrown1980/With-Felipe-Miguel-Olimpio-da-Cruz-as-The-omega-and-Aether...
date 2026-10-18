@@ -1,0 +1,6 @@
+HBIHDR|family=NEWER_SYSTEM|seat=8467a937cba309f7|seed=f90c15512028decd|stamp=2026-08-02|json=0
+EMIT|family=NEWER_SYSTEM|name=newer-system-runner|pid=f1cfd9ee5ada80df|omega=e51a020787803282c11bca3fd935bfd406a72fd8804bd2dd444c1d5de5fbbc20|status=MEASURED|json=0
+EMIT|family=NEWER_SYSTEM|name=two-lane-law|pid=d71a10ed3cf0d5f6|omega=8d5bdce0d1e1ec182d838d182770252a2e08b40f51f8663ee25af94a10742df4|status=MEASURED|json=0
+EMIT|family=NEWER_SYSTEM|name=room-bank|pid=2027f3e5d0ea5a34|omega=77f885588407f6fddc2589bcfcd1ab9d21f7d8fd5ce123f57bf6b60e6e1ad376|status=MEASURED|json=0
+EMIT|family=NEWER_SYSTEM|name=light-doors-hub|pid=e3548b548098446b|omega=36c96954771959dc4750bb8401789964707a025217c810fea55836f0f99f8d35|status=MEASURED|json=0
+EMIT|family=NEWER_SYSTEM|name=constellation-office|pid=c24f84000e1b4cd7|omega=f715ed81464ed4329c3d6c8090bfdc7dc96c22f8169532f2cc41828937971d52|status=MEASURED|json=0

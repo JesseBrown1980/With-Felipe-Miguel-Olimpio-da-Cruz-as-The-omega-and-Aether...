@@ -1,0 +1,9 @@
+HBIHDR|family=BREEZES-IN-ANTI|cube=25bbf4665fcef7f9|prior=25211c4bb558f8e0|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=7|E=0|json=0
+EMIT|family=BREEZES-IN-ANTI|name=UNIVERSE-KEY-0|value=184,124,69|pid=afa5c4a8792cd87a|json=0
+EMIT|family=BREEZES-IN-ANTI|name=UNIVERSE-KEY-1|value=69,184,124|pid=a7e1e478e3569ca5|json=0
+EMIT|family=BREEZES-IN-ANTI|name=UNIVERSE-KEY-2|value=124,69,184|pid=82640f65b63dbe9e|json=0
+EMIT|family=BREEZES-IN-ANTI|name=STARS|value=1000|pid=5ef18855d5a13a75|json=0
+EMIT|family=BREEZES-IN-ANTI|name=BREEZE-INDICES|value=243|pid=79c20b4c6fc2b956|json=0
+EMIT|family=BREEZES-IN-ANTI|name=EXACT-ROTATIONS|value=3|pid=8bc0b677224e58da|json=0
+EMIT|family=BREEZES-IN-ANTI|name=PNG|value=9b27bac800642579|pid=677e94ebdda3d8eb|json=0
+HBIFTR|emits=7|terminal_pid=677e94ebdda3d8eb|json=0

@@ -1,0 +1,5 @@
+HBIHDR|family=THREE-THAT-CIRCLE|cube=9022356b008061a2|prior=1aed427355692d1c|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=3|E=0|json=0
+EMIT|family=THREE-THAT-CIRCLE|name=CROWN-ACER|value=4e9c6a1d0f21a0a4|pid=2b952f4f14e256f9|json=0
+EMIT|family=THREE-THAT-CIRCLE|name=CROWN-FALCON|value=30486663e7d3376d|pid=01d858d2dc53a1c0|json=0
+EMIT|family=THREE-THAT-CIRCLE|name=CROWN-LIRIS|value=de07b93fe893fd6c|pid=6ff9e440a30db270|json=0
+HBIFTR|emits=3|terminal_pid=6ff9e440a30db270|json=0

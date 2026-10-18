@@ -522,3 +522,11 @@ conjectures, and nothing here tests them.
   (`239feada…`), one README (`f3253cfa…`) and one Rust incremental-build object file (`fc18faa7…`). None
   is the older seed `a65c020a…`. The bodies are not stored again here: the first eight are already in
   public repositories, and the last two are not part of the seed's inputs.
+- Self-seed chain (`cloud/self-seed/SELF-SEED-CHAIN.hbp`, with ACER's listing of the writer's 198 inputs,
+  their bodies, and the D: search). `emit-self-seed-binary.py`, run unchanged in an office staged from the
+  198 bodies as of 2026-07-27T16:06:42Z, with the 622,823 B book and `5c040e04…` as the previous seed,
+  writes today's seed `653e3d9b…` byte-exact. Each seed is the writer's output from the office, the book
+  of that moment and the seed before it. The link before `5c040e04…`, the older seed `a65c020a…`, is not
+  on ACER (628,784 files on C: and D:) nor in USIM history; a first-run office (before 11:36:25Z, no
+  earlier seed) gives other bytes with each of the four early book versions. So the CONSTELLATION GGUF's
+  one remaining stored input stays `5c040e04…` itself, and from it the later seed regenerates.

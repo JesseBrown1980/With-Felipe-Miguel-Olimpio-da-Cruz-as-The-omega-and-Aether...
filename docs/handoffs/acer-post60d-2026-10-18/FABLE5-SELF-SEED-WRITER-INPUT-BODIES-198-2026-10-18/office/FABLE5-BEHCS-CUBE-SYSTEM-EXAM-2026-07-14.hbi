@@ -1,0 +1,7 @@
+HBIROW|kind=emitter|seed=be80843b5ce5de04|chain=pid[n]=sha16(pid[n-1]|name)|json=0
+EMIT|family=exam|name=cube-exam-verdict|pid=19e1a26db43f0c61|json=0
+EMIT|family=exam|name=office-integrity-104-117|pid=280b8520c8437cc8|json=0
+EMIT|family=exam|name=chain-law-verified|pid=99df7feab4e359fd|json=0
+EMIT|family=exam|name=hbi-dialect-churn|pid=142e3a0e15898b0b|json=0
+EMIT|family=exam|name=registry-dormant-intake-stuck|pid=8a3df0d3be9c7f59|json=0
+EMIT|family=exam|name=trilateral-ledger-closed|pid=5b46d47f947f1bdd|json=0

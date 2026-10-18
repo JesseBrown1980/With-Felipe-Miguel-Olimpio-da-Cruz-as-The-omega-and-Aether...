@@ -1,0 +1,6 @@
+HBIHDR|family=TEST_LADDER|seat=8467a937cba309f7|seed=85757021a1561917|stamp=2026-08-02|json=0
+EMIT|family=TEST_LADDER|name=unit|pid=ea00f26f8dbcfc79|omega=556be2bbbaf93662df62d97d0806405175f0e37a5af1374ecf2aa63a4e5e0809|status=PASS-7/7|json=0
+EMIT|family=TEST_LADDER|name=integration|pid=36dd0b6ab8ee5c38|omega=e06daca98a7ee2f8b44afc688dd5ceb0f48d4f98f43576aac84ec02936c8d082|status=PASS-3/3|json=0
+EMIT|family=TEST_LADDER|name=system|pid=8a5fea11de9e8b5c|omega=9f211bd5eb0d9be7b67d4eef3db09b3a2ca088c8e8a60c810f59b47faafeac29|status=PASS-4/4|json=0
+EMIT|family=TEST_LADDER|name=fabric|pid=d6ed1877259b5c4f|omega=6bbe268265d2fb4241a56538a0cad71cd8ee644bd092a74f790834349acc5ffa|status=PASS-5/5|json=0
+EMIT|family=TEST_LADDER|name=matrix|pid=b236b4106bd270e5|omega=e4f6c8361b45690be6b009fe1f3651f48ffc1ddab42fa3fe37e98af18b8cb221|status=PASS-4/4|json=0

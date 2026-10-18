@@ -1,0 +1,10 @@
+HBIHDR|family=MOSS-TO-STONE|cube=c3326eeaf63d4dd5|prior=06993daedb7c8ec8|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=8|E=1|json=0
+EMIT|family=MOSS-TO-STONE|name=MERGE-COMMIT|value=21d86c7|pid=376b1de7c2f5b94c|json=0
+EMIT|family=MOSS-TO-STONE|name=GATE-COMMIT|value=c3f340f|pid=edc69acc8645e302|json=0
+EMIT|family=MOSS-TO-STONE|name=PUSH|value=80d62ff..c3f340f|pid=b24a2966c74eeee6|json=0
+EMIT|family=MOSS-TO-STONE|name=CARGO-TOML|value=1to3|pid=bcda0dfb8cb85695|json=0
+EMIT|family=MOSS-TO-STONE|name=PATHS-LANDED|value=23|pid=7ae582394a9219a3|json=0
+EMIT|family=MOSS-TO-STONE|name=SIDECARS|value=110ok-0fail|pid=306657d3c8363cf9|json=0
+EMIT|family=MOSS-TO-STONE|name=WORKFLOW|value=8ad181f008e83dd6|pid=f5681174cb6f117f|json=0
+EMIT|family=MOSS-TO-STONE|name=CONTINUE-ON-ERROR|value=1|pid=0ed5ac7b52bf2559|json=0
+HBIFTR|emits=8|terminal_pid=0ed5ac7b52bf2559|json=0

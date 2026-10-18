@@ -1,0 +1,6 @@
+COPHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=c7c67dc6cbec1b7a|prior=e36436797f6811f0|schema=ASOLARIA-ABSORB-EARTH-V1|archive=ESA_COPERNICUS|api=catalogue.dataspace.copernicus.eu/odata/v1|queried=2026-07-26|json=0
+CORPUS|products=UNRESOLVED|reason=endpoint_returned_http_000_twice|retry_required=1|tag=UNRESOLVED|json=0
+MISSION|s1=sar+s2=multispectral+s3=ocean_land+s5p=atmosphere|counts=UNRESOLVED|tag=UNRESOLVED|json=0
+ADDR|product=uuid|name=S2A_MSIL1C_{datetime}_{orbit}_{tile}|self_sectioning=1|bytes_fetched=0|json=0
+SECTION|law=products_are_the_functions_in_sections|unit=product_uuid|independently_fetchable=1|via=OData_Products|json=0
+FTR|receipt=438c831873b1b749d53bd6d95eff655f|rows=6|json=0|hot_path=1

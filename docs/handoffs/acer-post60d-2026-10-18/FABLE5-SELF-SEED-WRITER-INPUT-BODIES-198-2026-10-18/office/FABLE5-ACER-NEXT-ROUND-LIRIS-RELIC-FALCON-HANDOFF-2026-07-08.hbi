@@ -1,0 +1,9 @@
+HBI|id=FABLE5_ACER_NEXT_ROUND_LIRIS_RELIC_FALCON_HANDOFF_20260708|hbp=FABLE5-ACER-NEXT-ROUND-LIRIS-RELIC-FALCON-HANDOFF-2026-07-08.hbp|kind=next_round_handoff_index|json=0
+INDEX|row=GITHUB_PR2|head=adea84f48e96ed5744c575291ae0f521f67cba9a|state=open_draft|json=0
+INDEX|row=GITHUB_PR42|head=69859625291c024f4198d9c4567bcbb292f80ea3|state=open|json=0
+INDEX|row=ACER_BUILD_RECEIPT|hbp_sha256=b83d9c15c311541b33c839e361c48bd0c2731ea9276a908fd935422ffe24c755|hbi_sha256=79d1bdec8a0747b05b6d68eaec8633910a8535d77963562e4d954a1f61278f4e|json=0
+INDEX|row=FEDERATION_KERNEL_ARTIFACT|sha256=d77cc6d08d9c2747253a2b2334d1b99ae91ebdb237d5a9ccddb8e746817db2e9|bytes=20992|json=0
+INDEX|row=ASOLARIA_OS_ARTIFACT|sha256=ef6c836dbec0bfd286074cfb18a6ac7bb96ecf258e5df177f5e58a4b17cc77bd|bytes=16384|json=0
+INDEX|row=NEXT_ROUND|order=LIRIS,RELIC,FALCON|action=verify_then_review_then_observe|json=0
+INDEX|row=FALCON|state=prepared_not_started|adb_control=0|execute=0|json=0
+INDEX|row=BOUNDARY|usb_write=0|kernel_mutation=0|daemon_restart=0|live_boot=0|runtime_authority=0|json=0

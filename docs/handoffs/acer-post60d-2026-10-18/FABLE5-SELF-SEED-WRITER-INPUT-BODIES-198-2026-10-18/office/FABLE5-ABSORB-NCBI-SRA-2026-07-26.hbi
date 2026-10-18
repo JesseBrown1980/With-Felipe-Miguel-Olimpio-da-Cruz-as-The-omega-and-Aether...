@@ -1,0 +1,7 @@
+HBIHDR|family=ABSORB_SRA|seat=8467a937cba309f7|seed=e36436797f6811f0|stamp=2026-07-26|json=0
+EMIT|family=ABSORB_SRA|name=illumina|pid=3bcf6686788c82cc|omega=b2e459e0d69d90824ba2175d3e0509ac0ccee8417a7508d8b1c3301a6e4a67e2|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SRA|name=nanopore|pid=a0051db3f5c3a2ec|omega=02678ae7a8275187f83673639c13022a49f928e506469e7802e62cfa23c5e99f|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SRA|name=pacbio|pid=b4979fc6dde89301|omega=7888dfafa04b51ecc3b54faadaf36d2df2bc711b9f67411f12ee71a36b5ac349|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SRA|name=iontorrent|pid=224404f9fb47506f|omega=38a504ad4bdf6441cf94d5c41068084dfdef34bae5406d7a36ff1fe340c71260|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SRA|name=bgiseq|pid=f520b8af61039e2c|omega=0f2c77f193acc87e3ade0454764b47708d98e9687d57f094659a49d8ad931527|status=ADDRESSED|json=0
+EMIT|family=ABSORB_SRA|name=solid|pid=f8d0537bb6bcdcdb|omega=bf3a73043a1ef21889ef831f5fa8e203ccc2eaf036e324cca459ac30112b3ae3|status=ADDRESSED|json=0

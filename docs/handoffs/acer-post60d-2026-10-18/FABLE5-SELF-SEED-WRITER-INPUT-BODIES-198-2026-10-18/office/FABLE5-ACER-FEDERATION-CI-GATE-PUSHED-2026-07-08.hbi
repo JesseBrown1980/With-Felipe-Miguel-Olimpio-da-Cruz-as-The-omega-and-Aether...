@@ -1,0 +1,5 @@
+HBI|id=FABLE5_ACER_FEDERATION_CI_GATE_PUSHED_20260708|hbp=FABLE5-ACER-FEDERATION-CI-GATE-PUSHED-2026-07-08.hbp|kind=federation_ci_gate_index|json=0
+INDEX|row=FEDERATION_PR42|head=8d9f23bdefe015fec9ad58ee455009827ebad0f4|checks=5_success|mergeable=true|mergeable_state=blocked|json=0
+INDEX|row=PROTECTION|required_reviews=5|reviews=0|json=0
+INDEX|row=SUPERSEDES|receipt=FABLE5-ACER-FULL-PROFESSIONAL-SWEEP-2026-07-08.hbp|blocked_row=federation_workflow_scope|json=0
+INDEX|row=BOUNDARY|usb_write=0|bootloader_mutation=0|live_boot=0|qemu=0|adb_used=0|runtime_authority=0|json=0

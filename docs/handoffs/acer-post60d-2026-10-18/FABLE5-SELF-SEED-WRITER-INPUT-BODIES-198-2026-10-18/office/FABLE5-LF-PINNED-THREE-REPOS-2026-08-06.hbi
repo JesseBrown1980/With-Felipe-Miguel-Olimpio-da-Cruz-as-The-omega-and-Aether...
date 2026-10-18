@@ -1,0 +1,9 @@
+HBIHDR|family=LF-PINNED|cube=4d528279b5faaf15|prior=f3e7eea25c9af8e5|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-06|emits=7|E=0|fire=0|json=0
+EMIT|family=LF-PINNED|name=PUSH-path2-two-shadow-recovery|value=4b20680..3c9a4a3|pid=733da9d9fdfeb925|json=0
+EMIT|family=LF-PINNED|name=PUSH-dbbh-coms-quant-prism|value=330a62e..3970fb6|pid=1bd78ecd13b48674|json=0
+EMIT|family=LF-PINNED|name=PUSH-qprism-3d-slice-harness|value=6501920..862ddac|pid=ecb1e968fe4cf00c|json=0
+EMIT|family=LF-PINNED|name=WORKTREE-LF|value=3of3|pid=f874fa097d4a2c1a|json=0
+EMIT|family=LF-PINNED|name=CR-BYTES|value=0|pid=c9169bc1155bf8e0|json=0
+EMIT|family=LF-PINNED|name=DISCIPLINE-ON-DISK|value=18432cac9676d195|pid=aceff72588cd6f77|json=0
+EMIT|family=LF-PINNED|name=BLOB|value=af8d9cf18acdff2f|pid=9afec078bedb0989|json=0
+HBIFTR|emits=7|terminal_pid=9afec078bedb0989|json=0

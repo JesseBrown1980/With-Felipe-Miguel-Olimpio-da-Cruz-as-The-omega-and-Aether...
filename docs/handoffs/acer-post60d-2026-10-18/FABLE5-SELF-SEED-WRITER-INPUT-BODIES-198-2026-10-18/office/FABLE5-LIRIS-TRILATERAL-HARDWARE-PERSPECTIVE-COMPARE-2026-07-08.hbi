@@ -1,0 +1,7 @@
+HBI|id=FABLE5_LIRIS_TRILATERAL_HARDWARE_PERSPECTIVE_COMPARE_20260708|hbp=FABLE5-LIRIS-TRILATERAL-HARDWARE-PERSPECTIVE-COMPARE-2026-07-08.hbp|kind=fable5_liris_current_compare_index|json=0
+INDEX|row=LIRIS_HARDWARE|host=DESKTOP-PTSQTIE|cpu=i3-1005G1|ram_gb=7.79|usb_2tb_visible=0|port_listening=4947|json=0
+INDEX|row=GITHUB_FEDERATION|repo=asolaria-federation-1024|pr=42|head=69859625291c024f4198d9c4567bcbb292f80ea3|checks=5_pass|json=0
+INDEX|row=GITHUB_HYPERBECHS|repo=HYPER-BECHS--the-third-set|pr=2|head=10d698cb190b6629946c71781d72e284717cf474|hbp_sha=8ef3a6b0732730d202bc7ef4797424a933cdebed320b4a4628ab47db20631dd2|hbi_sha=abfad0d1af8d7ebcd9ca1f95e8c4c99d82fbfd296264bccb8a2a0abc413293b6|json=0
+INDEX|row=LIRIS_COMPARE|hbp_sha=803a194efb69a7f1ad994aee4e9845ff473b0963ea0ed586de1e85c9fe1af019|hbi_sha=48a99d7527cec15be0534cded5a632bc7667af05612f33f031106ff0616ea51c|json=0
+INDEX|row=LADDER|measured=64,256,1024,60D_PLUS|operator_observed=2048|boundary=2048_not_measured_as_kernel_substrate_here|json=0
+INDEX|row=BOUNDARY|runtime_authority=0|usb_write=0|kernel_mutation=0|live_boot=0|json=0

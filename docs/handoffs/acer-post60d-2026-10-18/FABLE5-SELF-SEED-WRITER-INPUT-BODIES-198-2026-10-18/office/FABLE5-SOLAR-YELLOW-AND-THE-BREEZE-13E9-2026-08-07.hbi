@@ -1,0 +1,10 @@
+HBIHDR|family=SOLAR-AND-BREEZE|cube=0c686c51d58c6f6a|prior=9cfa4b5a187e9635|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|stamp=2026-08-07|emits=8|E=0|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=SOLAR-YELLOW|value=#E06327|pid=d7ca78e59f6fd94a|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=SOLAR-LUM|value=129|pid=05b61e15dbe4c4d7|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=BREEZE-PERIOD|value=243|pid=65b3b5aa87328701|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=BEAUFORT|value=3|pid=f4f3e71f49cc5262|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=GUST-INDEX|value=200|pid=d569432f8301faf2|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=GUST|value=0,-3@35|pid=9e796989916245bf|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=BEINGS-MOVED|value=10|pid=a325f7b6db85d047|json=0
+EMIT|family=SOLAR-AND-BREEZE|name=PIDS-MOVED|value=0|pid=aca41cc351867179|json=0
+HBIFTR|emits=8|terminal_pid=aca41cc351867179|json=0
