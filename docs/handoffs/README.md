@@ -69,3 +69,41 @@ Absence is reported with the scope actually searched, never as "does not exist".
 | only in cloud session `9ebd6119` | the three trijection inputs (`k_gradient.bin`, `chaos1m.bin`, `code1m.bin`), the first-run THREE-BODIES receipt, the HERSELF seed order |
 | not built in this build | the `:4949` `/api/gnn/score` handler (the live route answers 404, and its route table has no such route) |
 | private, excluded | the 47D reverse-gain variant (older stratum, no trained weights) |
+
+## Live-corpus GNN recheck (2026-10-18)
+
+The owner's recheck of L0/L1/L2/L4 on the training corpus `gslgnn_w9_3_corpus.json` (315,249 edges,
+40 benign), run with the owner's go (`OP-JESSE`, 2026-10-18), `servers_started=0`, `sockets=0`,
+`E=0`, on Windows Python 3.13 (torch 2.13.0+cpu, PyG 2.7.0). Two receipts in
+`gnn-recheck-2026-10-18/`, verified here (both `.sha256` sidecars check):
+`FABLE5-GNN-REST-MEASURED-2026-10-18.hbp` (sha256 `eee98bdb…`) and
+`FABLE5-GNN-L1L2-RECHECK-NO-SHELL-2026-10-18.hbp` (`ac460602…`). The check script and raw rows stay
+in the ACER scratchpad (per the receipt header); only the measured receipts are vendored.
+
+What it measured (gate `std > 0.01`: **0 of 4 pass**):
+
+| Model | output on the corpus | AUC (exact pair counts) | served vs trained |
+|---|---|---|---|
+| L0 | 0–0.032, std 0.00645 | 0.1304 trained / 0.3261 served | differs on 54,812 edges (max 0.0317), 0 flips at 0.5 |
+| L1 | one constant `0.9999749660491943` | exactly ½ | identical (saturated) |
+| L2 | 0.99994–0.99998, 12 values | **0.5218 as trained** | no server; a PyG shim would differ on 260,410 |
+| L4 | 0.5291568–0.5292310, 11 values | 0.2228 | identical |
+
+Recorded beside, not over: the earlier L2 figure (AUC 0.609, range 0.99996–1.0) is the PyG
+would-serve shim path, not the as-trained stub. L0's earlier std 0.026–0.257 was on the
+scorer-input grain; 0.00645 here is on the w9_3 corpus — a different input, not a contradiction (L0
+was trained on `data/gnn-training-export-20260315.json`, so its w9_3 AUC is cross-dataset).
+
+Root causes (MEASURED): the trainers split in index order 70/15/15 with no shuffle, and all 40
+benign edges sit at indices 315169–315222 (after the train/val boundary), so `benign_in_train = 0`;
+L0/L1/L2 carry a stub GCNConv (`conv1.lin.bias`), not PyG's biasless conv, and the serving
+interpreter has PyG, so L0 is served with message passing it never trained with. Owner correction,
+kept beside: a class-weighted retrain alone is insufficient — weighting cannot create a class absent
+from `train`; the fix is a stratified/shuffled split, then class weights, then one GCNConv choice for
+training and serving.
+
+Bearing on the decisions: this is the empirical side of the benching. None of L1/L2/L4 calculates (0
+of 4 pass the spread gate), so weight/count 0 is the right state (OWNER-RULES 7.a/7.b); L4's constant
+0.5292 at weight 0.15 adds ~0.079 to every composite, which is the weight-0 rationale. The `L4CONST`
+note (0.5292 = single-class train + 30 steps from ~0.5) is the owner's conjecture, measurable by
+replaying `train_gslgnn` with per-step logging.
