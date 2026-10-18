@@ -1,0 +1,43 @@
+PROOFHDR|utc=2026-10-18T11:34:37Z|host=ACER|cpu=Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (AVX2, no SHA-NI)|threads=1|unit=ps_per_op_integer(divide_by_1000_for_ns)|json=0
+TOOLCHAIN|rustc 1.81.0 (eeb90cda1 2024-09-04)|cargo 1.81.0 (2dbb1af80 2024-08-20)|clippy=-D_warnings_exit_0|node=v24.13.1|json=0
+SHA256 bb0afa1c592ffc9c480653f6a099ee5b93b6a63f768cc81b5a481af76d4b775f *src/main.rs
+SHA256 7b42c659700f5fc2b86babebfc4f819b8c2388045c627eb4554ba3eec0fdf9c9 *Cargo.toml
+SHA256 d7bbcfe08c1a3a295c03077320bfb26c8b76db5403e90b6d64d19f1d4777bdb4 *Cargo.lock
+SHA256 c0a7d494ef8fbe6fa2efb32e537341996d422981651db5dd29d4138ef83670c2 *target/release/native-emit-bench.exe
+SHA256 50e4cb85f3b8cf91f9e6b162f990eb51e5f984661259563a21188f3a1d560da0 *C:/asolaria-acer/asolaria-os/kernel/core/src/tribit/mod.rs
+== NATIVE invocation 1 (Rust 1.81 release; host8 code byte-for-byte; tribit via #[path])
+PARITY|host8_test_vector=sha16(abc)=ba7816bf8f01cfea|holds=1|handle8_sample=dcde722163e26a73|json=0
+NATIVEBENCH|unit=host8_sha16_chain(exact,incl_hex)|n=1000000|runs=3|ps_per_op_min=3044198|ps_per_op_median=3055530|ops_per_s_median=327275|threads=1|json=0
+TABLEPARITY|steps=100001|identical=100001|abc=ba7816bf8f01cfea|json=0
+NATIVEBENCH|unit=proposed_sha16_table_chain(same_output)|n=2000000|runs=3|ps_per_op_min=496990|ps_per_op_median=499964|ops_per_s_median=2000140|threads=1|json=0
+NATIVEBENCH|unit=raw_sha256_digest(32B,no_hex)|n=2000000|runs=3|ps_per_op_min=264829|ps_per_op_median=265635|ops_per_s_median=3764552|threads=1|json=0
+NATIVEBENCH|unit=host8_fnv1a64_handle8(exact)|n=10000000|runs=3|ps_per_op_min=163426|ps_per_op_median=163588|ops_per_s_median=6112909|threads=1|json=0
+NATIVEBENCH|unit=host8_host_handle8_string(exact,incl_016x)|n=5000000|runs=3|ps_per_op_min=323424|ps_per_op_median=323728|ops_per_s_median=3089005|threads=1|json=0
+TRITRANGE|pid_bits=64|trits=41|3^40=12157665459056928801|2^64=18446744073709551616|3^41=36472996377170786403|40_trits_enough=0|41_trits_enough=1|json=0
+TRITPARITY|steps=100001|ternary_pid_equals_binary_pid=100001|trit_roundtrip_exact=100001|tritword_value_equals_pid=100001|json=0
+TRITSEAL|pids=10000|unprism(prism(lanes))==lanes=10000|K=27|P=1000081|json=0
+NATIVEBENCH|unit=trit_encode_u64_to_41_trits(TritWord)|n=10000000|runs=3|ps_per_op_min=78850|ps_per_op_median=79307|ops_per_s_median=12609224|threads=1|json=0
+NATIVEBENCH|unit=trit_decode_41_trits_to_u64|n=10000000|runs=3|ps_per_op_min=215920|ps_per_op_median=216128|ops_per_s_median=4626867|threads=1|json=0
+NATIVEBENCH|unit=binary_pid_emit(sha16,no_alloc)|n=2000000|runs=3|ps_per_op_min=276794|ps_per_op_median=277637|ops_per_s_median=3601816|threads=1|json=0
+NATIVEBENCH|unit=TERNARY_pid_emit(trits_in_trits_out,sha16,no_alloc)|n=2000000|runs=3|ps_per_op_min=598476|ps_per_op_median=599783|ops_per_s_median=1667268|threads=1|json=0
+NATIVEBENCH|unit=tribit_prism+unprism_seal(K=27,exact)|n=200000|runs=3|ps_per_op_min=23202597|ps_per_op_median=23252536|ops_per_s_median=43006|threads=1|json=0
+== NATIVE invocation 2 (Rust 1.81 release; host8 code byte-for-byte; tribit via #[path])
+PARITY|host8_test_vector=sha16(abc)=ba7816bf8f01cfea|holds=1|handle8_sample=dcde722163e26a73|json=0
+NATIVEBENCH|unit=host8_sha16_chain(exact,incl_hex)|n=1000000|runs=3|ps_per_op_min=3050764|ps_per_op_median=3058964|ops_per_s_median=326907|threads=1|json=0
+TABLEPARITY|steps=100001|identical=100001|abc=ba7816bf8f01cfea|json=0
+NATIVEBENCH|unit=proposed_sha16_table_chain(same_output)|n=2000000|runs=3|ps_per_op_min=495705|ps_per_op_median=499822|ops_per_s_median=2000709|threads=1|json=0
+NATIVEBENCH|unit=raw_sha256_digest(32B,no_hex)|n=2000000|runs=3|ps_per_op_min=265505|ps_per_op_median=265879|ops_per_s_median=3761104|threads=1|json=0
+NATIVEBENCH|unit=host8_fnv1a64_handle8(exact)|n=10000000|runs=3|ps_per_op_min=162248|ps_per_op_median=162852|ops_per_s_median=6140525|threads=1|json=0
+NATIVEBENCH|unit=host8_host_handle8_string(exact,incl_016x)|n=5000000|runs=3|ps_per_op_min=321846|ps_per_op_median=322138|ops_per_s_median=3104251|threads=1|json=0
+TRITRANGE|pid_bits=64|trits=41|3^40=12157665459056928801|2^64=18446744073709551616|3^41=36472996377170786403|40_trits_enough=0|41_trits_enough=1|json=0
+TRITPARITY|steps=100001|ternary_pid_equals_binary_pid=100001|trit_roundtrip_exact=100001|tritword_value_equals_pid=100001|json=0
+TRITSEAL|pids=10000|unprism(prism(lanes))==lanes=10000|K=27|P=1000081|json=0
+NATIVEBENCH|unit=trit_encode_u64_to_41_trits(TritWord)|n=10000000|runs=3|ps_per_op_min=79213|ps_per_op_median=79252|ops_per_s_median=12617954|threads=1|json=0
+NATIVEBENCH|unit=trit_decode_41_trits_to_u64|n=10000000|runs=3|ps_per_op_min=215536|ps_per_op_median=216119|ops_per_s_median=4627062|threads=1|json=0
+NATIVEBENCH|unit=binary_pid_emit(sha16,no_alloc)|n=2000000|runs=3|ps_per_op_min=277336|ps_per_op_median=281046|ops_per_s_median=3558126|threads=1|json=0
+NATIVEBENCH|unit=TERNARY_pid_emit(trits_in_trits_out,sha16,no_alloc)|n=2000000|runs=3|ps_per_op_min=597348|ps_per_op_median=598472|ops_per_s_median=1670919|threads=1|json=0
+NATIVEBENCH|unit=tribit_prism+unprism_seal(K=27,exact)|n=200000|runs=3|ps_per_op_min=22697051|ps_per_op_median=22893848|ops_per_s_median=43679|threads=1|json=0
+== JS cold lane (comparison only)
+EMITBENCH|unit=revolver.next(mintPID)|n=1000000|runs=3|ns_per_op_min=1754.1|ns_per_op_median=1758.4|ops_per_s_median=568697|threads=1|json=0
+EMITBENCH|unit=raw_sha16_chain|n=1000000|runs=3|ns_per_op_min=1536.3|ns_per_op_median=1549.9|ops_per_s_median=645193|threads=1|json=0
+EMITENV|node=v24.13.1|cpu=i5-8300H|last_pid_sample=501dcbca85fc867a|json=0

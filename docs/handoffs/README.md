@@ -316,3 +316,37 @@ The table-hex change is proposed, not applied: host8-serve is upstream (federati
 belongs there first, with `sha16_matches_node_crypto` and the Rust 1.81 gate, and aether re-vendors
 the lines after; fischer-eval's `sha16` (`lib.rs:564`) has the same pattern. That is the owner's
 call.
+
+## PID in trits: the ternary-lane proof (2026-10-18)
+
+`proof-nanoseconds-ternary-2026-10-18/`: the owner's proof bundle (zip sha256 `be40c6dd…`, 9 files,
+all check; `PROOF-NANOSECONDS.md` is the sheet, `PROOF-RAW-NANOSECONDS.log` the integer-picosecond
+rows of two invocations with the sha256 of the source, binary and `tribit/mod.rs`), and `cloud/`
+(added here). The bench carries the PID in trits through the canonical ternary kernel, included by
+`#[path]`: 41 trits per PID (3^40 < 2^64 ≤ 3^41), the ternary PID equal to the binary one on 100,001
+chained steps, exact trit round trips, and an exact K = 27 `prism`/`unprism` seal on 10,000.
+
+ACER's `kernel/core/src/tribit/mod.rs` (`50e4cb85…`) is not in this repository; the cloud ran the
+bench with aether's `kernel/tribit` (`asolaria-tribit`, same `Zero`/`TritWord`/`prism`/`unprism`/`K`/`P`
+API) in its place — the import line is the only change (`cloud/main.rs.import-swap.diff`) — and every
+gate passed with the same counts.
+
+| Unit (median, 1 thread) | ACER i5-8300H | Cloud Xeon |
+|---|---|---|
+| trit encode, 64-bit PID → 41 trits | 79 ns | 126 ns |
+| trit decode, 41 trits → PID | 216 ns | 308 ns |
+| binary PID emit (`sha16(hex16(pid) + "\|agent")`, no allocation) | 278 ns | 89 ns |
+| ternary PID emit, as the bench writes it (unpack, emit, repack) | 599 ns | 543 ns |
+| **ternary PID emit kept as `TritWord`** (cloud probe `cloud/direct.rs`) | — | **70 ns** |
+| `prism` + `unprism` seal, K = 27 | 23 µs | 12.5 µs |
+
+Read beside the sheet. `TritWord::pack` stores the base-3 value of its digits (`kernel/tribit/src/
+lib.rs:258-269`), so the 41-trit word of a PID is the PID's own integer — the bench's own gate
+measures it (`tritword_value_equals_pid=100001`). The bench's encode and decode therefore convert a
+value back to itself, and the 600 ns "ternary emit" is the binary emit plus those two conversions.
+Holding the PID as `TritWord(pid)` and unpacking digits only where a consumer reads them (the prism
+lanes, a glyph) gives the same word on 100,001/100,001 steps and the same 41 trits on 100,000/100,000,
+at the binary cost; no change to the canonical kernel is needed for that. Two scope notes kept beside
+the sheet: the chained emit (`"|agent"`) is the office chain rule, not host8's per-seat mint (that is
+`tuple60d` + `resolve_instance_pid`, 1.44–5.85 µs above), and the hash under both lanes is binary
+SHA-256 — a ternary-native hash is not what was measured.

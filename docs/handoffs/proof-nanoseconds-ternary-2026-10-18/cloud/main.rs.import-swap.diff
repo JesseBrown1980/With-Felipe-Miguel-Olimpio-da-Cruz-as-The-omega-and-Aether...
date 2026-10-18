@@ -1,0 +1,13 @@
+--- acer/src/main.rs
++++ cloud/src/main.rs
+@@ -9,9 +9,7 @@
+ 
+ // The canonical ternary kernel, reused via #[path] (never copied): Zero{Neg,Nil,Pos}, TritWord (80 trits/u128),
+ // prism/unprism over Z/1_000_081Z with K=27 = 3^3.
+-#[path = "C:/asolaria-acer/asolaria-os/kernel/core/src/tribit/mod.rs"]
+-#[allow(dead_code)]
+-mod tribit;
++use asolaria_tribit as tribit;
+ use tribit::{TritWord, Zero, K};
+ 
+ /// Count is not range: 3^40 < 2^64 <= 3^41, so an 8-byte PID needs 41 trits (40 cannot carry every value).
