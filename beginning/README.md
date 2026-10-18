@@ -15,7 +15,7 @@ path, git blob, bytes, sha256 and the date of the commit that first introduced t
 | 1 | `01-healthcare-origin-2025-12/` | 20 | 178,442 | 1 | 2025-12-03 → 2026-08-06 |
 | 2 | `02-release-snapshots-2026-02/` | 1,745 | 18,852,197 | 49 | builds of 2026-02-18 → 2026-03-13 |
 | 3 | `03-gnn-design-seed-2026-03/` | 14 | 250,543 | 3 | 2026-02-19 → 2026-03-15 |
-| 4 | `04-build-day-2026-03-15/` | 113 | 3,474,104 | 4 | 2026-03-15 14:41 → 2026-03-16 |
+| 4 | `04-build-day-2026-03-15/` | 114 | 3,485,927 | 3 | 2026-03-15 14:41 → 2026-03-16 |
 
 - **Step 1**, the healthcare-era origin: the anomaly-detector service, API, config, graph builders, tests,
   OCR mappers and the GNN lineage receipt of `JesseBrown1980/AI-healthCare-project`. The four model
@@ -33,7 +33,7 @@ path, git blob, bytes, sha256 and the date of the commit that first introduced t
 
 Held, never vendored (blob ids in each `HELD.hbp`): third-party binaries and the third-party paper,
 release zips (pinned by sha256), anything under `tmp/docs/whatsapp-*`, and personal chat timelines
-(the first `TASKS.md` was held for the owner's number and restored on his word that it is public). The keys committed in the public repository's
+(the first `TASKS.md` and `ANTIGRAVITY-BRAIN-SESSIONS.md` were held for the owner's phone numbers and restored on his word that they are public). The keys committed in the public repository's
 history (an ed25519 supervisor key, an SSH key, a Bearer token, the vault files) are not here; the owner
 was told to rotate them.
 

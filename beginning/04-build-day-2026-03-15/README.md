@@ -35,7 +35,7 @@ Five candidate records for this step are held, with only their blob ids recorded
 - `.history/archaeology/WHATSAPP-TIMELINE.md` — built from a personal WhatsApp chat export and quoting personal messages and financial figures;
 - `.history/archaeology/CONVERSATION-TIMELINE.md` — extraction of personal Facebook/WhatsApp conversations;
 - `.history/archaeology/GROUND-TRUTH.md` — a merge that reproduces the above;
-- `.history/archaeology/ANTIGRAVITY-BRAIN-SESSIONS.md` — carries a real personal phone number (an elevated-access value) and a reference to a live API key;
+- (`.history/archaeology/ANTIGRAVITY-BRAIN-SESSIONS.md` was held for an elevated-access phone number and restored on the owner's word that the number is his; it names key locations and holds no key value.)
 - (`TASKS.md`, the first version, `02ad906b`, was held on review for the owner's mobile number on its lines 171 and 437, and restored the same day on the owner's word: "My personal number is already public." It is vendored at `vendor/Asolaria/TASKS.md`.)
 
-After that review, no vendored file in this step contains a private key, token, password, API key, or third-party private data; the one phone number is the owner's own, in `TASKS.md`. The email addresses present are two of the owner's own. The `*_SECRET` constants in the vendored code are vault key *names* (for example `integrations.gcp.service_account`), not secret values.
+After that review, no vendored file in this step contains a private key, token, password, API key, or third-party private data; the phone numbers are the owner's own, in `TASKS.md` and `ANTIGRAVITY-BRAIN-SESSIONS.md`. The email addresses present are two of the owner's own. The `*_SECRET` constants in the vendored code are vault key *names* (for example `integrations.gcp.service_account`), not secret values.
