@@ -1,0 +1,9 @@
+HCASCADEATLAS|ts=2026-05-17T19:17:31Z|cascade_count=7|band_count=8|json=0
+HCASCADEATLASMAP|cascade=DW2|primary_band=hilbert_cube|cp_range=576-703|secondary=sequencing|cp_range_2=384-479|cells=559872
+HCASCADEATLASMAP|cascade=D1|primary_band=language_glyph|cp_range=480-575|secondary=sequencing|cp_range_2=384-479|cells=228
+HCASCADEATLASMAP|cascade=D2|primary_band=sequencing|cp_range=384-479|secondary=build_proof|cp_range_2=704-799|cells=~30
+HCASCADEATLASMAP|cascade=D3|primary_band=build_proof|cp_range=704-799|cells=9
+HCASCADEATLASMAP|cascade=D4|primary_band=sovereignty|cp_range=256-383|cells=33696
+HCASCADEATLASMAP|cascade=D5|primary_band=emergent_residual|cp_range=896-1023|cells=~250
+HCASCADEATLASMAP|cascade=D6|primary_band=build_proof|cp_range=704-799|secondary=emergent_residual|cells=220
+HCASCADEATLASCANON|all_cascades_atlas_mapped=true|json_in_atlas_source=problem_being_fixed_by_ATLAS_TR_1_and_2

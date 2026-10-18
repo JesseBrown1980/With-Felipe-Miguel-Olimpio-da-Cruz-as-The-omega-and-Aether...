@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-lazy-mint-canon-f015b5aa0ff672d5-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=f95e26c976be75d80cb02e37b0e1a3d3fc624df603ab63a0689012f5aa41742e|sha16=f95e26c976be75d8
+ROW|slot=0|sha16=9a3cfc5a202ae9e4|bytes=20
+ROW|slot=1|sha16=fd29af46224298b4|bytes=173
+ROW|slot=2|sha16=ec101dc92652e630|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=3c9d64d60028bd73|bytes=19
+ROW|slot=6|sha16=128983adc86f66c4|bytes=14
+ROW|slot=7|sha16=c4a587e36addab8b|bytes=67
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

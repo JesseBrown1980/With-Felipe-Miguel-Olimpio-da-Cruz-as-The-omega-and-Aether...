@@ -166,3 +166,46 @@ JavaScript semantics, as ported:
 Tests: `tests/fixtures/bridge-edge.ndjson` (synthetic, 3,845 B, sha256 `923a1d80…`) and node's rows
 for it, `bridge-edge.golden.hbp` (sha256 `246d034c…`), written by `tests/fixtures/bridge_golden_args.mjs`,
 which is `bridge_golden.mjs` with its paths and predictions label taken from argv.
+
+## gaia-loader.mjs (tuple60D parity, 2026-10-18)
+
+The node original that upstream's parity comments name is not vendored here. It is read where ACER
+delivered it, and its sha256 is pinned in `UPSTREAM.sha256` (with its `../` path) and in
+`tests/tuple60d_gaia_loader.rs`.
+
+| file | bytes | sha256 | where |
+|---|---|---|---|
+| gaia-loader.mjs | 16,547 | 8b45c7245b03c9c8d3342f82b233e3e149a4ecb25100761a16d2c8fa2e991043 | `docs/handoffs/acer-post60d-2026-10-18/FABLE5-REGEN-ITEM7-60D-CHAIN-2026-10-18/kernel/gaia-loader.mjs`, as delivered (item 7, `CUBE.hbp` row `FILE\|name=kernel/gaia-loader.mjs`, cube merkle `4440ff74…`; the item's rows do not give its ACER path) |
+| verbs.hbp | 22,808 | eb729cc8d563b6636cec10951b5a5c15e4fcd9245dd9e29d6bb88f03fd0e90af | `../acer/HyperBEHCS/data/catalogs/verbs.hbp`, pinned in `acer/UPSTREAM.sha256`; 73 entries, all distinct |
+| tests/fixtures/tuple60d_gaia_loader.mjs | 14,642 | d3b5171c86ea1725ae0795ec0810af8e01499a4ca9f6881019260a09b0dc46ad | written here; the fixture header names this sha256 |
+| tests/fixtures/tuple60d-gaia-loader.hbp | 1,057,837 | 1469f27854f527bbaf59309f844a0c3feb66c17a07dd21a36f0ef311f21cabf0 | node 22.22.0's output, seed 2 |
+
+The same blob is public. `git hash-object` of the delivered file gives
+`703cb8e24773821d75a2ce32a24ccc42b21339b8`, which is `src/gaia-loader.mjs` in
+`JesseBrown1980/bigpickle-rebuild`:
+
+- branch `acer/gaia-loader-summon-2026-06-19`, commit `2a45d54c16dc7cea7acad803b8af1056527bb485`
+  (2026-06-19 20:35:03 -0300);
+- branch `liris/gaia-loader-crossverify-2026-06-19` @ `cc25cd5f`;
+- branch `liris/gaia-smart-summon-converge-2026-07-01` @ `eb578281`, which also holds it at
+  `replication/liris-byte-parity/gaia-loader.mjs`.
+
+The refs were read with `git ls-remote` on 2026-10-18 and the blob from a read-only clone. Upstream's
+pinned vector (FORMULA-CHIEF, `d125579d9644c37a`) is also recomputed in the crossverify branch's
+`LIRIS-GAIA-LOADER-CROSSVERIFY-2026-06-19.md`.
+
+The generator imports gaia-loader.mjs with a loader hook. The hook checks the module's bytes against
+the sha256 above and appends `export { loadVerbCatalog, parseSeatRow, sha16 };` to the source it
+evaluates; the file itself is not changed. Its imports `./room-dispatcher.mjs` and
+`./free-agent-receipt.mjs` resolve to `data:` stubs that throw, so neither branch's
+`room-dispatcher.mjs` (blob `bbf49a24`) nor `free-agent-receipt.mjs` (blob `f56cc28d`) is read or run.
+
+Seat rows come from the item-5B seat book
+(`docs/handoffs/acer-post60d-2026-10-18/FABLE5-REGEN-ITEM5B-HOST8-SEAT-BOOK-SOURCES-2026-10-18/`, cube
+merkle `aefb7780…`). host8-serve's `load_seats` (main.rs:440-534), restated in the cold lane over this
+crate's seat parsers, reads 416 registered files and 726 feed rows and keeps 1,860 seats. Its
+`/seats.hbp` text is sha256 `b5aa35c9231117dcba4b31dbb8395f4e44351b5e7f7e611b79bc158bd22353ae`. The
+seat names are the owner's registered seat names; some name mathematicians in method names (Erdos-Turan,
+von Mangoldt, Tao, Achlioptas). 59 seats whose names carry a product name are in the fixture as
+`SKIP|handle8=` rows only; the cold-lane run covered all 1,860. The scan of the seat values found no
+e-mail address, IP address, device path or key.

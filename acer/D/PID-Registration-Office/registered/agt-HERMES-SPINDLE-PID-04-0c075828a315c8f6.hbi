@@ -1,0 +1,16 @@
+HBI1|task=agentterms-reg-0c075828a315c8f6|generated=2026-06-09T21:28:36.238Z|packets=13|json=0
+SRC|register-agentterms-2026-06-09.mjs
+BUNDLE|sha256=1c360ac4e9890430a4e3c87cbfdf03cb535693444d4527c30ad951f945eafc38|sha16=1c360ac4e9890430
+ROW|slot=0|sha16=f3dbcdbcc6bc9204|bytes=26
+ROW|slot=1|sha16=4aa4a6a2e55212c3|bytes=171
+ROW|slot=2|sha16=e684e3748cb78504|bytes=12
+ROW|slot=3|sha16=353df3b31240ea82|bytes=20
+ROW|slot=4|sha16=afe242aec32c8d66|bytes=28
+ROW|slot=5|sha16=4b926f1066676143|bytes=18
+ROW|slot=6|sha16=128983adc86f66c4|bytes=14
+ROW|slot=7|sha16=9b84531abfdf6e46|bytes=21
+ROW|slot=8|sha16=038587b9e0038806|bytes=27
+ROW|slot=9|sha16=e26c320f61583ac7|bytes=41
+ROW|slot=10|sha16=3499b5d186e9c59b|bytes=139
+ROW|slot=11|sha16=69db9f0c5c458e40|bytes=134
+ROW|slot=12|sha16=08fb28f87864de44|bytes=49

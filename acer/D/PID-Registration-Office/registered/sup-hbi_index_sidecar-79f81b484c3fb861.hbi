@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-hbi_index_sidecar-79f81b484c3fb861-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=9f65decb5f879e6283f9a5bcc9c62d65f02bc11b78f81a412d7b8bcc26183c90|sha16=9f65decb5f879e62
+ROW|slot=0|sha16=39ff1bad59278b8b|bytes=22
+ROW|slot=1|sha16=94f2d701e05cb025|bytes=173
+ROW|slot=2|sha16=8e02544a4566173f|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=e7dffb5e86d16de5|bytes=19
+ROW|slot=6|sha16=9279f0e7f1b51848|bytes=14
+ROW|slot=7|sha16=e421d789dac60ff1|bytes=69
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

@@ -1,0 +1,44 @@
+HATLASBLOCKS|ts=2026-05-17T19:22:11Z|version=v2|block_count=41|cp_total=1024|json=0|paired_with=atlas-canonical-1024.hbp|codec_version=2|supersedes=atlas-blocks-1024.hbp|provenance=v1-preserved-cold
+HATLASGUARD|rule=block-evolution-guard|cp_ranges=immutable|blocks=append-only|new_blocks=only-in-reserved-1004-1023-or-bump-codec|version_negotiation=readers-check-version-and-codec_version-reject-unknown|closes=no-version-negotiation-STALE-SURFACE-gap
+HBLOCK|name=digits|cp_start=0|cp_end=9|count=10|theme=base-10 numerals|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=lowercase|cp_start=10|cp_end=35|count=26|theme=Latin lowercase|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=uppercase|cp_start=36|cp_end=61|count=26|theme=Latin uppercase|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=ascii_symbol|cp_start=62|cp_end=93|count=32|theme=printable ASCII symbols|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=greek_lower|cp_start=94|cp_end=117|count=24|theme=Greek lowercase α-ω|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=greek_upper|cp_start=118|cp_end=127|count=10|theme=distinctive Greek uppercase|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=suit|cp_start=128|cp_end=135|count=8|theme=card suits (filled + open)|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=geometric|cp_start=136|cp_end=151|count=16|theme=circles, squares, diamonds, triangles, stars|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=arrow|cp_start=152|cp_end=167|count=16|theme=directional + double arrows|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=math|cp_start=168|cp_end=183|count=16|theme=math operators and relations|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=currency_music|cp_start=184|cp_end=191|count=8|theme=currency + music + sun/bolt|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=dingbat|cp_start=192|cp_end=207|count=16|theme=stars, religious, flowers|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=box_drawing|cp_start=208|cp_end=223|count=16|theme=box drawing characters|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=hexagram|cp_start=224|cp_end=231|count=8|theme=Yijing trigrams|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=circled|cp_start=232|cp_end=247|count=16|theme=circled 1-16|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=bracket_misc|cp_start=248|cp_end=255|count=8|theme=brackets, asterism, tombstone|supervisor=cube_cubed_sealer|domain=legacy_subset_256
+HBLOCK|name=cyrillic_upper|cp_start=256|cp_end=287|count=32|theme=cyrillic upper|supervisor=gaia|domain=sovereignty
+HBLOCK|name=cyrillic_lower|cp_start=288|cp_end=319|count=32|theme=cyrillic lower|supervisor=gaia|domain=sovereignty
+HBLOCK|name=hebrew|cp_start=320|cp_end=343|count=24|theme=hebrew|supervisor=gaia|domain=sovereignty
+HBLOCK|name=arabic|cp_start=344|cp_end=367|count=24|theme=arabic|supervisor=gaia|domain=sovereignty
+HBLOCK|name=hiragana|cp_start=368|cp_end=415|count=48|theme=hiragana|supervisor=helm|domain=sequencing
+HBLOCK|name=katakana|cp_start=416|cp_end=463|count=48|theme=katakana|supervisor=helm|domain=sequencing
+HBLOCK|name=devanagari|cp_start=464|cp_end=487|count=24|theme=devanagari|supervisor=helm|domain=sequencing
+HBLOCK|name=thai|cp_start=488|cp_end=511|count=24|theme=thai|supervisor=vector|domain=language_glyph
+HBLOCK|name=cjk_basic|cp_start=512|cp_end=543|count=32|theme=cjk basic|supervisor=vector|domain=language_glyph
+HBLOCK|name=astrological|cp_start=544|cp_end=567|count=24|theme=astrological|supervisor=vector|domain=language_glyph
+HBLOCK|name=chess_cards|cp_start=568|cp_end=583|count=16|theme=chess cards|supervisor=vector|domain=language_glyph
+HBLOCK|name=braille|cp_start=584|cp_end=647|count=64|theme=braille|supervisor=rook|domain=hilbert_cube
+HBLOCK|name=block_element|cp_start=648|cp_end=679|count=32|theme=block element|supervisor=rook|domain=hilbert_cube
+HBLOCK|name=star_sparkle_ext|cp_start=680|cp_end=711|count=32|theme=star sparkle ext|supervisor=rook|domain=hilbert_cube
+HBLOCK|name=math_ext|cp_start=712|cp_end=743|count=32|theme=math ext|supervisor=forge|domain=build_proof
+HBLOCK|name=currency_ext|cp_start=744|cp_end=759|count=16|theme=currency ext|supervisor=forge|domain=build_proof
+HBLOCK|name=astronomical|cp_start=760|cp_end=783|count=24|theme=astronomical|supervisor=forge|domain=build_proof
+HBLOCK|name=alchemical|cp_start=784|cp_end=807|count=24|theme=alchemical|supervisor=forge|domain=build_proof
+HBLOCK|name=yijing_hexagram|cp_start=808|cp_end=871|count=64|theme=yijing hexagram|supervisor=falcon|domain=federation
+HBLOCK|name=domino|cp_start=872|cp_end=899|count=28|theme=domino|supervisor=falcon|domain=federation
+HBLOCK|name=music_ext|cp_start=900|cp_end=923|count=24|theme=music ext|supervisor=livefree|domain=emergent_residual
+HBLOCK|name=geometric_ext|cp_start=924|cp_end=947|count=24|theme=geometric ext|supervisor=livefree|domain=emergent_residual
+HBLOCK|name=arrow_ext|cp_start=948|cp_end=971|count=24|theme=arrow ext|supervisor=livefree|domain=emergent_residual
+HBLOCK|name=misc_symbol_ext|cp_start=972|cp_end=1003|count=32|theme=misc symbol ext|supervisor=livefree|domain=emergent_residual
+HBLOCK|name=reserved|cp_start=1004|cp_end=1023|count=20|theme=reserved|supervisor=livefree|domain=emergent_residual
+HATLASBLOCKSPAIRING|primary=atlas-canonical-1024.hbp|secondary=atlas-blocks-1024.v2.hbp|cross_ref_key=block_name|v1_provenance=atlas-blocks-1024.hbp

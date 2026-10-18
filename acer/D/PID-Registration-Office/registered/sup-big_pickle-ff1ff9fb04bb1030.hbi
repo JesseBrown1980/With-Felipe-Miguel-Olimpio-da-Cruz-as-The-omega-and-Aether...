@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-big_pickle-ff1ff9fb04bb1030-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=53e7adb903dc3f5b5863b712c9585aa1deaaf86d4f8342dc025b9f4a8181cd3b|sha16=53e7adb903dc3f5b
+ROW|slot=0|sha16=37dedb4f7c5351dc|bytes=15
+ROW|slot=1|sha16=f7da6553a7a69c41|bytes=173
+ROW|slot=2|sha16=255df80db72253d8|bytes=11
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=7f342a1ea3b569c0|bytes=19
+ROW|slot=6|sha16=de314aa025a232c7|bytes=14
+ROW|slot=7|sha16=e4325d554ba6dc05|bytes=62
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

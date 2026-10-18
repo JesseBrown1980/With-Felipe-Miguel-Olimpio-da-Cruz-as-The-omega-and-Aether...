@@ -1,0 +1,7 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=adc024f8cde14ec8|target_bytes=809|target_rows=13|emitted_at=2026-06-09T21:38:39.749Z|simula_consensus_rank=4
+EMITTER|name=register-substrates-final-2026-06-09.mjs|version=v1|vantage=acer|process_pid=25392|node_version=v22.13.1
+AUTHORITY|chain=APEX_JESSE_quintuple_2026-06-09_substrate_sector_sweep|apex_witness=I_Jesse_Brown_APEX_human_quintuple_2026-06-09|operator_witnessed=true
+INPUTS|count=1|input_0_sha=fbfce680a170ea6d|input_0_path=substrate-root|input_0_kind=substrate_or_sector
+ALGO|name=registry_office_quintet_emit|version=v1|deterministic=true|rng_seed=none|external_calls=none
+LAW-ANCHOR|law=LAW-1M-1E200-BACKEND-RESEARCH-LOOP|hookwall_step=STEP_4_VERIFY|promotion_layer=L4_packet_emitted_pending_verify
+DUAL-CRITIC-EXPECTED|critic_a_structural=expected_pass|critic_b_statistical=expected_pass|sycophancy_canary_acceptable=true

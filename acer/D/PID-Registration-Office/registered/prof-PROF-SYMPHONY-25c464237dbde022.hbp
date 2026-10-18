@@ -1,0 +1,15 @@
+NAME|PROF-SYMPHONY
+PID|25c464237dbde022|birth=2026-06-30T23:06:52.730Z|authority=OP-JESSE-DANIEL-BROWN_human_apex_authorize_all_16_levels
+HILBERT|7683
+LAYER|prof-supervisor
+CLASS|prof_supervisor_singleton
+GLYPH_BEHCS1024|35
+GLYPH_BEHCS5|3
+ROLE|owns Symphony Linear-driven codex-app-server orchestration (ancillary lane)
+PAIRED_PROF|PROF-MCP
+SECTOR|prof-supervisor
+OWNER_ROOT|PROF-MCP|pid=406022553b5b10bf
+SOURCE|full-mcp-capability-absorption-2026-06-30|catalog=ASOLARIA-FULL-CAPABILITY-ABSORPTION
+REGISTRAR|acer-vantage|registered_at=2026-06-30T23:06:52.730Z|registrar_note=supervisor_resulting_from_mcp_absorption_per_operator_2026-06-30
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=register_pids_and_supervisors_that_result_then_map_2026-06-30
+STATUS|CANONICAL|registry_office_entry_mcp_absorption_supervisor

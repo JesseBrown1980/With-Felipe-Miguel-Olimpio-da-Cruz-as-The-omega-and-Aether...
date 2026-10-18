@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-cluster_hyperbehcs_hermes_acer_ext_src-8837d9242da64eef-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=c9766f448c940dac502785a9f58f9fcbfb09732bf813bf50f12a2b0249f513b0|sha16=c9766f448c940dac
+ROW|slot=0|sha16=4a1747bc0c0751c9|bytes=43
+ROW|slot=1|sha16=692701b24673cdb0|bytes=173
+ROW|slot=2|sha16=3f310b5b49b463fd|bytes=11
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=84b140826cef839e|bytes=19
+ROW|slot=6|sha16=13623d3f6d85fcb6|bytes=14
+ROW|slot=7|sha16=84f1453099d661cb|bytes=90
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

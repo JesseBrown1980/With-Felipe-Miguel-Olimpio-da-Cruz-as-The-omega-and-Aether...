@@ -1,0 +1,23 @@
+{
+  "pid": "604f473ac0981dd7",
+  "name": "HILBRA-ASOLARIA-INTERNET-FABRIC",
+  "brand": "Hilbra",
+  "layer": "internet-fabric",
+  "class": "federation-umbrella",
+  "emitter": "acer-vantage",
+  "authority": "OP-JESSE-DANIEL-BROWN",
+  "registered_at": "2026-06-22T21:30:18.071Z",
+  "inputs": [
+    "cross-fabric-search-live-acer-liris",
+    "brown-hilbert-addressing",
+    "6-tier-access",
+    "45-fragment-pii-oracle",
+    "host8-rust-kernel-E0"
+  ],
+  "algo": "sha256_name_slice_16",
+  "hilbert": 1643,
+  "bh": "BH.tauH.L16.D49.100988019",
+  "law_anchor": "LAW-HILBRA-ASOLARIA-INTERNET-FABRIC",
+  "dual_critic": "workflow wlp3uxjiz 6-agent name+strategy synthesis; council-q-1782162870304-bkl9ql UNSIGNED/advisory",
+  "status": "E0_REGISTERED_OPERATOR_RATIFIED_AWAITING_QUINTET_COSIGN"
+}

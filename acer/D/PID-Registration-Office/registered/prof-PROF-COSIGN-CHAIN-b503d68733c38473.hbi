@@ -1,0 +1,16 @@
+HBI1|task=pid-office-registration-prof-PROF-COSIGN-CHAIN-b503d68733c38473-2026-05-29T20:16:20.485Z|generated=2026-05-29T20:16:20.485Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/fix-and-register-2026-05-29.mjs
+BUNDLE|sha256=3f54e80b5e1dbe07f08a15120b8a63467c1b656161c741714e258846e79cc2bd|sha16=3f54e80b5e1dbe07
+ROW|slot=0|sha16=8bceaab0bef5a337|bytes=22
+ROW|slot=1|sha16=a7e9df39bf80b3d1|bytes=173
+ROW|slot=2|sha16=7c9be0b469beb937|bytes=11
+ROW|slot=3|sha16=6e9c64e9251b1ad8|bytes=21
+ROW|slot=4|sha16=b1669fa7daed606f|bytes=31
+ROW|slot=5|sha16=ab6c9e188e7d255f|bytes=19
+ROW|slot=6|sha16=9279f0e7f1b51848|bytes=14
+ROW|slot=7|sha16=876486d1668b88f5|bytes=69
+ROW|slot=8|sha16=fd32ddd66506751b|bytes=34
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=4a8d60b212a3ed44|bytes=136
+ROW|slot=11|sha16=779dc6029712975e|bytes=114
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

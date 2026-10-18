@@ -1,0 +1,16 @@
+HBI1|task=pid-office-registration-op-OP-FELIPE-b7753c8f63a6c89b-2026-05-29T20:16:20.485Z|generated=2026-05-29T20:16:20.485Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/fix-and-register-2026-05-29.mjs
+BUNDLE|sha256=16a3251e04b2dbf5afbcbb16527a0f2f2832b6ea248527b62a71c22a58bf5d7f|sha16=16a3251e04b2dbf5
+ROW|slot=0|sha16=63a29cf76f900ada|bytes=14
+ROW|slot=1|sha16=7840ff76a6bc2ca6|bytes=173
+ROW|slot=2|sha16=9b23a11fba6ae346|bytes=11
+ROW|slot=3|sha16=68e3c1d4466d886c|bytes=14
+ROW|slot=4|sha16=c89c374f1cd260e4|bytes=26
+ROW|slot=5|sha16=8af7112c54290fa4|bytes=19
+ROW|slot=6|sha16=9279f0e7f1b51848|bytes=14
+ROW|slot=7|sha16=5f94a802fc91f8b7|bytes=61
+ROW|slot=8|sha16=fd32ddd66506751b|bytes=34
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=4a8d60b212a3ed44|bytes=136
+ROW|slot=11|sha16=779dc6029712975e|bytes=114
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

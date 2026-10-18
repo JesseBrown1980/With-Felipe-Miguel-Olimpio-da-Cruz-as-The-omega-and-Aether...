@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-iam-bind-handler-953a5eada24acfeb-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=d90711557bcd0187d4f0048db0bfdf8f0885d3465f55f8a862952261e083b772|sha16=d90711557bcd0187
+ROW|slot=0|sha16=b4d3e68f925a1257|bytes=21
+ROW|slot=1|sha16=9dfcf964c2f14809|bytes=173
+ROW|slot=2|sha16=fe6b90ea5f0b6db3|bytes=12
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=fc9adfc0f48aefd5|bytes=19
+ROW|slot=6|sha16=13623d3f6d85fcb6|bytes=14
+ROW|slot=7|sha16=b271b0b2f8c698c1|bytes=68
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

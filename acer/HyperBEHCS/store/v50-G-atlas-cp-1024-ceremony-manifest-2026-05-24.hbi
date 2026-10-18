@@ -1,0 +1,36 @@
+{
+ "hbp_path": "C:\\HyperBEHCS\\store\\v50-G-atlas-cp-1024-ceremony-manifest-2026-05-24.hbp",
+ "hbp_file_sha256": "3626ffde08d728cac0816836f2aed789e668035ca5abdd134858d0853d652395",
+ "body_sha256": "0902577edfe894e1c20775ec62220101b323afd402ea92eec7685f0b53518793",
+ "anchor_pid": "ASOLARIA-V50-G-ATLAS-CP-1024-QUINTUPLE-CEREMONY-PID-2026-05-24",
+ "law_anchor": "ASOLARIA-FOUNDATION-V3-LAW-V39-LOAD-DIVISION-PID-2026-05-23",
+ "ceremony_class": "BATCH_SERVICE_PROVIDER_CITIZEN_ALLOCATION",
+ "allocations": [
+  [
+   "HUBSPOT_CRM_CITIZEN",
+   1038
+  ],
+  [
+   "MS_GRAPH_CITIZEN",
+   1053
+  ],
+  [
+   "AZURE_ARM_CITIZEN",
+   1055
+  ],
+  [
+   "AWS_API_CITIZEN",
+   1071
+  ],
+  [
+   "MS_TEAMS_CITIZEN",
+   1076
+  ],
+  [
+   "ONEDRIVE_CITIZEN",
+   1082
+  ]
+ ],
+ "quintuple_cosign_complete": true,
+ "ts": "2026-05-24T04:01:29.000Z"
+}

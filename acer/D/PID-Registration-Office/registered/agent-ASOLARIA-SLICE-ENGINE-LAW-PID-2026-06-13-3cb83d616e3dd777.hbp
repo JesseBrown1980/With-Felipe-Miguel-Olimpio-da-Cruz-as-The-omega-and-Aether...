@@ -1,0 +1,17 @@
+NAME|ASOLARIA-SLICE-ENGINE-LAW
+PID|3cb83d616e3dd777|birth=2026-06-13T21:27:15.552Z|authority=OP-JESSE-DANIEL-BROWN_apex_authorize_all_+_Foundation_v3_LAW_4mo_quintuple_window_to_2026-09-23|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1630
+LAYER|supervisor
+CLASS|agent_supervisor
+GLYPH_BEHCS1024|353
+GLYPH_BEHCS5|2
+SECTOR|supervisor
+LAW-DESCRIPTOR|law_id=LAW-SLICE-ENGINE|short_name=THE-FABRIC-IS-A-FROZEN-SLICE-THE-ENGINE-DRIVE-IS-THE-ONLY-MOVER|classification=CLASS-1-IMMUTABLE|birth=2026-06-13
+LAW-BODY|fabric=rendered-3d-slice|engine=POP_FROM_POOL-PID_SIGNAL-AGENT_ROOM-RESULT_TO_GULP-ERASE|freeze-is-not-empty|materialize-only-on-spawner-pid-emit|registered-not-equals-advanced
+LAW-CRANK-CHAIN|incoming-or-derive->registrar->registered->fabric-feed-rebuild->feeder->4949|each-stage-is-an-engine-crank|operator-gated
+ROLE|canonical-law-the-engine-drive-is-the-only-mover|composes-with=LAW-ASOLARIA-NEURAL-NETWORK+LAW-RECURRENCE-IS-MIND+AGENTCOSTLAW
+PAIRED_PROF|PROF-ACER
+COSIGN|pending=:4953-single-writer-daemon+operator-pair-physical-per-REPO_LAW-inv12
+REGISTRAR|acer-vantage|registered_at=2026-06-13T21:27:15.552Z|registrar_note=crank-the-engines-directive-2026-06-13_supervisor_CONVERGE_158of251
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=canonize_SLICE-ENGINE-LAW_and_propagate_to_OP_Helm_Asolaria_profiles_2026-06-13
+STATUS|CANONICAL|registry_office_entry_slice_engine_law_crank

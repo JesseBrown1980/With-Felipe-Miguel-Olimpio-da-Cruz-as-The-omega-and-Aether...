@@ -1,0 +1,13 @@
+NAME|OMNI-SPINDLE-PID-WORKQUEUE
+PID|1f8e1f6153b01993|birth=2026-06-09T21:28:36.238Z|authority=APEX_HUMAN_JESSE_BROWN_quintuple_fire_full_systems_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1405
+LAYER|supervisor
+CLASS|agentterms_named_agent
+GLYPH_BEHCS1024|865
+GLYPH_BEHCS5|1
+SECTOR|supervisor
+ROLE|omnispindle_work_queue_bounded_concurrency
+SOURCE|agentterms_surface_5054_2026-06-09
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:28:36.238Z|registrar_note=agentterms_named_agents_chief_executes_examined_registrar_plan
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=fire_full_systems_mapping_first_2026-06-09|sign=I_Jesse_Brown_APEX_human_quintuple_authorize
+STATUS|CANONICAL|registry_office_agentterms_sweep

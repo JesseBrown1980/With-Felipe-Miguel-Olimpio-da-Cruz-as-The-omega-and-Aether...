@@ -1,0 +1,16 @@
+HBI1|task=district-b-sup-brain-substrate-2ced280427381b2b-2026-05-29T20:30:30.763Z|generated=2026-05-29T20:30:30.763Z|packets=13|json=0
+SRC|D:/PID-Registration-Office/_tools/district-b-2026-05-29.mjs
+BUNDLE|sha256=d5afc1767c1a2ca4140d527306602ffb84ad02f7952d15a4661a8454c7b474de|sha16=d5afc1767c1a2ca4
+ROW|slot=0|sha16=d15e292960f7d5a0|bytes=20
+ROW|slot=1|sha16=e6344dcc1cae8b16|bytes=173
+ROW|slot=2|sha16=6daaf34c35393cfb|bytes=11
+ROW|slot=3|sha16=97b71f9fb935830b|bytes=16
+ROW|slot=4|sha16=c07e1fab264ef6ba|bytes=34
+ROW|slot=5|sha16=45b414230c9e2e6e|bytes=17
+ROW|slot=6|sha16=53d244cb43132be8|bytes=14
+ROW|slot=7|sha16=6eaf85b2f53d7a72|bytes=67
+ROW|slot=8|sha16=92ffc20653b9b9c3|bytes=41
+ROW|slot=9|sha16=afc655589a316d75|bytes=64
+ROW|slot=10|sha16=0b78b03ce3b7f065|bytes=141
+ROW|slot=11|sha16=6b6bf3f9926cdf55|bytes=87
+ROW|slot=12|sha16=f963f81de76a0c19|bytes=58

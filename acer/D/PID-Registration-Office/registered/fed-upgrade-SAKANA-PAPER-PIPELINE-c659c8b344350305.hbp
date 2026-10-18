@@ -1,0 +1,17 @@
+NAME|SAKANA-PAPER-PIPELINE
+PID|c659c8b344350305|birth=2026-05-29T20:16:20.485Z|authority=OP-JESSE-DANIEL-BROWN_Special_OP_2mo_window_+_Foundation_v3_LAW
+HILBERT|903
+LAYER|fed-upgrade-sector
+CLASS|fed_upgrade_sector_genius_mistake_aggregate
+GLYPH_BEHCS1024|746
+GLYPH_BEHCS5|4
+CHIEF_PID|7944b5e60798a17c
+HYP_PID|c659c8b344350305
+GENIUS_COUNT|2605
+MISTAKE_COUNT|2423
+RATE|0.052100
+CASCADE|fed-upgrade-1780012407030
+SOURCE_TS|2026-05-28T23:53:37.073Z
+REGISTRAR|acer-vantage|registered_at=2026-05-29T20:16:20.485Z|registrar_note=retrofit_missing_NAME_PID_HILBERT_LAYER_CLASS_GLYPH_BEHCS1024_GLYPH_BEHCS5_sib_hbi_sib_hex_sib_sha256_sib_ing
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=Make_PID_Registration_Office_actually_work_for_overlay_server_2026-05-29
+STATUS|CANONICAL|registry_office_entry_path2_fix_at_source

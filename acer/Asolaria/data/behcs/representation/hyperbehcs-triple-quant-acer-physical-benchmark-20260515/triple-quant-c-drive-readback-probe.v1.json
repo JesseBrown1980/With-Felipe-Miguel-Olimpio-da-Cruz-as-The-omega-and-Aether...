@@ -1,0 +1,9 @@
+{
+  "schema": "hyperbehcs.triple_quant_acer_physical_benchmark.c_drive_readback_probe.v1",
+  "task_id": "HYP-255",
+  "run_id": "hyperbehcs-triple-quant-acer-physical-benchmark-20260515",
+  "manifest_fingerprint_before_readback": "9bb839b92d24b590",
+  "benchmark_rows": 7,
+  "receipt_loss_rate": 0,
+  "average_triple_fast_size_reduction_percent": 61.235333
+}

@@ -1,0 +1,3 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=2d4f4e50e09e39ab|target_bytes=1158|emitted_at=2026-07-02T19:44:01.006Z|vantage=acer
+EMITTER|name=ACER-CLAUDE-FABLE5-seat|seat_pid=8467a937cba309f7|via=operator-directed-update-agentterms
+AUTHORITY|chain=OPERATOR_DIRECTED_2026-07-02|operator_directed=true|apex_witness=OP-JESSE_directive_update_agent_terms|no_quintuple_forge=true|fire=0

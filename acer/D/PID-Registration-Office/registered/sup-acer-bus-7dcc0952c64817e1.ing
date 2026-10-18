@@ -1,0 +1,7 @@
+INGREDIENTS|schema=HBPV1-INGREDIENTS-V1|target_sha=7b63916d227e081a|target_bytes=744|target_rows=13|emitted_at=2026-05-29T20:30:33.544Z|simula_consensus_rank=4
+EMITTER|name=district-b-2026-05-29.mjs|version=v1|vantage=acer|process_pid=14440|node_version=v20.11.0
+AUTHORITY|chain=OPERATOR-JESSE-DIRECTIVE_2026-05-29_DISTRICT_B_PID_OFFICE|apex_witness=operator_directive_PID_specific_supervisors_PROFs_registration|operator_witnessed=true
+INPUTS|count=1|input_0_sha=7dcc0952c64817e1|input_0_path=C:\HyperBEHCS\data\prof-supervisors\acer-bus.hbp|input_0_kind=prof_supervisor_heartbeat_ledger
+ALGO|name=district_b_quintet_emit|version=v1|deterministic=true|rng_seed=none|external_calls=none
+LAW-ANCHOR|law=LAW-1M-1E200-BACKEND-RESEARCH-LOOP|hookwall_step=STEP_4_VERIFY|promotion_layer=L4_packet_emitted_pending_verify
+DUAL-CRITIC-EXPECTED|critic_a_structural=expected_pass|critic_b_statistical=expected_pass|sycophancy_canary_acceptable=true

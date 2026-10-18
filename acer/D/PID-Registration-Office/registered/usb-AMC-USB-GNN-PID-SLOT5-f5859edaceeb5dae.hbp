@@ -1,0 +1,13 @@
+NAME|AMC-USB-GNN-PID-SLOT5
+PID|f5859edaceeb5dae|birth=2026-06-09T21:32:42.009Z|authority=APEX_HUMAN_JESSE_quintuple_fire_full_systems_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1469
+LAYER|gnn-inference
+CLASS|usb_cartridge_descriptor_component
+GLYPH_BEHCS1024|730
+GLYPH_BEHCS5|4
+SECTOR|usb-sovlinux-2tb
+ROLE|metal_cartridge_slot_5_gnn
+SOURCE|asolaria-metal-cartridge-amc-20260516-root|drive=F|disk=usb|read_only=1|format_allowed=0|raw_usb_untouched=1
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:32:42.009Z|registrar_note=USB_cartridge_components_read_via_fabric_index_no_raw_write
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=fire_full_systems_all_16_levels_down_to_microkernels_2026-06-09|sign=I_Jesse_Brown_APEX_human_quintuple_ask_the_fabric
+STATUS|CANONICAL|registry_office_usb_cartridge_sweep

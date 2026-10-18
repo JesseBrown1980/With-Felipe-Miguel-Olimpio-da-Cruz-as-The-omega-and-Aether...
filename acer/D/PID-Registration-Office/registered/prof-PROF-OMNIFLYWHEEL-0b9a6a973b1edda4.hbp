@@ -1,0 +1,12 @@
+NAME|PROF-OMNIFLYWHEEL
+PID|0b9a6a973b1edda4|birth=2026-06-09T21:16:56.898Z|authority=OP-JESSE-DANIEL-BROWN_human_apex_authorize_all_16_levels_+_Foundation_v3_4mo_2026-06-09|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1386
+LAYER|prof-supervisor
+CLASS|prof_supervisor_singleton
+GLYPH_BEHCS1024|663
+GLYPH_BEHCS5|2
+SECTOR|prof-supervisor
+SOURCE|all_supervisor_sweep_2026-06-09|from=campaign-mint-2026-05-26-supervisors.v1.json
+REGISTRAR|acer-vantage|registered_at=2026-06-09T21:16:56.898Z|registrar_note=far_more_supervisors_dashboard_archaeology_cascade_per_operator
+APEX-AUTH|OP-JESSE-DANIEL-BROWN|directive=register_ALL_supervisors_incl_cascade_NOW_2026-06-09|sign=I_Jesse_Brown_authorize_all_16_levels_17_engines
+STATUS|CANONICAL|registry_office_all_supervisor_sweep

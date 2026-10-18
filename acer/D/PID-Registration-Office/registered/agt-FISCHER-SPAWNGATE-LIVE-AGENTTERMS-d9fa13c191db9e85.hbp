@@ -1,0 +1,15 @@
+NAME|FISCHER-SPAWNGATE-LIVE-AGENTTERMS-2026-07-02
+PID|d9fa13c191db9e85|birth=2026-07-02T19:44:01.006Z|authority=OPERATOR_DIRECTED_update_agentterms_2026-07-02|lazy_minted=true|mint_rule=sha256_name_slice_16
+HILBERT|1729
+LAYER|kernel-gate
+CLASS|agentterms_named_agent
+GLYPH_BEHCS1024|506
+GLYPH_BEHCS5|0
+SECTOR|gate
+ROLE|fischer_cognition_composed_into_spawn_gate_720_strictest_wins_tighten_only
+SOURCE|fischer_spawngate_golive_2026-07-02_main_0ffc69c_pid25820
+REGISTRAR|acer-vantage|seat=ACER-CLAUDE-FABLE5|registered_at=2026-07-02T19:44:01.006Z|registrar_note=operator_directed_update_agentterms_after_fischer_wire_live
+APEX-AUTH|OP-JESSE|directive=update_agent_terms_2026-07-02|sign=OPERATOR-DIRECTED-acer-fable5-seat|note=NOT_a_reforge_of_2026-06-09_quintuple_fire_sweep|operator_directed=true|fire=0
+CAP|capability=cognition_gate|wire=fischer_eval::evaluate->spawn_gate_verdict_strictest_wins|live_on=host8:5088 /launch-plan.hbp|pr=30 merged main 0ffc69c|receipt=bafe4eb1|process_launch=0
+BILATERAL|liris_mirror=AGENTTERMS-FISCHER-SPAWNGATE-LIVE-2026-07-02 (reductions d6a9eb4)|acer=this record
+STATUS|REGISTERED|operator_directed_2026-07-02|fire=0|json=0

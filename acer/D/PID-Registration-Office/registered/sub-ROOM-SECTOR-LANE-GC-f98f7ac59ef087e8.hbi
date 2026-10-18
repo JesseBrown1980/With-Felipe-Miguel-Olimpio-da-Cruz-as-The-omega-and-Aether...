@@ -1,0 +1,16 @@
+HBI1|task=sub-reg-f98f7ac59ef087e8|generated=2026-06-09T21:38:37.349Z|packets=13|json=0
+SRC|register-substrates-final-2026-06-09.mjs
+BUNDLE|sha256=518abb49b9a611ce0ec6e263a9be0013281edb62f6f8815b0bf2b6f7db5a7a43|sha16=518abb49b9a611ce
+ROW|slot=0|sha16=6cab77c0bbfd8950|bytes=24
+ROW|slot=1|sha16=c3eaac288f6b2651|bytes=165
+ROW|slot=2|sha16=2d3ebc20fed78400|bytes=12
+ROW|slot=3|sha16=bdf6c36898c5bb59|bytes=22
+ROW|slot=4|sha16=6149666a50fe32dd|bytes=35
+ROW|slot=5|sha16=7fbaf0e22409e342|bytes=19
+ROW|slot=6|sha16=de314aa025a232c7|bytes=14
+ROW|slot=7|sha16=ef772408d04b7303|bytes=23
+ROW|slot=8|sha16=6cc37a9b60992213|bytes=45
+ROW|slot=9|sha16=592f3b21b5d067df|bytes=85
+ROW|slot=10|sha16=04063d89ba31f2c9|bytes=144
+ROW|slot=11|sha16=a7c99a232782247c|bytes=148
+ROW|slot=12|sha16=00fb7271de02326e|bytes=55
