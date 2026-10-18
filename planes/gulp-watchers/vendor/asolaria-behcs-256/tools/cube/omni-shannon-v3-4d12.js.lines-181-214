@@ -1,0 +1,34 @@
+  if (!candidatesPath) {
+    console.error('usage: omni-shannon-v3-4d12.js <candidates_json> [vote_id]');
+    process.exit(1);
+  }
+  const q = JSON.parse(fs.readFileSync(candidatesPath, 'utf8'));
+  const voteDir = path.join(VOTES_DIR, voteId);
+  if (!fs.existsSync(voteDir)) fs.mkdirSync(voteDir, { recursive: true });
+  const perPartPath = path.join(voteDir, 'per_part.ndjson');
+  const summaryPath = path.join(voteDir, 'summary.json');
+
+  const results = [];
+  for (const c of q.candidates) {
+    const parts = [];
+    for (const dim of DIMS) {
+      try {
+        const part = votePart(dim, c);
+        parts.push(part);
+        fs.appendFileSync(perPartPath, JSON.stringify({ vote_id: voteId, candidate_id: c.id, ...part }) + '\n');
+      } catch (e) {
+        recordMistake('omni-shannon-v3-4d12', c.id, e.message, dim.id);
+      }
+    }
+    // Tally
+    const totals = { PROCEED: 0, 'PROCEED-WITH-CONDITIONS': 0, 'NEEDS-CHANGE': 0, HALT: 0, REFUSED: 0 };
+    let totalScore = 0;
+    for (const p of parts) {
+      totals[p.lens_verdict] = (totals[p.lens_verdict] || 0) + 1;
+      totalScore += p.lens_score || 0;
+    }
+    const consensus = totals.HALT > 0 || totals.REFUSED > 0
+      ? 'HALT'
+      : totals['NEEDS-CHANGE'] > 0
+        ? 'PROCEED-WITH-CONDITIONS'
+        : 'PROCEED';

@@ -1,0 +1,19 @@
+# hp_mix fixture: written by tools/hp_mix_referee.py (stdlib mirror of hp_mix.rs @ cube-cloud f91bb2c).
+# CASE gives each input and the archive the mirror produced; PILOT is the row hp_mix verify prints;
+# DECOMPRESS is the row hp_mix decompress prints. Inputs: see cases() in the referee.
+HPMIXFIX|upstream=asolaria-cube-cloud@f91bb2c3f0e1734e72d94542967000556f6c1c5c|path=hutter/variants/mix/hp_mix.rs|decoder_src_bytes=13074|json=0
+CASE|name=empty|input_bytes=0|input_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|archive_bytes=12|archive_sha256=15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b|json=0
+PILOT|mode=verify|input_bytes=0|archive_bytes=12|decoder_src_bytes=13074|total_bytes=13086|ratio_x=0.0000|bpc=0.0000|roundtrip=1
+DECOMPRESS|archive_bytes=12|output_bytes=0
+CASE|name=one-byte-A|input_bytes=1|input_sha256=559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd|archive_bytes=12|archive_sha256=d0986cef564cf099336aaf89311e38589119720bb7be1458079996f77bf381ae|json=0
+PILOT|mode=verify|input_bytes=1|archive_bytes=12|decoder_src_bytes=13074|total_bytes=13086|ratio_x=0.0833|bpc=96.0000|roundtrip=1
+DECOMPRESS|archive_bytes=12|output_bytes=1
+CASE|name=AB-x20|input_bytes=40|input_sha256=9075068f680e2528afc7b2015b51d7c5597c00cd9826319328432689e7bd54b3|archive_bytes=29|archive_sha256=1bfaa8faf56cb87c8f1b22b6658eeeb66b7fe3ce87c214451b32c17165e28bbf|json=0
+PILOT|mode=verify|input_bytes=40|archive_bytes=29|decoder_src_bytes=13074|total_bytes=13103|ratio_x=1.3793|bpc=5.8000|roundtrip=1
+DECOMPRESS|archive_bytes=29|output_bytes=40
+CASE|name=lcg-65536|input_bytes=65536|input_sha256=d13e248e00462a6e03036b08bea9d04e8834c9ae37678bb9648759de71e8ed0c|archive_bytes=65663|archive_sha256=ce10f20bd2bf1ec7b5b229c898a81fe08734d6540389f984da017180ab721475|json=0
+PILOT|mode=verify|input_bytes=65536|archive_bytes=65663|decoder_src_bytes=13074|total_bytes=78737|ratio_x=0.9980|bpc=8.0155|roundtrip=1
+DECOMPRESS|archive_bytes=65663|output_bytes=65536
+CASE|name=hrm-license|input_bytes=11357|input_sha256=58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd|archive_bytes=4520|archive_sha256=d5b2d75aa07bcb7e38e66911c6b8201e489cb7cf0c6a852a1be94209e3f483d8|json=0
+PILOT|mode=verify|input_bytes=11357|archive_bytes=4520|decoder_src_bytes=13074|total_bytes=17594|ratio_x=2.5126|bpc=3.1839|roundtrip=1
+DECOMPRESS|archive_bytes=4520|output_bytes=11357

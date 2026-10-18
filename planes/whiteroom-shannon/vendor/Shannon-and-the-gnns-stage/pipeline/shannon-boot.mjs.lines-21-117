@@ -1,0 +1,97 @@
+//              window 2026-05-07 .. 200-step-plan complete; Shannon profile rotated 2026-05-10 (P00→P01).
+
+import { readFileSync, existsSync, mkdirSync, appendFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { resolve, dirname } from 'node:path';
+import { EventEmitter } from 'node:events';
+
+// ---- canonical paths (acer-vantage) ----
+const SHANNON_PROFILE_PATH = 'C:/asolaria-acer/packages/dashboard/src/super-os-viz/runtime/agent-terminal-fabric/profiles/shannon.profile.json';
+const SHANNON_PID_CANON   = 'AGT-SHANNON-PID-HD16C-A04-W1024-P01-N00001';
+const RULE_ANCHORS        = ['LX-328', 'LX-329', 'LX-331', 'LX-332', 'LX-333'];
+
+// ---- in-process bus (subscribed to 'shannon:gate:check') ----
+export const shannonBus = new EventEmitter();
+let registeredProfile = null;
+
+// ---- 1. bootShannon — load profile, register gate, subscribe to bus ----
+export function bootShannon({ profile = SHANNON_PROFILE_PATH } = {}) {
+  const path = resolve(profile);
+  if (!existsSync(path)) {
+    return { ok: false, reason: `profile_not_found:${path}` };
+  }
+  let doc;
+  try { doc = JSON.parse(readFileSync(path, 'utf8')); }
+  catch (e) { return { ok: false, reason: `profile_parse_error:${e.message}` }; }
+
+  if (doc.agent_pid_current !== SHANNON_PID_CANON) {
+    return { ok: false, reason: `pid_mismatch:${doc.agent_pid_current}!=${SHANNON_PID_CANON}` };
+  }
+  registeredProfile = {
+    role: doc.role,
+    supervisor_pid: doc.supervisor_pid,
+    prof_pid: doc.prof_pid,
+    agent_pid: doc.agent_pid_current,
+    brown_hilbert_hash: doc.resume_packet?.last_rotation?.brown_hilbert_hash || 'H421B85FD07C14FB4',
+    ruleAnchors: RULE_ANCHORS,
+    loadedAt: new Date().toISOString()
+  };
+  // bus wiring: re-emit verdicts back under 'shannon:gate:verdict'
+  shannonBus.on('shannon:gate:check', (req) => {
+    const verdict = checkShannonGate(req?.action, req?.tier, req?.approval);
+    shannonBus.emit('shannon:gate:verdict', { req, verdict });
+  });
+  return { ok: true, profile: registeredProfile, ruleAnchors: RULE_ANCHORS };
+}
+
+// ---- 2. checkShannonGate — LX-328/329/331/332/333 mini-evaluator ----
+// Mirrors shannonExecutionGate.evaluateExecution() decision shape.
+export function checkShannonGate(action, tier = 1, approval = {}) {
+  if (!registeredProfile) return { granted: false, reason: 'gate_not_booted', ruleAnchors: [] };
+  if (!action) return { granted: false, reason: 'action_required', ruleAnchors: ['LX-328'] };
+
+  // LX-328 baseline: any booted action with tier<=1 is dry-run-ready (no approval needed)
+  if (tier <= 1) {
+    return { granted: true, status: 'dry_run_ready', approvalState: 'dry_run_only',
+             reason: '', ruleAnchors: ['LX-328'] };
+  }
+
+  // LX-329 mode check: tier-2+ requires mode=approved_run
+  if (approval.mode !== 'approved_run') {
+    return { granted: false, status: 'blocked', approvalState: 'leader_required',
+             reason: 'mode_not_approved_run', ruleAnchors: ['LX-329'] };
+  }
+  // LX-331 explicit approval
+  if (!approval.explicitApproval) {
+    return { granted: false, status: 'blocked', approvalState: 'leader_required',
+             reason: 'execution_approval_required', ruleAnchors: ['LX-331'] };
+  }
+  // LX-332 authority mode must be asolaria_primary
+  if (approval.authorityMode !== 'asolaria_primary') {
+    return { granted: false, status: 'blocked', approvalState: 'leader_required',
+             reason: 'authority_mode_not_asolaria_primary', ruleAnchors: ['LX-332'] };
+  }
+  // LX-333 approval-by + approval-ref must be present
+  if (!approval.approvedBy || !approval.approvalRef) {
+    return { granted: false, status: 'blocked', approvalState: 'leader_required',
+             reason: 'execution_approval_reference_required', ruleAnchors: ['LX-333'] };
+  }
+  return { granted: true, status: 'approved_ready', approvalState: 'leader_approved',
+           reason: '', ruleAnchors: RULE_ANCHORS };
+}
+
+// ---- 3. selfTest — exercises LX-328 baseline + tier-2 happy path ----
+export function selfTest() {
+  const results = [];
+  const boot = bootShannon({});
+  results.push({ name: 'boot', ok: boot.ok === true, detail: boot.profile?.agent_pid || boot.reason });
+
+  // LX-328 baseline: tier-1 dry-run with no approval
+  const t1 = checkShannonGate('shannon:status', 1);
+  results.push({ name: 'LX-328-baseline', ok: t1.granted === true && t1.status === 'dry_run_ready', detail: t1.reason || t1.status });
+
+  // tier-2 happy path with full approval bundle
+  const happyApproval = {
+    mode: 'approved_run',
+    explicitApproval: true,
+    authorityMode: 'asolaria_primary',

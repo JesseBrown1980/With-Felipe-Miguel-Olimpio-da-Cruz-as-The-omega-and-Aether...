@@ -1,0 +1,15 @@
+[package]
+name = "asolaria-gulp-watchers"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The batch gulp/gc lanes, the GNN feedback cadence loop, the construction-routing and live-edge watchers, and the cosign durable-notify / universal-route dual-emit row builders, ported to an in-process integer Rust library that emits HBP text"
+keywords = ["gulp", "watcher", "hbp", "integer", "port"]
+categories = ["algorithms"]
+
+[lib]
+name = "gulp_watchers"
+path = "src/lib.rs"
+
+[dependencies]

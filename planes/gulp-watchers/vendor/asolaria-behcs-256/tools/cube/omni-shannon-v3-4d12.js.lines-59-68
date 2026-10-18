@@ -1,0 +1,10 @@
+function lensVerdict(dim, candidate) {
+  // Heuristic: score the candidate against the dim's focus.
+  const text = JSON.stringify(candidate).toLowerCase();
+  const blastRadius = (candidate.blast_radius || 'low').toLowerCase();
+  const leverage = (candidate.leverage || '').toLowerCase();
+  const tt = (candidate.time_to_running || '').toLowerCase();
+
+  // Hard-deny scan first (any dim catches a hard-deny → HALT)
+  const hardDenyHits = [];
+  if (text.includes('novalum') && text.includes('external')) hardDenyHits.push('HD1');

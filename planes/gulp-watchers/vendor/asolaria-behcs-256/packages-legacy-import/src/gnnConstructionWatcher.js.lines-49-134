@@ -1,0 +1,86 @@
+function recordRoutingEdge(fromConstructionId, toConstructionId, context = {}) {
+  if (!_routingGraph.has(fromConstructionId)) {
+    _routingGraph.set(fromConstructionId, new Map());
+  }
+  const edges = _routingGraph.get(fromConstructionId);
+  const existing = edges.get(toConstructionId) || { count: 0, confidence: 0, lastAt: "" };
+  existing.count += 1;
+  existing.lastAt = new Date().toISOString();
+
+  // Confidence is based on frequency relative to total outbound edges
+  let totalOut = 0;
+  for (const edge of edges.values()) totalOut += edge.count;
+  for (const [targetId, edge] of edges) {
+    edge.confidence = totalOut > 0 ? edge.count / totalOut : 0;
+  }
+
+  edges.set(toConstructionId, existing);
+
+  watcherEmitter.emit("routing_edge_recorded", {
+    from: fromConstructionId,
+    to: toConstructionId,
+    confidence: existing.confidence,
+    count: existing.count
+  });
+}
+
+/**
+ * Record that a message with certain keywords ended up at a construction.
+ */
+function recordPatternHit(keywords, constructionId) {
+  for (const keyword of keywords) {
+    const normalized = String(keyword).toLowerCase().trim();
+    if (!normalized || normalized.length < 3) continue;
+    const existing = _patternMemory.get(normalized) || { constructionId, hitCount: 0, lastAt: "" };
+    existing.constructionId = constructionId;
+    existing.hitCount += 1;
+    existing.lastAt = new Date().toISOString();
+    _patternMemory.set(normalized, existing);
+  }
+}
+
+/**
+ * Predict the best construction for a message using accumulated routing knowledge.
+ * Returns { constructionId, confidence, source } or null.
+ */
+function predictConstruction(message, currentConstructionId = null) {
+  const text = String(message.text || message || "").toLowerCase();
+  const words = text.split(/\s+/).filter(w => w.length >= 3);
+
+  // Strategy 1: Pattern memory — direct keyword matches
+  let bestPattern = null;
+  let bestPatternScore = 0;
+  for (const word of words) {
+    const hit = _patternMemory.get(word);
+    if (hit && hit.hitCount > bestPatternScore) {
+      bestPattern = hit;
+      bestPatternScore = hit.hitCount;
+    }
+  }
+
+  // Strategy 2: Routing graph — if we know where messages from current go next
+  let bestRoutingTarget = null;
+  if (currentConstructionId && _routingGraph.has(currentConstructionId)) {
+    const edges = _routingGraph.get(currentConstructionId);
+    let maxConfidence = 0;
+    for (const [targetId, edge] of edges) {
+      if (edge.confidence > maxConfidence) {
+        maxConfidence = edge.confidence;
+        bestRoutingTarget = { constructionId: targetId, confidence: edge.confidence };
+      }
+    }
+  }
+
+  // Combine: routing graph wins if confidence > 0.6, otherwise fall back to pattern memory
+  if (bestRoutingTarget && bestRoutingTarget.confidence > 0.6) {
+    return {
+      constructionId: bestRoutingTarget.constructionId,
+      confidence: bestRoutingTarget.confidence,
+      source: "routing_graph"
+    };
+  }
+
+  if (bestPattern && bestPatternScore >= 2) {
+    return {
+      constructionId: bestPattern.constructionId,
+      confidence: Math.min(1, bestPatternScore / 10),

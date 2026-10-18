@@ -1,0 +1,19 @@
+// shannon-boot.mjs — Shannon-gate boot fixture (Cohort-R Phase R1)
+// AGT-M11-SHANNON-GATE-BOOT-PID-2026-05-19  ·  supervisor=nereus cp=76
+//
+// LINEAGE HEADER (Dan-Hooks-derived ancestry):
+//   ROOT           DAN-HOOKS-LINEAGE-CANON-PID-2026-05-19 (data/dan-hooks-lineage/lineage.hbp seq=1)
+//     └── HOOKWALL src/hookwall/{dispatch,event-router,gnn-feeder,promotion-bridge,
+//                                cubes-indexer,tier-classifier,dan-hooks-approval-guard}.mjs
+//                  └── DAN-HOOKS-APPROVAL-GUARD (gate-prepend pattern)
+//                       └── SHANNON-EXECUTION-GATE (packages-legacy-import/src/shannonExecutionGate.js)
+//                            └── THIS FIXTURE (bootShannon + checkShannonGate)
+//
+// CANON SOURCES (read by Explore subs M11-S1..S5):
+//   S1: C:/asolaria-acer/packages-legacy-import/src/shannonExecutionGate.js
+//   S2: C:/asolaria-acer/packages-legacy-import/src/shannonPacketBuilder.js
+//   S3: C:/asolaria-acer/packages-legacy-import/src/shannonApprovalBridge.js
+//   S4: C:/asolaria-acer/packages/dashboard/src/super-os-viz/runtime/agent-terminal-fabric/profiles/shannon.profile.json
+//   S5: project_shannon_civilization_canon_acer_host_keys_2026_05_12.md  (LX-328/329/331/332/333)
+//
+// CONSTRAINTS: real-free class · append-only · describe_only · no API spend

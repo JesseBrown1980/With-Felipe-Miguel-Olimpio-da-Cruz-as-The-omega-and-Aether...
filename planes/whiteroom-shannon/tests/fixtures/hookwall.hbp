@@ -1,0 +1,407 @@
+# hookwall.hbp from tools/referee.py; do not edit
+# Mirrors Shannon-and-the-gnns-stage@32f9670 pipeline/hookwall.mjs (blob 5d300345) on one plane's counters,
+#   step by step (steps 0-1 are selfTest :68-77). fields = the encodeFrame arguments as value tokens.
+# enrichEnvelope (quant-bus.mjs, not on disk) is the TEST STAND-IN standin_enrich: intent_sha16 passed
+#   through, triple_quant '' when room_id % 3 == 0 else 'T<room_id>:<granted>', authority_quant
+#   'A' + intent_sha16[0:4] on a grant else undefined. The grant authority object (:45) is not used.
+# result=refused: Number(roomId) || 0 is not an integer of magnitude <= 2^53 (outside the port's domain).
+HW|step=0|call=request|room=#0|intent='test_intent|granted=0|tag=HKW|fields=[ #0 'c2c95456a7d7bc35 #0 'default_deny_quintuple_required ' ' ]|requests=1|denials=1|grants=0
+HW|step=1|call=grant|room=#0|intent='test_intent|auth={ 'signers [ 'a 'b 'c 'd 'e ] 'window_ok t }|granted=1|tag=HKG|fields=[ #0 'c2c95456a7d7bc35 #1 #5 ' 'Ac2c9 ]|requests=2|denials=1|grants=1
+HW|step=2|call=grant|room='1.5|intent='|auth=u|result=refused|requests=2|denials=1|grants=1
+HW|step=3|call=grant|room=#9007199254740992|intent='|auth='x|granted=0|tag=HKW|fields=[ #9007199254740992 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T9007199254740992:0 ' ]|requests=4|denials=3|grants=1
+HW|step=4|call=request|room='1.5|intent=u|result=refused|requests=4|denials=3|grants=1
+HW|step=5|call=request|room=n|intent=#42|granted=0|tag=HKW|fields=[ n '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=5|denials=4|grants=1
+HW|step=6|call=fire|tuple=f|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=6|denials=5|grants=1
+HW|step=7|call=fire|tuple={ 'room_id #7 'intent ' 'kind #0 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #7 'f416648f8086113f #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=8|denials=7|grants=1
+HW|step=8|call=grant|room='12|intent='%1F€0|auth=[ ]|granted=0|tag=HKW|fields=[ '12 '93195819e907768a #0 'default_deny_quintuple_required ' ' ]|requests=10|denials=9|grants=1
+HW|step=9|call=grant|room='1e3|intent='live|auth=u|granted=0|tag=HKW|fields=[ '1e3 '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=12|denials=11|grants=1
+HW|step=10|call=request|room={ }|intent=#42|granted=0|tag=HKW|fields=[ { } '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=13|denials=12|grants=1
+HW|step=11|call=grant|room=#7|intent='%0D|auth={ 'signers [ ] 'window_ok t }|granted=0|tag=HKW|fields=[ #7 '9d1e0e2d9459d065 #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=15|denials=14|grants=1
+HW|step=12|call=request|room=[ #5 ]|intent=n|granted=0|tag=HKW|fields=[ [ #5 ] '74234e98afe7498f #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=16|denials=15|grants=1
+HW|step=13|call=request|room=#NaN|intent='|granted=0|tag=HKW|fields=[ #NaN 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=17|denials=16|grants=1
+HW|step=14|call=grant|room=#-4|intent=[ #1 'x ]|auth={ 'signers [ #1 #1 ] 'window_ok #1 }|granted=0|tag=HKW|fields=[ #-4 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=19|denials=18|grants=1
+HW|step=15|call=fire|tuple={ 'room_id ' 'intent ' 'kind #0 'quintupleAuth { 'signers [ n #1 ] 'window_ok t } }|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=21|denials=20|grants=1
+HW|step=16|call=grant|room='abc|intent={ 'a #1 }|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ 'abc 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=23|denials=22|grants=1
+HW|step=17|call=fire|tuple={ 'kind #0 }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=24|denials=23|grants=1
+HW|step=18|call=request|room=#NaN|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ #NaN 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=25|denials=24|grants=1
+HW|step=19|call=request|room='%200x10%20|intent='live|granted=0|tag=HKW|fields=[ '%200x10%20 '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=26|denials=25|grants=1
+HW|step=20|call=request|room=n|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ n '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=27|denials=26|grants=1
+HW|step=21|call=grant|room='1.5|intent=#42|auth={ 'signers [ n 'a ] 'window_ok #1 }|result=refused|requests=27|denials=26|grants=1
+HW|step=22|call=fire|tuple=[ ]|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=28|denials=27|grants=1
+HW|step=23|call=fire|tuple={ 'room_id #NaN }|granted=0|tag=HKW|fields=[ #NaN 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=29|denials=28|grants=1
+HW|step=24|call=grant|room=#7|intent=u|auth=n|granted=0|tag=HKW|fields=[ #7 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=31|denials=30|grants=1
+HW|step=25|call=grant|room=#3|intent='live|auth=t|granted=0|tag=HKW|fields=[ #3 '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=33|denials=32|grants=1
+HW|step=26|call=fire|tuple={ 'room_id f 'quintupleAuth { 'signers [ 'b 'a 'a 'b ] 'window_ok t } }|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=35|denials=34|grants=1
+HW|step=27|call=request|room=#-4|intent='|granted=0|tag=HKW|fields=[ #-4 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=36|denials=35|grants=1
+HW|step=28|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=37|denials=36|grants=1
+HW|step=29|call=fire|tuple={ 'kind #0 }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=38|denials=37|grants=1
+HW|step=30|call=grant|room='abc|intent={ 'a #1 }|auth=t|granted=0|tag=HKW|fields=[ 'abc 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=40|denials=39|grants=1
+HW|step=31|call=fire|tuple={ 'room_id #0 'intent u 'kind '%3D: 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 '5c26ac5c6cdf82f6 #0 'default_deny_quintuple_required ' ' ]|requests=41|denials=40|grants=1
+HW|step=32|call=request|room=#0|intent='|granted=0|tag=HKW|fields=[ #0 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=42|denials=41|grants=1
+HW|step=33|call=request|room=#9007199254740994|intent=#42|result=refused|requests=42|denials=41|grants=1
+HW|step=34|call=request|room='1.5|intent='live|result=refused|requests=42|denials=41|grants=1
+HW|step=35|call=fire|tuple={ 'room_id f 'kind 'k }|granted=0|tag=HKW|fields=[ f '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=43|denials=42|grants=1
+HW|step=36|call=request|room='abc|intent='|granted=0|tag=HKW|fields=[ 'abc 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=44|denials=43|grants=1
+HW|step=37|call=request|room=#9007199254740994|intent='_|result=refused|requests=44|denials=43|grants=1
+HW|step=38|call=request|room={ }|intent='%7C0%7F\😀|granted=0|tag=HKW|fields=[ { } '871ecd211ad2f1b9 #0 'default_deny_quintuple_required ' ' ]|requests=45|denials=44|grants=1
+HW|step=39|call=fire|tuple={ 'room_id #9007199254740994 'intent u 'quintupleAuth { 'signers [ #1 ] 'window_ok #1 } }|result=refused|requests=45|denials=44|grants=1
+HW|step=40|call=grant|room=#9007199254740994|intent='|auth=t|result=refused|requests=45|denials=44|grants=1
+HW|step=41|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=46|denials=45|grants=1
+HW|step=42|call=request|room=#NaN|intent='"|granted=0|tag=HKW|fields=[ #NaN '8a331fdde7032f33 #0 'default_deny_quintuple_required ' ' ]|requests=47|denials=46|grants=1
+HW|step=43|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=48|denials=47|grants=1
+HW|step=44|call=grant|room=t|intent='😀|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ t 'f0443a342c5ef547 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=50|denials=49|grants=1
+HW|step=45|call=fire|tuple={ 'room_id #7 'quintupleAuth { 'signers [ 'a #1 #1 n #1 ] 'window_ok t } }|granted=1|tag=HKG|fields=[ #7 'f416648f8086113f #1 #5 'T7:1 'Af416 ]|requests=51|denials=49|grants=2
+HW|step=46|call=fire|tuple={ 'room_id n 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=52|denials=50|grants=2
+HW|step=47|call=grant|room=#1.5|intent=n|auth=u|result=refused|requests=52|denials=50|grants=2
+HW|step=48|call=grant|room=#0|intent='live|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ #0 '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=54|denials=52|grants=2
+HW|step=49|call=request|room=#9007199254740992|intent='%3D%1F%7C%25|granted=0|tag=HKW|fields=[ #9007199254740992 'cb8ee3cfcdde22f9 #0 'default_deny_quintuple_required 'T9007199254740992:0 ' ]|requests=55|denials=53|grants=2
+HW|step=50|call=fire|tuple={ 'room_id n 'intent 'Z 'kind ' }|granted=0|tag=HKW|fields=[ #0 'bbeebd879e1dff69 #0 'default_deny_quintuple_required ' ' ]|requests=56|denials=54|grants=2
+HW|step=51|call=fire|tuple={ 'intent 'k 'quintupleAuth { 'signers [ #1 'a 'b 'a ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=58|denials=56|grants=2
+HW|step=52|call=request|room=#3|intent='|granted=0|tag=HKW|fields=[ #3 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=59|denials=57|grants=2
+HW|step=53|call=grant|room='1e3|intent=#42|auth=[ ]|granted=0|tag=HKW|fields=[ '1e3 '73475cb40a568e8d #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=61|denials=59|grants=2
+HW|step=54|call=grant|room={ }|intent='%00Z9-%25|auth=u|granted=0|tag=HKW|fields=[ { } '4c384eba223f3117 #0 'default_deny_quintuple_required ' ' ]|requests=63|denials=61|grants=2
+HW|step=55|call=grant|room=u|intent=u|auth=u|granted=0|tag=HKW|fields=[ u 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=65|denials=63|grants=2
+HW|step=56|call=grant|room=#9007199254740994|intent=[ #1 'x ]|auth={ 'signers 'abcde 'window_ok t }|result=refused|requests=65|denials=63|grants=2
+HW|step=57|call=grant|room='%200x10%20|intent=u|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ '%200x10%20 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=67|denials=65|grants=2
+HW|step=58|call=grant|room='%200x10%20|intent=u|auth={ 'signers [ 'a 'a #1 n 'b ] 'window_ok t }|granted=1|tag=HKG|fields=[ '%200x10%20 'eb045d78d2731073 #1 #5 'T16:1 'Aeb04 ]|requests=68|denials=65|grants=3
+HW|step=59|call=grant|room={ }|intent='live|auth=n|granted=0|tag=HKW|fields=[ { } '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=70|denials=67|grants=3
+HW|step=60|call=grant|room={ }|intent={ 'a #1 }|auth='x|granted=0|tag=HKW|fields=[ { } 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=72|denials=69|grants=3
+HW|step=61|call=request|room='abc|intent=#42|granted=0|tag=HKW|fields=[ 'abc '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=73|denials=70|grants=3
+HW|step=62|call=request|room=#9007199254740994|intent='|result=refused|requests=73|denials=70|grants=3
+HW|step=63|call=request|room=#9007199254740994|intent={ 'a #1 }|result=refused|requests=73|denials=70|grants=3
+HW|step=64|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=74|denials=71|grants=3
+HW|step=65|call=grant|room={ }|intent='|auth={ 'signers [ ] 'window_ok 'true }|granted=0|tag=HKW|fields=[ { } 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=76|denials=73|grants=3
+HW|step=66|call=grant|room='abc|intent=[ #1 'x ]|auth={ 'signers [ ] 'window_ok t }|granted=0|tag=HKW|fields=[ 'abc '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=78|denials=75|grants=3
+HW|step=67|call=grant|room='1e3|intent=#42|auth=n|granted=0|tag=HKW|fields=[ '1e3 '73475cb40a568e8d #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=80|denials=77|grants=3
+HW|step=68|call=request|room=n|intent=n|granted=0|tag=HKW|fields=[ n '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=81|denials=78|grants=3
+HW|step=69|call=fire|tuple={ 'room_id t 'intent u 'kind '\Z%0A 'quintupleAuth { 'signers [ ] 'window_ok t } }|granted=0|tag=HKW|fields=[ t '9b3c84f47a9c917d #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=83|denials=80|grants=3
+HW|step=70|call=fire|tuple={ 'room_id { } 'intent u 'kind #0 }|granted=0|tag=HKW|fields=[ { } 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=84|denials=81|grants=3
+HW|step=71|call=request|room=n|intent=n|granted=0|tag=HKW|fields=[ n '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=85|denials=82|grants=3
+HW|step=72|call=fire|tuple={ 'intent #0 'kind '-%25_%00 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 '45dd4a318eca7eb8 #0 'default_deny_quintuple_required ' ' ]|requests=86|denials=83|grants=3
+HW|step=73|call=fire|tuple={ 'room_id n 'intent 'k 'kind '_ / 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=88|denials=85|grants=3
+HW|step=74|call=grant|room=[ #5 ]|intent=u|auth={ 'signers [ 'b n 'b #1 n ] 'window_ok u }|granted=0|tag=HKW|fields=[ [ #5 ] 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=90|denials=87|grants=3
+HW|step=75|call=request|room=n|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ n 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=91|denials=88|grants=3
+HW|step=76|call=fire|tuple={ 'intent ' }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=92|denials=89|grants=3
+HW|step=77|call=fire|tuple={ 'room_id 'abc 'intent #0 'kind #0 }|granted=0|tag=HKW|fields=[ 'abc 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=93|denials=90|grants=3
+HW|step=78|call=grant|room=#9007199254740994|intent=[ #1 'x ]|auth={ 'signers [ #1 'a n ] 'window_ok t }|result=refused|requests=93|denials=90|grants=3
+HW|step=79|call=grant|room=n|intent=n|auth={ 'signers [ n 'b 'a #1 #1 'a ] 'window_ok f }|granted=0|tag=HKW|fields=[ n '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=95|denials=92|grants=3
+HW|step=80|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=96|denials=93|grants=3
+HW|step=81|call=request|room=f|intent='live|granted=0|tag=HKW|fields=[ f '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=97|denials=94|grants=3
+HW|step=82|call=grant|room=u|intent=[ #1 'x ]|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ u '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=99|denials=96|grants=3
+HW|step=83|call=request|room=#7|intent='|granted=0|tag=HKW|fields=[ #7 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=100|denials=97|grants=3
+HW|step=84|call=request|room=#-4|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ #-4 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=101|denials=98|grants=3
+HW|step=85|call=fire|tuple=#3|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=102|denials=99|grants=3
+HW|step=86|call=fire|tuple={ 'intent #0 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=103|denials=100|grants=3
+HW|step=87|call=request|room=[ #5 ]|intent=#42|granted=0|tag=HKW|fields=[ [ #5 ] '73475cb40a568e8d #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=104|denials=101|grants=3
+HW|step=88|call=request|room=t|intent=u|granted=0|tag=HKW|fields=[ t 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=105|denials=102|grants=3
+HW|step=89|call=grant|room=u|intent='|auth='x|granted=0|tag=HKW|fields=[ u 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=107|denials=104|grants=3
+HW|step=90|call=fire|tuple=#3|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=108|denials=105|grants=3
+HW|step=91|call=fire|tuple=[ ]|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=109|denials=106|grants=3
+HW|step=92|call=request|room=f|intent=#42|granted=0|tag=HKW|fields=[ f '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=110|denials=107|grants=3
+HW|step=93|call=request|room='abc|intent=#42|granted=0|tag=HKW|fields=[ 'abc '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=111|denials=108|grants=3
+HW|step=94|call=request|room=[ #5 ]|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ [ #5 ] '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=112|denials=109|grants=3
+HW|step=95|call=grant|room='%200x10%20|intent='|auth=[ ]|granted=0|tag=HKW|fields=[ '%200x10%20 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=114|denials=111|grants=3
+HW|step=96|call=request|room=#9007199254740992|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ #9007199254740992 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T9007199254740992:0 ' ]|requests=115|denials=112|grants=3
+HW|step=97|call=grant|room=#0|intent='|auth=[ ]|granted=0|tag=HKW|fields=[ #0 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=117|denials=114|grants=3
+HW|step=98|call=request|room=u|intent=n|granted=0|tag=HKW|fields=[ u '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=118|denials=115|grants=3
+HW|step=99|call=request|room=#-4|intent=u|granted=0|tag=HKW|fields=[ #-4 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=119|denials=116|grants=3
+HW|step=100|call=fire|tuple={ 'room_id { } 'intent ' 'kind ' }|granted=0|tag=HKW|fields=[ { } 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=120|denials=117|grants=3
+HW|step=101|call=request|room=#NaN|intent=u|granted=0|tag=HKW|fields=[ #NaN 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=121|denials=118|grants=3
+HW|step=102|call=request|room='abc|intent=#42|granted=0|tag=HKW|fields=[ 'abc '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=122|denials=119|grants=3
+HW|step=103|call=grant|room=#0|intent={ 'a #1 }|auth=[ ]|granted=0|tag=HKW|fields=[ #0 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=124|denials=121|grants=3
+HW|step=104|call=request|room=#0|intent=n|granted=0|tag=HKW|fields=[ #0 '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=125|denials=122|grants=3
+HW|step=105|call=grant|room='1.5|intent=n|auth='x|result=refused|requests=125|denials=122|grants=3
+HW|step=106|call=request|room='12|intent=#42|granted=0|tag=HKW|fields=[ '12 '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=126|denials=123|grants=3
+HW|step=107|call=request|room=n|intent='%000_:|granted=0|tag=HKW|fields=[ n '555cf2dc87f24789 #0 'default_deny_quintuple_required ' ' ]|requests=127|denials=124|grants=3
+HW|step=108|call=request|room={ }|intent='|granted=0|tag=HKW|fields=[ { } 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=128|denials=125|grants=3
+HW|step=109|call=grant|room='%200x10%20|intent={ 'a #1 }|auth=n|granted=0|tag=HKW|fields=[ '%200x10%20 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=130|denials=127|grants=3
+HW|step=110|call=request|room=#-4|intent='%20"%20-|granted=0|tag=HKW|fields=[ #-4 '28d4f64033e634c8 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=131|denials=128|grants=3
+HW|step=111|call=request|room='%200x10%20|intent='live|granted=0|tag=HKW|fields=[ '%200x10%20 '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=132|denials=129|grants=3
+HW|step=112|call=grant|room=u|intent='|auth=t|granted=0|tag=HKW|fields=[ u 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=134|denials=131|grants=3
+HW|step=113|call=grant|room=#3|intent=n|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ #3 '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=136|denials=133|grants=3
+HW|step=114|call=request|room='12|intent=u|granted=0|tag=HKW|fields=[ '12 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=137|denials=134|grants=3
+HW|step=115|call=request|room=n|intent='live|granted=0|tag=HKW|fields=[ n '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=138|denials=135|grants=3
+HW|step=116|call=grant|room='|intent='|auth={ 'signers [ 'b n ] 'window_ok t }|granted=0|tag=HKW|fields=[ ' 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=140|denials=137|grants=3
+HW|step=117|call=request|room='1.5|intent='\%20\€|result=refused|requests=140|denials=137|grants=3
+HW|step=118|call=request|room=[ #5 ]|intent=n|granted=0|tag=HKW|fields=[ [ #5 ] '74234e98afe7498f #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=141|denials=138|grants=3
+HW|step=119|call=grant|room=f|intent='|auth=n|granted=0|tag=HKW|fields=[ f 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=143|denials=140|grants=3
+HW|step=120|call=fire|tuple=#3|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=144|denials=141|grants=3
+HW|step=121|call=request|room=t|intent=n|granted=0|tag=HKW|fields=[ t '74234e98afe7498f #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=145|denials=142|grants=3
+HW|step=122|call=grant|room=t|intent='live|auth={ 'signers [ 'a n 'b 'a ] 'window_ok t }|granted=0|tag=HKW|fields=[ t '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=147|denials=144|grants=3
+HW|step=123|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=148|denials=145|grants=3
+HW|step=124|call=fire|tuple={ 'room_id u 'intent 'k }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=149|denials=146|grants=3
+HW|step=125|call=fire|tuple=f|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=150|denials=147|grants=3
+HW|step=126|call=fire|tuple={ 'room_id '12 'kind ' 'quintupleAuth 'x }|granted=0|tag=HKW|fields=[ '12 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=152|denials=149|grants=3
+HW|step=127|call=fire|tuple=f|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=153|denials=150|grants=3
+HW|step=128|call=grant|room=#3|intent='é€|auth=u|granted=0|tag=HKW|fields=[ #3 'f0165711145fd431 #0 'default_deny_quintuple_required ' ' ]|requests=155|denials=152|grants=3
+HW|step=129|call=request|room=[ #5 ]|intent=n|granted=0|tag=HKW|fields=[ [ #5 ] '74234e98afe7498f #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=156|denials=153|grants=3
+HW|step=130|call=request|room=#NaN|intent=u|granted=0|tag=HKW|fields=[ #NaN 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=157|denials=154|grants=3
+HW|step=131|call=fire|tuple=n|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=158|denials=155|grants=3
+HW|step=132|call=grant|room=#0|intent='%25Z|auth={ 'signers [ n n #1 'b ] 'window_ok t }|granted=0|tag=HKW|fields=[ #0 '8b0b209068d4b20d #0 'default_deny_quintuple_required ' ' ]|requests=160|denials=157|grants=3
+HW|step=133|call=grant|room='1e3|intent={ 'a #1 }|auth=[ ]|granted=0|tag=HKW|fields=[ '1e3 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=162|denials=159|grants=3
+HW|step=134|call=grant|room='|intent={ 'a #1 }|auth='x|granted=0|tag=HKW|fields=[ ' 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=164|denials=161|grants=3
+HW|step=135|call=grant|room=#NaN|intent='%7C%7FZ|auth=n|granted=0|tag=HKW|fields=[ #NaN '2a4ae62c3b2a8b1e #0 'default_deny_quintuple_required ' ' ]|requests=166|denials=163|grants=3
+HW|step=136|call=grant|room=[ #5 ]|intent=#42|auth={ 'signers [ 'b 'b 'b 'b ] 'window_ok 'true }|granted=0|tag=HKW|fields=[ [ #5 ] '73475cb40a568e8d #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=168|denials=165|grants=3
+HW|step=137|call=grant|room=[ #5 ]|intent='|auth=u|granted=0|tag=HKW|fields=[ [ #5 ] 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=170|denials=167|grants=3
+HW|step=138|call=grant|room=#NaN|intent=n|auth=[ ]|granted=0|tag=HKW|fields=[ #NaN '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=172|denials=169|grants=3
+HW|step=139|call=request|room=#9007199254740994|intent=[ #1 'x ]|result=refused|requests=172|denials=169|grants=3
+HW|step=140|call=grant|room=f|intent={ 'a #1 }|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ f 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=174|denials=171|grants=3
+HW|step=141|call=fire|tuple={ 'room_id #9007199254740994 'quintupleAuth 'x }|result=refused|requests=174|denials=171|grants=3
+HW|step=142|call=request|room=#-4|intent='9%00€%20a|granted=0|tag=HKW|fields=[ #-4 '02856040747f5634 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=175|denials=172|grants=3
+HW|step=143|call=fire|tuple=u|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=176|denials=173|grants=3
+HW|step=144|call=grant|room=t|intent='|auth=n|granted=0|tag=HKW|fields=[ t 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=178|denials=175|grants=3
+HW|step=145|call=fire|tuple=#3|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=179|denials=176|grants=3
+HW|step=146|call=grant|room=t|intent={ 'a #1 }|auth={ 'signers [ ] 'window_ok t }|granted=0|tag=HKW|fields=[ t 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=181|denials=178|grants=3
+HW|step=147|call=request|room=#0|intent='|granted=0|tag=HKW|fields=[ #0 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=182|denials=179|grants=3
+HW|step=148|call=grant|room='12|intent=n|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ '12 '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=184|denials=181|grants=3
+HW|step=149|call=grant|room=u|intent={ 'a #1 }|auth={ 'signers [ ] 'window_ok f }|granted=0|tag=HKW|fields=[ u 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=186|denials=183|grants=3
+HW|step=150|call=request|room=f|intent='|granted=0|tag=HKW|fields=[ f 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=187|denials=184|grants=3
+HW|step=151|call=request|room=#7|intent=#42|granted=0|tag=HKW|fields=[ #7 '73475cb40a568e8d #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=188|denials=185|grants=3
+HW|step=152|call=fire|tuple={ 'room_id #-4 'kind '%25%20%1F%25 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #-4 '423ef5e1c2e7d8a9 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=189|denials=186|grants=3
+HW|step=153|call=grant|room='1.5|intent=#42|auth={ 'signers 'abcde 'window_ok t }|result=refused|requests=189|denials=186|grants=3
+HW|step=154|call=fire|tuple={ 'room_id #0 }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=190|denials=187|grants=3
+HW|step=155|call=fire|tuple={ 'room_id ' 'intent 'k }|granted=0|tag=HKW|fields=[ ' '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=191|denials=188|grants=3
+HW|step=156|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=192|denials=189|grants=3
+HW|step=157|call=grant|room=#0|intent={ 'a #1 }|auth=[ ]|granted=0|tag=HKW|fields=[ #0 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=194|denials=191|grants=3
+HW|step=158|call=request|room=#NaN|intent=u|granted=0|tag=HKW|fields=[ #NaN 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=195|denials=192|grants=3
+HW|step=159|call=request|room={ }|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ { } '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=196|denials=193|grants=3
+HW|step=160|call=fire|tuple={ 'room_id t 'intent ' 'kind 'k 'quintupleAuth 'x }|granted=0|tag=HKW|fields=[ t '8254c329a92850f6 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=198|denials=195|grants=3
+HW|step=161|call=grant|room=t|intent='😀%25é%3D|auth={ 'signers [ #1 #1 'b 'a #1 'a n ] 'window_ok t }|granted=1|tag=HKG|fields=[ t 'ad13841dcc5873e8 #1 #7 'T1:1 'Aad13 ]|requests=199|denials=195|grants=4
+HW|step=162|call=fire|tuple={ 'room_id #9007199254740994 'intent ' 'quintupleAuth { 'signers [ #1 'b n ] 'window_ok t } }|result=refused|requests=199|denials=195|grants=4
+HW|step=163|call=grant|room=[ #5 ]|intent='%0A"%7F/Z%0A|auth=u|granted=0|tag=HKW|fields=[ [ #5 ] 'a47e5481bf3413b7 #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=201|denials=197|grants=4
+HW|step=164|call=grant|room=u|intent='live|auth={ 'signers [ 'a 'a ] 'window_ok #1 }|granted=0|tag=HKW|fields=[ u '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=203|denials=199|grants=4
+HW|step=165|call=fire|tuple={ 'room_id f 'intent u 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=205|denials=201|grants=4
+HW|step=166|call=fire|tuple={ 'intent ' 'kind ' 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=206|denials=202|grants=4
+HW|step=167|call=request|room=#NaN|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ #NaN 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=207|denials=203|grants=4
+HW|step=168|call=grant|room='%200x10%20|intent=[ #1 'x ]|auth=t|granted=0|tag=HKW|fields=[ '%200x10%20 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=209|denials=205|grants=4
+HW|step=169|call=grant|room=#3|intent=[ #1 'x ]|auth=n|granted=0|tag=HKW|fields=[ #3 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=211|denials=207|grants=4
+HW|step=170|call=fire|tuple={ 'room_id #9007199254740994 'quintupleAuth { 'signers 'abcde 'window_ok t } }|result=refused|requests=211|denials=207|grants=4
+HW|step=171|call=fire|tuple={ 'room_id { } 'quintupleAuth { 'signers [ #1 'a #1 ] 'window_ok t } }|granted=0|tag=HKW|fields=[ { } 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=213|denials=209|grants=4
+HW|step=172|call=grant|room=u|intent=[ #1 'x ]|auth={ 'signers [ ] 'window_ok u }|granted=0|tag=HKW|fields=[ u '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=215|denials=211|grants=4
+HW|step=173|call=fire|tuple='|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=216|denials=212|grants=4
+HW|step=174|call=grant|room=f|intent='live|auth=#1|granted=0|tag=HKW|fields=[ f '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=218|denials=214|grants=4
+HW|step=175|call=request|room='%200x10%20|intent='9\|granted=0|tag=HKW|fields=[ '%200x10%20 '3b32ca2ed7d1cd53 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=219|denials=215|grants=4
+HW|step=176|call=grant|room=u|intent=#42|auth={ 'signers [ 'a n ] 'window_ok t }|granted=0|tag=HKW|fields=[ u '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=221|denials=217|grants=4
+HW|step=177|call=request|room=[ #5 ]|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ [ #5 ] '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=222|denials=218|grants=4
+HW|step=178|call=fire|tuple={ 'intent u 'quintupleAuth { 'signers [ n n 'b ] 'window_ok #1 } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=224|denials=220|grants=4
+HW|step=179|call=request|room='1.5|intent=n|result=refused|requests=224|denials=220|grants=4
+HW|step=180|call=fire|tuple={ 'kind '_\%25 'quintupleAuth { 'signers [ ] 'window_ok u } }|granted=0|tag=HKW|fields=[ #0 '5b52281b29cd0433 #0 'default_deny_quintuple_required ' ' ]|requests=226|denials=222|grants=4
+HW|step=181|call=fire|tuple={ 'room_id ' }|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=227|denials=223|grants=4
+HW|step=182|call=request|room=t|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ t '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=228|denials=224|grants=4
+HW|step=183|call=request|room=[ #5 ]|intent=n|granted=0|tag=HKW|fields=[ [ #5 ] '74234e98afe7498f #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=229|denials=225|grants=4
+HW|step=184|call=request|room=u|intent=#42|granted=0|tag=HKW|fields=[ u '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=230|denials=226|grants=4
+HW|step=185|call=request|room=n|intent=n|granted=0|tag=HKW|fields=[ n '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=231|denials=227|grants=4
+HW|step=186|call=fire|tuple={ 'kind '%25\ }|granted=0|tag=HKW|fields=[ #0 '6d1752959f3ee10b #0 'default_deny_quintuple_required ' ' ]|requests=232|denials=228|grants=4
+HW|step=187|call=grant|room=#0|intent=n|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ #0 '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=234|denials=230|grants=4
+HW|step=188|call=request|room=n|intent='live|granted=0|tag=HKW|fields=[ n '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=235|denials=231|grants=4
+HW|step=189|call=fire|tuple={ 'kind u 'quintupleAuth { 'signers [ ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=237|denials=233|grants=4
+HW|step=190|call=grant|room=#9007199254740994|intent=u|auth='x|result=refused|requests=237|denials=233|grants=4
+HW|step=191|call=grant|room=#NaN|intent={ 'a #1 }|auth={ 'signers [ 'a 'a 'b n 'a 'a ] 'window_ok f }|granted=0|tag=HKW|fields=[ #NaN 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=239|denials=235|grants=4
+HW|step=192|call=fire|tuple=f|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=240|denials=236|grants=4
+HW|step=193|call=grant|room=u|intent=[ #1 'x ]|auth=[ ]|granted=0|tag=HKW|fields=[ u '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=242|denials=238|grants=4
+HW|step=194|call=fire|tuple={ 'room_id { } }|granted=0|tag=HKW|fields=[ { } 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=243|denials=239|grants=4
+HW|step=195|call=grant|room=#NaN|intent=n|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ #NaN '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=245|denials=241|grants=4
+HW|step=196|call=request|room=#-4|intent='\"0é./|granted=0|tag=HKW|fields=[ #-4 '990d1b059ee28cba #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=246|denials=242|grants=4
+HW|step=197|call=request|room=t|intent=#42|granted=0|tag=HKW|fields=[ t '73475cb40a568e8d #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=247|denials=243|grants=4
+HW|step=198|call=request|room=t|intent='|granted=0|tag=HKW|fields=[ t 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=248|denials=244|grants=4
+HW|step=199|call=request|room='1.5|intent=n|result=refused|requests=248|denials=244|grants=4
+HW|step=200|call=grant|room='1e3|intent='|auth=#1|granted=0|tag=HKW|fields=[ '1e3 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=250|denials=246|grants=4
+HW|step=201|call=request|room=#NaN|intent=n|granted=0|tag=HKW|fields=[ #NaN '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=251|denials=247|grants=4
+HW|step=202|call=fire|tuple={ 'intent ' 'quintupleAuth { 'signers [ ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=253|denials=249|grants=4
+HW|step=203|call=grant|room=#9007199254740994|intent=#42|auth={ 'signers [ #1 'b #1 'a ] 'window_ok t }|result=refused|requests=253|denials=249|grants=4
+HW|step=204|call=fire|tuple={ 'room_id #7 'intent u 'kind u 'quintupleAuth n }|granted=0|tag=HKW|fields=[ #7 'f416648f8086113f #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=254|denials=250|grants=4
+HW|step=205|call=grant|room=n|intent=n|auth=n|granted=0|tag=HKW|fields=[ n '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=256|denials=252|grants=4
+HW|step=206|call=request|room=u|intent='live|granted=0|tag=HKW|fields=[ u '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=257|denials=253|grants=4
+HW|step=207|call=fire|tuple={ 'kind 'k }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=258|denials=254|grants=4
+HW|step=208|call=fire|tuple={ 'room_id { } 'intent u 'kind '_/%0A%09 }|granted=0|tag=HKW|fields=[ { } '5f4e3369f770b075 #0 'default_deny_quintuple_required ' ' ]|requests=259|denials=255|grants=4
+HW|step=209|call=fire|tuple={ 'room_id { } 'intent #0 'kind 'k }|granted=0|tag=HKW|fields=[ { } '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=260|denials=256|grants=4
+HW|step=210|call=fire|tuple={ 'intent u 'kind u 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=262|denials=258|grants=4
+HW|step=211|call=fire|tuple={ 'room_id u 'intent #0 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=264|denials=260|grants=4
+HW|step=212|call=grant|room='|intent={ 'a #1 }|auth=#1|granted=0|tag=HKW|fields=[ ' 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=266|denials=262|grants=4
+HW|step=213|call=fire|tuple=u|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=267|denials=263|grants=4
+HW|step=214|call=grant|room=f|intent='live|auth=n|granted=0|tag=HKW|fields=[ f '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=269|denials=265|grants=4
+HW|step=215|call=request|room=#NaN|intent=u|granted=0|tag=HKW|fields=[ #NaN 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=270|denials=266|grants=4
+HW|step=216|call=grant|room=f|intent=n|auth={ 'signers [ 'a 'b 'b 'a 'a 'a 'b ] 'window_ok t }|granted=1|tag=HKG|fields=[ f '74234e98afe7498f #1 #7 ' 'A7423 ]|requests=271|denials=266|grants=5
+HW|step=217|call=fire|tuple={ 'room_id f 'intent 'é%3D }|granted=0|tag=HKW|fields=[ f '76e8c746fc559195 #0 'default_deny_quintuple_required ' ' ]|requests=272|denials=267|grants=5
+HW|step=218|call=grant|room=u|intent='live|auth={ 'signers [ 'b ] 'window_ok t }|granted=0|tag=HKW|fields=[ u '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=274|denials=269|grants=5
+HW|step=219|call=request|room=f|intent='live|granted=0|tag=HKW|fields=[ f '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=275|denials=270|grants=5
+HW|step=220|call=grant|room=#NaN|intent=#42|auth={ 'signers [ n ] 'window_ok f }|granted=0|tag=HKW|fields=[ #NaN '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=277|denials=272|grants=5
+HW|step=221|call=grant|room={ }|intent=[ #1 'x ]|auth='x|granted=0|tag=HKW|fields=[ { } '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=279|denials=274|grants=5
+HW|step=222|call=grant|room='|intent='😀_ %7F|auth=u|granted=0|tag=HKW|fields=[ ' 'f52d35b9dd6e3d30 #0 'default_deny_quintuple_required ' ' ]|requests=281|denials=276|grants=5
+HW|step=223|call=fire|tuple='|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=282|denials=277|grants=5
+HW|step=224|call=fire|tuple={ 'kind ' 'quintupleAuth n }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=283|denials=278|grants=5
+HW|step=225|call=grant|room='|intent=#42|auth={ 'signers [ 'a #1 'b ] 'window_ok t }|granted=0|tag=HKW|fields=[ ' '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=285|denials=280|grants=5
+HW|step=226|call=fire|tuple={ 'intent '"%0D%25 'quintupleAuth { 'signers [ 'a 'a ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 '8a02ea79d34b6e0f #0 'default_deny_quintuple_required ' ' ]|requests=287|denials=282|grants=5
+HW|step=227|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=288|denials=283|grants=5
+HW|step=228|call=request|room=[ #5 ]|intent=#42|granted=0|tag=HKW|fields=[ [ #5 ] '73475cb40a568e8d #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=289|denials=284|grants=5
+HW|step=229|call=request|room=#0|intent='live|granted=0|tag=HKW|fields=[ #0 '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=290|denials=285|grants=5
+HW|step=230|call=grant|room=#-4|intent='Zé|auth=t|granted=0|tag=HKW|fields=[ #-4 'd2005ff7ac279cc4 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=292|denials=287|grants=5
+HW|step=231|call=fire|tuple={ 'room_id ' 'intent #0 'quintupleAuth u }|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=293|denials=288|grants=5
+HW|step=232|call=request|room='1e3|intent=u|granted=0|tag=HKW|fields=[ '1e3 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=294|denials=289|grants=5
+HW|step=233|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=295|denials=290|grants=5
+HW|step=234|call=request|room='%200x10%20|intent='live|granted=0|tag=HKW|fields=[ '%200x10%20 '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=296|denials=291|grants=5
+HW|step=235|call=request|room='|intent='|granted=0|tag=HKW|fields=[ ' 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=297|denials=292|grants=5
+HW|step=236|call=request|room='1.5|intent='live|result=refused|requests=297|denials=292|grants=5
+HW|step=237|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=298|denials=293|grants=5
+HW|step=238|call=request|room={ }|intent='|granted=0|tag=HKW|fields=[ { } 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=299|denials=294|grants=5
+HW|step=239|call=grant|room=#1.5|intent=#42|auth={ 'signers [ ] 'window_ok t }|result=refused|requests=299|denials=294|grants=5
+HW|step=240|call=grant|room=#9007199254740992|intent=#42|auth={ 'signers [ #1 n #1 #1 n ] 'window_ok t }|granted=1|tag=HKG|fields=[ #9007199254740992 '73475cb40a568e8d #1 #5 'T9007199254740992:1 'A7347 ]|requests=300|denials=294|grants=6
+HW|step=241|call=grant|room=#-4|intent=[ #1 'x ]|auth=u|granted=0|tag=HKW|fields=[ #-4 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=302|denials=296|grants=6
+HW|step=242|call=request|room='1.5|intent='""%0AZ%1F|result=refused|requests=302|denials=296|grants=6
+HW|step=243|call=grant|room=#NaN|intent=u|auth=u|granted=0|tag=HKW|fields=[ #NaN 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=304|denials=298|grants=6
+HW|step=244|call=fire|tuple={ 'intent ' 'quintupleAuth { 'signers [ #1 #1 #1 ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=306|denials=300|grants=6
+HW|step=245|call=fire|tuple={ 'room_id t 'quintupleAuth t }|granted=0|tag=HKW|fields=[ t 'f416648f8086113f #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=308|denials=302|grants=6
+HW|step=246|call=request|room=#0|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ #0 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=309|denials=303|grants=6
+HW|step=247|call=request|room='1e3|intent=#42|granted=0|tag=HKW|fields=[ '1e3 '73475cb40a568e8d #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=310|denials=304|grants=6
+HW|step=248|call=grant|room={ }|intent='|auth={ 'signers [ n 'a ] 'window_ok t }|granted=0|tag=HKW|fields=[ { } 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=312|denials=306|grants=6
+HW|step=249|call=fire|tuple={ 'intent u 'kind u }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=313|denials=307|grants=6
+HW|step=250|call=fire|tuple={ 'room_id [ #5 ] 'kind u }|granted=0|tag=HKW|fields=[ [ #5 ] 'f416648f8086113f #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=314|denials=308|grants=6
+HW|step=251|call=request|room=#0|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ #0 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=315|denials=309|grants=6
+HW|step=252|call=request|room=#0|intent='|granted=0|tag=HKW|fields=[ #0 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=316|denials=310|grants=6
+HW|step=253|call=grant|room=#NaN|intent=[ #1 'x ]|auth=u|granted=0|tag=HKW|fields=[ #NaN '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=318|denials=312|grants=6
+HW|step=254|call=grant|room=#NaN|intent=[ #1 'x ]|auth='x|granted=0|tag=HKW|fields=[ #NaN '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=320|denials=314|grants=6
+HW|step=255|call=grant|room=t|intent='0%0D|auth=u|granted=0|tag=HKW|fields=[ t '090126452a2d8d97 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=322|denials=316|grants=6
+HW|step=256|call=request|room='12|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ '12 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=323|denials=317|grants=6
+HW|step=257|call=grant|room='1.5|intent=n|auth={ 'signers 'abcde 'window_ok t }|result=refused|requests=323|denials=317|grants=6
+HW|step=258|call=fire|tuple={ 'kind 'aa 'quintupleAuth { 'signers [ n ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 '961b6dd3ede3cb8e #0 'default_deny_quintuple_required ' ' ]|requests=325|denials=319|grants=6
+HW|step=259|call=request|room=n|intent='live|granted=0|tag=HKW|fields=[ n '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=326|denials=320|grants=6
+HW|step=260|call=grant|room='12|intent=#42|auth=t|granted=0|tag=HKW|fields=[ '12 '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=328|denials=322|grants=6
+HW|step=261|call=fire|tuple={ 'room_id 'abc 'intent #0 'kind #0 }|granted=0|tag=HKW|fields=[ 'abc 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=329|denials=323|grants=6
+HW|step=262|call=fire|tuple=#0|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=330|denials=324|grants=6
+HW|step=263|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=331|denials=325|grants=6
+HW|step=264|call=grant|room=#0|intent=n|auth={ 'signers [ 'b 'a ] 'window_ok t }|granted=0|tag=HKW|fields=[ #0 '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=333|denials=327|grants=6
+HW|step=265|call=fire|tuple={ 'intent 'k 'kind ' 'quintupleAuth 'x }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=335|denials=329|grants=6
+HW|step=266|call=grant|room='12|intent='|auth=[ ]|granted=0|tag=HKW|fields=[ '12 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=337|denials=331|grants=6
+HW|step=267|call=fire|tuple={ 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=339|denials=333|grants=6
+HW|step=268|call=grant|room='%200x10%20|intent=u|auth={ 'signers [ 'b #1 #1 'a #1 n ] 'window_ok t }|granted=1|tag=HKG|fields=[ '%200x10%20 'eb045d78d2731073 #1 #6 'T16:1 'Aeb04 ]|requests=340|denials=333|grants=7
+HW|step=269|call=grant|room=#9007199254740994|intent={ 'a #1 }|auth={ 'signers [ 'b 'a 'b #1 #1 ] 'window_ok t }|result=refused|requests=340|denials=333|grants=7
+HW|step=270|call=grant|room='12|intent=[ #1 'x ]|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ '12 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=342|denials=335|grants=7
+HW|step=271|call=grant|room={ }|intent=u|auth={ 'signers [ 'b 'a 'a n ] 'window_ok u }|granted=0|tag=HKW|fields=[ { } 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=344|denials=337|grants=7
+HW|step=272|call=fire|tuple={ 'intent 'k }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=345|denials=338|grants=7
+HW|step=273|call=grant|room=#3|intent={ 'a #1 }|auth={ 'signers [ n 'a #1 ] 'window_ok #1 }|granted=0|tag=HKW|fields=[ #3 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=347|denials=340|grants=7
+HW|step=274|call=grant|room=#0|intent='|auth={ 'signers [ #1 #1 'a ] 'window_ok t }|granted=0|tag=HKW|fields=[ #0 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=349|denials=342|grants=7
+HW|step=275|call=request|room='|intent=u|granted=0|tag=HKW|fields=[ ' 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=350|denials=343|grants=7
+HW|step=276|call=grant|room=#-4|intent=u|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ #-4 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=352|denials=345|grants=7
+HW|step=277|call=fire|tuple={ 'room_id #NaN 'intent u 'kind ' }|granted=0|tag=HKW|fields=[ #NaN 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=353|denials=346|grants=7
+HW|step=278|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=354|denials=347|grants=7
+HW|step=279|call=grant|room='|intent=[ #1 'x ]|auth={ 'signers [ 'b 'a ] 'window_ok t }|granted=0|tag=HKW|fields=[ ' '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=356|denials=349|grants=7
+HW|step=280|call=request|room=#1.5|intent=n|result=refused|requests=356|denials=349|grants=7
+HW|step=281|call=fire|tuple={ 'room_id ' }|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=357|denials=350|grants=7
+HW|step=282|call=grant|room='|intent='|auth=[ ]|granted=0|tag=HKW|fields=[ ' 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=359|denials=352|grants=7
+HW|step=283|call=grant|room=#7|intent=n|auth=[ ]|granted=0|tag=HKW|fields=[ #7 '74234e98afe7498f #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=361|denials=354|grants=7
+HW|step=284|call=grant|room={ }|intent='live|auth={ 'signers [ #1 ] 'window_ok u }|granted=0|tag=HKW|fields=[ { } '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=363|denials=356|grants=7
+HW|step=285|call=request|room=[ #5 ]|intent=#42|granted=0|tag=HKW|fields=[ [ #5 ] '73475cb40a568e8d #0 'default_deny_quintuple_required 'T5:0 ' ]|requests=364|denials=357|grants=7
+HW|step=286|call=request|room='1.5|intent=u|result=refused|requests=364|denials=357|grants=7
+HW|step=287|call=request|room=f|intent=u|granted=0|tag=HKW|fields=[ f 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=365|denials=358|grants=7
+HW|step=288|call=grant|room=#1.5|intent=u|auth={ 'signers [ 'b 'a #1 n #1 ] 'window_ok t }|result=refused|requests=365|denials=358|grants=7
+HW|step=289|call=grant|room='1e3|intent=[ #1 'x ]|auth={ 'signers [ 'a #1 ] 'window_ok #1 }|granted=0|tag=HKW|fields=[ '1e3 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=367|denials=360|grants=7
+HW|step=290|call=grant|room=#NaN|intent='live|auth=n|granted=0|tag=HKW|fields=[ #NaN '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=369|denials=362|grants=7
+HW|step=291|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=370|denials=363|grants=7
+HW|step=292|call=request|room=t|intent='live|granted=0|tag=HKW|fields=[ t '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=371|denials=364|grants=7
+HW|step=293|call=grant|room=u|intent={ 'a #1 }|auth={ 'signers [ 'a n ] 'window_ok t }|granted=0|tag=HKW|fields=[ u 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=373|denials=366|grants=7
+HW|step=294|call=grant|room='abc|intent='live|auth={ 'signers [ ] 'window_ok u }|granted=0|tag=HKW|fields=[ 'abc '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=375|denials=368|grants=7
+HW|step=295|call=fire|tuple=#0|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=376|denials=369|grants=7
+HW|step=296|call=grant|room=#NaN|intent={ 'a #1 }|auth=[ ]|granted=0|tag=HKW|fields=[ #NaN 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=378|denials=371|grants=7
+HW|step=297|call=request|room=n|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ n 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=379|denials=372|grants=7
+HW|step=298|call=grant|room=u|intent='|auth={ 'signers [ ] 'window_ok u }|granted=0|tag=HKW|fields=[ u 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=381|denials=374|grants=7
+HW|step=299|call=fire|tuple={ 'intent u 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=383|denials=376|grants=7
+HW|step=300|call=grant|room=#1.5|intent={ 'a #1 }|auth={ 'signers [ n 'a #1 'a 'a 'b ] 'window_ok t }|result=refused|requests=383|denials=376|grants=7
+HW|step=301|call=request|room=#9007199254740994|intent={ 'a #1 }|result=refused|requests=383|denials=376|grants=7
+HW|step=302|call=grant|room=#3|intent='live|auth={ 'signers [ 'b 'a #1 'a ] 'window_ok t }|granted=0|tag=HKW|fields=[ #3 '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=385|denials=378|grants=7
+HW|step=303|call=fire|tuple=n|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=386|denials=379|grants=7
+HW|step=304|call=fire|tuple={ 'intent u 'quintupleAuth { 'signers [ n 'a #1 'b #1 ] 'window_ok t } }|granted=1|tag=HKG|fields=[ #0 'f416648f8086113f #1 #5 ' 'Af416 ]|requests=387|denials=379|grants=8
+HW|step=305|call=grant|room='abc|intent=u|auth={ 'signers [ #1 n n 'b 'b 'b #1 ] 'window_ok t }|granted=1|tag=HKG|fields=[ 'abc 'eb045d78d2731073 #1 #7 ' 'Aeb04 ]|requests=388|denials=379|grants=9
+HW|step=306|call=fire|tuple={ 'intent '%7F0_ 'kind 'k }|granted=0|tag=HKW|fields=[ #0 'ac0f6fb40f0e9794 #0 'default_deny_quintuple_required ' ' ]|requests=389|denials=380|grants=9
+HW|step=307|call=request|room=#-4|intent=#42|granted=0|tag=HKW|fields=[ #-4 '73475cb40a568e8d #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=390|denials=381|grants=9
+HW|step=308|call=request|room='%200x10%20|intent='live|granted=0|tag=HKW|fields=[ '%200x10%20 '247610f4dedd4ab7 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=391|denials=382|grants=9
+HW|step=309|call=grant|room=#9007199254740992|intent=[ #1 'x ]|auth=u|granted=0|tag=HKW|fields=[ #9007199254740992 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required 'T9007199254740992:0 ' ]|requests=393|denials=384|grants=9
+HW|step=310|call=fire|tuple={ 'room_id ' 'kind 'k 'quintupleAuth u }|granted=0|tag=HKW|fields=[ ' '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=394|denials=385|grants=9
+HW|step=311|call=request|room=#-4|intent='|granted=0|tag=HKW|fields=[ #-4 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=395|denials=386|grants=9
+HW|step=312|call=fire|tuple={ 'intent #0 'kind '%20%20 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 '6c179f21e6f62b62 #0 'default_deny_quintuple_required ' ' ]|requests=397|denials=388|grants=9
+HW|step=313|call=request|room=#7|intent=#42|granted=0|tag=HKW|fields=[ #7 '73475cb40a568e8d #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=398|denials=389|grants=9
+HW|step=314|call=request|room=#9007199254740992|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ #9007199254740992 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T9007199254740992:0 ' ]|requests=399|denials=390|grants=9
+HW|step=315|call=request|room='|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ ' '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=400|denials=391|grants=9
+HW|step=316|call=grant|room='1.5|intent='live|auth={ 'signers 'abcde 'window_ok t }|result=refused|requests=400|denials=391|grants=9
+HW|step=317|call=request|room=t|intent=u|granted=0|tag=HKW|fields=[ t 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=401|denials=392|grants=9
+HW|step=318|call=grant|room=u|intent=u|auth={ 'signers [ n 'a ] 'window_ok f }|granted=0|tag=HKW|fields=[ u 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=403|denials=394|grants=9
+HW|step=319|call=grant|room='12|intent=n|auth={ 'signers [ ] 'window_ok t }|granted=0|tag=HKW|fields=[ '12 '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=405|denials=396|grants=9
+HW|step=320|call=fire|tuple={ 'intent 'k }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=406|denials=397|grants=9
+HW|step=321|call=fire|tuple={ 'room_id '%200x10%20 'kind '%0A%7F%7C }|granted=0|tag=HKW|fields=[ '%200x10%20 'd3bfb9b56ca8c3f1 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=407|denials=398|grants=9
+HW|step=322|call=request|room='%200x10%20|intent='|granted=0|tag=HKW|fields=[ '%200x10%20 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=408|denials=399|grants=9
+HW|step=323|call=grant|room=#-4|intent=n|auth={ 'signers [ 'b n 'b n ] 'window_ok t }|granted=0|tag=HKW|fields=[ #-4 '74234e98afe7498f #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=410|denials=401|grants=9
+HW|step=324|call=grant|room=#-4|intent='|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ #-4 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=412|denials=403|grants=9
+HW|step=325|call=fire|tuple={ 'room_id #1.5 'kind #0 }|result=refused|requests=412|denials=403|grants=9
+HW|step=326|call=fire|tuple={ 'room_id '12 'intent u 'kind 'k }|granted=0|tag=HKW|fields=[ '12 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=413|denials=404|grants=9
+HW|step=327|call=grant|room='12|intent='|auth=u|granted=0|tag=HKW|fields=[ '12 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=415|denials=406|grants=9
+HW|step=328|call=grant|room=#3|intent=[ #1 'x ]|auth={ 'signers [ 'b #1 n n ] 'window_ok t }|granted=0|tag=HKW|fields=[ #3 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=417|denials=408|grants=9
+HW|step=329|call=request|room={ }|intent=#42|granted=0|tag=HKW|fields=[ { } '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=418|denials=409|grants=9
+HW|step=330|call=grant|room='%200x10%20|intent='%1F€%0D|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ '%200x10%20 '87a5b4ab6bbdb0c6 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=420|denials=411|grants=9
+HW|step=331|call=grant|room='1.5|intent='"":%00|auth={ 'signers [ n #1 n ] 'window_ok t }|result=refused|requests=420|denials=411|grants=9
+HW|step=332|call=grant|room=#1.5|intent=u|auth={ 'signers [ #1 'b 'b ] 'window_ok #1 }|result=refused|requests=420|denials=411|grants=9
+HW|step=333|call=grant|room='1.5|intent=#42|auth='x|result=refused|requests=420|denials=411|grants=9
+HW|step=334|call=fire|tuple={ 'intent 'aé 'kind '%3D 'quintupleAuth { 'signers [ #1 'a 'b 'a 'a 'a #1 ] 'window_ok t } }|granted=1|tag=HKG|fields=[ #0 '561951c2b8c47984 #1 #7 ' 'A5619 ]|requests=421|denials=411|grants=10
+HW|step=335|call=grant|room=n|intent=u|auth={ 'signers 'abcde 'window_ok t }|granted=0|tag=HKW|fields=[ n 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=423|denials=413|grants=10
+HW|step=336|call=grant|room='|intent=n|auth={ 'signers [ n #1 ] 'window_ok t }|granted=0|tag=HKW|fields=[ ' '74234e98afe7498f #0 'default_deny_quintuple_required ' ' ]|requests=425|denials=415|grants=10
+HW|step=337|call=fire|tuple={ 'room_id #0 'intent ' }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=426|denials=416|grants=10
+HW|step=338|call=fire|tuple={ }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=427|denials=417|grants=10
+HW|step=339|call=fire|tuple=u|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=428|denials=418|grants=10
+HW|step=340|call=request|room=n|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ n 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=429|denials=419|grants=10
+HW|step=341|call=fire|tuple={ 'room_id ' 'intent #0 'quintupleAuth u }|granted=0|tag=HKW|fields=[ ' 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=430|denials=420|grants=10
+HW|step=342|call=request|room=#9007199254740994|intent=u|result=refused|requests=430|denials=420|grants=10
+HW|step=343|call=request|room=#9007199254740994|intent='live|result=refused|requests=430|denials=420|grants=10
+HW|step=344|call=fire|tuple={ 'room_id t 'intent ' 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ t 'f416648f8086113f #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=432|denials=422|grants=10
+HW|step=345|call=fire|tuple={ 'kind '\ 'quintupleAuth n }|granted=0|tag=HKW|fields=[ #0 'a9253dc8529dd214 #0 'default_deny_quintuple_required ' ' ]|requests=433|denials=423|grants=10
+HW|step=346|call=fire|tuple=#3|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=434|denials=424|grants=10
+HW|step=347|call=grant|room=n|intent='|auth=u|granted=0|tag=HKW|fields=[ n 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=436|denials=426|grants=10
+HW|step=348|call=fire|tuple=f|granted=0|tag=HKW|fields=[ f 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=437|denials=427|grants=10
+HW|step=349|call=fire|tuple=n|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=438|denials=428|grants=10
+HW|step=350|call=fire|tuple={ 'room_id '1e3 }|granted=0|tag=HKW|fields=[ '1e3 'f416648f8086113f #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=439|denials=429|grants=10
+HW|step=351|call=fire|tuple={ 'kind 'k }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=440|denials=430|grants=10
+HW|step=352|call=grant|room=#0|intent=#42|auth={ 'signers [ n 'b 'a 'b n ] 'window_ok t }|granted=1|tag=HKG|fields=[ #0 '73475cb40a568e8d #1 #5 ' 'A7347 ]|requests=441|denials=430|grants=11
+HW|step=353|call=fire|tuple={ 'intent 'k 'kind ' }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=442|denials=431|grants=11
+HW|step=354|call=fire|tuple={ 'kind ' }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=443|denials=432|grants=11
+HW|step=355|call=grant|room='|intent={ 'a #1 }|auth={ 'signers [ 'a 'a 'b n ] 'window_ok t }|granted=0|tag=HKW|fields=[ ' 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=445|denials=434|grants=11
+HW|step=356|call=request|room=u|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ u '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=446|denials=435|grants=11
+HW|step=357|call=request|room='abc|intent='live|granted=0|tag=HKW|fields=[ 'abc '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=447|denials=436|grants=11
+HW|step=358|call=grant|room=t|intent={ 'a #1 }|auth={ 'signers [ #1 ] 'window_ok t }|granted=0|tag=HKW|fields=[ t 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=449|denials=438|grants=11
+HW|step=359|call=request|room='1.5|intent={ 'a #1 }|result=refused|requests=449|denials=438|grants=11
+HW|step=360|call=fire|tuple={ 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=450|denials=439|grants=11
+HW|step=361|call=fire|tuple={ 'intent ' 'quintupleAuth u }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=451|denials=440|grants=11
+HW|step=362|call=request|room=#0|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ #0 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required ' ' ]|requests=452|denials=441|grants=11
+HW|step=363|call=request|room=f|intent=u|granted=0|tag=HKW|fields=[ f 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=453|denials=442|grants=11
+HW|step=364|call=request|room=#0|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ #0 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=454|denials=443|grants=11
+HW|step=365|call=grant|room=f|intent=[ #1 'x ]|auth={ 'signers [ 'a 'a #1 'b ] 'window_ok t }|granted=0|tag=HKW|fields=[ f '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=456|denials=445|grants=11
+HW|step=366|call=fire|tuple={ 'kind u 'quintupleAuth { 'signers [ 'b n 'a 'a 'a 'a ] 'window_ok t } }|granted=1|tag=HKG|fields=[ #0 'f416648f8086113f #1 #6 ' 'Af416 ]|requests=457|denials=445|grants=12
+HW|step=367|call=request|room='12|intent='-|granted=0|tag=HKW|fields=[ '12 '3973e022e93220f9 #0 'default_deny_quintuple_required ' ' ]|requests=458|denials=446|grants=12
+HW|step=368|call=request|room=#NaN|intent=u|granted=0|tag=HKW|fields=[ #NaN 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=459|denials=447|grants=12
+HW|step=369|call=fire|tuple={ 'room_id '1e3 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ '1e3 'f416648f8086113f #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=461|denials=449|grants=12
+HW|step=370|call=fire|tuple={ 'room_id '12 'kind 'é%3Dé }|granted=0|tag=HKW|fields=[ '12 '340e1a37ece9ff63 #0 'default_deny_quintuple_required ' ' ]|requests=462|denials=450|grants=12
+HW|step=371|call=fire|tuple={ 'room_id f 'intent '\😀%7F" }|granted=0|tag=HKW|fields=[ f '425588b9ad51aace #0 'default_deny_quintuple_required ' ' ]|requests=463|denials=451|grants=12
+HW|step=372|call=request|room='12|intent='%0D|granted=0|tag=HKW|fields=[ '12 '9d1e0e2d9459d065 #0 'default_deny_quintuple_required ' ' ]|requests=464|denials=452|grants=12
+HW|step=373|call=request|room=t|intent=u|granted=0|tag=HKW|fields=[ t 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=465|denials=453|grants=12
+HW|step=374|call=request|room='1e3|intent={ 'a #1 }|granted=0|tag=HKW|fields=[ '1e3 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T1000:0 ' ]|requests=466|denials=454|grants=12
+HW|step=375|call=fire|tuple={ 'kind ' }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=467|denials=455|grants=12
+HW|step=376|call=fire|tuple={ 'room_id '12 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ '12 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=469|denials=457|grants=12
+HW|step=377|call=grant|room=#3|intent=[ #1 'x ]|auth=[ ]|granted=0|tag=HKW|fields=[ #3 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=471|denials=459|grants=12
+HW|step=378|call=request|room=#-4|intent='é%1F%25|granted=0|tag=HKW|fields=[ #-4 '17e4e503da986ac6 #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=472|denials=460|grants=12
+HW|step=379|call=request|room=#0|intent=#42|granted=0|tag=HKW|fields=[ #0 '73475cb40a568e8d #0 'default_deny_quintuple_required ' ' ]|requests=473|denials=461|grants=12
+HW|step=380|call=grant|room='|intent='live|auth={ 'signers [ #1 ] 'window_ok #1 }|granted=0|tag=HKW|fields=[ ' '247610f4dedd4ab7 #0 'default_deny_quintuple_required ' ' ]|requests=475|denials=463|grants=12
+HW|step=381|call=grant|room=f|intent=u|auth={ 'signers [ #1 ] 'window_ok t }|granted=0|tag=HKW|fields=[ f 'eb045d78d2731073 #0 'default_deny_quintuple_required ' ' ]|requests=477|denials=465|grants=12
+HW|step=382|call=request|room='%200x10%20|intent='%0A a|granted=0|tag=HKW|fields=[ '%200x10%20 '8bbb4fa1b2a0ab87 #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=478|denials=466|grants=12
+HW|step=383|call=grant|room=#9007199254740992|intent={ 'a #1 }|auth=t|granted=0|tag=HKW|fields=[ #9007199254740992 'b28c94b2195c8ed2 #0 'default_deny_quintuple_required 'T9007199254740992:0 ' ]|requests=480|denials=468|grants=12
+HW|step=384|call=grant|room=t|intent=u|auth=n|granted=0|tag=HKW|fields=[ t 'eb045d78d2731073 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=482|denials=470|grants=12
+HW|step=385|call=fire|tuple={ 'room_id #1.5 'intent '%0A.9 'quintupleAuth n }|result=refused|requests=482|denials=470|grants=12
+HW|step=386|call=fire|tuple=u|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=483|denials=471|grants=12
+HW|step=387|call=request|room=#0|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ #0 '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=484|denials=472|grants=12
+HW|step=388|call=fire|tuple={ 'quintupleAuth { 'signers [ n 'b n #1 ] 'window_ok t } }|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=486|denials=474|grants=12
+HW|step=389|call=grant|room='%200x10%20|intent=n|auth={ 'signers [ #1 'a n 'a #1 #1 'b ] 'window_ok f }|granted=0|tag=HKW|fields=[ '%200x10%20 '74234e98afe7498f #0 'default_deny_quintuple_required 'T16:0 ' ]|requests=488|denials=476|grants=12
+HW|step=390|call=fire|tuple={ 'room_id #-4 'intent u 'quintupleAuth { 'signers 'abcde 'window_ok t } }|granted=0|tag=HKW|fields=[ #-4 'f416648f8086113f #0 'default_deny_quintuple_required 'T-4:0 ' ]|requests=490|denials=478|grants=12
+HW|step=391|call=request|room=t|intent='€"%1F%0Aé%09|granted=0|tag=HKW|fields=[ t '80a751e8655539e3 #0 'default_deny_quintuple_required 'T1:0 ' ]|requests=491|denials=479|grants=12
+HW|step=392|call=grant|room=#7|intent='|auth=n|granted=0|tag=HKW|fields=[ #7 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required 'T7:0 ' ]|requests=493|denials=481|grants=12
+HW|step=393|call=grant|room=#9007199254740994|intent={ 'a #1 }|auth=u|result=refused|requests=493|denials=481|grants=12
+HW|step=394|call=request|room={ }|intent=[ #1 'x ]|granted=0|tag=HKW|fields=[ { } '2ce33e350c23d4a8 #0 'default_deny_quintuple_required ' ' ]|requests=494|denials=482|grants=12
+HW|step=395|call=fire|tuple='x|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=495|denials=483|grants=12
+HW|step=396|call=request|room='abc|intent='%0A%009|granted=0|tag=HKW|fields=[ 'abc 'e7c178c4d6e4acb6 #0 'default_deny_quintuple_required ' ' ]|requests=496|denials=484|grants=12
+HW|step=397|call=fire|tuple=n|granted=0|tag=HKW|fields=[ #0 'f416648f8086113f #0 'default_deny_quintuple_required ' ' ]|requests=497|denials=485|grants=12
+HW|step=398|call=fire|tuple={ 'room_id n 'kind 'k 'quintupleAuth t }|granted=0|tag=HKW|fields=[ #0 '8254c329a92850f6 #0 'default_deny_quintuple_required ' ' ]|requests=499|denials=487|grants=12
+HW|step=399|call=grant|room=n|intent='|auth=n|granted=0|tag=HKW|fields=[ n 'e3b0c44298fc1c14 #0 'default_deny_quintuple_required ' ' ]|requests=501|denials=489|grants=12

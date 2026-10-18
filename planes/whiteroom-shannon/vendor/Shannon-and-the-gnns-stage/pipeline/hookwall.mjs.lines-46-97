@@ -1,0 +1,52 @@
+  });
+  const frame = encodeFrame('HKG', [
+    roomId,
+    env.intent_sha16,
+    1,
+    signers.length,
+    env.triple_quant || '',
+    env.authority_quant || '',
+  ]);
+  return { granted: true, frame };
+}
+
+export function state() {
+  return {
+    plane: 'hookwall',
+    requests: _requests,
+    denials: _denials,
+    grants: _grants,
+    default_policy: 'descriptor_only_unless_quintuple',
+  };
+}
+
+export function selfTest() {
+  const r0 = requestLive(0, 'test_intent');
+  if (r0.granted) throw new Error('default-deny breach');
+  const r1 = grantLive(0, 'test_intent', {
+    signers: ['a', 'b', 'c', 'd', 'e'],
+    window_ok: true,
+  });
+  if (!r1.granted) throw new Error('quintuple grant failed');
+  return { ok: true, denied: 1, granted: 1 };
+}
+
+// fireHookwall: bus-side entrypoint. Every emit traversing the bus crosses
+// this gate; default-deny unless quintuple-auth is present.
+export function fireHookwall(tuple, _ctx) {
+  const roomId = (tuple && tuple.room_id) ?? 0;
+  const intent = (tuple && (tuple.intent || tuple.kind)) || 'unspecified';
+  const auth = tuple && tuple.quintupleAuth;
+  if (auth) return grantLive(roomId, intent, auth);
+  return requestLive(roomId, intent);
+}
+
+// wire(bus): hookwall is special — the bus IS hookwall-mediated.
+// The bus already calls requestLive() inside emit() (see bus.mjs), so the
+// gate is structurally present. wire() registers a 'fireHookwall' handler
+// so other planes can directly invoke the gate via the bus.
+// Defensive no-op if bus missing or lacks register().
+export function wire(bus) {
+  if (!bus || typeof bus.register !== 'function') return;
+  bus.register('hookwall', 'fireHookwall', fireHookwall);
+}

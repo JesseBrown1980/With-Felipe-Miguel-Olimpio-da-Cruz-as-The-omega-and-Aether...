@@ -1,0 +1,60 @@
+  // Per-dim heuristic
+  let score = 0;
+  let reason = '';
+  switch (dim.id) {
+    case 'D2_VERB':
+      score += /high|very high/.test(leverage) ? 2 : 1;
+      reason = 'capability_score=' + score;
+      break;
+    case 'D5_LAYER':
+      score += /low|none/.test(blastRadius) ? 2 : 0;
+      reason = 'constraint_safe_blast=' + blastRadius;
+      break;
+    case 'D6_GATE':
+      score += /minute|second|hour/.test(tt) ? 2 : 1;
+      reason = 'gate_advanceable_in=' + tt;
+      break;
+    case 'D8_IDENTITY':
+      score += /identity|register|name/.test(text) ? 2 : 1;
+      reason = 'identity_fits';
+      break;
+    case 'D11_PROOF':
+      // proof lens checks against existing mistakes — passes if no contradiction
+      score += /honest_caveat|caveat/.test(text) ? 2 : 1;
+      reason = 'proof_caveat_present=true';
+      break;
+    case 'D15_DEVICE':
+      score += /tool|device|hardware|firmware/.test(text) ? 2 : 1;
+      reason = 'device_axis_match';
+      break;
+    case 'D16_OWNERSHIP':
+      score += /project|owned|lifecycle/.test(text) ? 2 : 1;
+      reason = 'ownership_axis_match';
+      break;
+    case 'D22_TRANSLATION':
+      score += /reference|pointer|bridge|adapter|mapping/.test(text) ? 2 : 1;
+      reason = 'translation_axis_match';
+      break;
+    case 'D24_INTENT':
+      score += /plan|future|next/.test(text) ? 2 : 1;
+      reason = 'intent_axis_match';
+      break;
+    case 'D7_STATE':
+      score += (candidate.depends_on && candidate.depends_on.length === 0) ? 2 : 1;
+      reason = 'state_unblocked=' + (!candidate.depends_on || candidate.depends_on.length === 0);
+      break;
+    case 'D14_ENERGY':
+      score += /minute|second/.test(tt) ? 2 : 1;
+      reason = 'energy_cost_low';
+      break;
+    case 'D32_NEGATIVE_SPACE':
+      // What's NOT being blocked / NOT requiring cosign
+      score += !/cosign|approval|gate/.test(text) ? 2 : 1;
+      reason = 'negative_space_clearance';
+      break;
+  }
+  const verdict = score >= 2 ? 'PROCEED' : (score === 1 ? 'PROCEED-WITH-CONDITIONS' : 'NEEDS-CHANGE');
+  return { verdict, reason, score };
+}
+
+function reflect6(label, items, cb) {

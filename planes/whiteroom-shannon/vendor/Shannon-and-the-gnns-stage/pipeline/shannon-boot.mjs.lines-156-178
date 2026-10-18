@@ -1,0 +1,23 @@
+    'rule_anchors=LX-328|LX-329|LX-331|LX-332|LX-333',
+    'endpoint=0','provider=0','mcp=0','usb_write=0','device_write=0','dispatch=0','route=0','shell=0','terminal=0',
+    'file_write=1','memory_write=0','tool_execute=0','skill_execute=0','mcp_execute=0','webmcp_execute=0',
+    'provider_call=0','endpoint_open=0','browser_control=0','keyboard_control=0','screenshot_capture=0',
+    'network_call=0','webhook_open=0','cron_create=0','device_read=0','usb_read=0',
+    'private_surface_export=0','hidden_surface_export=0','restricted_surface_export=0','secret_surface_export=0',
+    'repo_publish=0','package_release=0'
+  ];
+  const body = row.join('|');
+  const row_hash = createHash('sha256').update(body).digest('hex');
+  const final = `${body}|row_hash=${row_hash}\n`;
+  mkdirSync(dirname(hbpPath), { recursive: true });
+  appendFileSync(hbpPath, final, 'utf8');
+  return { ok: true, hbpPath, row_hash, anchor, sequence: 191, status: 'FIXTURE_RESTORED' };
+}
+
+// ---- entry shim (importable + runnable) ----
+if (import.meta.url === `file:///${process.argv[1]?.replace(/\\/g, '/')}`) {
+  const r = selfTest();
+  const emit = r.allGreen ? emitFixtureRestored({}) : { ok: false, reason: 'selftest_failed' };
+  console.log(JSON.stringify({ selfTest: r, emit }, null, 2));
+  process.exit(r.allGreen && emit.ok ? 0 : 1);
+}

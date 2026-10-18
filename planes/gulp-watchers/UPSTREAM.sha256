@@ -1,0 +1,13 @@
+682798b577f56f29ca56f16769e6e39705c5409e46f477d3cd4f9b5d4df5cb36  vendor/asolaria-behcs-256/packages-legacy-import/src/gnnConstructionWatcher.js
+d2f54fb2d337a20b692084733b147cbcb01ebbe692337c5fd04914407dde8ace  vendor/asolaria-behcs-256/packages-legacy-import/src/gnnConstructionWatcher.js.lines-49-134
+d534b5e76026da1fd0a292c2ff33751f1aba13cac4818a126c03e20c4b2690bb  vendor/asolaria-behcs-256/packages/cycle-orchestrator/src/gnn-feedback-cadence-adjuster.mjs
+692d361e62d10820a239d8d4962fccaca5b831286f1cc61df30c40cb48f6945a  vendor/asolaria-behcs-256/packages/omni-gulp-gc/src/gc.ts
+9a3dc84d0c2d809e3dc2c1533fc54c03184ed4b99a2ee199312b4b8ad7047d8f  vendor/asolaria-behcs-256/packages/omni-gulp-gc/src/gulp.ts
+b423d197a9da4de19417e476acbe26ff7ee5f16066207f0808f4f7b3f2202d03  vendor/asolaria-behcs-256/packages/super-gulp-tier3-consumer/src/consumer.mjs
+6224bdeacfc8a7bed6a7f53710ccd830d000d3794776c4166440c7576e36b065  vendor/asolaria-behcs-256/packages/super-gulp-tier3-consumer/src/promoter.mjs
+71e53e0a753d5621c9d99365e5d0a2a76a17889b979a556e7a8b0fa23cb72de7  vendor/asolaria-behcs-256/tools/cube/cube-builder.js.lines-1-23
+18e086145f81ad7514b7f40a3227135a493c89e159341c1d391d351a59b865b7  vendor/asolaria-behcs-256/tools/cube/omni-shannon-v3-4d12.js.lines-181-214
+befdafbc1fbd33d3f107674bdd1d4f727a2c60465df2b659f2c8fa6309fe6d28  vendor/asolaria-behcs-256/tools/cube/omni-shannon-v3-4d12.js.lines-59-68
+40a655aae848ca67b943cf29d65e52eef556536292a1ca4879be639878cba0bb  vendor/asolaria-behcs-256/tools/cube/omni-shannon-v3-4d12.js.lines-74-75
+f63f9303d5dc4de3b4348a7ccd99577f74558e4ed4e7865496f0885e8fce5c44  vendor/asolaria-behcs-256/tools/cube/omni-shannon-v3-4d12.js.lines-77-136
+9710e3d9630e59689d13dabe7ed69fb95f8b0a3840b678c850a20ae827f58410  vendor/bigpickle-rebuild/src/cosign-bridge.mjs

@@ -1,0 +1,25 @@
+# route.hbp from tools/referee.py; do not edit
+# Mirrors universal-route.mjs:105-178 (dualEmitObservation). Upstream appends these rows to NDJSON;
+# here each REMIT input yields two golden rows (HOOKWALL-OBSERVATION + GNN-LIVE-EDGE) or an RERR.
+# '-' marks an absent option; an empty value is the string "" (falsy for every `||` fallback).
+REMIT|edge=-|src=-|auth=-|img=-|bpid=-|ts=2026-10-17T00:00:00.000Z|passed=1700000000000|subnet=-|channel=omni-asolaria/acer/tick|event=tick|vantage=acer|gfrom=-|gto=-|gverb=-|gweight=-
+HOOKWALL-OBSERVATION|schema=hookwall-observation.v1|ts=2026-10-17T00:00:00.000Z|subnet_h=H9100|channel=omni-asolaria/acer/tick|event=tick|vantage=acer|cosign_seq=|cosign_row=|cosign_prev=|sourceClass=backend_row|backendRowPid=|authorityLevel=dev|imageClass=none|gate=universal-route-default|passed_at=1700000000000
+GNN-LIVE-EDGE|schema=gnn-live-edge.v1|ts=2026-10-17T00:00:00.000Z|subnet_h=H9100|edgeClass=proof_edge|sourceClass=backend_row|authorityLevel=dev|imageClass=none|from=cosign_seq_unknown|to=channel_omni_asolaria_acer_tick|verb=tick|weight=1|vantage=acer|cosign_seq=|cosign_row=
+REMIT|edge=action_edge|src=pixel_screenshot|auth=prod|img=runtime_proof|bpid=pid-7|ts=2026-10-17T00:00:01.000Z|passed=1700000001000|subnet=H200|channel=chan%20x!y|event=shot|vantage=liris|gfrom=n1|gto=n2|gverb=do|gweight=5
+HOOKWALL-OBSERVATION|schema=hookwall-observation.v1|ts=2026-10-17T00:00:01.000Z|subnet_h=H200|channel=chan%20x!y|event=shot|vantage=liris|cosign_seq=|cosign_row=|cosign_prev=|sourceClass=pixel_screenshot|backendRowPid=pid-7|authorityLevel=prod|imageClass=runtime_proof|gate=universal-route-default|passed_at=1700000001000
+GNN-LIVE-EDGE|schema=gnn-live-edge.v1|ts=2026-10-17T00:00:01.000Z|subnet_h=H200|edgeClass=action_edge|sourceClass=pixel_screenshot|authorityLevel=prod|imageClass=runtime_proof|from=n1|to=n2|verb=do|weight=5|vantage=liris|cosign_seq=|cosign_row=
+REMIT|edge=bogus_edge|src=-|auth=-|img=-|bpid=-|ts=t|passed=p|subnet=-|channel=c|event=-|vantage=-|gfrom=-|gto=-|gverb=-|gweight=-
+RERR|msg=universal-route:%20opts.edgeClass%20must%20be%20one%20of%20proof_edge,%20prediction_edge,%20action_edge;%20got%20"bogus_edge"
+REMIT|edge=-|src=pixel_screenshot|auth=-|img=-|bpid=-|ts=t|passed=p|subnet=-|channel=c|event=-|vantage=-|gfrom=-|gto=-|gverb=-|gweight=-
+RERR|msg=universal-route:%20sourceClass%3Dpixel_screenshot%20requires%20opts.backendRowPid%20(Dan-fix%20#1%20backend_rows_before_pixels)
+REMIT|edge=-|src=pixel_screenshot|auth=-|img=-|bpid=|ts=t|passed=p|subnet=-|channel=c|event=-|vantage=-|gfrom=-|gto=-|gverb=-|gweight=-
+RERR|msg=universal-route:%20sourceClass%3Dpixel_screenshot%20requires%20opts.backendRowPid%20(Dan-fix%20#1%20backend_rows_before_pixels)
+REMIT|edge=|src=|auth=|img=|bpid=|ts=t2|passed=p2|subnet=|channel=|event=tick|vantage=|gfrom=|gto=|gverb=|gweight=-
+HOOKWALL-OBSERVATION|schema=hookwall-observation.v1|ts=t2|subnet_h=H9100|channel=unspecified|event=tick|vantage=|cosign_seq=|cosign_row=|cosign_prev=|sourceClass=backend_row|backendRowPid=|authorityLevel=dev|imageClass=none|gate=universal-route-default|passed_at=p2
+GNN-LIVE-EDGE|schema=gnn-live-edge.v1|ts=t2|subnet_h=H9100|edgeClass=proof_edge|sourceClass=backend_row|authorityLevel=dev|imageClass=none|from=cosign_seq_unknown|to=channel_unspecified|verb=tick|weight=1|vantage=|cosign_seq=|cosign_row=
+REMIT|edge=-|src=-|auth=-|img=-|bpid=-|ts=t3|passed=p3|subnet=-|channel=c|event=|vantage=-|gfrom=-|gto=-|gverb=-|gweight=-
+HOOKWALL-OBSERVATION|schema=hookwall-observation.v1|ts=t3|subnet_h=H9100|channel=c|event=|vantage=|cosign_seq=|cosign_row=|cosign_prev=|sourceClass=backend_row|backendRowPid=|authorityLevel=dev|imageClass=none|gate=universal-route-default|passed_at=p3
+GNN-LIVE-EDGE|schema=gnn-live-edge.v1|ts=t3|subnet_h=H9100|edgeClass=proof_edge|sourceClass=backend_row|authorityLevel=dev|imageClass=none|from=cosign_seq_unknown|to=channel_c|verb=universal_route_emit|weight=1|vantage=|cosign_seq=|cosign_row=
+REMIT|edge=-|src=-|auth=-|img=-|bpid=-|ts=t4|passed=p4|subnet=-|channel=a😀b|event=-|vantage=-|gfrom=-|gto=-|gverb=|gweight=0
+HOOKWALL-OBSERVATION|schema=hookwall-observation.v1|ts=t4|subnet_h=H9100|channel=a😀b|event=|vantage=|cosign_seq=|cosign_row=|cosign_prev=|sourceClass=backend_row|backendRowPid=|authorityLevel=dev|imageClass=none|gate=universal-route-default|passed_at=p4
+GNN-LIVE-EDGE|schema=gnn-live-edge.v1|ts=t4|subnet_h=H9100|edgeClass=proof_edge|sourceClass=backend_row|authorityLevel=dev|imageClass=none|from=cosign_seq_unknown|to=channel_a__b|verb=universal_route_emit|weight=0|vantage=|cosign_seq=|cosign_row=

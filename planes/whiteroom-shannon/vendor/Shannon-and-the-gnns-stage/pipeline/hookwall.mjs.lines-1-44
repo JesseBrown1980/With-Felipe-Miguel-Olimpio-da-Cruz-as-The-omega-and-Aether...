@@ -1,0 +1,44 @@
+// hookwall plane — authority_gate for descriptor→live promotion.
+// Canon: live_action_allowed is FALSE by default; only quintuple-auth grants.
+// Per-carry: hookwall_gate_required_for_live_action: true.
+
+import crypto from 'node:crypto';
+import { encodeFrame } from '../bpi-codec.mjs';
+import { enrichEnvelope } from '../quant-bus.mjs';
+
+let _requests = 0;
+let _denials = 0;
+let _grants = 0;
+
+function intentSha16(intent) {
+  return crypto.createHash('sha256').update(String(intent)).digest('hex').slice(0, 16);
+}
+
+export function requestLive(roomId, intent) {
+  _requests++;
+  _denials++;
+  const env = enrichEnvelope({ room_id: Number(roomId) || 0, intent_sha16: intentSha16(intent), granted: 0 });
+  const frame = encodeFrame('HKW', [
+    roomId,
+    env.intent_sha16,
+    0,
+    'default_deny_quintuple_required',
+    env.triple_quant || '',
+    env.authority_quant || '',
+  ]);
+  return { granted: false, frame };
+}
+
+export function grantLive(roomId, intent, quintupleAuth) {
+  _requests++;
+  const signers = quintupleAuth?.signers;
+  const ok = Array.isArray(signers) && signers.length >= 5 && quintupleAuth?.window_ok === true;
+  if (!ok) {
+    _denials++;
+    return requestLive(roomId, intent);
+  }
+  _grants++;
+  const env = enrichEnvelope({
+    room_id: Number(roomId) || 0,
+    intent_sha16: intentSha16(intent),
+    granted: 1,

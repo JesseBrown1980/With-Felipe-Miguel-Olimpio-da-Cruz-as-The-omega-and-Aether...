@@ -1,0 +1,43 @@
+# construction.hbp from tools/referee.py; do not edit
+# Mirrors gnnConstructionWatcher.js:49-140. EDGE/PAT build state; PRED checks the pick + source,
+# in file order. Each edge keeps the confidence :61-63 stored on it; the referee asserts the
+# upstream double compares (:115, :123) and the port's exact-ratio compares pick alike.
+EDGE|from=build|to=review
+EDGE|from=build|to=review
+EDGE|from=build|to=review
+EDGE|from=build|to=ship
+PAT|kw=deploy|cid=ship-construction
+PAT|kw=deploy|cid=ship-construction
+PAT|kw=rollback|cid=recover-construction
+PAT|kw=no|cid=too-short
+PRED|msg=push%20the%20deploy%20now|cur=-|pick=ship-construction|source=pattern|conf_num=2|conf_den=10
+PRED|msg=rollback%20please|cur=-|pick=-|source=-|conf_num=0|conf_den=0
+PRED|msg=anything|cur=build|pick=review|source=routing|conf_num=3|conf_den=3
+PRED|msg=anything|cur=unknown-node|pick=-|source=-|conf_num=0|conf_den=0
+PRED|msg=deploy%20rollback|cur=build|pick=review|source=routing|conf_num=3|conf_den=3
+EDGE|from=solo|to=b
+PRED|msg=anything|cur=solo|pick=-|source=-|conf_num=0|conf_den=0
+EDGE|from=pair|to=b
+EDGE|from=pair|to=c
+PRED|msg=anything|cur=pair|pick=b|source=routing|conf_num=1|conf_den=1
+EDGE|from=pair|to=c
+PRED|msg=anything|cur=pair|pick=c|source=routing|conf_num=2|conf_den=3
+EDGE|from=tie|to=x
+EDGE|from=tie|to=y
+EDGE|from=tie|to=x
+EDGE|from=tie|to=y
+PRED|msg=deploy|cur=tie|pick=ship-construction|source=pattern|conf_num=2|conf_den=10
+EDGE|from=|to=z
+EDGE|from=|to=z
+PRED|msg=anything|cur=|pick=-|source=-|conf_num=0|conf_den=0
+PAT|kw=﻿key|cid=c-bom
+PAT|kw=﻿key|cid=c-bom
+PRED|msg=key|cur=-|pick=c-bom|source=pattern|conf_num=2|conf_den=10
+PAT|kw=nel|cid=c-nel
+PAT|kw=nel|cid=c-nel
+PRED|msg=nel|cur=-|pick=-|source=-|conf_num=0|conf_den=0
+PRED|msg=deploynow|cur=-|pick=-|source=-|conf_num=0|conf_den=0
+PRED|msg=go﻿deploy|cur=-|pick=ship-construction|source=pattern|conf_num=2|conf_den=10
+PAT|kw=😀a|cid=c-astral
+PAT|kw=😀a|cid=c-astral
+PRED|msg=😀a|cur=-|pick=c-astral|source=pattern|conf_num=2|conf_den=10

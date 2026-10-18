@@ -1,0 +1,2 @@
+  if (text.includes('virus')) hardDenyHits.push('HD-virus');
+  if (hardDenyHits.length) return { verdict: 'HALT', reason: 'hard_deny:' + hardDenyHits.join(',') };

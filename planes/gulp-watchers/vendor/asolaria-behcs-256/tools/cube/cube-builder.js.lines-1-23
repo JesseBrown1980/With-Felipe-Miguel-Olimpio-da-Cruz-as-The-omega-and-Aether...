@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+/**
+ * cube-builder.js
+ *
+ * Reads tools/cube/agent-roster.json (or any roster file) and emits, for each
+ * agent in the roster:
+ *   - data/cubes/<agent_id>/manifest.json
+ *   - data/cubes/<agent_id>/findings.ndjson  (with a single seed entry)
+ *   - one entry appended to data/omnidirectional-calendar.ndjson
+ *   - mirror of all of the above to D:/safety-backups/session-20260406-asolaria/
+ *
+ * It is idempotent: re-running on an existing agent skips file creation but
+ * still appends a new calendar entry tagged with verb=meta.cube_rebuilt.
+ *
+ * Cube law: every emitted file carries the agent's cube[] + dim, and the
+ * builder appends a meta.register_actor entry to the calendar with the
+ * primary_cube + primary_dim tagged.
+ *
+ * Usage:
+ *   node tools/cube/cube-builder.js [path/to/roster.json]
+ *   default roster: tools/cube/agent-roster.json
+ */
+

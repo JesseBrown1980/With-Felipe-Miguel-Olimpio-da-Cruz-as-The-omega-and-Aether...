@@ -1,0 +1,18 @@
+# cosign.hbp from tools/referee.py; do not edit
+# Mirrors cosign-bridge.mjs:153-189 (durableNotify row + decisions). HTTP/redis transport is boundary.
+# Each NIN input is followed by its golden DURABLE-NOTIFY row and the NDEC decision row.
+NIN|seq=42|row=rowhash-aa|prev=prev-zz|channel=omni-asolaria/acer/heartbeat/tick|event=tick|vantage=acer|subs=0|uroute=-1
+DURABLE-NOTIFY|cosign_seq=42|cosign_row=rowhash-aa|cosign_prev=prev-zz|channel=omni-asolaria/acer/heartbeat/tick|event=tick|vantage=acer
+NDEC|gap=logged-but-no-live-subscriber|uroute=1|channel_ok=1
+NIN|seq=43|row=rowhash-bb|prev=prev-aa|channel=omni/liris/edge|event=edge|vantage=-|subs=3|uroute=0
+DURABLE-NOTIFY|cosign_seq=43|cosign_row=rowhash-bb|cosign_prev=prev-aa|channel=omni/liris/edge|event=edge|vantage=
+NDEC|gap=live-and-logged|uroute=0|channel_ok=1
+NIN|seq=44|row=rowhash-cc|prev=prev-bb|channel=a%20b%7Cc%3Dd|event=-|vantage=-|subs=1|uroute=1
+DURABLE-NOTIFY|cosign_seq=44|cosign_row=rowhash-cc|cosign_prev=prev-bb|channel=a%20b%7Cc%3Dd|event=|vantage=
+NDEC|gap=live-and-logged|uroute=1|channel_ok=1
+NIN|seq=45%20x|row=row%7Chash%3Ddd|prev=prev%25ee|channel=c|event=|vantage=|subs=0|uroute=-1
+DURABLE-NOTIFY|cosign_seq=45%20x|cosign_row=row%7Chash%3Ddd|cosign_prev=prev%25ee|channel=c|event=|vantage=
+NDEC|gap=logged-but-no-live-subscriber|uroute=1|channel_ok=1
+NIN|seq=46|row=rowhash-ff|prev=prev-dd|channel=|event=-|vantage=-|subs=2|uroute=-1
+DURABLE-NOTIFY|cosign_seq=46|cosign_row=rowhash-ff|cosign_prev=prev-dd|channel=|event=|vantage=
+NDEC|gap=live-and-logged|uroute=1|channel_ok=0

@@ -1,0 +1,9 @@
+# hp_mix on enwik8 / enwik9, MEASURED 2026-10-17: Rust 1.81.0 release build of this crate's hp_mix,
+# run from model/hrm-fork; compress, then decompress as a separate run (hutter-tournament.yml:75-79).
+# RUN = inputs and outputs by sha256; PILOT / DECOMPRESS = the rows hp_mix printed, byte for byte.
+RUN|corpus=enwik8|input_bytes=100000000|input_sha256=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8|archive_bytes=26421998|archive_sha256=4c1068e16725d8f308a9c1d13b5f44c3df0899e4ca56807e018b934e5bef666d|restored_sha256=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8|roundtrip_exact=1|json=0
+PILOT|mode=compress|input_bytes=100000000|archive_bytes=26421998|decoder_src_bytes=13074|total_bytes=26435072|ratio_x=3.7847|bpc=2.1137|roundtrip=0
+DECOMPRESS|archive_bytes=26421998|output_bytes=100000000
+RUN|corpus=enwik9|input_bytes=1000000000|input_sha256=159b85351e5f76e60cbe32e04c677847a9ecba3adc79addab6f4c6c7aa3744bc|archive_bytes=236419493|archive_sha256=97b87aa63f5b6310be50247e78ba6014ee80d588dc9a6e8b47db845042746eea|restored_sha256=159b85351e5f76e60cbe32e04c677847a9ecba3adc79addab6f4c6c7aa3744bc|roundtrip_exact=1|json=0
+PILOT|mode=compress|input_bytes=1000000000|archive_bytes=236419493|decoder_src_bytes=13074|total_bytes=236432567|ratio_x=4.2297|bpc=1.8913|roundtrip=0
+DECOMPRESS|archive_bytes=236419493|output_bytes=1000000000

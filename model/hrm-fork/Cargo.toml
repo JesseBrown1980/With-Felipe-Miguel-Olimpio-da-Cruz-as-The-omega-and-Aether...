@@ -1,0 +1,39 @@
+[package]
+name = "asolaria-hrm-fork"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The owner's hp_mix codec (asolaria-cube-cloud) built unchanged under Rust 1.81, and the owner's HRM fork vendored as a cold lane"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["hrm", "context-mixing", "arithmetic-coding", "enwik8", "integer"]
+categories = ["compression"]
+autobins = false
+autoexamples = false
+autobenches = false
+
+# The upstream source file, byte-identical (UPSTREAM.sha256). Upstream builds it with
+# `rustc --edition=2021 -O hp_mix.rs` (hutter-tournament.yml:71, enwik9-two-system.yml:60).
+[[bin]]
+name = "hp_mix"
+path = "vendor/asolaria-cube-cloud/hutter/variants/mix/hp_mix.rs"
+test = false
+doctest = false
+bench = false
+
+[dev-dependencies]
+sha2 = "0.10.9"
+
+# The vendored file cannot carry attributes without changing its bytes, so the crate-level
+# rules are set here. Each allowed clippy lint is named with the upstream lines it covers.
+[lints.rust]
+unsafe_code = "forbid"
+
+# Clippy 1.81 reports exactly these two lints on the vendored file; both are allowed by name.
+# The upstream repository's own CI (rust-1.81-clippy-verification.yml:47-86) runs clippy only on a
+# Cargo.toml, and asolaria-cube-cloud has none, so upstream records clippy as NOT_MEASURED there.
+[lints.clippy]
+# hp_mix.rs:104 `(65536 / 5) as i32`.
+unnecessary_cast = "allow"
+# hp_mix.rs:160-161,163-164,203-204 two-sided `if` bounds on d, p and nw.
+manual_clamp = "allow"

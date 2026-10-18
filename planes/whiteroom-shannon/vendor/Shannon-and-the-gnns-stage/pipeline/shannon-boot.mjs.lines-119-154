@@ -1,0 +1,36 @@
+    approvalRef: 'ASOLARIA-FEDERATION-REMAKE-1024-PID-2026-05-11'
+  };
+  const t2 = checkShannonGate('usb_raw_io.write', 2, happyApproval);
+  results.push({ name: 'tier-2-happy', ok: t2.granted === true && t2.status === 'approved_ready', detail: t2.reason || t2.status });
+
+  // tier-2 blocked: missing approvalRef
+  const blocked = checkShannonGate('usb_raw_io.write', 2, { ...happyApproval, approvalRef: '' });
+  results.push({ name: 'LX-333-blocked', ok: blocked.granted === false && blocked.reason === 'execution_approval_reference_required', detail: blocked.reason });
+
+  const allGreen = results.every((r) => r.ok);
+  return { allGreen, results };
+}
+
+// ---- 4. HBPv1 emit helper (append-only, multi-cosign chain head) ----
+export function emitFixtureRestored({
+  hbpPath = 'C:/asolaria-acer/packages/revolver-10k/data/fixtures/shannon-r1-boot.hbp',
+  anchor  = 'FIXTURE-RESTORED-SHANNON-R1-PID-2026-05-19',
+  prevHash = 'seq190-multitrack-rollup'
+} = {}) {
+  const row = [
+    'HBPv1',
+    'layer=fixture-restoration',
+    `pid=${anchor}`,
+    'prof=shannon-gate-boot-fixture',
+    'supervisor=nereus-cp76',
+    'tuple=fixture:shannon:gate:boot',
+    'triple_quant=unspecified',
+    'polar_quant=unspecified',
+    'js_quant=unspecified',
+    'turbo_quant=unspecified',
+    'json=0', 'runtime=0', 'promote=1', 'status=FIXTURE_RESTORED',
+    `antecedents=DAN-HOOKS-LINEAGE-CANON-PID-2026-05-19,${SHANNON_PID_CANON},LX-328,LX-329,LX-331,LX-332,LX-333,seq191-shannon-r1-boot`,
+    'chain_id=COHORT-R-FIXTURE-RESTORATION',
+    'sequence=191',
+    `prev_hash=${prevHash}`,
+    'cohort=R', 'phase=R1', 'fixture_class=real-free', 'describe_only=1',

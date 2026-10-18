@@ -1,0 +1,23 @@
+[package]
+name = "asolaria-whiteroom-shannon"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The white-room L0 scorer, the Shannon-stage hookwall plane, Shannon gate boot fixture and white-room consumer, the fabric-thinker GNN wire and the hybrid multi-GNN harness, ported to an in-process Rust library"
+keywords = ["gnn", "hbp", "integer", "port"]
+categories = ["algorithms"]
+
+[lib]
+name = "whiteroom_shannon"
+path = "src/lib.rs"
+
+[dependencies]
+# The L0 EdgeLevelGNN in process (the :4792 server's MODEL) and JavaScript binary64 arithmetic.
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }
+# The white-room engine, its Scorer interface, DeterministicScorer, the seal and deriveCubeAddress
+# (Q-WHITEROOM-GULP-MINT): used, not duplicated.
+asolaria-quant-cubes = { path = "../../quants/cubes", version = "0.1.0" }
+# hilbertEncode of bigpickle-rebuild src/hilbert.mjs: used, not duplicated.
+asolaria-hrm-mtp = { path = "../../model/hrm-mtp", version = "0.1.0" }
+sha2 = { version = "0.10.9", default-features = false }
