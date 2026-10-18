@@ -76,10 +76,24 @@ bus, and ACER's Windows sandbox, which stopped a GNN/FNN level-growth run near 1
 > infinite messaging, and the Omega hotel and the Omni hotel allow for particles to talk to each
 > other." (OPERATOR)
 
-The Brown-Hilbert hotel is in the records of section 2. The Omega and Omni hotels are the operator's
-words here; they are not yet written up under those names in the records searched for this guide.
+The Brown-Hilbert hotel is in the records of section 2. For the other two, the operator points to two
+repos (OPERATOR). Neither uses the word "hotel"; this is what each one defines, in its own words.
 
-## 4. Why Host8 was retired
+- **Omni: `Omni-Asolaria-ASI-OS-Matrix-Fabric` @ `2b4193f`.** One slice lives at every level of the
+  matrix at once, because every level translator is a bijection and the translators form a groupoid:
+  *"translators `T_ij` with `T_ji∘T_ij = id` and `T_jk∘T_ij = T_ik` make translation omnidirectional
+  and path-independent across the whole ladder."* (README, "Prism/Comb 0-loss", CANON; the 256↔1024
+  rung is MEASURED there.) ACER's records also name "OmniHotel" as stage 12 of the OMNI
+  constellation, on Liris evidence whose roster hash is still under bilateral HOLD (ACER memory,
+  `correction_rime_affirmative_claims_sector_counts_system_models_2026_07_24.md:140-142`).
+- **Omega: `asolaria-omega-omnibit-tournament` @ `dad4647`.** The Omega ledger: 27 shared binding
+  commitments that unify into one Omega root, with an `omega_slot` in every cube address
+  (`src/asolaria_tournament/relic_engine.py`, `OmegaLedger` and `CubeAddress`). The three seats,
+  Acer, Liris and Relic, keep their files, corpora and hardware private and meet only through what git
+  carries: *"reviewed code, derived commitments, allowlisted receipts, public fixtures, and explicit
+  Omega bindings."* (README, "Tournament topology")
+
+## 4. Why the Host8 handle was retired as an identity
 
 Host8 is 8 bytes cut from a SHA-256 of the 60-glyph tuple (`asolaria-federation-1024` @ `dc1da1a9`,
 `kernel/boot/src/hwinv.rs`, `project_60d` and `emit_device_pid`). Cutting a hash short means two
@@ -88,14 +102,21 @@ different addresses can land on the same handle: *"A short Host8 identifier may 
 never stands in for it: *"a glyph summarizes a backend address; per canon it never replaces the
 evidence."* (reductions repo, `01-rebuild/F01-prime-tower-geometry--builder.md`)
 
-The structured Brown-Hilbert address does not collide; a truncated handle of it can. The operator
-retired Host8 for that reason and replaced it with the system of the
+The Matrix-Fabric repo draws the same bound: `handle8 = sha256(content)[:8]` is only *"a coordinate
+against the content-addressed cube store"*, so the matrix has *"infinite ADDRESSING capacity, not
+lossless infinite compression."* (`Omni-Asolaria-ASI-OS-Matrix-Fabric` README, "Prism/Comb 0-loss")
+
+The structured Brown-Hilbert address does not collide; a truncated handle of it can. What the
+operator stopped using is the Host8 handle **as an identity** (OPERATOR, 2026-10-18, said in reply to
+the point that the 8-byte handle can collide). Identity moved to the system of the
 `Metatagging-data-for-a-Quantum-universe` repo (OPERATOR), whose seed tags every particle with its
 own metadata: *"`ParticleID` (e.g. `E123`) → **PID**: every agent, slice, room, receipt is
 content-addressed (BEHCS-1024)."* (`docs/WHAT-THIS-SEED-BECAME-2026-07-03.md:11`)
 
-On 2026-10-18 ACER's runtime still showed `host8-serve.exe` running, with ASI OS
-(`asolaria-asi-os.exe`, `:4600`) in front of it.
+The `host8-serve` server itself is still running. On 2026-10-18 ACER's process list showed
+`host8-serve.exe` behind ASI OS (`asolaria-asi-os.exe`, `:4600`), and ACER's records describe it as
+the runtime the Node/V8 services are being ported into, under `swap_gate=parity-before-retire` with
+`node_retired=0`.
 
 ## 5. How deep is enough
 
