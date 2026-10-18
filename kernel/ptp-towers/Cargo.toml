@@ -1,0 +1,23 @@
+[package]
+name = "asolaria-ptp-towers"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Cloud reproduction of the PTP (prime to prime: towers, cylinders) measurement on the tribit kernel. Integer only."
+publish = false
+
+[dependencies]
+asolaria-tribit = { path = "../tribit", version = "0.1.0" }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+float_arithmetic = "deny"
+cast_precision_loss = "deny"
+
+[profile.release]
+opt-level = 3
+
+[workspace]
