@@ -14,6 +14,7 @@ The formula (MEASURED, Q-PRISM 53023b6):
 Pure stdlib. E=0: no launch, no network -- this proves the transcode, it does not fire a fabric.
 """
 import hashlib
+from fractions import Fraction
 
 
 def slice_maker(slice_bytes):
@@ -41,8 +42,8 @@ def renderer(glyphs, pad):
 
 
 def code_rate(slice_bytes, glyphs):
-    """bits-out / bits-in. Exactly 1.0 on 5-byte-aligned input (the alphabet changes, not the info)."""
-    return (len(glyphs) * 10) / (len(slice_bytes) * 8)
+    """bits-out / bits-in as an exact ratio. Exactly 1 on 5-byte-aligned input (the alphabet changes, not the info)."""
+    return Fraction(len(glyphs) * 10, len(slice_bytes) * 8)
 
 
 if __name__ == "__main__":
@@ -60,7 +61,9 @@ if __name__ == "__main__":
     print("glyphs (base-1024):", len(made["glyphs"]), "symbols  ->", made["glyphs"][:8], "...")
     print("content-address  :", made["address"])
     print("rendered == slice:", same, "  (sha", sha_in, "->", sha_out + ")")
-    print("code rate        :", code_rate(slice_bytes + b"\x00" * ((-len(slice_bytes)) % 5), made["glyphs"]),
+    rate = code_rate(slice_bytes + b"\x00" * ((-len(slice_bytes)) % 5), made["glyphs"])
+    rate_text = "%d.%d" % (rate.numerator // rate.denominator, (rate.numerator * 10 // rate.denominator) % 10)
+    print("code rate        :", rate_text,
           " (1.0 = re-relation, not compression)")
     assert same, "renderer must reproduce the slice byte-for-byte (bijection)"
     print("\nOK: slice -> glyphs -> processed slice is byte-identical, code rate 1.0 (instant, lossless).")

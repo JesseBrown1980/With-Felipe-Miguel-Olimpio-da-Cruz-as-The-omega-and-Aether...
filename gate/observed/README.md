@@ -8,8 +8,10 @@ and builds the `VerifiedEnvelope` the tighten-only verdict (`gate/verdict`) read
 the caller. Crate `asolaria-observed`, `#![forbid(unsafe_code)]`, Rust 1.81, no `f32`/`f64`.
 
 **Lane.** Hot lane: everything in `src/` runs per request, in process, on integers, HBP text and
-SHA-256 (`sha2`), with no Python, torch, Node, JSON or HTTP. `tools/score_referee.py` is cold lane:
-a stdlib Python mirror of `asolaria-score.mjs` that CI uses to regenerate the expected fixture.
+SHA-256 (`sha2`), with no Python, torch, Node, JSON or HTTP. `tools/score_referee.py` is the cold
+lane: a stdlib Python mirror of `asolaria-score.mjs`, on integers (an integer emulation of binary64:
+a double is its 64-bit pattern, `+ - * /` the round-to-nearest-even integer operations), that CI uses
+to regenerate the expected fixture.
 
 ## API
 
@@ -94,11 +96,14 @@ Other measurements:
 - Shannon: computed in binary64 as asolaria-score.mjs:86-95 computes it, with `Math.log2` ported
   from V8 12.4.254.21 `src/base/ieee754.cc:1951-2050` (`k_log1p`, `log2`), assuming no FMA
   contraction, which x86-64 baseline code cannot emit. Over 20,247 inputs (lengths 0 to 2000,
-  multi-byte UTF-8, near-tie searches) it equals the referee's Python mirror of the JavaScript in
-  all 20,247; `log2` equals the referee's mirror of V8's bit for bit on 4,096 arguments. The
-  JavaScript value equals the exact-arithmetic rounding in 20,242 of the 20,247. C libm's
-  `math.log2` gives a different value from V8's for 202 of the 59,076 Shannon arguments and
-  changes no Shannon value.
+  multi-byte UTF-8, near-tie searches) it equals the referee's integer binary64 mirror of the
+  JavaScript in all 20,247; `log2` equals the referee's mirror of V8's bit for bit on 4,096
+  arguments. The JavaScript value equals the exact-arithmetic rounding — exact rationals
+  (fractions.Fraction) over a fixed-point integer log2 held to 512 fractional bits — in 20,242 of
+  the 20,247; over the 59,076 distinct log2 arguments the closest the entropy comes to a
+  `toFixed(4)` rounding half is 166,661,281,510,894,334 at scale 10^-30 (a fixed-point integer), so
+  the rounding is unambiguous. The host C library's `math.log2` is not compared to the V8 port here:
+  reproducing that comparison needs `math.log2`, a float function the integer rule excludes.
 - Baseline and reverse gain: 1,506 baselines and all 10,001 reverse gains equal.
 - Chain: for the 174 fixture pairs, `observe`'s L0 reading equals `score_pair` of the torch-fed
   inputs, and its e4 value equals `+score.toFixed(4)` of the torch float32 output, for torch fed
