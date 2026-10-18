@@ -1,0 +1,19 @@
+[package]
+name = "asolaria-tribit-referees"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Cold-lane integer ports of the owner's balanced-ternary scripts crank.py, compose.py and trunk.py, byte-equal to the vendored scripts' output"
+publish = false
+
+[lib]
+name = "tribit_referees"
+path = "src/lib.rs"
+
+[dependencies]
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]

@@ -1,0 +1,4 @@
+d0b579e162a86f27f225989e34233c6b10f427321724842814d630eb2488b0c2  bigpickle-rebuild/src/port-address-emitter.mjs
+49a32651cfbcc5377ee8b1905d8b76d628431ea32db70d541cb4aba488fd85fd  bigpickle-rebuild/src/district-fabric.mjs
+435091b7760469d5b6a81575deb9e8b46a682e0b78f9a8c7526b47e4d659f18c  bigpickle-rebuild/tests/unit/port-address-emitter.test.mjs
+d0b579e162a86f27f225989e34233c6b10f427321724842814d630eb2488b0c2  full-works/emitter/port-address-emitter.mjs

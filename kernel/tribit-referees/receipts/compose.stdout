@@ -1,0 +1,48 @@
+COMPOSE|does the closure survive nesting|json=0
+
+=== 1. closure at every level, exact integers ===
+ depth   leaves        levels_checked   sum_ne_zero
+  1      3             1                0
+  2      9             2                0
+  3      27            3                0
+  4      81            4                0
+  5      243           5                0
+  6      729           6                0
+  7      2187          7                0
+  8      6561          8                0
+  9      19683         9                0
+  10     59049         10               0
+  11     177147        11               0
+  12     531441        12               0
+  13     1594323       13               0
+
+=== 2. THE DECISIVE TEST: is the centre still free at depth? ===
+   shift the centre at EVERY level; arms must not move.
+
+ depth   arithmetic   arm_changes   worst_|delta|
+  1      int          0             0 exactly
+  3      int          0             0 exactly
+  6      int          0             0 exactly
+  9      int          0             0 exactly
+  12     int          0             0 exactly
+  1      float64      1             1.136868e-13
+  3      float64      10            9.094947e-13
+  6      float64      310           3.637979e-12
+  9      float64      8534          2.910383e-11
+  12     float64      228731        1.746230e-10
+
+=== 3. depth 27 and 81 — single path, exact rationals ===
+   full enumeration is impossible (3^27 = 7.6e12 leaves), so we walk one
+   path to the requested depth and carry the residual exactly.
+
+ depth   arithmetic   residual_at_root
+  1      exact        0
+  3      exact        0
+  9      exact        0
+  27     exact        0
+  81     exact        0
+  1      float64      0.000000e+00
+  3      float64      0.000000e+00
+  9      float64      -4.001777e-11
+  27     float64      -9.689025e-02
+  81     float64      -1.324979e+24

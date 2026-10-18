@@ -1,0 +1,24 @@
+[package]
+name = "asolaria-port-address-emitter"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Hilbert-traced nested 16-bit logical ports (port.port.port) per agent, ported to integer Rust from bigpickle-rebuild@c592599 src/port-address-emitter.mjs"
+repository = "https://github.com/JesseBrown1980/bigpickle-rebuild"
+keywords = ["hilbert", "address", "port", "integer"]
+categories = ["algorithms"]
+
+[workspace]
+
+[lib]
+name = "port_address_emitter"
+path = "src/lib.rs"
+
+[[example]]
+name = "emit_ports"
+path = "examples/emit_ports.rs"
+
+[dependencies]
+aether-loop = { path = "../../loop", version = "0.1.0" }
+asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }

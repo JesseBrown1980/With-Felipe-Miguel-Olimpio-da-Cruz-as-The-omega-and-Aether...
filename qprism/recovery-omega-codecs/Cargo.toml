@@ -1,0 +1,45 @@
+[package]
+name = "asolaria-recovery-omega-codecs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+description = "Vendored Omega floor codec and Omega hyper codec integration (isolated std-only v0 assemblies), byte-identical to asolaria-omega-omnibit-tournament@dad4647. Integer-only, zero float, zero dependencies."
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+readme = "README.md"
+keywords = ["qprism", "omega", "codec", "integer"]
+categories = ["algorithms"]
+include = [
+    "Cargo.toml",
+    "Cargo.lock",
+    "README.md",
+    "PROVENANCE.md",
+    "UPSTREAM.sha256",
+    "rust-toolchain.toml",
+    "omega-floor-codec-v0/omega_floor_codec_v0.rs",
+    "omega-hyper-codec-integration-v0/omega_hyper_codec_v0.rs",
+    "omega-operator-catalog-v0/omega_operator_catalog.rs",
+    "omega-floor-codec-contract-v0/INTEGRATED-OMEGA-FLOOR-CODEC-CONTRACT.hbp",
+    "vectors/OMEGA-FLOOR-CODEC-V0-VERIFY.hbp",
+    "vectors/OMEGA-FLOOR-CODEC-V0-VERIFY.hbi",
+]
+
+[[bin]]
+name = "omega_floor_codec_v0"
+path = "omega-floor-codec-v0/omega_floor_codec_v0.rs"
+
+[[bin]]
+name = "omega_hyper_codec_v0"
+path = "omega-hyper-codec-integration-v0/omega_hyper_codec_v0.rs"
+
+[dependencies]
+
+# The floor source carries #![forbid(unsafe_code)] (omega_floor_codec_v0.rs:1); this applies the
+# same level to the hyper binary and the catalog module it compiles in, without editing either.
+[lints.rust]
+unsafe_code = "forbid"
+
+[profile.release]
+overflow-checks = true
+lto = true
+codegen-units = 1

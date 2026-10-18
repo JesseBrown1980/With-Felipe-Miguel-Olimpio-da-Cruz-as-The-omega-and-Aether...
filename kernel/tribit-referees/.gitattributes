@@ -1,0 +1,5 @@
+* text eol=lf
+# vendored upstream bytes stay exactly as upstream committed them (the-browns-solution README.md
+# mixes CRLF and LF lines)
+vendor/** -text
+receipts/*.stdout -text

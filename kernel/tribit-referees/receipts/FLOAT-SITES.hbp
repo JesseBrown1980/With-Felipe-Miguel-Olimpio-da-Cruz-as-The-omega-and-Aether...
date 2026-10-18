@@ -1,0 +1,26 @@
+HBP1|schema=ASOLARIA-AETHER-TRIBIT-REFEREES-FLOAT-SITES-V1|json=0
+SCRIPT|path=vendor/The-Brown-Light-erdos-Engine-block-powered-by-light/crank.py|float_sites=3|json=0
+FLOAT_SITE|path=vendor/The-Brown-Light-erdos-Engine-block-powered-by-light/crank.py|line=53|col=60|kind=float_call|source=float(f)|json=0
+FLOAT_SITE|path=vendor/The-Brown-Light-erdos-Engine-block-powered-by-light/crank.py|line=71|col=10|kind=float_format:%.6f|source="  P(%d) = %-10s = %.6f" % (k, p, float(p))|json=0
+FLOAT_SITE|path=vendor/The-Brown-Light-erdos-Engine-block-powered-by-light/crank.py|line=71|col=44|kind=float_call|source=float(p)|json=0
+SCRIPT|path=vendor/does-the-closure-survive-81-levels/compose.py|float_sites=11|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=85|col=15|kind=float_call|source=float(s % 2001 - 1000)|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=85|col=40|kind=float_literal|source=0.1|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=87|col=22|kind=float_literal|source=0.0|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=122|col=32|kind=float_literal|source=7919.0|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=123|col=10|kind=float_format:%.6e|source="  %-6d %-12s %-13d %.6e" % (D, "float64", m, w)|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=146|col=14|kind=float_literal|source=11.1|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=146|col=21|kind=float_literal|source=4.1|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=146|col=26|kind=float_literal|source=93.1|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=147|col=12|kind=float_literal|source=0.0|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=151|col=12|kind=float_literal|source=7919.0|json=0
+FLOAT_SITE|path=vendor/does-the-closure-survive-81-levels/compose.py|line=156|col=10|kind=float_format:%.6e|source="  %-6d %-12s %.6e" % (D, "float64", resid)|json=0
+SCRIPT|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|float_sites=8|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=84|col=10|kind=float_format:%.4f|source="   pos %-4d %8d   (%.4f%%)" % (k, hist[k], 100 * hist[k] / (N + 1))|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=84|col=54|kind=true_division|source=100 * hist[k] / (N + 1)|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=86|col=6|kind=float_format:%.4f|source="   pos>=20  %8d   (%.4f%%)" % (tail, 100 * tail / (N + 1))|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=86|col=44|kind=true_division|source=100 * tail / (N + 1)|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=91|col=10|kind=float_format:%.4f+%.4f|source="   pos %-4d expected %.4f%%   observed %.4f%%"|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=92|col=23|kind=true_division|source=2 / 3|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=92|col=38|kind=true_division|source=1 / 3|json=0
+FLOAT_SITE|path=vendor/does-2-to-the-n-always-contain-a-digit-2-in-base-3/trunk.py|line=92|col=46|kind=true_division|source=100 * hist.get(k, 0) / (N + 1)|json=0
