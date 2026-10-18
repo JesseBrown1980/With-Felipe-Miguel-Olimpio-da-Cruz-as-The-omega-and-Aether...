@@ -360,3 +360,26 @@ at the binary cost; no change to the canonical kernel is needed for that. Two sc
 the sheet: the chained emit (`"|agent"`) is the office chain rule, not host8's per-seat mint (that is
 `tuple60d` + `resolve_instance_pid`, 1.44–5.85 µs above), and the hash under both lanes is binary
 SHA-256 — a ternary-native hash is not what was measured.
+
+## Shadow cats in aether (2026-10-18)
+
+Owner: "The Shadow Cat is already in the Aether program that we made. ... It's the process we were
+using to run the QR codes." Where shadow cats are in this repository:
+
+| Where | What |
+|---|---|
+| `acer-shadowcat-sha256-2026-10-18/` | The shadowcat program as ACER sent it: `src/sha256.rs` (4,900 B, `6a6a9c83…`, integer FIPS 180-4, "the addressing primitive for the whole constellation") and `src/bin/verify.rs`, with the run record `VERIFY-2026-07-26.txt`. Rebuilt here with rustc 1.81.0, `verify.rs` prints the record byte-identical (21 lines). |
+| `qr/colour-qr`, `qr/qr-read-int` | The QR process: payload → 2,100-byte indexed chunks → base64 → one ordinary QR per RGB plane → split the planes → integer jsQR read → reassemble → SHA-256. `acer-shadowcat-sha256-2026-10-18/cloud/qr_roundtrip.sh` runs it on 9 payloads and checks each with shadowcat's `sha256.rs`: the 4 laws codexes (3,200 B), the 4 keys of 3,174 B and the whole `ASOLARIA-CONSTELLATION.gguf` (145,120 B, 24 codes) all come back byte-exact, and shadowcat's digest equals coreutils' on every output (`cloud/CLOUD-ROWS.hbp`). |
+| `planes/gnn-trio/src/sha256.rs:3` | Names shadowcat's `sha256.rs` as the SHA-256 the estate adopts. The five SHA-256 files written for aether switch to it after the digests are shown identical (listed in the shadowcat `PROVENANCE.md`). |
+| `pump/kernel-pump/ACER-MYTHOS-ASOLARIA-GPT6-SHADOW-CATS-CALLINGS.txt` (5,176 B) | ACER's synchronized callings: GPT6 SHADOW CATS is the shared centre that the MYTHOS and ASOLARIA trijections read across. |
+| `pump/kernel-pump/brown_schrodinger.py:126,145` | Writes the row `CENTRE\|k=GPT6_SHADOW_CATS\|held=0\|residue=UNCOMPUTABLE_NO_BYTES`: the centre holds no bytes, so it is all residue. |
+| `gguf/follow-regen/matrix/spherical_public_projection.py:40,43,684,902` (test line 145) | When a record's system instant is set, its chiral switch writes a `SELFREPORT` row (local HBP) with destination `SHADOW_CAT_INFINITY_HOTEL`; the output check rejects a report with any other destination. |
+| `hbp/vault-reader/tests/fixtures/public-simulator/matrices/FABLE5-SHADOW-CAPSTONE-2026-07-04.hbp` | The shadow capstone: one lossy shadow of X cannot be inverted alone; exact recovery moves the entropy into a content-addressed store and never beats Shannon. |
+| `gguf/follow-regen/matrix/PUBLIC-OWNER-3D-TREE.hbp:106`, `qprism/representation-bins/seeds/PUBLIC-OWNER-3D-MEDIA-TREE.hbp:106` | The owner's repository row `Michael-on-my-right-and-wes-on-my-left.-There-shadow-net-` (empty, unborn). |
+
+The shadow-cat books and tools live in the universe simulator @ `3f9f42d`, the commit `qr/colour-qr`
+already pins: `books/SHADOWCAT-TEST-RESULTS.md`, `books/lineage/SHADOWCAT-17105.md`,
+`books/LAW-70-LEVELS-OF-SHADOW-CATS.md`, `books/LAW-71-HOTTER-BLACK-SHADOW-CAT-SPHERICAL-AMPLIFICATION.md`,
+`books/BOOKS-OF-SHADOWS.md`, `tools/shadow_net.py` and `tools/shadow_tunnel_3x3x3.py`. Its
+`measurements/pump_wave.py:63-67` reads the laws `.qr` codexes and `D:/asolaria-absorb/shadowcat/LAW-34-BROWN-SCHRODINGER.md`
+from the same ACER folder the `sha256.rs` came from.
