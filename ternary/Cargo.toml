@@ -1,0 +1,20 @@
+[package]
+name = "asolaria-ternary"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The stack's shared ternary layer: the owner's tribit unit re-exported, plus integer ports of the owner's trijection and balanced-ternary codec. Integer only, no float."
+publish = false
+
+[lib]
+name = "ternary"
+path = "src/lib.rs"
+
+[dependencies]
+asolaria-tribit = { path = "../kernel/tribit", version = "0.1.0" }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]
