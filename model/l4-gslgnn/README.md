@@ -28,8 +28,10 @@ agreement and the measured outputs are in [`PROVENANCE.md`](PROVENANCE.md).
   SHA-256 of each UTF-8 string, each as the Q24 value of the float32 of the double `byte / 255`.
 - `score_request(pid, content)` runs the forward on edge `(0, 1)` and returns `L4Reading { score_q24,
   score_e4 }`: `scores[0]` and `+scores[0].toFixed(4)` in e4 units, the value asolaria-score.mjs:128
-  puts in `signals.l4`. The composite weight for that slot, 0.15 (asolaria-score.mjs:152, 156), is
-  already in `gate/observed/src/score.rs`.
+  puts in `signals.l4`. The served composite gives that slot no weight since the owner's 2026-10-18
+  edit (served asolaria-score.mjs:157, `gate/observed/vendor/acer-scorer-2026-10-18/`; upstream blob
+  `b101c098` line 156 had 0.15): L4 is still queried and reported, and does not vote.
+  `gate/observed/src/score.rs` mirrors the served weights.
 
 ## What the served checkpoint computes
 

@@ -1,0 +1,18 @@
+--- /mnt/d/bigpickle-rebuild/src/asolaria-score.mjs.bak-pre-l4-weight0-2026-10-18	2026-06-08 09:47:28.000000000 -0300
++++ /mnt/d/bigpickle-rebuild/src/asolaria-score.mjs	2026-10-18 06:49:23.178480700 -0300
+@@ -149,11 +149,12 @@
+   }
+ 
+   // ── COMPOSITE — weight real signals, honest about provenance ──────────────
+-  // Weights: L0=0.30, L4=0.15, G1=0.10, G2=0.10, G3=0.10, Shannon=0.15, Baseline=0.10
+-  // Normalize to available signals only.
++  // Weights: L0=0.30, G1=0.10, G2=0.10, G3=0.10, Shannon=0.15, Baseline=0.10 (sum 0.85, normalized below)
++  // L4 = 0 (operator 2026-10-18): constant 0.5292 on the corpus, so it still reports in signals/provenance but does not vote
++  // — same as L1/L2. Normalize to available signals only.
+   let composite = 0;
+   let totalWeight = 0;
+-  const WEIGHTS = { l0: 0.30, l4: 0.15, g1: 0.10, g2: 0.10, g3: 0.10, shannon: 0.15, baseline: 0.10 };
++  const WEIGHTS = { l0: 0.30, g1: 0.10, g2: 0.10, g3: 0.10, shannon: 0.15, baseline: 0.10 };
+   for (const [key, w] of Object.entries(WEIGHTS)) {
+     const sig = signals[key];
+     if (typeof sig === 'number') { composite += sig * w; totalWeight += w; }

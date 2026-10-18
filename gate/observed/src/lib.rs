@@ -57,9 +57,9 @@ pub struct Observed {
     pub l0: Option<L0Reading>,
     /// asolaria-score.mjs signals.
     pub signals: Signals,
-    /// `+composite.toFixed(4)` (asolaria-score.mjs:163) in e4 units.
+    /// `+composite.toFixed(4)` (asolaria-score.mjs:164) in e4 units.
     pub composite_e4: u32,
-    /// `reverseGain(composite)` (asolaria-score.mjs:166).
+    /// `reverseGain(composite)` (asolaria-score.mjs:167).
     pub reverse_gain: ReverseGain,
 }
 

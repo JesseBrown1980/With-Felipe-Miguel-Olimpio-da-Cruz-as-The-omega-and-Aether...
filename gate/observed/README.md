@@ -32,7 +32,7 @@ to regenerate the expected fixture.
 | `signals.l4`, `g1`, `g2`, `g3` | absent: this stack has no L4 or :4949 fabric service | asolaria-score.mjs:126-138 |
 | `signals.shannon` | `shannon_e4(payload)` | asolaria-score.mjs:86-95, 141 |
 | `signals.baseline` | `sha_baseline_e4(pid, payload)` | asolaria-score.mjs:98-101, 145 |
-| composite | `composite_e4(signals)`: weights `l0 .30, l4 .15, g1 .10, g2 .10, g3 .10, shannon .15, baseline .10` over the present signals, in that order, divided by their summed weight, `toFixed(4)`; binary64 throughout, via `l0_edge::jsnum` | asolaria-score.mjs:151-163 |
+| composite | `composite_e4(signals)`: weights `l0 .30, g1 .10, g2 .10, g3 .10, shannon .15, baseline .10` over the present signals, in that order, divided by their summed weight, `toFixed(4)`; binary64 throughout, via `l0_edge::jsnum`. `l4` is a reported signal with no weight (the owner's 2026-10-18 edit; before it, `l4 .15`) | served asolaria-score.mjs:151-164 (`vendor/acer-scorer-2026-10-18/`) |
 | reverse gain | `reverse_risk = +(1 - composite).toFixed(4)`, `promoted = composite >= 0.72 && reverse_risk <= 0.28` | asolaria-score.mjs:104-108 |
 | spawn gate `forward_score_q` | `composite_e4 / 10`, rounded down | |
 | spawn gate `reverse_risk_q` | `reverse_risk_e4 / 10`, rounded up | |

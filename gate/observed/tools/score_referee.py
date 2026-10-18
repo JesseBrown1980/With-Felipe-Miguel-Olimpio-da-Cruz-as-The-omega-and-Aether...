@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
 """Referee for src/score.rs: mirrors asolaria-score.mjs shannonSignal (lines 86-95), shaBaseline
-(lines 25, 98-101, 145), reverseGain (lines 104-108) and the composite (lines 151-163). Every
+(lines 25, 98-101, 145), reverseGain (lines 104-108) and the composite (lines 151-164). Every
 JavaScript number (binary64) is reproduced by an integer emulation of IEEE-754 binary64 (the Dbl /
 Binary64 port of src/score.rs): a double is its 64-bit pattern, and +, -, *, / are the same
 round-to-nearest-even integer operations the hardware runs, no float anywhere.
 
-Upstream: model/l0-edge/vendor/pipeline/asolaria-score.mjs (git blob b101c0989de3af0ca41db0eac1293c758d7e5296).
+Served: vendor/acer-scorer-2026-10-18/asolaria-score.mjs (git blob 033fe88877532fcd62eb731990cb76b8bd68b5b5),
+the owner's 2026-10-18 edit of upstream model/l0-edge/vendor/pipeline/asolaria-score.mjs (git blob
+b101c0989de3af0ca41db0eac1293c758d7e5296): l4 dropped from WEIGHTS. Before writing or checking, both
+blobs are verified, and each file converted to CRLF is checked against the pre/post sha256 of the
+owner's office receipt for the edit.
 Writes tests/fixtures/expected-score.hbp; --check regenerates it in memory and diffs the committed copy.
 Math.log2 is mirrored statement by statement from V8's log2: v8/v8 tag 12.4.254.21 (the V8 of Node
 v22.22.0) src/base/ieee754.cc:1951-1962 (k_log1p) and 1973-2050 (log2), git blob
 e71b63fd7c17711e5dc04d9acc040be0aa0b7c40, over the binary64 emulation (the hardware double path with
 no FMA contraction, which x86-64 baseline code cannot emit). The exact arithmetic the referee
-compares against (shannon `exact`, near-tie generation) is exact rationals (fractions.Fraction) over a
-fixed-point integer log2 held to 512 fractional bits; the closest the entropy comes to a rounding
-boundary over every row is reported, so the rounding is shown to be unambiguous.
+compares against (shannon `exact`, the composite's exact value) is exact rationals
+(fractions.Fraction) over a fixed-point integer log2 held to 512 fractional bits; the closest the
+entropy comes to a rounding boundary over every row is reported, so the rounding is shown to be
+unambiguous.
 """
 import hashlib
 import pathlib
@@ -23,17 +28,24 @@ from fractions import Fraction
 
 CRATE = pathlib.Path(__file__).resolve().parent.parent
 FIXTURE = CRATE / "tests" / "fixtures" / "expected-score.hbp"
+SERVED = CRATE / "vendor" / "acer-scorer-2026-10-18" / "asolaria-score.mjs"
+SERVED_BLOB = "033fe88877532fcd62eb731990cb76b8bd68b5b5"
 UPSTREAM = CRATE.parent.parent / "model" / "l0-edge" / "vendor" / "pipeline" / "asolaria-score.mjs"
 UPSTREAM_BLOB = "b101c0989de3af0ca41db0eac1293c758d7e5296"
+# FABLE5-SCORER-L4-WEIGHT0-2026-10-18.hbp: pre_sha256 / post_sha256 of the ACER working copy (CRLF).
+RECEIPT_PRE_CRLF_SHA256 = "99b3d8ecce397e2005262787530fccc80e6e374e64875a257ab7f7a879c6ea25"
+RECEIPT_POST_CRLF_SHA256 = "74b8e90607d7884c3094f4b5b5547e005f6bfdcc82253c97e338dfcc12ae7919"
 
 HEADER = """\
 # expected-score.hbp from tools/score_referee.py; do not edit
-# Mirrors asolaria-score.mjs (git blob b101c098) in Python binary64 = JavaScript numbers; values in e4 units.
+# Mirrors the served asolaria-score.mjs (git blob 033fe888 = upstream b101c098 + the owner's 2026-10-18 edit)
+#   in Python binary64 = JavaScript numbers; values in e4 units.
 # SHANNON want = +shannonSignal(content).score (lines 86-95), exact = the same entropy in exact arithmetic,
 #   rounded half up; bins = UTF-8 byte counts by byte % 12, utf8_hex = the content's UTF-8 bytes.
 # LOG2 want = Math.log2(x), V8 12.4.254.21 src/base/ieee754.cc:1951-2050; x and want are binary64 bits (hex).
 # BASELINE want = +shaBaseline(pid, content).toFixed(4) (lines 98-101, 145); pid_hex / content_hex = UTF-8 bytes.
-# COMPOSITE want = +composite.toFixed(4) over the listed signals (lines 154-163); an absent key is an absent signal.
+# COMPOSITE want = +composite.toFixed(4) over the listed signals (lines 155-164); an absent key is an absent signal.
+#   l4 is listed when present, but WEIGHTS (line 157) gives it no weight, so it does not move want.
 # REVERSE reverseGain(+(composite / 10000)) (lines 104-108): reverse_risk = +(1 - score).toFixed(4), promoted 1 or 0.
 """
 
@@ -436,37 +448,50 @@ def reverse_gain(score):
     return reverse_risk_units, promoted
 
 
-# ---- composite, asolaria-score.mjs:151-163 ------------------------------------------------------
+# ---- composite, asolaria-score.mjs:151-164 ------------------------------------------------------
 
-WEIGHTS = (  # :156
+WEIGHTS = (  # :157  no l4 (the owner's 2026-10-18 edit)
     ("l0", from_fraction(Fraction(30, 100))),
-    ("l4", from_fraction(Fraction(15, 100))),
     ("g1", from_fraction(Fraction(10, 100))),
     ("g2", from_fraction(Fraction(10, 100))),
     ("g3", from_fraction(Fraction(10, 100))),
     ("shannon", from_fraction(Fraction(15, 100))),
     ("baseline", from_fraction(Fraction(10, 100))),
 )
-WEIGHT_TWENTIETHS = {"l0": 6, "l4": 3, "g1": 2, "g2": 2, "g3": 2, "shannon": 3, "baseline": 2}
+WEIGHT_TWENTIETHS = {"l0": 6, "g1": 2, "g2": 2, "g3": 2, "shannon": 3, "baseline": 2}
+# The signals a request may carry: l4 is still set when L4 answers (line 128), it just has no weight.
 OPTIONAL = ("l0", "l4", "g1", "g2", "g3")
+SIGNAL_ORDER = OPTIONAL + ("shannon", "baseline")
 
 
 def composite_e4(signals_e4):
-    composite = ZERO  # :154
-    total_weight = ZERO  # :155
-    for key, w in WEIGHTS:  # :157  for (const [key, w] of Object.entries(WEIGHTS))
-        if key in signals_e4:  # :159  typeof sig === 'number'
+    composite = ZERO  # :155
+    total_weight = ZERO  # :156
+    for key, w in WEIGHTS:  # :158  for (const [key, w] of Object.entries(WEIGHTS))
+        if key in signals_e4:  # :160  typeof sig === 'number'
             composite = composite + js_number_from_e4(signals_e4[key]) * w
             total_weight = total_weight + w
-    if not total_weight.is_zero():  # :162
+    if not total_weight.is_zero():  # :163
         composite = composite / total_weight
-    return js_to_fixed_units(composite, 4)  # :163  +composite.toFixed(4)
+    return js_to_fixed_units(composite, 4)  # :164  +composite.toFixed(4)
+
+
+def weight_twentieths(signals_e4):
+    return sum(WEIGHT_TWENTIETHS[k] for k in signals_e4 if k in WEIGHT_TWENTIETHS)
+
+
+def weighted_twentieths(signals_e4):
+    return sum(WEIGHT_TWENTIETHS[k] * v for k, v in signals_e4.items() if k in WEIGHT_TWENTIETHS)
 
 
 def exact_composite_e4(signals_e4):
-    weight = sum(WEIGHT_TWENTIETHS[k] for k in signals_e4)
-    value = Fraction(sum(WEIGHT_TWENTIETHS[k] * v for k, v in signals_e4.items()), weight) + Fraction(1, 2)
+    value = Fraction(weighted_twentieths(signals_e4), weight_twentieths(signals_e4)) + Fraction(1, 2)
     return value.numerator // value.denominator
+
+
+def is_exact_half(signals_e4):
+    weight = weight_twentieths(signals_e4)
+    return (2 * weighted_twentieths(signals_e4)) % (2 * weight) == weight
 
 
 # ---- inputs ---------------------------------------------------------------------------------------
@@ -711,31 +736,27 @@ def composite_rows(summary, total):
             sets.append({**{k: value for i, k in enumerate(OPTIONAL) if mask >> i & 1}, "shannon": value, "baseline": value})
         for _ in range(8):
             sets.append({**{k: random_e4(rng) for i, k in enumerate(OPTIONAL) if mask >> i & 1}, "shannon": random_e4(rng), "baseline": 10 * rng.below(1000)})
-    ties = 0
-    while ties < 2000:
-        # Exact halves need an even weight sum in twentieths, which only patterns with l4 have.
-        mask = rng.below(32) | 2
-        signals = {**{k: rng.below(10001) for i, k in enumerate(OPTIONAL) if mask >> i & 1}, "shannon": rng.below(10001), "baseline": rng.below(10001)}
-        weight = sum(WEIGHT_TWENTIETHS[k] for k in signals)
-        weighted = sum(WEIGHT_TWENTIETHS[k] * v for k, v in signals.items())
-        steps = [s for s in range(weight) if (weighted + 3 * s) % weight == weight // 2 and signals["shannon"] + s <= 10000]
-        if steps:
-            signals["shannon"] += steps[0]
-            sets.append(signals)
-            ties += 1
+    # No exact-half rows are built: an exact half needs an even weight sum in twentieths, and with l4
+    # unweighted every sum is shannon 3 + baseline 2 + even optional weights, which is odd. The count
+    # of exact halves over all rows is measured below instead.
     while len(sets) < total:
         mask = rng.below(32)
         baseline = 10 * rng.below(1000) if rng.below(2) else random_e4(rng)
         sets.append({**{k: random_e4(rng) for i, k in enumerate(OPTIONAL) if mask >> i & 1}, "shannon": random_e4(rng), "baseline": baseline})
     rows = []
     rounds_unlike_exact = 0
+    exact_halves = 0
+    with_l4 = 0
     for signals in sets:
         want = composite_e4(signals)
         if want != exact_composite_e4(signals):
             rounds_unlike_exact += 1
-        fields = "|".join(f"{k}={signals[k]}" for k, _ in WEIGHTS if k in signals)
+        exact_halves += is_exact_half(signals)
+        with_l4 += "l4" in signals
+        fields = "|".join(f"{k}={signals[k]}" for k in SIGNAL_ORDER if k in signals)
         rows.append(f"COMPOSITE|{fields}|want={want}")
-    summary.update(composite=len(rows), composite_exact_half=ties, composite_want_ne_exact=rounds_unlike_exact)
+    summary.update(composite=len(rows), composite_with_l4=with_l4, composite_exact_half=exact_halves,
+                   composite_want_ne_exact=rounds_unlike_exact)
     return rows
 
 
@@ -754,10 +775,15 @@ def render(summary):
 
 
 def verify_upstream():
-    data = UPSTREAM.read_bytes()
-    blob = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
-    if blob != UPSTREAM_BLOB:
-        raise SystemExit(f"{UPSTREAM} is blob {blob}, expected {UPSTREAM_BLOB}")
+    for path, want_blob, want_crlf in ((UPSTREAM, UPSTREAM_BLOB, RECEIPT_PRE_CRLF_SHA256),
+                                       (SERVED, SERVED_BLOB, RECEIPT_POST_CRLF_SHA256)):
+        data = path.read_bytes()
+        blob = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+        if blob != want_blob:
+            raise SystemExit(f"{path} is blob {blob}, expected {want_blob}")
+        crlf = hashlib.sha256(data.replace(b"\n", b"\r\n")).hexdigest()
+        if crlf != want_crlf:
+            raise SystemExit(f"{path} as CRLF is sha256 {crlf}, expected the receipt's {want_crlf}")
 
 
 def summary_line(status, summary):

@@ -184,7 +184,8 @@ What it computes, in order:
    [`../model/l0-edge/README.md`](../model/l0-edge/README.md#the-forward)).
 3. The asolaria-score signals: `l0` (when present), Shannon of the payload and the sha baseline
    of `pid|payload`. L4, G1, G2 and G3 have no service in this stack and are absent.
-4. The composite (asolaria-score.mjs:154-163) and `reverseGain` (lines 104-108).
+4. The composite (asolaria-score.mjs:155-164, the served copy in `gate/observed/vendor/acer-scorer-2026-10-18/`;
+   `l4` carries no weight there since the owner's 2026-10-18 edit) and `reverseGain` (lines 104-108).
 5. The gate envelope: `forward_score_q = composite_e4 / 10` (rounded down) and
    `reverse_risk_q = reverse_risk_e4 / 10` (rounded up) for the spawn gate, where `_e4` values
    are the four decimals of `toFixed(4)` as integers (units of 1/10000), and the Fischer
@@ -218,7 +219,9 @@ same envelope otherwise:
 The model was trained with `BCELoss` on the `gnnDataExport.js` edge label (train_baseline.py:83-105),
 which is 1 for risk >= 6, status blocked or denied, or an action containing blocked or denied
 (gnnDataExport.js:74-77). asolaria-score adds L0 to the composite with weight 0.30
-(asolaria-score.mjs:156-159). These are the upstream definitions; `observe` reproduces them.
+(served asolaria-score.mjs:157-160). These are the upstream definitions; `observe` reproduces them.
+L4, G1, G2 and G3 are absent in this stack, so the figures above are the same before and after the
+owner's 2026-10-18 edit that took `l4` out of the weights.
 
 `--pub`/`--sig` work as for `gate` and cover the exact envelope bytes only. The events file is
 not signed, so `signature=verified` says nothing about it. The events file decides the L0 term:

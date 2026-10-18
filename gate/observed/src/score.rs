@@ -1,4 +1,5 @@
-//! Port of the asolaria-score.mjs signals, composite and reverse-gain gate, in e4 units (1/10000).
+//! Port of the served asolaria-score.mjs (`vendor/acer-scorer-2026-10-18/`) signals, composite and
+//! reverse-gain gate, in e4 units (1/10000).
 
 use core::cmp::Ordering;
 use core::ops::{Add, Div, Mul, Neg, Sub};
@@ -35,12 +36,12 @@ pub fn sha_baseline_e4(pid: &str, content: &str) -> u32 {
     (leading_hex4 % 1000) * 10
 }
 
-/// The `signals` asolaria-score.mjs weighs (lines 116-145), each `+x.toFixed(4)` in e4 units.
+/// The `signals` asolaria-score.mjs builds (lines 116-145), each `+x.toFixed(4)` in e4 units.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Signals {
     /// L0 EdgeLevelGNN `scores[0]` (line 122); `None` when :4792 gives no score.
     pub l0: Option<u32>,
-    /// L4 GSLGNN (line 128).
+    /// L4 GSLGNN (line 128). Reported, not weighted: the served `WEIGHTS` (line 157) has no `l4`.
     pub l4: Option<u32>,
     /// Fabric G1 edge mining (line 134).
     pub g1: Option<u32>,
@@ -54,12 +55,11 @@ pub struct Signals {
     pub baseline: u32,
 }
 
-/// `+composite.toFixed(4)` (asolaria-score.mjs:154-163): the weighted mean of the present signals in
-/// WEIGHTS order, evaluated in JavaScript number arithmetic.
+/// `+composite.toFixed(4)` (asolaria-score.mjs:155-164): the weighted mean of the present signals in
+/// WEIGHTS order (line 157), evaluated in JavaScript number arithmetic.
 pub fn composite_e4(signals: &Signals) -> u32 {
     let weighted = [
         (signals.l0, 30),
-        (signals.l4, 15),
         (signals.g1, 10),
         (signals.g2, 10),
         (signals.g3, 10),

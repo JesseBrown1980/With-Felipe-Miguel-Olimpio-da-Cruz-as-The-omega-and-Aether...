@@ -268,11 +268,10 @@ is the exact rendering `n/2^24` of the Q24 integer before it, and `toFixed(4)` v
 
 ## Composite weight
 
-asolaria-score.mjs:152, 156 give L4 the weight 0.15 among `l0 0.30, l4 0.15, g1 0.10, g2 0.10,
-g3 0.10, shannon 0.15, baseline 0.10`, normalised over the signals present (lines 157-162). That
-weight is already in `gate/observed/src/score.rs` (`composite_e4`, slot `l4`, 15); this crate supplies
-the value for that slot as `score_request(pid, content).score_e4`. Wiring it there is the
-integrator's step.
+Upstream (blob `b101c098`), asolaria-score.mjs:152, 156 gave L4 the weight 0.15 among `l0 0.30, l4
+0.15, g1 0.10, g2 0.10, g3 0.10, shannon 0.15, baseline 0.10`, normalised over the signals present
+(lines 157-162). The served scorer no longer does: see the owner decision below, applied the same day.
+This crate supplies the reported value, `score_request(pid, content).score_e4`, for `signals.l4`.
 
 Owner decision 2026-10-18 (OWNER-RULES 7.a amendment): L4 is to carry weight 0 — "something that
 doesn't calculate shouldn't propagate." The :4793 GSLGNN returns a near-constant 0.5292 (the same
@@ -283,8 +282,16 @@ checkpoint (9e50723b) and the `gslgnn_inference_server.py` server are present (o
 9859b576). To keep rule 1 (the port never self-corrects ahead of the served source), the weight-0
 change is made at the source — dropping the `l4` entry in asolaria-score.mjs:156 lets the
 present-signals weighted mean renormalise to the remaining 85 on its own — and this port and its
-referee re-mirror it then (one line each + a fixture regen). Until that source edit lands,
-`composite_e4` here stays faithful at `l4` = 15: the decision is recorded, not yet applied.
+referee re-mirror it then (one line each + a fixture regen).
+
+Applied 2026-10-18. The owner's seat made the source edit (office receipt
+`FABLE5-SCORER-L4-WEIGHT0-2026-10-18.hbp`: `WEIGHTS` is now line 157 with no `l4`; working-copy sha256
+`99b3d8ec…` before, `74b8e906…` after, CRLF). The served file is vendored at
+`gate/observed/vendor/acer-scorer-2026-10-18/` (LF; it is upstream blob `b101c098` plus that edit, and
+the referee checks both against the receipt). `gate/observed/src/score.rs` `composite_e4` has no `l4`
+slot, and `tools/score_referee.py` regenerates its fixture with `l4` present in 25,010 of 50,000
+composite rows, none of which it moves. With `l4` unweighted every weight sum is odd in twentieths,
+so no composite is an exact half (measured: 0 of 50,000).
 
 ## Referees
 
