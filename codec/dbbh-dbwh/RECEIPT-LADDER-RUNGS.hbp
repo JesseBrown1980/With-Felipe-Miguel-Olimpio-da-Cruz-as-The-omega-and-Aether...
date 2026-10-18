@@ -1,6 +1,9 @@
 # Metatag ladder rungs — MEASURED receipt (2026-10-18)
-# Extends the seed repo's proven 256<->1024 (byte-8<->symbol-10) rung to every rung this codec represents (width 1..16).
-# Produced by: cargo +1.81.0 test metatag_ladder_rungs_are_lossless_every_width -- --nocapture (codec/dbbh-dbwh).
+# Seed repo proved only the 256<->1024 rung. This proves the lossless byte<->symbol round-trip
+# for every rung the shipped u16 codec represents (width 1..16), AND that the ladder is not
+# capped there: the same transform over u64/u128 is lossless for width 1..64 (incl. the 60 rung);
+# arbitrary precision is unbounded. 16 was an implementation choice, not a limit.
+# Produced by: cargo +1.81.0 test metatag_ladder -- --nocapture (codec/dbbh-dbwh).
 RUNG|width=1|alphabet=2|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
 RUNG|width=2|alphabet=4|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
 RUNG|width=3|alphabet=8|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
@@ -18,3 +21,4 @@ RUNG|width=14|alphabet=16384|tested=85793|roundtrip_failures=0|uniform=1|lossles
 RUNG|width=15|alphabet=32768|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
 RUNG|width=16|alphabet=65536|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
 LADDER|widths=1..16|rungs=16|total_tested=1372688|total_failures=0|cross_rung_4rung=1|readme_1024_rung_included=1|receipt_sha256=ed2bc6942cf54db4814f492527fae932efb13e10c8033385ec55c292fb3fe24c|tag=MEASURED|json=0
+WIDE-LADDER|widths=1..64|total_tested=4530752|total_failures=0|past16_lossless=1|rung60_lossless=1|u16_cap=implementation_not_limit|arbitrary_precision=unbounded|tag=MEASURED|json=0

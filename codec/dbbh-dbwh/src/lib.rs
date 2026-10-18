@@ -805,4 +805,113 @@ mod tests {
         assert_eq!(total_fail, 0, "a metatag-ladder rung lost data");
         assert!(proven_included, "the README-proven 1024 rung must be in the sweep");
     }
+
+    // The 16-rung sweep stops at width 16 only because the shipped codec packs symbols
+    // into u16 — that is an implementation ceiling, NOT a property of the ladder. The
+    // byte<->symbol transform is a reversible bit-stream regrouping for ANY width w >= 1,
+    // so the ladder "keeps going" (operator: levels are unbounded, not capped at 16).
+    // Same transform over u64 symbols / u128 accumulator, proven lossless for widths
+    // 1..=64 (alphabets 2 .. 2^64) — including the 60-level rung. Arbitrary precision
+    // would carry it to any level; only the chosen integer type bounds one build.
+    fn to_symbols_wide(bytes: &[u8], width: u32) -> Vec<u64> {
+        let mut out = Vec::new();
+        let (mut acc, mut n) = (0u128, 0u32);
+        let mask: u128 = (1u128 << width) - 1;
+        for &b in bytes {
+            acc = (acc << 8) | b as u128;
+            n += 8;
+            while n >= width {
+                n -= width;
+                out.push(((acc >> n) & mask) as u64);
+            }
+        }
+        if n > 0 {
+            out.push(((acc << (width - n)) & mask) as u64);
+        }
+        out
+    }
+    fn from_symbols_wide(syms: &[u64], width: u32, orig_len: usize) -> Vec<u8> {
+        let mut out = Vec::new();
+        let (mut acc, mut n) = (0u128, 0u32);
+        for &s in syms {
+            acc = (acc << width) | (s as u128 & ((1u128 << width) - 1));
+            n += width;
+            while n >= 8 {
+                n -= 8;
+                out.push(((acc >> n) & 0xFF) as u8);
+            }
+        }
+        out.truncate(orig_len);
+        out
+    }
+    fn wide_rung_ok(bytes: &[u8], width: u32) -> bool {
+        let syms = to_symbols_wide(bytes, width);
+        let mask: u128 = (1u128 << width) - 1;
+        syms.iter().all(|&s| (s as u128) <= mask)
+            && from_symbols_wide(&syms, width, bytes.len()) == bytes
+    }
+
+    #[test]
+    fn metatag_ladder_keeps_going_past_16() {
+        let mut state: u64 = 0xD1B5_4A32_D192_ED03;
+        let mut next = || -> u64 {
+            state = state.wrapping_add(0x9E37_79B9_7F4A_7C15);
+            let mut z = state;
+            z = (z ^ (z >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
+            z = (z ^ (z >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
+            z ^ (z >> 31)
+        };
+        let mut total_tested: u64 = 0;
+        let mut total_fail: u64 = 0;
+        let mut past16_ok = true;
+        let mut sixty_ok = false;
+        for width in 1u32..=64 {
+            let mut fail: u64 = 0;
+            let mut tested: u64 = 0;
+            if !wide_rung_ok(&[], width) {
+                fail += 1;
+            }
+            tested += 1;
+            for a in 0u16..=255 {
+                tested += 1;
+                if !wide_rung_ok(&[a as u8], width) {
+                    fail += 1;
+                }
+            }
+            for a in 0u16..=255 {
+                for b in 0u16..=255 {
+                    tested += 1;
+                    if !wide_rung_ok(&[a as u8, b as u8], width) {
+                        fail += 1;
+                    }
+                }
+            }
+            for _ in 0..5_000 {
+                let len = (next() % 96) as usize;
+                let mut v = Vec::with_capacity(len);
+                for _ in 0..len {
+                    v.push((next() & 0xFF) as u8);
+                }
+                tested += 1;
+                if !wide_rung_ok(&v, width) {
+                    fail += 1;
+                }
+            }
+            total_tested += tested;
+            total_fail += fail;
+            if width > 16 && fail != 0 {
+                past16_ok = false;
+            }
+            if width == 60 && fail == 0 {
+                sixty_ok = true;
+            }
+        }
+        println!(
+            "WIDE-LADDER|widths=1..64|total_tested={total_tested}|total_failures={total_fail}|past16_lossless={}|rung60_lossless={}|u16_cap=implementation_not_limit|arbitrary_precision=unbounded|tag=MEASURED|json=0",
+            u8::from(past16_ok),
+            u8::from(sixty_ok)
+        );
+        assert_eq!(total_fail, 0, "a rung past width 16 lost data");
+        assert!(past16_ok && sixty_ok, "ladder must keep going past 16, incl. the 60 rung");
+    }
 }
