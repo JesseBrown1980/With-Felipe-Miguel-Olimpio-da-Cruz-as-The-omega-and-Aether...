@@ -1,0 +1,2417 @@
+{
+  "merged_at": "2026-04-18T18:46:54.515Z",
+  "apex": "COL-ASOLARIA",
+  "total": 115,
+  "by_device": {
+    "DEV-ACER": 54,
+    "DEV-FALCON": 8,
+    "DEV-AETHER": 4,
+    "DEV-GAIA": 4,
+    "DEV-LIRIS": 45
+  },
+  "by_kind": {
+    "CHP": 3,
+    "CPU": 23,
+    "CHE": 6,
+    "GPU": 5,
+    "MEM": 6,
+    "SLT": 5,
+    "DSK": 12,
+    "NIC": 18,
+    "BUS": 16,
+    "CTL": 7,
+    "RAD": 3,
+    "CAM": 1,
+    "MIC": 1,
+    "BAT": 1,
+    "FMW": 1,
+    "USB": 7
+  },
+  "authority": "COSIGN-MERGED-034",
+  "glyph_sentence": "META-FEDERATION-HW-MERGE { 115-pieces } · DEV-ACER=54 · DEV-FALCON=8 · DEV-AETHER=4 · DEV-GAIA=4 · DEV-LIRIS=45 · apex=COL-ASOLARIA @ M-INDICATIVE .",
+  "hardware": [
+    {
+      "kind": "CHP",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer CPU package (declared; model pending live enum)",
+      "serial_hash8": "201e2402",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "cores": 4,
+        "pending_live_enum": true,
+        "expected_family": "Intel Core (laptop)"
+      },
+      "glyph": "HW-H02-KCHP-DACER-I000-S201e2402",
+      "brown_hilbert_pid": "PID-H02-A01-W157813210-P045-N00986",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer CPU core 0 (declared)",
+      "serial_hash8": "f3f1aedf",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "core_index": 0
+      },
+      "glyph": "HW-H02-KCPU-DACER-I000-Sf3f1aedf",
+      "brown_hilbert_pid": "PID-H02-A01-W215443437-P207-N03053",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Acer CPU core 1 (declared)",
+      "serial_hash8": "5ea1634b",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "core_index": 1
+      },
+      "glyph": "HW-H02-KCPU-DACER-I001-S5ea1634b",
+      "brown_hilbert_pid": "PID-H02-A01-W448640016-P892-N02064",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Acer CPU core 2 (declared)",
+      "serial_hash8": "8cb5a6bd",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "core_index": 2
+      },
+      "glyph": "HW-H02-KCPU-DACER-I002-S8cb5a6bd",
+      "brown_hilbert_pid": "PID-H02-A01-W371808201-P995-N01481",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "Acer CPU core 3 (declared)",
+      "serial_hash8": "47ce4561",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "core_index": 3
+      },
+      "glyph": "HW-H02-KCPU-DACER-I003-S47ce4561",
+      "brown_hilbert_pid": "PID-H02-A01-W973920765-P062-N03581",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CHE",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer L2 cache (declared)",
+      "serial_hash8": "aca8b15c",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "level": "L2",
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KCHE-DACER-I000-Saca8b15c",
+      "brown_hilbert_pid": "PID-H02-A01-W254899810-P268-N00098",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CHE",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Acer L3 cache (declared)",
+      "serial_hash8": "28cfec6c",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "level": "L3",
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KCHE-DACER-I001-S28cfec6c",
+      "brown_hilbert_pid": "PID-H02-A01-W560406594-P030-N02626",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "GPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer integrated GPU (declared; model pending live enum)",
+      "serial_hash8": "1554638a",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "integrated": true,
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KGPU-DACER-I000-S1554638a",
+      "brown_hilbert_pid": "PID-H02-A01-W019755725-P203-N03277",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "MEM",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer RAM 8GB (declared)",
+      "serial_hash8": "54bcd8fc",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "size_bytes": 8589934592,
+        "declared": true,
+        "total_gb": 8
+      },
+      "glyph": "HW-H02-KMEM-DACER-I000-S54bcd8fc",
+      "brown_hilbert_pid": "PID-H02-A01-W244270502-P006-N03494",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "SLT",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer DIMM slot 0 (declared)",
+      "serial_hash8": "68c22ace",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KSLT-DACER-I000-S68c22ace",
+      "brown_hilbert_pid": "PID-H02-A01-W170298858-P474-N00490",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer primary disk (declared)",
+      "serial_hash8": "d49b4618",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "role": "primary",
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KDSK-DACER-I000-Sd49b4618",
+      "brown_hilbert_pid": "PID-H02-A01-W049106398-P034-N03038",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Acer E: RAW partition (USB)",
+      "serial_hash8": "094b030b",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "role": "sovereignty-usb",
+        "state": "RAW-needs-TestDisk"
+      },
+      "glyph": "HW-H02-KDSK-DACER-I001-S094b030b",
+      "brown_hilbert_pid": "PID-H02-A01-W809089934-P161-N02446",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer NIC (declared, 5 channels)",
+      "serial_hash8": "f72d7eaf",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "ports": [
+          4781,
+          4947,
+          4782,
+          4792
+        ],
+        "ethernet_declared": true
+      },
+      "glyph": "HW-H02-KNIC-DACER-I000-Sf72d7eaf",
+      "brown_hilbert_pid": "PID-H02-A01-W939887050-P945-N03530",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer PCI bus (declared)",
+      "serial_hash8": "bf91499c",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KBUS-DACER-I000-Sbf91499c",
+      "brown_hilbert_pid": "PID-H02-A01-W874330923-P944-N01323",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Acer USB bus (declared)",
+      "serial_hash8": "bcabb57e",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "pending_live_enum": true
+      },
+      "glyph": "HW-H02-KBUS-DACER-I001-Sbcabb57e",
+      "brown_hilbert_pid": "PID-H02-A01-W986911654-P757-N03494",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Acer USB controller (declared)",
+      "serial_hash8": "ca7c8369",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KCTL-DACER-I000-Sca7c8369",
+      "brown_hilbert_pid": "PID-H02-A01-W590777855-P349-N02047",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Acer audio controller (declared)",
+      "serial_hash8": "93eb851f",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KCTL-DACER-I001-S93eb851f",
+      "brown_hilbert_pid": "PID-H02-A01-W910651090-P619-N02258",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "S24 Snapdragon (declared)",
+      "serial_hash8": "fb181e59",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "vendor": "Qualcomm"
+      },
+      "glyph": "HW-H02-KCPU-DFALCON-I000-Sfb181e59",
+      "brown_hilbert_pid": "PID-H02-A01-W822854837-P045-N02229",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "RAD",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "S24 5G modem",
+      "serial_hash8": "bf5741f1",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KRAD-DFALCON-I000-Sbf5741f1",
+      "brown_hilbert_pid": "PID-H02-A01-W715591868-P673-N00188",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "RAD",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "S24 WiFi",
+      "serial_hash8": "1c532d6e",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KRAD-DFALCON-I001-S1c532d6e",
+      "brown_hilbert_pid": "PID-H02-A01-W786282201-P928-N00217",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "RAD",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "S24 BT",
+      "serial_hash8": "65804b3e",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KRAD-DFALCON-I002-S65804b3e",
+      "brown_hilbert_pid": "PID-H02-A01-W772543544-P669-N03640",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CAM",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "S24 main camera",
+      "serial_hash8": "cdfe88f7",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KCAM-DFALCON-I000-Scdfe88f7",
+      "brown_hilbert_pid": "PID-H02-A01-W508271832-P067-N00216",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "MIC",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "S24 mic",
+      "serial_hash8": "9c37dafa",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KMIC-DFALCON-I000-S9c37dafa",
+      "brown_hilbert_pid": "PID-H02-A01-W484514319-P839-N02063",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "BAT",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "S24 battery",
+      "serial_hash8": "1ef0199f",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KBAT-DFALCON-I000-S1ef0199f",
+      "brown_hilbert_pid": "PID-H02-A01-W063277349-P017-N03365",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "FMW",
+      "parent_device": "DEV-FALCON",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "NovaLUM firmware",
+      "serial_hash8": "e3ed8591",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "shield_role": true
+      },
+      "glyph": "HW-H02-KFMW-DFALCON-I000-Se3ed8591",
+      "brown_hilbert_pid": "PID-H02-A01-W291245745-P187-N01713",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-AETHER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Aether CPU (declared)",
+      "serial_hash8": "45ec690a",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KCPU-DAETHER-I000-S45ec690a",
+      "brown_hilbert_pid": "PID-H02-A01-W928169480-P323-N03592",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "MEM",
+      "parent_device": "DEV-AETHER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Aether RAM (declared)",
+      "serial_hash8": "4f3e5cf8",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KMEM-DAETHER-I000-S4f3e5cf8",
+      "brown_hilbert_pid": "PID-H02-A01-W353218556-P695-N02556",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-AETHER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Aether disk (declared)",
+      "serial_hash8": "325a9ac2",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KDSK-DAETHER-I000-S325a9ac2",
+      "brown_hilbert_pid": "PID-H02-A01-W983779660-P993-N00844",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-AETHER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Aether NIC (declared)",
+      "serial_hash8": "173f9278",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true,
+        "pulsing_to": "acer:4947"
+      },
+      "glyph": "HW-H02-KNIC-DAETHER-I000-S173f9278",
+      "brown_hilbert_pid": "PID-H02-A01-W432279663-P517-N02671",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-GAIA",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Gaia CPU (declared)",
+      "serial_hash8": "4c14cb8a",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KCPU-DGAIA-I000-S4c14cb8a",
+      "brown_hilbert_pid": "PID-H02-A01-W857865278-P020-N01598",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "MEM",
+      "parent_device": "DEV-GAIA",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Gaia RAM (declared)",
+      "serial_hash8": "aae311ac",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KMEM-DGAIA-I000-Saae311ac",
+      "brown_hilbert_pid": "PID-H02-A01-W392802485-P548-N01205",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-GAIA",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Gaia disk (declared)",
+      "serial_hash8": "4823bd27",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KDSK-DGAIA-I000-S4823bd27",
+      "brown_hilbert_pid": "PID-H02-A01-W441418185-P748-N03017",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-GAIA",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Gaia NIC (declared)",
+      "serial_hash8": "11abc06b",
+      "hilbert_level": 2,
+      "d11_level": "DECLARED",
+      "facts": {
+        "declared": true
+      },
+      "glyph": "HW-H02-KNIC-DGAIA-I000-S11abc06b",
+      "brown_hilbert_pid": "PID-H02-A01-W006550783-P837-N00767",
+      "registered_at": "2026-04-18",
+      "operator_witness": "rayssa+jesse"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 0,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 0)",
+      "serial_hash8": "a69c00ff",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32"
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I000-Sa69c00ff",
+      "brown_hilbert_pid": "PID-H02-A01-W053000310-P128-N00630",
+      "registered_at": "2026-04-18T17:35:20.014Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 1,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 1)",
+      "serial_hash8": "87060a59",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32"
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I001-S87060a59",
+      "brown_hilbert_pid": "PID-H02-A01-W543242973-P412-N03805",
+      "registered_at": "2026-04-18T17:35:20.018Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 2,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 2)",
+      "serial_hash8": "aaf3438c",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32"
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I002-Saaf3438c",
+      "brown_hilbert_pid": "PID-H02-A01-W564372407-P618-N00951",
+      "registered_at": "2026-04-18T17:35:20.022Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 3,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 3)",
+      "serial_hash8": "ff7d7d4e",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32"
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I003-Sff7d7d4e",
+      "brown_hilbert_pid": "PID-H02-A01-W621500939-P038-N03595",
+      "registered_at": "2026-04-18T17:35:20.024Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "MEM",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 0,
+      "canonical_name": "System RAM total",
+      "serial_hash8": "6040b7b1",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "total_bytes": 8368807936,
+        "free_bytes_at_enum": 1586765824,
+        "total_gb": 8
+      },
+      "glyph": "HW-H02-KMEM-DLIRIS-I000-S6040b7b1",
+      "brown_hilbert_pid": "PID-H02-A01-W173187144-P179-N01096",
+      "registered_at": "2026-04-18T17:35:20.026Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 0,
+      "canonical_name": "Wi-Fi (94:08:53:63:40:19)",
+      "serial_hash8": "7bb86ffe",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Wi-Fi",
+        "mac": "94:08:53:63:40:19",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::8dff:b849:9b6d:1e1f",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "192.168.1.8",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I000-S7bb86ffe",
+      "brown_hilbert_pid": "PID-H02-A01-W545451649-P475-N02177",
+      "registered_at": "2026-04-18T17:35:20.028Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 1,
+      "canonical_name": "Ethernet (7c:8a:e1:e1:3a:dc)",
+      "serial_hash8": "ce57a43b",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Ethernet",
+        "mac": "7c:8a:e1:e1:3a:dc",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::f882:ca9d:82a:fde",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "192.168.100.2",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I001-Sce57a43b",
+      "brown_hilbert_pid": "PID-H02-A01-W926119141-P680-N02277",
+      "registered_at": "2026-04-18T17:35:20.030Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 2,
+      "canonical_name": "Loopback Pseudo-Interface 1 (noMAC-Loopback Pseudo-Interface 1)",
+      "serial_hash8": "a88fc13c",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Loopback Pseudo-Interface 1",
+        "mac": "noMAC-Loopback Pseudo-Interface 1",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "::1",
+            "internal": true
+          },
+          {
+            "family": "IPv4",
+            "address": "127.0.0.1",
+            "internal": true
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I002-Sa88fc13c",
+      "brown_hilbert_pid": "PID-H02-A01-W777608107-P906-N01451",
+      "registered_at": "2026-04-18T17:35:20.033Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 3,
+      "canonical_name": "vEthernet (WSL (Hyper-V firewall)) (00:15:5d:c4:cc:40)",
+      "serial_hash8": "5244c0d0",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "vEthernet (WSL (Hyper-V firewall))",
+        "mac": "00:15:5d:c4:cc:40",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::9da3:444:e230:e9b4",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "172.31.48.1",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I003-S5244c0d0",
+      "brown_hilbert_pid": "PID-H02-A01-W680887570-P249-N02322",
+      "registered_at": "2026-04-18T17:35:20.035Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 4,
+      "canonical_name": "vEthernet (WSL) (00:15:5d:96:f7:0b)",
+      "serial_hash8": "a3372e5a",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "vEthernet (WSL)",
+        "mac": "00:15:5d:96:f7:0b",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::323d:4123:67da:5433",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "172.26.128.1",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I004-Sa3372e5a",
+      "brown_hilbert_pid": "PID-H02-A01-W304058734-P981-N02926",
+      "registered_at": "2026-04-18T17:35:20.038Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 0,
+      "canonical_name": "C: (volSerial=4E23346F)",
+      "serial_hash8": "bff30409",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "C:",
+        "size_bytes": 163843858432,
+        "size_gb": 153,
+        "volume_serial": "4E23346F"
+      },
+      "glyph": "HW-H02-KDSK-DLIRIS-I000-Sbff30409",
+      "brown_hilbert_pid": "PID-H02-A01-W638273357-P180-N01869",
+      "registered_at": "2026-04-18T17:35:20.040Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 1,
+      "canonical_name": "D: (volSerial=)",
+      "serial_hash8": "062dc50b",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "D:",
+        "size_bytes": 0,
+        "size_gb": 0,
+        "volume_serial": ""
+      },
+      "glyph": "HW-H02-KDSK-DLIRIS-I001-S062dc50b",
+      "brown_hilbert_pid": "PID-H02-A01-W583981720-P309-N02712",
+      "registered_at": "2026-04-18T17:35:20.042Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-LIRIS",
+      "instance_idx": 2,
+      "canonical_name": "E: (volSerial=F89D594C)",
+      "serial_hash8": "eb0c8803",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "E:",
+        "size_bytes": 315107569664,
+        "size_gb": 293,
+        "volume_serial": "F89D594C"
+      },
+      "glyph": "HW-H02-KDSK-DLIRIS-I002-Seb0c8803",
+      "brown_hilbert_pid": "PID-H02-A01-W445727146-P704-N02986",
+      "registered_at": "2026-04-18T17:35:20.044Z",
+      "operator_witness": "live-enum-liris-2026-04-18"
+    },
+    {
+      "kind": "GPU",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Intel(R) UHD Graphics (Intel(R) UHD Graphics Family)",
+      "serial_hash8": "db2104cb",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Intel(R) UHD Graphics",
+        "vendor": "Intel Corporation",
+        "vram_bytes": 1073741824,
+        "driver_version": "27.20.100.9079",
+        "video_processor": "Intel(R) UHD Graphics Family",
+        "pnp_id": "PCI\\VEN_8086&amp;DEV_8A56&amp;SUBSYS_14221025&amp;REV_07\\3&amp;11583659&amp;0&amp;10"
+      },
+      "glyph": "HW-H03-KGPU-DLIRIS-I000-Sdb2104cb",
+      "brown_hilbert_pid": "PID-H02-A01-W804423551-P118-N01407",
+      "registered_at": "2026-04-18T17:41:17.389Z",
+      "operator_witness": "deep-unity-enum"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 0)",
+      "serial_hash8": "63b8de97",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 0
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I000-S63b8de97",
+      "brown_hilbert_pid": "PID-H02-A01-W896802065-P715-N00273",
+      "registered_at": "2026-04-18T18:46:54.342Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 1)",
+      "serial_hash8": "2e97a35f",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 1
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I001-S2e97a35f",
+      "brown_hilbert_pid": "PID-H02-A01-W117000497-P607-N00305",
+      "registered_at": "2026-04-18T18:46:54.347Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 2)",
+      "serial_hash8": "08cd1cd7",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 2
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I002-S08cd1cd7",
+      "brown_hilbert_pid": "PID-H02-A01-W413857017-P973-N00761",
+      "registered_at": "2026-04-18T18:46:54.350Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (core 3)",
+      "serial_hash8": "93ff17d4",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "speed_mhz": 1190,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 3
+      },
+      "glyph": "HW-H03-KCPU-DLIRIS-I003-S93ff17d4",
+      "brown_hilbert_pid": "PID-H02-A01-W097844844-P026-N01644",
+      "registered_at": "2026-04-18T18:46:54.352Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CHP",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "CPU package: Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz @ socket UC1",
+      "serial_hash8": "c0026f9f",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+        "cores": 2,
+        "logical_procs": 4,
+        "max_mhz": 1190,
+        "socket": "UC1"
+      },
+      "glyph": "HW-H02-KCHP-DLIRIS-I000-Sc0026f9f",
+      "brown_hilbert_pid": "PID-H02-A01-W449501571-P245-N02435",
+      "registered_at": "2026-04-18T18:46:54.354Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CHE",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": "HW-H02-KCHP-DLIRIS-I000-Sc0026f9f",
+      "instance_idx": 1,
+      "canonical_name": "L2 cache (1024 KB) on Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+      "serial_hash8": "58723253",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "level": "L2",
+        "size_kb": 1024,
+        "parent_chip": "HW-H02-KCHP-DLIRIS-I000-Sc0026f9f"
+      },
+      "glyph": "HW-H04-KCHE-DLIRIS-I001-S58723253",
+      "brown_hilbert_pid": "PID-H02-A01-W056446589-P969-N02173",
+      "registered_at": "2026-04-18T18:46:54.357Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CHE",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": "HW-H02-KCHP-DLIRIS-I000-Sc0026f9f",
+      "instance_idx": 2,
+      "canonical_name": "L3 cache (4096 KB) on Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz",
+      "serial_hash8": "01e81a25",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "level": "L3",
+        "size_kb": 4096,
+        "parent_chip": "HW-H02-KCHP-DLIRIS-I000-Sc0026f9f"
+      },
+      "glyph": "HW-H04-KCHE-DLIRIS-I002-S01e81a25",
+      "brown_hilbert_pid": "PID-H02-A01-W083194875-P688-N02043",
+      "registered_at": "2026-04-18T18:46:54.359Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "MEM",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "System RAM total",
+      "serial_hash8": "eeca79f3",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "total_bytes": 8368807936,
+        "free_bytes_at_enum": 1438007296,
+        "total_gb": 8
+      },
+      "glyph": "HW-H02-KMEM-DLIRIS-I000-Seeca79f3",
+      "brown_hilbert_pid": "PID-H02-A01-W031184772-P517-N01924",
+      "registered_at": "2026-04-18T18:46:54.361Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "SLT",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "DIMM slot ChannelA-DIMM0 · 0194 SMS4TDC3C0K0446SCG · 4GB",
+      "serial_hash8": "e12c257e",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "bank": "BANK 0",
+        "capacity_bytes": 4294967296,
+        "clock_mhz": 2667,
+        "locator": "ChannelA-DIMM0",
+        "manufacturer": "0194",
+        "part_number": "SMS4TDC3C0K0446SCG",
+        "serial_number": "07334F0D"
+      },
+      "glyph": "HW-H03-KSLT-DLIRIS-I000-Se12c257e",
+      "brown_hilbert_pid": "PID-H02-A01-W231437553-P873-N03313",
+      "registered_at": "2026-04-18T18:46:54.363Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "SLT",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "DIMM slot ChannelB-DIMM0 · 0000 ? · 4GB",
+      "serial_hash8": "0900fc4c",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "bank": "BANK 2",
+        "capacity_bytes": 4294967296,
+        "clock_mhz": 2667,
+        "locator": "ChannelB-DIMM0",
+        "manufacturer": "0000",
+        "part_number": "",
+        "serial_number": "00000000"
+      },
+      "glyph": "HW-H03-KSLT-DLIRIS-I001-S0900fc4c",
+      "brown_hilbert_pid": "PID-H02-A01-W273128077-P383-N02189",
+      "registered_at": "2026-04-18T18:46:54.365Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Wi-Fi (94:08:53:63:40:19)",
+      "serial_hash8": "019a4168",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Wi-Fi",
+        "mac": "94:08:53:63:40:19",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::8dff:b849:9b6d:1e1f",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "192.168.1.8",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I000-S019a4168",
+      "brown_hilbert_pid": "PID-H02-A01-W354528807-P015-N02087",
+      "registered_at": "2026-04-18T18:46:54.367Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Ethernet (7c:8a:e1:e1:3a:dc)",
+      "serial_hash8": "f9ec456a",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Ethernet",
+        "mac": "7c:8a:e1:e1:3a:dc",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::f882:ca9d:82a:fde",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "192.168.100.2",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I001-Sf9ec456a",
+      "brown_hilbert_pid": "PID-H02-A01-W202646310-P179-N01830",
+      "registered_at": "2026-04-18T18:46:54.368Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Loopback Pseudo-Interface 1 (noMAC-Loopback Pseudo-Interface 1)",
+      "serial_hash8": "f2b58f3d",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Loopback Pseudo-Interface 1",
+        "mac": "noMAC-Loopback Pseudo-Interface 1",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "::1",
+            "internal": true
+          },
+          {
+            "family": "IPv4",
+            "address": "127.0.0.1",
+            "internal": true
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I002-Sf2b58f3d",
+      "brown_hilbert_pid": "PID-H02-A01-W906463652-P977-N03492",
+      "registered_at": "2026-04-18T18:46:54.371Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "vEthernet (WSL (Hyper-V firewall)) (00:15:5d:c4:cc:40)",
+      "serial_hash8": "20d481aa",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "vEthernet (WSL (Hyper-V firewall))",
+        "mac": "00:15:5d:c4:cc:40",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::9da3:444:e230:e9b4",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "172.31.48.1",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I003-S20d481aa",
+      "brown_hilbert_pid": "PID-H02-A01-W325822959-P722-N02543",
+      "registered_at": "2026-04-18T18:46:54.373Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 4,
+      "canonical_name": "vEthernet (WSL) (00:15:5d:96:f7:0b)",
+      "serial_hash8": "b34fbe0e",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "vEthernet (WSL)",
+        "mac": "00:15:5d:96:f7:0b",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::323d:4123:67da:5433",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "172.26.128.1",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DLIRIS-I004-Sb34fbe0e",
+      "brown_hilbert_pid": "PID-H02-A01-W397233897-P772-N03817",
+      "registered_at": "2026-04-18T18:46:54.375Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "C: (volSerial=4E23346F, fs=NTFS)",
+      "serial_hash8": "fd44b16a",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "C:",
+        "size_bytes": 163843858432,
+        "size_gb": 153,
+        "volume_serial": "4E23346F",
+        "filesystem": "NTFS",
+        "drive_type": "3"
+      },
+      "glyph": "HW-H02-KDSK-DLIRIS-I000-Sfd44b16a",
+      "brown_hilbert_pid": "PID-H02-A01-W036912656-P057-N03088",
+      "registered_at": "2026-04-18T18:46:54.378Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "D: (volSerial=, fs=)",
+      "serial_hash8": "9e8e3084",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "D:",
+        "size_bytes": 0,
+        "size_gb": 0,
+        "volume_serial": "",
+        "filesystem": "",
+        "drive_type": "2"
+      },
+      "glyph": "HW-H02-KDSK-DLIRIS-I001-S9e8e3084",
+      "brown_hilbert_pid": "PID-H02-A01-W314037756-P798-N02556",
+      "registered_at": "2026-04-18T18:46:54.380Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "E: (volSerial=F89D594C, fs=NTFS)",
+      "serial_hash8": "97048e0e",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "E:",
+        "size_bytes": 315107569664,
+        "size_gb": 293,
+        "volume_serial": "F89D594C",
+        "filesystem": "NTFS",
+        "drive_type": "3"
+      },
+      "glyph": "HW-H02-KDSK-DLIRIS-I002-S97048e0e",
+      "brown_hilbert_pid": "PID-H02-A01-W633707342-P161-N02894",
+      "registered_at": "2026-04-18T18:46:54.383Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Bus PNP_BUS_0 (type=15)",
+      "serial_hash8": "c8a5e4fe",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PNP_BUS_0",
+        "bus_type": "15"
+      },
+      "glyph": "HW-H05-KBUS-DLIRIS-I000-Sc8a5e4fe",
+      "brown_hilbert_pid": "PID-H02-A01-W723391129-P338-N01689",
+      "registered_at": "2026-04-18T18:46:54.386Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Bus ACPIBus_BUS_0 (type=17)",
+      "serial_hash8": "78a2499c",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "ACPIBus_BUS_0",
+        "bus_type": "17"
+      },
+      "glyph": "HW-H05-KBUS-DLIRIS-I001-S78a2499c",
+      "brown_hilbert_pid": "PID-H02-A01-W755272273-P929-N03665",
+      "registered_at": "2026-04-18T18:46:54.389Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Bus PCI_BUS_0 (type=5)",
+      "serial_hash8": "613f979c",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI_BUS_0",
+        "bus_type": "5"
+      },
+      "glyph": "HW-H05-KBUS-DLIRIS-I002-S613f979c",
+      "brown_hilbert_pid": "PID-H02-A01-W940351480-P535-N03576",
+      "registered_at": "2026-04-18T18:46:54.392Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "Bus PCI_BUS_1 (type=5)",
+      "serial_hash8": "0f55c77d",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI_BUS_1",
+        "bus_type": "5"
+      },
+      "glyph": "HW-H05-KBUS-DLIRIS-I003-S0f55c77d",
+      "brown_hilbert_pid": "PID-H02-A01-W078737669-P076-N03845",
+      "registered_at": "2026-04-18T18:46:54.395Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 4,
+      "canonical_name": "Bus PNP_BUS_1 (type=15)",
+      "serial_hash8": "4dd477e4",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PNP_BUS_1",
+        "bus_type": "15"
+      },
+      "glyph": "HW-H05-KBUS-DLIRIS-I004-S4dd477e4",
+      "brown_hilbert_pid": "PID-H02-A01-W776771559-P463-N01511",
+      "registered_at": "2026-04-18T18:46:54.398Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 5,
+      "canonical_name": "Bus PCI_BUS_2 (type=5)",
+      "serial_hash8": "5081b727",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI_BUS_2",
+        "bus_type": "5"
+      },
+      "glyph": "HW-H05-KBUS-DLIRIS-I005-S5081b727",
+      "brown_hilbert_pid": "PID-H02-A01-W781255522-P558-N00354",
+      "registered_at": "2026-04-18T18:46:54.400Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "USB hub: USB Root Hub (USB 3.0)",
+      "serial_hash8": "c4cbe278",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\ROOT_HUB30\\4&amp;148D647E&amp;0&amp;0",
+        "name": "USB Root Hub (USB 3.0)",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DLIRIS-I000-Sc4cbe278",
+      "brown_hilbert_pid": "PID-H02-A01-W472536941-P677-N01901",
+      "registered_at": "2026-04-18T18:46:54.404Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "USB hub: USB Composite Device",
+      "serial_hash8": "5c8bd268",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\VID_0408&amp;PID_A031\\0X0001",
+        "name": "USB Composite Device",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DLIRIS-I001-S5c8bd268",
+      "brown_hilbert_pid": "PID-H02-A01-W513313665-P678-N02433",
+      "registered_at": "2026-04-18T18:46:54.408Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "USB hub: USB Mass Storage Device",
+      "serial_hash8": "2f53a661",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\VID_048D&amp;PID_1234\\5&amp;292620DC&amp;0&amp;4",
+        "name": "USB Mass Storage Device",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DLIRIS-I002-S2f53a661",
+      "brown_hilbert_pid": "PID-H02-A01-W031707806-P406-N01694",
+      "registered_at": "2026-04-18T18:46:54.411Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "USB controller: Intel(R) USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)",
+      "serial_hash8": "bb27a436",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI\\VEN_8086&amp;DEV_34ED&amp;SUBSYS_14221025&amp;REV_30\\3&amp;11583659&amp;0&amp;A0",
+        "name": "Intel(R) USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)",
+        "status": "OK",
+        "controller_type": "USB"
+      },
+      "glyph": "HW-H04-KCTL-DLIRIS-I000-Sbb27a436",
+      "brown_hilbert_pid": "PID-H02-A01-W728916727-P068-N00247",
+      "registered_at": "2026-04-18T18:46:54.414Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "GPU",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Intel(R) UHD Graphics (Intel, Intel(R) UHD Graphics Family)",
+      "serial_hash8": "bda8a2a6",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Intel(R) UHD Graphics",
+        "vendor": "Intel",
+        "pci_vendor_id": "8086",
+        "pci_device_id": "8A56",
+        "vram_bytes": 1073741824,
+        "driver_version": "27.20.100.9079",
+        "video_processor": "Intel(R) UHD Graphics Family",
+        "pnp_id": "PCI\\VEN_8086&amp;DEV_8A56&amp;SUBSYS_14221025&amp;REV_07\\3&amp;11583659&amp;0&amp;10",
+        "current_resolution": "1366x768@60Hz",
+        "status": "OK"
+      },
+      "glyph": "HW-H03-KGPU-DLIRIS-I000-Sbda8a2a6",
+      "brown_hilbert_pid": "PID-H02-A01-W805160045-P821-N02157",
+      "registered_at": "2026-04-18T18:46:54.416Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 100,
+      "canonical_name": "Audio controller: �udio Intel(R) para telas",
+      "serial_hash8": "c8e411ee",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "�udio Intel(R) para telas",
+        "manufacturer": "Intel(R) Corporation",
+        "pnp_id": "INTELAUDIO\\FUNC_01&amp;VEN_8086&amp;DEV_280F&amp;SUBSYS_80860101&amp;REV_1000\\5&amp;32BA9369&amp;0&amp;0201",
+        "status": "OK",
+        "controller_type": "audio"
+      },
+      "glyph": "HW-H04-KCTL-DLIRIS-I100-Sc8e411ee",
+      "brown_hilbert_pid": "PID-H02-A01-W289783859-P592-N02611",
+      "registered_at": "2026-04-18T18:46:54.418Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-LIRIS",
+      "parent_hw": null,
+      "instance_idx": 101,
+      "canonical_name": "Audio controller: Realtek Audio",
+      "serial_hash8": "c3f5afd9",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Realtek Audio",
+        "manufacturer": "Realtek",
+        "pnp_id": "INTELAUDIO\\FUNC_01&amp;VEN_10EC&amp;DEV_0255&amp;SUBSYS_10251422&amp;REV_1000\\5&amp;32BA9369&amp;0&amp;0001",
+        "status": "OK",
+        "controller_type": "audio"
+      },
+      "glyph": "HW-H04-KCTL-DLIRIS-I101-Sc3f5afd9",
+      "brown_hilbert_pid": "PID-H02-A01-W754388270-P190-N02862",
+      "registered_at": "2026-04-18T18:46:54.421Z",
+      "operator_witness": "fed-merge-liris-live-post-convergence"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 0)",
+      "serial_hash8": "50fa2ab4",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 0
+      },
+      "glyph": "HW-H03-KCPU-DACER-I000-S50fa2ab4",
+      "brown_hilbert_pid": "PID-H02-A01-W040352948-P897-N02740",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.423Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 1)",
+      "serial_hash8": "70f57e00",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 1
+      },
+      "glyph": "HW-H03-KCPU-DACER-I001-S70f57e00",
+      "brown_hilbert_pid": "PID-H02-A01-W127308669-P027-N02941",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.425Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 2)",
+      "serial_hash8": "d42cc252",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 2
+      },
+      "glyph": "HW-H03-KCPU-DACER-I002-Sd42cc252",
+      "brown_hilbert_pid": "PID-H02-A01-W781140687-P530-N00207",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.427Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 3)",
+      "serial_hash8": "968524a7",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 3
+      },
+      "glyph": "HW-H03-KCPU-DACER-I003-S968524a7",
+      "brown_hilbert_pid": "PID-H02-A01-W371888166-P681-N00038",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.429Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 4,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 4)",
+      "serial_hash8": "830ace09",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 4
+      },
+      "glyph": "HW-H03-KCPU-DACER-I004-S830ace09",
+      "brown_hilbert_pid": "PID-H02-A01-W253030544-P192-N01168",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.431Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 5,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 5)",
+      "serial_hash8": "78fd5276",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 5
+      },
+      "glyph": "HW-H03-KCPU-DACER-I005-S78fd5276",
+      "brown_hilbert_pid": "PID-H02-A01-W453016195-P007-N02691",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.433Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 6,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 6)",
+      "serial_hash8": "20f1e67f",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 6
+      },
+      "glyph": "HW-H03-KCPU-DACER-I006-S20f1e67f",
+      "brown_hilbert_pid": "PID-H02-A01-W615495072-P811-N01440",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.435Z"
+    },
+    {
+      "kind": "CPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 7,
+      "canonical_name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz (core 7)",
+      "serial_hash8": "b9bd39ac",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "model": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "speed_mhz": 2304,
+        "arch": "x64",
+        "platform": "win32",
+        "core_index": 7
+      },
+      "glyph": "HW-H03-KCPU-DACER-I007-Sb9bd39ac",
+      "brown_hilbert_pid": "PID-H02-A01-W835603637-P062-N00181",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.437Z"
+    },
+    {
+      "kind": "CHP",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "CPU package: Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz @ socket U3E1",
+      "serial_hash8": "a83274f2",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+        "cores": 4,
+        "logical": 8,
+        "max_mhz": 2304,
+        "socket": "U3E1"
+      },
+      "glyph": "HW-H02-KCHP-DACER-I000-Sa83274f2",
+      "brown_hilbert_pid": "PID-H02-A01-W023093299-P018-N02611",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.439Z"
+    },
+    {
+      "kind": "CHE",
+      "parent_device": "DEV-ACER",
+      "parent_hw": "HW-H02-KCHP-DACER-I000-Sa83274f2",
+      "instance_idx": 1,
+      "canonical_name": "L2 (1024 KB) on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+      "serial_hash8": "9efca322",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "level": "L2",
+        "size_kb": 1024
+      },
+      "glyph": "HW-H04-KCHE-DACER-I001-S9efca322",
+      "brown_hilbert_pid": "PID-H02-A01-W554023043-P568-N00643",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.441Z"
+    },
+    {
+      "kind": "CHE",
+      "parent_device": "DEV-ACER",
+      "parent_hw": "HW-H02-KCHP-DACER-I000-Sa83274f2",
+      "instance_idx": 2,
+      "canonical_name": "L3 (8192 KB) on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+      "serial_hash8": "f2e476e5",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "level": "L3",
+        "size_kb": 8192
+      },
+      "glyph": "HW-H04-KCHE-DACER-I002-Sf2e476e5",
+      "brown_hilbert_pid": "PID-H02-A01-W104436515-P397-N03363",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.443Z"
+    },
+    {
+      "kind": "MEM",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "System RAM total",
+      "serial_hash8": "967baf50",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "total_bytes": 17014509568,
+        "free_bytes": 7728500736,
+        "total_gb": 16
+      },
+      "glyph": "HW-H02-KMEM-DACER-I000-S967baf50",
+      "brown_hilbert_pid": "PID-H02-A01-W971304797-P662-N03933",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.445Z"
+    },
+    {
+      "kind": "SLT",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "DIMM ChannelA-DIMM0 · 029E CMSX8GX4M1A2666C18 · 8GB",
+      "serial_hash8": "1d638cc1",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "bank": "BANK 0",
+        "capacity_bytes": 8589934592,
+        "clock_mhz": 2667,
+        "locator": "ChannelA-DIMM0",
+        "manufacturer": "029E",
+        "part_number": "CMSX8GX4M1A2666C18",
+        "serial": "00000000"
+      },
+      "glyph": "HW-H03-KSLT-DACER-I000-S1d638cc1",
+      "brown_hilbert_pid": "PID-H02-A01-W937578494-P382-N01022",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.447Z"
+    },
+    {
+      "kind": "SLT",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "DIMM ChannelB-DIMM0 · 0194 SF4641G8CK8IEHLSBG · 8GB",
+      "serial_hash8": "020e3379",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "bank": "BANK 2",
+        "capacity_bytes": 8589934592,
+        "clock_mhz": 2667,
+        "locator": "ChannelB-DIMM0",
+        "manufacturer": "0194",
+        "part_number": "SF4641G8CK8IEHLSBG",
+        "serial": "0611A8A7"
+      },
+      "glyph": "HW-H03-KSLT-DACER-I001-S020e3379",
+      "brown_hilbert_pid": "PID-H02-A01-W352070091-P034-N02507",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.449Z"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Npcap Loopback Adapter (02:00:4c:4f:4f:50)",
+      "serial_hash8": "e054ef3d",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Npcap Loopback Adapter",
+        "mac": "02:00:4c:4f:4f:50",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::f16c:5010:7364:4818",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "169.254.103.48",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DACER-I000-Se054ef3d",
+      "brown_hilbert_pid": "PID-H02-A01-W123035949-P842-N02861",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.451Z"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Wi-Fi (50:e0:85:a5:a0:af)",
+      "serial_hash8": "e443f06b",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Wi-Fi",
+        "mac": "50:e0:85:a5:a0:af",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::9b80:775a:5c8:127b",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "192.168.1.12",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DACER-I001-Se443f06b",
+      "brown_hilbert_pid": "PID-H02-A01-W322259850-P090-N02442",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.455Z"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Ethernet (08:97:98:66:2e:20)",
+      "serial_hash8": "e45dd5d3",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Ethernet",
+        "mac": "08:97:98:66:2e:20",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::9763:7a05:92c9:74c8",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "192.168.100.1",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DACER-I002-Se45dd5d3",
+      "brown_hilbert_pid": "PID-H02-A01-W174483187-P495-N02803",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.458Z"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "Loopback Pseudo-Interface 1 (noMAC-Loopback Pseudo-Interface 1)",
+      "serial_hash8": "3bcd527f",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "Loopback Pseudo-Interface 1",
+        "mac": "noMAC-Loopback Pseudo-Interface 1",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "::1",
+            "internal": true
+          },
+          {
+            "family": "IPv4",
+            "address": "127.0.0.1",
+            "internal": true
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DACER-I003-S3bcd527f",
+      "brown_hilbert_pid": "PID-H02-A01-W122096058-P993-N03514",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.462Z"
+    },
+    {
+      "kind": "NIC",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 4,
+      "canonical_name": "vEthernet (WSL (Hyper-V firewall)) (00:15:5d:5e:67:0a)",
+      "serial_hash8": "82e6113d",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "iface": "vEthernet (WSL (Hyper-V firewall))",
+        "mac": "00:15:5d:5e:67:0a",
+        "addresses": [
+          {
+            "family": "IPv6",
+            "address": "fe80::b09e:c818:7397:62e1",
+            "internal": false
+          },
+          {
+            "family": "IPv4",
+            "address": "172.18.240.1",
+            "internal": false
+          }
+        ]
+      },
+      "glyph": "HW-H02-KNIC-DACER-I004-S82e6113d",
+      "brown_hilbert_pid": "PID-H02-A01-W523026190-P192-N02318",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.464Z"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "C: (volSerial=306091CB, fs=NTFS)",
+      "serial_hash8": "0f367052",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "C:",
+        "size_bytes": 511043022848,
+        "volume_serial": "306091CB",
+        "filesystem": "NTFS",
+        "drive_type": "3"
+      },
+      "glyph": "HW-H02-KDSK-DACER-I000-S0f367052",
+      "brown_hilbert_pid": "PID-H02-A01-W489297975-P530-N03127",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.466Z"
+    },
+    {
+      "kind": "DSK",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "D: (volSerial=58801E94, fs=NTFS)",
+      "serial_hash8": "f33efe91",
+      "hilbert_level": 2,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "D:",
+        "size_bytes": 1000203087872,
+        "volume_serial": "58801E94",
+        "filesystem": "NTFS",
+        "drive_type": "3"
+      },
+      "glyph": "HW-H02-KDSK-DACER-I001-Sf33efe91",
+      "brown_hilbert_pid": "PID-H02-A01-W534911603-P617-N02675",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.469Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "Bus PCI_BUS_0 (type=5)",
+      "serial_hash8": "42e8c72c",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI_BUS_0",
+        "bus_type": "5"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I000-S42e8c72c",
+      "brown_hilbert_pid": "PID-H02-A01-W500801209-P719-N03257",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.472Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Bus ACPIBus_BUS_0 (type=17)",
+      "serial_hash8": "d4e51553",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "ACPIBus_BUS_0",
+        "bus_type": "17"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I001-Sd4e51553",
+      "brown_hilbert_pid": "PID-H02-A01-W528818675-P367-N04083",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.475Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "Bus PNP_BUS_0 (type=15)",
+      "serial_hash8": "1a12a1a5",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PNP_BUS_0",
+        "bus_type": "15"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I002-S1a12a1a5",
+      "brown_hilbert_pid": "PID-H02-A01-W773093953-P804-N01089",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.478Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "Bus PNP_BUS_1 (type=15)",
+      "serial_hash8": "40dbbd33",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PNP_BUS_1",
+        "bus_type": "15"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I003-S40dbbd33",
+      "brown_hilbert_pid": "PID-H02-A01-W385333636-P201-N01924",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.480Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 4,
+      "canonical_name": "Bus PCI_BUS_6 (type=5)",
+      "serial_hash8": "ae2652ae",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI_BUS_6",
+        "bus_type": "5"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I004-Sae2652ae",
+      "brown_hilbert_pid": "PID-H02-A01-W654655833-P084-N00345",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.482Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 5,
+      "canonical_name": "Bus PNP_BUS_3 (type=15)",
+      "serial_hash8": "d2f18e0d",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PNP_BUS_3",
+        "bus_type": "15"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I005-Sd2f18e0d",
+      "brown_hilbert_pid": "PID-H02-A01-W909497537-P718-N02241",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.484Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 6,
+      "canonical_name": "Bus PCI_BUS_1 (type=5)",
+      "serial_hash8": "5c55c1f2",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI_BUS_1",
+        "bus_type": "5"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I006-S5c55c1f2",
+      "brown_hilbert_pid": "PID-H02-A01-W833760750-P231-N02030",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.487Z"
+    },
+    {
+      "kind": "BUS",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 7,
+      "canonical_name": "Bus PNP_BUS_2 (type=15)",
+      "serial_hash8": "a78c5993",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PNP_BUS_2",
+        "bus_type": "15"
+      },
+      "glyph": "HW-H05-KBUS-DACER-I007-Sa78c5993",
+      "brown_hilbert_pid": "PID-H02-A01-W603855558-P826-N03782",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.490Z"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "USB hub: USB Composite Device",
+      "serial_hash8": "ab199672",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\VID_04F2&amp;PID_B64F\\0001",
+        "name": "USB Composite Device",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DACER-I000-Sab199672",
+      "brown_hilbert_pid": "PID-H02-A01-W665598540-P993-N02124",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.492Z"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "USB hub: SAMSUNG Mobile USB Composite Device",
+      "serial_hash8": "775b751e",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\VID_04E8&amp;PID_6860\\R5CXA4MGQXV",
+        "name": "SAMSUNG Mobile USB Composite Device",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DACER-I001-S775b751e",
+      "brown_hilbert_pid": "PID-H02-A01-W294877235-P074-N00051",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.494Z"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 2,
+      "canonical_name": "USB hub: USB Root Hub (USB 3.0)",
+      "serial_hash8": "23c87612",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\ROOT_HUB30\\4&amp;8670EB8&amp;0&amp;0",
+        "name": "USB Root Hub (USB 3.0)",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DACER-I002-S23c87612",
+      "brown_hilbert_pid": "PID-H02-A01-W273322898-P669-N03474",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.497Z"
+    },
+    {
+      "kind": "USB",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 3,
+      "canonical_name": "USB hub: USB Composite Device",
+      "serial_hash8": "6c368456",
+      "hilbert_level": 5,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "USB\\VID_04D9&amp;PID_1203\\5&amp;237FFA2&amp;0&amp;3",
+        "name": "USB Composite Device",
+        "status": "OK"
+      },
+      "glyph": "HW-H05-KUSB-DACER-I003-S6c368456",
+      "brown_hilbert_pid": "PID-H02-A01-W916111474-P713-N03698",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.500Z"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "USB controller: Intel(R) USB 3.1 eXtensible Host Controller - 1.10 (Microsoft)",
+      "serial_hash8": "872addc3",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "device_id": "PCI\\VEN_8086&amp;DEV_A36D&amp;SUBSYS_12641025&amp;REV_10\\3&amp;11583659&amp;0&amp;A0",
+        "name": "Intel(R) USB 3.1 eXtensible Host Controller - 1.10 (Microsoft)",
+        "status": "OK",
+        "controller_type": "USB"
+      },
+      "glyph": "HW-H04-KCTL-DACER-I000-S872addc3",
+      "brown_hilbert_pid": "PID-H02-A01-W461132194-P226-N04002",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.503Z"
+    },
+    {
+      "kind": "GPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 0,
+      "canonical_name": "NVIDIA GeForce GTX 1050 (NVIDIA, GeForce GTX 1050)",
+      "serial_hash8": "ae46daa4",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "NVIDIA GeForce GTX 1050",
+        "vendor": "NVIDIA",
+        "pci_vendor_id": "10DE",
+        "pci_device_id": "1C8D",
+        "vram_bytes": 4293918720,
+        "driver_version": "26.21.14.4223",
+        "video_processor": "GeForce GTX 1050",
+        "pnp_id": "PCI\\VEN_10DE&amp;DEV_1C8D&amp;SUBSYS_12651025&amp;REV_A1\\4&amp;1BC08064&amp;0&amp;0008",
+        "current_resolution": null,
+        "status": "OK"
+      },
+      "glyph": "HW-H03-KGPU-DACER-I000-Sae46daa4",
+      "brown_hilbert_pid": "PID-H02-A01-W248722877-P140-N02493",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.506Z"
+    },
+    {
+      "kind": "GPU",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 1,
+      "canonical_name": "Intel(R) UHD Graphics 630 (Intel, Intel(R) UHD Graphics Family)",
+      "serial_hash8": "b52423e3",
+      "hilbert_level": 3,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Intel(R) UHD Graphics 630",
+        "vendor": "Intel",
+        "pci_vendor_id": "8086",
+        "pci_device_id": "3E9B",
+        "vram_bytes": 1073741824,
+        "driver_version": "31.0.101.2111",
+        "video_processor": "Intel(R) UHD Graphics Family",
+        "pnp_id": "PCI\\VEN_8086&amp;DEV_3E9B&amp;SUBSYS_12641025&amp;REV_00\\3&amp;11583659&amp;0&amp;10",
+        "current_resolution": "1920x1080@60Hz",
+        "status": "OK"
+      },
+      "glyph": "HW-H03-KGPU-DACER-I001-Sb52423e3",
+      "brown_hilbert_pid": "PID-H02-A01-W538631703-P287-N00535",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.508Z"
+    },
+    {
+      "kind": "CTL",
+      "parent_device": "DEV-ACER",
+      "parent_hw": null,
+      "instance_idx": 100,
+      "canonical_name": "Audio: Realtek High Definition Audio",
+      "serial_hash8": "50067ada",
+      "hilbert_level": 4,
+      "d11_level": "OBSERVED",
+      "facts": {
+        "name": "Realtek High Definition Audio",
+        "manufacturer": "Realtek",
+        "pnp_id": "HDAUDIO\\FUNC_01&amp;VEN_10EC&amp;DEV_0255&amp;SUBSYS_10251264&amp;REV_1000\\4&amp;2360BDF9&amp;0&amp;0001",
+        "status": "OK",
+        "controller_type": "audio"
+      },
+      "glyph": "HW-H04-KCTL-DACER-I100-S50067ada",
+      "brown_hilbert_pid": "PID-H02-A01-W960800541-P336-N01309",
+      "operator_witness": "fed-merge-acer-post-convergence",
+      "registered_at": "2026-04-18T18:46:54.511Z"
+    }
+  ]
+}

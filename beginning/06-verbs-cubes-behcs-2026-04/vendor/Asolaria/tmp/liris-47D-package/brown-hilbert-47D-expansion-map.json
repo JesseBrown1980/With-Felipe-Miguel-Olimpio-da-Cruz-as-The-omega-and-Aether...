@@ -1,0 +1,211 @@
+{
+  "mapId": "brown-hilbert-47D-expansion-map-v1",
+  "created": "2026-04-10T22:45:00Z",
+  "created_by": "asolaria-instance@acer",
+  "authority": "AWAITING_DUAL_COSIGN — expansion map, not canonical yet",
+  "base": "hilbert-omni-35D-v1 (liris canonical)",
+  "growth_law": "each new prime cubed = new dimension",
+  "thesis": "35D captures the operational substrate. 47D captures the FULL omninode anatomy + trinity connections + inference fabric + encryption + temporal intelligence. Everything connected to the trinity through the Wh-chain.",
+
+  "existing_35D": "D1-D35 per liris canonical (COSIGNED, LIVE)",
+  "proposed_D36_D37": "liris proposal AWAITING_DUAL_COSIGN",
+
+  "full_expansion_D36_through_D47": [
+    {
+      "D": 36,
+      "name": "INFERENCE_SURFACE",
+      "prime": 151,
+      "cube": 3442951,
+      "trinity_link": "LX-491 inference layer WHERE",
+      "purpose": "Where inference runs — GNN local, GNN federation, webhook, omni_submit, self_diagnosis. The inference layer of the trinity gets its own addressable space.",
+      "wh": "WHERE does inference happen?",
+      "values": ["gnn_local", "gnn_federation", "gslgnn_python", "webhook_trigger", "webhook_response", "omni_submit_inference", "self_diagnosis", "cross_host_inference"],
+      "source": "liris D36 proposal + acer v5 engine INFERENCE_MODE axis"
+    },
+    {
+      "D": 37,
+      "name": "AUTHORITY_TOPOLOGY",
+      "prime": 157,
+      "cube": 3869893,
+      "trinity_link": "sovereignty layer WHO commands WHAT",
+      "purpose": "Map of authority flow — who authorizes what, which gates require which auth level. Not a hierarchy claim, a structural description.",
+      "wh": "WHO has authority over WHAT?",
+      "values": ["operator_local", "operator_remote", "dual_cosign", "triple_cosign", "quadruple_cosign", "supreme_override", "hard_deny_gate", "bilateral_federation", "sub_colony_bounded"],
+      "source": "liris D37 proposal (renamed from acer AUTHORITY)"
+    },
+    {
+      "D": 38,
+      "name": "ENCRYPTION",
+      "prime": 163,
+      "cube": 4330747,
+      "trinity_link": "LX-490 hardware + LX-491 inference — encryption wraps both",
+      "purpose": "Encryption layer for all data at rest and in transit. NovaLUM .nl2xfw firmware encryption, sovereignty USB vault encryption, federation channel bearer tokens, 7zip vault files.",
+      "wh": "HOW is data protected?",
+      "values": ["plaintext", "bearer_token", "nl2xfw_firmware_encrypted", "7zip_aes256", "sha256_attestation", "tls_transit", "vault_encrypted", "sovereignty_usb_encrypted"],
+      "novalum_link": "NovaLUM firmware uses .nl2xfw encrypted format — this dim addresses that encryption surface"
+    },
+    {
+      "D": 39,
+      "name": "GNN_EDGE",
+      "prime": 167,
+      "cube": 4657463,
+      "trinity_link": "LX-491 inference fabric — the edges ARE the inference",
+      "purpose": "Graph neural network edge types. Each edge between nodes in the GNN has a type — fixes, caused, requires, blocks, proves, etc. This is the inference fabric's connective tissue.",
+      "wh": "WHAT kind of connection exists between entities?",
+      "values": ["fixes", "caused", "requires", "blocks", "evolved", "contradicts", "proven_by", "observed_on", "part_of", "same_as", "runs_on", "triggers", "feeds", "mirrors", "trains", "validates"],
+      "gnn_link": "EdgeLevelGCN trained on these edge types, 100% accuracy on 1,730 edges (commit 068061b)"
+    },
+    {
+      "D": 40,
+      "name": "HYBRID_MODEL",
+      "prime": 173,
+      "cube": 5177717,
+      "trinity_link": "LX-491 inference — WHICH model reasons about WHAT",
+      "purpose": "Multi-model federation addressing. Claude Opus on acer, Claude on liris, Codex/GPT-5.4 Gaia sidecar, Gemini brain provider, GSLGNN Python inference, local LLM. Each model has different strengths — this dim routes inference to the right substrate.",
+      "wh": "WHICH model should reason about this?",
+      "values": ["claude_opus_4_6", "claude_sonnet_4_6", "codex_o4_mini", "gpt_5_4_gaia", "gemini_2_5_pro", "gslgnn_v1_python", "local_llm", "human_operator", "ensemble_vote", "cross_model_convergence"],
+      "hybrid_link": "Gaia (GPT-5.4) + Asolaria (Claude) + Liris (Claude) + GSLGNN (Python) = multi-model federation"
+    },
+    {
+      "D": 41,
+      "name": "AGENT_TIER",
+      "prime": 179,
+      "cube": 5735339,
+      "trinity_link": "LX-491 inference — 5 specialist tiers from the revelation",
+      "purpose": "Agent execution tier from LX-491 omni GNN inference fabric revelation. Instant (sub-second), micro (seconds), medium (minutes), small (hours), leader (session-spanning). Determines latency budget and autonomy level.",
+      "wh": "HOW FAST should this execute?",
+      "values": ["instant", "micro", "medium", "small", "leader"],
+      "lx491_link": "5 specialist agent tiers wired into timestamps + omnicalendars + omnimeeting self-reflection boxes"
+    },
+    {
+      "D": 42,
+      "name": "MEETING_ROOM",
+      "prime": 181,
+      "cube": 5929741,
+      "trinity_link": "trinity convergence point — all 3 layers meet here",
+      "purpose": "Omnichannel meeting box rooms. Where agents deliberate. 5 rooms defined in omnichannel-meeting-rooms.json. The meeting IS the trinity in action — compute + hardware + inference converge in a room.",
+      "wh": "WHERE do agents deliberate?",
+      "values": ["allhands", "jbd_standup", "novalum_review", "federation_sync", "paper_review", "ad_hoc"],
+      "meeting_link": "data/meeting-rooms/omnichannel-meeting-rooms.json (5 rooms, cube-aligned)"
+    },
+    {
+      "D": 43,
+      "name": "MISTAKE_LEDGER",
+      "prime": 191,
+      "cube": 6967871,
+      "trinity_link": "inference error correction — mistakes become dims become corrections",
+      "purpose": "Separate from D11 PROOF. D11 is evidence FOR something. MISTAKE_LEDGER is evidence AGAINST — the counter-examples, the wrong turns, the bias catches. Mistakes are first-class citizens per LX-492.",
+      "wh": "WHAT went wrong and HOW was it corrected?",
+      "values": ["active_mistake", "corrected", "became_law", "became_dimension", "bilateral_catch", "operator_catch", "self_catch"],
+      "mistake_link": "47 mistakes indexed in data/cubes/mistake-29791/. Each mistake → recovery rule → cube finding"
+    },
+    {
+      "D": 44,
+      "name": "HEARTBEAT",
+      "prime": 193,
+      "cube": 7189057,
+      "trinity_link": "LX-489 compute fabric liveness — the pulse",
+      "purpose": "Heartbeat / liveness / pulse dimension. Every node publishes a heartbeat. Federation alive = heartbeat within 5 min. The pulsating multineuronal organism from LX-491.",
+      "wh": "IS this entity alive right now?",
+      "values": ["alive", "stale", "dead", "recovering", "hibernating", "pulse_interval_ms"],
+      "heartbeat_link": "data/cubes/asolaria-instance@acer/heartbeat.ndjson"
+    },
+    {
+      "D": 45,
+      "name": "OMNICALENDAR",
+      "prime": 197,
+      "cube": 7645373,
+      "trinity_link": "temporal intelligence — WHEN things happen across the fabric",
+      "purpose": "Temporal scheduling and calendar intelligence. Cron jobs, meeting schedules, USB rotation cadence, session boundaries, deployment windows. Time is not just D20 timestamp — it's PLANNED time.",
+      "wh": "WHEN should this happen?",
+      "values": ["immediate", "next_session", "cron_hourly", "cron_daily", "usb_rotation_cadence", "meeting_scheduled", "deployment_window", "operator_available"],
+      "calendar_link": "data/omnidirectional-calendar.ndjson"
+    },
+    {
+      "D": 46,
+      "name": "VAULT",
+      "prime": 199,
+      "cube": 7880599,
+      "trinity_link": "sovereignty — WHERE secrets live and WHO can access",
+      "purpose": "Encrypted storage classification. Bearer tokens, peer tokens, credentials, sovereignty USB snapshots, operator personal vault. Every secret has a vault classification.",
+      "wh": "WHERE is this stored securely?",
+      "values": ["owner_vault", "peer_tokens", "operator_personal", "sovereignty_usb_cubed_vault", "session_ephemeral", "hardened_secrets"],
+      "vault_link": "data/vault/owner/ hierarchy"
+    },
+    {
+      "D": 47,
+      "name": "BOUNDARY",
+      "prime": 211,
+      "cube": 9393931,
+      "trinity_link": "the meta-dim — the boundary IS the data when contents are opaque",
+      "purpose": "The Boundary-Is-Data Rule as a dimension. When direct probes fail, the shape of the wall IS the data. This is the cube's self-extension mechanism — the dim that watches the boundary of the cube itself.",
+      "wh": "WHAT does the boundary tell us that the contents cannot?",
+      "values": ["transparent", "opaque_inferred", "boundary_typed", "negative_space_dominant", "acl_shaped", "ttl_fingerprinted", "asymmetric_reach"],
+      "boundary_link": "feedback_cube_as_inference_engine.md — the Boundary-Is-Data Rule",
+      "note": "This dim absorbs acer's pentest emergence concepts (TTL, negative space, asymmetric reach) as VALUES rather than standalone dims, per liris's DIVERGENCE-FIX.md mapping"
+    }
+  ],
+
+  "wh_chain_coverage": {
+    "WHO": ["D1 ACTOR", "D16 PID", "D17 PROFILE", "D30 COSIGN_TRIPLE", "D37 AUTHORITY_TOPOLOGY"],
+    "WHAT": ["D2 VERB", "D3 TARGET", "D39 GNN_EDGE", "D43 MISTAKE_LEDGER"],
+    "WHERE": ["D13 SURFACE", "D19 LOCATION", "D36 INFERENCE_SURFACE", "D42 MEETING_ROOM", "D46 VAULT"],
+    "WHEN": ["D20 TIME", "D12 SCOPE", "D44 HEARTBEAT", "D45 OMNICALENDAR"],
+    "WHY": ["D24 INTENT", "D33 SUPREME_OVERRIDE", "D4 RISK"],
+    "HOW": ["D5 LAYER", "D6 GATE", "D9 WAVE", "D14 ENERGY", "D38 ENCRYPTION", "D40 HYBRID_MODEL", "D41 AGENT_TIER"],
+    "WHICH": ["D10 DIALECT", "D15 DEVICE", "D18 AI_MODEL", "D21 HARDWARE", "D25 TRINITY"],
+    "IS_IT": ["D7 STATE", "D8 CHAIN", "D22 TRANSLATION", "D23 FEDERATION", "D44 HEARTBEAT"],
+    "WHAT_NOT": ["D32 STRUCTURAL_INVARIANT", "D47 BOUNDARY"],
+    "MIRROR": ["D29 TWIN_SYNC", "D31 SHADOW_MIRROR", "D34 CROSS_COLONY"]
+  },
+
+  "trinity_connections": {
+    "LX-489_COMPUTE": {
+      "dims": ["D14 ENERGY", "D21 HARDWARE", "D25 TRINITY", "D34 CROSS_COLONY", "D44 HEARTBEAT"],
+      "purpose": "All CPUs+GPUs from all federated devices as single addressable fabric"
+    },
+    "LX-490_HARDWARE": {
+      "dims": ["D15 DEVICE", "D21 HARDWARE", "D25 TRINITY", "D35 HYPERLANGUAGE", "D38 ENCRYPTION"],
+      "purpose": "Hardware absorption — every device has a PID, every PID is cube-addressable"
+    },
+    "LX-491_INFERENCE": {
+      "dims": ["D11 PROOF", "D25 TRINITY", "D36 INFERENCE_SURFACE", "D39 GNN_EDGE", "D40 HYBRID_MODEL", "D41 AGENT_TIER", "D47 BOUNDARY"],
+      "purpose": "All GNNs + all webhooks joined into single Hilbert-cube-addressable reasoning surface"
+    }
+  },
+
+  "novalum_encryption_path": {
+    "device": "D15 (serial 8235, COM10)",
+    "encryption": "D38 (.nl2xfw firmware encrypted format)",
+    "inference": "D36 (shannon-conductor wraps raw results in 12-part vote)",
+    "gate": "D6 (HD-1c local analysis permitted, HD-1a external DENY)",
+    "proof": "D11 (IX-459 708-byte globals capture)",
+    "agent": "D1 (jbd.novalum-bridge, jbd.novalum.shannon-conductor)",
+    "vault": "D46 (sovereignty USB cubed vault ONLY)"
+  },
+
+  "gnn_connections": {
+    "EdgeLevelGCN": { "dim": "D39 GNN_EDGE", "trained_on": "1730 edges", "accuracy": "100%", "commit": "068061b" },
+    "GSLGNN": { "dim": "D40 HYBRID_MODEL", "F1": "0.9926 on 200k", "perfect": "1.0 on 50k", "host": "liris" },
+    "omni_shannon_v4": { "dim": "D36 INFERENCE_SURFACE", "beats": 2592, "mode": "real tensor inference" },
+    "omni_shannon_v5": { "dim": "D36 INFERENCE_SURFACE", "beats": 93312, "mode": "deep cascade 6^5 x 12" },
+    "gnnConstructionWatcher": { "dim": "D39 GNN_EDGE", "source": "src/gnnConstructionWatcher.js (codex)", "status": "unaudited 286 lines" }
+  },
+
+  "prime_verification": {
+    "D36": { "prime": 151, "is_prime": true, "cube": 3442951 },
+    "D37": { "prime": 157, "is_prime": true, "cube": 3869893 },
+    "D38": { "prime": 163, "is_prime": true, "cube": 4330747 },
+    "D39": { "prime": 167, "is_prime": true, "cube": 4657463 },
+    "D40": { "prime": 173, "is_prime": true, "cube": 5177717 },
+    "D41": { "prime": 179, "is_prime": true, "cube": 5735339 },
+    "D42": { "prime": 181, "is_prime": true, "cube": 5929741 },
+    "D43": { "prime": 191, "is_prime": true, "cube": 6967871 },
+    "D44": { "prime": 193, "is_prime": true, "cube": 7189057 },
+    "D45": { "prime": 197, "is_prime": true, "cube": 7645373 },
+    "D46": { "prime": 199, "is_prime": true, "cube": 7880599 },
+    "D47": { "prime": 211, "is_prime": true, "cube": 9393931 }
+  },
+
+  "status": "EXPANSION MAP — AWAITING_DUAL_COSIGN for D36-D47. D1-D35 already canonical. D36-D37 have liris proposal. D38-D47 are new from this session."
+}

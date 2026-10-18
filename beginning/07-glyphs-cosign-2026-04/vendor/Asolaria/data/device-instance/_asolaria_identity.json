@@ -1,0 +1,29 @@
+{
+  "permanent_name": "dev-acer-asolaria-capital-20260418",
+  "hilbert_pid": "PID-H01-CIV-DEV-ACER-I001-S4abb0a9c",
+  "shape_fingerprint": {
+    "scale_1": "a116f1c4a6d342f3",
+    "scale_10": "ddb5e3ee12d62f3f",
+    "scale_100": "3174d4191068c8b5",
+    "scale_1k": "7e3aebd0e5926f82",
+    "scale_10k": "c1f2fe881f61e4fb"
+  },
+  "first_observation_tuple": {
+    "ts": "2026-04-18T22:30:00Z",
+    "observer_pid": "dev-acer-4abb0a9c",
+    "observer_surface": "asolaria",
+    "operator_id": "jesse",
+    "host_surface": "DESKTOP-J99VCNH"
+  },
+  "provenance": "original",
+  "last_verified_at": "2026-04-19T00:21:40.835Z",
+  "last_verified_by": "jesse",
+  "constitutional_clauses": [
+    "no_mutation_without_operator_acknowledged_rebind",
+    "verify_on_every_touch",
+    "halt_on_fingerprint_drift"
+  ],
+  "location_history": [],
+  "drift_log": [],
+  "schema_version": "1.0.0"
+}

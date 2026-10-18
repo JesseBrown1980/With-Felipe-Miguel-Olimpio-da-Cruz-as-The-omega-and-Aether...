@@ -1,0 +1,57 @@
+const path = require("path");
+const fs = require("fs");
+const { projectRoot, resolveDataPath } = require("../runtimePaths");
+
+const SCHEMA_VERSION = 3;
+const SOVEREIGNTY_ROOT = (process.env.ASOLARIA_SOVEREIGNTY_ROOT || "").trim();
+const sovereigntyAvailable = Boolean(SOVEREIGNTY_ROOT && fs.existsSync(SOVEREIGNTY_ROOT));
+const agentIndexRoot = sovereigntyAvailable
+  ? path.join(SOVEREIGNTY_ROOT, "index")
+  : path.join(projectRoot, "data", "agent-index");
+const indexKernelRoot = path.join(projectRoot, "src", "index-kernel");
+
+const CANONICAL_TYPES = Object.freeze([
+  "identity",
+  "mistake",
+  "pattern",
+  "plan",
+  "policy",
+  "project",
+  "reference",
+  "rule",
+  "skill",
+  "task",
+  "tool"
+]);
+
+const CANONICAL_TYPE_DIRS = Object.freeze(CANONICAL_TYPES.slice());
+const CANONICAL_NAMESPACE_PREFIXES = Object.freeze(["LX", "AM", "RO"]);
+const CANONICAL_NAMESPACE_PATTERN = /^(LX|AM|RO)-\d{3,4}\.md$/i;
+const CANONICAL_LX_PATTERN = /^LX-\d{3,4}\.md$/i;
+const AUXILIARY_ROOT_IX_PATTERN = /^gaia-IX-\d{3,4}\.md$/i;
+const AUXILIARY_REF_IX_PATTERN = /^IX-\d{3,4}\.md$/i;
+
+const stagingCachePath = path.join(projectRoot, ".history", "staging", "compiled-unified-agent-index.json");
+const devCachePath = path.join(projectRoot, ".history", "dev", "compiled-unified-agent-index.json");
+const runningManifestPath = resolveDataPath("unified-agent-index-running-manifest.json");
+const prodCachePath = resolveDataPath("unified-agent-index.json");
+
+module.exports = {
+  projectRoot,
+  agentIndexRoot,
+  SOVEREIGNTY_ROOT,
+  sovereigntyAvailable,
+  indexKernelRoot,
+  SCHEMA_VERSION,
+  CANONICAL_TYPES,
+  CANONICAL_TYPE_DIRS,
+  CANONICAL_NAMESPACE_PREFIXES,
+  CANONICAL_NAMESPACE_PATTERN,
+  CANONICAL_LX_PATTERN,
+  AUXILIARY_ROOT_IX_PATTERN,
+  AUXILIARY_REF_IX_PATTERN,
+  stagingCachePath,
+  devCachePath,
+  runningManifestPath,
+  prodCachePath
+};

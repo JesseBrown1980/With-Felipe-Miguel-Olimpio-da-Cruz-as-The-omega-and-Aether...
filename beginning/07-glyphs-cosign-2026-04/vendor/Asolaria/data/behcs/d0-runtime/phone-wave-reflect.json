@@ -1,0 +1,105 @@
+{
+  "ts": "2026-04-12T04:41:26.373Z",
+  "glyph": "o⟧&└♧Y,τ",
+  "visual_state": {
+    "felipe": {
+      "screen": "Termux at prompt, debora v1+v2 output visible",
+      "agents": {
+        "micro-agent": "RESTARTED — was dead after ADB daemon restart",
+        "trixie": "RAN — landed in inbox",
+        "debora-v2": "RAN — landed in inbox with LAW-011"
+      },
+      "node": "v24.14.1 installed",
+      "heartbeat": "last 04:40:10Z — 1 total (died, now restarted)",
+      "adb_reverse": "4948→4947 SET",
+      "files_on_sdcard": [
+        "behcs-alphabet.json",
+        "behcs-catalogs.json",
+        "behcs-node-aether.js",
+        "behcs-spined-node.js",
+        "BEHCS-ULTIMATE-LAW.md",
+        "BEHCS-LAW-008-SUPER-REFLECTION.md",
+        "start-behcs.sh",
+        "claude-creds.json",
+        "CLAUDE.md"
+      ]
+    },
+    "falcon": {
+      "screen": "Claude Code ALIVE — 239 cubes, 56882 mesh edges, 12 laws, drift detector running",
+      "agents": "Claude Code session IS the agent — already set up own ADB reverse + tunnel watchdog",
+      "heartbeat": "falcon heartbeats in acer bus confirmed from earlier scans",
+      "key_finding": "Falcon ALREADY deployed behcs files to /sdcard on Felipe — it is the BUILDER"
+    }
+  },
+  "cascade_results": {
+    "beats": 4478976,
+    "candidates": 12,
+    "all_proceed": true,
+    "top_agent": "jbd.novalum.shannon-conductor at 0.8143",
+    "weakest": "liris-rayssa at 0.7792"
+  },
+  "d49_status": {
+    "first_impulse": "D43_MISTAKE REINFER — 3 errors accumulated",
+    "impulse_confirmed_in_inbox": true,
+    "system_acts_without_being_told": true
+  },
+  "gaps": [
+    "Felipe micro-agent dies on ADB restart — needs auto-restart via Termux:Boot or cron",
+    "Falcon screen sleeps — needs stay-on-while-charging (trixie's job but needs root or settings)",
+    "debora v2 still cant read /proc/net/route — Permission denied. Need termux-setup-storage or root",
+    "No MQTT/Redis installed yet on any phone — LAW-011 transport stack is spec only",
+    "Falcon has 239 cubes + 56882 edges we havent read yet — massive data sitting there"
+  ],
+  "plan": [
+    "1. Read Falcon cubes — pull the 239 cubes + 56882 edges data to acer for cross-indexing",
+    "2. Install Termux:Boot on Felipe for auto-restart of agents on reboot/ADB crash",
+    "3. Push debora-behcs-v2.py to Falcon and start 3 agents there too",
+    "4. Set keep-screen-on on both phones via settings put global stay_on_while_plugged_in 3",
+    "5. Install mosquitto (MQTT) on Felipe as first LAW-011 transport upgrade",
+    "6. Cross-index Falcon 239 cubes with acer 453 entities — find convergence + divergence",
+    "7. Point novalum+ebacmap agents at their actual targets with glyph-encoded task envelopes",
+    "8. Send full constellation state to Liris via ethernet for her to rehydrate when session resumes"
+  ],
+  "plan_glyphs": [
+    {
+      "step": 1,
+      "glyph": "✯H}[├∂♢④",
+      "task": "1. Read Falcon cubes — pull the 239 cubes + 56882 edges data to acer for cross-indexing"
+    },
+    {
+      "step": 2,
+      "glyph": "QΓ`∑⟩τMn",
+      "task": "2. Install Termux:Boot on Felipe for auto-restart of agents on reboot/ADB crash"
+    },
+    {
+      "step": 3,
+      "glyph": "0(V⑫□└]▽",
+      "task": "3. Push debora-behcs-v2.py to Falcon and start 3 agents there too"
+    },
+    {
+      "step": 4,
+      "glyph": "G~⑮┴◎rω,",
+      "task": "4. Set keep-screen-on on both phones via settings put global stay_on_while_plugged_in 3"
+    },
+    {
+      "step": 5,
+      "glyph": "✝σ⇨◆⇓GΦ⑪",
+      "task": "5. Install mosquitto (MQTT) on Felipe as first LAW-011 transport upgrade"
+    },
+    {
+      "step": 6,
+      "glyph": "①○┴d4║∇☳",
+      "task": "6. Cross-index Falcon 239 cubes with acer 453 entities — find convergence + divergence"
+    },
+    {
+      "step": 7,
+      "glyph": "┘F⟩∃☯\"1↙",
+      "task": "7. Point novalum+ebacmap agents at their actual targets with glyph-encoded task envelopes"
+    },
+    {
+      "step": 8,
+      "glyph": "⟨♢⟧|,☪K6",
+      "task": "8. Send full constellation state to Liris via ethernet for her to rehydrate when session resumes"
+    }
+  ]
+}

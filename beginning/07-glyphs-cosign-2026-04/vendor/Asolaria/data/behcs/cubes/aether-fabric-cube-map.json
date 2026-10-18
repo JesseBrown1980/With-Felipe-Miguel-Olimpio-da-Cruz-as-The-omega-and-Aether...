@@ -1,0 +1,126 @@
+{
+  "ts": "2026-04-12T04:20:18.601Z",
+  "type": "aether_fabric_cube_map",
+  "agents": {
+    "trixie": {
+      "role": "Node Activation",
+      "actions": "ADB enable, dev mode, lockscreen clear, stay-on",
+      "dim": "D15_DEVICE+D27",
+      "original": "trixie.py (60LOC)",
+      "behcs": "trixie-behcs.py (25LOC)",
+      "glyph": "ΔΓq]★4U☰"
+    },
+    "debora": {
+      "role": "Communications",
+      "actions": "reverse TCP, ADB WiFi, battery, network scan",
+      "dim": "D22_TRANSLATION+D34",
+      "original": "debora.py (55LOC)",
+      "behcs": "debora-behcs.py (30LOC)",
+      "glyph": "⑭ω├α~:l∇"
+    },
+    "shannon": {
+      "role": "Pentest/Shannon",
+      "actions": "consensus engine, security scanning",
+      "dim": "D11_PROOF",
+      "original": "referenced in fabric but no file on device",
+      "behcs": "N/A",
+      "glyph": "⇐⑥❂υ⑤Λ✪|"
+    },
+    "micro-agent": {
+      "role": "Heartbeat Core",
+      "actions": "30s pulse, CPU/RAM report, boot announce",
+      "dim": "D44_HEARTBEAT+D1",
+      "original": "micro_agent.py (MQTT)",
+      "behcs": "micro-agent-behcs.py (35LOC, HTTP)",
+      "glyph": "②❂∑∀'κGυ"
+    },
+    "fabric": {
+      "role": "Topology Coordinator",
+      "actions": "scan ADB, scan USB, scan network, build mesh",
+      "dim": "D23_FEDERATION",
+      "original": "asolaria_fabric.py (120LOC)",
+      "behcs": "N/A (runs from liris)",
+      "glyph": "θY#R↘i☆e"
+    },
+    "liris": {
+      "type": "orchestrator",
+      "ip": "192.168.15.170",
+      "channels": [
+        "local",
+        "usb_host",
+        "wifi",
+        "bluetooth"
+      ],
+      "glyph": "l♦♣ιd∇€{"
+    },
+    "felipe-a06": {
+      "serial": "R9QY205KAKJ",
+      "model": "SM-A065M",
+      "agents": [
+        "trixie",
+        "debora"
+      ],
+      "channels": [
+        "usb_adb",
+        "wifi",
+        "wifi_adb"
+      ],
+      "glyph": "A⑧∃≠❁⑫⟦."
+    },
+    "monet": {
+      "serial": "56C90D22",
+      "soc": "SD765G",
+      "vid_pid": "2717:ff40",
+      "status": "pending_unlock",
+      "channels": [
+        "usb_mtp",
+        "usb_aoa",
+        "wifi_passive"
+      ],
+      "glyph": "≠┘lcK┤⇓δ"
+    },
+    "rayssa-s24": {
+      "note": "future node referenced in fabric docstring",
+      "glyph": "Γ♪P/a⑤✿♦"
+    }
+  },
+  "nodes": {
+    "liris": {
+      "type": "orchestrator",
+      "ip": "192.168.15.170",
+      "channels": [
+        "local",
+        "usb_host",
+        "wifi",
+        "bluetooth"
+      ]
+    },
+    "felipe-a06": {
+      "serial": "R9QY205KAKJ",
+      "model": "SM-A065M",
+      "agents": [
+        "trixie",
+        "debora"
+      ],
+      "channels": [
+        "usb_adb",
+        "wifi",
+        "wifi_adb"
+      ]
+    },
+    "monet": {
+      "serial": "56C90D22",
+      "soc": "SD765G",
+      "vid_pid": "2717:ff40",
+      "status": "pending_unlock",
+      "channels": [
+        "usb_mtp",
+        "usb_aoa",
+        "wifi_passive"
+      ]
+    },
+    "rayssa-s24": {
+      "note": "future node referenced in fabric docstring"
+    }
+  }
+}

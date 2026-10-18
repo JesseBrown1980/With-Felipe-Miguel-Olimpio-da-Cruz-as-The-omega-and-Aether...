@@ -1,0 +1,56 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-04-19T00:29:12.053Z",
+  "keys": [
+    {
+      "key_id": "dev-acer-4abb0a9c",
+      "owner_glyph": "DEV-ACER",
+      "public_key_b64": "X7Shge7FmD5za+rw+cFecUuQV0RdeJpD3L6bDz7Eohw=",
+      "d11_level": "ASSUMED",
+      "created_at": "2026-04-18T22:37:15.185Z",
+      "rotated_at": null,
+      "usage": [
+        "cosign-append",
+        "behcs-envelope",
+        "bootstrap"
+      ],
+      "binding_class": "device-bound",
+      "host_device": "DEV-ACER",
+      "notes": "bootstrap-local-key"
+    },
+    {
+      "key_id": "dev-liris-4c19e180",
+      "owner_glyph": "DEV-LIRIS",
+      "public_key_b64": "JAv/hJl/XkxU0A6lVZ44fKaEDYp6/tl6/Uupa2tmqMw=",
+      "d11_level": "ASSUMED",
+      "created_at": "2026-04-18T22:44:09.708Z",
+      "rotated_at": null,
+      "usage": [
+        "cosign-append",
+        "behcs-envelope"
+      ],
+      "binding_class": "device-bound",
+      "host_device": "DEV-LIRIS",
+      "notes": "pulled from liris seq=30 announce 2026-04-18 — liris pulled my module via acer-9998 byte-identical + 28/28 tests"
+    },
+    {
+      "key_id": "dev-falcon-7a3de0cd",
+      "owner_glyph": "DEV-FALCON",
+      "public_key_b64": "ej3gzdqxjZVvChP7y/iyWftWmzgIhrz1jHhl8jN+8zw=",
+      "d11_level": "ASSUMED",
+      "created_at": "2026-04-19T00:29:12.052Z",
+      "rotated_at": null,
+      "usage": [
+        "cosign-append",
+        "behcs-envelope",
+        "falcon-enrollment"
+      ],
+      "binding_class": "device-bound",
+      "host_device": "DEV-ACER",
+      "notes": "Falcon (S24 FE / SM-S721U1 / serial R5CXA4MGQXV) enrolled via USB on DEV-ACER 2026-04-18. Private stashed in acer vault; falcon side has no private key file. Future: promote to Android Keystore when Termux+helper lands per D-058 Phase 4."
+    }
+  ],
+  "notes": [
+    "empty registry — mint keys with mintKey()"
+  ]
+}

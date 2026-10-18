@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Asolaria Transport Epoch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId",
+    "schemaVersion",
+    "epochId",
+    "transportId",
+    "sourceColonyId",
+    "targetColonyId",
+    "sourceKind",
+    "observedAt",
+    "verifier",
+    "status",
+    "transportKind",
+    "endpoint",
+    "authority",
+    "canonicalUse",
+    "evidence"
+  ],
+  "properties": {
+    "schemaId": {
+      "const": "asolaria.transport-epoch"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "epochId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transportId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceColonyId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetColonyId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceKind": {
+      "type": "string",
+      "enum": [
+        "live_probe",
+        "code_verified",
+        "document_claim",
+        "historical_transcript",
+        "derived"
+      ]
+    },
+    "observedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verifier": {
+      "$ref": "#/$defs/actorRef"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "live",
+        "stale",
+        "proposed",
+        "myth",
+        "superseded"
+      ]
+    },
+    "transportKind": {
+      "type": "string",
+      "enum": [
+        "manual_owner_relay",
+        "mqtt",
+        "direct_bridge",
+        "friend_bridge",
+        "https_api",
+        "adb_reverse",
+        "other"
+      ]
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol"
+      ],
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roomId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "topic": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bridgeRoomState",
+        "senderPolicyState",
+        "fallbackRule"
+      ],
+      "properties": {
+        "bridgeRoomState": {
+          "type": "string",
+          "enum": [
+            "live",
+            "staged",
+            "absent",
+            "historical",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "senderPolicyState": {
+          "type": "string",
+          "enum": [
+            "live",
+            "staged",
+            "absent",
+            "historical",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "fallbackRule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "canonicalUse": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "fallback",
+        "historical",
+        "disabled"
+      ]
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/evidenceRef"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "agent",
+            "system"
+          ]
+        }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "report",
+            "ix",
+            "task",
+            "manual_relay",
+            "code"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

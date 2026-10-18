@@ -104,7 +104,7 @@
     },
     {
      "component": "L0 first training set data/gnn-training-export-20260315.json",
-     "what_it_is": "The dataset the first trained checkpoint was fit on. train_baseline.py:122 names it, and commit 1023c7b says '309 nodes, 1,730 edges, 50 epochs ... Accuracy: 100%'. It was never committed: none of the 364 mirror commits on 132 refs has the path, and neither do fnns, behcs-256, the local owner clones or aether. aether's docs/handoffs/README.md:103 records that L0 was trained on it. Its source log, data/graph-runtime-events.ndjson, is not committed either.",
+     "what_it_is": "The dataset the first trained checkpoint was fit on. train_baseline.py:122 names it, and commit 1023c7b says '309 nodes, 1,730 edges, 50 epochs ... Accuracy: 100%'. It was never committed: none of the 364 mirror commits on 132 refs has the path, and neither do fnns, behcs-256, the local owner clones or aether. aether's docs/handoffs/README.md:110 records that L0 was trained on it. Its source log, data/graph-runtime-events.ndjson, is not committed either.",
      "where": [
       "named at Asolaria mirror 1023c7b services/gnn-sidecar/train_baseline.py:122 (blob 4fefc7ab)",
       "owner machine: C:/Users/acer/Asolaria/data/gnn-training-export-20260315.json; ACER sovereignty/research/gnn-patterns/gnn-training-export.json is a probable sibling (listed untracked on 2026-04-25)"

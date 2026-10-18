@@ -1,0 +1,29 @@
+{
+  "id": "BEHCS-LAW-011",
+  "title": "Omnidirectional 3-Agent-Per-Phone With Revolving Omni Messaging",
+  "glyph": "2═∃⇧✯⚡⑫Φ",
+  "glyph_3556": "☴d000000",
+  "status": "PERMANENT",
+  "ts": "2026-04-12T04:28:32.445Z",
+  "body": "Every phone node in the federation MUST run exactly 3 named agents:\n  1. ACTIVATION agent (trixie) — D15 DEVICE — opens doors, enables ADB, scans hardware\n  2. COMMS agent (debora) — D22 TRANSLATION — establishes all channels, tests reachability\n  3. HEARTBEAT agent (micro-agent) — D44 HEARTBEAT — 30s pulse, CPU/RAM, bus alive\n\nAll 3 agents MUST be OMNIDIRECTIONAL:\n  - Send AND receive on ALL available transports simultaneously\n  - Revolving omni messaging: cycle through transports in priority order\n  - Transport priority: ADB-reverse > LAN-direct > MQTT > MQTT-SN > Redis > HTTP-hybrid\n  - If primary fails, auto-fallback to next; if ALL fail, queue locally and retry\n  - Each agent maintains its own transport state and reports it in every heartbeat\n\nRevolving Omni Messaging Protocol:\n  - Redis pub/sub for real-time inter-agent state sharing\n  - MQTT for reliable delivery to colony orchestrator\n  - MQTT-SN for low-bandwidth/lossy connections (cellular, Bluetooth)\n  - HTTP BEHCS bus for cube-gated verified delivery\n  - Hybrid mode: fire on ALL available transports simultaneously, deduplicate at receiver\n\nEach phone has its own backend:\n  - Local BEHCS sidecar (behcs-spined-node.js or micro-agent-behcs.py)\n  - Local cube store for offline operation\n  - Auto-translator for Termux shell path differences (ip→ifconfig, dumpsys→termux-api)\n\nVisual proof check: EVERY agent action MUST be verifiable via phone screenshot.\n  - Use ADB screencap or mirror API to capture user screen\n  - Screenshot BEFORE claiming success (per feedback_visual_verify)\n  - User screen state is D11 PROOF for phone operations\n\nWhite room: All agent messages pass through white room sanitization before bus relay.\nShannon part: Each agent message gets 6-part Shannon review before dispatch.\nCube alignment: D15+D22+D44 per phone, D0 runtime consumes all.",
+  "cube": {
+    "D15": 103823,
+    "D22": 493039,
+    "D44": 7189057,
+    "D0": "meta"
+  },
+  "transports": [
+    "adb-reverse",
+    "lan-direct",
+    "mqtt",
+    "mqtt-sn",
+    "redis",
+    "http-behcs-hybrid"
+  ],
+  "agents_per_phone": 3,
+  "agent_roles": [
+    "activation",
+    "comms",
+    "heartbeat"
+  ]
+}

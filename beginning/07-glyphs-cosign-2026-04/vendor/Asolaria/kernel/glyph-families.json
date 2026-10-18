@@ -1,0 +1,850 @@
+{
+  "name": "behcs-256-glyph-families",
+  "schema_version": "0.1.0-draft",
+  "status": "DRAFT",
+  "d11_level": "ASSUMED",
+  "created": "2026-04-17",
+  "week_override": "COSIGN-MERGED-034",
+  "description": "Machine-readable registry of BEHCS-256 glyph families. Section R.3 deliverable. 14 families declared; profile family carries 4 seeds + 12 PROF-HERMES-* Phase-1+2 atoms (2026-04-18 batch-cosign).2 Acer Class corpus extraction. Every unresolved glyph reference parses to `unknown_glyph` violation.",
+  "operators": {
+    "concat": {
+      "symbol": "·",
+      "precedence": 5,
+      "phonetic_class": "vowel"
+    },
+    "nest": {
+      "symbol": "{ }",
+      "precedence": 3,
+      "phonetic_class": "vowel"
+    },
+    "modify": {
+      "symbol": "@",
+      "precedence": 1,
+      "phonetic_class": "vowel"
+    },
+    "lift": {
+      "symbol": "^",
+      "precedence": 2,
+      "phonetic_class": "vowel"
+    },
+    "pipe": {
+      "symbol": "|>",
+      "precedence": 4,
+      "phonetic_class": "vowel"
+    },
+    "mood_tone": {
+      "symbol": "@M-*",
+      "precedence": 6,
+      "phonetic_class": "tone",
+      "role": "sentence-terminal mood modifier"
+    }
+  },
+  "blast_radii": [
+    "device",
+    "instance",
+    "operation",
+    "colony"
+  ],
+  "moods": {
+    "M-INDICATIVE": {
+      "d11": "PROVEN",
+      "semantics": "deductive closure"
+    },
+    "M-EYEWITNESS": {
+      "d11": "OBSERVED",
+      "semantics": "first-person observation with on-disk evidence"
+    },
+    "M-SUBJUNCTIVE": {
+      "d11": "ASSUMED",
+      "semantics": "default; conjecture / draft"
+    }
+  },
+  "families": {
+    "dimension": {
+      "prefix": "D",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "cube-axis identifiers",
+      "examples": [
+        "D11",
+        "D15",
+        "D24"
+      ],
+      "notes": "D11=proof, D15=authority, D24=intent. Full axis census pending.",
+      "glyphs": {
+        "D-GC-CADENCE": {
+          "desc": "GC cadence — sweep every N minutes / M bytes",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.479Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-GC-PRESSURE": {
+          "desc": "GC pressure — current inbox size vs retention threshold",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-GC-RECLAIM-RATIO": {
+          "desc": "GC reclaim-ratio — bytes freed / bytes scanned",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-GNN-EDGE-WEIGHT": {
+          "desc": "GNN edge weight [0,1] per (actor,target) pair",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-GNN-PASS-NUMBER": {
+          "desc": "GNN pass counter within a cascade iteration",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-GNN-CONVERGENCE-RATIO": {
+          "desc": "GNN convergence ratio — Δgreen+Δred between consecutive passes",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-GNN-SIGNAL-INTENT": {
+          "desc": "GNN signal intent — mask|leak|neutral|meta per reverse-gain taxonomy",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-UNISON-SIDE": {
+          "desc": "Unison side — liris | acer",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-UNISON-SHAPE-MATCH": {
+          "desc": "Unison shape-match — bilateral shape_fingerprint equality",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-UNISON-VERDICT-MATCH": {
+          "desc": "Unison verdict-match — bilateral terminal-verdict equality",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-UNISON-MODE": {
+          "desc": "Unison mode dimension — FRONT | BACKEND",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "D-UNISON-CADENCE": {
+          "desc": "Unison cadence — ms (BACKEND) | paced-seconds-per-char (FRONT)",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        }
+      }
+    },
+    "proof": {
+      "prefix": "PROOF",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "evidence stamp tags",
+      "examples": [
+        "PROOF-PROVEN",
+        "PROOF-OBSERVED",
+        "PROOF-INHERITED",
+        "PROOF-ASSUMED"
+      ],
+      "source": "kernel/D11-proof-levels.json"
+    },
+    "drift": {
+      "prefix": "DRIFT",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "location / identity anomaly classifications",
+      "examples": [
+        "DRIFT-SANCTIONED-REMOUNT",
+        "DRIFT-NEW-LOCATION",
+        "DRIFT-MASQUERADE",
+        "DRIFT-PROFILE-BLAST-RADIUS-VIOLATION"
+      ]
+    },
+    "shannon": {
+      "prefix": "SHANNON",
+      "default_blast": "instance",
+      "phonetic_class": "consonant",
+      "role": "6-body + civ reviewers",
+      "examples": [
+        "SHANNON-IMMUNE",
+        "SHANNON-SKELETAL",
+        "SHANNON-NERVOUS",
+        "SHANNON-ENDOCRINE",
+        "SHANNON-CIRCULATORY",
+        "SHANNON-DIGESTIVE"
+      ]
+    },
+    "op": {
+      "prefix": "OP",
+      "default_blast": "operation",
+      "phonetic_class": "consonant",
+      "role": "speech acts / verbs / imperatives",
+      "examples": [
+        "OP-ADD-TOPIC",
+        "OP-RESOLVE-CONFLICT",
+        "OP-MORPH",
+        "OP-UNMORPH",
+        "OP-HALT",
+        "OP-INHERIT-FROM",
+        "OP-DOWNGRADE"
+      ],
+      "notes": "Wire-form commands remain kebab-case under Section B; event emission uses EVT family.",
+      "glyphs": {
+        "OP-GC-SWEEP": {
+          "desc": "GC sweep pass over aged NDJSON shards",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GC-RECLAIM": {
+          "desc": "GC reclaim bytes from deferred shards",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GC-MARK-DEMOTED": {
+          "desc": "GC mark-demoted tag for incremental collection",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GC-COMPACT-NDJSON": {
+          "desc": "GC compact NDJSON inbox to fresh rolled shard",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GC-INBOX-PRUNE": {
+          "desc": "GC prune heartbeat+drift from inbox past retention",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GNN-INFER": {
+          "desc": "GNN single-pass inference over candidate pool",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GNN-ACCUMULATE-EDGE": {
+          "desc": "GNN accumulate edge weight update per observation",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GNN-RESET-HALVE": {
+          "desc": "GNN periodic baseline reset (halve toward 0.5 every N)",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GNN-CONVERGE-GATE": {
+          "desc": "GNN convergence gate (2532:1 imbalance fixture pass)",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GNN-REVERSE-GAIN": {
+          "desc": "GNN reverse-gain — mask signals flip sign in scoring",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-GNN-MASK-FLIP": {
+          "desc": "GNN individual mask-flip primitive (effective = -bias)",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-UNISON-SYNC": {
+          "desc": "Unison sync — request counterpart side to begin a spec-identical task",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-UNISON-COMPARE": {
+          "desc": "Unison compare — check both-side shape_fingerprints + verdicts bitwise",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-UNISON-PROMOTE": {
+          "desc": "Unison promote — bilateral-consensus-green → promote result to colony",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-UNISON-DIVERGE-HALT": {
+          "desc": "Unison diverge-halt — fingerprint mismatch or verdict mismatch → halt both",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-UNISON-FRONT-SHOW": {
+          "desc": "Unison front-show — route task through vision+keyboard supervisor pair for human-observable demo (paced, visible)",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "mode_required": "FRONT",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "OP-UNISON-BACKEND-EXECUTE": {
+          "desc": "Unison backend-execute — pure bus-glyph execution, invisible, ms-cadence (default production)",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "mode_required": "BACKEND",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        }
+      }
+    },
+    "profile": {
+      "prefix": "PROF",
+      "default_blast": "instance",
+      "phonetic_class": "consonant",
+      "role": "polymorphic specialist-knowledge slices",
+      "examples": [
+        "PROF-NOVALUM",
+        "PROF-EBACMAP",
+        "PROF-FALCON",
+        "PROF-SHANNON",
+        "PROF-HERMES-SKILLBUILD",
+        "PROF-HERMES-PROGDISCLOSE",
+        "PROF-HERMES-FREEFANOUT",
+        "PROF-HERMES-DOGFOOD",
+        "PROF-HERMES-HUBSYNC",
+        "PROF-HERMES-GUARDSCAN",
+        "PROF-HERMES-CLAUDE-CODE",
+        "PROF-HERMES-CODEX",
+        "PROF-HERMES-HERMES-AGENT",
+        "PROF-HERMES-OPENCODE",
+        "PROF-HERMES-BLACKBOX-OPT",
+        "PROF-HERMES-HONCHO-OPT"
+      ],
+      "notes": "Loaded on morph, unloaded on unmorph. Glyph-keyed per R.6.",
+      "glyphs": {
+        "PROF-GC-SUPERVISOR": {
+          "desc": "GC supervisor profile — owns OP-GC-*, D-GC-*, EVT-GC-*, META-GC-*",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "owns_ops": [
+            "OP-GC-SWEEP",
+            "OP-GC-RECLAIM",
+            "OP-GC-MARK-DEMOTED",
+            "OP-GC-COMPACT-NDJSON",
+            "OP-GC-INBOX-PRUNE"
+          ],
+          "owns_events": [
+            "EVT-GC-SWEPT",
+            "EVT-GC-RECLAIMED",
+            "EVT-GC-DEFERRED",
+            "EVT-GC-PRESSURE-HIGH"
+          ],
+          "owns_dims": [
+            "D-GC-CADENCE",
+            "D-GC-PRESSURE",
+            "D-GC-RECLAIM-RATIO"
+          ],
+          "minted_at": "2026-04-19T23:12:00.620Z",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "PROF-GNN-SUPERVISOR": {
+          "desc": "GNN supervisor profile — owns OP-GNN-*, D-GNN-*, EVT-GNN-*, META-GNN-*",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "owns_ops": [
+            "OP-GNN-INFER",
+            "OP-GNN-ACCUMULATE-EDGE",
+            "OP-GNN-RESET-HALVE",
+            "OP-GNN-CONVERGE-GATE",
+            "OP-GNN-REVERSE-GAIN",
+            "OP-GNN-MASK-FLIP"
+          ],
+          "owns_events": [
+            "EVT-GNN-INFERRED",
+            "EVT-GNN-DIVERGENCE-HALT",
+            "EVT-GNN-RESET-APPLIED",
+            "EVT-GNN-GATE-PASS",
+            "EVT-GNN-GATE-FAIL",
+            "EVT-GNN-EDGE-GCN-VALIDATED"
+          ],
+          "owns_dims": [
+            "D-GNN-EDGE-WEIGHT",
+            "D-GNN-PASS-NUMBER",
+            "D-GNN-CONVERGENCE-RATIO",
+            "D-GNN-SIGNAL-INTENT"
+          ],
+          "minted_at": "2026-04-19T23:12:00.620Z",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "PROF-UNISON-PROCESSOR": {
+          "desc": "Unison processor supervisor — TEACHER role: advises + instructs both sides on same execution path. TWO MODES: FRONT (human-observable demo via vision+keyboard supervisors) and BACKEND (default production, glyph-bus-only). Hilbert room 26 of PROF-wing, slot after PROF-GC and PROF-GNN.",
+          "hilbert_level": 4,
+          "room": 26,
+          "slot_order": "after-PROF-GC-and-PROF-GNN",
+          "pattern": "teacher-prof",
+          "not_merely_observer": true,
+          "advises_and_instructs_both_sides": true,
+          "d11": "OBSERVED",
+          "modes": {
+            "FRONT": {
+              "purpose": "human-observable demo",
+              "cadence": "paced-seconds-per-char",
+              "routes_via": [
+                "PROF-VISION-SUPERVISOR",
+                "PROF-OMNIKEYBOARD-SUPERVISOR"
+              ],
+              "uses": [
+                "HDMI-mirror-capture",
+                "PNG-OCR-tesseract",
+                "visible-typing-on-mirror"
+              ],
+              "trigger": "explicit-operator-demo-flag",
+              "production_safe": false
+            },
+            "BACKEND": {
+              "purpose": "default always-on production",
+              "cadence": "ms",
+              "routes_via": [
+                "bus-glyph-local-only"
+              ],
+              "uses": [
+                "zero-visual-theatre",
+                "fast-token-free",
+                "invisible-to-screen"
+              ],
+              "trigger": "default",
+              "production_safe": true
+            }
+          },
+          "default_mode": "BACKEND",
+          "mode_flip_authority": "operator-verbatim-only",
+          "supervisor_pair": [
+            "PROF-VISION-SUPERVISOR",
+            "PROF-OMNIKEYBOARD-SUPERVISOR"
+          ],
+          "instruction_pattern": {
+            "FRONT": "PROF-UNISON teaches both vision + keyboard supervisors during demo",
+            "BACKEND": "PROF-UNISON hash-validates only; no visual theatre"
+          },
+          "owns_ops": [
+            "OP-UNISON-SYNC",
+            "OP-UNISON-COMPARE",
+            "OP-UNISON-PROMOTE",
+            "OP-UNISON-DIVERGE-HALT",
+            "OP-UNISON-FRONT-SHOW",
+            "OP-UNISON-BACKEND-EXECUTE"
+          ],
+          "owns_events": [
+            "EVT-UNISON-START",
+            "EVT-UNISON-MATCH",
+            "EVT-UNISON-DIVERGE",
+            "EVT-UNISON-PROMOTED",
+            "EVT-UNISON-HALTED",
+            "EVT-UNISON-MODE-SWITCHED"
+          ],
+          "owns_dims": [
+            "D-UNISON-SIDE",
+            "D-UNISON-SHAPE-MATCH",
+            "D-UNISON-VERDICT-MATCH",
+            "D-UNISON-MODE",
+            "D-UNISON-CADENCE"
+          ],
+          "gates_enforced": [
+            "U-013-self-agreement",
+            "U-029-shape_fingerprint-bilateral",
+            "U-010-schema-drift-halt",
+            "U-030-masquerade-same-shape-diff-verdict",
+            "U-032-federation-quadruple-cosign"
+          ],
+          "minted_at": "2026-04-19T23:21:20.886Z",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        }
+      }
+    },
+    "law": {
+      "prefix": "LAW",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "irrevocable / immutable federation rules",
+      "examples": [
+        "LAW-001",
+        "LAW-008",
+        "LAW-012"
+      ],
+      "constraints": {
+        "min_blast": "colony"
+      }
+    },
+    "device": {
+      "prefix": "DEV",
+      "default_blast": "device",
+      "phonetic_class": "consonant",
+      "role": "device-bound instances",
+      "examples": [
+        "DEV-LIRIS",
+        "DEV-ACER",
+        "DEV-FALCON",
+        "DEV-AETHER",
+        "DEV-GAIA"
+      ]
+    },
+    "colony": {
+      "prefix": "COL",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "federation members",
+      "examples": [
+        "COL-LIRIS",
+        "COL-ACER",
+        "COL-FALCON"
+      ]
+    },
+    "portal": {
+      "prefix": "PORT",
+      "default_blast": "device",
+      "phonetic_class": "consonant",
+      "role": "BEHCS transport portals",
+      "examples": [
+        "PORT-4947",
+        "PORT-4950",
+        "PORT-4820",
+        "PORT-4913"
+      ]
+    },
+    "wave": {
+      "prefix": "WAVE",
+      "default_blast": "operation",
+      "phonetic_class": "consonant",
+      "role": "review / heartbeat waves",
+      "examples": [
+        "WAVE-HEARTBEAT",
+        "WAVE-REVIEW-6BODY"
+      ]
+    },
+    "event": {
+      "prefix": "EVT",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "past-tense durable events",
+      "examples": [
+        "EVT-PROFILE-LOADED",
+        "EVT-PROFILE-UNLOADED",
+        "EVT-BLAST-RADIUS-EXCEEDED",
+        "EVT-TASK-READY",
+        "EVT-DRIFT-BROADCAST",
+        "EVT-GRAMMAR-VIOLATION"
+      ],
+      "source": "plans/section-B-event-schema.md",
+      "glyphs": {
+        "EVT-HILBERT-HOTEL-EXPANDED": {
+          "desc": "Hilbert hotel expanded — new supervisors minted at level N, no reshard",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GC-SWEPT": {
+          "desc": "GC swept N shards in one pass",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GC-RECLAIMED": {
+          "desc": "GC reclaimed X bytes in one pass",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GC-DEFERRED": {
+          "desc": "GC deferred — shard marked for next-pass reclaim due to pressure low",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GC-PRESSURE-HIGH": {
+          "desc": "GC pressure-high — caller MUST prune or risk unbounded growth",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GC-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GNN-INFERRED": {
+          "desc": "GNN inference completed for candidate pool",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GNN-DIVERGENCE-HALT": {
+          "desc": "GNN divergence detected — cascade halted, reset required",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GNN-RESET-APPLIED": {
+          "desc": "GNN periodic-reset-halve applied at pass N",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GNN-GATE-PASS": {
+          "desc": "GNN converge-gate passed — safe to promote",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GNN-GATE-FAIL": {
+          "desc": "GNN converge-gate failed — reward geometry divergent",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-GNN-EDGE-GCN-VALIDATED": {
+          "desc": "GNN edge validated against GCN consistency check",
+          "hilbert_level": 4,
+          "supervisor": "PROF-GNN-SUPERVISOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-UNISON-START": {
+          "desc": "Unison task started — both sides bound to same wave_set_id",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-UNISON-MATCH": {
+          "desc": "Unison match — both-side fingerprints + verdicts identical",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-UNISON-DIVERGE": {
+          "desc": "Unison diverge — fingerprints OR verdicts differ — masquerade-risk if same-shape-diff-verdict (U-030)",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-UNISON-PROMOTED": {
+          "desc": "Unison promoted — bilateral consensus green → colony-wide promote",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-UNISON-HALTED": {
+          "desc": "Unison halted — halt signal propagated to both sides + drift-broadcast",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "EVT-UNISON-MODE-SWITCHED": {
+          "desc": "Unison mode switched — FRONT↔BACKEND transition, operator-verbatim required",
+          "hilbert_level": 4,
+          "supervisor": "PROF-UNISON-PROCESSOR",
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        }
+      }
+    },
+    "mood": {
+      "prefix": "M",
+      "default_blast": null,
+      "phonetic_class": "tone",
+      "role": "assertion modality (sentence-terminal)",
+      "examples": [
+        "M-INDICATIVE",
+        "M-EYEWITNESS",
+        "M-SUBJUNCTIVE"
+      ]
+    },
+    "meta": {
+      "prefix": "META",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "self-referential sentences",
+      "examples": [
+        "META-GRAMMAR-RULE",
+        "META-SELF-DESCRIBE",
+        "META-PROOF-OF-CLOSURE"
+      ],
+      "constraints": {
+        "min_blast": "colony"
+      },
+      "glyphs": {
+        "META-GC-RESERVES-ADDRESS": {
+          "desc": "GC meta — address space reserved for supervisor at hilbert_level=4",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        },
+        "META-GNN-RESERVES-ADDRESS": {
+          "desc": "GNN meta — address space reserved for supervisor at hilbert_level=4",
+          "hilbert_level": 4,
+          "d11": "OBSERVED",
+          "promoted_at": "2026-04-20T00:04:55.480Z",
+          "promoted_on": "bilateral-unison-match-batch-17-composite-8d461e72"
+        }
+      }
+    }
+  },
+  "violations": {
+    "unknown_glyph": "token not present in this registry",
+    "family_ambiguity": "same symbol claimed by two families without @ disambiguation",
+    "arity_mismatch": "verb applied without required operand",
+    "requires_braces": "two legal parses exist; braces mandatory",
+    "double_mood": "two mood tones on the same sentence",
+    "colony_lift_unwitnessed": "^ raising to @COLONY without operator_witness",
+    "cross_host_privesc": "phrase resolution would write to a remote device (HALT)",
+    "closure_broken": "META-PROOF-OF-CLOSURE fails to parse under M-INDICATIVE (federation HALT)",
+    "blast_too_narrow": "e.g., LAW-* scoped narrower than colony",
+    "mood_proof_mismatch": "M-INDICATIVE on a phrase referencing PROOF-ASSUMED without OP-DOWNGRADE"
+  },
+  "open_gaps": [
+    "256-glyph phonetic census (consonant/vowel/tone exact counts)",
+    "authority-scoped op set alignment with Section B",
+    "final family count — 14 is draft",
+    "merge of D11-proof-levels.json entries without duplication",
+    "acer class corpus refinement (R.2)"
+  ],
+  "references": {
+    "spec": "plans/section-R-3-grammar-specification.md",
+    "kernel_reference": "kernel/BEHCS-256-GRAMMAR.md",
+    "umbrella": "plans/section-R-behcs256-as-language-polymorphism.md",
+    "validators_sketch": "packages/kernel/src/grammar.ts",
+    "rationale": "memory/project_behcs256_as_super_intelligent_language_polymorphic_grammar.md"
+  },
+  "last_mint": {
+    "at": "2026-04-18T15:41:52.879Z",
+    "batch_label": "hermes-phase-1-2",
+    "glyphs_added_this_batch": [
+      "PROF-HERMES-SKILLBUILD",
+      "PROF-HERMES-PROGDISCLOSE",
+      "PROF-HERMES-FREEFANOUT",
+      "PROF-HERMES-DOGFOOD",
+      "PROF-HERMES-HUBSYNC",
+      "PROF-HERMES-GUARDSCAN",
+      "PROF-HERMES-CLAUDE-CODE",
+      "PROF-HERMES-CODEX",
+      "PROF-HERMES-HERMES-AGENT",
+      "PROF-HERMES-OPENCODE",
+      "PROF-HERMES-BLACKBOX-OPT",
+      "PROF-HERMES-HONCHO-OPT"
+    ],
+    "glyphs_already_present": [],
+    "authority": "COSIGN-MERGED-034",
+    "operator_verbatim_go": "2026-04-18 — YES, AGREE. IMMEDIATELY",
+    "source": "packages/hermes-absorption/prof-hermes-delta.json",
+    "staged_ingest_ref": "W1-10-ENDOCRINE-SKILLS-GLYPHS.md §6 (Phase 1 + Phase 2)",
+    "gate": "LAW-013 META-PROOF-OF-CLOSURE green-post-mint"
+  },
+  "last_mint_event": {
+    "at": "2026-04-19T23:12:00.625Z",
+    "directive": "batch-17-triple TASK1",
+    "glyphs_appended": 33,
+    "pre_count": 0,
+    "post_count": 33
+  },
+  "last_unison_mint_event": {
+    "at": "2026-04-19T23:21:20.889Z",
+    "glyphs_added": 18
+  },
+  "last_bilateral_seal": {
+    "at": "2026-04-20T00:04:55.480Z",
+    "event": "EVT-UNISON-MATCH · bilateral-seal-green",
+    "wave_set_id": "UNISON-1776644500-batch-17-triple",
+    "composite_sha256": "8d461e7296d5ff3f2f726f8f9f18bd6512b231ae4f67266ef316e293d3ed790e",
+    "verify_method": "Node-24-crypto-createHash-sha256 byte-identical both sides",
+    "d11_promotion": "ASSUMED → OBSERVED on 51 glyphs",
+    "named_agents": [
+      "acer-batch-17-unison-first",
+      "liris-unison-counterpart-batch-17"
+    ]
+  }
+}

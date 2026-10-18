@@ -1,0 +1,7 @@
+# Pinned, not vendored — 05-index-language-2026-03
+
+These are recorded by hash and not copied into the step directory, either because they are large data (the compiled ASO tables), or third-party, or archives whose needed content is vendored elsewhere. Full rows with digests are in `../PROVENANCE.md` ("Pinned, not vendored") and `../HELD.hbp`.
+
+- `aso-tables.liris-kernel-package.pin.tsv` — the 20 members of `Asolaria/data/aso/` (the compiled ASO index "database", ~13.8 MB unpacked: six `aso-export` JSONs, the seven `tables/*.json`, `graph-edges.json`, `graph-nodes.json`, `graph.dot`, `crosswalk.json`, `DIGEST.md`, the two ops-logs). They exist in the mirror only inside `reports/liris-sync-20260327/liris-kernel-package.zip` (zip git blob `7adee82b`, 83,776,268 B). Per the build order the tables are pinned by member hash, not vendored, to keep this directory small. The ASO compiler/runtime that produced them (`src/index-kernel/`) is vendored.
+- The GAIA / Liris archives under `tmp/docs/whatsapp-rayssa/` (`gaia-full-src.zip`, `gaia-final-system.zip`, `gaia-final-complete.zip`, `gaia-to-liris-sync.zip`, `liris-merged-20260324.zip`, `liris-index-restructure.zip`, `colony-anatomy-liris.tar.gz`) are pinned by git blob + sha256. Only `gaia-full-src.zip`'s 115 non-`node_modules` members are extracted and vendored.
+- `tools/cloudflared.exe` (65,846,200 B) inside the liris kernel package is a third-party binary; pinned by sha256, held.

@@ -1,0 +1,71 @@
+{
+  "schemaId": "asolaria.colony-registry",
+  "schemaVersion": "1.0.0",
+  "registryId": "colony-registry-20260322-v1",
+  "observedAt": "2026-03-22T22:18:00-03:00",
+  "verifier": {
+    "id": "gaia",
+    "kind": "agent"
+  },
+  "sharedLanguage": {
+    "sharedCanonNamespace": "IX",
+    "indexCatalogPath": "data/agent-index/CATALOG.md",
+    "localCanonNamespaces": [
+      "LX"
+    ],
+    "draftLayerName": "draft"
+  },
+  "colonies": [
+    {
+      "colonyId": "sovereign.gaia",
+      "displayName": "Gaia / Sovereign",
+      "scope": "sovereign",
+      "status": "live",
+      "canonNamespaces": [
+        "IX"
+      ],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "reports/",
+      "retrievalSurfaces": [
+        "workspace_knowledge",
+        "mcp_resource",
+        "notebooklm_mirror"
+      ],
+      "transportRefs": [
+        "manual-owner-relay",
+        "friend-bridge-rayssa",
+        "direct-bridge-4799"
+      ],
+      "authority": {
+        "relayPolicy": "manual_owner_relay",
+        "mutationPolicy": "owner_only"
+      }
+    },
+    {
+      "colonyId": "sub.liris",
+      "displayName": "Liris / Rayssa",
+      "parentColonyId": "sovereign.gaia",
+      "scope": "sub_colony",
+      "status": "stale",
+      "canonNamespaces": [
+        "LX"
+      ],
+      "catalogPath": "C:/Users/rayss/Asolaria/data/agent-index/CATALOG.md",
+      "draftMemoryPath": "C:/Users/rayss/.claude/projects/C--Users-rayss/memory/",
+      "retrievalSurfaces": [
+        "local_catalog",
+        "local_memory",
+        "mcp_resource"
+      ],
+      "transportRefs": [
+        "manual-owner-relay",
+        "friend-bridge-rayssa",
+        "direct-bridge-4799"
+      ],
+      "authority": {
+        "relayPolicy": "manual_owner_relay",
+        "mutationPolicy": "approval_required"
+      }
+    }
+  ]
+}

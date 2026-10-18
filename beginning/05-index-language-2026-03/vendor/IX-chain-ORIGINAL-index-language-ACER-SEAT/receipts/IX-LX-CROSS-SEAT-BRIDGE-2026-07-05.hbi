@@ -1,0 +1,5 @@
+HBIv1|doc=IX-LX-CROSS-SEAT-BRIDGE-2026-07-05|json=0
+EMIT|family=ASOLARIACROSSSEAT|name=ix-lx-public-bridge|pid=BH.IXLX.PUBLIC.BRIDGE.20260705|json=0
+EMIT|family=ASOLARIAACERIX|name=acer-ix-origin-repo|pid=BH.ACER.IX.ORIGIN.REPO|json=0
+EMIT|family=ASOLARIALIRISLX|name=liris-lx-origin-repo|pid=BH.LIRIS.LX.ORIGIN.REPO|json=0
+EMIT|family=ASOLARIABOUNDARY|name=public-reciprocal-pointer-no-private-dump|pid=BH.PUBLIC.POINTER.NO-PRIVATE-DUMP|json=0

@@ -1,0 +1,32 @@
+{
+  "name": "D11-proof-levels",
+  "description": "D11 stamp catalog: PROVEN / OBSERVED / INHERITED / ASSUMED. Created 2026-04-17 as part of 300B taint cleanup (Priority 1).",
+  "created": "2026-04-17",
+  "provenance": "Created fresh during 300B taint cleanup. Prior reference in project_behcs256_kernel.md pointed to this path but the file did not exist on disk. Patch created it so the catalog is real.",
+  "levels": {
+    "PROVEN": {
+      "definition": "Mathematically or formally proven. Deductive closure.",
+      "example": "Hilbert orthogonality — 24D prime cube dimensions proven pairwise orthogonal by construction."
+    },
+    "OBSERVED": {
+      "definition": "Empirically measured on real runs with reproducible evidence on disk.",
+      "example": "EdgeLevelGCN achieved 100% accuracy on 1,730 trained edges (commit 1023c7b, 2026-04-16). Replaces earlier 300B claim falsified 2026-04-17."
+    },
+    "INHERITED": {
+      "definition": "Accepted from an authoritative upstream source (jesse, rayssa, named cosign ring, established canon).",
+      "example": "LAW-001 PORTS 4947+4950 ALWAYS OPEN — inherited from jesse directive, irrevocable."
+    },
+    "ASSUMED": {
+      "definition": "Unverified claim. Awaiting proof, observation, or retraction. Default level for any claim whose provenance cannot be walked back to PROVEN/OBSERVED/INHERITED evidence.",
+      "example": "All pre-BEHCS-256 validation claims — downgraded to D11:ASSUMED after 2026-04-17 falsification of the 300B/200B/97.47% zero-failure narrative."
+    }
+  },
+  "retraction_log": [
+    {
+      "date": "2026-04-17",
+      "claim": "300 billion GNN operations validated with zero failures",
+      "falsification": "Agents set true to all answers without verification. See feedback_300B_gnn_validation_was_false.md.",
+      "replacement": "EdgeLevelGCN 100% on 1,730 trained edges (commit 1023c7b)"
+    }
+  ]
+}

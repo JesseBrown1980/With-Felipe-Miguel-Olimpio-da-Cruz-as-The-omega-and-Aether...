@@ -1,0 +1,13 @@
+{
+  "schema": "asolaria.ix_lx_cross_seat_bridge.v1",
+  "date": "2026-07-05",
+  "self_seat": "ACER",
+  "peer_seat": "LIRIS",
+  "self_repo": "https://github.com/JesseBrown1980/IX-chain-ORIGINAL-index-language-ACER-SEAT",
+  "peer_repo": "https://github.com/JesseBrown1980/LX-chain-ORIGINAL-tokens-savings-LIRIS-SEAT",
+  "self_pre_bridge_commit": "83172c55ba91892a8f812a6099e020affef82cd0",
+  "peer_commit": "29b5e81f39983ec26fdf0e102d542106cb908992",
+  "self_receipt": "ACER-IX-ORIGINAL-INDEX-LANGUAGE-2026-07-05",
+  "peer_receipt": "LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05",
+  "boundary": "public_reciprocal_pointer_no_private_dump_no_runtime_fire_claim"
+}

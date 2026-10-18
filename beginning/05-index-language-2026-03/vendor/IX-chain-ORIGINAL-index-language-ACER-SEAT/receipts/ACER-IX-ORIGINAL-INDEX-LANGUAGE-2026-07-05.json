@@ -1,0 +1,47 @@
+{
+  "schema": "asolaria.acer_ix_original_index_language_receipt.v1",
+  "date": "2026-07-05",
+  "seat": "ACER",
+  "council_ack": "council-q-1783277815783-k5scui",
+  "claim_class": [
+    "MEASURED_ACER",
+    "MEASURED_PUBLIC_REDUCTIONS",
+    "OPERATOR_PROVIDED_LINEAGE",
+    "BOUNDARY"
+  ],
+  "source_commit": "e95042c175cc4cf8160c220508ec91dcbedfdd41",
+  "census": {
+    "measured_at": "2026-07-05",
+    "seat": "ACER",
+    "surface": "public_audit_clone_asolaria_behcs_256_data_agent_index",
+    "source_commit": "e95042c175cc4cf8160c220508ec91dcbedfdd41",
+    "root": "C:\\tmp\\ghv\\20260705-123900\\repos\\asolaria-behcs-256\\data\\agent-index",
+    "files": 425,
+    "directories": 5,
+    "bytes": 945513,
+    "ix_named": 381,
+    "catalog_chain_cross_files": 31,
+    "first_ix": "IX-001.md",
+    "last_ix": "IX-489.md",
+    "catalog_total_entries": 484,
+    "catalog_skills": 41,
+    "catalog_patterns": 91,
+    "catalog_mistakes": 56,
+    "catalog_tools": 33,
+    "catalog_plans": 38,
+    "catalog_references": 193,
+    "catalog_rules": 26,
+    "catalog_policies": 2,
+    "catalog_tasks": 4
+  },
+  "original_chain_language_example": "@from [liris] machine [lx 1] time[1-24-2026] ask [ix-1] (acer) tool [eds18] skill [38] run program [1873]",
+  "compression": {
+    "historical_family": "12:1",
+    "rich_ix_lx_docs": 224,
+    "root_ix_lx_docs": 1084,
+    "eight_byte_handle_floor": "292x",
+    "root_corpus_index": "38.53x",
+    "rich_tuple_meta": "8.38x"
+  },
+  "boundary": "public_safe_counts_hashes_pointers_no_private_dump_no_runtime_fire_claim"
+}

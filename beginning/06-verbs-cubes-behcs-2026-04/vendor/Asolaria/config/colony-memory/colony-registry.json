@@ -1,0 +1,147 @@
+{
+  "schemaId": "asolaria.colony-registry",
+  "schemaVersion": "1.0.0",
+  "registryId": "asolaria-sovereign-registry-v1",
+  "observedAt": "2026-03-30T02:45:00.000Z",
+  "verifier": {
+    "id": "gaia",
+    "kind": "agent"
+  },
+  "sharedLanguage": {
+    "sharedCanonNamespace": "IX",
+    "indexCatalogPath": "data/agent-index/CATALOG.md",
+    "localCanonNamespaces": ["IX", "LX", "GA", "LI", "FA", "AM", "RO"],
+    "draftLayerName": "draft"
+  },
+  "colonies": [
+    {
+      "colonyId": "asolaria",
+      "displayName": "Asolaria",
+      "scope": "sovereign",
+      "status": "live",
+      "canonNamespaces": ["IX"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "data/agent-index/drafts",
+      "retrievalSurfaces": ["workspace_knowledge", "local_catalog", "mcp_resource"],
+      "transportRefs": [],
+      "authority": {
+        "relayPolicy": "local_only",
+        "mutationPolicy": "owner_only"
+      }
+    },
+    {
+      "colonyId": "gaia",
+      "displayName": "Gaia",
+      "parentColonyId": "asolaria",
+      "scope": "sub_colony",
+      "status": "live",
+      "canonNamespaces": ["IX", "GA"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/gaia/drafts",
+      "retrievalSurfaces": ["workspace_knowledge", "local_catalog", "mcp_resource"],
+      "transportRefs": ["admin-terminal-gaia"],
+      "authority": {
+        "relayPolicy": "local_only",
+        "mutationPolicy": "approval_required"
+      }
+    },
+    {
+      "colonyId": "liris",
+      "displayName": "Liris",
+      "parentColonyId": "gaia",
+      "scope": "sub_colony",
+      "status": "live",
+      "canonNamespaces": ["LX"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/liris/drafts",
+      "retrievalSurfaces": ["workspace_knowledge", "local_catalog", "mcp_resource"],
+      "transportRefs": ["admin-terminal-liris", "mqtt-liris"],
+      "authority": {
+        "relayPolicy": "manual_owner_relay",
+        "mutationPolicy": "approval_required"
+      }
+    },
+    {
+      "colonyId": "falcon",
+      "displayName": "Falcon",
+      "parentColonyId": "gaia",
+      "scope": "sub_colony",
+      "status": "offline",
+      "canonNamespaces": ["FA"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/falcon/drafts",
+      "retrievalSurfaces": ["workspace_knowledge", "local_catalog"],
+      "transportRefs": ["admin-terminal-falcon"],
+      "authority": {
+        "relayPolicy": "local_only",
+        "mutationPolicy": "approval_required"
+      }
+    },
+    {
+      "colonyId": "amy-oracle",
+      "displayName": "Amy Oracle",
+      "parentColonyId": "gaia",
+      "scope": "sub_colony",
+      "status": "offline",
+      "platform": "windows",
+      "canonNamespaces": ["AM"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/amy/drafts",
+      "retrievalSurfaces": ["workspace_knowledge"],
+      "transportRefs": [],
+      "authority": {
+        "relayPolicy": "manual_owner_relay",
+        "mutationPolicy": "approval_required"
+      }
+    },
+    {
+      "colonyId": "amy-rose",
+      "displayName": "Amy Rose",
+      "parentColonyId": "gaia",
+      "scope": "sub_colony",
+      "status": "offline",
+      "platform": "macos",
+      "canonNamespaces": ["RO"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/rose/drafts",
+      "retrievalSurfaces": ["workspace_knowledge"],
+      "transportRefs": [],
+      "authority": {
+        "relayPolicy": "manual_owner_relay",
+        "mutationPolicy": "approval_required"
+      }
+    },
+    {
+      "colonyId": "helm",
+      "displayName": "Helm",
+      "parentColonyId": "asolaria",
+      "scope": "service",
+      "status": "live",
+      "canonNamespaces": ["IX"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/helm/drafts",
+      "retrievalSurfaces": ["local_catalog"],
+      "transportRefs": ["admin-terminal-helm"],
+      "authority": {
+        "relayPolicy": "local_only",
+        "mutationPolicy": "local_only"
+      }
+    },
+    {
+      "colonyId": "sentinel",
+      "displayName": "Sentinel",
+      "parentColonyId": "asolaria",
+      "scope": "service",
+      "status": "live",
+      "canonNamespaces": ["IX"],
+      "catalogPath": "data/agent-index/CATALOG.md",
+      "draftMemoryPath": "runtime/admin-terminals/sentinel/drafts",
+      "retrievalSurfaces": ["local_catalog"],
+      "transportRefs": ["admin-terminal-sentinel"],
+      "authority": {
+        "relayPolicy": "local_only",
+        "mutationPolicy": "disabled"
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-04-18T22:37:15.185Z",
+  "keys": [
+    {
+      "key_id": "dev-acer-4abb0a9c",
+      "owner_glyph": "DEV-ACER",
+      "public_key_b64": "X7Shge7FmD5za+rw+cFecUuQV0RdeJpD3L6bDz7Eohw=",
+      "d11_level": "ASSUMED",
+      "created_at": "2026-04-18T22:37:15.185Z",
+      "rotated_at": null,
+      "usage": [
+        "cosign-append",
+        "behcs-envelope",
+        "bootstrap"
+      ],
+      "binding_class": "device-bound",
+      "host_device": "DEV-ACER",
+      "notes": "bootstrap-local-key"
+    }
+  ],
+  "notes": [
+    "empty registry — mint keys with mintKey()"
+  ]
+}

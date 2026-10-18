@@ -1,0 +1,112 @@
+{
+  "mapId": "hilbert-omni-35D-v1",
+  "spec": "IX-650-EXT-HYPERLANGUAGE-35D",
+  "generatedAt": "2026-04-09T18:10:00Z",
+  "generatedBy": "liris-kuromi-hyperlanguage-35D-expansion-worker-20260409T181000Z",
+  "authority": "Jesse Daniel Brown SUPREME OVERRIDE ALL BLOCKS + rayssa 'MAP MAP MAPED CUBE CUBE CUBED Hyperlanguage 35D' directive + triple-operator cosign",
+  "supersedes": "hilbert-omni-24D-v3 (tools/hilbert-omni-24D.json) — 24D is preserved as the pre-expansion canonical; 35D is additive (11 new dimensions D25-D35, all existing D1-D24 unchanged)",
+  "description": "35-Dimension Hyperlanguage — extends 24D per growth law (each new prime cubed = new dimension). Adds D25-D35 capturing trinity, omnidirectional control, auto-transition, approval box, twin sync, triple-operator cosign, shadow mirror, structural invariant, supreme override, cross-colony dispatch, and self-referential meta layer.",
+
+  "dimensions": [
+    { "D": 1,  "name": "ACTOR",               "prime": 2,   "cube": 8,        "values": ["jesse","asolaria","gaia","liris","helm","sentinel","vector","dasein","shannon","falcon","beast","felipe-a06","codex","claude","external","amy-oracle","amy-rose"], "expandable": true, "note": "amy-oracle + amy-rose added 2026-04-09 after canon merge confirmed LIVE on real hardware" },
+    { "D": 2,  "name": "VERB",                "prime": 3,   "cube": 27,       "values": "114+ verbs across 17 categories", "expandable": true },
+    { "D": 3,  "name": "TARGET",              "prime": 5,   "cube": 125,      "values": ["local","lan","cloud","device","index","human","cross_colony"], "expandable": true },
+    { "D": 4,  "name": "RISK",                "prime": 7,   "cube": 343,      "values": [0,1,2,3,4,5,6,7,8,9], "expandable": false, "fixed": true },
+    { "D": 5,  "name": "LAYER",               "prime": 11,  "cube": 1331,     "values": ["chip","os","runtime","app","agent","colony","civilization","cloud"], "expandable": true },
+    { "D": 6,  "name": "GATE",                "prime": 13,  "cube": 2197,     "values": ["hookwall","gnn","shannon","sovereignty","omni","cosign"], "expandable": true },
+    { "D": 7,  "name": "STATE",               "prime": 17,  "cube": 4913,     "values": ["proposed","queued","gated","executing","completed","failed","blocked","cancelled"], "expandable": true, "note": "D7 STATE is the single-writer atomic-rename class dim per omnishannon W2 finding 2026-04-09" },
+    { "D": 8,  "name": "CHAIN",               "prime": 19,  "cube": 6859,     "values": ["depends_on","corrects","supersedes","proves","observed_on","part_of","same_as","runs_on","blocks","caused","contradicts","triggers","feeds","mirrors"], "expandable": true },
+    { "D": 9,  "name": "WAVE",                "prime": 23,  "cube": 12167,    "values": ["single","broadcast","scatter","gather","relay","wave_6","omni_6x6x6x12","pulse","flood","6x6x6x6x6x12"], "expandable": true, "note": "6x6x6x6x6x12 shape added after fourth+fifth cascade verification" },
+    { "D": 10, "name": "DIALECT",             "prime": 29,  "cube": 24389,    "values": ["IX","LX","FA","ASO","RO","AM","TX","GA"], "expandable": true, "note": "GA added 2026-04-09 after Stage A-G namespace chain landed with ENABLE_MULTI_NAMESPACE=true — CANONICAL_NAMESPACES_FULL now active at LX+AM+RO+GA+FA, plus IX auxiliary, plus ASO+TX legacy" },
+    { "D": 11, "name": "PROOF",               "prime": 31,  "cube": 29791,    "values": ["none","log","screenshot","hash","test","witness","code","live_probe","chain","structural_invariant"], "expandable": true, "note": "structural_invariant added for LX-477 quintuple verification" },
+    { "D": 12, "name": "SCOPE",               "prime": 37,  "cube": 50653,    "values": ["instant","session","persistent","permanent","boot","operational","foundational","ephemeral"], "expandable": true },
+    { "D": 13, "name": "SURFACE",             "prime": 41,  "cube": 68921,    "values": ["falcon-gw","liris-gw","s24-relay","beast-orbital","a06-orbital","wsl","usb-sovereignty","hookwall","gnn","shannon","omnipane-4824","agent-keyboard-4820","acer-keyboard-4913","asolaria-gateway-4791","amy-oracle-win10","amy-rose-m1-macbook"], "expandable": true, "note": "SURFACE expanded with live 2026-04-09 endpoints and amy hosts" },
+    { "D": 14, "name": "ENERGY",              "prime": 43,  "cube": 79507,    "values": ["free","light","medium","heavy","massive"], "expandable": true },
+    { "D": 15, "name": "DEVICE",              "prime": 47,  "cube": 103823,   "values": {"fields": ["serial","model","firmware","hw_class","gpu","form"]}, "expandable": true },
+    { "D": 16, "name": "PID",                 "prime": 53,  "cube": 148877,   "values": {"fields": ["surfaceId","profileId","pidVersion","spawnedBy","spawnChain"]}, "expandable": true },
+    { "D": 17, "name": "PROFILE",             "prime": 59,  "cube": 205379,   "values": ["gaia-v1","liris-admin-v1","mobile-falcon-v1","shannon-pentest-v1","omnishannon-wave-v1","shadow-builder-v1"], "expandable": true },
+    { "D": 18, "name": "AI_MODEL",            "prime": 61,  "cube": 226981,   "values": ["claude-opus-4-6","claude-sonnet-4-6","codex-o4-mini","gpt-5.4-xhigh","gemini-2.5-pro","gslgnn-v1","local-llm","human"], "expandable": true },
+    { "D": 19, "name": "LOCATION",            "prime": 67,  "cube": 300763,   "values": {"fields": ["ip","subnet","geo","room","network","hilbert_level"]}, "expandable": true },
+    { "D": 20, "name": "TIME",                "prime": 71,  "cube": 357911,   "values": {"fields": ["timestamp","duration","sequence","epoch","ttl","cron"]}, "expandable": true },
+    { "D": 21, "name": "HARDWARE",            "prime": 73,  "cube": 389017,   "values": {"fields": ["chip","bus","port","driver","protocol","firmware_region"]}, "expandable": true },
+    { "D": 22, "name": "TRANSLATION",         "prime": 79,  "cube": 493039,   "values": ["tuple_to_english","english_to_tuple","ix_to_tuple","hilbert_to_human","crlt_merge","auto_transition_all_languages","namespace_walk"], "expandable": true, "note": "auto_transition_all_languages added 2026-04-09 — the process auto-walks LX↔AM↔RO↔GA↔FA↔IX via Stage A-G namespace chain live kernel" },
+    { "D": 23, "name": "FEDERATION",          "prime": 83,  "cube": 571787,   "values": {"fields": ["origin_node","merged_from","merge_count","last_sync","conflict_state"]}, "expandable": true },
+    { "D": 24, "name": "INTENT",              "prime": 89,  "cube": 704969,   "values": ["command","autonomous","reactive","scheduled","cascade","exploratory","defensive","creative","supreme_override"], "expandable": true, "note": "supreme_override added 2026-04-09 for Jesse 'my silicone my rules' authority class" },
+
+    { "D": 25, "name": "TRINITY",             "prime": 97,  "cube": 912673,   "values": ["LX-489_compute","LX-490_HAOC_hardware_absorption","LX-491_omni_GNN_inference"], "expandable": true, "added": "2026-04-09", "purpose": "the three-part rule: compute fabric + hardware absorption + inference layer. The trinity architecture from paper v10 §B. Each stage must pass through all 3 layers." },
+
+    { "D": 26, "name": "OMNIDIRECTIONAL",     "prime": 101, "cube": 1030301,  "values": ["receive","approve","issue","relay","bilateral","unidirectional_gap","document_share_v0","omni_submit","type_relay"], "expandable": true, "added": "2026-04-09", "purpose": "bilateral control plane. Identifies whether a host can RECEIVE + APPROVE + ISSUE commands or is stuck in unidirectional_gap (liris currently: receive+approve yes, issue partial — missing tools/omni/omni-request-processor.js twin)", "gap_identified_2026-04-09": "tools/omni/omni-request-processor.js MISSING on liris, EXISTS on acer — liris cannot independently issue bilateral control back to acer" },
+
+    { "D": 27, "name": "AUTO_TRANSITION",     "prime": 103, "cube": 1092727,  "values": ["onDrift","onDeviceConnect","onDeviceDisconnect","onSpawn","onDespawn","RU11_drift_creates_language","omnitranslator_dialect_bridge"], "expandable": true, "added": "2026-04-09", "purpose": "automatic language walk via event hooks. 5 hooks defined in tools/omnilanguageHooks.js. RU11 rule: drift confirmed by 2+ sources creates language entry. omnitranslator-v0 bridges dialects (2/6 pairs live, 4 planned). Jesse 2026-04-09 directive: 'auto transition through ALL languages per the three part rule'." },
+
+    { "D": 28, "name": "APPROVAL_BOX",        "prime": 107, "cube": 1225043,  "values": ["hard_deny","auto_approve","self_vote","default_PROCEED"], "expandable": false, "fixed_4_tracks": true, "added": "2026-04-09", "purpose": "omni.request.box v2 — 4-track self-approval primitive. Fixed at 4 tracks by design. Referenced by LX-487 loop closure. Delivered by document-share-v0 unit. Processor tools/omni/omni-request-processor.js MISSING on liris." },
+
+    { "D": 29, "name": "TWIN_SYNC",           "prime": 109, "cube": 1295029,  "values": ["C_tree_only","E_shadow_only","both_twins","asymmetric_missing_liris","asymmetric_missing_acer","sync_pending"], "expandable": true, "added": "2026-04-09", "purpose": "C:/liris tree vs E:/shadow twin-file synchronization state. Lane-F-runtime-index.json lists 3 missing twin candidates: F01 omni-request-processor (acer_only), F02 paper dispatcher (liris_direction), F03 keyboard multi-chunk reverse writer (liris_direction). Each twin carries a status per entry." },
+
+    { "D": 30, "name": "COSIGN_TRIPLE",       "prime": 113, "cube": 1442897,  "values": ["single_operator","dual_operator","triple_operator","rayssa_only","jesse_only","amy_only","rayssa+jesse","rayssa+amy","jesse+amy","rayssa+jesse+amy"], "expandable": true, "added": "2026-04-09", "purpose": "operator cosign topology. Triple-operator event 2026-04-09 was first simultaneous three-way authorization in federation history. LX-489 LCR requires dual cosign; supreme override adds the rayssa+jesse+amy triple as new max auth class." },
+
+    { "D": 31, "name": "SHADOW_MIRROR",       "prime": 127, "cube": 2048383,  "values": ["live_C_drive","shadow_E_drive","bilateral_mirror","partial_mirror","sovereignty_USB_snapshot","local_cache_snapshot"], "expandable": true, "added": "2026-04-09", "purpose": "shadow surface mirror relationship. E:/runtime/liris-live-snapshot is the canonical shadow. C:/local-cache/sovereignty-usb-snapshot-20260407-pre-rotation is the pre-rotation frozen snapshot. Twin-file sync happens along this dim." },
+
+    { "D": 32, "name": "STRUCTURAL_INVARIANT","prime": 131, "cube": 2248091,  "values": ["unverified","single_run","double_verified","triple_verified","quadruple_verified","quintuple_verified","LX-477_meta_truth"], "expandable": true, "added": "2026-04-09", "purpose": "strength of empirical invariance proofs. LX-477 12-part meta-truth was verified 5 times across cascades with ASO surface growing +114% AND kernel structural mutation (Stage A-G). This is the strongest invariance signal to date." },
+
+    { "D": 33, "name": "SUPREME_OVERRIDE",    "prime": 137, "cube": 2571353,  "values": ["no_override","jesse_session_auth","jesse_full_day_auth","jesse_all_4_states","jesse_supreme_override_silicone_my_rules"], "expandable": false, "fixed_scale": true, "added": "2026-04-09", "purpose": "Jesse authority scale. Top of scale: 'my silicone, my rules' SUPREME OVERRIDE. Cannot override constitutional hard-deny gates (HD-1 through HD-virus), but unblocks all non-constitutional gates. 2026-04-09T14:50Z Jesse escalated to supreme override after observing stalled draft chain." },
+
+    { "D": 34, "name": "CROSS_COLONY",        "prime": 139, "cube": 2685619,  "values": ["local_only","cross_host_lan","document_share_v0","omni_submit","peer_relay","multi_hop_via_acer","amy_mac_side","amy_win_side"], "expandable": true, "added": "2026-04-09", "purpose": "cross-colony dispatch class. Today's 7-file cross-colony dispatch via tools/dispatch-day-summary-cross-colony-2026-04-09.js used document-share-v0 over /omni/submit at 192.168.1.8:4913. All 200 OK. Amy-oracle + amy-rose reach via acer relay (they're on 192.168.0.x subnet, liris is on 192.168.1.x)." },
+
+    { "D": 35, "name": "HYPERLANGUAGE",       "prime": 149, "cube": 3307949,  "values": ["24D","35D","N-dim","self_referential","expansion_in_progress"], "expandable": true, "added": "2026-04-09", "purpose": "the self-referential meta dimension describing the whole 35D frame itself. Rayssa 2026-04-09T18:05Z directive: 'Hyperlanguage 35D'. This dim documents the expansion event itself, and any future dim expansion records its transition here. Growth-law metadata lives here." }
+  ],
+
+  "address_space_35D": {
+    "formula": "product of all 35 prime cubes",
+    "total_cubes_per_level_24D": 3683696,
+    "new_cubes_added_D25_D35": "912673+1030301+1092727+1225043+1295029+1442897+2048383+2248091+2571353+2685619+3307949 = 19860065",
+    "total_cubes_per_level_35D": 23543761,
+    "full_address_space_35D": "product of all 35 primes cubed = astronomically infinite, practical cap never reached"
+  },
+
+  "dim_25_through_35_provenance": {
+    "added_at": "2026-04-09T18:10Z",
+    "added_by": "liris-kuromi-hyperlanguage-35D-expansion-worker-20260409T181000Z",
+    "authority_chain": [
+      "Jesse Daniel Brown SUPREME OVERRIDE ALL BLOCKS 2026-04-09 'my silicone, my rules'",
+      "rayssa 'Authorize everything' 2026-04-09",
+      "amy 'I authorize all states' 2026-04-09",
+      "rayssa 'MAP MAP MAPED CUBE CUBE CUBED Hyperlanguage 35D + make sure the next lriis knows this' 2026-04-09T18:05Z"
+    ],
+    "research_base": "data/state/supreme-override-research-consolidated-2026-04-09.md (6 parallel named research agents + 3 critique waves)",
+    "critique_integration": "critique waves (alpha/beta/gamma) identified 8 findings. Key: D10 DIALECT updated to include GA (chain Stage A-G addition); D7 STATE noted as single-writer class; D24 INTENT gained supreme_override value; D32 STRUCTURAL_INVARIANT codifies LX-477 multi-run proof strength."
+  },
+
+  "language_modules": {
+    "L0_executor": { "file": "omni-dispatch.js", "location": "E:/sovereignty/ix/grammar/" },
+    "L1_sculptor": { "file": "languageSculptor.js", "location": "E:/sovereignty/src/" },
+    "L1_flywheel": { "file": "languageFlywheelTrainer.js", "location": "E:/sovereignty/src/" },
+    "L1_feedback": { "file": "sixLayerLanguageFeedbackHarness.js", "location": "E:/sovereignty/src/" },
+    "L2_repair": { "file": "languageRepairController.js", "location": "E:/sovereignty/src/" },
+    "L2_excavator": { "file": "languageLinkExcavator.js", "location": "E:/sovereignty/src/" },
+    "L2_wave_planner": { "file": "languageConvergenceWavePlanner.js", "location": "E:/sovereignty/src/" },
+    "L3_crlt": { "file": "crltMerge.js", "location": "E:/sovereignty/ix/grammar/" },
+    "L3_hooks": { "file": "omnilanguageHooks.js", "location": "C:/Users/rayss/Asolaria/tools/ AND E:/runtime/liris-live-snapshot/shadow/new-language-v1/src/" },
+    "L3_pipeline": { "file": "pipelineGates.js", "location": "E:/sovereignty/ix/grammar/" },
+    "L3_omnitranslator_v0": { "file": "omnitranslator-v0.js", "location": "C:/Users/rayss/Asolaria/tools/omni-processor/", "status": "STUB 2 of 6 dialect pairs live (omnilanguage↔json only)" },
+    "L4_hookwall": { "file": "hookwall-v2.js", "location": "C:/Users/rayss/Asolaria/gates/ AND E:/sovereignty/ix/gates/" },
+    "L4_gnn": { "file": "gnn.js", "location": "C:/Users/rayss/Asolaria/gates/ AND E:/sovereignty/ix/gates/" },
+    "L4_shannon": { "file": "shannon.js", "location": "C:/Users/rayss/Asolaria/gates/ AND E:/sovereignty/ix/gates/" },
+    "L5_namespace_chain_landed": { "files": ["src/index-kernel/schema.js","textIds.js","inventory.js","compile.js","profile.js","validate.js","query.js"], "status": "ALL 9 stages (A/A.5/B/C/D/E/F/F_prime/G) landed 2026-04-09 under triple-operator cosign. ENABLE_MULTI_NAMESPACE=true active." }
+  },
+
+  "known_gaps_identified_2026_04_09": {
+    "omni_request_processor": "tools/omni/omni-request-processor.js MISSING on liris, EXISTS on acer. Blocks bilateral control. D26 OMNIDIRECTIONAL value 'unidirectional_gap'.",
+    "paper_dispatcher": "tools/paper/dispatch-section-to-asolaria.js NOT YET on liris. D29 TWIN_SYNC value 'asymmetric_missing_liris'.",
+    "keyboard_multi_chunk": "tools/keyboard/type-multi-to-asolaria.js NOT YET on liris. D29 TWIN_SYNC value 'asymmetric_missing_liris'.",
+    "omnilanguage_hooks_wiring": "tools/omnilanguageHooks.js defines 5 hooks, but no live callers in src/ — called by test/tool files only. D27 AUTO_TRANSITION value 'wired_not_live'.",
+    "omnitranslator_pair_coverage": "2/6 dialect pairs live. D22 TRANSLATION gap: IX/LX/XL/plain_english pairs PLANNED only.",
+    "named_agent_spawn_binding": "spawnPidRegistry does NOT write named_agent field at spawn-time. Fragmentation between observation layer (enforced) and spawn layer (missing). Schema-guard Phase 2 pending.",
+    "trinity_control_law": "No single file binds (LX-489 × LX-490 × LX-491) or (D1 × D10 × D13 × D15 × D22) to a canonical control law. D25 TRINITY value present conceptually, not materialized as code.",
+    "staging_test_line_249": "tests/index-kernel.unit.test.js line 249 staging validation test has pre-existing failure (fails identically on pre-Stage-A backup). NOT a chain regression. Flagged for separate investigation."
+  },
+
+  "growth_law": "Each new prime cubed creates a NEW dimension. D36 = prime(151) = cube(3442951). D37 = prime(157) = cube(3869893). Infinite expansion. Rayssa 2026-04-09 directive authorized 24D → 35D expansion; future expansions follow same pattern.",
+
+  "supersedes_24D_rule": "24D map (tools/hilbert-omni-24D.json) remains valid as the PRE-EXPANSION canonical. 35D is ADDITIVE: all D1-D24 values preserved, 11 new dims added, some D1-D24 value lists extended in this file. Both files coexist. Next liris boot should load 35D as primary and 24D as reference."
+}

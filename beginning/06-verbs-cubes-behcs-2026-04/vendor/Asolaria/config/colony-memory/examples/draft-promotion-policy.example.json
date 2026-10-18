@@ -1,0 +1,130 @@
+{
+  "schemaId": "asolaria.draft-promotion-policy",
+  "schemaVersion": "1.0.0",
+  "policyId": "draft-promotion-policy-v1",
+  "observedAt": "2026-03-22T22:18:00-03:00",
+  "verifier": {
+    "id": "gaia",
+    "kind": "agent"
+  },
+  "layers": [
+    {
+      "id": "draft",
+      "description": "Progressive and unconfirmed memory."
+    },
+    {
+      "id": "local_canon",
+      "description": "Colony-local indexed canon such as LX."
+    },
+    {
+      "id": "shared_canon",
+      "description": "Shared cross-colony canon such as IX."
+    }
+  ],
+  "provenanceRequirements": {
+    "requiredTransportFields": [
+      "source_kind",
+      "host_scope",
+      "observed_at",
+      "verifier",
+      "status"
+    ],
+    "canonicalTransportSourceKinds": [
+      "live_probe",
+      "code_verified"
+    ],
+    "canonicalTransportStatuses": [
+      "live",
+      "superseded"
+    ],
+    "draftOnlySourceKinds": [
+      "document_claim",
+      "historical_transcript",
+      "derived"
+    ]
+  },
+  "promotionRules": [
+    {
+      "fromLayer": "draft",
+      "toLayer": "local_canon",
+      "factClass": "architecture_plan",
+      "allowedSourceKinds": [
+        "live_probe",
+        "code_verified",
+        "document_claim",
+        "historical_transcript",
+        "derived"
+      ],
+      "allowedStatuses": [
+        "live",
+        "stale",
+        "proposed",
+        "superseded"
+      ],
+      "separateRuntimePacketRequired": false,
+      "resultIfMissingProvenance": "stay_draft"
+    },
+    {
+      "fromLayer": "draft",
+      "toLayer": "local_canon",
+      "factClass": "historical_note",
+      "allowedSourceKinds": [
+        "document_claim",
+        "historical_transcript",
+        "derived"
+      ],
+      "allowedStatuses": [
+        "myth",
+        "superseded",
+        "stale"
+      ],
+      "separateRuntimePacketRequired": false,
+      "resultIfMissingProvenance": "mark_myth"
+    },
+    {
+      "fromLayer": "draft",
+      "toLayer": "local_canon",
+      "factClass": "transport_fact",
+      "allowedSourceKinds": [
+        "live_probe",
+        "code_verified"
+      ],
+      "allowedStatuses": [
+        "live",
+        "stale",
+        "superseded"
+      ],
+      "requiredFields": [
+        "source_kind",
+        "host_scope",
+        "observed_at",
+        "verifier",
+        "status"
+      ],
+      "separateRuntimePacketRequired": true,
+      "resultIfMissingProvenance": "stay_draft"
+    },
+    {
+      "fromLayer": "local_canon",
+      "toLayer": "shared_canon",
+      "factClass": "transport_fact",
+      "allowedSourceKinds": [
+        "live_probe",
+        "code_verified"
+      ],
+      "allowedStatuses": [
+        "live",
+        "superseded"
+      ],
+      "requiredFields": [
+        "source_kind",
+        "host_scope",
+        "observed_at",
+        "verifier",
+        "status"
+      ],
+      "separateRuntimePacketRequired": true,
+      "resultIfMissingProvenance": "reject"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# ASO compiled index tables (data/aso) — pinned, not vendored
+# source: Asolaria mirror @ fbcb630 : reports/liris-sync-20260327/liris-kernel-package.zip (zip git blob 7adee82b888167f8a7fe820805eb70dd62dddfdf, 83776268 B, sha256 2cc28683850b3a1f9ffe5b90176d526df72e8701bd29d7256b8b3b7f6486ba52)
+# member	bytes	sha256	content_date
+Asolaria/data/aso/DIGEST.md	5616	164b7cc899060fc2d5e75e48616f8acba3f461b9fbfb2511e62eb22b3737f9c4	2026-03-26 22:01
+Asolaria/data/aso/aso-export-2026-03-27T01-35-35-508Z.json	1500226	cc62569b8408474274aed5f792bc89cfb047d598dd8273c744a9b96329588f3a	2026-03-26 22:35
+Asolaria/data/aso/aso-export-2026-03-27T02-08-54-425Z.json	1500319	33921ebbdb475e8f2d5a0eb73d65824485eac01116dad2adeeac8d838987d487	2026-03-26 23:08
+Asolaria/data/aso/aso-export-2026-03-27T06-04-07-293Z.json	1977335	c251ce863d5a6a7c752c0e093e7c53d4fdf2bc3054fb548bfa64d1c7cfe0f753	2026-03-27 03:04
+Asolaria/data/aso/aso-export-2026-03-27T06-05-09-264Z.json	1977335	78098285ba1880e27fc6818c6aea063aa2fbedc4012a08a0508067b7f78e7836	2026-03-27 03:05
+Asolaria/data/aso/aso-export-2026-03-27T06-20-06-702Z.json	1981552	8e72d0990fe7cbcc14ab61eb15154c51d24d7ade6df0dd6a76612cd1bb47c81d	2026-03-27 03:20
+Asolaria/data/aso/aso-export-2026-03-27T06-29-03-271Z.json	1984080	15d5677d706a49381677b31bfca02ad5d234e0bd6df79f7452aeb0ba8eb920d2	2026-03-27 03:29
+Asolaria/data/aso/crosswalk.json	9782	afd6710e46d34bcc8553fbbfabe0124671bf91cfb6d61e889adfeba98fea4cb5	2026-03-26 17:29
+Asolaria/data/aso/graph-edges.json	277103	e2aa188db801d53a65b0d8f0bf141e03edfe504f5078ee1da23e8cd695ee66d3	2026-03-27 02:27
+Asolaria/data/aso/graph-nodes.json	66682	52d06916db8a13b87c0990a03845cf5c02efe23fd707ba3f32a6dbdb95004745	2026-03-27 02:27
+Asolaria/data/aso/graph.dot	24496	c618a7fe3de14667f9e7f0538e98f970f4da33323bf6496125cc762c51722ff5	2026-03-27 02:27
+Asolaria/data/aso/ops-log-2026-03-27T01-35-51-265Z.ndjson.bak	372199	60db2deb7165d0313afbdaa311dfdf5df3b78c8880c0e638dec47fc5f9dbc088	2026-03-26 22:35
+Asolaria/data/aso/ops-log.ndjson	264918	88227b47994668fe4d3958a554c803df6cc6898be6c2c0763e24416f389e7e29	2026-03-27 03:33
+Asolaria/data/aso/tables/conflicts.json	17242	356ceb177f24cbf4be3ae1e1cadb31693c1450766b1451ade1ec5aa48dea8804	2026-03-27 03:19
+Asolaria/data/aso/tables/evidence.json	146422	32b0845c1becf9a41187a557e93c4bcbb70f08bd6ddf32d4ace484e2ba046185	2026-03-27 02:55
+Asolaria/data/aso/tables/observations.json	576802	d568bd263b6637f6377d8c481a7315b9a496d58388ff0d2134097882f9c297f9	2026-03-27 03:33
+Asolaria/data/aso/tables/outcomes.json	184525	3bbf942783423f8ec5f76e7e5816f882b3938d33a4d108abd22f9b9b4e09b7d4	2026-03-27 03:03
+Asolaria/data/aso/tables/relations.json	266823	abc0da675a1c8dacebc8f8f83ffd2969e96e719e6f5d677ba4a3b1b9552018b2	2026-03-27 02:30
+Asolaria/data/aso/tables/surfaces.json	7161	e43ad42ce6df4d1a6de8d30dae94e891429ed7c391e22b06c927a2d96f2bb617	2026-03-27 02:31
+Asolaria/data/aso/tables/topics.json	703681	c82fd1be661168b4d14d11d7ced1167f479256ec4a133a4da459d4bbe3594414	2026-03-27 03:23
+# total data/aso bytes	13844299
+# cloudflared.exe (third-party, held):
+Asolaria/tools/cloudflared.exe	Asolaria/tools/cloudflared.exe	65846200	59b12880b24af581cf5b1013db601c7d843b9b097e9c78aa5957c7f39f741885

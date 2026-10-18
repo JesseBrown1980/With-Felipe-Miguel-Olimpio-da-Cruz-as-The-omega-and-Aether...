@@ -1,0 +1,91 @@
+{
+  "mapId": "hilbert-omni-47D-v1",
+  "spec": "IX-650-EXT-HYPERLANGUAGE-47D",
+  "generatedAt": "2026-04-10T23:09:00Z",
+  "generatedBy": "asolaria-instance@acer",
+  "base": "hilbert-omni-35D-v1 (liris canonical, triple-operator cosigned 2026-04-09)",
+  "expansion_cosign": "COSIGN_47D_001 — quadruple operator (jesse + rayssa + amy + felipe) 2026-04-10T23:08Z",
+  "authority": "Jesse Daniel Brown COSIGN FOR All + rayssa + amy + felipe all present",
+  "supersedes": "hilbert-omni-35D-v1 — 35D preserved as pre-expansion canonical; 47D is additive (12 new dimensions D36-D47, all existing D1-D35 unchanged from liris canonical)",
+  "description": "47-Dimension Brown-Hilbert Cube — extends 35D per growth law. Adds D36-D47 capturing inference surface, authority topology, encryption, GNN edges, hybrid models, agent tiers, meeting rooms, mistake ledger, heartbeat, omnicalendar, vault, and boundary meta-dim. Complete Wh-chain coverage. Everything connected to the trinity.",
+
+  "dimensions": [
+    { "D": 1,  "name": "ACTOR",               "prime": 2,   "cube": 8,        "values": ["jesse","asolaria","gaia","liris","helm","sentinel","vector","dasein","shannon","falcon","beast","felipe-a06","codex","claude","external","amy-oracle","amy-rose"], "expandable": true },
+    { "D": 2,  "name": "VERB",                "prime": 3,   "cube": 27,       "values": "114+ verbs across 17 categories", "expandable": true },
+    { "D": 3,  "name": "TARGET",              "prime": 5,   "cube": 125,      "values": ["local","lan","cloud","device","index","human","cross_colony"], "expandable": true },
+    { "D": 4,  "name": "RISK",                "prime": 7,   "cube": 343,      "values": [0,1,2,3,4,5,6,7,8,9], "expandable": false, "fixed": true },
+    { "D": 5,  "name": "LAYER",               "prime": 11,  "cube": 1331,     "values": ["chip","os","runtime","app","agent","colony","civilization","cloud"], "expandable": true },
+    { "D": 6,  "name": "GATE",                "prime": 13,  "cube": 2197,     "values": ["hookwall","gnn","shannon","sovereignty","omni","cosign"], "expandable": true },
+    { "D": 7,  "name": "STATE",               "prime": 17,  "cube": 4913,     "values": ["proposed","queued","gated","executing","completed","failed","blocked","cancelled"], "expandable": true },
+    { "D": 8,  "name": "CHAIN",               "prime": 19,  "cube": 6859,     "values": ["depends_on","corrects","supersedes","proves","observed_on","part_of","same_as","runs_on","blocks","caused","contradicts","triggers","feeds","mirrors"], "expandable": true },
+    { "D": 9,  "name": "WAVE",                "prime": 23,  "cube": 12167,    "values": ["single","broadcast","scatter","gather","relay","wave_6","omni_6x6x6x12","pulse","flood","6x6x6x6x6x12"], "expandable": true },
+    { "D": 10, "name": "DIALECT",             "prime": 29,  "cube": 24389,    "values": ["IX","LX","FA","ASO","RO","AM","TX","GA"], "expandable": true },
+    { "D": 11, "name": "PROOF",               "prime": 31,  "cube": 29791,    "values": ["none","log","screenshot","hash","test","witness","code","live_probe","chain","structural_invariant"], "expandable": true },
+    { "D": 12, "name": "SCOPE",               "prime": 37,  "cube": 50653,    "values": ["instant","session","persistent","permanent","boot","operational","foundational","ephemeral"], "expandable": true },
+    { "D": 13, "name": "SURFACE",             "prime": 41,  "cube": 68921,    "values": ["falcon-gw","liris-gw","s24-relay","beast-orbital","a06-orbital","wsl","usb-sovereignty","hookwall","gnn","shannon","omnipane-4824","agent-keyboard-4820","acer-keyboard-4913","asolaria-gateway-4791","amy-oracle-win10","amy-rose-m1-macbook"], "expandable": true },
+    { "D": 14, "name": "ENERGY",              "prime": 43,  "cube": 79507,    "values": ["free","light","medium","heavy","massive"], "expandable": true },
+    { "D": 15, "name": "DEVICE",              "prime": 47,  "cube": 103823,   "values": {"fields": ["serial","model","firmware","hw_class","gpu","form"]}, "expandable": true },
+    { "D": 16, "name": "PID",                 "prime": 53,  "cube": 148877,   "values": {"fields": ["surfaceId","profileId","pidVersion","spawnedBy","spawnChain"]}, "expandable": true },
+    { "D": 17, "name": "PROFILE",             "prime": 59,  "cube": 205379,   "values": ["gaia-v1","liris-admin-v1","mobile-falcon-v1","shannon-pentest-v1","omnishannon-wave-v1","shadow-builder-v1"], "expandable": true },
+    { "D": 18, "name": "AI_MODEL",            "prime": 61,  "cube": 226981,   "values": ["claude-opus-4-6","claude-sonnet-4-6","codex-o4-mini","gpt-5.4-xhigh","gemini-2.5-pro","gslgnn-v1","local-llm","human"], "expandable": true },
+    { "D": 19, "name": "LOCATION",            "prime": 67,  "cube": 300763,   "values": {"fields": ["ip","subnet","geo","room","network","hilbert_level"]}, "expandable": true },
+    { "D": 20, "name": "TIME",                "prime": 71,  "cube": 357911,   "values": {"fields": ["timestamp","duration","sequence","epoch","ttl","cron"]}, "expandable": true },
+    { "D": 21, "name": "HARDWARE",            "prime": 73,  "cube": 389017,   "values": {"fields": ["chip","bus","port","driver","protocol","firmware_region"]}, "expandable": true },
+    { "D": 22, "name": "TRANSLATION",         "prime": 79,  "cube": 493039,   "values": ["tuple_to_english","english_to_tuple","ix_to_tuple","hilbert_to_human","crlt_merge","auto_transition_all_languages","namespace_walk"], "expandable": true },
+    { "D": 23, "name": "FEDERATION",          "prime": 83,  "cube": 571787,   "values": {"fields": ["origin_node","merged_from","merge_count","last_sync","conflict_state"]}, "expandable": true },
+    { "D": 24, "name": "INTENT",              "prime": 89,  "cube": 704969,   "values": ["command","autonomous","reactive","scheduled","cascade","exploratory","defensive","creative","supreme_override"], "expandable": true },
+    { "D": 25, "name": "TRINITY",             "prime": 97,  "cube": 912673,   "values": ["LX-489_compute","LX-490_HAOC_hardware_absorption","LX-491_omni_GNN_inference"], "expandable": true, "added": "2026-04-09" },
+    { "D": 26, "name": "OMNIDIRECTIONAL",     "prime": 101, "cube": 1030301,  "values": ["receive","approve","issue","relay","bilateral","unidirectional_gap","document_share_v0","omni_submit","type_relay"], "expandable": true, "added": "2026-04-09" },
+    { "D": 27, "name": "AUTO_TRANSITION",     "prime": 103, "cube": 1092727,  "values": ["onDrift","onDeviceConnect","onDeviceDisconnect","onSpawn","onDespawn","RU11_drift_creates_language","omnitranslator_dialect_bridge"], "expandable": true, "added": "2026-04-09" },
+    { "D": 28, "name": "APPROVAL_BOX",        "prime": 107, "cube": 1225043,  "values": ["hard_deny","auto_approve","self_vote","default_PROCEED"], "expandable": false, "fixed_4_tracks": true, "added": "2026-04-09" },
+    { "D": 29, "name": "TWIN_SYNC",           "prime": 109, "cube": 1295029,  "values": ["C_tree_only","E_shadow_only","both_twins","asymmetric_missing_liris","asymmetric_missing_acer","sync_pending"], "expandable": true, "added": "2026-04-09" },
+    { "D": 30, "name": "COSIGN_TRIPLE",       "prime": 113, "cube": 1442897,  "values": ["single_operator","dual_operator","triple_operator","quadruple_operator","rayssa_only","jesse_only","amy_only","felipe_only","rayssa+jesse","rayssa+amy","jesse+amy","rayssa+jesse+amy","rayssa+jesse+amy+felipe"], "expandable": true, "added": "2026-04-09", "updated": "2026-04-10 — quadruple_operator + felipe_only + rayssa+jesse+amy+felipe added after COSIGN_47D_001" },
+    { "D": 31, "name": "SHADOW_MIRROR",       "prime": 127, "cube": 2048383,  "values": ["live_C_drive","shadow_E_drive","bilateral_mirror","partial_mirror","sovereignty_USB_snapshot","local_cache_snapshot"], "expandable": true, "added": "2026-04-09" },
+    { "D": 32, "name": "STRUCTURAL_INVARIANT","prime": 131, "cube": 2248091,  "values": ["unverified","single_run","double_verified","triple_verified","quadruple_verified","quintuple_verified","LX-477_meta_truth"], "expandable": true, "added": "2026-04-09" },
+    { "D": 33, "name": "SUPREME_OVERRIDE",    "prime": 137, "cube": 2571353,  "values": ["no_override","jesse_session_auth","jesse_full_day_auth","jesse_all_4_states","jesse_supreme_override_silicone_my_rules"], "expandable": false, "fixed_scale": true, "added": "2026-04-09" },
+    { "D": 34, "name": "CROSS_COLONY",        "prime": 139, "cube": 2685619,  "values": ["local_only","cross_host_lan","document_share_v0","omni_submit","peer_relay","multi_hop_via_acer","amy_mac_side","amy_win_side"], "expandable": true, "added": "2026-04-09" },
+    { "D": 35, "name": "HYPERLANGUAGE",       "prime": 149, "cube": 3307949,  "values": ["24D","35D","47D","N-dim","self_referential","expansion_in_progress"], "expandable": true, "added": "2026-04-09", "updated": "2026-04-10 — 47D value added after COSIGN_47D_001" },
+
+    { "D": 36, "name": "INFERENCE_SURFACE",   "prime": 151, "cube": 3442951,  "values": ["gnn_local","gnn_federation","gslgnn_python","webhook_trigger","webhook_response","omni_submit_inference","self_diagnosis","cross_host_inference"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "LX-491", "wh": "WHERE does inference happen?" },
+    { "D": 37, "name": "AUTHORITY_TOPOLOGY",  "prime": 157, "cube": 3869893,  "values": ["operator_local","operator_remote","dual_cosign","triple_cosign","quadruple_cosign","supreme_override","hard_deny_gate","bilateral_federation","sub_colony_bounded"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "sovereignty", "wh": "WHO has authority over WHAT?" },
+    { "D": 38, "name": "ENCRYPTION",          "prime": 163, "cube": 4330747,  "values": ["plaintext","bearer_token","nl2xfw_firmware_encrypted","7zip_aes256","sha256_attestation","tls_transit","vault_encrypted","sovereignty_usb_encrypted"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "LX-490+LX-491", "wh": "HOW is data protected?" },
+    { "D": 39, "name": "GNN_EDGE",            "prime": 167, "cube": 4657463,  "values": ["fixes","caused","requires","blocks","evolved","contradicts","proven_by","observed_on","part_of","same_as","runs_on","triggers","feeds","mirrors","trains","validates"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "LX-491", "wh": "WHAT kind of connection?", "gnn": "EdgeLevelGCN 1730 edges 100% accuracy" },
+    { "D": 40, "name": "HYBRID_MODEL",        "prime": 173, "cube": 5177717,  "values": ["claude_opus_4_6","claude_sonnet_4_6","codex_o4_mini","gpt_5_4_gaia","gemini_2_5_pro","gslgnn_v1_python","local_llm","human_operator","ensemble_vote","cross_model_convergence"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "LX-491", "wh": "WHICH model reasons?" },
+    { "D": 41, "name": "AGENT_TIER",          "prime": 179, "cube": 5735339,  "values": ["instant","micro","medium","small","leader"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "LX-491", "wh": "HOW FAST?" },
+    { "D": 42, "name": "MEETING_ROOM",        "prime": 181, "cube": 5929741,  "values": ["allhands","jbd_standup","novalum_review","federation_sync","paper_review","ad_hoc"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "trinity_convergence", "wh": "WHERE do agents deliberate?" },
+    { "D": 43, "name": "MISTAKE_LEDGER",      "prime": 191, "cube": 6967871,  "values": ["active_mistake","corrected","became_law","became_dimension","bilateral_catch","operator_catch","self_catch"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "inference_error_correction", "wh": "WHAT went wrong?" },
+    { "D": 44, "name": "HEARTBEAT",           "prime": 193, "cube": 7189057,  "values": ["alive","stale","dead","recovering","hibernating"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "LX-489", "wh": "IS IT alive?" },
+    { "D": 45, "name": "OMNICALENDAR",        "prime": 197, "cube": 7645373,  "values": ["immediate","next_session","cron_hourly","cron_daily","usb_rotation_cadence","meeting_scheduled","deployment_window","operator_available"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "temporal_intelligence", "wh": "WHEN should this happen?" },
+    { "D": 46, "name": "VAULT",               "prime": 199, "cube": 7880599,  "values": ["owner_vault","peer_tokens","operator_personal","sovereignty_usb_cubed_vault","session_ephemeral","hardened_secrets"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "sovereignty", "wh": "WHERE are secrets?" },
+    { "D": 47, "name": "BOUNDARY",            "prime": 211, "cube": 9393931,  "values": ["transparent","opaque_inferred","boundary_typed","negative_space_dominant","acl_shaped","ttl_fingerprinted","asymmetric_reach"], "expandable": true, "added": "2026-04-10", "cosign": "COSIGN_47D_001", "trinity_link": "meta_dim_self_extension", "wh": "WHAT does the boundary tell us?" }
+  ],
+
+  "address_space_47D": {
+    "formula": "product of all 47 prime cubes",
+    "total_cubes_per_level_35D": 23543761,
+    "new_cubes_D36_D47": "3442951+3869893+4330747+4657463+5177717+5735339+5929741+6967871+7189057+7645373+7880599+9393931 = 72220682",
+    "total_cubes_per_level_47D": 95764443,
+    "full_address_space": "product of all 47 primes cubed — infinite practical address space"
+  },
+
+  "wh_chain": {
+    "WHO":      ["D1","D16","D17","D30","D37"],
+    "WHAT":     ["D2","D3","D39","D43"],
+    "WHERE":    ["D13","D19","D36","D42","D46"],
+    "WHEN":     ["D20","D12","D44","D45"],
+    "WHY":      ["D24","D33","D4"],
+    "HOW":      ["D5","D6","D9","D14","D38","D40","D41"],
+    "WHICH":    ["D10","D15","D18","D21","D25"],
+    "IS_IT":    ["D7","D8","D22","D23","D44"],
+    "WHAT_NOT": ["D32","D47"],
+    "MIRROR":   ["D29","D31","D34"]
+  },
+
+  "trinity_connections": {
+    "LX-489_COMPUTE":   ["D14","D21","D25","D34","D44"],
+    "LX-490_HARDWARE":  ["D15","D21","D25","D35","D38"],
+    "LX-491_INFERENCE": ["D11","D25","D36","D39","D40","D41","D47"]
+  },
+
+  "growth_law": "Each new prime cubed = new dimension. D48 = prime(223) = cube(11089567). Infinite expansion. 47D is the current ceiling, not the final one."
+}

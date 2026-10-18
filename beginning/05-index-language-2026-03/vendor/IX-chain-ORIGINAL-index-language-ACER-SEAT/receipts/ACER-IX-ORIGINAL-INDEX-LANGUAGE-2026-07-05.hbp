@@ -1,0 +1,9 @@
+HBPv1|doc=ACER-IX-ORIGINAL-INDEX-LANGUAGE-2026-07-05|json=0
+ACERIX|date=2026-07-05|seat=ACER|surface=IX-chain-ORIGINAL-index-language-ACER-SEAT|json=0
+FABRIC|council_ack=council-q-1783277815783-k5scui|topic=find_ACER_IX_original_index_language_publication|json=0
+CENSUS|source=asolaria-behcs-256/data/agent-index|commit=e95042c175cc4cf8160c220508ec91dcbedfdd41|files=425|dirs=5|bytes=945513|ix_named=381|catalog_chain_cross=31|json=0
+CATALOG|total=484|skills=41|patterns=91|mistakes=56|tools=33|plans=38|references=193|rules=26|policies=2|tasks=4|json=0
+IX060|name=index_is_language|numbers_are_words=1|chains_are_sentences=1|catalog_is_dictionary=1|historical_compression_family=12_to_1|json=0
+OPERATORLINEAGE|original_sentence=@from_liris_machine_lx1_time_1_24_2026_ask_ix1_acer_tool_eds18_skill_38_run_program_1873|json=0
+REDUCTIONS|rich_ix_lx_docs=224|rich_tuple_meta=8.38x|root_ix_lx_docs=1084|root_corpus_index=38.53x|eight_byte_handle_floor=292x|json=0
+BOUNDARY|public_safe=1|private_dump=0|secret_dump=0|runtime_fire_claim=0|json=0

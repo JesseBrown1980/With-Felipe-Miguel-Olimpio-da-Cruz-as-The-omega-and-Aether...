@@ -1,0 +1,29 @@
+{
+  "permanent_name": "dev-falcon-s24fe-20260418",
+  "hilbert_pid": "PID-H02-ORB-DEV-FALCON-I001-S7a3de0cd",
+  "shape_fingerprint": {
+    "scale_1": "6b238d70f15fb990",
+    "scale_10": "0cd72809063c61e6",
+    "scale_100": "8a4a77f53d3ba0c7",
+    "scale_1k": "f6728f40a1d846c9",
+    "scale_10k": "8777d02e30da147c"
+  },
+  "first_observation_tuple": {
+    "ts": "2026-04-19T00:29:12.056Z",
+    "observer_pid": "dev-acer-4abb0a9c",
+    "observer_surface": "asolaria",
+    "operator_id": "jesse",
+    "host_surface": "DESKTOP-J99VCNH-usb-adb"
+  },
+  "provenance": "original",
+  "last_verified_at": "2026-04-19T00:29:12.056Z",
+  "last_verified_by": "jesse",
+  "constitutional_clauses": [
+    "no_mutation_without_operator_acknowledged_rebind",
+    "verify_on_every_touch",
+    "halt_on_fingerprint_drift"
+  ],
+  "location_history": [],
+  "drift_log": [],
+  "schema_version": "1.0.0"
+}

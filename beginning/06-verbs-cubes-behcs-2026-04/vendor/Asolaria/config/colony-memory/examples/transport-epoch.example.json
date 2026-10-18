@@ -1,0 +1,45 @@
+{
+  "schemaId": "asolaria.transport-epoch",
+  "schemaVersion": "1.0.0",
+  "epochId": "transport-epoch-20260322-manual-owner-relay",
+  "transportId": "manual-owner-relay",
+  "sourceColonyId": "sovereign.gaia",
+  "targetColonyId": "sub.liris",
+  "sourceKind": "live_probe",
+  "observedAt": "2026-03-22T22:18:00-03:00",
+  "verifier": {
+    "id": "gaia",
+    "kind": "agent"
+  },
+  "status": "live",
+  "transportKind": "manual_owner_relay",
+  "endpoint": {
+    "protocol": "manual_owner_relay",
+    "path": "whatsapp-or-direct-owner-relay"
+  },
+  "authority": {
+    "bridgeRoomState": "not_applicable",
+    "senderPolicyState": "not_applicable",
+    "fallbackRule": "Authoritative until a separate live bridge verification packet supersedes it."
+  },
+  "canonicalUse": "primary",
+  "supersedes": [
+    "transport-epoch-18886-myth",
+    "transport-epoch-4799-direct-bridge-myth"
+  ],
+  "evidence": [
+    {
+      "kind": "ix",
+      "ref": "IX-224"
+    },
+    {
+      "kind": "ix",
+      "ref": "IX-253"
+    },
+    {
+      "kind": "report",
+      "ref": "reports/rayssa-path-inspection-latest.md"
+    }
+  ],
+  "notes": "This example encodes the current authoritative fallback path without asserting that any bridge lane is live."
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "asolaria.acer_ix_index_language.source_manifest.v1",
+  "date": "2026-07-05",
+  "seat": "ACER",
+  "repo": "JesseBrown1980/IX-chain-ORIGINAL-index-language-ACER-SEAT",
+  "boundary": "public_safe_pointers_counts_hashes_no_hidden_memory_dump",
+  "census": {
+    "measured_at": "2026-07-05",
+    "seat": "ACER",
+    "surface": "public_audit_clone_asolaria_behcs_256_data_agent_index",
+    "source_commit": "e95042c175cc4cf8160c220508ec91dcbedfdd41",
+    "root": "C:\\tmp\\ghv\\20260705-123900\\repos\\asolaria-behcs-256\\data\\agent-index",
+    "files": 425,
+    "directories": 5,
+    "bytes": 945513,
+    "ix_named": 381,
+    "catalog_chain_cross_files": 31,
+    "first_ix": "IX-001.md",
+    "last_ix": "IX-489.md",
+    "catalog_total_entries": 484,
+    "catalog_skills": 41,
+    "catalog_patterns": 91,
+    "catalog_mistakes": 56,
+    "catalog_tools": 33,
+    "catalog_plans": 38,
+    "catalog_references": 193,
+    "catalog_rules": 26,
+    "catalog_policies": 2,
+    "catalog_tasks": 4
+  },
+  "evidence": [
+    {
+      "id": "catalog",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\tmp\\ghv\\20260705-123900\\repos\\asolaria-behcs-256\\data\\agent-index\\CATALOG.md",
+      "bytes": 2656,
+      "sha256": "c53dcdea688a95ecd8ce9d82a033e5eb27f3e9e3919ad1cad686d28e59fb715a",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "CATALOG reports 484 IX/LX index entries and the router rule: search by IX number/type/tag/keyword, then follow chains."
+    },
+    {
+      "id": "chains",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\tmp\\ghv\\20260705-123900\\repos\\asolaria-behcs-256\\data\\agent-index\\CHAINS.md",
+      "bytes": 35956,
+      "sha256": "5065a8b002fdad6d30e69f6d93396b9f77f2ef1e39734ba36a5dfa52601220c7",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "CHAINS is the public chain-definition surface for the Acer IX agent index."
+    },
+    {
+      "id": "ix060",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\tmp\\ghv\\20260705-123900\\repos\\asolaria-behcs-256\\data\\agent-index\\patterns\\IX-060.md",
+      "bytes": 1966,
+      "sha256": "ac6e43ff746ee7188ce300ed0896c7b1e839e65895f8d6ba0fa64313c3703773",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "IX-060 is the index-language anchor: index as language, numbers as words, chains as sentences, catalog as dictionary, about 12:1 compression."
+    },
+    {
+      "id": "crossExam",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\tmp\\ghv\\20260705-123900\\repos\\asolaria-behcs-256\\data\\agent-index\\CROSS-EXAMINATION-REPORT.md",
+      "bytes": 32405,
+      "sha256": "3477e070cfcc66fd1327959966c7925b016a669a1a6d656a62931879d285d78d",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "Cross-examination report records IX chain format and cross-colony LX references."
+    },
+    {
+      "id": "unified",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\Users\\acer\\.claude\\projects\\E--sovereignty\\memory\\project_unified_index_language.md",
+      "bytes": 3910,
+      "sha256": "79e41c15d85a3916ff83b0e86e17efd5477f6c31ee56771b12c19549a7778dcf",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "Acer memory surface records Jesse directive: index as language, entries vocabulary, chains grammar, tables sentences."
+    },
+    {
+      "id": "founding",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\Users\\acer\\.claude\\projects\\E--sovereignty\\memory\\project_session_20260330_complete.md",
+      "bytes": 3832,
+      "sha256": "cfb607f32933d64ce2698130064109daad2bc30a46246e81170f83d4c1681267",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "Acer founding-night memory records IX-060 recovery, 12:1 compression, 99.22 percent cost reduction, and executable language vote."
+    },
+    {
+      "id": "oldCurve",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\tmp\\ghv\\20260705-123900\\repos\\what-is-asolaria---how-do-we-get-reductions-in-everything\\OLD-COMPRESSION-GROWTH-CURVE-MEASURED-2026-06-16.md",
+      "bytes": 8996,
+      "sha256": "10383a3513a2348494dcff54efa60b25a687fbe6a97235964ebcfa7f9c1b70a1",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "Public reductions proof records rich IX/LX 224 docs at 8.38x tuple-meta and root IX/LX 1084 docs at 38.53x corpus index."
+    },
+    {
+      "id": "richCurve",
+      "kind": "pointer_hash_lineage",
+      "path": "C:\\tmp\\ghv\\20260705-123900\\repos\\what-is-asolaria---how-do-we-get-reductions-in-everything\\RICH-INDEX-LANGUAGE-GROWTH-CURVE-2026-06-16.md",
+      "bytes": 5501,
+      "sha256": "9046cd5653942aa11870b0008752eb97ad5533b767725277a97515c946ba4c4b",
+      "public_payload": "pointer_only_no_private_dump",
+      "notes": "Public reductions proof records rich index-language catalog locus and historical 12:1 line."
+    }
+  ]
+}

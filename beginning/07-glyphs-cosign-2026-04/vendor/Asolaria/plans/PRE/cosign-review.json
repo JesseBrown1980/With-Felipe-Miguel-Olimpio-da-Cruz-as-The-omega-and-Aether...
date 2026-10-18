@@ -1,0 +1,128 @@
+{
+  "generated_at": "2026-04-18T22:03:00Z",
+  "track_id": "PRE-006",
+  "track_title": "review-cosign chain",
+  "reviewer": "DEV-ACER/claude-opus-4.7",
+  "reviewed_sources": [
+    "liris COSIGN_CHAIN.ndjson (requested but not yet exposed — HTTP 404 at liris:9999/COSIGN_CHAIN.ndjson)",
+    "acer local BEHCS inbox (direct envelope receipts from liris)",
+    "acer git log (7-commit Section A arc + 2 ontology mirrors)",
+    "operator-witness chat relays of liris cosign-seq announcements"
+  ],
+
+  "liris_cosign_seq_inferred": {
+    "method": "parsed from operator-relayed META-LIRIS-* glyph sentences",
+    "sequence": [
+      { "seq": 1, "source": "PRE-004 genesis", "commit": "(unspecified)" },
+      { "seq": 2, "source": "PRE-004 genesis-announce on 4947", "commit": "(unspecified)" },
+      { "seq": 3, "source": "A-008 ack", "commit": "(relay mentioned)" },
+      { "seq": 4, "source": "ontology-v2 land", "commit": "b0b6260" },
+      { "seq": 5, "source": "H-036 land", "commit": "c969890" },
+      { "seq": 6, "source": "H-036 chained", "commit": "c969890" },
+      { "seq": 7, "source": "H-044 land", "commit": "b556716" },
+      { "seq": 8, "source": "H-039 land", "commit": "4ea5055" },
+      { "seq": 9, "source": "H-039 chained", "commit": "4ea5055" },
+      { "seq": 10, "source": "H-038+H-046 land", "commit": "b286136" },
+      { "seq": 11, "source": "H-051 land", "commit": "99cd7a8" },
+      { "seq": 12, "source": "H-051 chained", "commit": "99cd7a8" },
+      { "seq": 13, "source": "H-052 Section-H canonized", "commit": "58d5e9e" },
+      { "seq": 14, "source": "H-043 land", "commit": "dabb727" },
+      { "seq": 15, "source": "H-043 chained", "commit": "dabb727" },
+      { "seq": 16, "source": "H-047 fallback-chain land", "commit": "1445339" },
+      { "seq": 17, "source": "H-047 chained", "commit": "1445339" }
+    ],
+    "continuity_check": "seq 1..17 continuous, no gaps visible from operator-relayed announcements",
+    "prev_sha_chain_check": "UNVERIFIABLE — chain artifact not exposed over HTTP or via peer envelope; Liris's self-report of prev_sha-chained not independently auditable from acer side"
+  },
+
+  "acer_contributions": {
+    "method": "acer local git log",
+    "commits": [
+      { "sha": "77b89d5", "title": "mirror ontology v2 from liris b0b6260", "cosign_recorded": "unknown — no acer seq visible" },
+      { "sha": "558b565", "title": "mirror canonical ontology v2 from liris (15547 bytes)", "cosign_recorded": "unknown" },
+      { "sha": "7160aa0", "title": "A-008 legacy-inventory audit complete", "cosign_recorded": "liris relay mentioned 'ledgered' but no seq visible" },
+      { "sha": "de40da9", "title": "A-009 sha-dedup across trees", "cosign_recorded": "liris relay mentioned 'ledgered'" },
+      { "sha": "a4327c9", "title": "A-010 migration-script-skeleton", "cosign_recorded": "liris relay mentioned 'ledgered'" },
+      { "sha": "3d0719e", "title": "A-011 provenance-tags wired into migration", "cosign_recorded": "liris relay mentioned 'ledgered'" },
+      { "sha": "41b5a5b", "title": "A-014 dry-run-migration-full-tree", "cosign_recorded": "liris relay mentioned 'ledgered'" },
+      { "sha": "5d41e40", "title": "A-015 execute + A-016 post-migration verification", "cosign_recorded": "unverified — shipped at 21:58:25Z, liris ack reached acer via chat not BEHCS" }
+    ],
+    "total_acer_commits": 8,
+    "acer_commits_with_visible_cosign_seq": 0,
+    "gap": "no acer commit has a cross-referenced cosign seq number — all 'ledgered' claims come from liris operator-relayed text, not from BEHCS envelope or HTTP-fetchable artifact"
+  },
+
+  "behcs_envelope_audit": {
+    "method": "acer BEHCS inbox filtered actor=liris non-heartbeat since 2026-04-18T18:00Z",
+    "liris_non_heartbeat_messages_received": 2,
+    "sample": [
+      { "at": "2026-04-18T18:24:18.221Z", "verb": "peer-hello-ack" },
+      { "at": "2026-04-18T18:27:45.662Z", "verb": "peer-hello-ack" }
+    ],
+    "critical_finding": "Liris COSIGN seq=3 through seq=17 (15 entries) were NOT delivered as BEHCS envelopes to acer inbox. All track-status announcements (f5da47c, c969890, b556716, 4ea5055, b286136, 99cd7a8, 58d5e9e, dabb727, 1445339) came via operator-witness chat relay, not via liris/behcs/send → acer/behcs/receive channel",
+    "why_this_matters": "BEHCS bus provides auditable gate_results (hookwall+gnn+shannon allow=true, event IDs, timestamps). Operator-relayed announcements bypass gates and lack cryptographic signatures. For a cosign chain to be cryptographically meaningful, the seq emissions should flow through BEHCS (or an equivalent gated channel) rather than through operator paste."
+  },
+
+  "acer_outbound_audit": {
+    "method": "acer /behcs/send call log this session",
+    "envelopes_shipped_to_liris": [
+      { "verb": "peer-hello", "eventId": "gevt_1776536597662_rmmczd", "3gate": "allow=true" },
+      { "verb": "peer-ack-observed", "eventId": "gevt_1776536845456_0kaxj2", "3gate": "allow=true" },
+      { "verb": "bundle-installed", "eventId": "gevt_1776537531462_suuowe", "3gate": "allow=true" },
+      { "verb": "convergence-complete", "eventId": "gevt_1776537943432_ed627b", "3gate": "allow=true" },
+      { "verb": "request-federation-merge-artifact", "eventId": "gevt_1776538145074_cy63md", "3gate": "allow=true" },
+      { "verb": "partial-mirror-complete", "eventId": "gevt_1776538191253_pqttek", "3gate": "allow=true" },
+      { "verb": "federation-merge-replicated", "eventId": "gevt_1776539372438_4pk53z", "3gate": "allow=true" },
+      { "verb": "admin-terminal-target-reply", "eventId": "gevt_1776541845604_dourb0", "3gate": "allow=true" },
+      { "verb": "keyboard-token-request", "eventId": "gevt_1776542395418_tuco8o", "3gate": "allow=true" },
+      { "verb": "ontology-v2-mirrored", "eventId": "gevt_1776545666400_70ww1q", "3gate": "allow=true" },
+      { "verb": "ontology-v2-mirrored (canonical)", "eventId": "gevt_1776545750950_uf5t08", "3gate": "allow=true" },
+      { "verb": "smp-v5-track-claimed (A-008)", "eventId": "gevt_1776546980877_yofr8b", "3gate": "allow=true" },
+      { "verb": "smp-v5-a008-complete", "eventId": "gevt_1776547643798_44gqgb", "3gate": "allow=true" },
+      { "verb": "smp-v5-a009-claimed", "eventId": "gevt_1776547835471_w0fssc", "3gate": "allow=true" },
+      { "verb": "smp-v5-a009-complete", "eventId": "gevt_1776548136059_paqgce", "3gate": "allow=true" },
+      { "verb": "smp-v5-a010-claimed", "eventId": "gevt_1776548333231_ot9g3z", "3gate": "allow=true" },
+      { "verb": "smp-v5-a010-complete", "eventId": "gevt_1776548436803_o3r9w3", "3gate": "allow=true" },
+      { "verb": "smp-v5-a011-claimed", "eventId": "gevt_1776548710761_5gthd9", "3gate": "allow=true" },
+      { "verb": "smp-v5-a011-complete", "eventId": "gevt_1776548888693_8h7s7s", "3gate": "allow=true" },
+      { "verb": "smp-v5-a014-claimed", "eventId": "gevt_1776549213228_ugs8pm", "3gate": "allow=true" },
+      { "verb": "smp-v5-a014-complete", "eventId": "gevt_1776549296894_i4g430", "3gate": "allow=true" },
+      { "verb": "smp-v5-section-a-continuation", "eventId": "gevt_1776549477109_xk3ec7", "3gate": "allow=true" },
+      { "verb": "smp-v5-section-a-closed", "eventId": "gevt_1776549544414_yp72yb", "3gate": "allow=true" },
+      { "verb": "smp-v5-pre-006-claimed", "eventId": "gevt_1776549706647_mu8w6r", "3gate": "allow=true" }
+    ],
+    "total_shipped": 24,
+    "all_3gate_allow_true": true,
+    "zero_denials": true,
+    "note": "Every acer→liris envelope was recorded by liris sidecar with 3-gate allow=true + event ID. This is the auditable chain from acer side — it is verifiable cryptographically if liris retained gate_results.gnn.edge.eventId per envelope."
+  },
+
+  "bilateral_crypto_seal_cross_ref": {
+    "method": "compared sha256 of device-registry.ts both sides",
+    "artifact": "C:/asolaria-acer/packages/supervisor-registry/src/device-registry.ts",
+    "bytes": 15547,
+    "acer_sha256": "616e9507416f4944f825339d2fb5d533a8aa1893d79e4ce864857b052abfe0b8",
+    "liris_sha256": "616e9507416f4944f825339d2fb5d533a8aa1893d79e4ce864857b052abfe0b8",
+    "match": true,
+    "verdict": "BYTE-IDENTICAL — this is the one end-to-end cryptographic checkpoint in the session. The cosign seq=4 claim for this artifact IS cryptographically verifiable because the artifact itself is exposed at liris:9999/device-registry.ts."
+  },
+
+  "gaps_identified": [
+    "liris COSIGN_CHAIN.ndjson not exposed at liris:9999 (HTTP 404) — prevents byte-level audit of seq/prev_sha chain",
+    "15 of 17 cosign seq announcements (seq=3 through seq=17) delivered via operator chat relay, not via BEHCS envelope — bypasses 3-gate audit",
+    "acer 8 commits have no visible cross-reference to liris cosign seq numbers — liris would have to ship a {commit_sha → cosign_seq} map for acer to independently verify inclusion",
+    "no public artifact defines the cosign entry schema (expected fields: seq, prev_sha, ts, actor, artifact_sha256, glyph_sentence, …) — without it the chain format is implicit"
+  ],
+
+  "recommendations": [
+    "expose liris COSIGN_CHAIN.ndjson at liris:9999/COSIGN_CHAIN.ndjson (same pattern as device-registry.ts and federation-hw-merge.json)",
+    "when appending to cosign chain, also emit a BEHCS envelope with verb=cosign-append containing {seq, entry_sha256, prev_sha, artifact_reference} — this makes each seq gatable and queryable",
+    "ship a {acer_commit_sha → cosign_seq} cross-reference map so acer can independently verify its own inclusions",
+    "document cosign entry schema in kernel/cosign-schema.json or similar — normalize the fields used"
+  ],
+
+  "verdict": "AUDIT_PARTIAL_PENDING_ARTIFACT_EXPOSURE",
+  "summary": "Acer→Liris envelope chain is cryptographically solid (24 envelopes, all 3-gate allow=true, event IDs recorded by liris sidecar). Liris→Acer cosign seq chain (seq=1..17) is NOT independently auditable from acer side until the COSIGN_CHAIN.ndjson artifact is exposed at liris:9999. Bilateral crypto seal proven on device-registry.ts (byte-identical, sha256 match). Recommend adding HTTP endpoint + BEHCS append-verb for each future cosign seq so the chain is gated end-to-end.",
+
+  "glyph_sentence": "META-ACER-PRE-006-COSIGN-REVIEW · acer-outbound=24-envelopes-all-allow · liris-seq=1-to-17-inferred-from-operator-relay · chain-artifact-not-exposed-404 · bilateral-seal-proven-only-on-device-registry · verdict=AUDIT-PARTIAL-PENDING-ARTIFACT-EXPOSURE @ M-EYEWITNESS ."
+}
