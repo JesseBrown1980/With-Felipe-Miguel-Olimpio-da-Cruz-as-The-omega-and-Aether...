@@ -1,0 +1,33 @@
+# Runtime and private state
+data/
+logs/
+captures/
+inbox/
+private/
+certs/
+tmp-http_ece/
+
+# Dependencies and build artifacts
+node_modules/
+**/node_modules/
+apps/dashboard/dist/
+
+# Generated reports and snapshots
+reports/asolaria-snapshot-*.json
+reports/asolaria-snapshot-*.md
+reports/asolaria-current-build-profile.*
+reports/*.patch
+
+# Local temp/debug artifacts
+tmp-*
+*.pid
+*.log
+*.tmp
+
+# Local secrets and tokens
+*.token
+*.token.txt
+*secret_id.txt
+*role_id.txt
+*vault.master.key
+*vault.secrets.json

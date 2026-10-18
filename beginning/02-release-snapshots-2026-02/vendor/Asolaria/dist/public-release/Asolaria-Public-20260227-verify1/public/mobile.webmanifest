@@ -1,0 +1,52 @@
+{
+  "id": "/mobile-console.html",
+  "name": "Asolaria Mobile Console",
+  "short_name": "Asolaria",
+  "description": "Secure phone control, approvals, and live console access for Asolaria.",
+  "start_url": "/mobile-console.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "/icons/asolaria-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/asolaria-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mobile Console",
+      "short_name": "Console",
+      "url": "/mobile-console.html",
+      "icons": [
+        {
+          "src": "/icons/asolaria-icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Approval Center",
+      "short_name": "Approvals",
+      "url": "/mobile-approvals.html",
+      "icons": [
+        {
+          "src": "/icons/asolaria-icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

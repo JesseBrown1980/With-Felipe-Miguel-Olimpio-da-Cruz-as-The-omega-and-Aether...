@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Auto-Continue</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#222;display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui}
+.box{background:#333;border-radius:8px;padding:12px 18px;display:flex;align-items:center;gap:12px;user-select:none}
+.sw{position:relative;width:44px;height:24px;cursor:pointer}
+.sw input{display:none}
+.sw .sl{position:absolute;inset:0;background:#555;border-radius:12px;transition:.2s}
+.sw .sl:before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#999;border-radius:50%;transition:.2s}
+.sw input:checked+.sl{background:#0a4}
+.sw input:checked+.sl:before{transform:translateX(20px);background:#fff}
+.lb{color:#aaa;font-size:13px;font-weight:600;letter-spacing:.5px}
+.lb.on{color:#0a4}
+</style>
+</head>
+<body>
+<div class="box">
+<label class="sw"><input type="checkbox" id="t"><span class="sl"></span></label>
+<span class="lb" id="lb">OFF</span>
+</div>
+<script>
+const t=document.getElementById('t'),lb=document.getElementById('lb');
+let iv=null,tick=0;
+const ENTER_SEC=10,CONT_SEC=15*60;
+t.addEventListener('change',()=>{
+  if(t.checked){
+    lb.textContent='ON';lb.classList.add('on');tick=0;
+    iv=setInterval(()=>{
+      tick+=ENTER_SEC;
+      if(tick>=CONT_SEC){
+        fetch('/api/auto-continue/fire',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'continue'})}).catch(()=>{});
+        tick=0;
+      }else{
+        fetch('/api/auto-continue/fire',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'enter'})}).catch(()=>{});
+      }
+    },ENTER_SEC*1000);
+  }else{
+    lb.textContent='OFF';lb.classList.remove('on');
+    clearInterval(iv);iv=null;tick=0;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1320" />
+  <link rel="manifest" href="/mobile.webmanifest" />
+  <title>Asolaria Mobile Approvals</title>
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #131f33;
+      --muted: #9fb0c9;
+      --text: #f2f6ff;
+      --ok: #2ecc71;
+      --no: #ff6b6b;
+      --warn: #f6c453;
+      --line: #263a58;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(1200px 700px at 20% -10%, #1c2f50, var(--bg));
+      color: var(--text);
+    }
+    .app { max-width: 740px; margin: 0 auto; }
+    .bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    input, button, select, textarea {
+      border: 1px solid var(--line);
+      background: #0d182a;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    input { flex: 1; min-width: 170px; }
+    button { cursor: pointer; }
+    button.ok { border-color: #2d7a52; background: #164f35; }
+    button.no { border-color: #894545; background: #4a1f1f; }
+    button.warn { border-color: #7d6633; background: #483a1a; }
+    .status {
+      padding: 10px 12px;
+      background: #0d182a;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+    }
+    .list { display: grid; gap: 10px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .card.focused {
+      border-color: #9dd8ff;
+      box-shadow: 0 0 0 2px rgba(157, 216, 255, 0.22);
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .id {
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      color: #b7c7de;
+    }
+    .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+    }
+    .risk-critical { color: #ffd1d1; background: #4a1f1f; border-color: #894545; }
+    .risk-high { color: #ffe8c5; background: #4e3616; border-color: #7d6633; }
+    .risk-medium { color: #f5f2cf; background: #3e3a1a; border-color: #6a6330; }
+    .risk-low { color: #d6f5dd; background: #1b3b2a; border-color: #2d7a52; }
+    .preview {
+      margin-top: 8px;
+      color: #d4deed;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .details {
+      margin-top: 8px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 12px;
+      color: #c5d4ea;
+      background: #0f1c30;
+      display: none;
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: auto;
+    }
+    .hint { color: var(--muted); font-size: 12px; }
+    .push-status {
+      color: #9dd8ff;
+      font-size: 12px;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h2>Asolaria Mobile Approval</h2>
+    <p class="hint">Secure owner control for critical decisions.</p>
+
+    <div class="bar">
+      <input id="tokenInput" type="password" placeholder="Mobile approval token" />
+      <button id="saveTokenBtn">Save Token</button>
+      <button id="refreshBtn" class="warn">Refresh</button>
+    </div>
+
+    <div class="bar">
+      <select id="statusFilter">
+        <option value="pending">pending</option>
+        <option value="all">all</option>
+        <option value="approved">approved</option>
+        <option value="denied">denied</option>
+        <option value="expired">expired</option>
+      </select>
+      <label class="hint">
+        <input id="criticalOnly" type="checkbox" />
+        critical only
+      </label>
+    </div>
+
+    <div class="bar">
+      <button id="enablePushBtn" class="ok">Enable Push Alerts</button>
+      <button id="disablePushBtn" class="no">Disable Push Alerts</button>
+      <span id="pushStatus" class="push-status">Push: checking...</span>
+    </div>
+
+    <div id="status" class="status">Loading...</div>
+    <section id="list" class="list"></section>
+  </main>
+  <script src="mobile-approvals.js?v=20260211-3"></script>
+</body>
+</html>

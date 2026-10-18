@@ -1,0 +1,1615 @@
+{
+  "ok": true,
+  "generatedAt": "2026-03-07T23:04:32.999Z",
+  "schemaVersion": "1.0",
+  "note": "Pseudo-labeled read-only export for offline graph-runtime experiments. Not for online policy decisions.",
+  "slice": {
+    "windowMinutes": 1440,
+    "includeLowRisk": true,
+    "latestAt": "2026-03-07T22:33:59.278Z",
+    "filtersApplied": {
+      "component": "",
+      "action": "",
+      "minRisk": "",
+      "cutoffAt": ""
+    }
+  },
+  "stats": {
+    "nodes": 11,
+    "edgeSamples": 11,
+    "recordSamples": 24,
+    "pseudoLabels": {
+      "benign": 1,
+      "watch": 19,
+      "suspicious": 4
+    }
+  },
+  "nodes": [
+    {
+      "id": "subject:subject",
+      "type": "subject",
+      "entityId": "subject",
+      "label": "subject",
+      "domain": "",
+      "criticality": "",
+      "degree": 46,
+      "count": 23,
+      "roles": [
+        "subject"
+      ],
+      "primaryComponent": "phone-edge",
+      "maxRiskLevel": "high",
+      "maxRiskScore": 8,
+      "freshness": 1,
+      "freshnessBand": "hot"
+    },
+    {
+      "id": "orchestrator:asolaria",
+      "type": "orchestrator",
+      "entityId": "asolaria",
+      "label": "asolaria",
+      "domain": "",
+      "criticality": "",
+      "degree": 4,
+      "count": 4,
+      "roles": [
+        "actor"
+      ],
+      "primaryComponent": "brain-orchestrator",
+      "maxRiskLevel": "high",
+      "maxRiskScore": 8,
+      "freshness": 1,
+      "freshnessBand": "hot"
+    },
+    {
+      "id": "provider:codex",
+      "type": "provider",
+      "entityId": "codex",
+      "label": "codex",
+      "domain": "",
+      "criticality": "high",
+      "degree": 2,
+      "count": 2,
+      "roles": [
+        "target"
+      ],
+      "primaryComponent": "brain-orchestrator",
+      "maxRiskLevel": "high",
+      "maxRiskScore": 8,
+      "freshness": 1,
+      "freshnessBand": "hot"
+    },
+    {
+      "id": "provider:gemini-api",
+      "type": "provider",
+      "entityId": "gemini-api",
+      "label": "gemini-api",
+      "domain": "",
+      "criticality": "medium",
+      "degree": 2,
+      "count": 2,
+      "roles": [
+        "target"
+      ],
+      "primaryComponent": "brain-orchestrator",
+      "maxRiskLevel": "high",
+      "maxRiskScore": 6,
+      "freshness": 0.001,
+      "freshnessBand": "cold"
+    },
+    {
+      "id": "assistant_route:phone-edge-gemini",
+      "type": "assistant_route",
+      "entityId": "phone-edge-gemini",
+      "label": "phone-edge-gemini",
+      "domain": "",
+      "criticality": "medium",
+      "degree": 16,
+      "count": 16,
+      "roles": [
+        "actor",
+        "target"
+      ],
+      "primaryComponent": "phone-edge",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0.364,
+      "freshnessBand": "cool"
+    },
+    {
+      "id": "device_channel:phone",
+      "type": "device_channel",
+      "entityId": "phone",
+      "label": "phone",
+      "domain": "mobile",
+      "criticality": "",
+      "degree": 8,
+      "count": 8,
+      "roles": [
+        "actor"
+      ],
+      "primaryComponent": "phone-edge",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0.364,
+      "freshnessBand": "cool"
+    },
+    {
+      "id": "task:task_1772913797723_hwive9",
+      "type": "task",
+      "entityId": "task_1772913797723_hwive9",
+      "label": "google_status: google status",
+      "domain": "",
+      "criticality": "low",
+      "degree": 4,
+      "count": 4,
+      "roles": [
+        "target"
+      ],
+      "primaryComponent": "task-ledger",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0,
+      "freshnessBand": "cold"
+    },
+    {
+      "id": "chat_source:chat-auto",
+      "type": "chat_source",
+      "entityId": "chat-auto",
+      "label": "chat-auto",
+      "domain": "chat-auto",
+      "criticality": "",
+      "degree": 1,
+      "count": 1,
+      "roles": [
+        "actor"
+      ],
+      "primaryComponent": "chat-ingress",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0,
+      "freshnessBand": "cold"
+    },
+    {
+      "id": "conversation:phone-live",
+      "type": "conversation",
+      "entityId": "phone-live",
+      "label": "phone-live",
+      "domain": "",
+      "criticality": "low",
+      "degree": 8,
+      "count": 8,
+      "roles": [
+        "target"
+      ],
+      "primaryComponent": "phone-edge",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0.364,
+      "freshnessBand": "cool"
+    },
+    {
+      "id": "task_actor:chat-auto",
+      "type": "task_actor",
+      "entityId": "chat-auto",
+      "label": "chat-auto",
+      "domain": "",
+      "criticality": "",
+      "degree": 2,
+      "count": 2,
+      "roles": [
+        "actor"
+      ],
+      "primaryComponent": "task-ledger",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0,
+      "freshnessBand": "cold"
+    },
+    {
+      "id": "task_actor:router",
+      "type": "task_actor",
+      "entityId": "router",
+      "label": "router",
+      "domain": "",
+      "criticality": "",
+      "degree": 1,
+      "count": 1,
+      "roles": [
+        "actor"
+      ],
+      "primaryComponent": "task-ledger",
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0,
+      "freshnessBand": "cold"
+    }
+  ],
+  "edgeSamples": [
+    {
+      "edgeId": "orchestrator:asolaria=>subject:subject",
+      "source": "orchestrator:asolaria",
+      "target": "subject:subject",
+      "primaryComponent": "brain-orchestrator",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "provider_attempt",
+        "provider_succeeded"
+      ],
+      "count": 4,
+      "maxRiskLevel": "high",
+      "maxRiskScore": 8,
+      "freshness": 1,
+      "freshnessBand": "hot",
+      "suspiciousScore": 11.4,
+      "archetypeTags": [
+        "autonomous-provider-route",
+        "hot-risk-edge"
+      ],
+      "prototypeId": "provider-route",
+      "prototypeLabel": "Autonomous Provider Route",
+      "prototypeSimilarity": 0.9,
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "edgeId": "subject:subject=>provider:codex",
+      "source": "subject:subject",
+      "target": "provider:codex",
+      "primaryComponent": "brain-orchestrator",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "provider_attempt",
+        "provider_succeeded"
+      ],
+      "count": 2,
+      "maxRiskLevel": "high",
+      "maxRiskScore": 8,
+      "freshness": 1,
+      "freshnessBand": "hot",
+      "suspiciousScore": 10.7,
+      "archetypeTags": [
+        "autonomous-provider-route",
+        "high-criticality-target",
+        "hot-risk-edge"
+      ],
+      "prototypeId": "provider-route",
+      "prototypeLabel": "Autonomous Provider Route",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "edgeId": "subject:subject=>provider:gemini-api",
+      "source": "subject:subject",
+      "target": "provider:gemini-api",
+      "primaryComponent": "brain-orchestrator",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "provider_attempt",
+        "provider_succeeded"
+      ],
+      "count": 2,
+      "maxRiskLevel": "high",
+      "maxRiskScore": 6,
+      "freshness": 0.001,
+      "freshnessBand": "cold",
+      "suspiciousScore": 6.7,
+      "archetypeTags": [
+        "autonomous-provider-route"
+      ],
+      "prototypeId": "provider-route",
+      "prototypeLabel": "Autonomous Provider Route",
+      "prototypeSimilarity": 0.9,
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "edgeId": "device_channel:phone=>subject:subject",
+      "source": "device_channel:phone",
+      "target": "subject:subject",
+      "primaryComponent": "phone-edge",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "assistant_request"
+      ],
+      "count": 8,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0.364,
+      "freshnessBand": "cool",
+      "suspiciousScore": 7.53,
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "prototypeId": "phone-loop",
+      "prototypeLabel": "Phone Live Loop",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "subject:subject=>assistant_route:phone-edge-gemini",
+      "source": "subject:subject",
+      "target": "assistant_route:phone-edge-gemini",
+      "primaryComponent": "phone-edge",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "assistant_request"
+      ],
+      "count": 8,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0.364,
+      "freshnessBand": "cool",
+      "suspiciousScore": 7.53,
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "prototypeId": "phone-loop",
+      "prototypeLabel": "Phone Live Loop",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "chat_source:chat-auto=>task:task_1772913797723_hwive9",
+      "source": "chat_source:chat-auto",
+      "target": "task:task_1772913797723_hwive9",
+      "primaryComponent": "chat-ingress",
+      "kinds": [
+        "action_manifest"
+      ],
+      "actions": [
+        "google_status"
+      ],
+      "count": 1,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 4,
+      "freshness": 0,
+      "freshnessBand": "cold",
+      "suspiciousScore": 4.35,
+      "archetypeTags": [],
+      "prototypeId": "task-flow",
+      "prototypeLabel": "Tracked Task Flow",
+      "prototypeSimilarity": 0.45,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "assistant_route:phone-edge-gemini=>subject:subject",
+      "source": "assistant_route:phone-edge-gemini",
+      "target": "subject:subject",
+      "primaryComponent": "phone-edge",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "assistant_reply"
+      ],
+      "count": 8,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0.364,
+      "freshnessBand": "cool",
+      "suspiciousScore": 6.53,
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "prototypeId": "phone-loop",
+      "prototypeLabel": "Phone Live Loop",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "subject:subject=>conversation:phone-live",
+      "source": "subject:subject",
+      "target": "conversation:phone-live",
+      "primaryComponent": "phone-edge",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "assistant_reply"
+      ],
+      "count": 8,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0.364,
+      "freshnessBand": "cool",
+      "suspiciousScore": 6.53,
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "prototypeId": "phone-loop",
+      "prototypeLabel": "Phone Live Loop",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "subject:subject=>task:task_1772913797723_hwive9",
+      "source": "subject:subject",
+      "target": "task:task_1772913797723_hwive9",
+      "primaryComponent": "task-ledger",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "chat_received",
+        "chat_routed_completed",
+        "task_created"
+      ],
+      "count": 3,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0,
+      "freshnessBand": "cold",
+      "suspiciousScore": 4.05,
+      "archetypeTags": [
+        "chat-task-lifecycle"
+      ],
+      "prototypeId": "task-flow",
+      "prototypeLabel": "Tracked Task Flow",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "task_actor:chat-auto=>subject:subject",
+      "source": "task_actor:chat-auto",
+      "target": "subject:subject",
+      "primaryComponent": "task-ledger",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "chat_received",
+        "task_created"
+      ],
+      "count": 2,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0,
+      "freshnessBand": "cold",
+      "suspiciousScore": 3.7,
+      "archetypeTags": [
+        "chat-task-lifecycle"
+      ],
+      "prototypeId": "task-flow",
+      "prototypeLabel": "Tracked Task Flow",
+      "prototypeSimilarity": 1,
+      "pseudoLabel": "watch"
+    },
+    {
+      "edgeId": "task_actor:router=>subject:subject",
+      "source": "task_actor:router",
+      "target": "subject:subject",
+      "primaryComponent": "task-ledger",
+      "kinds": [
+        "graph_event"
+      ],
+      "actions": [
+        "chat_routed_completed"
+      ],
+      "count": 1,
+      "maxRiskLevel": "medium",
+      "maxRiskScore": 3,
+      "freshness": 0,
+      "freshnessBand": "cold",
+      "suspiciousScore": 3,
+      "archetypeTags": [],
+      "prototypeId": "",
+      "prototypeLabel": "",
+      "prototypeSimilarity": 0,
+      "pseudoLabel": "watch"
+    }
+  ],
+  "recordSamples": [
+    {
+      "recordId": "gevt_1772913797772_a2yph4",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:03:17.771Z",
+      "component": "task-ledger",
+      "category": "task_ledger",
+      "action": "task_created",
+      "status": "",
+      "actor": {
+        "type": "task_actor",
+        "id": "chat-auto",
+        "label": "chat-auto",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "task",
+        "id": "task_1772913797723_hwive9",
+        "label": "google_status: google status",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "task_actor:chat-auto",
+        "subject:subject",
+        "task:task_1772913797723_hwive9"
+      ],
+      "edgeKeys": [
+        "task_actor:chat-auto=>subject:subject",
+        "subject:subject=>task:task_1772913797723_hwive9"
+      ],
+      "riskLevel": "low",
+      "riskScore": 0,
+      "approvalState": "",
+      "archetypeTags": [],
+      "pseudoLabel": "benign"
+    },
+    {
+      "recordId": "gevt_1772913797837_jabdki",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:03:17.837Z",
+      "component": "task-ledger",
+      "category": "task_ledger",
+      "action": "chat_received",
+      "status": "",
+      "actor": {
+        "type": "task_actor",
+        "id": "chat-auto",
+        "label": "chat-auto",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "task",
+        "id": "task_1772913797723_hwive9",
+        "label": "google_status: google status",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "task_actor:chat-auto",
+        "subject:subject",
+        "task:task_1772913797723_hwive9"
+      ],
+      "edgeKeys": [
+        "task_actor:chat-auto=>subject:subject",
+        "subject:subject=>task:task_1772913797723_hwive9"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "",
+      "archetypeTags": [
+        "chat-task-lifecycle"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772913797909_1ztn1t",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:03:17.909Z",
+      "component": "task-ledger",
+      "category": "task_ledger",
+      "action": "chat_routed_completed",
+      "status": "",
+      "actor": {
+        "type": "task_actor",
+        "id": "router",
+        "label": "router",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "task",
+        "id": "task_1772913797723_hwive9",
+        "label": "google_status: google status",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "task_actor:router",
+        "subject:subject",
+        "task:task_1772913797723_hwive9"
+      ],
+      "edgeKeys": [
+        "task_actor:router=>subject:subject",
+        "subject:subject=>task:task_1772913797723_hwive9"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "",
+      "archetypeTags": [
+        "chat-task-lifecycle"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772913804237_cdpqmf",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:03:24.237Z",
+      "component": "brain-orchestrator",
+      "category": "provider",
+      "action": "provider_attempt",
+      "status": "attempting",
+      "actor": {
+        "type": "orchestrator",
+        "id": "asolaria",
+        "label": "asolaria",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "provider",
+        "id": "gemini-api",
+        "label": "gemini-api",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "orchestrator:asolaria",
+        "subject:subject",
+        "provider:gemini-api"
+      ],
+      "edgeKeys": [
+        "orchestrator:asolaria=>subject:subject",
+        "subject:subject=>provider:gemini-api"
+      ],
+      "riskLevel": "high",
+      "riskScore": 6,
+      "approvalState": "",
+      "archetypeTags": [
+        "autonomous-provider-route"
+      ],
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "recordId": "gevt_1772913810982_y68gaf",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:03:30.982Z",
+      "component": "brain-orchestrator",
+      "category": "provider",
+      "action": "provider_succeeded",
+      "status": "ok",
+      "actor": {
+        "type": "orchestrator",
+        "id": "asolaria",
+        "label": "asolaria",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "provider",
+        "id": "gemini-api",
+        "label": "gemini-api",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "orchestrator:asolaria",
+        "subject:subject",
+        "provider:gemini-api"
+      ],
+      "edgeKeys": [
+        "orchestrator:asolaria=>subject:subject",
+        "subject:subject=>provider:gemini-api"
+      ],
+      "riskLevel": "high",
+      "riskScore": 6,
+      "approvalState": "",
+      "archetypeTags": [
+        "autonomous-provider-route"
+      ],
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "recordId": "gevt_1772916290456_bjmwms",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:44:50.455Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916291511_tcxr0w",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:44:51.511Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916306060_qkgoe0",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:45:06.060Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916309324_oe5k5t",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:45:09.324Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916338510_ixlffq",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:45:38.510Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916340698_eub2so",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:45:40.697Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916361662_vu66a4",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:46:01.662Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772916361805_dqmlz3",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:46:01.805Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917009089_ibagq0",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:56:49.088Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917010034_nl0jy8",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:56:50.034Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917035685_bwvpxw",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:57:15.685Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917037204_uv7wrm",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:57:17.204Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917065808_nmqzec",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:57:45.808Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917067330_4mvbpu",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:57:47.330Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917089998_fbanfu",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:58:09.997Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_request",
+      "status": "",
+      "actor": {
+        "type": "device_channel",
+        "id": "phone",
+        "label": "phone",
+        "domain": "mobile",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": "medium"
+      },
+      "refKeys": [
+        "device_channel:phone",
+        "subject:subject",
+        "assistant_route:phone-edge-gemini"
+      ],
+      "edgeKeys": [
+        "device_channel:phone=>subject:subject",
+        "subject:subject=>assistant_route:phone-edge-gemini"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772917090912_289vl9",
+      "kind": "graph_event",
+      "at": "2026-03-07T20:58:10.912Z",
+      "component": "phone-edge",
+      "category": "phone_assistant",
+      "action": "assistant_reply",
+      "status": "ok",
+      "actor": {
+        "type": "assistant_route",
+        "id": "phone-edge-gemini",
+        "label": "phone-edge-gemini",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "conversation",
+        "id": "phone-live",
+        "label": "phone-live",
+        "domain": "",
+        "criticality": "low"
+      },
+      "refKeys": [
+        "assistant_route:phone-edge-gemini",
+        "subject:subject",
+        "conversation:phone-live"
+      ],
+      "edgeKeys": [
+        "assistant_route:phone-edge-gemini=>subject:subject",
+        "subject:subject=>conversation:phone-live"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 3,
+      "approvalState": "not_required",
+      "archetypeTags": [
+        "phone-live-loop"
+      ],
+      "pseudoLabel": "watch"
+    },
+    {
+      "recordId": "gevt_1772922678522_vj2ib1",
+      "kind": "graph_event",
+      "at": "2026-03-07T22:31:18.521Z",
+      "component": "brain-orchestrator",
+      "category": "provider",
+      "action": "provider_attempt",
+      "status": "attempting",
+      "actor": {
+        "type": "orchestrator",
+        "id": "asolaria",
+        "label": "asolaria",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "provider",
+        "id": "codex",
+        "label": "codex",
+        "domain": "",
+        "criticality": "high"
+      },
+      "refKeys": [
+        "orchestrator:asolaria",
+        "subject:subject",
+        "provider:codex"
+      ],
+      "edgeKeys": [
+        "orchestrator:asolaria=>subject:subject",
+        "subject:subject=>provider:codex"
+      ],
+      "riskLevel": "high",
+      "riskScore": 8,
+      "approvalState": "",
+      "archetypeTags": [
+        "autonomous-provider-route",
+        "high-criticality-target",
+        "hot-risk-edge"
+      ],
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "recordId": "gevt_1772922839279_621dtz",
+      "kind": "graph_event",
+      "at": "2026-03-07T22:33:59.278Z",
+      "component": "brain-orchestrator",
+      "category": "provider",
+      "action": "provider_succeeded",
+      "status": "ok",
+      "actor": {
+        "type": "orchestrator",
+        "id": "asolaria",
+        "label": "asolaria",
+        "domain": "",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "provider",
+        "id": "codex",
+        "label": "codex",
+        "domain": "",
+        "criticality": "high"
+      },
+      "refKeys": [
+        "orchestrator:asolaria",
+        "subject:subject",
+        "provider:codex"
+      ],
+      "edgeKeys": [
+        "orchestrator:asolaria=>subject:subject",
+        "subject:subject=>provider:codex"
+      ],
+      "riskLevel": "high",
+      "riskScore": 8,
+      "approvalState": "",
+      "archetypeTags": [
+        "autonomous-provider-route",
+        "high-criticality-target",
+        "hot-risk-edge"
+      ],
+      "pseudoLabel": "suspicious"
+    },
+    {
+      "recordId": "gman_1772913797791_y6qe0j",
+      "kind": "action_manifest",
+      "at": "2026-03-07T20:03:17.791Z",
+      "component": "chat-ingress",
+      "category": "",
+      "action": "google_status",
+      "status": "queued",
+      "actor": {
+        "type": "chat_source",
+        "id": "chat-auto",
+        "label": "chat-auto",
+        "domain": "chat-auto",
+        "criticality": ""
+      },
+      "subject": {
+        "type": "subject",
+        "id": "subject",
+        "label": "subject",
+        "domain": "",
+        "criticality": ""
+      },
+      "target": {
+        "type": "task",
+        "id": "task_1772913797723_hwive9",
+        "label": "google_status: google status",
+        "domain": "",
+        "criticality": "normal"
+      },
+      "refKeys": [
+        "chat_source:chat-auto",
+        "subject:subject",
+        "task:task_1772913797723_hwive9"
+      ],
+      "edgeKeys": [
+        "chat_source:chat-auto=>task:task_1772913797723_hwive9"
+      ],
+      "riskLevel": "medium",
+      "riskScore": 4,
+      "approvalState": "not_required",
+      "archetypeTags": [],
+      "pseudoLabel": "watch"
+    }
+  ]
+}

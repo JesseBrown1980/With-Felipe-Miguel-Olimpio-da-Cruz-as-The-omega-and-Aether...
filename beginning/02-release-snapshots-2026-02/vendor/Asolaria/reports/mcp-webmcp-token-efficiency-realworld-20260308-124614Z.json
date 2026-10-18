@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-03-08T12:46:14.537590+00:00",
+  "runtime": {
+    "skillsTotal": 55,
+    "toolsTotalActions": 32,
+    "mcpProviders": 1,
+    "mcpProviderCatalogCount": 0,
+    "mcpScopedContextCount": 0,
+    "cursorMcp": {
+      "enabled": true,
+      "configured": true,
+      "preset": "read_only",
+      "approvalMode": "never",
+      "tokenReductionProfile": "aggressive",
+      "toolSchemaMode": "full",
+      "dynamicAllowlistMax": 1,
+      "promptTokenLimit": 900
+    }
+  },
+  "liveSkillRun": {
+    "id": "job_1772973631706_zyaaww",
+    "createdAt": "2026-03-08T12:40:31.706Z",
+    "finishedAt": "2026-03-08T12:42:41.152Z",
+    "elapsedMs": 129446
+  },
+  "measurements": {
+    "tools_inline_50": {
+      "chars": 33023,
+      "bytes": 33023,
+      "chars_div_4_est": 8256,
+      "tokens_o200k": 7736,
+      "tokens_cl100k": 7085
+    },
+    "tools_mcp_current": {
+      "chars": 307,
+      "bytes": 307,
+      "chars_div_4_est": 77,
+      "tokens_o200k": 83,
+      "tokens_cl100k": 82
+    },
+    "tools_mcp_pointer_5_plus_prev": {
+      "chars": 438,
+      "bytes": 438,
+      "chars_div_4_est": 110,
+      "tokens_o200k": 113,
+      "tokens_cl100k": 112
+    },
+    "skill_run_by_id": {
+      "chars": 114,
+      "bytes": 114,
+      "chars_div_4_est": 29,
+      "tokens_o200k": 26,
+      "tokens_cl100k": 26
+    },
+    "skill_run_inlined_single": {
+      "chars": 2111,
+      "bytes": 2111,
+      "chars_div_4_est": 528,
+      "tokens_o200k": 555,
+      "tokens_cl100k": 548
+    },
+    "skill_catalog_ids": {
+      "chars": 1605,
+      "bytes": 1605,
+      "chars_div_4_est": 402,
+      "tokens_o200k": 398,
+      "tokens_cl100k": 392
+    },
+    "skill_catalog_inlined": {
+      "chars": 47583,
+      "bytes": 47583,
+      "chars_div_4_est": 11896,
+      "tokens_o200k": 11851,
+      "tokens_cl100k": 11595
+    }
+  },
+  "deltas": {
+    "tools_inline50_vs_mcp_current": {
+      "saved_tokens_o200k": 7653,
+      "saved_percent_o200k": 98.93
+    },
+    "tools_inline50_vs_mcp_pointer5": {
+      "saved_tokens_o200k": 7623,
+      "saved_percent_o200k": 98.54
+    },
+    "skill_single_inlined_vs_id": {
+      "saved_tokens_o200k": 529,
+      "saved_percent_o200k": 95.32
+    },
+    "skill_catalog_inlined_vs_ids": {
+      "saved_tokens_o200k": 11453,
+      "saved_percent_o200k": 96.64
+    }
+  },
+  "notes": [
+    "Tokenizer used: tiktoken o200k_base and cl100k_base.",
+    "Tool scenario A uses 50 realistic inline function schemas (synthetic but representative).",
+    "MCP scenarios use live runtime cursor MCP server label/url and approval policy shape.",
+    "Skill-linking scenarios use real local skill definitions from Asolaria/skills/*."
+  ],
+  "endpointHealth": {
+    "externalStatusOk": true,
+    "skillsIndexOk": true,
+    "mcpCacheOk": true,
+    "jobsOk": true
+  }
+}

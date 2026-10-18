@@ -1,0 +1,36 @@
+{
+  "name": "githubConnector.create_issue",
+  "description": "Create a GitHub issue. Credentials must come from the local vault only.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "repo": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+        "description": "owner/repo"
+      },
+      "title": {
+        "type": "string",
+        "minLength": 3
+      },
+      "body": {
+        "type": "string"
+      },
+      "labels": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["repo", "title"],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "url": { "type": "string" },
+      "number": { "type": "integer" }
+    },
+    "required": ["url", "number"],
+    "additionalProperties": true
+  }
+}

@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111f" />
+  <link rel="manifest" href="/mobile.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/asolaria-icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/icons/asolaria-icon-512.png" />
+  <link rel="apple-touch-icon" href="/icons/asolaria-icon-192.png" />
+  <title>Jesse's Phone Link</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap");
+    :root {
+      --bg0: #061224;
+      --bg1: #0d1a34;
+      --card: #0e1f3d;
+      --line: #214371;
+      --ink: #e9f2ff;
+      --muted: #9fb9df;
+      --accent: #1cb3ff;
+      --ok: #1f7b54;
+      --warn: #8c6a24;
+      --danger: #8a3434;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      min-height: 100%;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Sora", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% -10%, rgba(28, 179, 255, 0.2), transparent 35%),
+        radial-gradient(circle at 88% 0%, rgba(240, 167, 66, 0.15), transparent 32%),
+        linear-gradient(155deg, var(--bg0), var(--bg1));
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 14px;
+    }
+    .shell {
+      width: min(1400px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+    .top {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(10, 23, 45, 0.84);
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand h1 {
+      margin: 0;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+      line-height: 1.1;
+    }
+    .brand p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .status-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .level-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .level-row label {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .launcher-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .launcher-btn {
+      display: grid;
+      gap: 2px;
+      justify-items: start;
+      border-radius: 12px;
+      border: 1px solid rgba(72, 132, 201, 0.6);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(54, 179, 255, 0.22), transparent 48%),
+        linear-gradient(135deg, rgba(10, 29, 55, 0.96), rgba(8, 21, 41, 0.95));
+      min-height: 54px;
+      padding: 9px 10px;
+      text-align: left;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .launcher-btn .title {
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: 0.84rem;
+      line-height: 1.1;
+    }
+    .launcher-btn .sub {
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.2;
+    }
+    .launcher-btn.is-primary {
+      border-color: rgba(82, 198, 255, 0.8);
+      box-shadow: 0 0 0 1px rgba(82, 198, 255, 0.2) inset;
+    }
+    .launcher-btn.is-warn {
+      border-color: rgba(255, 189, 88, 0.75);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(255, 198, 102, 0.24), transparent 48%),
+        linear-gradient(135deg, rgba(49, 35, 17, 0.95), rgba(40, 28, 14, 0.95));
+    }
+    .launcher-btn.is-admin {
+      border-color: rgba(190, 130, 255, 0.76);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(193, 131, 255, 0.2), transparent 50%),
+        linear-gradient(135deg, rgba(35, 22, 53, 0.96), rgba(23, 15, 38, 0.95));
+    }
+    .launcher-btn.is-super {
+      border-color: rgba(255, 121, 121, 0.78);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255, 138, 138, 0.22), transparent 50%),
+        linear-gradient(135deg, rgba(58, 21, 27, 0.95), rgba(46, 16, 22, 0.95));
+    }
+    .launcher-btn.is-active {
+      border-color: rgba(127, 240, 190, 0.88);
+      box-shadow: 0 0 0 1px rgba(127, 240, 190, 0.28) inset;
+    }
+    .launcher-status {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .launcher-status.is-ok {
+      color: #9df7cf;
+    }
+    .launcher-status.is-warn {
+      color: #ffd69f;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: rgba(9, 18, 36, 0.84);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(420px, 1.25fr) minmax(350px, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(13, 28, 54, 0.9);
+      padding: 12px;
+      overflow: hidden;
+    }
+    body.ui-level-talk .layout {
+      display: none;
+    }
+    body.ui-level-talk .status-row {
+      display: none;
+    }
+    body.ui-level-talk .live-hub > .hint {
+      display: none;
+    }
+    body.ui-level-talk .chat-route-row label,
+    body.ui-level-talk .chat-route-row select,
+    body.ui-level-talk #phoneLiveOpenControlsBtn,
+    body.ui-level-talk #phoneLiveCloseControlsBtn,
+    body.ui-level-talk .phone-gemini-relay,
+    body.ui-level-talk .phone-live-volume-row {
+      display: none;
+    }
+    body.ui-level-talk #phoneLiveSpeakBtn,
+    body.ui-level-talk #phoneLiveStopBtn,
+    body.ui-level-talk #phoneLiveVoiceTestBtn {
+      display: none;
+    }
+    body.ui-level-talk #phoneLiveChatInput {
+      min-height: 72px;
+    }
+    body.ui-level-control .level-admin-only {
+      display: none;
+    }
+    .card h2 {
+      margin: 0 0 4px;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: 1.1rem;
+    }
+    .inbox-shell {
+      display: grid;
+      gap: 10px;
+    }
+    .inbox-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .inbox-head .status-row {
+      justify-content: flex-start;
+    }
+    .inbox-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .inbox-column {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+    .inbox-column h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .inbox-list {
+      display: grid;
+      gap: 8px;
+    }
+    .inbox-empty {
+      border: 1px dashed rgba(112, 151, 202, 0.45);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      background: rgba(9, 20, 38, 0.56);
+    }
+    .inbox-item {
+      border: 1px solid rgba(71, 120, 185, 0.5);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(8, 19, 39, 0.82);
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+    }
+    .inbox-item-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .inbox-item-title {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.25;
+    }
+    .inbox-item-meta {
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+    .inbox-item-body {
+      color: #e7f1ff;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .inbox-item-actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+    .inbox-item-actions button {
+      min-height: 34px;
+      padding: 7px 10px;
+      font-size: 0.78rem;
+    }
+    .risk-pill {
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 0.72rem;
+      border: 1px solid rgba(105, 139, 187, 0.44);
+      color: #eff6ff;
+      background: rgba(19, 38, 65, 0.74);
+    }
+    .risk-pill.is-critical {
+      background: rgba(112, 33, 33, 0.9);
+      border-color: rgba(221, 101, 101, 0.7);
+    }
+    .risk-pill.is-high {
+      background: rgba(110, 77, 25, 0.9);
+      border-color: rgba(223, 180, 92, 0.7);
+    }
+    .risk-pill.is-medium {
+      background: rgba(45, 63, 96, 0.88);
+      border-color: rgba(118, 154, 220, 0.65);
+    }
+    .risk-pill.is-low {
+      background: rgba(28, 88, 62, 0.88);
+      border-color: rgba(83, 185, 132, 0.65);
+    }
+    .hint {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+    .row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    button,
+    input,
+    select,
+    textarea {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #091a33;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.9rem;
+      padding: 9px 11px;
+    }
+    button {
+      cursor: pointer;
+      min-height: 40px;
+    }
+    button.ok {
+      background: var(--ok);
+      border-color: #2e9d72;
+    }
+    button.warn {
+      background: var(--warn);
+      border-color: #b48a3a;
+    }
+    button.danger {
+      background: var(--danger);
+      border-color: #b25757;
+    }
+    button.accent {
+      background: #0f4d7b;
+      border-color: #2c7eb4;
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-width: 0;
+    }
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+    .screen-frame {
+      --phone-aspect: 0.46;
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(14, 30, 62, 0.6), transparent 34%),
+        #050d19;
+      overflow: hidden;
+      transition: border-color 200ms ease;
+    }
+    .screen-frame .device-stage {
+      width: 100%;
+      aspect-ratio: var(--phone-aspect);
+      background: #050d19;
+    }
+    .screen-frame.spin {
+      animation: frameSpin 520ms ease;
+    }
+    @keyframes frameSpin {
+      from { transform: perspective(700px) rotateY(0deg); }
+      to { transform: perspective(700px) rotateY(360deg); }
+    }
+    .screen-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #050d19;
+      cursor: crosshair;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .screen-frame.observer img {
+      cursor: default;
+    }
+    .screen-frame.disarmed {
+      border-color: #9c4f4f;
+    }
+    .screen-frame.disarmed img {
+      cursor: not-allowed;
+      opacity: 0.74;
+      filter: saturate(0.7);
+    }
+    .screen-frame[data-orientation="portrait"] .device-stage {
+      max-width: min(430px, 100%);
+      margin: 0 auto;
+    }
+    .screen-frame[data-orientation="landscape"] .device-stage {
+      max-width: min(780px, 100%);
+      margin: 0 auto;
+    }
+    .mirror-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .mirror-column {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+    .mirror-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mirror-title h3 {
+      margin: 0;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: 0.95rem;
+    }
+    .mirror-note {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .guard-pill {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 7px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(9, 18, 36, 0.84);
+    }
+    .guard-pill.on {
+      border-color: #2b915f;
+      color: #d9fce8;
+      background: rgba(31, 123, 84, 0.3);
+    }
+    .guard-pill.off {
+      border-color: #9c4f4f;
+      color: #ffd7d7;
+      background: rgba(138, 52, 52, 0.3);
+    }
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .status-box,
+    .log {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #08182f;
+      padding: 9px 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .log {
+      min-height: 90px;
+      max-height: 200px;
+      overflow: auto;
+      font-family: Consolas, "SFMono-Regular", ui-monospace, monospace;
+      line-height: 1.32;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .controls-grid button {
+      width: 100%;
+      padding: 8px 6px;
+      font-size: 0.82rem;
+    }
+    .checkline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin: 6px 0;
+    }
+    .checkline input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      padding: 0;
+      border-radius: 4px;
+    }
+    .audio {
+      width: 100%;
+      margin-top: 6px;
+    }
+    .live-hub {
+      padding: 14px;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(28, 179, 255, 0.2), transparent 38%),
+        radial-gradient(circle at 95% 0%, rgba(240, 167, 66, 0.15), transparent 34%),
+        rgba(12, 25, 48, 0.92);
+    }
+    .live-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+    .live-avatar-wrap {
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+      text-align: center;
+    }
+    .live-avatar-stage {
+      width: 170px;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 128, 186, 0.75);
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(156, 235, 255, 0.94), rgba(28, 179, 255, 0.2) 56%, rgba(6, 16, 32, 0.12) 100%);
+      box-shadow: 0 16px 32px rgba(5, 13, 26, 0.45);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .live-avatar-stage::before,
+    .live-avatar-stage::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      border: 1px solid rgba(173, 227, 255, 0.4);
+      inset: 10%;
+      animation: avatarPulse 2.4s ease-in-out infinite;
+    }
+    .live-avatar-stage::after {
+      inset: 2%;
+      opacity: 0.55;
+      animation-duration: 3.2s;
+    }
+    .live-avatar-stage.is-listening {
+      box-shadow: 0 0 0 8px rgba(28, 179, 255, 0.18), 0 14px 28px rgba(3, 31, 54, 0.45);
+      transform: scale(1.02);
+    }
+    .live-avatar-stage.is-thinking {
+      box-shadow: 0 0 0 8px rgba(240, 167, 66, 0.18), 0 14px 28px rgba(3, 31, 54, 0.45);
+    }
+    .live-avatar-stage.is-speaking {
+      box-shadow: 0 0 0 10px rgba(53, 208, 128, 0.2), 0 16px 32px rgba(3, 31, 54, 0.45);
+      transform: scale(1.03);
+    }
+    .live-avatar-stage.is-error {
+      box-shadow: 0 0 0 8px rgba(216, 96, 96, 0.22), 0 16px 32px rgba(3, 31, 54, 0.45);
+    }
+    .live-avatar-core {
+      width: 52%;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #86dcff 32%, rgba(14, 80, 130, 0.68));
+      border: 1px solid rgba(188, 238, 255, 0.75);
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+    .live-avatar-face {
+      position: relative;
+      width: 72%;
+      height: 72%;
+    }
+    .live-avatar-eye {
+      position: absolute;
+      top: 30%;
+      width: 16%;
+      height: 16%;
+      border-radius: 999px;
+      background: #082344;
+      box-shadow: 0 0 0 1px rgba(176, 235, 255, 0.35);
+    }
+    .live-avatar-eye-left {
+      left: 24%;
+    }
+    .live-avatar-eye-right {
+      right: 24%;
+    }
+    .live-avatar-mouth {
+      position: absolute;
+      left: 50%;
+      bottom: 18%;
+      width: 34%;
+      height: 10%;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #0a2c4f;
+      box-shadow: inset 0 0 0 1px rgba(176, 235, 255, 0.28);
+    }
+    .live-avatar-stage.is-listening .live-avatar-eye {
+      animation: liveAvatarBlink 1.1s ease-in-out infinite;
+    }
+    .live-avatar-stage.is-thinking .live-avatar-eye {
+      animation: liveAvatarBlink 0.7s ease-in-out infinite;
+    }
+    .live-avatar-stage.is-speaking .live-avatar-mouth {
+      animation: liveAvatarMouthTalk 220ms ease-in-out infinite;
+    }
+    .live-avatar-stage.is-error .live-avatar-mouth {
+      width: 28%;
+      height: 8%;
+      border-radius: 3px;
+    }
+    @keyframes avatarPulse {
+      0%, 100% { transform: scale(1); opacity: 0.62; }
+      50% { transform: scale(1.08); opacity: 0.3; }
+    }
+    @keyframes liveAvatarBlink {
+      0%, 100% { transform: scaleY(1); }
+      45% { transform: scaleY(0.2); }
+      55% { transform: scaleY(1); }
+    }
+    @keyframes liveAvatarMouthTalk {
+      0%, 100% {
+        height: 10%;
+        width: 34%;
+      }
+      50% {
+        height: 22%;
+        width: 28%;
+      }
+    }
+    .live-voice-status {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+    .live-voice-status.live-ok {
+      color: #bfffe0;
+    }
+    .live-voice-status.live-error {
+      color: #ffd4d4;
+    }
+    .phone-live-realtime-card {
+      border: 1px solid rgba(33, 67, 113, 0.8);
+      border-radius: 10px;
+      background: rgba(8, 18, 34, 0.86);
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .phone-live-realtime-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .phone-live-realtime-head strong {
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: 0.84rem;
+      letter-spacing: 0.01em;
+    }
+    .phone-live-realtime-status {
+      border: 1px solid rgba(72, 132, 201, 0.55);
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(8, 15, 29, 0.82);
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+    .phone-live-realtime-status.live-ok {
+      border-color: rgba(72, 190, 134, 0.72);
+      color: #bfffe0;
+    }
+    .phone-live-realtime-status.live-error {
+      border-color: rgba(194, 84, 84, 0.75);
+      color: #ffd4d4;
+    }
+    .phone-live-realtime-source-row {
+      align-items: center;
+    }
+    .phone-live-realtime-source-row label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      white-space: nowrap;
+      min-width: 62px;
+    }
+    .phone-live-realtime-source-row select {
+      flex: 1;
+      min-width: 0;
+    }
+    .phone-live-realtime-transcript {
+      border: 1px solid rgba(33, 67, 113, 0.72);
+      border-radius: 10px;
+      background: rgba(6, 13, 25, 0.78);
+      min-height: 84px;
+      max-height: 180px;
+      overflow: auto;
+      padding: 8px;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+    .chat-shell {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+    .chat-route-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .chat-route-row select {
+      width: auto;
+      min-width: 150px;
+    }
+    .chat-messages {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #091a33;
+      min-height: 180px;
+      max-height: 280px;
+      overflow: auto;
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    body.ui-level-talk .chat-messages {
+      min-height: 120px;
+      max-height: 170px;
+    }
+    .chat-turn {
+      border: 1px solid rgba(33, 67, 113, 0.75);
+      border-radius: 10px;
+      padding: 7px 9px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: rgba(8, 20, 37, 0.9);
+    }
+    .chat-turn.user {
+      border-color: rgba(28, 179, 255, 0.62);
+      background: rgba(16, 63, 98, 0.4);
+    }
+    .chat-turn.assistant {
+      border-color: rgba(240, 167, 66, 0.62);
+      background: rgba(86, 58, 17, 0.28);
+    }
+    .phone-chat-history {
+      border: 1px solid rgba(72, 105, 162, 0.55);
+      border-radius: 10px;
+      background: rgba(7, 15, 28, 0.85);
+      padding: 6px 8px;
+    }
+    .phone-chat-history-summary {
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.8rem;
+      user-select: none;
+    }
+    .phone-chat-history-body {
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .chat-compose {
+      display: grid;
+      gap: 8px;
+    }
+    .chat-compose textarea {
+      min-height: 92px;
+    }
+    .chat-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .backup-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    @media (max-width: 1100px) {
+      .inbox-grid {
+        grid-template-columns: 1fr;
+      }
+      .live-grid {
+        grid-template-columns: 1fr;
+      }
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .mirror-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      .launcher-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .backup-grid {
+        grid-template-columns: 1fr;
+      }
+      .controls-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .screen-frame[data-orientation="portrait"] .device-stage {
+        max-width: min(360px, 100%);
+      }
+      .screen-frame[data-orientation="landscape"] .device-stage {
+        max-width: min(640px, 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand">
+        <h1>Jesse's Phone Link</h1>
+        <p>Communication-first phone surface connected to Asolaria.</p>
+      </div>
+      <div class="status-row">
+        <span id="deviceBadge" class="pill">Primary: Jesse's Phone (checking...)</span>
+        <span id="oliLaneBadge" class="pill">Oli lane: checking...</span>
+        <span id="orientationBadge" class="pill">Orientation: unknown</span>
+        <span id="mirrorBadge" class="pill">Mirror: idle</span>
+      </div>
+      <div class="level-row">
+        <label for="uiLevelSelect">Interface level</label>
+        <select id="uiLevelSelect">
+          <option value="talk">Talk</option>
+          <option value="control">Control</option>
+          <option value="admin">Admin</option>
+        </select>
+        <span id="uiLevelHint" class="pill">Talk: voice/chat only</span>
+      </div>
+      <div class="launcher-row" aria-label="Human friendly launcher">
+        <button id="phoneLaunchVoiceBtn" type="button" class="launcher-btn is-primary">
+          <span class="title">Voice</span>
+          <span class="sub">Talk out loud</span>
+        </button>
+        <button id="phoneLaunchTextBtn" type="button" class="launcher-btn">
+          <span class="title">Text</span>
+          <span class="sub">Type messages</span>
+        </button>
+        <button id="phoneLaunchVideoBtn" type="button" class="launcher-btn is-warn">
+          <span class="title">Video</span>
+          <span class="sub">Open mirror</span>
+        </button>
+        <button id="phoneLaunchAdvancedBtn" type="button" class="launcher-btn is-admin">
+          <span class="title">Advanced</span>
+          <span class="sub">Control view</span>
+        </button>
+        <button id="phoneLaunchSuperAdvancedBtn" type="button" class="launcher-btn is-super">
+          <span class="title">Super Advanced</span>
+          <span class="sub">Admin tools</span>
+        </button>
+      </div>
+      <p id="phoneLauncherStatus" class="launcher-status">Ready. Pick Voice, Text, Video, Advanced, or Super Advanced.</p>
+    </header>
+
+    <section class="card inbox-shell">
+      <div class="inbox-head">
+        <div>
+          <h2>Urgent Inbox</h2>
+          <p class="hint">Approvals, active tasks, and priority notes trimmed for fast phone triage.</p>
+        </div>
+        <div class="status-row">
+          <span id="inboxSummaryBadge" class="pill">Inbox: loading...</span>
+          <span id="inboxSystemBadge" class="pill">System: checking...</span>
+        </div>
+      </div>
+      <div class="row">
+        <button id="refreshInboxBtn" type="button" class="accent">Refresh Inbox</button>
+        <button id="openInboxApprovalsBtn" type="button" class="warn">Open Approvals</button>
+        <button id="openInboxAdminBtn" type="button">Open Admin Console</button>
+        <span id="inboxStatus" class="pill">Waiting for first sync...</span>
+      </div>
+      <div class="inbox-grid">
+        <section class="inbox-column" aria-label="Approvals">
+          <h3>Approvals</h3>
+          <div id="inboxApprovals" class="inbox-list"></div>
+        </section>
+        <section class="inbox-column" aria-label="Active tasks">
+          <h3>Active Tasks</h3>
+          <div id="inboxTasks" class="inbox-list"></div>
+        </section>
+        <section class="inbox-column" aria-label="Priority notes">
+          <h3>Priority Notes</h3>
+          <div id="inboxNotes" class="inbox-list"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="card live-hub">
+      <h2>Jesse Phone Live</h2>
+      <p class="hint">Same colony session as desktop: chat, voice, and avatar-first flow.</p>
+      <div class="live-grid">
+        <div class="live-avatar-wrap">
+          <div
+            id="phoneLiveAvatarStage"
+            class="live-avatar-stage is-idle"
+            role="button"
+            tabindex="0"
+            aria-label="Tap to start voice"
+            aria-pressed="false"
+          >
+            <div class="live-avatar-core">
+              <div class="live-avatar-face" aria-hidden="true">
+                <span class="live-avatar-eye live-avatar-eye-left"></span>
+                <span class="live-avatar-eye live-avatar-eye-right"></span>
+                <span class="live-avatar-mouth"></span>
+              </div>
+            </div>
+          </div>
+          <div id="phoneLiveAvatarStatus" class="status-box">Avatar idle.</div>
+          <div id="phoneLiveVoiceStatus" class="live-voice-status">Voice standby. Press Push-to-Talk or type.</div>
+          <div class="row phone-live-volume-row">
+            <label for="phoneLiveVolume" class="hint">Voice volume</label>
+            <input id="phoneLiveVolume" type="range" min="0" max="100" step="5" value="80" />
+            <span id="phoneLiveVolumeValue" class="pill">80%</span>
+          </div>
+        </div>
+        <div class="chat-shell">
+          <div class="chat-route-row">
+            <label for="phoneLiveRouteMode">Route</label>
+            <select id="phoneLiveRouteMode">
+              <option value="normal">RouteLLM</option>
+              <option value="deep">Deep Agent Style</option>
+              <option value="gemini">Gemini Edge + Asolaria</option>
+            </select>
+            <button id="phoneLiveOpenControlsBtn" type="button" class="accent">Open Mirror Controls</button>
+            <button id="phoneLiveCloseControlsBtn" type="button">Close Controls</button>
+          </div>
+          <div id="phoneLiveChatMessages" class="chat-messages"></div>
+          <div class="chat-compose">
+            <textarea id="phoneLiveChatInput" placeholder="Talk to Asolaria here..."></textarea>
+            <div class="chat-actions">
+              <button id="phoneLiveSendBtn" type="button" class="ok">Send</button>
+              <button id="phoneLiveSpeakBtn" type="button" class="accent">Speak (Auto)</button>
+              <button id="phoneLivePushBtn" type="button" class="accent">Push-to-Talk</button>
+              <button id="phoneLiveStopBtn" type="button" class="danger">Stop</button>
+              <button id="phoneLiveVoiceTestBtn" type="button">Voice Test</button>
+            </div>
+            <div class="chat-actions">
+              <button id="phoneLiveNotebookAskBtn" type="button">Ask NotebookLM</button>
+              <button id="phoneLiveNotebookStatusBtn" type="button">NotebookLM Status</button>
+            </div>
+            <p class="hint">NotebookLM shortcuts use the current text box through Asolaria's NotebookLM route, even while Gemini Edge voice mode is active.</p>
+            <label class="checkline">
+              <input id="phoneLiveAutoSendToggle" type="checkbox" checked />
+              Auto-send voice after transcription
+            </label>
+            <p class="hint">On: full hands-free voice turn. Off: dictation only, so speech lands in the text box until you press Send.</p>
+            <label class="checkline">
+              <input id="phoneLiveWakeLoopToggle" type="checkbox" />
+              Always listen for "Hello Asolaria" while this screen is open
+            </label>
+            <p class="hint">Foreground only. This keeps a light wake listener armed inside Asolaria, then hands the command to the fast Gemini edge path.</p>
+          </div>
+          <section class="phone-live-realtime-card" aria-label="Meeting captions">
+            <div class="phone-live-realtime-head">
+              <strong>Meeting Captions</strong>
+              <span id="phoneRealtimeStatus" class="phone-live-realtime-status">Idle</span>
+            </div>
+            <p class="hint">Pick a source to avoid cross-feed. Tab/window capture is cleaner than full-screen/system audio.</p>
+            <div class="row phone-live-realtime-source-row">
+              <label for="phoneRealtimeSourceSelect">Source</label>
+              <select id="phoneRealtimeSourceSelect">
+                <option value="tab_audio">Meeting Tab Audio (Recommended)</option>
+                <option value="window_audio">App Window Audio</option>
+                <option value="screen_audio">Entire Screen/System Audio</option>
+                <option value="microphone">Microphone Only</option>
+              </select>
+            </div>
+            <div class="row">
+              <button id="phoneRealtimeStartBtn" type="button" class="accent">Start Selected Source</button>
+              <button id="phoneRealtimeStopBtn" type="button" class="danger">Stop Captions</button>
+              <button id="phoneRealtimeClearBtn" type="button">Clear</button>
+              <button id="phoneRealtimeCopyBtn" type="button">Copy</button>
+              <button id="phoneRealtimeSendBtn" type="button" class="ok">Send to Asolaria</button>
+            </div>
+            <div id="phoneRealtimeTranscript" class="phone-live-realtime-transcript" aria-live="polite"></div>
+          </section>
+          <div class="chat-compose phone-gemini-relay">
+            <textarea id="geminiRelayInput" placeholder="Paste Gemini Live transcript or notes here (safe relay mode, no app interception)."></textarea>
+            <div class="chat-actions">
+              <button id="geminiRelaySendBtn" type="button" class="accent">Send Gemini Relay</button>
+            </div>
+            <p class="hint">Use this to bridge Gemini Live output into Asolaria. Gemini answers fast; Asolaria continues deeper.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <section class="card" id="phoneMirrorControlsCard" data-level="control">
+        <h2>Live Mirror</h2>
+        <p class="hint">Dual-screen mode: interactive control screen + read-only shadow workspace.</p>
+        <div class="row">
+          <button id="refreshMirrorBtn" type="button" class="accent">Refresh Frame</button>
+          <button id="toggleAutoBtn" type="button" class="ok">Auto Refresh: ON</button>
+          <button id="refreshObserverBtn" type="button" class="accent">Refresh Shadow</button>
+          <button id="openWhatsappBtn" type="button" class="warn">Open WhatsApp App</button>
+        </div>
+        <p class="hint">WhatsApp biometric unlock must be approved on the phone device; remote auto-approval is not supported.</p>
+        <div class="row">
+          <button id="armControlBtn" type="button" class="warn">Arm Controls (90s)</button>
+          <span id="controlGuardStatus" class="guard-pill off">Control: disarmed</span>
+          <label class="checkline">
+            <input id="observerFollowToggle" type="checkbox" checked />
+            shadow follows live
+          </label>
+        </div>
+        <div class="mirror-columns">
+          <div class="mirror-column">
+            <div class="mirror-title">
+              <h3>Active Phone Screen</h3>
+              <span class="mirror-note">Armed interactive controls.</span>
+            </div>
+            <div id="screenFrame" class="screen-frame" data-orientation="unknown">
+              <div class="device-stage">
+                <img id="phoneMirrorImage" alt="Phone mirror frame" />
+              </div>
+            </div>
+            <div id="mirrorMeta" class="status-box">Waiting for first capture...</div>
+          </div>
+          <div class="mirror-column">
+            <div class="mirror-title">
+              <h3>Shadow Workspace</h3>
+              <span class="mirror-note">Read-only visual verification.</span>
+            </div>
+            <div id="observerScreenFrame" class="screen-frame observer" data-orientation="unknown">
+              <div class="device-stage">
+                <img id="observerMirrorImage" alt="Phone shadow frame" />
+              </div>
+            </div>
+            <div id="observerMeta" class="status-box">Shadow screen waiting for first frame...</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel-grid">
+        <section class="card" data-level="control">
+          <h2>Quick Controls</h2>
+          <div class="controls-grid">
+            <button type="button" data-key="BACK">Back</button>
+            <button type="button" data-key="HOME">Home</button>
+            <button type="button" data-key="APP_SWITCH">Recent</button>
+            <button type="button" data-key="ENTER">Enter</button>
+            <button type="button" data-key="POWER">Power</button>
+          </div>
+          <div class="row">
+            <button id="swipeUpBtn" type="button" class="accent">Scroll Up</button>
+            <button id="swipeDownBtn" type="button" class="accent">Scroll Down</button>
+          </div>
+          <div class="row">
+            <input id="typeInput" type="text" placeholder="Type text on phone..." />
+            <button id="typeSendBtn" type="button" class="accent">Send Text</button>
+          </div>
+        </section>
+
+        <section class="card" data-level="control">
+          <h2>Pro Mirror (scrcpy)</h2>
+          <p class="hint">Low-latency desktop mirror window with direct keyboard/mouse control.</p>
+          <div class="row">
+            <input id="proMirrorMaxFps" type="number" min="15" max="120" step="1" value="60" placeholder="FPS" />
+            <input id="proMirrorBitRate" type="text" value="8M" placeholder="Bitrate (e.g. 8M)" />
+          </div>
+          <div class="row">
+            <label class="checkline">
+              <input id="proMirrorAlwaysOnTop" type="checkbox" checked />
+              always on top
+            </label>
+            <label class="checkline">
+              <input id="proMirrorNoAudio" type="checkbox" checked />
+              no audio
+            </label>
+          </div>
+          <div class="row">
+            <button id="proMirrorStartBtn" type="button" class="ok">Start Pro Mirror</button>
+            <button id="proMirrorStopBtn" type="button" class="danger">Stop Pro Mirror</button>
+            <button id="proMirrorRefreshBtn" type="button" class="accent">Refresh Pro Status</button>
+          </div>
+          <div id="proMirrorStatus" class="status-box">Pro mirror status loading...</div>
+        </section>
+
+        <section class="card" data-level="control">
+          <h2>WhatsApp + Voice</h2>
+          <div class="row">
+            <label class="checkline">
+              <input id="waEnabled" type="checkbox" />
+              WhatsApp alerts enabled
+            </label>
+          </div>
+          <div class="row">
+            <select id="waNotifyMode">
+              <option value="critical_or_security">critical_or_security</option>
+              <option value="security_only">security_only</option>
+              <option value="all_alerts">all_alerts</option>
+            </select>
+            <button id="waSaveConfigBtn" type="button">Save WA Policy</button>
+          </div>
+          <input id="waAccountSid" type="text" autocomplete="off" placeholder="Twilio Account SID (optional update)" />
+          <input id="waAuthToken" type="password" autocomplete="new-password" placeholder="Twilio Auth Token (optional update)" />
+          <div class="row">
+            <input id="waFromNumber" type="text" autocomplete="off" placeholder="Twilio WhatsApp sender (e.g. whatsapp:+14155238886)" />
+            <input id="waToNumber" type="text" autocomplete="off" placeholder="Target WhatsApp recipient (e.g. whatsapp:+15551234567)" />
+          </div>
+          <div class="backup-grid">
+            <input id="waBackupAsolariaNumber" type="text" autocomplete="off" placeholder="Asolaria backup number (e.g. whatsapp:+15550123456)" />
+            <input id="waBackupUserNumber" type="text" autocomplete="off" placeholder="Your backup number (e.g. whatsapp:+15550987654)" />
+          </div>
+          <textarea id="waMessage" placeholder="Write WhatsApp message..."></textarea>
+          <div class="row">
+            <label class="checkline">
+              <input id="waIncludeVoice" type="checkbox" />
+              Generate voice clip too
+            </label>
+          </div>
+          <input id="waVoiceText" type="text" placeholder="Optional voice text (defaults to message)" />
+          <div class="row">
+            <button id="waSendBtn" type="button" class="ok">Send via WhatsApp</button>
+            <button id="waBackupToAsolariaBtn" type="button" class="accent">Backup to Asolaria Number</button>
+            <button id="waBackupToUserBtn" type="button" class="accent">Backup to My Number</button>
+            <button id="playVoiceBtn" type="button" class="warn">Play Latest Voice</button>
+          </div>
+          <audio id="latestVoice" class="audio" controls preload="none"></audio>
+          <div id="waStatus" class="status-box">WhatsApp status loading...</div>
+        </section>
+
+        <section class="card level-admin-only" data-level="admin">
+          <h2>Linked Device Mode</h2>
+          <p class="hint">Open a specific chat and run an approval-gated voice-note macro.</p>
+          <input id="linkedToNumber" type="text" placeholder="Target phone digits (optional if WA default configured)" />
+          <input id="linkedPrefillText" type="text" placeholder="Optional prefill text when opening chat" />
+          <div class="row">
+            <button id="linkedOpenChatBtn" type="button" class="accent">Open Linked Chat</button>
+          </div>
+          <div class="row">
+            <input id="linkedMicX" type="number" step="0.001" placeholder="micX (0-1 or px)" />
+            <input id="linkedMicY" type="number" step="0.001" placeholder="micY (0-1 or px)" />
+            <input id="linkedHoldMs" type="number" min="700" max="12000" step="50" value="2400" placeholder="hold ms" />
+          </div>
+          <input id="linkedVoiceText" type="text" placeholder="Voice-note text description (for approval context)" />
+          <input id="linkedApprovalId" type="text" placeholder="Approval ID (after owner approval)" />
+          <div class="row">
+            <button id="linkedVoiceNoteBtn" type="button" class="warn">Run Voice Note (Approval)</button>
+          </div>
+          <div id="linkedStatus" class="status-box">Linked mode idle.</div>
+        </section>
+
+        <section class="card" data-level="control">
+          <h2>Activity</h2>
+          <div id="eventLog" class="log"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+  <script src="phone-mode.js"></script>
+</body>
+</html>

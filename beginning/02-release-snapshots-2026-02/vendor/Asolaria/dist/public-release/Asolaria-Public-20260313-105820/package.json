@@ -1,0 +1,33 @@
+{
+  "name": "asolaria",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Asolaria master orchestrator for Codex, Chrome, and Power Automate Desktop",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "skills:validate": "node tools/validate-skills.js",
+    "skills:codex:wrap": "node scripts/generate-codex-skill-wrappers.js",
+    "skills:codex:apply-risk-map": "node scripts/apply-codex-wrapper-risk-map.js",
+    "skills:codex:export-risk": "node scripts/export-codex-wrapper-risk-report.js",
+    "review:kickoff": "node tools/Run-CodebaseReviewKickoff.js",
+    "review:composite": "node tools/Run-CodebaseReviewCompositeSnapshot.js",
+    "restart:main": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\tools\\Restart-Asolaria-Main.ps1 -Port 4781",
+    "gateway:start": "node src/gateway/server.js",
+    "sandbox:start": "node services/sandbox-manager/server.js",
+    "memory:start": "node services/memory-indexer/server.js",
+    "release:public": "powershell -ExecutionPolicy Bypass -File .\\tools\\Build-PublicRelease.ps1 -Zip"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "aedes": "^1.0.1",
+    "express": "^4.21.2",
+    "minimalistic-assert": "^1.0.1",
+    "minimalistic-crypto-utils": "^1.0.1",
+    "mqtt": "^5.10.4",
+    "playwright": "^1.56.1",
+    "web-push": "^3.6.7",
+    "ws": "^8.18.3"
+  }
+}

@@ -1,0 +1,1474 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/asolaria-icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/icons/asolaria-icon-512.png" />
+  <link rel="apple-touch-icon" href="/icons/asolaria-icon-192.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>Asolaria</title>
+  <link rel="stylesheet" href="styles.css?v=20260312-super-coder" />
+</head>
+<body class="stealth-off">
+  <div class="bg-layer"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="orb"></div>
+        <div>
+          <h1>Asolaria</h1>
+          <p>One interface. Multiple engines.</p>
+        </div>
+      </div>
+      <div class="top-controls">
+        <button id="natural20DailyBtn" type="button" class="natural20-daily-btn" title="Open Natural20 daily model update">
+          <span class="natural20-daily-btn-label">Natural20 Daily</span>
+        </button>
+        <a href="/graph-runtime.html" target="_blank" rel="noreferrer" class="mode-chip mode-chip-link" title="Open live graph runtime viewer">
+          <span>Graph Runtime</span>
+        </a>
+        <a href="/swarm-civilization-preview.html" target="_blank" rel="noreferrer" class="mode-chip mode-chip-link" title="Open the private civilization preview">
+          <span>Civilization</span>
+        </a>
+        <a href="/abacus-worker.html" target="_blank" rel="noreferrer" class="mode-chip mode-chip-link" title="Open the Abacus worker operator surface">
+          <span>Abacus Worker</span>
+        </a>
+        <a href="/worker-runtime.html" target="_blank" rel="noreferrer" class="mode-chip mode-chip-link" title="Open the live worker runtime surface">
+          <span>Worker Runtime</span>
+        </a>
+        <a href="/worker-router.html" target="_blank" rel="noreferrer" class="mode-chip mode-chip-link" title="Open the unified worker router">
+          <span>Worker Router</span>
+        </a>
+        <label class="stealth-chip" for="stealthToggle">
+          <input id="stealthToggle" type="checkbox" />
+              <span id="stealthLabel">Stealth OFF</span>
+        </label>
+        <label class="mode-chip" for="approvalMode">
+          <span>Approvals</span>
+          <select id="approvalMode">
+            <option value="smart">smart</option>
+            <option value="manual">manual</option>
+            <option value="deny">deny</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="costMode">
+          <span>Cost</span>
+          <select id="costMode">
+            <option value="low">low</option>
+            <option value="balanced">balanced</option>
+            <option value="quality">quality</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="codexWebSearch">
+          <span>Web</span>
+          <select id="codexWebSearch">
+            <option value="off">off</option>
+            <option value="on">on</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="openclawMode">
+          <span>OpenClaw (legacy)</span>
+          <select id="openclawMode">
+            <option value="read_only">read_only</option>
+            <option value="governed">governed</option>
+            <option value="disabled">disabled</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="uiExperienceMode">
+          <span>UI</span>
+          <select id="uiExperienceMode">
+            <option value="simple">simple</option>
+            <option value="admin">admin</option>
+            <option value="advanced">super admin</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="voiceOutputMode">
+          <span>Voice Out</span>
+          <select id="voiceOutputMode">
+            <option value="browser">browser</option>
+            <option value="server">server</option>
+            <option value="kitty_tts">kitty_tts</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="voiceAutoSpeak">
+          <span>Auto Speak</span>
+          <select id="voiceAutoSpeak">
+            <option value="off">off</option>
+            <option value="on">on</option>
+          </select>
+        </label>
+        <div class="status status-mini phone-runtime-alert is-unknown" id="phoneRuntimeAlertBadge">Phone Runtime: checking...</div>
+        <div class="status" id="healthBadge">Checking system...</div>
+      </div>
+    </header>
+
+    <section class="startup-bootstrap" id="startupBootstrap" aria-live="polite" hidden>
+      <div class="startup-bootstrap-shell">
+        <div class="startup-bootstrap-avatar" id="startupBootstrapAvatar" aria-hidden="true">
+          <div class="startup-bootstrap-pulse"></div>
+          <div class="startup-bootstrap-core">
+            <div class="avatar-face" aria-hidden="true">
+              <span class="avatar-eye avatar-eye-left"></span>
+              <span class="avatar-eye avatar-eye-right"></span>
+              <span class="avatar-mouth"></span>
+            </div>
+          </div>
+          <div class="startup-bootstrap-ring"></div>
+        </div>
+        <div class="startup-bootstrap-copy">
+          <h2>Asolaria Startup Monitor</h2>
+          <p id="startupBootstrapStatus">Hello, I am Asolaria. Right now, we are loading the main brain...</p>
+          <p id="startupBootstrapProvider" class="startup-bootstrap-provider">Preparing provider probes...</p>
+          <div class="startup-bootstrap-meta">
+            <span id="startupBootstrapAttempt">Attempt: 0</span>
+            <span id="startupBootstrapTimeout">Timeout: 30s per provider</span>
+            <span id="startupBootstrapLoop">Loop: booting</span>
+          </div>
+          <ul id="startupBootstrapProbeLog" class="startup-bootstrap-log"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="human-launcher" id="humanLauncher" aria-label="Interaction launcher">
+      <div class="human-launcher-head">
+        <h2>Start Asolaria</h2>
+        <p>Use one start action, then ask Asolaria to open services from the dashboard.</p>
+      </div>
+      <div class="human-launcher-grid">
+        <button id="launchSpeakBtn" type="button" class="human-launcher-card is-primary">
+          <span class="launcher-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-label="Start Asolaria">
+              <path d="M12 2a10 10 0 1 0 10 10A10.01 10.01 0 0 0 12 2Zm-1 5a1 1 0 0 1 2 0v5.59l2.3 2.29a1 1 0 1 1-1.42 1.42l-2.59-2.59A1 1 0 0 1 11 13Z"/>
+            </svg>
+          </span>
+          <span class="launcher-copy">
+            <strong>Start Asolaria</strong>
+            <small>Launch dashboard and greeting. Start services by asking Asolaria.</small>
+          </span>
+        </button>
+      </div>
+      <section class="human-mode-picker" aria-label="Interface modes">
+        <div class="human-mode-picker-head">
+          <h3>Interface Modes</h3>
+          <p>Choose how much of Asolaria to expose after launch.</p>
+        </div>
+        <div class="human-mode-grid">
+          <button
+            id="launchSimpleUiBtn"
+            type="button"
+            class="human-mode-card human-mode-card--simple"
+            data-ui-mode-target="simple"
+            aria-pressed="false"
+          >
+            <span class="human-mode-card-icon" aria-hidden="true">S</span>
+            <span class="human-mode-card-copy">
+              <strong>Simple</strong>
+              <small>Minimal voice + chat view with less visual noise.</small>
+            </span>
+          </button>
+          <button
+            id="launchAdminUiBtn"
+            type="button"
+            class="human-mode-card human-mode-card--admin"
+            data-ui-mode-target="admin"
+            aria-pressed="false"
+          >
+            <span class="human-mode-card-icon" aria-hidden="true">A</span>
+            <span class="human-mode-card-copy">
+              <strong>Admin</strong>
+              <small>Operational controls and runtime cards without full terminal depth.</small>
+            </span>
+          </button>
+          <button
+            id="launchSuperAdminUiBtn"
+            type="button"
+            class="human-mode-card human-mode-card--super"
+            data-ui-mode-target="advanced"
+            aria-pressed="false"
+          >
+            <span class="human-mode-card-icon" aria-hidden="true">SA</span>
+            <span class="human-mode-card-copy">
+              <strong>Super Admin</strong>
+              <small>Expose the brain lane, admin lane, and the live terminal view.</small>
+            </span>
+          </button>
+        </div>
+      </section>
+      <p class="human-launcher-status" id="humanLauncherStatus">Ready. Click Start Asolaria, then ask for any service.</p>
+    </section>
+
+    <section class="quick-shell" id="quickShell" aria-label="Asolaria quick interface">
+      <div class="quick-avatar">
+        <div class="quick-avatar-stage" id="quickAvatarStage" aria-hidden="true">
+          <div class="quick-avatar-pulse"></div>
+          <div class="quick-avatar-core">
+            <div class="avatar-face" aria-hidden="true">
+              <span class="avatar-eye avatar-eye-left"></span>
+              <span class="avatar-eye avatar-eye-right"></span>
+              <span class="avatar-mouth"></span>
+            </div>
+          </div>
+          <div class="quick-avatar-ring"></div>
+        </div>
+        <div class="quick-avatar-copy">
+          <h2>Asolaria Live Interface</h2>
+          <p id="quickAvatarStatus">Avatar idle. Voice is ready when you are.</p>
+          <div class="quick-runtime-pills">
+            <span id="quickAvatarModePill" class="quick-pill quick-pill-highlight">Avatar: orb | Voice: browser</span>
+            <span id="quickColonyStatus" class="quick-pill">Agent Colony: checking...</span>
+            <span id="quickPhoneStatus" class="quick-pill">Phone Lane: checking...</span>
+          </div>
+        </div>
+      </div>
+      <div class="quick-actions">
+        <button id="quickVoiceToggleBtn" type="button" class="quick-primary-btn">Start Voice</button>
+        <button id="quickVoicePushBtn" type="button" class="quick-secondary-btn">Push-to-Talk</button>
+        <button id="quickVoiceTestBtn" type="button" class="quick-secondary-btn">Test Voice Out</button>
+        <button id="quickOpenAvatarStageBtn" type="button" class="quick-secondary-btn">Avatar Stage</button>
+        <button id="quickOpenPhoneBtn" type="button" class="quick-secondary-btn">Phone View</button>
+        <button id="quickOpenAdvancedBtn" type="button" class="quick-secondary-btn">Open Super Admin</button>
+      </div>
+      <section class="dashboard-launcher" id="dashboardLauncher" aria-label="Dashboard launcher">
+        <div class="dashboard-launcher-head">
+          <h3>Dashboards</h3>
+          <p>Start from one tile, then open the exact workspace you want.</p>
+        </div>
+        <div class="dashboard-launcher-grid">
+          <button type="button" class="dashboard-launcher-tile dashboard-launcher-tile--chat" data-dashboard-action="chat">
+            <span class="dashboard-launcher-tile-icon" aria-hidden="true">C</span>
+            <span class="dashboard-launcher-tile-copy">
+              <strong>Chat</strong>
+              <small>Open the brain console and continue the current task.</small>
+            </span>
+          </button>
+          <button type="button" class="dashboard-launcher-tile dashboard-launcher-tile--runtime" data-dashboard-action="runtime">
+            <span class="dashboard-launcher-tile-icon" aria-hidden="true">R</span>
+            <span class="dashboard-launcher-tile-copy">
+              <strong>Runtime</strong>
+              <small>Core start, phone connect, control plane, and health actions.</small>
+            </span>
+          </button>
+          <button type="button" class="dashboard-launcher-tile dashboard-launcher-tile--transcript" data-dashboard-action="transcript">
+            <span class="dashboard-launcher-tile-icon" aria-hidden="true">T</span>
+            <span class="dashboard-launcher-tile-copy">
+              <strong>Transcript</strong>
+              <small>Live capture, bridge lanes, and interview copilot tools.</small>
+            </span>
+          </button>
+          <button type="button" class="dashboard-launcher-tile dashboard-launcher-tile--phone" data-dashboard-action="phone">
+            <span class="dashboard-launcher-tile-icon" aria-hidden="true">P</span>
+            <span class="dashboard-launcher-tile-copy">
+              <strong>Phone</strong>
+              <small>Open the mobile view and companion phone controls.</small>
+            </span>
+          </button>
+          <button type="button" class="dashboard-launcher-tile dashboard-launcher-tile--daily" data-dashboard-action="natural20">
+            <span class="dashboard-launcher-tile-icon" aria-hidden="true">N20</span>
+            <span class="dashboard-launcher-tile-copy">
+              <strong>Natural20</strong>
+              <small>Open Wes Roth's daily model tracker and AI brief.</small>
+            </span>
+          </button>
+          <button type="button" class="dashboard-launcher-tile dashboard-launcher-tile--super" data-dashboard-action="super_admin">
+            <span class="dashboard-launcher-tile-icon" aria-hidden="true">SA</span>
+            <span class="dashboard-launcher-tile-copy">
+              <strong>Super Admin</strong>
+              <small>Reveal the brain lane, admin lane, and live terminal surfaces.</small>
+            </span>
+          </button>
+        </div>
+      </section>
+      <section id="quickRuntimeControl" class="quick-runtime-control" aria-label="Runtime controls">
+        <h3>Runtime Controls</h3>
+        <div class="quick-actions">
+          <button id="runtimeStartAsolariaBtn" type="button" class="quick-secondary-btn">Start Core</button>
+          <button id="runtimeStartPhoneBtn" type="button" class="quick-secondary-btn">Phone Connect</button>
+          <button id="runtimeStartControlPlaneBtn" type="button" class="quick-secondary-btn">Control Plane</button>
+          <button id="runtimeStartControlPlaneSandboxBtn" type="button" class="quick-secondary-btn">Control+Sandbox</button>
+          <button id="runtimeAdbHealthBtn" type="button" class="quick-secondary-btn">ADB Health</button>
+          <button id="runtimeStopAsolariaBtn" type="button" class="quick-secondary-btn">Stop Core</button>
+          <button id="runtimeStopControlPlaneBtn" type="button" class="quick-secondary-btn">Stop Control Plane</button>
+        </div>
+      </section>
+      <p id="quickRuntimeActionStatus" class="quick-voice-status">Runtime controls are ready. Desktop utility shortcuts are optional.</p>
+      <p id="quickVoiceStatus" class="quick-voice-status">Voice is off. Web Speech runs now; Kitty.TTS can be swapped in as the output voice engine.</p>
+      <section id="quickRealtimeCard" class="quick-realtime-card" aria-label="Realtime transcription">
+        <div class="quick-realtime-head">
+          <h3>Realtime Transcript</h3>
+          <span id="quickRealtimeStatus" class="quick-realtime-status">Idle</span>
+        </div>
+        <p class="hint">Pick a capture source first. For clean meeting transcript lines, use tab/window capture so other app audio is excluded.</p>
+        <div id="quickRealtimeBasicPresets" class="quick-realtime-basic-presets" aria-label="Simple transcript presets">
+          <button id="quickRealtimeBasicMeetBtn" type="button" class="quick-secondary-btn">Meeting Captions</button>
+          <button id="quickRealtimeBasicTabBtn" type="button" class="quick-secondary-btn">Tab Audio</button>
+          <button id="quickRealtimeBasicWindowBtn" type="button" class="quick-secondary-btn">Window Audio</button>
+        </div>
+        <p id="quickRealtimeBasicHint" class="hint quick-realtime-basic-hint">
+          Basic mode: choose one preset and Asolaria starts transcript capture immediately. For two meetings, run caption bridge in both tabs and Asolaria will separate lanes.
+        </p>
+        <section id="quickRealtimeDualPanel" class="quick-realtime-dual-panel" aria-label="Dual meeting lanes">
+          <div class="quick-realtime-head">
+            <h3>Dual Meeting Lanes</h3>
+            <span class="quick-realtime-status">A/B</span>
+          </div>
+          <p class="hint">Copy one script per meeting tab. Each lane ID keeps transcript lines separated.</p>
+          <div class="quick-realtime-dual-grid">
+            <article class="quick-realtime-dual-card">
+              <h4>Meeting A</h4>
+              <label for="quickRealtimeLaneAInput">Lane ID</label>
+              <input
+                id="quickRealtimeLaneAInput"
+                class="quick-realtime-source-select"
+                type="text"
+                maxlength="64"
+                value="meet_a"
+                spellcheck="false"
+                autocomplete="off"
+              />
+              <button id="quickRealtimeCopyBridgeABtn" type="button" class="quick-secondary-btn">Copy Script A</button>
+              <p id="quickRealtimeLaneAStatus" class="hint quick-realtime-lane-status">Lane meet_a: idle</p>
+            </article>
+            <article class="quick-realtime-dual-card">
+              <h4>Meeting B</h4>
+              <label for="quickRealtimeLaneBInput">Lane ID</label>
+              <input
+                id="quickRealtimeLaneBInput"
+                class="quick-realtime-source-select"
+                type="text"
+                maxlength="64"
+                value="meet_b"
+                spellcheck="false"
+                autocomplete="off"
+              />
+              <button id="quickRealtimeCopyBridgeBBtn" type="button" class="quick-secondary-btn">Copy Script B</button>
+              <p id="quickRealtimeLaneBStatus" class="hint quick-realtime-lane-status">Lane meet_b: idle</p>
+            </article>
+          </div>
+          <div class="quick-actions">
+            <button id="quickRealtimePasteHelperBtn" type="button" class="quick-secondary-btn">Open Paste Helper</button>
+          </div>
+        </section>
+        <div class="quick-realtime-source-row">
+          <label for="quickRealtimeSourceSelect">Capture Source</label>
+          <select id="quickRealtimeSourceSelect" class="quick-realtime-source-select">
+            <option value="tab_audio">Meeting Tab Audio (Recommended)</option>
+            <option value="window_audio">App Window Audio</option>
+            <option value="screen_audio">Entire Screen/System Audio</option>
+            <option value="microphone">Microphone Only</option>
+            <option value="server_loopback">System Audio (Server Loopback, Copyable)</option>
+            <option value="google_meet_caption">Google Meet Captions (Instant, Copyable)</option>
+            <option value="custom_caption">Custom Caption Bridge (Script, Copyable)</option>
+          </select>
+        </div>
+        <div class="quick-realtime-source-row">
+          <label for="quickRealtimeTranscriptSourceSelect">Transcript Source</label>
+          <select id="quickRealtimeTranscriptSourceSelect" class="quick-realtime-source-select">
+            <option value="live">Live Engine</option>
+            <option value="bridge">Bridge Captions</option>
+            <option value="all">Live + Bridge</option>
+          </select>
+        </div>
+        <div class="quick-realtime-source-row">
+          <label for="quickRealtimeBridgeTokenInput">Bridge Push Token (Optional)</label>
+          <input
+            id="quickRealtimeBridgeTokenInput"
+            class="quick-realtime-source-select"
+            type="password"
+            maxlength="240"
+            placeholder="Used when copying bridge scripts to token-protected ingest"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+        <div class="quick-actions">
+          <button id="quickRealtimeStartBtn" type="button" class="quick-secondary-btn">Start Selected Source</button>
+          <button id="quickRealtimeStopBtn" type="button" class="quick-secondary-btn">Stop</button>
+          <button id="quickRealtimeClearBtn" type="button" class="quick-secondary-btn">Clear</button>
+          <button id="quickRealtimeCopyBtn" type="button" class="quick-secondary-btn">Copy</button>
+          <button id="quickRealtimeBridgeBtn" type="button" class="quick-secondary-btn" hidden>Copy Meet Bridge Script</button>
+        </div>
+        <div class="quick-realtime-tools">
+          <label class="quick-realtime-toggle" for="quickRealtimeAutoCopyToggle">
+            <input id="quickRealtimeAutoCopyToggle" type="checkbox" checked />
+            <span>Auto-copy incoming lines</span>
+          </label>
+          <label class="quick-realtime-toggle" for="quickRealtimeMirrorToChatToggle">
+            <input id="quickRealtimeMirrorToChatToggle" type="checkbox" checked />
+            <span>Mirror lines into chat box</span>
+          </label>
+          <button id="quickRealtimeCopyLastBtn" type="button" class="quick-secondary-btn">Copy Last Line</button>
+          <button id="quickRealtimeInstantAskBtn" type="button" class="quick-secondary-btn">Instant Ask Last Line</button>
+        </div>
+        <p class="hint quick-realtime-hotkeys">Hotkeys: Ctrl+Shift+M = start/stop live capture, Ctrl+Shift+K = instant ask on latest line.</p>
+        <div id="quickRealtimeTranscript" class="quick-realtime-transcript" aria-live="polite"></div>
+        <label class="hint" for="quickRealtimeChatMirrorBox">Live Transcript Chat Box (Copy/Paste Ready)</label>
+        <textarea
+          id="quickRealtimeChatMirrorBox"
+          class="quick-interview-input"
+          rows="4"
+          readonly
+          placeholder="Live transcript lines will stream here in chat-ready format."
+        ></textarea>
+        <div class="quick-flow-toolbar" aria-label="Flow monitor controls">
+          <button
+            id="quickFlowMasterToggle"
+            type="button"
+            class="quick-secondary-btn quick-flow-toggle-btn quick-flow-toggle-btn--off"
+            aria-pressed="false"
+          >
+            Flow Monitor Off
+          </button>
+          <button
+            id="quickFlowAnalyzeToggle"
+            type="button"
+            class="quick-secondary-btn quick-flow-toggle-btn quick-flow-toggle-btn--off"
+            aria-pressed="false"
+          >
+            AI Analysis Off
+          </button>
+          <button id="quickFlowRefreshBtn" type="button" class="quick-secondary-btn">Refresh Board</button>
+          <input
+            id="quickFlowProbeText"
+            class="quick-flow-input"
+            type="text"
+            maxlength="240"
+            placeholder="Probe text..."
+          />
+          <input
+            id="quickFlowProbeLane"
+            class="quick-flow-input quick-flow-input--lane"
+            type="text"
+            maxlength="64"
+            placeholder="Lane id (optional)"
+          />
+          <button id="quickFlowProbeBtn" type="button" class="quick-secondary-btn">Probe Lane</button>
+        </div>
+        <div id="quickFlowBoard" class="quick-flow-board" aria-live="polite">
+          <article class="quick-flow-card">
+            <div class="quick-flow-card-head">
+              <strong>Flow Monitor</strong>
+              <span class="quick-flow-pill quick-flow-pill--off">Monitor Off</span>
+            </div>
+            <div class="quick-flow-stream quick-flow-stream--incoming">Incoming lane stream is idle.</div>
+            <div class="quick-flow-stream quick-flow-stream--outgoing">Outgoing lane stream is idle.</div>
+            <div class="quick-flow-lines">Turn on Flow Monitor to render per-flow transcript activity here.</div>
+          </article>
+        </div>
+        <section class="quick-interview-copilot" aria-label="AI interview copilot">
+          <div class="quick-realtime-head">
+            <h3>AI Interview Copilot</h3>
+            <span id="quickInterviewQuestionCount" class="quick-realtime-status">0/200 words</span>
+          </div>
+          <textarea
+            id="quickInterviewQuestion"
+            class="quick-interview-input"
+            rows="3"
+            maxlength="2400"
+            placeholder="Ask a question from the live transcript..."
+          ></textarea>
+          <p class="hint">Type or paste your question. Use quick actions to inject the latest live line.</p>
+          <div class="quick-actions">
+            <button id="quickInterviewAskBtn" type="button" class="quick-secondary-btn">Ask Copilot</button>
+            <button id="quickInterviewUseLastBtn" type="button" class="quick-secondary-btn">Use Last Line</button>
+            <button id="quickInterviewClearBtn" type="button" class="quick-secondary-btn">Clear Question</button>
+          </div>
+        </section>
+      </section>
+      <section class="super-admin-console" id="superAdminConsole" aria-label="Super admin terminals">
+        <div class="super-admin-console-head">
+          <div>
+            <h3>Super Admin Terminals</h3>
+            <p>See the active brain lane and the admin lane before you trust a reply.</p>
+          </div>
+          <span id="superAdminConsoleStatus" class="quick-realtime-status">Waiting for super admin mode...</span>
+        </div>
+        <div class="super-admin-console-grid">
+          <article class="super-admin-terminal super-admin-terminal--brain">
+            <div class="super-admin-terminal-head">
+              <div>
+                <h4>Main Brain</h4>
+                <p id="superAdminBrainMeta">Provider and model information will appear here.</p>
+              </div>
+              <button id="superAdminBrainWindowBtn" type="button" class="quick-secondary-btn">Open Brain PowerShell</button>
+            </div>
+            <pre id="superAdminBrainOutput" class="super-admin-terminal-output">Waiting for the main brain terminal feed...</pre>
+          </article>
+          <article class="super-admin-terminal super-admin-terminal--admin">
+            <div class="super-admin-terminal-head">
+              <div>
+                <h4>Super Admin</h4>
+                <p id="superAdminAdminMeta">Runtime control, startup, and watchdog status will appear here.</p>
+              </div>
+              <button id="superAdminAdminWindowBtn" type="button" class="quick-secondary-btn">Open Admin PowerShell</button>
+            </div>
+            <pre id="superAdminAdminOutput" class="super-admin-terminal-output">Waiting for the admin terminal feed...</pre>
+          </article>
+          <article class="super-admin-terminal super-admin-terminal--direct">
+            <div class="super-admin-terminal-head">
+              <div>
+                <h4>Direct Codex Window</h4>
+                <p id="superAdminDirectMeta">Internal-only lane. RouteLLM and external fallback are bypassed here.</p>
+              </div>
+              <button id="superAdminDirectOpenThreadBtn" type="button" class="quick-secondary-btn">Open Full Thread</button>
+            </div>
+            <div class="super-admin-direct-statusbar">
+              <span id="superAdminDirectStatus" class="quick-realtime-status">Direct Codex lane idle.</span>
+              <span class="super-admin-direct-pill">Internal only</span>
+            </div>
+            <div id="superAdminDirectTranscript" class="super-admin-direct-transcript" aria-live="polite">
+              <div class="super-admin-direct-empty">Send a direct message to talk to internal Codex without routed shortcuts.</div>
+            </div>
+            <form id="superAdminDirectForm" class="super-admin-direct-form">
+              <textarea
+                id="superAdminDirectInput"
+                class="super-admin-direct-input"
+                rows="4"
+                placeholder="Talk directly to internal Codex..."
+              ></textarea>
+              <div class="super-admin-direct-actions">
+                <button id="superAdminDirectClearBtn" type="button" class="quick-secondary-btn">Clear</button>
+                <button id="superAdminDirectSend" type="submit" class="quick-primary-btn">Send Direct</button>
+              </div>
+            </form>
+          </article>
+        </div>
+      </section>
+      <dialog id="quickRealtimePasteHelperDialog" class="icv2-dialog">
+        <form method="dialog" class="icv2-dialog-form">
+          <h3>Meeting Paste Helper</h3>
+          <p id="quickRealtimePasteHelperStatus" class="hint">No bridge script copied yet.</p>
+          <ol class="quick-realtime-paste-steps">
+            <li>Focus the target meeting tab.</li>
+            <li>Open DevTools Console (<code>Ctrl+Shift+J</code> on Windows).</li>
+            <li>Paste the script and press <code>Enter</code>.</li>
+            <li>Leave that tab open while captions stream.</li>
+          </ol>
+          <label for="quickRealtimePasteHelperScript" class="hint">Script preview</label>
+          <textarea
+            id="quickRealtimePasteHelperScript"
+            class="quick-realtime-paste-script"
+            rows="8"
+            readonly
+            spellcheck="false"
+          ></textarea>
+          <div class="quick-actions">
+            <button id="quickRealtimePasteHelperCopyBtn" type="button" class="quick-secondary-btn">Copy Script Again</button>
+            <button id="quickRealtimePasteHelperCloseBtn" type="submit" class="quick-secondary-btn">Close</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+
+    <section class="interview-copilot-v2" id="interviewCopilotV2" aria-label="Interview Copilot">
+      <div class="icv2-head">
+        <div>
+          <h2>Interview Copilot</h2>
+          <p>Asolaria-native workflow on top of local routing, transcript, and voice controls.</p>
+          <p class="hint">Asolaria-native runtime: no third-party copilot billing or session metering.</p>
+        </div>
+        <div class="icv2-head-actions">
+          <span id="icv2FlowBadge" class="icv2-flow-badge">Flow: setup pending</span>
+          <button id="icv2StartBtn" type="button" class="quick-primary-btn">Start Interview Copilot</button>
+          <button id="icv2ShareAudioBtn" type="button" class="quick-secondary-btn">Share Audio</button>
+          <button id="icv2StopAudioBtn" type="button" class="quick-secondary-btn">Stop Audio</button>
+          <button id="icv2PrefsBtn" type="button" class="quick-secondary-btn">Preferences</button>
+          <button id="icv2HotkeysBtn" type="button" class="quick-secondary-btn">Keyboard Shortcuts</button>
+        </div>
+      </div>
+      <div id="icv2FlowLane" class="icv2-flow-lane" aria-label="Interview flow status">
+        <article id="icv2StepSetup" class="icv2-flow-step is-pending">
+          <p class="icv2-flow-step-label">1. Setup</p>
+          <p class="icv2-flow-step-title">Preset + profile</p>
+          <p id="icv2StepSetupState" class="icv2-flow-step-state">Pick source and confirm checklist</p>
+        </article>
+        <article id="icv2StepCapture" class="icv2-flow-step is-pending">
+          <p class="icv2-flow-step-label">2. Capture</p>
+          <p class="icv2-flow-step-title">Share interview audio</p>
+          <p id="icv2StepCaptureState" class="icv2-flow-step-state">Start capture from selected app</p>
+        </article>
+        <article id="icv2StepAsk" class="icv2-flow-step is-pending">
+          <p class="icv2-flow-step-label">3. Ask</p>
+          <p class="icv2-flow-step-title">Draft your question</p>
+          <p id="icv2StepAskState" class="icv2-flow-step-state">Use transcript line or type your own</p>
+        </article>
+        <article id="icv2StepAnswer" class="icv2-flow-step is-pending">
+          <p class="icv2-flow-step-label">4. Answer</p>
+          <p class="icv2-flow-step-title">Get interview guidance</p>
+          <p id="icv2StepAnswerState" class="icv2-flow-step-state">Copilot response appears here</p>
+        </article>
+      </div>
+      <div id="icv2RuntimeStrip" class="icv2-runtime-strip" aria-label="Interview runtime state">
+        <span id="icv2TranscriptStateChip" class="icv2-state-chip icv2-state-chip--idle">Transcript: idle</span>
+        <span id="icv2SourceStateChip" class="icv2-state-chip icv2-state-chip--info">Source: not selected</span>
+        <span id="icv2SwarmStateChip" class="icv2-state-chip icv2-state-chip--info" hidden>Swarm mode: n/a</span>
+        <span id="icv2MistakeStateChip" class="icv2-state-chip icv2-state-chip--info" hidden>Mistake hints: n/a</span>
+      </div>
+
+      <div class="icv2-grid">
+        <section class="icv2-card">
+          <h3>Review and confirm</h3>
+          <div class="icv2-inline-grid">
+            <label for="icv2RoleInput">Role</label>
+            <input id="icv2RoleInput" type="text" placeholder="Software Engineer @ Company" />
+          </div>
+          <div class="icv2-inline-grid">
+            <label for="icv2TimeLimitInput">Time Limit (minutes)</label>
+            <input id="icv2TimeLimitInput" type="number" min="5" max="180" step="5" value="15" />
+          </div>
+          <div class="icv2-inline-grid">
+            <label for="icv2SessionsLeftInput">Parallel Audio Lanes</label>
+            <input id="icv2SessionsLeftInput" type="number" min="1" max="12" step="1" value="2" />
+          </div>
+          <div class="icv2-inline-grid">
+            <label for="icv2LanguageSelect">Language</label>
+            <select id="icv2LanguageSelect">
+              <option value="English">English</option>
+              <option value="Spanish">Spanish</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+            </select>
+          </div>
+          <label class="checkline icv2-checkline">
+            <input id="icv2StealthToggle" type="checkbox" checked />
+            Stealth Mode
+          </label>
+          <div class="icv2-inline-grid">
+            <label for="icv2CaptureSourceSelect">Capture Source</label>
+            <select id="icv2CaptureSourceSelect">
+              <option value="tab_audio">Meeting Tab Audio (Recommended)</option>
+              <option value="window_audio">App Window Audio</option>
+              <option value="screen_audio">Entire Screen/System Audio</option>
+              <option value="microphone">Microphone Only</option>
+              <option value="server_loopback">System Audio (Server Loopback)</option>
+              <option value="google_meet_caption">Google Meet Captions</option>
+              <option value="custom_caption">Custom Caption Bridge</option>
+            </select>
+          </div>
+          <section class="icv2-onboarding" aria-label="Capture source onboarding">
+            <p class="icv2-onboarding-label">Capture Source Onboarding</p>
+            <p class="hint icv2-onboarding-hint">Pick your meeting app. Asolaria will apply a source preset and checklist for Meet, Zoom, or Teams.</p>
+            <div class="icv2-source-presets" role="group" aria-label="Meeting app preset">
+              <button id="icv2PresetMeetBtn" type="button" class="icv2-preset-btn">
+                <span class="icv2-preset-name">Google Meet</span>
+                <span class="icv2-preset-meta">Use Meet tab audio for native capture</span>
+              </button>
+              <button id="icv2PresetZoomBtn" type="button" class="icv2-preset-btn">
+                <span class="icv2-preset-name">Zoom</span>
+                <span class="icv2-preset-meta">Capture the Zoom app window audio</span>
+              </button>
+              <button id="icv2PresetTeamsBtn" type="button" class="icv2-preset-btn">
+                <span class="icv2-preset-name">Microsoft Teams</span>
+                <span class="icv2-preset-meta">Capture Teams window with steady output</span>
+              </button>
+              <button id="icv2PresetCustomBtn" type="button" class="icv2-preset-btn">
+                <span class="icv2-preset-name">Manual</span>
+                <span class="icv2-preset-meta">Choose source and routing yourself</span>
+              </button>
+            </div>
+            <div class="icv2-onboarding-meta">
+              <span id="icv2PresetTag" class="icv2-onboarding-tag">Preset: Manual</span>
+              <span id="icv2PresetSourceHint" class="icv2-onboarding-source">Recommended source appears here.</span>
+            </div>
+            <p id="icv2PresetProTip" class="hint icv2-onboarding-tip">Tip: Start capture before the interviewer asks the first question.</p>
+            <div class="icv2-onboarding-checks" role="group" aria-label="Capture readiness checklist">
+              <label class="checkline icv2-onboarding-check">
+                <input id="icv2Check1" type="checkbox" />
+                <span id="icv2Check1Label">Select your meeting capture source.</span>
+              </label>
+              <label class="checkline icv2-onboarding-check">
+                <input id="icv2Check2" type="checkbox" />
+                <span id="icv2Check2Label">Confirm audio route for interviewer speech before capture starts.</span>
+              </label>
+              <label class="checkline icv2-onboarding-check">
+                <input id="icv2Check3" type="checkbox" />
+                <span id="icv2Check3Label">Verify transcript mirror movement before asking Copilot.</span>
+              </label>
+            </div>
+            <div class="quick-actions">
+              <button id="icv2ApplyPresetBtn" type="button" class="quick-secondary-btn">Apply Preset Source</button>
+              <button id="icv2StartPresetCaptureBtn" type="button" class="quick-secondary-btn">Start Capture with Preset</button>
+              <button id="icv2ResetChecksBtn" type="button" class="quick-secondary-btn">Reset Checklist</button>
+            </div>
+            <p id="icv2ChecklistStatus" class="hint">Checklist: 0/3 complete.</p>
+            <p id="icv2OnboardingNextStep" class="hint icv2-onboarding-next">Next: choose a preset, complete checklist, then start capture.</p>
+            <p id="icv2PresetStatus" class="hint">Preset: not selected.</p>
+            <ol id="icv2SourceChecklist" class="icv2-source-checklist" aria-live="polite"></ol>
+          </section>
+          <p id="icv2Status" class="hint">Idle. Configure and start when ready.</p>
+        </section>
+
+        <section class="icv2-card">
+          <h3>Model</h3>
+          <select id="icv2ModelSelect"></select>
+          <p id="icv2ModelMeta" class="hint">Provider route will be selected automatically.</p>
+          <div class="icv2-inline-grid" id="icv2ResponseLengthWrap">
+            <label for="icv2ResponseLengthSelect">Response Length</label>
+            <select id="icv2ResponseLengthSelect">
+              <option value="concise">Concise</option>
+              <option value="balanced">Balanced</option>
+              <option value="detailed">Detailed</option>
+            </select>
+          </div>
+          <div class="icv2-sharing">
+            <label for="icv2ShareLinkInput">Session Sharing</label>
+            <div class="icv2-sharing-row">
+              <input id="icv2ShareLinkInput" type="text" readonly />
+              <button id="icv2CopyShareLinkBtn" type="button" class="quick-secondary-btn">Copy</button>
+            </div>
+          </div>
+          <p class="hint">Open this link on another device to view the same interview context.</p>
+        </section>
+      </div>
+
+      <div class="icv2-grid">
+        <section class="icv2-card">
+          <h3>Ask a question...</h3>
+          <textarea
+            id="icv2QuestionInput"
+            class="quick-interview-input"
+            rows="4"
+            placeholder="Ask for exact answer, concise guidance, or follow-up strategy."
+          ></textarea>
+          <div class="quick-actions">
+            <button id="icv2AskBtn" type="button" class="quick-primary-btn">Ask Copilot</button>
+            <button id="icv2UseLastLineBtn" type="button" class="quick-secondary-btn">Use Last Transcript Line</button>
+            <button id="icv2ClearQuestionBtn" type="button" class="quick-secondary-btn">Clear</button>
+          </div>
+          <p class="hint">Shortcut: Ctrl+K focuses input. Ctrl+Shift+Y sends.</p>
+          <p id="icv2RouteDebug" class="hint">Route: idle</p>
+          <div id="icv2AnswerBox" class="quick-realtime-transcript">Copilot responses will appear here.</div>
+        </section>
+
+        <section class="icv2-card">
+          <h3>Live transcript mirror</h3>
+          <p id="icv2TranscriptStatus" class="hint">Idle. Ready for shared audio.</p>
+          <div id="icv2TranscriptMirror" class="quick-realtime-transcript">Transcript will appear here while capture is active.</div>
+        </section>
+      </div>
+
+      <div class="icv2-grid">
+        <section class="icv2-card">
+          <h3>Voice Injection Bridge</h3>
+          <p class="hint">Set this output to a virtual cable endpoint, and set your meeting microphone to the same cable for injected speech.</p>
+          <div class="icv2-inline-grid">
+            <label for="icv2InjectOutputDevice">Injection Output Device</label>
+            <select id="icv2InjectOutputDevice">
+              <option value="default">System default</option>
+            </select>
+          </div>
+          <textarea
+            id="icv2InjectText"
+            class="quick-interview-input"
+            rows="3"
+            placeholder="Type what Asolaria should inject into the meeting audio path..."
+          ></textarea>
+          <div class="quick-actions">
+            <button id="icv2InjectSpeakBtn" type="button" class="quick-primary-btn">Inject Voice</button>
+            <button id="icv2InjectSelfTestBtn" type="button" class="quick-secondary-btn">Self-Test Bridge</button>
+            <button id="icv2InjectWizardBtn" type="button" class="quick-secondary-btn">Bridge Setup Wizard</button>
+            <button id="icv2InjectRefreshDevicesBtn" type="button" class="quick-secondary-btn">Refresh Devices</button>
+          </div>
+          <p id="icv2InjectStatus" class="hint">Idle. Choose output and inject a line.</p>
+        </section>
+      </div>
+
+      <dialog id="icv2PrefsDialog" class="icv2-dialog">
+        <form method="dialog" class="icv2-dialog-form">
+          <h3>Preferences</h3>
+          <label class="checkline">
+            <input id="icv2PrefAutoScroll" type="checkbox" checked />
+            Auto Scroll
+          </label>
+          <label class="checkline">
+            <input id="icv2PrefShowQuestion" type="checkbox" checked />
+            Show Question in Response
+          </label>
+          <label class="checkline">
+            <input id="icv2PrefResponseLengthControl" type="checkbox" checked />
+            Response Length Control
+          </label>
+          <label class="checkline">
+            <input id="icv2PrefPrompterMode" type="checkbox" />
+            Prompter Mode
+          </label>
+          <label class="checkline">
+            <input id="icv2PrefPip" type="checkbox" />
+            Picture in Picture
+          </label>
+          <div class="button-row wrap-row">
+            <button id="icv2OpenPipBtn" type="button" class="quick-secondary-btn">Open PiP View</button>
+            <button id="icv2ClosePrefsBtn" type="submit" class="quick-primary-btn">Done</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog id="icv2HotkeysDialog" class="icv2-dialog">
+        <form method="dialog" class="icv2-dialog-form">
+          <h3>Keyboard Shortcuts</h3>
+          <div class="event-log icv2-hotkeys-log">
+            <div><strong>Ctrl+Shift+I</strong> Start/End Interview Copilot</div>
+            <div><strong>Ctrl+Shift+A</strong> Share Audio (start capture)</div>
+            <div><strong>Ctrl+Shift+S</strong> Stop Audio capture</div>
+            <div><strong>Ctrl+Shift+Y</strong> Ask Copilot</div>
+            <div><strong>Ctrl+Shift+P</strong> Toggle Prompter Mode</div>
+            <div><strong>Ctrl+/</strong> Open this hotkey panel</div>
+            <div><strong>Ctrl+K</strong> Focus question input</div>
+            <div><strong>Ctrl+Shift+M</strong> Existing Asolaria start/stop live capture</div>
+            <div><strong>Ctrl+Shift+K</strong> Existing Asolaria instant ask on latest line</div>
+          </div>
+          <div class="button-row wrap-row">
+            <button id="icv2CloseHotkeysBtn" type="submit" class="quick-primary-btn">Close</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+
+    <section class="layout">
+      <section id="brainConsolePanel" class="panel chat-panel">
+        <div class="panel-head">
+          <h2>Brain Console</h2>
+          <p>Codex-backed reasoning stream</p>
+        </div>
+
+        <div class="chat-surface">
+          <aside class="chat-left-rail">
+            <div class="chat-rail-nav" id="chatRailNav">
+              <button type="button" class="chat-rail-nav-btn" data-chat-rail="apps" title="Shortcut: g then t">Tools</button>
+              <button type="button" class="chat-rail-nav-btn" data-chat-rail="tasks" title="Shortcut: g then w">Work</button>
+              <button type="button" class="chat-rail-nav-btn active" data-chat-rail="chats" title="Shortcut: g then c">Conversations</button>
+            </div>
+
+            <section class="chat-rail-section is-hidden" id="chatRailAppsSection" data-chat-rail-section="apps">
+              <div class="chat-app-card">
+                <div class="chat-thread-header">
+                  <strong>Routing</strong>
+                  <span class="hint" id="chatActiveThreadHint">Main Chat</span>
+                </div>
+                <div class="chat-route-group">
+                  <label for="chatRouteMode">Mode</label>
+                  <select id="chatRouteMode">
+                    <option value="normal">RouteLLM</option>
+                    <option value="deep">Deep Agent Style</option>
+                    <option value="direct">Direct Codex (Internal)</option>
+                  </select>
+                  <button id="chatEscalateBtn" type="button">Escalate</button>
+                </div>
+              </div>
+              <div class="chat-app-card">
+                <div class="chat-app-card-title">Thread Controls</div>
+                <div class="button-row wrap-row">
+                  <button id="chatNewThreadBtn" type="button">New Chat</button>
+                  <button id="chatRenameThreadBtn" type="button">Rename</button>
+                </div>
+              </div>
+              <div class="chat-app-card">
+                <div class="chat-app-card-title">Abacus Upgrade Pack</div>
+                <div class="button-row wrap-row">
+                  <button id="chatCreateAbacusPackBtn" type="button">Create Today Pack</button>
+                  <button id="chatSeedAbacusPromptBtn" type="button">Seed Prompt</button>
+                </div>
+                <p class="hint" id="chatAbacusPackStatus">Create scoped tasks and seed a focused upgrade prompt.</p>
+              </div>
+              <div class="chat-app-card">
+                <div class="chat-app-card-title">Friend Bootstrap Pack</div>
+                <div class="button-row wrap-row">
+                  <button id="chatSeedFriendBootstrapBtn" type="button">Seed System Card</button>
+                  <button id="chatCopyFriendBootstrapBtn" type="button">Copy Full Pack</button>
+                </div>
+                <p class="hint" id="chatFriendBootstrapStatus">Load the Codex bootstrap system card and task packet for a new machine.</p>
+              </div>
+            </section>
+
+            <section class="chat-rail-section is-hidden" id="chatRailTasksSection" data-chat-rail-section="tasks">
+              <input id="chatTaskSearch" type="text" placeholder="Search tasks..." />
+              <div class="chat-task-card-list" id="chatTaskCardList"></div>
+            </section>
+
+            <section class="chat-rail-section" id="chatRailChatsSection" data-chat-rail-section="chats">
+              <input id="chatThreadSearch" type="text" placeholder="Search conversations..." />
+              <div class="chat-rail-metric-row">
+                <span id="chatExecutionChip" class="chat-mini-chip" title="Today: active, blocked, and done tasks">0 Active | 0 Blocked | 0 Done Today</span>
+                <span id="chatSafetyMetricsChip" class="chat-mini-chip" title="Today: NBA click-through and reopen ratio">NBA 0/0 | Reopen 0/0</span>
+                <button id="chatSafetyMetricsResetBtn" type="button" class="chat-mini-action" title="Reset today's local safety metrics">Reset Metrics</button>
+              </div>
+              <div class="chat-threads-group">
+                <h4>Recently Active</h4>
+                <div class="chat-thread-card-list" id="chatRecentlyActiveThreadList"></div>
+              </div>
+              <div class="chat-threads-group">
+                <div class="chat-threads-head">
+                  <h4 title="Your current priorities. Limited to 3.">Focus</h4>
+                  <span id="chatFocusTurnoverChip" class="chat-mini-chip" title="Today's focus turnover">A0 | R0 | X0 | C0</span>
+                  <button id="chatClearFocusBtn" type="button" class="chat-mini-action">Clear Focus</button>
+                </div>
+                <div id="chatFocusSuggestionRow" class="chat-focus-suggestion" hidden>
+                  <span id="chatFocusSuggestionText" class="chat-thread-preview">Suggested Focus: continue recent priority work.</span>
+                  <button id="chatFocusSuggestionBtn" type="button" class="chat-mini-action">Add Suggested</button>
+                </div>
+                <div class="chat-thread-card-list" id="chatPinnedThreadList"></div>
+              </div>
+              <div class="chat-threads-group">
+                <h4>Recent</h4>
+                <div class="chat-thread-card-list" id="chatThreadList"></div>
+              </div>
+            </section>
+          </aside>
+
+          <div class="chat-main">
+            <div class="next-action-strip" id="nextActionStrip">
+              <div class="next-action-copy">
+                <div class="next-action-title">Pick up where you left off</div>
+                <div class="next-action-subtitle" id="nextActionSubtitle">Start something new or continue current work.</div>
+                <div class="next-action-reason" id="nextActionReason">Because you worked on this today</div>
+              </div>
+              <div class="next-action-actions">
+                <button id="nextActionPrimaryBtn" type="button">Continue</button>
+                <button id="nextActionSecondaryBtn" type="button">Start new</button>
+              </div>
+            </div>
+            <div class="close-loop-prompt" id="closeLoopPrompt" hidden>
+              <div class="close-loop-copy" id="closeLoopText">Resolve and archive this or continue working?</div>
+              <div class="close-loop-actions">
+                <button id="closeLoopMarkDoneBtn" type="button">Resolve &amp; Archive</button>
+                <button id="closeLoopResumeBtn" type="button">Resume</button>
+              </div>
+            </div>
+            <div class="close-loop-toast" id="closeLoopToast" hidden>
+              <div class="close-loop-toast-copy" id="closeLoopToastText">Resolved and archived. You can reopen anytime.</div>
+              <button id="closeLoopToastReopenBtn" type="button">Reopen</button>
+            </div>
+            <div class="messages" id="messages"></div>
+
+            <form id="chatForm" class="chat-input-wrap">
+              <textarea id="chatInput" placeholder="Give Asolaria a task..." rows="3"></textarea>
+              <button type="submit" id="chatSend">Send</button>
+              <div class="chat-tools">
+                <label class="file-attach" for="chatImages">
+                  <span>Attach image(s)</span>
+                  <input id="chatImages" type="file" accept="image/*" multiple />
+                </label>
+                <span id="chatImageStatus" class="hint">No images selected.</span>
+                <label class="file-attach" for="chatFiles">
+                  <span>Attach file(s)</span>
+                  <input id="chatFiles" type="file" accept=".txt,.md,.log,.json,.csv,.ts,.tsx,.js,.jsx,.css,.html,.xml,.yml,.yaml,.toml,.ini,.ps1,.py,.java,.go,.rs,.c,.cpp,.h,.hpp,.pdf" multiple />
+                </label>
+                <span id="chatFileStatus" class="hint">No files selected.</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel action-panel">
+        <div class="panel-head">
+          <h2>Connectors</h2>
+          <p>Backend controls for tools</p>
+        </div>
+
+        <div class="action-layout">
+          <div class="rail-filter" id="railFilter">
+            <button type="button" class="rail-filter-btn active" data-group="all">Home</button>
+            <button type="button" class="rail-filter-btn" data-group="projects">Projects</button>
+            <button type="button" class="rail-filter-btn" data-group="tasks">Tasks</button>
+            <button type="button" class="rail-filter-btn" data-group="skills">Skills</button>
+            <button type="button" class="rail-filter-btn" data-group="runtime">Runtime</button>
+          </div>
+
+          <div class="action-content">
+        <div class="card workspace-card" id="workspaceCard" data-group="projects">
+          <h3>Workspace Projects</h3>
+          <p class="hint">Active project scope controls task grouping and quick focus.</p>
+          <input id="projectFolderSearch" class="project-search" type="text" placeholder="Filter project folders..." />
+          <div class="project-nav" id="projectNav"></div>
+          <div class="button-row wrap-row project-actions">
+            <button id="projectRefreshBtn" type="button">Refresh Projects</button>
+            <button id="projectCreateBtn" type="button">New Project</button>
+            <button id="projectUpdateBtn" type="button">Edit Selected</button>
+            <button id="projectDeleteBtn" type="button">Delete Selected</button>
+          </div>
+          <p id="projectAdminOutput" class="hint">Projects are persisted in local data storage.</p>
+          <div class="folder-tree" id="projectFolderTree"></div>
+        </div>
+
+        <div class="card super-coder-card" id="superCoderCard" data-group="runtime">
+          <div class="super-coder-head">
+            <div>
+              <h3>Super Coder Cockpit</h3>
+              <p id="superCoderSummary" class="hint">Codex, Claude, Vector, Symphony, MQTT, and the private civilization world align here.</p>
+            </div>
+            <span id="superCoderStatus" class="quick-realtime-status">Standby</span>
+          </div>
+          <div class="button-row wrap-row super-coder-actions">
+            <button id="superCoderSetQualityBtn" class="quick-primary-btn" type="button">Set Quality</button>
+            <button id="superCoderOpenSwarmDeskBtn" class="quick-secondary-btn" type="button">Open Civilization</button>
+            <button id="superCoderOpenGraphBtn" class="quick-secondary-btn" type="button">Open Graph</button>
+            <button id="superCoderRefreshBtn" class="quick-secondary-btn" type="button">Refresh</button>
+          </div>
+          <div id="superCoderGrid" class="super-coder-grid" aria-live="polite"></div>
+          <div id="superCoderNotes" class="super-coder-notes"></div>
+          <p id="superCoderUpdatedAt" class="hint">Updated: n/a</p>
+        </div>
+
+        <div class="card agent-colony-card" id="colonyDashboardCard" data-group="runtime">
+          <h3>Live Agent Colony</h3>
+          <p id="colonySummary" class="hint">Waiting for live runtime status...</p>
+          <div id="colonyGrid" class="colony-grid"></div>
+          <p id="colonyUpdatedAt" class="hint">Updated: n/a</p>
+        </div>
+
+        <div class="card admin-terminal-cockpit-card" id="adminTerminalCockpitCard" data-group="runtime">
+          <div class="admin-terminal-cockpit-head">
+            <div>
+              <h3>Admin Terminal Cockpit</h3>
+              <p id="adminTerminalCockpitSummary" class="hint">Helm and Sentinel can be launched and steered from here.</p>
+            </div>
+            <span id="adminTerminalCockpitStatus" class="quick-realtime-status">Standby</span>
+          </div>
+          <div class="button-row wrap-row admin-terminal-cockpit-actions">
+            <button id="adminTerminalCockpitEnsureBtn" type="button">Launch Helm + Sentinel</button>
+            <button id="adminTerminalCockpitRefreshBtn" type="button">Refresh</button>
+            <button id="adminTerminalCockpitRebriefBtn" type="button">Re-brief Both</button>
+            <label class="checkline admin-terminal-cockpit-toggle">
+              <input id="adminTerminalCockpitAutoEnsure" type="checkbox" checked />
+              Auto-launch in Super Admin
+            </label>
+          </div>
+          <div id="adminTerminalCockpitStack" class="admin-terminal-cockpit-stack" aria-live="polite"></div>
+          <p id="adminTerminalCockpitUpdatedAt" class="hint">Updated: n/a</p>
+        </div>
+
+        <div class="card agent-colony-card phone-agent-card" id="phoneAgentRuntimeCard" data-group="runtime">
+          <h3>Phone Agent Runtime</h3>
+          <p id="phoneAgentSummary" class="hint">Waiting for phone runtime status...</p>
+          <div id="phoneAgentGrid" class="colony-grid"></div>
+          <p id="phoneAgentUpdatedAt" class="hint">Updated: n/a</p>
+        </div>
+
+        <div class="card visible-action" id="openChromeCard" data-group="runtime">
+          <h3>Open Chrome</h3>
+          <form id="openChromeForm" class="stack-form">
+            <input id="chromeUrl" type="text" placeholder="https://example.com" />
+            <button type="submit">Launch</button>
+          </form>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Voice &amp; Avatar</h3>
+          <div class="stack-form">
+            <div class="inline-form ledger-inline">
+              <label for="voiceEnabled">Voice</label>
+              <select id="voiceEnabled">
+                <option value="on">on</option>
+                <option value="off">off</option>
+              </select>
+              <select id="avatarEnabled">
+                <option value="on">Avatar on</option>
+                <option value="off">Avatar off</option>
+              </select>
+            </div>
+            <div class="inline-form ledger-inline">
+              <label for="avatarMode">Avatar mode</label>
+              <select id="avatarMode">
+                <option value="orb">orb</option>
+                <option value="video">video</option>
+                <option value="live2d">live2d</option>
+              </select>
+              <select id="voiceOutputModeRuntime">
+                <option value="browser">browser</option>
+                <option value="server">server</option>
+                <option value="kitty_tts">kitty_tts</option>
+              </select>
+            </div>
+            <div class="inline-form ledger-inline">
+              <label for="voiceInputCaptureMode">Voice input source</label>
+              <select id="voiceInputCaptureMode">
+                <option value="wasapi_loopback">system/speaker loopback</option>
+                <option value="wasapi_microphone">microphone</option>
+                <option value="dshow_microphone">microphone (dshow)</option>
+              </select>
+              <select id="voiceInputDevice">
+                <option value="">Auto (recommended)</option>
+              </select>
+            </div>
+            <div class="inline-form ledger-inline">
+              <label for="voiceOutputDeviceId">Voice output device</label>
+              <select id="voiceOutputDeviceId">
+                <option value="default">System default</option>
+              </select>
+              <button id="voiceAudioDevicesRefreshBtn" type="button">Refresh audio devices</button>
+            </div>
+            <p id="voiceAudioDevicesStatus" class="hint">Audio devices will appear after refresh.</p>
+            <input id="voiceWakeWord" type="text" placeholder="Wake word (example: Asolaria)" />
+            <input id="kittyTtsUrl" type="text" placeholder="Kitty endpoint URL (optional)" />
+            <input id="kittyTtsApiKey" type="password" placeholder="Kitty API key (optional)" />
+            <div class="button-row wrap-row">
+              <button id="voiceAvatarSaveBtn" type="button">Save Voice/Avatar</button>
+              <button id="voiceAvatarTestBtn" type="button">Test Speak</button>
+            </div>
+          </div>
+          <p id="voiceAvatarStatus" class="hint">Voice and avatar controls are live for this Asolaria session.</p>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Asolaria Phone Mode</h3>
+          <p class="hint">Interactive mirror and controls for the connected phone.</p>
+          <div class="button-row wrap-row">
+            <button id="openPhoneModeBtn" type="button">Open Phone Mode</button>
+          </div>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Screenshot</h3>
+          <form id="shotForm" class="stack-form">
+            <input id="shotUrl" type="text" placeholder="https://example.com" />
+            <input id="shotFile" type="text" placeholder="home-page.png" />
+            <button type="submit">Capture</button>
+          </form>
+          <p id="shotOutput" class="hint"></p>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Backend Chat Channel</h3>
+          <p class="hint">Send chat prompts via backend browser automation and extract replies into Asolaria runtime.</p>
+          <form id="chatChannelForm" class="stack-form">
+            <input id="chatChannelUrl" type="text" placeholder="https://chat.example.com" />
+            <input id="chatChannelInputSelector" type="text" placeholder="Input selector (example: textarea)" />
+            <input id="chatChannelMessage" type="text" placeholder="Message to send" />
+            <div class="button-row wrap-row">
+              <input id="chatChannelSendSelector" type="text" placeholder="Send button selector (optional)" />
+              <input id="chatChannelResponseSelector" type="text" placeholder="Response selector (optional)" />
+            </div>
+            <div class="button-row wrap-row">
+              <input id="chatChannelSendKey" type="text" placeholder="Send key (default: Enter)" />
+              <label class="checkline">
+                <input id="chatChannelExtractLinks" type="checkbox" /> Extract links
+              </label>
+            </div>
+            <button type="submit">Run Chat Channel</button>
+          </form>
+          <p id="chatChannelOutput" class="hint"></p>
+        </div>
+
+        <div class="card" id="skillsCard" data-group="skills">
+          <h3>Skills</h3>
+          <div class="button-row wrap-row">
+            <button id="skillsRefreshBtn" type="button">Refresh Skills</button>
+            <button id="skillsReloadBtn" type="button">Reload Registry</button>
+          </div>
+          <form id="skillsRunForm" class="stack-form">
+            <select id="skillsSelect"></select>
+            <input id="skillsInput" type="text" placeholder='Optional JSON input (or plain text)' />
+            <button type="submit">Run Skill</button>
+          </form>
+          <p id="skillsOutput" class="hint"></p>
+        </div>
+
+        <div class="card" id="openclawCard" data-group="runtime">
+          <h3>OpenClaw Control</h3>
+          <div class="button-row wrap-row">
+            <button class="openclaw-action" type="button" data-action="gateway_status">Gateway Status</button>
+            <button class="openclaw-action" type="button" data-action="daemon_status">Daemon Status</button>
+            <button class="openclaw-action" type="button" data-action="models_status">Models Status</button>
+            <button class="openclaw-action" type="button" data-action="cron_list">Cron List</button>
+            <button class="openclaw-action" type="button" data-action="approvals_get">Approvals</button>
+            <button class="openclaw-action" type="button" data-action="nodes_list">Nodes</button>
+          </div>
+          <div class="button-row wrap-row">
+            <button class="openclaw-action" type="button" data-action="gateway_start">Gateway Start</button>
+            <button class="openclaw-action" type="button" data-action="gateway_restart">Gateway Restart</button>
+            <button class="openclaw-action" type="button" data-action="daemon_restart">Daemon Restart</button>
+          </div>
+          <form id="openclawCronRunForm" class="stack-form">
+            <input id="openclawCronName" type="text" placeholder="cron-job-name" />
+            <button type="submit">Run OpenClaw Cron Job</button>
+          </form>
+          <p id="openclawOutput" class="hint"></p>
+        </div>
+
+        <div class="card" id="gatewayAuditCard" data-group="runtime">
+          <h3>Gateway Audit</h3>
+          <p id="gatewayAuthorityStatus" class="hint">Authority: loading...</p>
+          <p id="gatewayAuditStatus" class="hint">Audit: loading...</p>
+          <div class="stack-form">
+            <select id="gatewayAuditType">
+              <option value="">All event types</option>
+              <option value="authority.transition_requested">authority.transition_requested</option>
+              <option value="authority.mode_changed">authority.mode_changed</option>
+              <option value="approval.created">approval.created</option>
+              <option value="approval.decided">approval.decided</option>
+              <option value="approval.used">approval.used</option>
+              <option value="tool.invoked">tool.invoked</option>
+              <option value="server.started">server.started</option>
+            </select>
+            <input id="gatewayAuditLimit" type="number" min="1" max="100" step="1" value="15" />
+            <div class="button-row wrap-row">
+              <button id="gatewayAuditRefreshBtn" type="button">Refresh Audit</button>
+              <button id="gatewayAuditVerifyBtn" type="button">Verify Chain</button>
+              <button id="gatewayReadinessDrillBtn" type="button">Readiness Drill</button>
+            </div>
+            <div class="button-row wrap-row">
+              <button id="gatewayHeartbeatRunBtn" type="button">Run Heartbeat</button>
+              <button id="gatewayStartSandboxBtn" type="button">Start Sandbox Manager</button>
+            </div>
+          </div>
+          <p id="gatewayReadinessDrillOutput" class="hint"></p>
+          <div id="gatewayReadinessHints" class="event-log"></div>
+          <div id="gatewayAuditEvents" class="event-log"></div>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>External Providers</h3>
+          <div class="button-row wrap-row">
+            <button id="antigravityStatusBtn" type="button">Antigravity Status</button>
+            <button id="cursorStatusBtn" type="button">Cursor Status</button>
+            <button id="anthropicStatusBtn" type="button">Anthropic Status</button>
+            <button id="geminiCliStatusBtn" type="button">Gemini CLI Status</button>
+          </div>
+          <form id="externalRunForm" class="stack-form">
+            <select id="externalProviderSelect">
+              <option value="anthropic">anthropic</option>
+              <option value="gemini">gemini</option>
+              <option value="antigravity">antigravity</option>
+              <option value="cursor">cursor</option>
+            </select>
+            <input id="externalModelInput" type="text" list="externalModelAliasList" placeholder="Model alias or exact ID (optional)" />
+            <datalist id="externalModelAliasList"></datalist>
+            <p id="externalModelHint" class="hint">Model aliases will load from server.</p>
+            <p id="externalObservedHint" class="hint">Observed models for selected provider will appear here.</p>
+            <div class="inline-form">
+              <label for="externalMcpTokenReductionProfile">Token profile</label>
+              <select id="externalMcpTokenReductionProfile">
+                <option value="balanced">balanced</option>
+                <option value="aggressive">aggressive</option>
+                <option value="off">off</option>
+              </select>
+              <label for="externalMcpToolSchemaMode">MCP schema mode</label>
+              <select id="externalMcpToolSchemaMode">
+                <option value="compact">compact</option>
+                <option value="pointer">pointer</option>
+                <option value="full">full</option>
+              </select>
+            </div>
+            <div class="button-row wrap-row">
+              <input id="externalMcpPromptTokenLimit" type="number" min="0" max="12000" step="20" value="1600" title="Prompt token budget" placeholder="Prompt token limit" />
+              <input id="externalMcpContextKey" type="text" placeholder="MCP context key (optional)" />
+            </div>
+            <input id="externalMcpSkillHints" type="text" placeholder="Skill hints (comma-separated, optional)" />
+            <input id="externalMcpWebHints" type="text" placeholder="WebMCP hints (comma-separated, optional)" />
+            <p class="hint">Token reduction uses compact prompts + pointer/compact MCP tool schemas + context reuse.</p>
+            <div class="button-row wrap-row">
+              <button id="externalSaveDefaultBtn" type="button">Save Default Model</button>
+              <button id="externalClearDefaultBtn" type="button">Clear Default Model</button>
+              <button id="externalClearObservedBtn" type="button">Clear Observed Models</button>
+              <button id="externalClearObservedAllBtn" type="button">Clear Observed (All)</button>
+              <button id="externalModelStatusBtn" type="button">Model Settings</button>
+            </div>
+            <div class="button-row wrap-row">
+              <input id="externalObservedMaxAgeDays" type="number" min="1" max="3650" step="1" value="30" />
+              <button id="externalPruneObservedBtn" type="button">Prune Observed</button>
+            </div>
+            <label class="checkline">
+              <input id="externalObservedAutoPruneEnabled" type="checkbox" /> Auto-prune observed models daily
+            </label>
+            <div class="button-row wrap-row">
+              <input id="externalObservedAutoPruneDays" type="number" min="1" max="3650" step="1" value="30" title="Max age days" placeholder="Max age days" />
+              <input id="externalObservedAutoPruneHour" type="number" min="0" max="23" step="1" value="3" title="Daily hour (local)" placeholder="Daily hour" />
+              <button id="externalSaveObservedPruneSettingsBtn" type="button">Save Auto Prune</button>
+            </div>
+            <p id="externalObservedPruneStatus" class="hint">Auto-prune status will appear here.</p>
+            <input id="externalPrompt" type="text" placeholder="Prompt for selected provider" />
+            <button type="submit">Run External Provider</button>
+          </form>
+          <p id="externalOutput" class="hint"></p>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Company Policy</h3>
+          <label class="checkline">
+            <input id="allowExternalPosting" type="checkbox" /> Allow external posting actions
+          </label>
+          <div class="button-row wrap-row">
+            <button id="companyMissionBtn" type="button">Mission</button>
+            <button id="companyDraftBtn" type="button">Draft Post</button>
+            <button id="companyDecideBtn" type="button">Decide Proceed</button>
+          </div>
+          <p id="companyHint" class="hint">Default is safe mode: no external posting.</p>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Company Account</h3>
+          <div class="button-row wrap-row">
+            <button id="companyCreateAccountBtn" type="button">Create Primary Sign-in Profile</button>
+            <button id="companyShowAccountBtn" type="button">Show Account (Masked)</button>
+            <button id="companyRevealAccountBtn" type="button">Reveal Account</button>
+            <button id="companyMarkRegisteredBtn" type="button">Mark Registered</button>
+            <button id="companyOpenSiteBtn" type="button" class="visible-action">Open Company Portal</button>
+          </div>
+          <p id="companyAccountOutput" class="hint">Credentials are encrypted at rest in Asolaria vault.</p>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Guardian Autonomy</h3>
+          <div class="inline-form">
+            <label for="guardianMode">Mode</label>
+            <select id="guardianMode">
+              <option value="off">off</option>
+              <option value="notify">notify</option>
+              <option value="autonomous">autonomous</option>
+              <option value="strict">strict</option>
+            </select>
+            <button id="saveGuardianModeBtn" type="button">Save</button>
+          </div>
+          <div class="inline-form">
+            <label for="guardianRiskThreshold">Risk threshold</label>
+            <select id="guardianRiskThreshold">
+              <option value="low">low</option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+              <option value="critical">critical</option>
+            </select>
+            <button id="saveGuardianThresholdBtn" type="button">Save</button>
+          </div>
+          <label class="checkline">
+            <input id="guardianAlertsEnabled" type="checkbox" /> Enable guardian alerts
+          </label>
+          <label class="checkline">
+            <input id="guardianAutoBlockCritical" type="checkbox" /> Auto-block critical risk actions
+          </label>
+          <div class="button-row wrap-row">
+            <button id="guardianStatusBtn" type="button">Guardian Status</button>
+            <button id="guardianBootstrapContactsBtn" type="button">Bootstrap Contacts</button>
+            <button id="guardianTestAlertBtn" type="button">Send Test Alert</button>
+          </div>
+          <p id="guardianOutput" class="hint">Guardian watches high-risk actions and can alert your contacts.</p>
+        </div>
+
+        <div class="card" data-group="runtime">
+          <h3>Power Automate Desktop</h3>
+          <div class="button-row visible-action" id="openPadWrap">
+            <button id="openPadBtn" type="button">Open PAD</button>
+          </div>
+          <form id="padRunForm" class="stack-form">
+            <input id="padPackage" type="text" placeholder="C:\\path\\to\\package.zip" />
+            <select id="padMode">
+              <option value="LocalRun">LocalRun</option>
+              <option value="Run">Run</option>
+              <option value="Debug">Debug</option>
+            </select>
+            <label class="checkline">
+              <input id="padDisableShots" type="checkbox" /> Disable PAD execution screenshots
+            </label>
+            <button type="submit">Run Package</button>
+          </form>
+          <p id="stealthHint" class="hint"></p>
+        </div>
+
+        <div class="card" data-group="projects">
+          <h3>Project Memory</h3>
+          <p id="memoryStats" class="hint">Loading memory...</p>
+          <div class="inline-form">
+            <label for="memoryWindowTurns">Window turns</label>
+            <input id="memoryWindowTurns" type="number" min="4" max="40" step="1" value="12" />
+            <button id="saveMemoryWindowBtn" type="button">Save</button>
+          </div>
+          <div id="memoryPreview" class="event-log"></div>
+          <div class="button-row">
+            <button id="refreshMemoryBtn" type="button">Refresh Memory</button>
+            <button id="clearMemoryBtn" type="button">Clear Memory</button>
+          </div>
+        </div>
+
+        <div class="card" data-group="tasks">
+          <h3>Project Task Ledger</h3>
+          <p id="taskLedgerStats" class="hint">Loading tasks...</p>
+          <div class="stack-form">
+            <input id="taskLedgerTitle" type="text" placeholder="Task title" />
+            <input id="taskLedgerDescription" type="text" placeholder="Task description (optional)" />
+            <div class="inline-form ledger-inline">
+              <label for="taskLedgerCreatePriority">Priority</label>
+              <select id="taskLedgerCreatePriority">
+                <option value="normal">normal</option>
+                <option value="low">low</option>
+                <option value="high">high</option>
+                <option value="critical">critical</option>
+              </select>
+              <button id="taskLedgerAddBtn" type="button">Add Task</button>
+            </div>
+          </div>
+          <div class="inline-form ledger-inline">
+            <label for="taskLedgerStatusFilter">Status</label>
+            <select id="taskLedgerStatusFilter">
+              <option value="all">all</option>
+              <option value="planned">planned</option>
+              <option value="ready">ready</option>
+              <option value="in_progress">in_progress</option>
+              <option value="blocked">blocked</option>
+              <option value="review">review</option>
+              <option value="done">done</option>
+              <option value="canceled">canceled</option>
+              <option value="archived">archived</option>
+            </select>
+            <select id="taskLedgerPriorityFilter">
+              <option value="all">all priorities</option>
+              <option value="low">low</option>
+              <option value="normal">normal</option>
+              <option value="high">high</option>
+              <option value="critical">critical</option>
+            </select>
+          </div>
+          <div class="inline-form ledger-inline">
+            <label for="taskLedgerQuery">Search</label>
+            <input id="taskLedgerQuery" type="text" placeholder="Search task text" />
+            <button id="taskLedgerRefreshBtn" type="button">Refresh</button>
+          </div>
+          <label class="checkline">
+            <input id="taskLedgerIncludeArchived" type="checkbox" checked /> Include archived
+          </label>
+          <div id="taskLedgerList" class="event-log ledger-list"></div>
+          <p class="hint">Recent events</p>
+          <div id="taskLedgerEvents" class="event-log ledger-events"></div>
+        </div>
+
+        <div class="card" data-group="tasks">
+          <h3>Event Log</h3>
+          <div id="eventLog" class="event-log"></div>
+        </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div id="avatarStageOverlay" class="avatar-stage-overlay" hidden>
+      <div class="avatar-stage-panel">
+        <div class="avatar-stage-head">
+          <h2>Avatar Stage</h2>
+          <button id="avatarStageCloseBtn" type="button" class="quick-secondary-btn">Close</button>
+        </div>
+        <div id="avatarStageVisual" class="avatar-stage-visual">
+          <div class="quick-avatar-pulse"></div>
+          <div class="quick-avatar-core">
+            <div class="avatar-face" aria-hidden="true">
+              <span class="avatar-eye avatar-eye-left"></span>
+              <span class="avatar-eye avatar-eye-right"></span>
+              <span class="avatar-mouth"></span>
+            </div>
+          </div>
+          <div class="quick-avatar-ring"></div>
+        </div>
+        <p id="avatarStageStatus" class="quick-voice-status">Avatar idle. Push to talk when ready.</p>
+        <div class="button-row wrap-row">
+          <button id="avatarStagePushTalkBtn" type="button">Push-to-Talk</button>
+          <button id="avatarStageTestSpeakBtn" type="button" class="quick-secondary-btn">Test Speak</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js?v=20260312-super-coder"></script>
+  <script src="interview-copilot.js?v=20260304-livecapturefix2"></script>
+</body>
+</html>
+

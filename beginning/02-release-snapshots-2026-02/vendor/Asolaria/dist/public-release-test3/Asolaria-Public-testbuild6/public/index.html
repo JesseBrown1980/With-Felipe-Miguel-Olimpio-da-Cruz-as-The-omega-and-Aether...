@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asolaria</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="stealth-on">
+  <div class="bg-layer"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="orb"></div>
+        <div>
+          <h1>Asolaria</h1>
+          <p>One interface. Multiple engines.</p>
+        </div>
+      </div>
+      <div class="top-controls">
+        <label class="stealth-chip" for="stealthToggle">
+          <input id="stealthToggle" type="checkbox" />
+          <span id="stealthLabel">Stealth ON</span>
+        </label>
+        <label class="mode-chip" for="approvalMode">
+          <span>Approvals</span>
+          <select id="approvalMode">
+            <option value="smart">smart</option>
+            <option value="manual">manual</option>
+            <option value="deny">deny</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="costMode">
+          <span>Cost</span>
+          <select id="costMode">
+            <option value="low">low</option>
+            <option value="balanced">balanced</option>
+            <option value="quality">quality</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="codexWebSearch">
+          <span>Web</span>
+          <select id="codexWebSearch">
+            <option value="off">off</option>
+            <option value="on">on</option>
+          </select>
+        </label>
+        <label class="mode-chip" for="openclawMode">
+          <span>OpenClaw (legacy)</span>
+          <select id="openclawMode">
+            <option value="read_only">read_only</option>
+            <option value="governed">governed</option>
+            <option value="disabled">disabled</option>
+          </select>
+        </label>
+        <div class="status" id="healthBadge">Checking system...</div>
+      </div>
+    </header>
+
+    <section class="layout">
+      <section class="panel chat-panel">
+        <div class="panel-head">
+          <h2>Brain Console</h2>
+          <p>Codex-backed reasoning stream</p>
+        </div>
+
+        <div class="messages" id="messages"></div>
+
+        <form id="chatForm" class="chat-input-wrap">
+          <textarea id="chatInput" placeholder="Give Asolaria a task..." rows="3"></textarea>
+          <button type="submit" id="chatSend">Send</button>
+          <div class="chat-tools">
+            <label class="file-attach" for="chatImages">
+              <span>Attach image(s)</span>
+              <input id="chatImages" type="file" accept="image/*" multiple />
+            </label>
+            <span id="chatImageStatus" class="hint">No images selected.</span>
+            <label class="file-attach" for="chatFiles">
+              <span>Attach file(s)</span>
+              <input id="chatFiles" type="file" accept=".txt,.md,.log,.json,.csv,.ts,.tsx,.js,.jsx,.css,.html,.xml,.yml,.yaml,.toml,.ini,.ps1,.py,.java,.go,.rs,.c,.cpp,.h,.hpp,.pdf" multiple />
+            </label>
+            <span id="chatFileStatus" class="hint">No files selected.</span>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel action-panel">
+        <div class="panel-head">
+          <h2>Connectors</h2>
+          <p>Backend controls for tools</p>
+        </div>
+
+        <div class="card visible-action" id="openChromeCard">
+          <h3>Open Chrome</h3>
+          <form id="openChromeForm" class="stack-form">
+            <input id="chromeUrl" type="text" placeholder="https://example.com" />
+            <button type="submit">Launch</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Screenshot</h3>
+          <form id="shotForm" class="stack-form">
+            <input id="shotUrl" type="text" placeholder="https://example.com" />
+            <input id="shotFile" type="text" placeholder="home-page.png" />
+            <button type="submit">Capture</button>
+          </form>
+          <p id="shotOutput" class="hint"></p>
+        </div>
+
+        <div class="card" id="skillsCard">
+          <h3>Skills</h3>
+          <div class="button-row wrap-row">
+            <button id="skillsRefreshBtn" type="button">Refresh Skills</button>
+            <button id="skillsReloadBtn" type="button">Reload Registry</button>
+          </div>
+          <form id="skillsRunForm" class="stack-form">
+            <select id="skillsSelect"></select>
+            <input id="skillsInput" type="text" placeholder='Optional JSON input (or plain text)' />
+            <button type="submit">Run Skill</button>
+          </form>
+          <p id="skillsOutput" class="hint"></p>
+        </div>
+
+        <div class="card" id="openclawCard">
+          <h3>OpenClaw Control</h3>
+          <div class="button-row wrap-row">
+            <button class="openclaw-action" type="button" data-action="gateway_status">Gateway Status</button>
+            <button class="openclaw-action" type="button" data-action="daemon_status">Daemon Status</button>
+            <button class="openclaw-action" type="button" data-action="models_status">Models Status</button>
+            <button class="openclaw-action" type="button" data-action="cron_list">Cron List</button>
+            <button class="openclaw-action" type="button" data-action="approvals_get">Approvals</button>
+            <button class="openclaw-action" type="button" data-action="nodes_list">Nodes</button>
+          </div>
+          <div class="button-row wrap-row">
+            <button class="openclaw-action" type="button" data-action="gateway_start">Gateway Start</button>
+            <button class="openclaw-action" type="button" data-action="gateway_restart">Gateway Restart</button>
+            <button class="openclaw-action" type="button" data-action="daemon_restart">Daemon Restart</button>
+          </div>
+          <form id="openclawCronRunForm" class="stack-form">
+            <input id="openclawCronName" type="text" placeholder="cron-job-name" />
+            <button type="submit">Run OpenClaw Cron Job</button>
+          </form>
+          <p id="openclawOutput" class="hint"></p>
+        </div>
+
+        <div class="card">
+          <h3>Antigravity / Cursor</h3>
+          <div class="button-row wrap-row">
+            <button id="antigravityStatusBtn" type="button">Antigravity Status</button>
+            <button id="cursorStatusBtn" type="button">Cursor Status</button>
+          </div>
+          <form id="externalRunForm" class="stack-form">
+            <select id="externalProviderSelect">
+              <option value="antigravity">antigravity</option>
+              <option value="cursor">cursor</option>
+            </select>
+            <input id="externalPrompt" type="text" placeholder="Prompt for selected provider" />
+            <button type="submit">Run External Provider</button>
+          </form>
+          <p id="externalOutput" class="hint"></p>
+        </div>
+
+        <div class="card">
+          <h3>MoltBook Policy</h3>
+          <label class="checkline">
+            <input id="allowExternalPosting" type="checkbox" /> Allow external posting actions
+          </label>
+          <div class="button-row wrap-row">
+            <button id="moltbookMissionBtn" type="button">Mission</button>
+            <button id="moltbookDraftBtn" type="button">Draft Post</button>
+            <button id="moltbookDecideBtn" type="button">Decide Proceed</button>
+          </div>
+          <p id="moltbookHint" class="hint">Default is safe mode: no external posting.</p>
+        </div>
+
+        <div class="card">
+          <h3>MoltBook Account</h3>
+          <div class="button-row wrap-row">
+            <button id="moltbookCreateAccountBtn" type="button">Create AI Account Profile</button>
+            <button id="moltbookShowAccountBtn" type="button">Show Account (Masked)</button>
+            <button id="moltbookRevealAccountBtn" type="button">Reveal Account</button>
+            <button id="moltbookMarkRegisteredBtn" type="button">Mark Registered</button>
+            <button id="moltbookOpenSiteBtn" type="button" class="visible-action">Open MoltBook Site</button>
+          </div>
+          <p id="moltbookAccountOutput" class="hint">Credentials are encrypted at rest in Asolaria vault.</p>
+        </div>
+
+        <div class="card">
+          <h3>Guardian Autonomy</h3>
+          <div class="inline-form">
+            <label for="guardianMode">Mode</label>
+            <select id="guardianMode">
+              <option value="off">off</option>
+              <option value="notify">notify</option>
+              <option value="autonomous">autonomous</option>
+              <option value="strict">strict</option>
+            </select>
+            <button id="saveGuardianModeBtn" type="button">Save</button>
+          </div>
+          <div class="inline-form">
+            <label for="guardianRiskThreshold">Risk threshold</label>
+            <select id="guardianRiskThreshold">
+              <option value="low">low</option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+              <option value="critical">critical</option>
+            </select>
+            <button id="saveGuardianThresholdBtn" type="button">Save</button>
+          </div>
+          <label class="checkline">
+            <input id="guardianAlertsEnabled" type="checkbox" /> Enable guardian alerts
+          </label>
+          <label class="checkline">
+            <input id="guardianAutoBlockCritical" type="checkbox" /> Auto-block critical risk actions
+          </label>
+          <div class="button-row wrap-row">
+            <button id="guardianStatusBtn" type="button">Guardian Status</button>
+            <button id="guardianBootstrapContactsBtn" type="button">Bootstrap Contacts</button>
+            <button id="guardianTestAlertBtn" type="button">Send Test Alert</button>
+          </div>
+          <p id="guardianOutput" class="hint">Guardian watches high-risk actions and can alert your contacts.</p>
+        </div>
+
+        <div class="card">
+          <h3>Power Automate Desktop</h3>
+          <div class="button-row visible-action" id="openPadWrap">
+            <button id="openPadBtn" type="button">Open PAD</button>
+          </div>
+          <form id="padRunForm" class="stack-form">
+            <input id="padPackage" type="text" placeholder="C:\\path\\to\\package.zip" />
+            <select id="padMode">
+              <option value="LocalRun">LocalRun</option>
+              <option value="Run">Run</option>
+              <option value="Debug">Debug</option>
+            </select>
+            <label class="checkline">
+              <input id="padDisableShots" type="checkbox" /> Disable PAD execution screenshots
+            </label>
+            <button type="submit">Run Package</button>
+          </form>
+          <p id="stealthHint" class="hint"></p>
+        </div>
+
+        <div class="card">
+          <h3>Memory</h3>
+          <p id="memoryStats" class="hint">Loading memory...</p>
+          <div class="inline-form">
+            <label for="memoryWindowTurns">Window turns</label>
+            <input id="memoryWindowTurns" type="number" min="4" max="40" step="1" value="12" />
+            <button id="saveMemoryWindowBtn" type="button">Save</button>
+          </div>
+          <div id="memoryPreview" class="event-log"></div>
+          <div class="button-row">
+            <button id="refreshMemoryBtn" type="button">Refresh Memory</button>
+            <button id="clearMemoryBtn" type="button">Clear Memory</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Task Ledger</h3>
+          <p id="taskLedgerStats" class="hint">Loading tasks...</p>
+          <div class="stack-form">
+            <input id="taskLedgerTitle" type="text" placeholder="Task title" />
+            <input id="taskLedgerDescription" type="text" placeholder="Task description (optional)" />
+            <div class="inline-form ledger-inline">
+              <label for="taskLedgerCreatePriority">Priority</label>
+              <select id="taskLedgerCreatePriority">
+                <option value="normal">normal</option>
+                <option value="low">low</option>
+                <option value="high">high</option>
+                <option value="critical">critical</option>
+              </select>
+              <button id="taskLedgerAddBtn" type="button">Add Task</button>
+            </div>
+          </div>
+          <div class="inline-form ledger-inline">
+            <label for="taskLedgerStatusFilter">Status</label>
+            <select id="taskLedgerStatusFilter">
+              <option value="all">all</option>
+              <option value="planned">planned</option>
+              <option value="ready">ready</option>
+              <option value="in_progress">in_progress</option>
+              <option value="blocked">blocked</option>
+              <option value="review">review</option>
+              <option value="done">done</option>
+              <option value="canceled">canceled</option>
+              <option value="archived">archived</option>
+            </select>
+            <select id="taskLedgerPriorityFilter">
+              <option value="all">all priorities</option>
+              <option value="low">low</option>
+              <option value="normal">normal</option>
+              <option value="high">high</option>
+              <option value="critical">critical</option>
+            </select>
+          </div>
+          <div class="inline-form ledger-inline">
+            <label for="taskLedgerQuery">Search</label>
+            <input id="taskLedgerQuery" type="text" placeholder="Search task text" />
+            <button id="taskLedgerRefreshBtn" type="button">Refresh</button>
+          </div>
+          <label class="checkline">
+            <input id="taskLedgerIncludeArchived" type="checkbox" checked /> Include archived
+          </label>
+          <div id="taskLedgerList" class="event-log ledger-list"></div>
+          <p class="hint">Recent events</p>
+          <div id="taskLedgerEvents" class="event-log ledger-events"></div>
+        </div>
+
+        <div class="card">
+          <h3>Event Log</h3>
+          <div id="eventLog" class="event-log"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

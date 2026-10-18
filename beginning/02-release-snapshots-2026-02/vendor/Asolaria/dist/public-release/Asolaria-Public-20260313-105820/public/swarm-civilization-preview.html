@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Asolaria Civilization Preview</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .civilization-page { min-height: 100vh; color: var(--ink); }
+    .civilization-shell { max-width: 1600px; margin: 0 auto; padding: 20px; display: grid; gap: 16px; }
+    .civilization-hero, .civilization-panel, .civilization-controls {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(17, 29, 50, 0.9), rgba(10, 18, 31, 0.94));
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(14px);
+    }
+    .civilization-hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr); gap: 18px; padding: 22px; }
+    .civilization-title h1, .civilization-panel h2, .civilization-panel h3 { margin: 0; font-family: "Space Grotesk", "Sora", sans-serif; }
+    .civilization-title p, .civilization-panel p, .civilization-muted { color: var(--ink-muted); line-height: 1.55; }
+    .civilization-pill-row, .civilization-link-row, .civilization-card-grid, .civilization-chip-row, .civilization-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .civilization-pill, .civilization-link, .civilization-select, .civilization-input, .civilization-toggle {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(14, 24, 42, 0.8);
+      color: var(--ink);
+      font: inherit;
+    }
+    .civilization-pill, .civilization-link { padding: 8px 12px; font-size: 0.8rem; }
+    .civilization-pill.is-live { border-color: rgba(94, 245, 176, 0.42); color: #c9ffe5; }
+    .civilization-pill.is-warn { border-color: rgba(255, 188, 92, 0.46); color: #ffd7a8; }
+    .civilization-pill.is-error { border-color: rgba(255, 123, 123, 0.55); color: #ffd0d0; }
+    .civilization-link { text-decoration: none; transition: transform 140ms ease, border-color 140ms ease; }
+    .civilization-link:hover { transform: translateY(-1px); border-color: rgba(39, 194, 255, 0.44); }
+    .civilization-metric {
+      flex: 1 1 140px;
+      min-width: 132px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(15, 24, 43, 0.75);
+      border: 1px solid rgba(122, 151, 199, 0.18);
+    }
+    .civilization-metric strong {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .civilization-metric span {
+      display: block;
+      margin-top: 8px;
+      font-size: clamp(1.15rem, 1.8vw, 1.8rem);
+      font-weight: 700;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+    }
+    .civilization-side { display: grid; gap: 14px; }
+    .civilization-side-card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(122, 151, 199, 0.18);
+      background: rgba(10, 18, 31, 0.82);
+    }
+    .civilization-side-card h2, .civilization-side-card h3 { font-size: 1rem; }
+    .civilization-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 16px;
+      align-items: center;
+    }
+    .civilization-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-muted);
+      font-size: 0.84rem;
+    }
+    .civilization-select, .civilization-input { padding: 8px 12px; outline: none; }
+    .civilization-input { width: 200px; }
+    .civilization-toggle {
+      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .civilization-toggle input { accent-color: var(--accent); }
+    .civilization-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.7fr); gap: 16px; align-items: start; }
+    .civilization-panel { padding: 16px; display: grid; gap: 14px; }
+    .civilization-panel-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .civilization-panel-subtitle { margin: 6px 0 0; color: var(--ink-muted); font-size: 0.84rem; }
+    .civilization-map-shell {
+      position: relative;
+      min-height: 780px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(122, 151, 199, 0.16);
+      background:
+        radial-gradient(circle at 12% 14%, rgba(39, 194, 255, 0.12), transparent 26%),
+        radial-gradient(circle at 88% 18%, rgba(255, 188, 92, 0.12), transparent 24%),
+        radial-gradient(circle at 50% 88%, rgba(126, 243, 176, 0.08), transparent 28%),
+        linear-gradient(165deg, rgba(8, 14, 25, 0.92), rgba(10, 18, 33, 0.96));
+    }
+    .civilization-map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(159, 177, 206, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(159, 177, 206, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    #civilizationRoutes {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .civilization-district-layer, .civilization-node-layer {
+      position: absolute;
+      inset: 0;
+    }
+    .civilization-district-tag {
+      position: absolute;
+      min-width: 150px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(122, 151, 199, 0.18);
+      background: rgba(8, 14, 26, 0.78);
+      backdrop-filter: blur(12px);
+      color: var(--ink);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+      transform: translate(-50%, -50%);
+    }
+    .civilization-district-tag strong { display: block; font-size: 0.86rem; }
+    .civilization-district-tag span { display: block; margin-top: 4px; font-size: 0.75rem; color: var(--ink-muted); }
+    .civilization-node {
+      position: absolute;
+      min-width: 92px;
+      max-width: 164px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(122, 151, 199, 0.18);
+      background: rgba(10, 18, 31, 0.88);
+      color: var(--ink);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+      display: grid;
+      gap: 6px;
+      transform: translate(-50%, -50%);
+      transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+      cursor: pointer;
+      text-align: left;
+    }
+    .civilization-node:hover {
+      transform: translate(-50%, -50%) translateY(-2px);
+      border-color: rgba(39, 194, 255, 0.46);
+      box-shadow: 0 20px 36px rgba(0, 0, 0, 0.34);
+    }
+    .civilization-node.is-selected {
+      border-color: rgba(255, 188, 92, 0.62);
+      box-shadow: 0 0 0 1px rgba(255, 188, 92, 0.22), 0 22px 40px rgba(0, 0, 0, 0.38);
+    }
+    .civilization-node.is-dimmed { opacity: 0.42; }
+    .civilization-node-header { display: flex; align-items: center; gap: 8px; }
+    .civilization-node-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(39, 194, 255, 0.16);
+      border: 1px solid rgba(39, 194, 255, 0.24);
+      flex: 0 0 auto;
+    }
+    .civilization-node-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .civilization-node-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.68rem;
+      color: var(--ink-muted);
+    }
+    .civilization-node-meta span {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 151, 199, 0.14);
+      background: rgba(14, 22, 38, 0.72);
+    }
+    .civilization-node.kind-sovereign { border-radius: 28px; min-width: 138px; background: linear-gradient(145deg, rgba(29, 50, 84, 0.96), rgba(11, 20, 36, 0.95)); }
+    .civilization-node.kind-tower { min-width: 104px; padding-top: 16px; padding-bottom: 16px; }
+    .civilization-node.kind-gate { border-radius: 16px; border-style: dashed; }
+    .civilization-node.kind-agent { border-radius: 999px; min-width: 96px; text-align: center; justify-items: center; }
+    .civilization-node.kind-packet { border-radius: 14px; background: rgba(19, 33, 57, 0.92); }
+    .civilization-node.kind-task { border-radius: 16px; }
+    .civilization-node.kind-surface, .civilization-node.kind-runtime_node { background: rgba(11, 21, 40, 0.9); }
+    .civilization-node.kind-sub_colony { border-radius: 20px; min-width: 110px; background: linear-gradient(145deg, rgba(0, 80, 80, 0.94), rgba(8, 30, 50, 0.93)); border-color: rgba(0, 200, 190, 0.55); }
+    .civilization-node.status-offline { opacity: 0.62; }
+    .civilization-node.status-blocked { border-color: rgba(255, 122, 144, 0.48); }
+    .civilization-node.status-active, .civilization-node.status-running { box-shadow: 0 0 0 1px rgba(126, 243, 176, 0.18), 0 20px 38px rgba(0, 0, 0, 0.34); }
+    .civilization-node.is-hot .civilization-node-icon { background: rgba(255, 188, 92, 0.18); border-color: rgba(255, 188, 92, 0.28); }
+    .civilization-route { fill: none; stroke-width: 2.2; stroke-linecap: round; opacity: 0.72; }
+    .civilization-route.risk-low { stroke: rgba(92, 184, 255, 0.46); }
+    .civilization-route.risk-medium { stroke: rgba(255, 188, 92, 0.62); }
+    .civilization-route.risk-high { stroke: rgba(255, 140, 92, 0.78); }
+    .civilization-route.risk-critical { stroke: rgba(255, 103, 103, 0.88); }
+    .civilization-route.is-selected { stroke-width: 3.4; opacity: 1; }
+    .civilization-route-pulse {
+      fill: rgba(255, 255, 255, 0.84);
+      opacity: 0.92;
+    }
+    .civilization-feed-list, .civilization-card-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .civilization-feed-item {
+      border-radius: 16px;
+      border: 1px solid rgba(122, 151, 199, 0.16);
+      background: rgba(12, 20, 36, 0.82);
+      padding: 12px 14px;
+    }
+    .civilization-feed-item strong { display: block; font-size: 0.86rem; }
+    .civilization-feed-item p, .civilization-feed-item span {
+      margin: 7px 0 0;
+      color: var(--ink-muted);
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+    .civilization-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 151, 199, 0.18);
+      background: rgba(14, 22, 38, 0.7);
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+    }
+    .civilization-chip.is-good { color: #c9ffe5; border-color: rgba(94, 245, 176, 0.32); }
+    .civilization-chip.is-warn { color: #ffd7a8; border-color: rgba(255, 188, 92, 0.34); }
+    .civilization-chip.is-error { color: #ffd0d0; border-color: rgba(255, 123, 123, 0.42); }
+    .civilization-inspector-grid { display: grid; gap: 10px; }
+    .civilization-pre {
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(122, 151, 199, 0.16);
+      background: rgba(8, 14, 26, 0.92);
+      color: #d6e4ff;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .civilization-empty {
+      display: grid;
+      place-items: center;
+      min-height: 200px;
+      color: var(--ink-muted);
+      text-align: center;
+      padding: 24px;
+    }
+    @media (max-width: 1180px) {
+      .civilization-hero, .civilization-layout { grid-template-columns: 1fr; }
+      .civilization-map-shell { min-height: 680px; }
+    }
+    @media (max-width: 720px) {
+      .civilization-shell { padding: 14px; }
+      .civilization-hero, .civilization-panel, .civilization-controls { border-radius: 16px; }
+      .civilization-map-shell { min-height: 540px; }
+      .civilization-input { width: 100%; }
+    }
+  </style>
+</head>
+<body class="civilization-page">
+  <div class="bg-layer"></div>
+  <main class="civilization-shell">
+    <section class="civilization-hero">
+      <div class="civilization-title">
+        <div class="civilization-pill-row">
+          <span id="civilizationLiveState" class="civilization-pill">Connecting...</span>
+          <span id="civilizationPrivacyPill" class="civilization-pill is-live">Local only</span>
+          <span id="civilizationUpdatedAt" class="civilization-pill">No snapshot yet</span>
+        </div>
+        <h1>Asolaria Civilization Preview</h1>
+        <p>Private local view over the Asolaria civilization model. Towers, gates, agents, packets, and routes are rendered from the canonical runtime world feed without pushing anything into the external Madness system.</p>
+        <div id="civilizationMetrics" class="civilization-metrics"></div>
+      </div>
+      <div class="civilization-side">
+        <div class="civilization-side-card">
+          <h2>Privacy Boundary</h2>
+          <p>This page is a local projection only. It reads loopback JSON from Asolaria and does not deploy or publish into the trusted external world.</p>
+          <div class="civilization-chip-row">
+            <span class="civilization-chip is-good">loopback guarded</span>
+            <span class="civilization-chip">Madness untouched</span>
+            <span class="civilization-chip">source of truth: Asolaria runtime</span>
+          </div>
+        </div>
+        <div class="civilization-side-card">
+          <h3>Links</h3>
+          <div class="civilization-link-row">
+            <a class="civilization-link" href="/" target="_blank" rel="noreferrer">Open Main Asolaria</a>
+            <a class="civilization-link" href="/worker-runtime.html" target="_blank" rel="noreferrer">Open Worker Runtime</a>
+            <a class="civilization-link" href="/graph-runtime.html" target="_blank" rel="noreferrer">Open Graph Runtime</a>
+            <a id="civilizationJsonLink" class="civilization-link" href="/api/worker-runtime/civilization-world?trusted=1&admin=1" target="_blank" rel="noreferrer">Open World JSON</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="civilization-controls">
+      <label class="civilization-control" for="civilizationDistrictFilter">
+        <span>District</span>
+        <select id="civilizationDistrictFilter" class="civilization-select">
+          <option value="">all</option>
+        </select>
+      </label>
+      <label class="civilization-control" for="civilizationKindFilter">
+        <span>Kind</span>
+        <select id="civilizationKindFilter" class="civilization-select">
+          <option value="">all</option>
+          <option value="sovereign">sovereign</option>
+          <option value="agent">agent</option>
+          <option value="tower">tower</option>
+          <option value="gate">gate</option>
+          <option value="surface">surface</option>
+          <option value="packet">packet</option>
+          <option value="task">task</option>
+          <option value="runtime_node">runtime_node</option>
+        </select>
+      </label>
+      <label class="civilization-control" for="civilizationRiskFilter">
+        <span>Route Risk</span>
+        <select id="civilizationRiskFilter" class="civilization-select">
+          <option value="">all</option>
+          <option value="medium">medium+</option>
+          <option value="high">high+</option>
+          <option value="critical">critical</option>
+        </select>
+      </label>
+      <label class="civilization-control" for="civilizationSearch">
+        <span>Search</span>
+        <input id="civilizationSearch" class="civilization-input" type="search" placeholder="entity, tower, packet, route..." />
+      </label>
+      <label class="civilization-toggle" for="civilizationTrustedToggle">
+        <input id="civilizationTrustedToggle" type="checkbox" checked />
+        <span>Trusted only</span>
+      </label>
+      <label class="civilization-toggle" for="civilizationAdminToggle">
+        <input id="civilizationAdminToggle" type="checkbox" checked />
+        <span>Admin structures</span>
+      </label>
+      <label class="civilization-toggle" for="civilizationHotToggle">
+        <input id="civilizationHotToggle" type="checkbox" />
+        <span>Hot entities only</span>
+      </label>
+      <label class="civilization-toggle" for="civilizationAutoRefresh">
+        <input id="civilizationAutoRefresh" type="checkbox" checked />
+        <span>Auto refresh</span>
+      </label>
+      <button id="civilizationRefreshBtn" type="button" class="civilization-link">Refresh</button>
+    </section>
+
+    <section class="civilization-layout">
+      <section class="civilization-panel">
+        <div class="civilization-panel-head">
+          <div>
+            <h2>World Map</h2>
+            <p class="civilization-panel-subtitle">Agents, towers, gates, packets, and tasks placed by district with live routed edges.</p>
+          </div>
+          <div id="civilizationMapSummary" class="civilization-chip-row"></div>
+        </div>
+        <div id="civilizationMapShell" class="civilization-map-shell">
+          <div class="civilization-map-grid"></div>
+          <svg id="civilizationRoutes" viewBox="0 0 1200 820" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div id="civilizationDistrictLayer" class="civilization-district-layer"></div>
+          <div id="civilizationNodeLayer" class="civilization-node-layer"></div>
+        </div>
+        <div>
+          <h3>District Overview</h3>
+          <ul id="civilizationDistrictList" class="civilization-card-list"></ul>
+        </div>
+      </section>
+
+      <div class="civilization-side">
+        <section class="civilization-panel">
+          <div class="civilization-panel-head">
+            <div>
+              <h2>Inspector</h2>
+              <p class="civilization-panel-subtitle">Selected entity, connected routes, and live notes.</p>
+            </div>
+          </div>
+          <div id="civilizationInspector" class="civilization-inspector-grid">
+            <div class="civilization-empty">Select a node to inspect its routes and current runtime meaning.</div>
+          </div>
+        </section>
+
+        <section class="civilization-panel">
+          <div class="civilization-panel-head">
+            <div>
+              <h2>Claude Max Advisory</h2>
+              <p class="civilization-panel-subtitle">Recent local Claude Max router dispatches only.</p>
+            </div>
+          </div>
+          <ul id="civilizationClaudeList" class="civilization-feed-list"></ul>
+        </section>
+
+        <section class="civilization-panel">
+          <div class="civilization-panel-head">
+            <div>
+              <h2>Recent World Events</h2>
+              <p class="civilization-panel-subtitle">Latest canonical runtime events touching the visible world.</p>
+            </div>
+          </div>
+          <ul id="civilizationEventList" class="civilization-feed-list"></ul>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/swarm-civilization-preview.js" defer></script>
+</body>
+</html>

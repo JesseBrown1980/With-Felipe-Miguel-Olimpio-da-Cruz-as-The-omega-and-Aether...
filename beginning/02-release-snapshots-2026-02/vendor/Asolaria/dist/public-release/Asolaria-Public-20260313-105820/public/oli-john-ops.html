@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f1f2b" />
+  <title>Asolaria | Oli + John Bridge Ops</title>
+  <style>
+    :root {
+      --bg: #08121b;
+      --panel: #102433;
+      --line: #2e4960;
+      --text: #edf6ff;
+      --muted: #a3bfd3;
+      --ok: #225f40;
+      --warn: #7f5c1f;
+      --bad: #7e2f2f;
+      --accent: #145777;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: radial-gradient(900px 520px at 20% -8%, #16324a, var(--bg));
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .app {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      padding: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+    p, li {
+      color: var(--muted);
+    }
+    .hint {
+      margin: 4px 0 0;
+      font-size: 13px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 8px;
+    }
+    .status-chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      color: #d8e8f8;
+      background: #102436;
+      min-height: 30px;
+    }
+    .ok { background: var(--ok); border-color: #3b8963; }
+    .warn { background: var(--warn); border-color: #b58a40; }
+    .bad { background: var(--bad); border-color: #b05757; }
+    .neutral { background: #1c344a; border-color: #476786; }
+    button, input, textarea {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #0b1b29;
+      color: var(--text);
+      padding: 9px 11px;
+      font-size: 14px;
+    }
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      border-color: #327fa9;
+    }
+    input, textarea {
+      width: 100%;
+    }
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .table th, .table td {
+      border-bottom: 1px solid #2a4257;
+      text-align: left;
+      padding: 7px 6px;
+    }
+    .mono {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      color: #d2e5f8;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      body { padding: 10px; }
+      h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <h1>Oli + John Bridge Ops</h1>
+      <p class="hint">Mac-first handoff UI for John onboarding, phone pairing, and real-time bridge/watchdog/Vertex checks.</p>
+      <div class="row" style="margin-top:10px;">
+        <button id="refreshBtn" type="button">Refresh Now</button>
+        <label class="status-chip neutral"><input id="autoRefreshToggle" type="checkbox" style="width:auto;margin-right:8px;" checked />Auto refresh (10s)</label>
+        <span id="lastUpdated" class="status-chip neutral">Updated: waiting...</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Live Status</h2>
+      <div class="grid">
+        <div>
+          <p class="hint">Runtime</p>
+          <span id="runtimeBadge" class="status-chip neutral">checking</span>
+        </div>
+        <div>
+          <p class="hint">Bridge Lanes</p>
+          <span id="bridgeBadge" class="status-chip neutral">checking</span>
+        </div>
+        <div>
+          <p class="hint">Watchdog</p>
+          <span id="watchdogBadge" class="status-chip neutral">checking</span>
+        </div>
+        <div>
+          <p class="hint">Vertex</p>
+          <span id="vertexBadge" class="status-chip neutral">checking</span>
+        </div>
+        <div>
+          <p class="hint">Phone Path</p>
+          <span id="phoneBadge" class="status-chip neutral">checking</span>
+        </div>
+      </div>
+      <p id="statusSummary" class="hint">Waiting for first refresh...</p>
+    </section>
+
+    <section class="card">
+      <h2>Agent Lanes</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Lane</th>
+            <th>State</th>
+            <th>Running</th>
+            <th>Last Seen</th>
+          </tr>
+        </thead>
+        <tbody id="laneRows">
+          <tr><td colspan="4" class="hint">No data yet.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card split">
+      <div>
+        <h2>Oli Mac Control</h2>
+        <p class="hint">Store the mobile token locally on Oli's Mac browser to use John control pages.</p>
+        <div class="row">
+          <input id="tokenInput" type="text" placeholder="Paste mobile token here" />
+        </div>
+        <div class="row">
+          <button id="saveTokenBtn" type="button">Save Token</button>
+          <button id="clearTokenBtn" type="button">Clear Token</button>
+          <button id="openConsoleBtn" type="button">Open John Console</button>
+          <button id="openApprovalsBtn" type="button">Open Approvals</button>
+        </div>
+        <p id="tokenStatus" class="hint">Token is not set.</p>
+
+        <h2 style="margin-top:12px;">Mac Quick Commands</h2>
+        <div class="mono" id="macCommands">brew install --cask android-platform-tools
+adb devices
+open "<john_console_url_with_token>"</div>
+      </div>
+      <div>
+        <h2>John Phone Setup Checklist</h2>
+        <ol class="hint" id="phoneChecklist">
+          <li>Install and open Asolaria companion on John's phone.</li>
+          <li>Enable Developer Options and USB debugging on John's phone.</li>
+          <li>Open John Console URL from Oli's Mac and save the mobile token.</li>
+          <li>Tap Push Subscribe in Mobile Console, then run one click/type control test.</li>
+          <li>Run WhatsApp integration check (`/api/phone/mirror/whatsapp/open`) and confirm manual biometric approval on John's phone.</li>
+          <li>Confirm phone bridge keeper shows running and watchdog reports lane activity.</li>
+        </ol>
+        <div class="row">
+          <button id="copyPacketBtn" type="button">Copy Sanitized Handoff Packet</button>
+        </div>
+        <textarea id="handoffPacket" readonly></textarea>
+      </div>
+    </section>
+  </main>
+  <script src="/oli-john-ops.js?v=20260301-2"></script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Asolaria Abacus Worker</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .abacus-worker-page { min-height: 100vh; color: var(--ink); }
+    .abacus-worker-shell { position: relative; max-width: 1540px; margin: 0 auto; padding: 20px; display: grid; gap: 16px; }
+    .abacus-panel, .abacus-hero, .abacus-actions, .abacus-feed-panel, .abacus-form-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(140deg, rgba(17, 29, 50, 0.9), rgba(11, 18, 31, 0.92));
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(12px);
+    }
+    .abacus-hero { padding: 22px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr); gap: 18px; }
+    .abacus-hero h1, .abacus-panel h2, .abacus-feed-panel h2, .abacus-form-panel h2 {
+      margin: 0;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+    }
+    .abacus-hero p, .abacus-panel-subtitle, .abacus-muted { color: var(--ink-muted); line-height: 1.55; }
+    .abacus-pill-row, .abacus-link-row, .abacus-card-grid, .abacus-button-row, .abacus-chip-row, .abacus-surface-grid, .abacus-preset-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .abacus-pill, .abacus-link, .abacus-select, .abacus-input, .abacus-textarea, .abacus-button, .abacus-chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(14, 24, 42, 0.78);
+      color: var(--ink);
+      font: inherit;
+    }
+    .abacus-pill, .abacus-link, .abacus-chip { padding: 8px 12px; font-size: 0.8rem; }
+    .abacus-pill.is-ok { border-color: rgba(94, 245, 176, 0.42); color: #c9ffe5; }
+    .abacus-pill.is-warn { border-color: rgba(255, 188, 92, 0.46); color: #ffd7a8; }
+    .abacus-pill.is-bad { border-color: rgba(255, 123, 123, 0.55); color: #ffd0d0; }
+    .abacus-link { text-decoration: none; transition: transform 140ms ease, border-color 140ms ease; }
+    .abacus-link:hover { transform: translateY(-1px); border-color: rgba(39, 194, 255, 0.44); }
+    .abacus-card-grid { margin-top: 16px; }
+    .abacus-metric {
+      flex: 1 1 150px;
+      min-width: 150px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(15, 24, 43, 0.72);
+      border: 1px solid rgba(122, 151, 199, 0.18);
+    }
+    .abacus-metric strong {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .abacus-metric span {
+      display: block;
+      margin-top: 8px;
+      font-size: clamp(1.1rem, 2vw, 1.7rem);
+      font-weight: 700;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+    }
+    .abacus-panel, .abacus-feed-panel, .abacus-form-panel { padding: 16px; }
+    .abacus-actions { padding: 16px; display: grid; gap: 12px; }
+    .abacus-button-row { align-items: center; }
+    .abacus-button {
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+    .abacus-button:hover { transform: translateY(-1px); border-color: rgba(39, 194, 255, 0.4); }
+    .abacus-button.is-primary {
+      background: linear-gradient(135deg, rgba(39, 194, 255, 0.22), rgba(59, 130, 246, 0.2));
+      border-color: rgba(39, 194, 255, 0.42);
+    }
+    .abacus-button.is-warm {
+      background: linear-gradient(135deg, rgba(255, 177, 74, 0.2), rgba(255, 120, 120, 0.14));
+      border-color: rgba(255, 177, 74, 0.4);
+    }
+    .abacus-main {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .abacus-stack { display: grid; gap: 16px; }
+    .abacus-surface-grid { margin-top: 12px; }
+    .abacus-surface-card, .abacus-preset-card, .abacus-packet-item {
+      flex: 1 1 220px;
+      min-width: 220px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(122, 151, 199, 0.16);
+      background: rgba(15, 25, 45, 0.74);
+    }
+    .abacus-preset-grid { margin-top: 14px; }
+    .abacus-issue-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--ink-muted);
+      display: grid;
+      gap: 8px;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+    .abacus-preset-card h3, .abacus-surface-card h3, .abacus-packet-item h3 {
+      margin: 0;
+      font-size: 0.98rem;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+    }
+    .abacus-preset-card p, .abacus-surface-card p, .abacus-packet-item p {
+      margin: 8px 0 0;
+      color: var(--ink-muted);
+      font-size: 0.84rem;
+      line-height: 1.48;
+    }
+    .abacus-chip-row { margin-top: 10px; }
+    .abacus-chip { border-radius: 999px; padding: 6px 10px; font-size: 0.72rem; }
+    .abacus-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .abacus-field { display: grid; gap: 8px; }
+    .abacus-field label { color: var(--ink-muted); font-size: 0.82rem; }
+    .abacus-select, .abacus-input, .abacus-textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      outline: none;
+      background: rgba(10, 18, 33, 0.88);
+    }
+    .abacus-textarea { min-height: 110px; resize: vertical; border-radius: 16px; }
+    .abacus-field.is-full { grid-column: 1 / -1; }
+    .abacus-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-muted);
+      font-size: 0.84rem;
+    }
+    .abacus-toggle input { accent-color: var(--accent); }
+    .abacus-feed-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      max-height: 920px;
+      overflow: auto;
+    }
+    .abacus-packet-item {
+      list-style: none;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease;
+    }
+    .abacus-packet-item:hover { transform: translateY(-1px); border-color: rgba(39, 194, 255, 0.32); }
+    .abacus-packet-item.is-selected { border-color: rgba(255, 188, 92, 0.52); box-shadow: inset 0 0 0 1px rgba(255, 188, 92, 0.2); }
+    .abacus-packet-head, .abacus-packet-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .abacus-packet-meta { margin-top: 10px; color: var(--ink-muted); font-size: 0.76rem; }
+    .abacus-status-message {
+      min-height: 24px;
+      color: var(--ink-muted);
+      font-size: 0.84rem;
+    }
+    .abacus-status-message.is-ok { color: #c9ffe5; }
+    .abacus-status-message.is-warn { color: #ffd7a8; }
+    .abacus-status-message.is-bad { color: #ffd0d0; }
+    .abacus-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .abacus-detail-card {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(122, 151, 199, 0.16);
+      background: rgba(10, 17, 31, 0.88);
+    }
+    .abacus-detail-card pre {
+      margin: 10px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 0.76rem;
+      color: #d7e5ff;
+    }
+    .abacus-empty { margin-top: 14px; color: var(--ink-muted); font-size: 0.9rem; }
+    @media (max-width: 1120px) {
+      .abacus-hero, .abacus-main, .abacus-detail-grid, .abacus-form-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .abacus-worker-shell { padding: 14px; }
+      .abacus-hero, .abacus-panel, .abacus-feed-panel, .abacus-form-panel, .abacus-actions { border-radius: 16px; }
+    }
+  </style>
+</head>
+<body class="abacus-worker-page">
+  <div class="bg-layer"></div>
+  <main class="abacus-worker-shell">
+    <section class="abacus-hero">
+      <div>
+        <div class="abacus-pill-row">
+          <span id="abacusLiveState" class="abacus-pill">Connecting...</span>
+          <span id="abacusAccountPill" class="abacus-pill">Account: unknown</span>
+          <span id="abacusTierPill" class="abacus-pill">Tier: unknown</span>
+        </div>
+        <h1>Asolaria Abacus Worker</h1>
+        <p>Bounded operator surface for Abacus browser, desktop, listener, and CLI-assisted worker packets. Use this to launch Workflow Studio or Claude-style coding tasks under Asolaria’s audit trail.</p>
+        <div id="abacusMetricCards" class="abacus-card-grid"></div>
+      </div>
+      <div class="abacus-stack">
+        <div class="abacus-panel">
+          <h2>Links</h2>
+          <p class="abacus-panel-subtitle">Jump between the live worker lane, graph runtime, and raw status feeds.</p>
+          <div class="abacus-link-row">
+            <a class="abacus-link" href="/" target="_blank" rel="noreferrer">Open Asolaria</a>
+            <a class="abacus-link" href="/worker-runtime.html" target="_blank" rel="noreferrer">Open Worker Runtime</a>
+            <a class="abacus-link" href="/graph-runtime.html" target="_blank" rel="noreferrer">Open Graph Runtime</a>
+            <a class="abacus-link" href="/api/integrations/abacus/status" target="_blank" rel="noreferrer">Open Status JSON</a>
+          </div>
+        </div>
+        <div class="abacus-actions">
+          <h2>Quick Actions</h2>
+          <div class="abacus-button-row">
+            <button id="abacusOpenBrowserBtn" class="abacus-button is-primary" type="button">Open Browser Surface</button>
+            <button id="abacusOpenDesktopBtn" class="abacus-button is-primary" type="button">Open Desktop App</button>
+            <button id="abacusProbeMcpBtn" class="abacus-button" type="button">Probe MCP List</button>
+            <button id="abacusProbeReadyBtn" class="abacus-button" type="button">Probe Print Mode</button>
+            <button id="abacusRefreshBtn" class="abacus-button is-warm" type="button">Refresh</button>
+          </div>
+          <div id="abacusStatusMessage" class="abacus-status-message">Ready.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="abacus-main">
+      <div class="abacus-stack">
+        <section class="abacus-panel">
+          <h2>Surface Status</h2>
+          <p class="abacus-panel-subtitle">Observed runtime state for browser, desktop, listener, and CLI surfaces.</p>
+          <div id="abacusSurfaceGrid" class="abacus-surface-grid"></div>
+        </section>
+
+        <section class="abacus-panel">
+          <h2>Operating Strategy</h2>
+          <p class="abacus-panel-subtitle">Recommended Abacus lanes by task shape, plus explicit known mistakes and current limitations.</p>
+          <div id="abacusStrategyGrid" class="abacus-preset-grid"></div>
+          <ul id="abacusKnownIssues" class="abacus-issue-list"></ul>
+        </section>
+
+        <section class="abacus-panel">
+          <h2>Packet Presets</h2>
+          <p class="abacus-panel-subtitle">Preset-backed work packets for Workflow Studio, Claude-style coding, listener triage, and research briefs.</p>
+          <div id="abacusPresetGrid" class="abacus-preset-grid"></div>
+        </section>
+
+        <section class="abacus-form-panel">
+          <h2>Create Work Packet</h2>
+          <p class="abacus-panel-subtitle">Compose a bounded work packet, then open it in the desktop app for Workflow Studio or code-mode execution.</p>
+          <div class="abacus-form-grid">
+            <div class="abacus-field">
+              <label for="abacusPresetSelect">Preset</label>
+              <select id="abacusPresetSelect" class="abacus-select">
+                <option value="">custom</option>
+              </select>
+            </div>
+            <div class="abacus-field">
+              <label for="abacusTitleInput">Title</label>
+              <input id="abacusTitleInput" class="abacus-input" type="text" maxlength="200" placeholder="Claude Code patch: graph runtime view polish" />
+            </div>
+            <div class="abacus-field is-full">
+              <label for="abacusObjectiveInput">Objective</label>
+              <textarea id="abacusObjectiveInput" class="abacus-textarea" placeholder="Describe the exact bounded objective for Abacus."></textarea>
+            </div>
+            <div class="abacus-field is-full">
+              <label for="abacusInstructionsInput">Instructions</label>
+              <textarea id="abacusInstructionsInput" class="abacus-textarea" placeholder="Optional packet-specific instructions."></textarea>
+            </div>
+            <div class="abacus-field is-full">
+              <label for="abacusPathsInput">Allowed Paths</label>
+              <textarea id="abacusPathsInput" class="abacus-textarea" placeholder="One path per line."></textarea>
+            </div>
+            <div class="abacus-field">
+              <label for="abacusArtifactsInput">Expected Artifacts</label>
+              <textarea id="abacusArtifactsInput" class="abacus-textarea" placeholder="One artifact per line."></textarea>
+            </div>
+            <div class="abacus-field">
+              <label for="abacusSurfaceHintsInput">Surface Hints</label>
+              <textarea id="abacusSurfaceHintsInput" class="abacus-textarea" placeholder="workflow_studio&#10;claude_code"></textarea>
+            </div>
+            <div class="abacus-field">
+              <label for="abacusTaskIdInput">Source Task ID</label>
+              <input id="abacusTaskIdInput" class="abacus-input" type="text" maxlength="120" placeholder="Optional task-ledger task ID" />
+            </div>
+            <div class="abacus-field">
+              <label for="abacusWorkerModeInput">Worker Mode</label>
+              <input id="abacusWorkerModeInput" class="abacus-input" type="text" maxlength="80" placeholder="workflow_studio" />
+            </div>
+          </div>
+          <div class="abacus-button-row" style="margin-top: 14px;">
+            <label class="abacus-toggle"><input id="abacusLaunchDesktopToggle" type="checkbox" checked /> Launch desktop after create</label>
+            <button id="abacusCreatePacketBtn" class="abacus-button is-primary" type="button">Create Packet</button>
+            <button id="abacusResetDraftBtn" class="abacus-button" type="button">Reset Draft</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="abacus-stack">
+        <section class="abacus-feed-panel">
+          <h2>Worker Packets</h2>
+          <p class="abacus-panel-subtitle">Recent packets with open, scan, and import actions.</p>
+          <ul id="abacusPacketList" class="abacus-feed-list"></ul>
+          <div id="abacusPacketsEmpty" class="abacus-empty" hidden>No packets yet.</div>
+        </section>
+
+        <section class="abacus-panel">
+          <h2>Selected Packet</h2>
+          <p class="abacus-panel-subtitle">Inspect the selected packet, view its response preview, and import it back into Asolaria.</p>
+          <div class="abacus-button-row">
+            <button id="abacusOpenPacketBtn" class="abacus-button" type="button" disabled>Open Packet</button>
+            <button id="abacusScanPacketBtn" class="abacus-button" type="button" disabled>Scan Packet</button>
+            <button id="abacusImportPacketBtn" class="abacus-button is-warm" type="button" disabled>Import Packet</button>
+          </div>
+          <div id="abacusPacketDetailGrid" class="abacus-detail-grid"></div>
+          <div id="abacusPacketDetailEmpty" class="abacus-empty">Select a packet to inspect it.</div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/abacus-worker.js"></script>
+</body>
+</html>

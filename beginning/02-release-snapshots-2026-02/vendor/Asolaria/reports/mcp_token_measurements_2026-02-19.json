@@ -1,0 +1,33 @@
+{
+  "tokenizer": "o200k_base (fallback)",
+  "model_requested": "gpt-5.3-codex",
+  "rows": [
+    {
+      "case": "A_50_inline_functions",
+      "chars": 26510,
+      "bytes": 26510,
+      "estimated_tokens_chars_div_4": 6627.5,
+      "actual_tokens": 5382
+    },
+    {
+      "case": "B_1_mcp_pointer_allow5",
+      "chars": 314,
+      "bytes": 314,
+      "estimated_tokens_chars_div_4": 78.5,
+      "actual_tokens": 82,
+      "delta_vs_A_tokens": -5300,
+      "savings_vs_A_tokens": 5300,
+      "savings_vs_A_percent": 98.47640282422891
+    },
+    {
+      "case": "C_followup_previous_response",
+      "chars": 155,
+      "bytes": 155,
+      "estimated_tokens_chars_div_4": 38.75,
+      "actual_tokens": 42,
+      "delta_vs_A_tokens": -5340,
+      "savings_vs_A_tokens": 5340,
+      "savings_vs_A_percent": 99.21962095875139
+    }
+  ]
+}

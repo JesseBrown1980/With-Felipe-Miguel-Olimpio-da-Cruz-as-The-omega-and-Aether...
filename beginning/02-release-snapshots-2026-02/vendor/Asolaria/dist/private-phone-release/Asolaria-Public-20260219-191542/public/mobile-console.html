@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111f" />
+  <link rel="manifest" href="/mobile.webmanifest" />
+  <title>Asolaria Mobile Console</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --card: #0f1e33;
+      --line: #274366;
+      --text: #f2f7ff;
+      --muted: #a8bbd8;
+      --ok: #1f6f48;
+      --warn: #6f5520;
+      --no: #7a3131;
+      --accent: #0f7ea0;
+    }
+    * { box-sizing: border-box; }
+    html {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      margin: 0;
+      padding: 14px;
+      background: radial-gradient(900px 600px at 18% -10%, #1c3254, var(--bg));
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    .app {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+    .title { margin: 2px 0 4px; font-size: 28px; }
+    .hint { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    input, textarea, button, select {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0a1729;
+      color: var(--text);
+      font-size: 14px;
+      padding: 10px 12px;
+      max-width: 100%;
+    }
+    input, textarea { flex: 1; min-width: 150px; }
+    .row > * { min-width: 0; }
+    textarea { min-height: 82px; resize: vertical; }
+    button { cursor: pointer; }
+    button.ok { background: var(--ok); border-color: #379264; }
+    button.warn { background: var(--warn); border-color: #98773a; }
+    button.no { background: var(--no); border-color: #a95050; }
+    button.accent { background: #0d4b66; border-color: #2d7ca0; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      padding: 12px;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+    .status {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0c1729;
+      color: var(--muted);
+      padding: 10px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      font-size: 13px;
+    }
+    .status.small {
+      margin-top: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      line-height: 1.35;
+      max-height: 132px;
+      overflow: auto;
+    }
+    .screen-wrap {
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #04080f;
+    }
+    .screen-wrap img {
+      display: block;
+      width: 100%;
+      min-height: 180px;
+      object-fit: contain;
+      background: #04080f;
+    }
+    .list { display: grid; gap: 8px; }
+    .item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0c192b;
+      padding: 10px;
+    }
+    .task-actions button {
+      font-size: 12px;
+      padding: 7px 9px;
+    }
+    .task-actions {
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+    .task-summary {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 8px;
+    }
+    .task-events {
+      margin-top: 8px;
+    }
+    .msg-role {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .msg-text {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      line-height: 1.35;
+      font-size: 14px;
+    }
+    .approval-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .approval-id {
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      color: #cad8ec;
+    }
+    .badge {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+    }
+    .risk-critical { background: #4e1f1f; border-color: #954545; color: #ffdada; }
+    .risk-high { background: #4d3517; border-color: #8b6730; color: #ffe8c8; }
+    .risk-medium { background: #3f3919; border-color: #726530; color: #f4f1cf; }
+    .risk-low { background: #1c3c2b; border-color: #2d8558; color: #d8f6e2; }
+    .push-status {
+      color: #9dd8ff;
+      font-size: 12px;
+      min-height: 18px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .control-status {
+      color: #ffd27d;
+      font-size: 12px;
+      min-height: 18px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .connection-status {
+      color: #a9ddff;
+      font-size: 12px;
+      min-height: 18px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    #stealthStatus,
+    #screenMeta,
+    #pushStatus,
+    #controlStatus {
+      display: block;
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    #displaySelect {
+      min-width: 0;
+      flex: 1 1 100%;
+      width: 100%;
+      max-width: 100% !important;
+    }
+    #remoteBaseInput {
+      min-width: 0;
+      width: 100%;
+      font-family: Consolas, "SFMono-Regular", ui-monospace, monospace;
+      font-size: 13px;
+    }
+    .mono {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #071426;
+      color: #d8e6ff;
+      padding: 10px;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      line-height: 1.35;
+      max-height: 280px;
+      overflow: auto;
+    }
+    #installAppBtn[hidden] {
+      display: none;
+    }
+    @media (max-width: 700px) {
+      .row {
+        gap: 6px;
+      }
+      .row > button,
+      .row > select,
+      .row > input,
+      .row > textarea {
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 520px) {
+      body {
+        padding: 10px;
+      }
+      .title {
+        font-size: 24px;
+        line-height: 1.15;
+      }
+      .hint {
+        font-size: 12px;
+      }
+      .card {
+        padding: 10px;
+      }
+      .top-actions > input,
+      .strategy-row > select,
+      .strategy-row > button,
+      .remote-url-row > input,
+      .remote-url-row > button {
+        flex: 1 1 100%;
+      }
+      .top-actions > button {
+        flex: 1 1 calc(50% - 6px);
+      }
+      .connection-profiles > button,
+      .push-row > button {
+        flex: 1 1 calc(33.33% - 6px);
+        min-width: 0;
+        padding-inline: 10px;
+      }
+      #remoteBaseInput {
+        font-size: 12px;
+      }
+    }
+    @media (max-width: 390px) {
+      .connection-profiles > button,
+      .push-row > button {
+        flex: 1 1 calc(50% - 6px);
+      }
+    }
+    @media (min-width: 980px) {
+      .grid {
+        grid-template-columns: 1.2fr 1fr;
+      }
+      .card.full {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1 class="title">Asolaria Mobile Console</h1>
+    <p class="hint">Phone control, approvals, and secure desktop snapshots with your private token.</p>
+
+    <div class="row top-actions">
+      <input id="tokenInput" type="password" placeholder="Mobile approval token" />
+      <button id="saveTokenBtn">Save Token</button>
+      <button id="refreshAllBtn" class="warn">Refresh</button>
+      <button id="openApprovalsBtn" class="accent">Approval Center</button>
+      <button id="installAppBtn" class="accent" hidden>Install App</button>
+    </div>
+
+    <div class="row strategy-row">
+      <select id="approvalStrategySelect">
+        <option value="pay_priority">P/A/Y Priority</option>
+        <option value="balanced">Balanced</option>
+      </select>
+      <button id="saveApprovalStrategyBtn" class="accent">Save Strategy</button>
+      <span id="approvalStrategyStatus" class="hint"></span>
+    </div>
+
+    <div class="row push-row">
+      <button id="enablePushBtn" class="ok">Enable Push Alerts</button>
+      <button id="disablePushBtn" class="no">Disable Push</button>
+      <button id="testPushBtn" class="warn">Test Push</button>
+      <span id="pushStatus" class="push-status">Push: checking...</span>
+    </div>
+
+    <div id="globalStatus" class="status">Loading mobile console...</div>
+    <div id="networkHistory" class="status small">Network events: none.</div>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Connection Mode</h3>
+        <div class="row connection-profiles">
+          <button id="profileWifiBtn" class="ok">Home Wi-Fi</button>
+          <button id="profileInternetBtn" class="warn">Internet Tunnel</button>
+          <button id="profileUsbBtn">USB First</button>
+        </div>
+        <div class="row remote-url-row">
+          <input id="remoteBaseInput" type="url" placeholder="Tunnel base URL (optional): https://example.trycloudflare.com" />
+          <button id="saveRemoteBaseBtn" class="accent">Save URL</button>
+        </div>
+        <div class="row">
+          <button id="vpnHeartbeatBtn" class="accent">Mark VPN Active</button>
+        </div>
+        <div class="row">
+          <button id="stealthToggleBtn" class="accent">Stealth: checking...</button>
+          <span id="stealthStatus" class="hint"></span>
+        </div>
+        <div id="connectionStatus" class="connection-status">Connection mode: checking...</div>
+      </article>
+
+      <article class="card">
+        <h3>Screen View</h3>
+        <div class="row">
+          <button id="captureBtn" class="ok">Capture Now</button>
+          <button id="toggleAutoBtn" class="accent">Live Refresh On</button>
+          <select id="displaySelect" style="max-width:220px;">
+            <option value="-1">Primary Screen</option>
+          </select>
+          <button id="refreshDisplaysBtn">Displays</button>
+          <button id="captureAllBtn">All Screens Off</button>
+          <span id="screenMeta" class="hint">No capture yet.</span>
+        </div>
+        <div class="screen-wrap">
+          <img id="desktopImage" alt="Latest desktop snapshot" />
+        </div>
+        <div class="row">
+          <button id="openImageBtn">Open Full Screen</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Work Org</h3>
+        <div class="row">
+          <select id="workOrgSelect" style="max-width:260px;">
+            <option value="">(loading...)</option>
+          </select>
+          <button id="setWorkOrgBtn" class="accent">Set</button>
+          <button id="refreshWorkOrgBtn">Refresh</button>
+        </div>
+        <div id="workOrgStatus" class="hint">Work org: checking...</div>
+        <p class="hint">Use org profiles to enforce Slack-only vs Teams/VPN rules.</p>
+      </article>
+
+      <article class="card">
+        <h3>Phone Control (Safe)</h3>
+        <div class="row">
+          <button id="armControlBtn" class="warn">Arm 2m</button>
+          <button id="disarmControlBtn" class="no">Disarm</button>
+          <button id="tapControlToggleBtn" class="accent">Tap-to-Click On</button>
+          <button id="runControlDiagBtn">Control Diagnostics</button>
+        </div>
+        <div class="row">
+          <span id="controlDiagStatus" class="hint">Diagnostics: not run.</span>
+        </div>
+        <div class="row">
+          <button id="scrollUpBtn">Scroll Up</button>
+          <button id="scrollDownBtn">Scroll Down</button>
+          <button id="keyEnterBtn">Enter</button>
+          <button id="keyEscBtn">Esc</button>
+          <button id="keyBackspaceBtn">Backspace</button>
+        </div>
+        <div class="row">
+          <button id="keyPageUpBtn">Page Up</button>
+          <button id="keyPageDownBtn">Page Down</button>
+        </div>
+        <div class="row">
+          <button id="keyCtrlCBtn">Ctrl+C</button>
+          <button id="keyCtrlVBtn">Ctrl+V</button>
+          <button id="keyCtrlABtn">Ctrl+A</button>
+        </div>
+        <div class="row">
+          <button id="keyPrevTabBtn">Prev Tab</button>
+          <button id="keyNextTabBtn">Next Tab</button>
+          <button id="keyCloseTabBtn" class="no">Close Tab</button>
+        </div>
+        <div class="row">
+          <input id="typeInput" type="text" placeholder="Type on desktop..." />
+          <button id="sendTypeBtn" class="ok">Send Text</button>
+        </div>
+        <div id="controlStatus" class="control-status">Control: checking...</div>
+        <p class="hint">Tap the screenshot to click the desktop pointer when armed.</p>
+      </article>
+
+      <article class="card">
+        <h3>Window Control</h3>
+        <div class="row">
+          <input id="windowSearchInput" type="text" placeholder="Window title contains..." />
+          <button id="focusWindowBtn" class="accent">Focus</button>
+          <button id="refreshWindowsBtn">Refresh</button>
+        </div>
+        <div class="row">
+          <button id="switchWindowBtn">Alt+Tab</button>
+          <button id="minimizeWindowBtn">Minimize</button>
+          <button id="maximizeWindowBtn">Maximize</button>
+          <button id="restoreWindowBtn">Restore</button>
+          <button id="closeWindowBtn" class="no">Close</button>
+        </div>
+        <div id="windowsStatus" class="hint">Windows: checking...</div>
+        <div id="windowList" class="list"></div>
+      </article>
+
+      <article class="card">
+        <h3>Pending Approvals</h3>
+        <div id="approvalList" class="list"></div>
+      </article>
+
+      <article class="card">
+        <h3>Power</h3>
+        <div class="row">
+          <input id="powerDelayInput" type="number" min="0" max="3600" value="15" />
+          <span class="hint">Delay (s)</span>
+        </div>
+        <div class="row">
+          <button id="powerShutdownBtn" class="no">Shutdown</button>
+          <button id="powerRestartBtn" class="warn">Restart</button>
+          <button id="powerAbortBtn">Abort</button>
+        </div>
+        <div class="row">
+          <select id="wolDeviceSelect">
+            <option value="">Select WOL device...</option>
+          </select>
+          <input id="wolTargetInput" type="text" placeholder="or type device name..." />
+          <button id="wolWakeBtn" class="accent">Wake</button>
+          <button id="wolRefreshBtn">Refresh List</button>
+        </div>
+        <div id="powerStatus" class="hint">Power: idle.</div>
+        <p class="hint">Safety: requires Arm Control and may require Guardian approval for shutdown/restart.</p>
+      </article>
+
+      <article class="card full">
+        <h3>Integrations</h3>
+        <div class="row">
+          <button id="refreshIntegrationsBtn" class="warn">Refresh Status</button>
+          <button id="openIntegrationsSetupBtn" class="accent">Open Setup (Desktop)</button>
+          <span id="integrationsHint" class="hint"></span>
+        </div>
+        <div class="row">
+          <div class="item" style="flex:1; min-width:280px;">
+            <div class="msg-role">SLACK</div>
+            <div class="row">
+              <button id="slackStatusBtn">Status</button>
+              <button id="slackChannelsBtn">Channels</button>
+            </div>
+            <div class="row">
+              <input id="slackChannelInput" type="text" placeholder="#general" />
+              <input id="slackLimitInput" type="number" min="1" max="200" value="40" style="max-width:110px;" />
+              <select id="slackAnalyzeSelect" style="max-width:140px;">
+                <option value="1">Analyze</option>
+                <option value="0">Raw</option>
+              </select>
+              <button id="slackReviewBtn" class="ok">Review</button>
+            </div>
+            <div id="slackStatusBox" class="status small">Slack: tap Status.</div>
+          </div>
+          <div class="item" style="flex:1; min-width:280px;">
+            <div class="msg-role">GOOGLE</div>
+            <div class="row">
+              <button id="googleStatusBtn">Status</button>
+              <button id="googleAuthStartBtn" class="accent">Auth Start</button>
+              <button id="googleOpenAuthBtn">Open on Desktop</button>
+            </div>
+            <div class="row">
+              <input id="googleAccountInput" type="text" placeholder="account email (optional)" />
+              <input id="googleLimitInput" type="number" min="1" max="80" value="12" style="max-width:110px;" />
+            </div>
+            <div class="row">
+              <button id="gmailInboxBtn">Inbox</button>
+              <input id="gmailSearchInput" type="text" placeholder="gmail search query..." />
+              <button id="gmailSearchBtn" class="ok">Search</button>
+            </div>
+            <div class="row">
+              <input id="calendarDaysInput" type="number" min="1" max="60" value="7" style="max-width:110px;" />
+              <button id="calendarUpcomingBtn" class="accent">Upcoming</button>
+              <button id="calendarListBtn">Calendars</button>
+            </div>
+            <div class="row">
+              <input id="googleApiUrlInput" type="text" placeholder="google api URL (GET)..." />
+              <button id="googleApiGetBtn" class="ok">API GET</button>
+            </div>
+            <div id="googleStatusBox" class="status small">Google: tap Status.</div>
+            <div id="googleAuthUrlBox" class="status small">OAuth URL: (none)</div>
+          </div>
+          <div class="item" style="flex:1; min-width:280px;">
+            <div class="msg-role">GCP</div>
+            <div class="row">
+              <button id="gcpStatusBtn">Status</button>
+              <button id="gcpEnabledBtn" class="accent">Enabled APIs</button>
+            </div>
+            <div class="row">
+              <input id="gcpProjectInput" type="text" placeholder="project id/number (optional)" />
+            </div>
+            <div class="row">
+              <input id="gcpServiceInput" type="text" placeholder="enable: gmail.googleapis.com" />
+              <button id="gcpEnableBtn" class="warn">Enable</button>
+            </div>
+            <div class="row">
+              <input id="gcpApiUrlInput" type="text" placeholder="gcp api URL (GET)..." />
+              <button id="gcpApiGetBtn" class="ok">API GET</button>
+            </div>
+            <div id="gcpStatusBox" class="status small">GCP: tap Status.</div>
+          </div>
+        </div>
+        <p class="hint">Setup requires local loopback. Use Open Setup (Desktop). OAuth must complete on the PC running Asolaria.</p>
+      </article>
+
+      <article class="card full">
+        <h3>Phone (Termux)</h3>
+        <div class="row">
+          <button id="androidStatusBtn">Status</button>
+          <button id="androidOpenTermuxBtn">Open Termux</button>
+          <button id="androidOpenFdroidBtn">Open F-Droid</button>
+        </div>
+        <div class="row">
+          <input id="androidTermuxCmdInput" type="text" placeholder="termux cmd (runs: bash -lc <cmd>)" />
+          <button id="androidTermuxRunBtn" class="warn">Run</button>
+        </div>
+        <div class="row">
+          <button id="androidTermuxSshdBtn" class="accent">Start sshd</button>
+        </div>
+        <div id="androidStatusBox" class="status small">
+          Phone: open this page inside the Asolaria Android app to enable Termux control.
+        </div>
+        <p class="hint">Safety: Termux control is only enabled for trusted origins (loopback 127.0.0.1/localhost, or the exact Base URL origin configured in the Asolaria Android app when it points to a private LAN/VPN host, including Tailscale 100.64.0.0/10).</p>
+      </article>
+
+      <article class="card full">
+        <h3>Ask Asolaria</h3>
+        <div class="row">
+          <textarea id="chatInput" placeholder="Example: run a screenshot test on https://example.com"></textarea>
+        </div>
+        <div class="row">
+          <select id="commandPresetSelect">
+            <option value="">Command preset...</option>
+          </select>
+          <button id="applyCommandPresetBtn">Insert</button>
+          <button id="runCommandBtn" class="accent">Run Command</button>
+          <button id="repeatLastCommandBtn">Repeat Last</button>
+          <button id="clearCommandHistoryBtn">Clear History</button>
+        </div>
+        <div class="row">
+          <input id="customPresetLabelInput" type="text" placeholder="Custom preset label (optional)" />
+          <input id="customPresetCommandInput" type="text" placeholder="Custom preset command (required)" />
+        </div>
+        <div class="row">
+          <button id="saveCustomPresetBtn" class="ok">Save Preset</button>
+          <button id="removeCustomPresetBtn" class="no">Remove Preset</button>
+          <span id="customPresetStatus" class="hint"></span>
+        </div>
+        <div class="row">
+          <input id="chatFiles" type="file" multiple accept=".png,.jpg,.jpeg,.webp,.gif,.bmp,.txt,.md,.log,.json,.csv,.ts,.tsx,.js,.jsx,.css,.html,.xml,.yml,.yaml,.toml,.ini,.ps1,.py,.java,.go,.rs,.c,.cpp,.h,.hpp,.pdf" />
+          <span id="chatFileStatus" class="hint">No files selected.</span>
+        </div>
+        <div class="row">
+          <button id="sendBtn" class="ok">Send</button>
+          <button id="clearInputBtn">Clear</button>
+          <button id="attachScreenBtn" class="accent">Attach Screen On</button>
+          <span id="chatStatus" class="hint"></span>
+        </div>
+        <div id="commandHistoryList" class="list"></div>
+        <p class="hint">Command mode is optimized for routed commands from phone (files are skipped, Ctrl+Enter runs command).</p>
+      </article>
+
+      <article class="card full">
+        <h3>Last Job Result</h3>
+        <div class="row">
+          <button id="clearJobResultBtn">Clear</button>
+          <span id="jobResultMeta" class="hint"></span>
+        </div>
+        <div id="jobResultBox" class="mono">(no job yet)</div>
+      </article>
+
+      <article class="card full">
+        <h3>Notebook Memory</h3>
+        <div class="row">
+          <input id="notebookSearchInput" type="text" placeholder="Search notes (example: gcp roles)" />
+          <button id="notebookSearchBtn">Search</button>
+          <button id="notebookRefreshBtn">Refresh</button>
+        </div>
+        <div class="row">
+          <input id="notebookTitleInput" type="text" placeholder="Title (optional)" />
+        </div>
+        <div class="row">
+          <input id="notebookTagsInput" type="text" placeholder="Tags (comma-separated, optional)" />
+        </div>
+        <div class="row">
+          <textarea id="notebookTextInput" placeholder="Note text (do not store passwords or API keys here)"></textarea>
+        </div>
+        <div class="row">
+          <button id="notebookAddBtn" class="ok">Add Note</button>
+          <button id="notebookClearBtn">Clear</button>
+          <span id="notebookStatus" class="hint"></span>
+        </div>
+        <div id="notebookList" class="list"></div>
+        <p class="hint">Notes auto-marked sensitive are hidden from lists and never injected into LLM prompts.</p>
+      </article>
+
+      <article class="card full">
+        <h3>Task Ledger</h3>
+        <p id="taskLedgerStatus" class="task-summary">Loading tasks...</p>
+        <div class="row">
+          <input id="taskLedgerTitleInput" type="text" placeholder="Task title" />
+        </div>
+        <div class="row">
+          <input id="taskLedgerDescriptionInput" type="text" placeholder="Description (optional)" />
+        </div>
+        <div class="row">
+          <select id="taskLedgerCreatePriority">
+            <option value="normal">Priority: normal</option>
+            <option value="low">Priority: low</option>
+            <option value="high">Priority: high</option>
+            <option value="critical">Priority: critical</option>
+          </select>
+          <button id="taskLedgerAddBtn" class="ok">Add Task</button>
+        </div>
+        <div class="row">
+          <select id="taskLedgerStatusFilter">
+            <option value="all">Status: all</option>
+            <option value="planned">planned</option>
+            <option value="ready">ready</option>
+            <option value="in_progress">in_progress</option>
+            <option value="blocked">blocked</option>
+            <option value="review">review</option>
+            <option value="done">done</option>
+            <option value="canceled">canceled</option>
+            <option value="archived">archived</option>
+          </select>
+          <select id="taskLedgerPriorityFilter">
+            <option value="all">Priority: all</option>
+            <option value="low">low</option>
+            <option value="normal">normal</option>
+            <option value="high">high</option>
+            <option value="critical">critical</option>
+          </select>
+          <label class="hint" style="display:flex;align-items:center;gap:6px;margin:0;">
+            <input id="taskLedgerIncludeArchived" type="checkbox" checked style="flex:0 0 auto;min-width:auto;" />
+            include archived
+          </label>
+        </div>
+        <div class="row">
+          <input id="taskLedgerSearchInput" type="text" placeholder="Search tasks (optional)" />
+          <button id="taskLedgerRefreshBtn">Refresh</button>
+        </div>
+        <div id="taskLedgerList" class="list"></div>
+        <div id="taskLedgerEvents" class="list task-events"></div>
+      </article>
+
+      <article class="card full">
+        <h3>Recent Conversation</h3>
+        <div id="memoryList" class="list"></div>
+      </article>
+    </section>
+  </main>
+  <script src="mobile-console.js?v=20260219-2"></script>
+</body>
+</html>

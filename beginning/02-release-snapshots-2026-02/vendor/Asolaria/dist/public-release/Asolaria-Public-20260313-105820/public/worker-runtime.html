@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Asolaria Worker Runtime</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07111f;
+      --surface: rgba(13, 21, 37, 0.92);
+      --surface-2: rgba(17, 29, 50, 0.92);
+      --border: rgba(117, 154, 214, 0.16);
+      --text: #f5f9ff;
+      --muted: #9db2ce;
+      --accent: #32bbff;
+      --warm: #ffb14a;
+      --danger: #ff7a90;
+      --good: #7ef3b0;
+      --shadow: 0 24px 68px rgba(0, 0, 0, 0.34);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(50, 187, 255, 0.09), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 177, 74, 0.08), transparent 22%),
+        linear-gradient(155deg, #07111f, #091523 40%, #0b1829);
+    }
+    .shell {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+    .hero, .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .hero {
+      padding: 24px 26px;
+      display: grid;
+      gap: 14px;
+    }
+    .hero h1, .panel h2, .panel h3 {
+      margin: 0;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+    }
+    .hero p, .panel p, .muted {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .pill-row, .chip-row, .link-row, .status-grid, .metric-grid, .card-grid, .detail-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.8fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+    .panel {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+    .pill, .chip, .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(50, 187, 255, 0.24);
+      background: rgba(50, 187, 255, 0.11);
+      padding: 8px 12px;
+      color: var(--text);
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .pill.warn, .chip.warn, .link.warn {
+      border-color: rgba(255, 177, 74, 0.26);
+      background: rgba(255, 177, 74, 0.12);
+    }
+    .pill.bad, .chip.bad {
+      border-color: rgba(255, 122, 144, 0.28);
+      background: rgba(255, 122, 144, 0.12);
+    }
+    .pill.good, .chip.good {
+      border-color: rgba(126, 243, 176, 0.32);
+      background: rgba(126, 243, 176, 0.12);
+    }
+    .metric-grid { margin-top: 6px; }
+    .metric-card, .mini-card, .feed-item, .agent-card {
+      border-radius: 18px;
+      border: 1px solid rgba(117, 154, 214, 0.15);
+      background: rgba(10, 18, 31, 0.88);
+      padding: 14px 15px;
+    }
+    .metric-card {
+      flex: 1 1 160px;
+      min-width: 150px;
+    }
+    .metric-card strong {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .metric-card span {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+    .mini-card ul, .panel ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .feed-list {
+      display: grid;
+      gap: 10px;
+    }
+    .feed-item h3, .agent-card h3 {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+    .feed-item p, .agent-card p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+    .feed-meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .agent-card.is-active { box-shadow: inset 0 0 0 1px rgba(126, 243, 176, 0.18); }
+    .agent-card.is-idle { box-shadow: inset 0 0 0 1px rgba(255, 177, 74, 0.14); }
+    .agent-card.is-offline { box-shadow: inset 0 0 0 1px rgba(255, 122, 144, 0.16); }
+    pre {
+      margin: 0;
+      padding: 12px 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(6, 10, 18, 0.95);
+      border: 1px solid rgba(117, 154, 214, 0.14);
+      border-radius: 14px;
+      color: #d9ebff;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .shell { padding: 14px; }
+      .hero, .panel { border-radius: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="pill-row">
+        <span id="runtimeLivePill" class="pill">Connecting...</span>
+        <span id="runtimeBrainPill" class="pill">Brain: loading...</span>
+        <span id="runtimeColonyPill" class="pill">Colony: loading...</span>
+        <span id="runtimeSymphonyPill" class="pill">Symphony: loading...</span>
+        <span id="runtimeAbacusPill" class="pill">Abacus: loading...</span>
+      </div>
+      <h1>Asolaria Worker Runtime</h1>
+      <p>Live operator surface for the worker economy: brain selection, relay colony, Symphony issue execution, Abacus worker lanes, task-ledger work, and cleanup signals. This is the page that answers “is Asolaria actually doing anything right now?”</p>
+      <div class="link-row">
+        <a class="link" href="/" target="_blank" rel="noreferrer">Open Main Asolaria</a>
+        <a class="link" href="/worker-router.html" target="_blank" rel="noreferrer">Open Worker Router</a>
+        <a class="link" href="/graph-runtime.html" target="_blank" rel="noreferrer">Open Graph Runtime</a>
+        <a class="link" href="/abacus-worker.html" target="_blank" rel="noreferrer">Open Abacus Worker</a>
+        <a class="link" href="/api/worker-runtime/fast" target="_blank" rel="noreferrer">Open Fast Runtime JSON</a>
+        <a class="link" href="/api/worker-runtime/symphony" target="_blank" rel="noreferrer">Open Symphony Panel JSON</a>
+        <a class="link" href="/api/worker-runtime/status" target="_blank" rel="noreferrer">Open Runtime JSON</a>
+      </div>
+      <div id="runtimeMetricGrid" class="metric-grid"></div>
+    </section>
+
+    <section class="layout">
+      <div class="stack">
+        <section class="panel">
+          <h2>Core Runtime</h2>
+          <p>Selected brain, queue pressure, phone runtime, and active mistakes/limitations that matter right now.</p>
+          <div id="runtimeCoreGrid" class="status-grid"></div>
+          <div>
+            <h3>Mistakes / Limits</h3>
+            <ul id="runtimeMistakes"></ul>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Colony & Bridge</h2>
+          <p>What is really online versus merely installed.</p>
+          <div id="runtimeAgentGrid" class="agent-grid"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Symphony Live</h2>
+          <p>Linear-backed long-running work under the managed Symphony lane.</p>
+          <div id="runtimeSymphonyGrid" class="detail-grid"></div>
+          <div class="feed-list" id="runtimeSymphonySessions"></div>
+        </section>
+      </div>
+
+      <div class="stack">
+        <section class="panel">
+          <h2>Abacus Lane</h2>
+          <p>Browser, desktop, listener, and CLI readiness for the external worker tier.</p>
+          <div id="runtimeAbacusGrid" class="detail-grid"></div>
+          <ul id="runtimeAbacusIssues"></ul>
+        </section>
+
+        <section class="panel">
+          <h2>Routed Work</h2>
+          <p>Recent worker-router dispatches and open task-ledger work.</p>
+          <div class="feed-list" id="runtimeDispatchList"></div>
+          <div class="feed-list" id="runtimeTaskList"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Cleanup Signals</h2>
+          <p>Residue that makes the system feel haunted even when the actual workers are fine.</p>
+          <div id="runtimeCleanupGrid" class="detail-grid"></div>
+          <pre id="runtimeCleanupPre">Waiting for cleanup data...</pre>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/worker-runtime.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asolaria Phone Mode</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap");
+    :root {
+      --bg0: #061224;
+      --bg1: #0d1a34;
+      --card: #0e1f3d;
+      --line: #214371;
+      --ink: #e9f2ff;
+      --muted: #9fb9df;
+      --accent: #1cb3ff;
+      --ok: #1f7b54;
+      --warn: #8c6a24;
+      --danger: #8a3434;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      min-height: 100%;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Sora", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% -10%, rgba(28, 179, 255, 0.2), transparent 35%),
+        radial-gradient(circle at 88% 0%, rgba(240, 167, 66, 0.15), transparent 32%),
+        linear-gradient(155deg, var(--bg0), var(--bg1));
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 14px;
+    }
+    .shell {
+      width: min(1400px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+    .top {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(10, 23, 45, 0.84);
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand h1 {
+      margin: 0;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+      line-height: 1.1;
+    }
+    .brand p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .status-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: rgba(9, 18, 36, 0.84);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(420px, 1.25fr) minmax(350px, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(13, 28, 54, 0.9);
+      padding: 12px;
+      overflow: hidden;
+    }
+    .card h2 {
+      margin: 0 0 4px;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: 1.1rem;
+    }
+    .hint {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+    .row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    button,
+    input,
+    select,
+    textarea {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #091a33;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.9rem;
+      padding: 9px 11px;
+    }
+    button {
+      cursor: pointer;
+      min-height: 40px;
+    }
+    button.ok {
+      background: var(--ok);
+      border-color: #2e9d72;
+    }
+    button.warn {
+      background: var(--warn);
+      border-color: #b48a3a;
+    }
+    button.danger {
+      background: var(--danger);
+      border-color: #b25757;
+    }
+    button.accent {
+      background: #0f4d7b;
+      border-color: #2c7eb4;
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-width: 0;
+    }
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+    .screen-frame {
+      --phone-aspect: 0.46;
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(14, 30, 62, 0.6), transparent 34%),
+        #050d19;
+      overflow: hidden;
+      transition: border-color 200ms ease;
+    }
+    .screen-frame .device-stage {
+      width: 100%;
+      aspect-ratio: var(--phone-aspect);
+      background: #050d19;
+    }
+    .screen-frame.spin {
+      animation: frameSpin 520ms ease;
+    }
+    @keyframes frameSpin {
+      from { transform: perspective(700px) rotateY(0deg); }
+      to { transform: perspective(700px) rotateY(360deg); }
+    }
+    .screen-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #050d19;
+      cursor: crosshair;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .screen-frame.observer img {
+      cursor: default;
+    }
+    .screen-frame.disarmed {
+      border-color: #9c4f4f;
+    }
+    .screen-frame.disarmed img {
+      cursor: not-allowed;
+      opacity: 0.74;
+      filter: saturate(0.7);
+    }
+    .screen-frame[data-orientation="portrait"] .device-stage {
+      max-width: min(430px, 100%);
+      margin: 0 auto;
+    }
+    .screen-frame[data-orientation="landscape"] .device-stage {
+      max-width: min(780px, 100%);
+      margin: 0 auto;
+    }
+    .mirror-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .mirror-column {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+    .mirror-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mirror-title h3 {
+      margin: 0;
+      font-family: "Space Grotesk", "Sora", sans-serif;
+      font-size: 0.95rem;
+    }
+    .mirror-note {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .guard-pill {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 7px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(9, 18, 36, 0.84);
+    }
+    .guard-pill.on {
+      border-color: #2b915f;
+      color: #d9fce8;
+      background: rgba(31, 123, 84, 0.3);
+    }
+    .guard-pill.off {
+      border-color: #9c4f4f;
+      color: #ffd7d7;
+      background: rgba(138, 52, 52, 0.3);
+    }
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .status-box,
+    .log {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #08182f;
+      padding: 9px 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .log {
+      min-height: 90px;
+      max-height: 200px;
+      overflow: auto;
+      font-family: Consolas, "SFMono-Regular", ui-monospace, monospace;
+      line-height: 1.32;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .controls-grid button {
+      width: 100%;
+      padding: 8px 6px;
+      font-size: 0.82rem;
+    }
+    .checkline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin: 6px 0;
+    }
+    .checkline input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      padding: 0;
+      border-radius: 4px;
+    }
+    .audio {
+      width: 100%;
+      margin-top: 6px;
+    }
+    @media (max-width: 1100px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .mirror-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      .controls-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .screen-frame[data-orientation="portrait"] .device-stage {
+        max-width: min(360px, 100%);
+      }
+      .screen-frame[data-orientation="landscape"] .device-stage {
+        max-width: min(640px, 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand">
+        <h1>Asolaria Phone Mode</h1>
+        <p>Private phone mirror and control surface for Asolaria.</p>
+      </div>
+      <div class="status-row">
+        <span id="deviceBadge" class="pill">Device: checking...</span>
+        <span id="orientationBadge" class="pill">Orientation: unknown</span>
+        <span id="mirrorBadge" class="pill">Mirror: idle</span>
+      </div>
+    </header>
+
+    <section class="layout">
+      <section class="card">
+        <h2>Live Mirror</h2>
+        <p class="hint">Dual-screen mode: interactive control screen + read-only shadow workspace.</p>
+        <div class="row">
+          <button id="refreshMirrorBtn" type="button" class="accent">Refresh Frame</button>
+          <button id="toggleAutoBtn" type="button" class="ok">Auto Refresh: ON</button>
+          <button id="refreshObserverBtn" type="button" class="accent">Refresh Shadow</button>
+          <button id="openWhatsappBtn" type="button" class="warn">Open WhatsApp App</button>
+        </div>
+        <p class="hint">WhatsApp biometric unlock must be approved on the phone device; remote auto-approval is not supported.</p>
+        <div class="row">
+          <button id="armControlBtn" type="button" class="warn">Arm Controls (90s)</button>
+          <span id="controlGuardStatus" class="guard-pill off">Control: disarmed</span>
+          <label class="checkline">
+            <input id="observerFollowToggle" type="checkbox" checked />
+            shadow follows live
+          </label>
+        </div>
+        <div class="mirror-columns">
+          <div class="mirror-column">
+            <div class="mirror-title">
+              <h3>Active Phone Screen</h3>
+              <span class="mirror-note">Armed interactive controls.</span>
+            </div>
+            <div id="screenFrame" class="screen-frame" data-orientation="unknown">
+              <div class="device-stage">
+                <img id="phoneMirrorImage" alt="Phone mirror frame" />
+              </div>
+            </div>
+            <div id="mirrorMeta" class="status-box">Waiting for first capture...</div>
+          </div>
+          <div class="mirror-column">
+            <div class="mirror-title">
+              <h3>Shadow Workspace</h3>
+              <span class="mirror-note">Read-only visual verification.</span>
+            </div>
+            <div id="observerScreenFrame" class="screen-frame observer" data-orientation="unknown">
+              <div class="device-stage">
+                <img id="observerMirrorImage" alt="Phone shadow frame" />
+              </div>
+            </div>
+            <div id="observerMeta" class="status-box">Shadow screen waiting for first frame...</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel-grid">
+        <section class="card">
+          <h2>Quick Controls</h2>
+          <div class="controls-grid">
+            <button type="button" data-key="BACK">Back</button>
+            <button type="button" data-key="HOME">Home</button>
+            <button type="button" data-key="APP_SWITCH">Recent</button>
+            <button type="button" data-key="ENTER">Enter</button>
+            <button type="button" data-key="POWER">Power</button>
+          </div>
+          <div class="row">
+            <button id="swipeUpBtn" type="button" class="accent">Scroll Up</button>
+            <button id="swipeDownBtn" type="button" class="accent">Scroll Down</button>
+          </div>
+          <div class="row">
+            <input id="typeInput" type="text" placeholder="Type text on phone..." />
+            <button id="typeSendBtn" type="button" class="accent">Send Text</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Pro Mirror (scrcpy)</h2>
+          <p class="hint">Low-latency desktop mirror window with direct keyboard/mouse control.</p>
+          <div class="row">
+            <input id="proMirrorMaxFps" type="number" min="15" max="120" step="1" value="60" placeholder="FPS" />
+            <input id="proMirrorBitRate" type="text" value="8M" placeholder="Bitrate (e.g. 8M)" />
+          </div>
+          <div class="row">
+            <label class="checkline">
+              <input id="proMirrorAlwaysOnTop" type="checkbox" checked />
+              always on top
+            </label>
+            <label class="checkline">
+              <input id="proMirrorNoAudio" type="checkbox" checked />
+              no audio
+            </label>
+          </div>
+          <div class="row">
+            <button id="proMirrorStartBtn" type="button" class="ok">Start Pro Mirror</button>
+            <button id="proMirrorStopBtn" type="button" class="danger">Stop Pro Mirror</button>
+            <button id="proMirrorRefreshBtn" type="button" class="accent">Refresh Pro Status</button>
+          </div>
+          <div id="proMirrorStatus" class="status-box">Pro mirror status loading...</div>
+        </section>
+
+        <section class="card">
+          <h2>WhatsApp + Voice</h2>
+          <div class="row">
+            <label class="checkline">
+              <input id="waEnabled" type="checkbox" />
+              WhatsApp alerts enabled
+            </label>
+          </div>
+          <div class="row">
+            <select id="waNotifyMode">
+              <option value="critical_or_security">critical_or_security</option>
+              <option value="security_only">security_only</option>
+              <option value="all_alerts">all_alerts</option>
+            </select>
+            <button id="waSaveConfigBtn" type="button">Save WA Policy</button>
+          </div>
+          <input id="waAccountSid" type="text" autocomplete="off" placeholder="Twilio Account SID (optional update)" />
+          <input id="waAuthToken" type="password" autocomplete="new-password" placeholder="Twilio Auth Token (optional update)" />
+          <div class="row">
+            <input id="waFromNumber" type="text" autocomplete="off" placeholder="Twilio WhatsApp sender (e.g. whatsapp:+14155238886)" />
+            <input id="waToNumber" type="text" autocomplete="off" placeholder="Target WhatsApp recipient (e.g. whatsapp:+15551234567)" />
+          </div>
+          <textarea id="waMessage" placeholder="Write WhatsApp message..."></textarea>
+          <div class="row">
+            <label class="checkline">
+              <input id="waIncludeVoice" type="checkbox" />
+              Generate voice clip too
+            </label>
+          </div>
+          <input id="waVoiceText" type="text" placeholder="Optional voice text (defaults to message)" />
+          <div class="row">
+            <button id="waSendBtn" type="button" class="ok">Send via WhatsApp</button>
+            <button id="playVoiceBtn" type="button" class="warn">Play Latest Voice</button>
+          </div>
+          <audio id="latestVoice" class="audio" controls preload="none"></audio>
+          <div id="waStatus" class="status-box">WhatsApp status loading...</div>
+        </section>
+
+        <section class="card">
+          <h2>Linked Device Mode</h2>
+          <p class="hint">Open a specific chat and run an approval-gated voice-note macro.</p>
+          <input id="linkedToNumber" type="text" placeholder="Target phone digits (optional if WA default configured)" />
+          <input id="linkedPrefillText" type="text" placeholder="Optional prefill text when opening chat" />
+          <div class="row">
+            <button id="linkedOpenChatBtn" type="button" class="accent">Open Linked Chat</button>
+          </div>
+          <div class="row">
+            <input id="linkedMicX" type="number" step="0.001" placeholder="micX (0-1 or px)" />
+            <input id="linkedMicY" type="number" step="0.001" placeholder="micY (0-1 or px)" />
+            <input id="linkedHoldMs" type="number" min="700" max="12000" step="50" value="2400" placeholder="hold ms" />
+          </div>
+          <input id="linkedVoiceText" type="text" placeholder="Voice-note text description (for approval context)" />
+          <input id="linkedApprovalId" type="text" placeholder="Approval ID (after owner approval)" />
+          <div class="row">
+            <button id="linkedVoiceNoteBtn" type="button" class="warn">Run Voice Note (Approval)</button>
+          </div>
+          <div id="linkedStatus" class="status-box">Linked mode idle.</div>
+        </section>
+
+        <section class="card">
+          <h2>Activity</h2>
+          <div id="eventLog" class="log"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+  <script src="phone-mode.js"></script>
+</body>
+</html>

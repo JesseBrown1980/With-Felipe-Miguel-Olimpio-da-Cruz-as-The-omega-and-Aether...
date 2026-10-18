@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Asolaria Graph Runtime</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .graph-runtime-page { min-height: 100vh; color: var(--ink); }
+    .graph-runtime-shell { position: relative; max-width: 1560px; margin: 0 auto; padding: 20px; display: grid; gap: 16px; }
+    .graph-runtime-hero, .graph-runtime-panel, .graph-runtime-controls, .graph-runtime-feed-panel {
+      border: 1px solid var(--line); border-radius: 18px;
+      background: linear-gradient(140deg, rgba(17, 29, 50, 0.9), rgba(11, 18, 31, 0.92));
+      box-shadow: var(--shadow-md); backdrop-filter: blur(12px);
+    }
+    .graph-runtime-hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr); gap: 18px; padding: 22px; align-items: start; }
+    .graph-runtime-title h1 { margin: 0; font-family: "Space Grotesk", "Sora", sans-serif; font-size: clamp(1.7rem, 2.7vw, 2.6rem); letter-spacing: 0.02em; }
+    .graph-runtime-title p { margin: 10px 0 0; color: var(--ink-muted); max-width: 72ch; line-height: 1.55; }
+    .graph-runtime-pill-row, .graph-runtime-link-row, .graph-runtime-card-grid, .graph-runtime-risk-grid, .graph-runtime-breakdown-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .graph-runtime-pill, .graph-runtime-link, .graph-runtime-select, .graph-runtime-input, .graph-runtime-toggle {
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(14, 24, 42, 0.78); color: var(--ink); font: inherit;
+    }
+    .graph-runtime-pill, .graph-runtime-link { padding: 8px 12px; font-size: 0.8rem; }
+    .graph-runtime-pill.is-live { border-color: rgba(94, 245, 176, 0.42); color: #c9ffe5; }
+    .graph-runtime-pill.is-warn { border-color: rgba(255, 188, 92, 0.46); color: #ffd7a8; }
+    .graph-runtime-pill.is-error { border-color: rgba(255, 123, 123, 0.55); color: #ffd0d0; }
+    .graph-runtime-link { text-decoration: none; transition: transform 140ms ease, border-color 140ms ease; }
+    .graph-runtime-link:hover { transform: translateY(-1px); border-color: rgba(39, 194, 255, 0.44); }
+    .graph-runtime-card-grid { margin-top: 16px; }
+    .graph-runtime-metric { flex: 1 1 160px; min-width: 140px; padding: 14px 16px; border-radius: 16px; background: rgba(15, 24, 43, 0.72); border: 1px solid rgba(122, 151, 199, 0.18); }
+    .graph-runtime-metric-label { display: block; font-size: 0.76rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .graph-runtime-metric-value { display: block; margin-top: 8px; font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 700; font-family: "Space Grotesk", "Sora", sans-serif; }
+    .graph-runtime-side { display: grid; gap: 14px; }
+    .graph-runtime-side h2, .graph-runtime-side h3, .graph-runtime-panel h2, .graph-runtime-panel h3, .graph-runtime-feed-panel h3 { margin: 0; font-family: "Space Grotesk", "Sora", sans-serif; font-size: 1rem; }
+    .graph-runtime-risk-grid, .graph-runtime-breakdown-grid { margin-top: 12px; }
+    .graph-runtime-risk-card, .graph-runtime-breakdown-card { flex: 1 1 120px; min-width: 110px; padding: 12px 14px; border-radius: 14px; background: rgba(15, 25, 45, 0.76); border: 1px solid rgba(122, 151, 199, 0.16); }
+    .graph-runtime-risk-card strong, .graph-runtime-breakdown-card strong { display: block; font-size: 0.8rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .graph-runtime-risk-card span, .graph-runtime-breakdown-card span { display: block; margin-top: 6px; font-size: 1.05rem; font-weight: 700; }
+    .graph-runtime-controls { display: flex; flex-wrap: wrap; gap: 12px; padding: 14px 16px; align-items: center; }
+    .graph-runtime-control { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-muted); font-size: 0.84rem; }
+    .graph-runtime-select, .graph-runtime-input { padding: 8px 12px; outline: none; }
+    .graph-runtime-input { width: 88px; }
+    .graph-runtime-input.is-wide { width: 160px; }
+    .graph-runtime-link.is-active { border-color: rgba(255, 188, 92, 0.52); color: #ffd7a8; }
+    .graph-runtime-toggle { padding: 8px 12px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+    .graph-runtime-toggle input { accent-color: var(--accent); }
+    .graph-runtime-playback { display: flex; align-items: center; gap: 10px; flex: 1 1 100%; }
+    .graph-runtime-range { flex: 1 1 240px; accent-color: var(--accent); }
+    .graph-runtime-compare { display: flex; align-items: center; gap: 10px; flex: 1 1 100%; }
+    .graph-runtime-main { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr); gap: 16px; align-items: start; }
+    .graph-runtime-panel { padding: 16px; }
+    .graph-runtime-panel-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .graph-runtime-panel-subtitle { margin: 6px 0 0; color: var(--ink-muted); font-size: 0.84rem; }
+    .graph-runtime-canvas-shell {
+      position: relative; min-height: 640px; border-radius: 16px; overflow: hidden;
+      background: radial-gradient(circle at 10% 10%, rgba(39, 194, 255, 0.11), transparent 28%), radial-gradient(circle at 90% 12%, rgba(255, 177, 74, 0.11), transparent 26%), linear-gradient(160deg, rgba(8, 14, 25, 0.9), rgba(10, 18, 33, 0.92));
+      border: 1px solid rgba(122, 151, 199, 0.16);
+    }
+    #graphRuntimeCanvas { width: 100%; height: 640px; display: block; }
+    .graph-runtime-canvas-empty {
+      position: absolute; inset: 0; display: grid; place-items: center; padding: 18px; text-align: center; color: var(--ink-muted);
+      font-size: 0.95rem; pointer-events: none;
+    }
+    .graph-runtime-tooltip {
+      position: absolute; min-width: 220px; max-width: 320px; padding: 10px 12px; border-radius: 14px;
+      border: 1px solid rgba(122, 151, 199, 0.22); background: rgba(8, 14, 26, 0.94); color: var(--ink);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); pointer-events: none; opacity: 0; transform: translateY(8px);
+      transition: opacity 120ms ease, transform 120ms ease; z-index: 3;
+    }
+    .graph-runtime-tooltip.is-visible { opacity: 1; transform: translateY(0); }
+    .graph-runtime-inspector pre {
+      margin: 0; padding: 14px; max-height: 560px; overflow: auto; border-radius: 14px; border: 1px solid rgba(122, 151, 199, 0.16);
+      background: rgba(10, 17, 31, 0.88); color: #d6e4ff; font-size: 0.78rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
+    }
+    .graph-runtime-related-panel { margin-top: 14px; }
+    .graph-runtime-feeds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .graph-runtime-feed-panel { padding: 16px; min-height: 300px; }
+    .graph-runtime-feed-list { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    .graph-runtime-feed-item { border-radius: 14px; border: 1px solid rgba(122, 151, 199, 0.16); background: rgba(15, 25, 45, 0.7); padding: 12px 14px; }
+    .graph-runtime-feed-item.is-clickable { cursor: pointer; transition: transform 120ms ease, border-color 120ms ease; }
+    .graph-runtime-feed-item.is-clickable:hover { transform: translateY(-1px); border-color: rgba(39, 194, 255, 0.34); }
+    .graph-runtime-feed-item.is-selected { border-color: rgba(255, 188, 92, 0.52); box-shadow: inset 0 0 0 1px rgba(255, 188, 92, 0.25); }
+    .graph-runtime-feed-item-header, .graph-runtime-feed-item-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .graph-runtime-feed-item-header strong { font-size: 0.9rem; }
+    .graph-runtime-feed-item-meta { margin-top: 8px; color: var(--ink-muted); font-size: 0.78rem; flex-wrap: wrap; }
+    .graph-runtime-feed-item p { margin: 8px 0 0; color: var(--ink-muted); font-size: 0.84rem; line-height: 1.45; }
+    .graph-runtime-risk-pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(122, 151, 199, 0.2);
+      font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .graph-runtime-risk-pill.is-low { color: #b8d8ff; border-color: rgba(116, 174, 255, 0.28); }
+    .graph-runtime-risk-pill.is-medium { color: #ffe4b2; border-color: rgba(255, 188, 92, 0.36); }
+    .graph-runtime-risk-pill.is-high { color: #ffcab8; border-color: rgba(255, 128, 102, 0.44); }
+    .graph-runtime-risk-pill.is-critical { color: #ffd0d0; border-color: rgba(255, 90, 90, 0.55); }
+    .graph-runtime-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .graph-runtime-legend-item {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px;
+      border: 1px solid rgba(122, 151, 199, 0.16); background: rgba(12, 20, 36, 0.8); color: var(--ink-muted); font-size: 0.78rem;
+    }
+    .graph-runtime-legend-swatch { width: 11px; height: 11px; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.12); }
+    .graph-runtime-legend-note { color: var(--ink-muted); font-size: 0.8rem; margin-top: 8px; }
+    .graph-runtime-analysis-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .graph-runtime-mini-chart { display: grid; grid-template-columns: repeat(18, minmax(0, 1fr)); gap: 6px; align-items: end; min-height: 170px; margin-top: 12px; }
+    .graph-runtime-mini-bar {
+      border-radius: 12px 12px 6px 6px;
+      min-height: 18px;
+      background: linear-gradient(180deg, rgba(39, 194, 255, 0.95), rgba(19, 97, 255, 0.28));
+      border: 1px solid rgba(122, 151, 199, 0.14);
+      position: relative;
+      overflow: hidden;
+    }
+    .graph-runtime-mini-bar::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: var(--risk-fill, 0%);
+      background: linear-gradient(180deg, rgba(255, 188, 92, 0.22), rgba(255, 103, 103, 0.46));
+    }
+    .graph-runtime-mini-bar.is-compare { box-shadow: inset 0 0 0 1px rgba(255, 188, 92, 0.35); }
+    .graph-runtime-mini-list { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    .graph-runtime-mini-list li {
+      padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(122, 151, 199, 0.16); background: rgba(15, 25, 45, 0.7);
+    }
+    .graph-runtime-mini-list strong { display: block; font-size: 0.88rem; }
+    .graph-runtime-mini-list span { display: block; margin-top: 5px; color: var(--ink-muted); font-size: 0.8rem; line-height: 1.45; }
+    .graph-runtime-diff-chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .graph-runtime-diff-chip {
+      padding: 9px 12px; border-radius: 999px; border: 1px solid rgba(122, 151, 199, 0.18); background: rgba(12, 20, 36, 0.8); font-size: 0.78rem;
+    }
+    .graph-runtime-mini-muted { color: var(--ink-muted); font-size: 0.84rem; margin-top: 10px; }
+    .graph-runtime-empty-state { margin-top: 14px; color: var(--ink-muted); font-size: 0.9rem; }
+    @media (max-width: 1120px) {
+      .graph-runtime-hero, .graph-runtime-main, .graph-runtime-feeds, .graph-runtime-analysis-grid { grid-template-columns: 1fr; }
+      .graph-runtime-canvas-shell, #graphRuntimeCanvas { min-height: 520px; height: 520px; }
+    }
+    @media (max-width: 720px) {
+      .graph-runtime-shell { padding: 14px; }
+      .graph-runtime-hero, .graph-runtime-panel, .graph-runtime-feed-panel, .graph-runtime-controls { border-radius: 16px; }
+      .graph-runtime-canvas-shell, #graphRuntimeCanvas { min-height: 420px; height: 420px; }
+    }
+  </style>
+</head>
+<body class="graph-runtime-page">
+  <div class="bg-layer"></div>
+  <main class="graph-runtime-shell">
+    <section class="graph-runtime-hero">
+      <div class="graph-runtime-title">
+        <div class="graph-runtime-pill-row">
+          <span id="graphLiveState" class="graph-runtime-pill">Connecting...</span>
+          <span id="graphUpdatedAt" class="graph-runtime-pill">No snapshot yet</span>
+        </div>
+        <h1>Asolaria Graph Runtime</h1>
+        <p>Live graph view over canonical runtime events and action manifests. This is local-loopback only and shows how Asolaria is moving across providers, task flow, approvals, and runtime actions.</p>
+        <div id="graphMetricCards" class="graph-runtime-card-grid"></div>
+      </div>
+      <div class="graph-runtime-side">
+        <div>
+          <h2>Risk Overview</h2>
+          <div id="graphRiskCards" class="graph-runtime-risk-grid"></div>
+        </div>
+        <div>
+          <h3>Top Breakdowns</h3>
+          <div id="graphBreakdownCards" class="graph-runtime-breakdown-grid"></div>
+        </div>
+        <div class="graph-runtime-link-row">
+          <a class="graph-runtime-link" href="/" target="_blank" rel="noreferrer">Open Main Asolaria</a>
+          <a id="graphSnapshotLink" class="graph-runtime-link" href="/api/graph-runtime/snapshot" target="_blank" rel="noreferrer">Open JSON Snapshot</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="graph-runtime-controls">
+      <label class="graph-runtime-control" for="graphWindowMinutes">
+        <span>Window</span>
+        <select id="graphWindowMinutes" class="graph-runtime-select">
+          <option value="15">15 min</option>
+          <option value="60">1 hour</option>
+          <option value="360" selected>6 hours</option>
+          <option value="1440">24 hours</option>
+          <option value="4320">3 days</option>
+        </select>
+      </label>
+      <label class="graph-runtime-control" for="graphMaxNodes">
+        <span>Max Nodes</span>
+        <input id="graphMaxNodes" class="graph-runtime-input" type="number" min="8" max="180" step="1" value="48" />
+      </label>
+      <label class="graph-runtime-control" for="graphComponentFilter">
+        <span>Component</span>
+        <select id="graphComponentFilter" class="graph-runtime-select">
+          <option value="">all</option>
+        </select>
+      </label>
+      <label class="graph-runtime-control" for="graphActionFilter">
+        <span>Action</span>
+        <select id="graphActionFilter" class="graph-runtime-select">
+          <option value="">all</option>
+        </select>
+      </label>
+      <label class="graph-runtime-control" for="graphRiskFilter">
+        <span>Min Risk</span>
+        <select id="graphRiskFilter" class="graph-runtime-select">
+          <option value="">all</option>
+          <option value="medium">medium+</option>
+          <option value="high">high+</option>
+          <option value="critical">critical</option>
+        </select>
+      </label>
+      <label class="graph-runtime-control" for="graphColorMode">
+        <span>Color By</span>
+        <select id="graphColorMode" class="graph-runtime-select">
+          <option value="risk" selected>risk</option>
+          <option value="component">component</option>
+          <option value="freshness">freshness</option>
+        </select>
+      </label>
+      <label class="graph-runtime-control" for="graphPresetSelect">
+        <span>Preset</span>
+        <select id="graphPresetSelect" class="graph-runtime-select">
+          <option value="custom">custom</option>
+          <option value="all">all activity</option>
+          <option value="phone-live">phone live</option>
+          <option value="providers">provider routes</option>
+          <option value="task-ledger">task ledger</option>
+          <option value="chat-ingress">chat ingress</option>
+          <option value="hot-risk">hot risk</option>
+        </select>
+      </label>
+      <label class="graph-runtime-control" for="graphSavedViewName">
+        <span>Save View</span>
+        <input id="graphSavedViewName" class="graph-runtime-input is-wide" type="text" maxlength="48" placeholder="name this view" />
+      </label>
+      <button id="graphSaveViewBtn" type="button" class="graph-runtime-link">Save View</button>
+      <label class="graph-runtime-control" for="graphSavedViewSelect">
+        <span>Saved Views</span>
+        <select id="graphSavedViewSelect" class="graph-runtime-select">
+          <option value="">none</option>
+        </select>
+      </label>
+      <button id="graphDeleteViewBtn" type="button" class="graph-runtime-link">Delete View</button>
+      <label class="graph-runtime-toggle" for="graphIncludeLowRisk">
+        <input id="graphIncludeLowRisk" type="checkbox" />
+        <span>Include low-risk edges</span>
+      </label>
+      <label class="graph-runtime-toggle" for="graphLiveToggle">
+        <input id="graphLiveToggle" type="checkbox" checked />
+        <span>Live updates</span>
+      </label>
+      <button id="graphRefreshBtn" type="button" class="graph-runtime-link">Refresh</button>
+      <a id="graphExportLink" class="graph-runtime-link" href="/api/graph-runtime/export" download>Export JSON</a>
+      <button id="graphFreezeCompareBtn" type="button" class="graph-runtime-link">Freeze Compare</button>
+      <a id="graphDiffReportLink" class="graph-runtime-link" href="/api/graph-runtime/diff-report" download>Export Diff Report</a>
+      <a id="graphTrainingExportLink" class="graph-runtime-link" href="/api/graph-runtime/training-export" download>Export Training Slice</a>
+      <div class="graph-runtime-playback">
+        <button id="graphPlaybackBtn" type="button" class="graph-runtime-link">Play</button>
+        <input id="graphPlaybackRange" class="graph-runtime-range" type="range" min="0" max="100" step="1" value="100" />
+        <span id="graphPlaybackLabel" class="graph-runtime-pill">Latest</span>
+      </div>
+      <div class="graph-runtime-compare">
+        <span class="graph-runtime-pill">Diff Against</span>
+        <input id="graphCompareRange" class="graph-runtime-range" type="range" min="0" max="100" step="1" value="70" />
+        <span id="graphCompareLabel" class="graph-runtime-pill">Compare: earlier</span>
+      </div>
+    </section>
+
+    <section class="graph-runtime-main">
+      <section class="graph-runtime-panel">
+        <div class="graph-runtime-panel-head">
+          <div>
+            <h2>Relationship Graph</h2>
+            <p class="graph-runtime-panel-subtitle">Aggregated actor -> subject -> target and manifest edges, colored by max observed risk.</p>
+            <div id="graphLegend" class="graph-runtime-legend"></div>
+            <div id="graphLegendNote" class="graph-runtime-legend-note"></div>
+          </div>
+          <span id="graphCanvasHint" class="graph-runtime-pill">Hover or click a node/edge</span>
+        </div>
+        <div id="graphCanvasShell" class="graph-runtime-canvas-shell">
+          <canvas id="graphRuntimeCanvas"></canvas>
+          <div id="graphCanvasEmpty" class="graph-runtime-canvas-empty">Waiting for graph-runtime data...</div>
+          <div id="graphTooltip" class="graph-runtime-tooltip"></div>
+        </div>
+      </section>
+
+      <aside class="graph-runtime-panel graph-runtime-inspector">
+        <div class="graph-runtime-panel-head">
+          <div>
+            <h2>Inspector</h2>
+            <p class="graph-runtime-panel-subtitle">Selected node or edge details from the current snapshot.</p>
+          </div>
+        </div>
+        <pre id="graphInspectorOutput">Select a node or edge to inspect it.</pre>
+        <div class="graph-runtime-related-panel">
+          <div class="graph-runtime-panel-head">
+            <div>
+              <h3>Related Records</h3>
+              <p class="graph-runtime-panel-subtitle">Raw filtered records that touch the selected node or edge.</p>
+            </div>
+          </div>
+          <ul id="graphSelectedRecords" class="graph-runtime-feed-list"></ul>
+          <div id="graphSelectedRecordsEmpty" class="graph-runtime-empty-state">Select a node or edge to see matching records.</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="graph-runtime-analysis-grid">
+      <section class="graph-runtime-feed-panel">
+        <div class="graph-runtime-panel-head">
+          <div>
+            <h3>Activity Heatmap</h3>
+            <p class="graph-runtime-panel-subtitle">Visible event density and weighted risk across the current playback window.</p>
+          </div>
+        </div>
+        <div id="graphActivityChart" class="graph-runtime-mini-chart"></div>
+        <div id="graphActivityMeta" class="graph-runtime-mini-muted">No activity buckets yet.</div>
+      </section>
+      <section class="graph-runtime-feed-panel">
+        <div class="graph-runtime-panel-head">
+          <div>
+            <h3>Snapshot Diff</h3>
+            <p class="graph-runtime-panel-subtitle">What changed between the current playback point and the compare point.</p>
+          </div>
+        </div>
+        <div id="graphDiffSummary" class="graph-runtime-diff-chip-row"></div>
+        <ul id="graphDiffList" class="graph-runtime-mini-list"></ul>
+        <div id="graphDiffEmpty" class="graph-runtime-empty-state">Move the compare slider to generate a diff.</div>
+      </section>
+      <section class="graph-runtime-feed-panel">
+        <div class="graph-runtime-panel-head">
+          <div>
+            <h3>Archetypes & Suspicious Edges</h3>
+            <p class="graph-runtime-panel-subtitle">Deterministic control-plane patterns, suspicious aggregated edges, and a bounded experimental prototype lane.</p>
+          </div>
+        </div>
+        <div id="graphArchetypeSummary" class="graph-runtime-diff-chip-row"></div>
+        <ul id="graphSuspiciousList" class="graph-runtime-mini-list"></ul>
+        <div id="graphSuspiciousEmpty" class="graph-runtime-empty-state">No suspicious edges in the current slice.</div>
+      </section>
+    </section>
+
+    <section class="graph-runtime-feeds">
+      <section class="graph-runtime-feed-panel">
+        <h3>Recent Events</h3>
+        <ul id="graphEventsList" class="graph-runtime-feed-list"></ul>
+        <div id="graphEventsEmpty" class="graph-runtime-empty-state" hidden>No runtime events in the current window.</div>
+      </section>
+      <section class="graph-runtime-feed-panel">
+        <h3>Recent Action Manifests</h3>
+        <ul id="graphManifestsList" class="graph-runtime-feed-list"></ul>
+        <div id="graphManifestsEmpty" class="graph-runtime-empty-state" hidden>No action manifests in the current window.</div>
+      </section>
+    </section>
+  </main>
+  <script src="/graph-runtime.js" defer></script>
+</body>
+</html>

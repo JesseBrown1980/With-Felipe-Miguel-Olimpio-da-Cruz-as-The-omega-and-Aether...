@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1320" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/asolaria-icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/icons/asolaria-icon-512.png" />
+  <link rel="apple-touch-icon" href="/icons/asolaria-icon-192.png" />
+  <link rel="manifest" href="/mobile.webmanifest" />
+  <title>Asolaria Mobile Approvals</title>
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #131f33;
+      --muted: #9fb0c9;
+      --text: #f2f6ff;
+      --ok: #2ecc71;
+      --no: #ff6b6b;
+      --warn: #f6c453;
+      --line: #263a58;
+    }
+    * { box-sizing: border-box; }
+    html {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: auto;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    body {
+      margin: 0;
+      padding:
+        calc(env(safe-area-inset-top) + 16px)
+        calc(env(safe-area-inset-right) + 16px)
+        calc(env(safe-area-inset-bottom) + 16px)
+        calc(env(safe-area-inset-left) + 16px);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(1200px 700px at 20% -10%, #1c2f50, var(--bg));
+      color: var(--text);
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: auto;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+      -webkit-text-size-adjust: 100%;
+      touch-action: pan-x pan-y pinch-zoom;
+    }
+    .app {
+      max-width: 740px;
+      width: min(100%, 740px);
+      margin: 0 auto;
+      min-width: 0;
+    }
+    .bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      min-width: 0;
+    }
+    .bar > * {
+      min-width: 0;
+      max-width: 100%;
+    }
+    input, button, select, textarea {
+      border: 1px solid var(--line);
+      background: #0d182a;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      width: auto;
+      max-width: 100%;
+    }
+    input { flex: 1 1 190px; min-width: 0; }
+    button { cursor: pointer; }
+    button.ok { border-color: #2d7a52; background: #164f35; }
+    button.no { border-color: #894545; background: #4a1f1f; }
+    button.warn { border-color: #7d6633; background: #483a1a; }
+    .status {
+      padding: 10px 12px;
+      background: #0d182a;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+    }
+    .list { display: grid; gap: 10px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .card.focused {
+      border-color: #9dd8ff;
+      box-shadow: 0 0 0 2px rgba(157, 216, 255, 0.22);
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .id {
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      color: #b7c7de;
+    }
+    .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+    }
+    .risk-critical { color: #ffd1d1; background: #4a1f1f; border-color: #894545; }
+    .risk-high { color: #ffe8c5; background: #4e3616; border-color: #7d6633; }
+    .risk-medium { color: #f5f2cf; background: #3e3a1a; border-color: #6a6330; }
+    .risk-low { color: #d6f5dd; background: #1b3b2a; border-color: #2d7a52; }
+    .preview {
+      margin-top: 8px;
+      color: #d4deed;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .details {
+      margin-top: 8px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 12px;
+      color: #c5d4ea;
+      background: #0f1c30;
+      display: none;
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: auto;
+    }
+    .hint { color: var(--muted); font-size: 12px; }
+    .push-status {
+      color: #9dd8ff;
+      font-size: 12px;
+      min-height: 20px;
+    }
+    @media (max-width: 560px) {
+      body {
+        padding:
+          calc(env(safe-area-inset-top) + 10px)
+          calc(env(safe-area-inset-right) + 10px)
+          calc(env(safe-area-inset-bottom) + 10px)
+          calc(env(safe-area-inset-left) + 10px);
+      }
+      .bar > input,
+      .bar > button,
+      .bar > select,
+      .bar > label {
+        flex: 1 1 100%;
+      }
+      .bar > label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h2>Asolaria Mobile Approval</h2>
+    <p class="hint">Secure owner control for critical decisions.</p>
+
+    <div class="bar">
+      <input id="tokenInput" type="password" placeholder="Mobile approval token" />
+      <button id="saveTokenBtn">Save Token</button>
+      <button id="refreshBtn" class="warn">Refresh</button>
+    </div>
+
+    <div class="bar">
+      <select id="statusFilter">
+        <option value="pending">pending</option>
+        <option value="all">all</option>
+        <option value="approved">approved</option>
+        <option value="denied">denied</option>
+        <option value="expired">expired</option>
+      </select>
+      <label class="hint">
+        <input id="criticalOnly" type="checkbox" />
+        critical only
+      </label>
+    </div>
+
+    <div class="bar">
+      <button id="enablePushBtn" class="ok">Enable Push Alerts</button>
+      <button id="disablePushBtn" class="no">Disable Push Alerts</button>
+      <span id="pushStatus" class="push-status">Push: checking...</span>
+    </div>
+
+    <div id="status" class="status">Loading...</div>
+    <section id="list" class="list"></section>
+  </main>
+  <script src="mobile-approvals.js?v=20260222-4"></script>
+</body>
+</html>

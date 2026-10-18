@@ -1,0 +1,21 @@
+{
+  "name": "asolaria",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Asolaria master orchestrator for Codex, Chrome, and Power Automate Desktop",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "gateway:start": "node src/gateway/server.js",
+    "sandbox:start": "node services/sandbox-manager/server.js",
+    "release:public": "powershell -ExecutionPolicy Bypass -File .\\tools\\Build-PublicRelease.ps1 -Zip"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "minimalistic-assert": "^1.0.1",
+    "minimalistic-crypto-utils": "^1.0.1",
+    "playwright": "^1.56.1",
+    "web-push": "^3.6.7"
+  }
+}
