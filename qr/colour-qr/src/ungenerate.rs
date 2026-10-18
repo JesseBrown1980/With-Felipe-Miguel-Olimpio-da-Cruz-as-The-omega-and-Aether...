@@ -1,6 +1,9 @@
 //! "To un-generate" (the-colour-qr README.md:51-60). Plane extraction, `atob`, the index and
-//! body split and reassembly follow the reader in index.html:10228-10289; the QR decode is the
-//! `rqrr` crate in place of the page's jsQR.
+//! body split and reassembly follow the reader in index.html:10228-10289. The QR decode is
+//! [`Reader::Integer`] by default: `qr-read-int`, the integer-only port of the page's own jsQR
+//! (owner decision 2026-10-17). [`Reader::RqrrSecondary`], the third-party `rqrr` crate with
+//! floating-point geometry, exists only with the `rqrr-secondary` feature and is never the
+//! default.
 
 use crate::png_io::{decode_png, RgbaImage};
 use crate::{sha256_hex, Error, INDEX_BYTES, PLANES};
@@ -12,17 +15,60 @@ pub fn plane(img: &RgbaImage, ch: usize) -> Vec<u8> {
     img.data.iter().skip(ch).step_by(4).copied().collect()
 }
 
-/// The QR read of one plane, in the order `jsQR(..., {inversionAttempts:"attemptBoth"})` at
-/// index.html:10242 uses: the plane as it is first, then inverted (index.html:494-500), and
-/// the first located symbol that decodes is the result (`scan`, index.html:455-484). The
-/// decoder is `rqrr`, not jsQR, so other images can read differently (README "The Rust reader
-/// next to the page"); a symbol whose Reed-Solomon check fails gives no result, so it is never
-/// read (README.md:59-60).
-pub fn read_plane(width: usize, height: usize, plane: &[u8]) -> Option<Vec<u8>> {
-    scan(width, height, plane, false).or_else(|| scan(width, height, plane, true))
+/// Which QR decoder reads the planes.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Reader {
+    /// The default: `qr-read-int`, the page's jsQR (index.html:125-10226) in integer Rust,
+    /// called as index.html:10242 calls jsQR.
+    #[default]
+    Integer,
+    /// The labelled secondary, built only with the `rqrr-secondary` feature: the third-party
+    /// `rqrr` 0.10.1 crate, which computes capstone matching and perspective geometry in
+    /// double-precision floating point (README "Floating point"). Not the owner's decoder and
+    /// never the default.
+    #[cfg(feature = "rqrr-secondary")]
+    RqrrSecondary,
 }
 
-fn scan(width: usize, height: usize, plane: &[u8], inverted: bool) -> Option<Vec<u8>> {
+impl Reader {
+    /// The name the CLI prints for this reader.
+    pub fn label(&self) -> &'static str {
+        match self {
+            Reader::Integer => "qr-read-int",
+            #[cfg(feature = "rqrr-secondary")]
+            Reader::RqrrSecondary => "rqrr-0.10.1-secondary-float-geometry",
+        }
+    }
+}
+
+/// The QR read of one plane with the default [`Reader::Integer`]: the text jsQR's
+/// `r.data` holds (index.html:10242, 10245), as UTF-8 bytes. A symbol whose Reed-Solomon
+/// check fails gives no result, so it is never read (README.md:59-60).
+pub fn read_plane(width: usize, height: usize, plane: &[u8]) -> Option<Vec<u8>> {
+    read_plane_with(Reader::Integer, width, height, plane)
+}
+
+/// The QR read of one plane with the given reader.
+pub fn read_plane_with(
+    reader: Reader,
+    width: usize,
+    height: usize,
+    plane: &[u8],
+) -> Option<Vec<u8>> {
+    match reader {
+        Reader::Integer => qr_read_int::read(width, height, plane).map(|c| c.text.into_bytes()),
+        #[cfg(feature = "rqrr-secondary")]
+        Reader::RqrrSecondary => {
+            rqrr_scan(width, height, plane, false).or_else(|| rqrr_scan(width, height, plane, true))
+        }
+    }
+}
+
+/// Secondary only: rqrr on the plane as it is, then inverted, in the order of
+/// `inversionAttempts: "attemptBoth"` (index.html:494-500); the first located grid that decodes
+/// is the result. rqrr returns the segments' raw bytes, not jsQR's text.
+#[cfg(feature = "rqrr-secondary")]
+fn rqrr_scan(width: usize, height: usize, plane: &[u8], inverted: bool) -> Option<Vec<u8>> {
     let mut img = rqrr::PreparedImage::prepare_from_greyscale(width, height, |x, y| {
         let v = plane[y * width + x];
         if inverted {
@@ -156,9 +202,14 @@ impl Chunks {
 /// index.html:10247 builds it with JS bitwise OR, which equals that uint32 below 2^31 and is
 /// the negative int32 from 2^31 up (README "The Rust reader next to the page").
 pub fn take(chunks: &mut Chunks, img: &RgbaImage) -> [PlaneRead; PLANES] {
+    take_with(Reader::Integer, chunks, img)
+}
+
+/// [`take`] with the given reader.
+pub fn take_with(reader: Reader, chunks: &mut Chunks, img: &RgbaImage) -> [PlaneRead; PLANES] {
     let mut reads = [PlaneRead::NoSymbol; PLANES];
     for (ch, read) in reads.iter_mut().enumerate() {
-        let Some(text) = read_plane(img.width, img.height, &plane(img, ch)) else {
+        let Some(text) = read_plane_with(reader, img.width, img.height, &plane(img, ch)) else {
             continue;
         };
         let Some(d) = atob(&text) else {
@@ -180,14 +231,22 @@ pub fn take(chunks: &mut Chunks, img: &RgbaImage) -> [PlaneRead; PLANES] {
     reads
 }
 
-/// The whole "To un-generate" direction over PNG files: every image through [`take`] in the
-/// order given, then [`Chunks::reassemble`].
+/// The whole "To un-generate" direction over PNG files with the default reader: every image
+/// through [`take`] in the order given, then [`Chunks::reassemble`].
 pub fn ungenerate(pngs: &[&[u8]]) -> Result<(Vec<[PlaneRead; PLANES]>, Chunks), Error> {
+    ungenerate_with(Reader::Integer, pngs)
+}
+
+/// [`ungenerate`] with the given reader.
+pub fn ungenerate_with(
+    reader: Reader,
+    pngs: &[&[u8]],
+) -> Result<(Vec<[PlaneRead; PLANES]>, Chunks), Error> {
     let mut chunks = Chunks::new();
     let mut reads = Vec::with_capacity(pngs.len());
     for png in pngs {
         let img = decode_png(png)?;
-        reads.push(take(&mut chunks, &img));
+        reads.push(take_with(reader, &mut chunks, &img));
     }
     Ok((reads, chunks))
 }

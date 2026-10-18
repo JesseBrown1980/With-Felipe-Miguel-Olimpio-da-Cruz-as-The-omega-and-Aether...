@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
-"""Cold lane record: the Rust reader and the owner's page on resampled fixture PNGs.
+"""Cold lane record: the Rust readers and the owner's page on resampled fixture PNGs.
 
 the-colour-qr README.md:73 reads its codes back "from a 457 px crop of a screenshot rather
 than the original file". This tool resamples each fixture PNG (tests/fixtures/FIXTURES.hbp,
-555 px) in integers to other sides and has both readers read every copy:
+555 px) in integers to other sides and has every reader read every copy:
 
   box      each output pixel is the exact area-weighted sum of the source pixels it covers,
            divided once, rounded half up
   nearest  each output pixel is the source pixel under its centre
 
-Rust is `colour-qr ungenerate` (path given). The page is the vendored index.html, unmodified,
-through its file input and save button, one fresh page per copy, as page_check.py drives it.
-Prints one HBP row per copy with both readers' per-plane results, one summary row per
-resampling and one row per pair of differing per-plane results. It records both readers and
-does not require them to agree. Integer arithmetic only.
+Readers:
+  int   `colour-qr ungenerate` from the default build: qr-read-int, the integer-only port of
+        the page's jsQR (the default un-generate path)
+  rqrr  `colour-qr ungenerate --rqrr-secondary` from a build with `--features rqrr-secondary`:
+        the labelled secondary, third-party rqrr with f64 geometry (only with --colour-qr-rqrr)
+  page  the vendored index.html, unmodified, through its file input and save button, one fresh
+        page per copy, as page_check.py drives it
 
-Usage: resample_check.py --colour-qr BIN [--chromium PATH] [--manifest FIXTURES.hbp]
+Prints one HBP row per copy with every reader's per-plane result, one summary row per
+resampling, one row per pair of differing per-plane results and a total row. It records the
+readers and does not require them to agree, except that --check-int-page exits 1 unless the
+integer reader and the page give the same result on every plane. Integer arithmetic only.
+
+Usage: resample_check.py --colour-qr BIN [--colour-qr-rqrr BIN] [--chromium PATH]
+                         [--manifest FIXTURES.hbp] [--check-int-page]
 """
 import argparse
 import collections
@@ -131,9 +139,10 @@ def nearest(w, h, ch, pix, side):
     return out
 
 
-def rust_read(binary, png, tmp):
-    rows = subprocess.run([binary, "ungenerate", str(tmp / "rust.bin"), str(png)], check=True,
-                          capture_output=True, text=True).stdout.splitlines()
+def rust_read(binary, png, tmp, secondary=False):
+    flag = ["--rqrr-secondary"] if secondary else []
+    rows = subprocess.run([binary, "ungenerate", *flag, str(tmp / "rust.bin"), str(png)],
+                          check=True, capture_output=True, text=True).stdout.splitlines()
     planes, sha = [], ""
     for row in rows:
         f = dict(x.split("=", 1) for x in row.split("|")[1:] if "=" in x)
@@ -170,9 +179,12 @@ def page_read(browser, png):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--colour-qr", required=True, help="the colour-qr binary (release build)")
+    ap.add_argument("--colour-qr", required=True, help="colour-qr binary, default build")
+    ap.add_argument("--colour-qr-rqrr", default=None,
+                    help="colour-qr binary built with --features rqrr-secondary")
     ap.add_argument("--chromium", default=None, help="Chromium executable (default: Playwright's)")
     ap.add_argument("--manifest", default=str(ROOT / "tests" / "fixtures" / "FIXTURES.hbp"))
+    ap.add_argument("--check-int-page", action="store_true")
     a = ap.parse_args()
     page_sha = hashlib.sha256(PAGE.read_bytes()).hexdigest()
     if page_sha != page_pin():
@@ -183,8 +195,14 @@ def main():
             f = dict(x.split("=", 1) for x in line.split("|")[1:] if "=" in x)
             fixtures.append((ROOT / f["png"], f["sha256"]))
     kinds = [("box", s) for s in BOX] + [("nearest", s) for s in NEAREST]
-    summary = collections.OrderedDict((f"{k}{s}", [0, 0, 0, 0]) for k, s in kinds)
-    pairs = collections.Counter()
+    readers = ["int", "page"] + (["rqrr"] if a.colour_qr_rqrr else [])
+    pairs = [("int", "page")] + ([("int", "rqrr"), ("rqrr", "page")] if a.colour_qr_rqrr else [])
+    # per resampling: copies, exact per reader, then per pair: copies equal, planes equal
+    summary = collections.OrderedDict(
+        (f"{k}{s}", {"copies": 0, **{f"{r}_exact": 0 for r in readers},
+                     **{f"{x}_{y}_copies_equal": 0 for x, y in pairs},
+                     **{f"{x}_{y}_planes_equal": 0 for x, y in pairs}}) for k, s in kinds)
+    diffs = {pair: collections.Counter() for pair in pairs}
     with tempfile.TemporaryDirectory() as tmp, sync_playwright() as p:
         tmp = pathlib.Path(tmp)
         kw = {"headless": True}
@@ -193,8 +211,8 @@ def main():
         browser = p.chromium.launch(**kw)
         print(f"RESAMPLE_HDR|page=vendor/the-colour-qr/index.html|page_sha256={page_sha}"
               f"|browser=chromium-{browser.version}|fixtures={len(fixtures)}"
-              f"|box={','.join(map(str, BOX))}|nearest={','.join(map(str, NEAREST))}|json=0",
-              flush=True)
+              f"|box={','.join(map(str, BOX))}|nearest={','.join(map(str, NEAREST))}"
+              f"|readers={','.join(readers)}|json=0", flush=True)
         for png, expected in fixtures:
             w, h, ch, pix = read_png(png.read_bytes())
             stem = png.stem.replace("-code-01", "")
@@ -202,25 +220,46 @@ def main():
                 pix2 = (box if kind == "box" else nearest)(w, h, ch, pix, side)
                 copy = tmp / f"{stem}-{kind}{side}.png"
                 copy.write_bytes(write_png(side, side, ch, pix2))
-                r_planes, r_sha = rust_read(a.colour_qr, copy, tmp)
-                p_planes, p_sha = page_read(browser, copy)
-                r_ok, p_ok, same = int(r_sha == expected), int(p_sha == expected), int(r_planes == p_planes)
+                got = {"int": rust_read(a.colour_qr, copy, tmp),
+                       "page": page_read(browser, copy)}
+                if a.colour_qr_rqrr:
+                    got["rqrr"] = rust_read(a.colour_qr_rqrr, copy, tmp, secondary=True)
                 s = summary[f"{kind}{side}"]
-                s[0], s[1], s[2], s[3] = s[0] + 1, s[1] + r_ok, s[2] + p_ok, s[3] + same
-                if not same:
-                    pairs[(",".join(r_planes), ",".join(p_planes))] += 1
+                s["copies"] += 1
+                fields = []
+                for r in readers:
+                    exact = int(got[r][1] == expected)
+                    s[f"{r}_exact"] += exact
+                    fields.append(f"{r}={','.join(got[r][0])}|{r}_exact={exact}")
+                for x, y in pairs:
+                    px, py = got[x][0], got[y][0]
+                    planes = sum(int(u == v) for u, v in zip(px, py))
+                    s[f"{x}_{y}_planes_equal"] += planes
+                    s[f"{x}_{y}_copies_equal"] += int(px == py)
+                    fields.append(f"{x}_{y}_planes_equal={planes}/3")
+                    if px != py:
+                        diffs[(x, y)][(",".join(px), ",".join(py))] += 1
                 print(f"RESAMPLE|png={copy.name}|png_sha256={hashlib.sha256(copy.read_bytes()).hexdigest()}"
-                      f"|rust={','.join(r_planes)}|rust_exact={r_ok}|page={','.join(p_planes)}"
-                      f"|page_exact={p_ok}|planes_equal={same}|json=0", flush=True)
+                      f"|{'|'.join(fields)}|json=0", flush=True)
         browser.close()
-    for name, (n, r_ok, p_ok, same) in summary.items():
-        print(f"RESAMPLE_SUMMARY|resample={name}|copies={n}|rust_exact={r_ok}|page_exact={p_ok}"
-              f"|planes_equal={same}|json=0")
-    for (r, pg), n in sorted(pairs.items(), key=lambda kv: (-kv[1], kv[0])):
-        print(f"RESAMPLE_DIFF|rust={r}|page={pg}|copies={n}|json=0")
-    tot = [sum(v[i] for v in summary.values()) for i in range(4)]
-    print(f"RESAMPLE_TOTAL|copies={tot[0]}|rust_exact={tot[1]}|page_exact={tot[2]}"
-          f"|planes_equal={tot[3]}|planes_differ={tot[0] - tot[3]}|json=0")
+    total = collections.Counter()
+    for name, s in summary.items():
+        total.update(s)
+        n = s["copies"]
+        cells = [f"{r}_exact={s[f'{r}_exact']}/{n}" for r in readers]
+        cells += [f"{x}_{y}_copies_equal={s[f'{x}_{y}_copies_equal']}/{n}"
+                  f"|{x}_{y}_planes_equal={s[f'{x}_{y}_planes_equal']}/{3 * n}" for x, y in pairs]
+        print(f"RESAMPLE_SUMMARY|resample={name}|copies={n}|{'|'.join(cells)}|json=0")
+    for (x, y), counter in diffs.items():
+        for (u, v), n in sorted(counter.items(), key=lambda kv: (-kv[1], kv[0])):
+            print(f"RESAMPLE_DIFF|pair={x}_{y}|{x}={u}|{y}={v}|copies={n}|json=0")
+    n = total["copies"]
+    cells = [f"{r}_exact={total[f'{r}_exact']}/{n}" for r in readers]
+    cells += [f"{x}_{y}_copies_equal={total[f'{x}_{y}_copies_equal']}/{n}"
+              f"|{x}_{y}_planes_equal={total[f'{x}_{y}_planes_equal']}/{3 * n}" for x, y in pairs]
+    print(f"RESAMPLE_TOTAL|copies={n}|{'|'.join(cells)}|json=0")
+    if a.check_int_page and total["int_page_planes_equal"] != 3 * n:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
 //! Both directions of the colour QR carrier on the fixtures and on the README's measured layout.
 
 use colour_qr::generate::{base64_text, compose};
-use colour_qr::ungenerate::{plane, read_plane};
+use colour_qr::ungenerate::{plane, read_plane, read_plane_with};
 use colour_qr::{
     atob, decode_png, generate, generate_png, indexed_chunks, sha256_hex, symbol, take, ungenerate,
-    Chunks, PlaneRead, FILLER, IMAGE_PX, QR_MODULES,
+    ungenerate_with, Chunks, PlaneRead, Reader, FILLER, IMAGE_PX, QR_MODULES,
 };
 use std::path::PathBuf;
 
@@ -319,4 +319,48 @@ fn each_plane_reads_alone() {
     assert!(read_plane(img.width, img.height, &plane(&img, 2)).is_none());
     let blank = compose([None, None, None]);
     assert!(blank.data.iter().all(|&v| v == FILLER));
+}
+
+/// Owner decision 2026-10-17: the integer-only reader is the default un-generate path.
+#[test]
+fn the_default_reader_is_the_integer_port_of_the_page() {
+    assert_eq!(Reader::default(), Reader::Integer);
+    assert_eq!(Reader::default().label(), "qr-read-int");
+    let f = &fixtures()[1];
+    let img = decode_png(&f.png).unwrap();
+    for ch in 0..3 {
+        let p = plane(&img, ch);
+        assert_eq!(
+            read_plane(img.width, img.height, &p),
+            read_plane_with(Reader::Integer, img.width, img.height, &p)
+        );
+        let jsqr = qr_read_int::read(img.width, img.height, &p);
+        assert_eq!(
+            read_plane(img.width, img.height, &p),
+            jsqr.as_ref().map(|c| c.text.clone().into_bytes())
+        );
+        if let Some(code) = jsqr {
+            assert_eq!(
+                (code.version, code.inverted, code.mirrored),
+                (40, false, false)
+            );
+        }
+    }
+    let a = ungenerate(&[f.png.as_slice()]).unwrap();
+    let b = ungenerate_with(Reader::Integer, &[f.png.as_slice()]).unwrap();
+    assert_eq!(a, b);
+}
+
+/// The labelled secondary read (third-party rqrr, floating-point geometry) still returns every fixture.
+#[cfg(feature = "rqrr-secondary")]
+#[test]
+fn the_rqrr_secondary_returns_every_fixture_byte_exact() {
+    assert_eq!(
+        Reader::RqrrSecondary.label(),
+        "rqrr-0.10.1-secondary-float-geometry"
+    );
+    for f in fixtures() {
+        let (_, chunks) = ungenerate_with(Reader::RqrrSecondary, &[f.png.as_slice()]).unwrap();
+        assert_eq!(chunks.reassemble().sha256, f.sha256, "{}", f.name);
+    }
 }

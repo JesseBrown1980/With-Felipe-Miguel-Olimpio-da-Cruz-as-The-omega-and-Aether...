@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # Runs the checks of the qr/colour-qr CI jobs. Usage: qr/colour-qr/check.sh [main|page|resample]
-#   main      upstream pins, fmt, clippy, tests, the CLI round trip on every fixture, no float
-#             in this crate's own .rs files
+#   main      upstream pins, fmt, clippy and tests (default build and the labelled
+#             `rqrr-secondary` build), no rqrr in the default build, the CLI round trip on every
+#             fixture with the default integer reader, no float in this crate's own .rs files
 #   page      cold lane: the vendored index.html in headless Chromium reads every fixture PNG
 #             (PYTHON=<python with playwright>, default python3; CHROMIUM=<chrome binary> optional)
-#   resample  cold lane record: Rust and the page each read integer-resampled fixture copies
+#   resample  cold lane: the integer reader, the rqrr secondary and the page each read
+#             integer-resampled fixture copies; exits 1 unless the integer reader and the page
+#             agree on every plane
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
@@ -16,7 +19,11 @@ case "${1:-main}" in
     (cd vendor/universe-simulator/key && for s in *.sha256; do sha256sum -c --quiet "$s"; done)
     cargo +1.81.0 fmt --check
     cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+    cargo +1.81.0 clippy --locked --all-targets --features rqrr-secondary -- -D warnings
+    # The default build compiles no rqrr: it is only the labelled secondary.
+    if cargo +1.81.0 tree --locked -e normal --prefix none | grep -q '^rqrr '; then exit 1; fi
     cargo +1.81.0 test --locked
+    cargo +1.81.0 test --locked --features rqrr-secondary
     out="$(mktemp -d)"
     trap 'rm -rf "$out"' EXIT
     grep '^FIXTURE|' tests/fixtures/FIXTURES.hbp | while IFS= read -r row; do
@@ -25,8 +32,9 @@ case "${1:-main}" in
       png="$(sed -E 's/.*\|png=([^|]*)\|.*/\1/' <<<"$row")"
       cargo +1.81.0 run --quiet --release --locked --bin colour-qr -- generate "$payload" "$out/gen" >/dev/null
       cmp "$out/gen/$(basename "$png")" "$png"
-      cargo +1.81.0 run --quiet --release --locked --bin colour-qr -- ungenerate "$out/back.bin" "$png" \
-        | grep -qxE "COLOURQR_OUT\|bytes=[0-9]+\|chunks=2\|contiguous_from_0=2/2\|sha256=$sha\|json=0"
+      rows="$(cargo +1.81.0 run --quiet --release --locked --bin colour-qr -- ungenerate "$out/back.bin" "$png")"
+      grep -qxF "COLOURQR_READER|reader=qr-read-int|json=0" <<<"$rows"
+      grep -qxE "COLOURQR_OUT\|bytes=[0-9]+\|chunks=2\|contiguous_from_0=2/2\|sha256=$sha\|json=0" <<<"$rows"
       cmp "$out/back.bin" "$payload"
     done
     if grep -rnE --include='*.rs' '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
@@ -41,13 +49,18 @@ case "${1:-main}" in
     ;;
   resample)
     py="${PYTHON:-python3}"
+    bins="$(mktemp -d)"
+    trap 'rm -rf "$bins"' EXIT
     cargo +1.81.0 build --quiet --release --locked --bin colour-qr
-    bin="$(cd "${CARGO_TARGET_DIR:-target}" && pwd)/release/colour-qr"
+    release="$(cd "${CARGO_TARGET_DIR:-target}" && pwd)/release"
+    cp "$release/colour-qr" "$bins/colour-qr"
+    cargo +1.81.0 build --quiet --release --locked --features rqrr-secondary --bin colour-qr
+    cp "$release/colour-qr" "$bins/colour-qr-rqrr"
+    set -- --colour-qr "$bins/colour-qr" --colour-qr-rqrr "$bins/colour-qr-rqrr" --check-int-page
     if [ -n "${CHROMIUM:-}" ]; then
-      "$py" -I -B tools/resample_check.py --colour-qr "$bin" --chromium "$CHROMIUM"
-    else
-      "$py" -I -B tools/resample_check.py --colour-qr "$bin"
+      set -- "$@" --chromium "$CHROMIUM"
     fi
+    "$py" -I -B tools/resample_check.py "$@"
     ;;
   *)
     echo "usage: qr/colour-qr/check.sh [main|page|resample]" >&2

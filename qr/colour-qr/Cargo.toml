@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 rust-version = "1.81"
 license = "MIT OR Apache-2.0"
-description = "The owner's colour QR carrier in Rust: three ordinary QR symbols, one per RGB plane, generate and un-generate"
+description = "The owner's colour QR carrier in Rust: three ordinary QR symbols, one per RGB plane, generate and un-generate, integer-only by default"
 keywords = ["qr", "colour", "carrier", "integer", "hbp"]
 categories = ["encoding"]
 
@@ -13,11 +13,20 @@ name = "colour_qr"
 path = "src/lib.rs"
 
 [dependencies]
+# The default QR read: the integer-only port of the page's jsQR (owner decision 2026-10-17).
+asolaria-qr-read-int = { path = "../qr-read-int", version = "0.1.0" }
 base64 = { version = "=0.22.1", default-features = false, features = ["alloc"] }
 png = "=0.17.16"
 qrcode = { version = "=0.14.1", default-features = false }
-rqrr = { version = "=0.10.1", default-features = false }
+# Secondary QR read only, third-party, f64 geometry: compiled only with `rqrr-secondary`.
+rqrr = { version = "=0.10.1", default-features = false, optional = true }
 sha2 = { version = "=0.10.9", default-features = false }
+
+[features]
+# The labelled secondary QR read: the third-party `rqrr` crate, which computes its capstone
+# and perspective geometry in f64. Never the default; the CLI selects it with
+# `--rqrr-secondary`.
+rqrr-secondary = ["dep:rqrr"]
 
 # The QR, PNG and deflate crates run optimised under `cargo test` so the decode tests stay short.
 [profile.dev.package."*"]

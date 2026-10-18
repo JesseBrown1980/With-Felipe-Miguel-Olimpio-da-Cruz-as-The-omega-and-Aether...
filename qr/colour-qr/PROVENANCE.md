@@ -48,7 +48,8 @@ only from the root `.github/workflows/`.
 
 `index.html` (index.html:125-10226) inlines a webpack UMD build of jsQR. The file names no
 jsQR version and carries no licence header. jsQR's own repository (`cozmo/jsQR`) is licensed
-Apache-2.0.
+Apache-2.0. The crate's default QR read, `qr/qr-read-int`, is an integer port of that build,
+with its tables generated from these lines of the vendored page (`qr/qr-read-int/PROVENANCE.md`).
 
 ## Payload fixtures that are not repository files
 

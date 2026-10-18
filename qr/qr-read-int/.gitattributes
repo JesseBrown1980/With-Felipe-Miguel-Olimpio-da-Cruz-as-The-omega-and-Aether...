@@ -1,0 +1,2 @@
+# The page-parity record and every HBP row file keep LF bytes on a core.autocrlf=true checkout.
+*.hbp   text eol=lf

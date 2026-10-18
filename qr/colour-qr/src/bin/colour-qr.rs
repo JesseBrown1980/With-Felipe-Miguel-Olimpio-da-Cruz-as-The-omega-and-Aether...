@@ -1,20 +1,33 @@
 //! colour-qr generate <payload> <out-dir>      write <stem>-code-NN.png, one per three chunks
 //! colour-qr ungenerate <out-file> <png>...    read the planes, reassemble, write the bytes
-//! Both print HBP rows on stdout.
+//! colour-qr ungenerate --rqrr-secondary <out-file> <png>...
+//!     the same with the labelled secondary QR read (third-party rqrr, floating-point geometry); only in a
+//!     build with the `rqrr-secondary` feature
+//! All print HBP rows on stdout.
 #![forbid(unsafe_code)]
 
-use colour_qr::{generate_png, sha256_hex, ungenerate, PlaneRead, PLANE_NAMES};
+use colour_qr::{generate_png, sha256_hex, ungenerate_with, PlaneRead, Reader, PLANE_NAMES};
 use std::path::Path;
 use std::process::ExitCode;
+
+const USAGE: &str = "usage: colour-qr generate <payload> <out-dir> | \
+ungenerate [--rqrr-secondary] <out-file> <png>...";
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let result = match args.first().map(String::as_str) {
         Some("generate") if args.len() == 3 => run_generate(&args[1], &args[2]),
-        Some("ungenerate") if args.len() >= 3 => run_ungenerate(&args[1], &args[2..]),
-        _ => Err(
-            "usage: colour-qr generate <payload> <out-dir> | ungenerate <out-file> <png>...".into(),
-        ),
+        Some("ungenerate") if args.get(1).map(String::as_str) == Some("--rqrr-secondary") => {
+            match secondary_reader() {
+                Ok(reader) if args.len() >= 4 => run_ungenerate(reader, &args[2], &args[3..]),
+                Ok(_) => Err(USAGE.into()),
+                Err(e) => Err(e),
+            }
+        }
+        Some("ungenerate") if args.len() >= 3 => {
+            run_ungenerate(Reader::Integer, &args[1], &args[2..])
+        }
+        _ => Err(USAGE.into()),
     };
     match result {
         Ok(()) => ExitCode::SUCCESS,
@@ -65,13 +78,28 @@ fn run_generate(payload_path: &str, out_dir: &str) -> Result<(), Box<dyn std::er
     Ok(())
 }
 
-fn run_ungenerate(out_file: &str, pngs: &[String]) -> Result<(), Box<dyn std::error::Error>> {
+#[cfg(feature = "rqrr-secondary")]
+fn secondary_reader() -> Result<Reader, Box<dyn std::error::Error>> {
+    Ok(Reader::RqrrSecondary)
+}
+
+#[cfg(not(feature = "rqrr-secondary"))]
+fn secondary_reader() -> Result<Reader, Box<dyn std::error::Error>> {
+    Err("--rqrr-secondary needs a build with `--features rqrr-secondary`".into())
+}
+
+fn run_ungenerate(
+    reader: Reader,
+    out_file: &str,
+    pngs: &[String],
+) -> Result<(), Box<dyn std::error::Error>> {
     let files = pngs
         .iter()
         .map(std::fs::read)
         .collect::<Result<Vec<_>, _>>()?;
     let views: Vec<&[u8]> = files.iter().map(Vec::as_slice).collect();
-    let (reads, chunks) = ungenerate(&views)?;
+    println!("COLOURQR_READER|reader={}|json=0", reader.label());
+    let (reads, chunks) = ungenerate_with(reader, &views)?;
     for (path, planes) in pngs.iter().zip(&reads) {
         for (read, name) in planes.iter().zip(PLANE_NAMES) {
             let detail = match read {

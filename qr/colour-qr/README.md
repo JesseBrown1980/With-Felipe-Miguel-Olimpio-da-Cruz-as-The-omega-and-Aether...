@@ -2,9 +2,16 @@
 
 This crate (`asolaria-colour-qr`, lib `colour_qr`, binary `colour-qr`) brings in
 `JesseBrown1980/the-colour-qr` @ `1938a9b`. It keeps that repository's files byte-identical
-under `vendor/the-colour-qr/` and implements both of its written directions in Rust 1.81. The
-crate's own code is integer; the QR read it calls (`rqrr`) computes in `f64` (see "Floating
-point").
+under `vendor/the-colour-qr/` and implements both of its written directions in Rust 1.81.
+
+Its default QR read is `qr/qr-read-int`: the page's own jsQR decoder ported to integer Rust, so
+the default un-generate QR read is integer-only; the `png` crate that decodes the input PNG runs
+`f64` code when that PNG is interlaced (see "Floating point"). The third-party `rqrr` read stays
+as a labelled secondary, compiled only with the `rqrr-secondary` feature and selected only with
+`--rqrr-secondary`. Owner decision, 2026-10-17: "Colour-QR decision: Option 2. Integer-only
+reader as the default, `rqrr` kept as a labelled secondary — same pattern as codec and Fischer.
+That keeps the repo's own law intact with no hidden float in the primary path." (See "Floating
+point".)
 
 ## What the colour QR is
 
@@ -70,7 +77,7 @@ not contain that program:
 | Generate 5: an ordinary QR symbol | `generate::symbol` (`qrcode` crate) | — |
 | Generate 6: chunk `3k` red, `3k+1` green, `3k+2` blue; a plane with no chunk is filler | `generate::compose`, `generate::generate` | — |
 | Un-generate 1: split R, G, B, never grey | `ungenerate::plane` | `planeData`, 10230-10235 |
-| Un-generate 2: ordinary QR decode per plane; no symbol is filler | `ungenerate::read_plane`: the `rqrr` crate in place of the page's jsQR, the plane as it is, then inverted | `jsQR(..., {inversionAttempts:"attemptBoth"})`, 10242 |
+| Un-generate 2: ordinary QR decode per plane; no symbol is filler | `ungenerate::read_plane`: `qr_read_int::read`, the page's jsQR in integer Rust, returning jsQR's text (default); `Reader::RqrrSecondary` with the `rqrr-secondary` feature | `jsQR(..., {inversionAttempts:"attemptBoth"})`, 10242 |
 | Un-generate 3: base64-decode | `ungenerate::atob` (WHATWG forgiving-base64) | `b64`, 10236-10237 |
 | Un-generate 4: first 4 bytes LE = index, the rest = body; fewer than 5 bytes is dropped | `ungenerate::take` | `take`, 10238-10253 |
 | Un-generate 5-6: sort by index, concatenate, sha256 | `Chunks::reassemble` | save handler, 10265-10271 |
@@ -100,33 +107,24 @@ the `qrcode` crate's own tables.
 ## The Rust reader next to the page
 
 The plane extraction, `atob`, the index and body split and the reassembly follow the page's
-lines (table above). The QR decode does not: it is the `rqrr` crate, not the page's jsQR.
-`decode_png` returns 8-bit RGBA with grey copied to R, G and B, alpha 255 when the file has no
-alpha, and stored RGB and alpha kept as they are.
+lines (table above). The QR decode is the page's own decoder: `qr-read-int` follows jsQR's lines
+in integers (its README lists every integer form and rounding) and returns jsQR's text, the
+string the page passes to `b64` (index.html:10245). `decode_png` returns 8-bit RGBA with grey
+copied to R, G and B, alpha 255 when the file has no alpha, and stored RGB and alpha kept as
+they are.
 
 On the 555 px PNGs the generator writes (the 8 fixtures and the two code sets in "Measured"),
-the two readers return the same bytes. They differ here:
+the Rust reader and the page return the same bytes. On the 80 resampled copies they give the
+same result on every plane (240 of 240, "Resampled copies"). They differ here:
 
-- **QR decoder.** rqrr binarises with its own adaptive threshold (rqrr `prepare.rs`). jsQR uses
-  8×8 block black points (index.html:534-624). For `attemptBoth`, the Rust reader reads the
-  inverted plane (255 − v) when the plane as it is gives nothing. On resampled copies of the
-  fixtures the per-plane reads differ on 57 of 80 copies, in both directions (see "Resampled
-  copies" below).
 - **Index at or above 2^31.** README.md:57 names the index a little-endian uint32.
   index.html:10247 builds it with JS bitwise OR, a signed 32-bit value, and the page sorts keys
   as numbers (index.html:10255, 10266). Measured on one image with R = index 0, body `A`×10 and
   G = index `0x80000000`, body `B`×10: the page shows lane G "chunk -2147483648", keys
   -2147483648,0, contiguous "1 / 1", and saves `B`×10 then `A`×10 (sha256 dc55361ddb4a4fe3…).
   Rust gives keys 0, 2147483648, contiguous 1/2147483649, and `A`×10 then `B`×10 (sha256
-  91d64712ba9d8b96…). Below 2^31 the two indices are equal (2^31 chunks × 2,100 B is about
-  4.5 TB).
-- **FNC1 in first position.** Measured on the wiki_qr payload with R = an FNC1-first mode
-  indicator (mode 5) followed by the byte segment of chunk 0, and G = chunk 1 as generated. jsQR
-  has no branch for mode 5 and reads on to the byte segment (index.html:1086-1155), so the page
-  reads chunk 0 and chunk 1 and saves 3,200 B, sha256 3e2570928edf8648… byte-exact. rqrr
-  returns `UnknownDataType` for mode 5 (rqrr `decode.rs:144-152`), so Rust reads R as no symbol
-  and gives chunk 1 alone (1,100 B, sha256 3bd70a250a2fbb4f…). An ECI-26 header before the same
-  segment reads as chunk 0 on both sides.
+  91d64712ba9d8b96…). Both QR reads return the same text for both planes; the two differ in
+  `take`. Below 2^31 the two indices are equal (2^31 chunks × 2,100 B is about 4.5 TB).
 - **Alpha 0.** Measured on the wiki_qr fixture rewritten as RGBA with alpha 0 on every pixel:
   the page's file path (`createImageBitmap`, canvas, `getImageData`, index.html:10282-10287)
   hands `take` R, G, B and A all 0 on all 308,025 pixels, so the page reads "no symbol in this
@@ -135,8 +133,30 @@ the two readers return the same bytes. They differ here:
 - **Other inputs the generator never writes.** A PNG with alpha between 1 and 254, 16-bit
   samples or colour-space chunks may reach the page's canvas with different values. Here,
   16-bit samples keep their high byte, alpha is passed through, and no colour conversion runs.
-  A symbol with a non-ASCII byte segment fails `atob` here. In the page, `decodeURIComponent`
-  gives empty text for a segment that is not valid UTF-8 (index.html:1048-1053).
+- **Geometry the page computes in doubles.** At an even number of pixels per module every
+  module centre lies exactly on a pixel edge, and the page's double transform lands a hair
+  either side of it. `qr-read-int` computes the page's doubles bit for bit in integers, so it
+  reads the same pixels (`qr-read-int` README "Integer forms of jsQR's doubles"); an exact
+  rational transform, its earlier form, read differently from the page on 80 of its 1,583
+  corpus planes, all at 2 or 4 px. The fixtures here are drawn at 3 px.
+
+The page decodes FNC1 in first position the way the integer reader does: jsQR has no branch for
+mode 5 and reads on to the next segment (index.html:1086-1155). Measured on the wiki_qr payload
+with R = an FNC1-first mode indicator (mode 5) followed by the byte segment of chunk 0, and
+G = chunk 1 as generated: the page and the integer reader both read chunk 0 and chunk 1, 3,200 B,
+sha256 3e2570928edf8648… byte-exact. An ECI-26 header before the same segment reads as chunk 0
+on both. A byte segment that is not UTF-8 gives empty text on both (index.html:1048-1053).
+
+**The labelled secondary, `rqrr` 0.10.1** (`--features rqrr-secondary`, `colour-qr ungenerate
+--rqrr-secondary`). It is third-party code, not the owner's decoder, and computes its geometry
+in floating point ("Floating point"). It binarises with its own adaptive threshold (rqrr
+`prepare.rs`); jsQR uses 8×8 block black points (index.html:534-624). For `attemptBoth`, it
+reads the inverted plane (255 − v) when the plane as it is gives nothing. It returns the
+segments' raw bytes rather than jsQR's text. Measured: every fixture byte-exact; on the
+resampled copies it differs from the page on 57 of 80 copies, in both directions; on the
+FNC1-first image it returns `UnknownDataType` for mode 5 (rqrr `decode.rs:144-152`), reads R as
+no symbol and gives chunk 1 alone (1,100 B, sha256 3bd70a250a2fbb4f…); on the index and alpha
+images it reads as the integer reader does.
 
 The cold lane runs the page itself on every fixture (`tools/page_check.py`), so the page's own
 result is measured and does not depend on this comparison.
@@ -144,8 +164,8 @@ result is measured and does not depend on this comparison.
 ## Measured (rust 1.81.0, chromium 141.0.7390.37 headless, this host, 2026-10-17)
 
 Fixtures, one PNG each as the generator writes it (`tests/fixtures/png/`, 555×555,
-29,094–29,428 B). "Rust" is `colour-qr ungenerate`. "Page" is the vendored index.html file path
-plus its save button, with the download hashed:
+29,094–29,428 B). "Rust" is `colour-qr ungenerate` with the default integer reader. "Page" is the
+vendored index.html file path plus its save button, with the download hashed:
 
 | payload | bytes | sha256 (16) | PNG bytes | Rust read | Page read | byte-exact |
 |---|---|---|---|---|---|---|
@@ -158,7 +178,8 @@ plus its save button, with the download hashed:
 | ASOLARIA-HERSELF-KEY-3174 | 3,174 | 925c818d4c84aa23 | 29,428 | same layout | same | 1 · 1 |
 | ASOLARIA-KERNEL-3174 | 3,174 | f075f5c64d656ae3 | 29,285 | same layout | same | 1 · 1 |
 
-Page summary row: `PAGE_SUMMARY|sets=8|byte_exact=8|json=0`.
+Page summary row: `PAGE_SUMMARY|sets=8|byte_exact=8|json=0`. The `rqrr` secondary also returns
+all 8 byte-exact (`the_rqrr_secondary_returns_every_fixture_byte_exact`).
 
 **README.md:62-78 layout.** The first 65,536 B of `ASOLARIA-CONSTELLATION.gguf` stand in for
 the JWST raw, which the-colour-qr does not contain. They give 32 chunks (31 × 2,100 + 436) and
@@ -173,45 +194,53 @@ return 3d7b3bdf… byte-exact.
 **Resampled copies.** README.md:73 reads the owner's codes back "from a 457 px crop of a
 screenshot rather than the original file". `tools/resample_check.py` (`check.sh resample`)
 resamples each of the 8 fixture PNGs in integers: box filter to 520, 500, 480, 457, 440, 400
-and 370 px, and nearest pixel to 500, 457 and 400 px. Rust and the page each read all 80 copies.
-"Read" counts the copies whose reassembled bytes equal the payload sha256:
+and 370 px, and nearest pixel to 500, 457 and 400 px. The integer reader (default build), the
+`rqrr` secondary (`rqrr-secondary` build) and the page each read all 80 copies. "Read" counts
+the copies whose reassembled bytes equal the payload sha256; "planes equal" counts planes
+(3 per copy) where two readers give the same result:
 
-| resample | Rust read | page read | per-plane reads equal |
-|---|---|---|---|
-| box 520 | 8/8 | 0/8 | 0/8 |
-| box 500 | 0/8 | 8/8 | 0/8 |
-| box 480 | 0/8 | 0/8 | 8/8 |
-| box 457 | 8/8 | 0/8 | 0/8 |
-| box 440 | 0/8 | 0/8 | 5/8 |
-| box 400 | 4/8 | 0/8 | 2/8 |
-| box 370 | 8/8 | 8/8 | 8/8 |
-| nearest 500 | 0/8 | 8/8 | 0/8 |
-| nearest 457 | 8/8 | 0/8 | 0/8 |
-| nearest 400 | 8/8 | 0/8 | 0/8 |
-| all | 44/80 | 24/80 | 23/80 |
+| resample | integer read | rqrr read | page read | integer = page planes | integer = rqrr planes |
+|---|---|---|---|---|---|
+| box 520 | 0/8 | 8/8 | 0/8 | 24/24 | 8/24 |
+| box 500 | 8/8 | 0/8 | 8/8 | 24/24 | 8/24 |
+| box 480 | 0/8 | 0/8 | 0/8 | 24/24 | 24/24 |
+| box 457 | 0/8 | 8/8 | 0/8 | 24/24 | 8/24 |
+| box 440 | 0/8 | 0/8 | 0/8 | 24/24 | 21/24 |
+| box 400 | 0/8 | 4/8 | 0/8 | 24/24 | 14/24 |
+| box 370 | 8/8 | 8/8 | 8/8 | 24/24 | 24/24 |
+| nearest 500 | 8/8 | 0/8 | 8/8 | 24/24 | 8/24 |
+| nearest 457 | 0/8 | 8/8 | 0/8 | 24/24 | 8/24 |
+| nearest 400 | 0/8 | 8/8 | 0/8 | 24/24 | 8/24 |
+| all | 24/80 | 44/80 | 24/80 | 240/240 (80/80 copies) | 131/240 (23/80 copies) |
 
-The 57 copies whose per-plane reads differ (R, G, B):
+`rqrr` and the page agree on 131 of 240 planes (23 of 80 copies), as the integer reader and
+`rqrr` do. The 57 copies where `rqrr` and the page differ (R, G, B):
 
-| Rust | page | copies |
+| rqrr | page and integer reader | copies |
 |---|---|---|
 | chunk 0, chunk 1, no symbol | no symbol ×3 | 36 |
 | no symbol ×3 | chunk 0, chunk 1, no symbol | 16 |
 | no symbol ×3 | no symbol, chunk 1, no symbol | 3 |
 | no symbol, chunk 1, no symbol | no symbol ×3 | 2 |
 
-On every copy where both chunks arrive, the reassembled bytes are byte-exact on that side. The
-tool records both readers and does not require them to agree.
+On every copy where both chunks arrive, the reassembled bytes are byte-exact on that side.
+`check.sh resample` exits 1 unless the integer reader and the page agree on every plane; it
+records `rqrr` and does not require it to agree.
 
-**README.md:53 "Do not convert to grey — that destroys all three."** Two measurements:
+**README.md:53 "Do not convert to grey — that destroys all three."** Owner correction, recorded
+2026-10-17 beside the upstream statement, not over it (the vendored upstream README stays
+byte-identical): upstream README.md:53 says converting to grey "destroys all three"; measured,
+it destroys two of three: jsQR on the unsplit image and a Rust read with jsQR's grey weights both
+return the green chunk on 8/8 fixtures. The measurements:
 
-- jsQR from the vendored page, run once on the unsplit RGBA image (its own greyscale, weights
-  0.2126 / 0.7152 / 0.0722, index.html:545), returns the green plane's chunk 1 on 8 of 8
-  fixtures.
-- `examples/grey_read.rs` uses the same weights in integers and rqrr. It also returns chunk 1 on
-  8 of 8 fixtures, and on a three-symbol image (6,300 B).
+| reader on the grey image | fixtures giving chunk 1 (green) | red or blue chunk |
+|---|---|---|
+| the page's jsQR on the unsplit RGBA image (its own greyscale, weights 0.2126 / 0.7152 / 0.0722, index.html:545; `page_check.py` row field `unsplit_jsqr`) | 8/8 | 0/8 |
+| `examples/grey_read.rs`, the same weights in integers (per 10,000, rounded half up), integer reader | 8/8 | 0/8 |
+| `examples/grey_read.rs --rqrr-secondary` | 8/8 | 0/8 |
 
-In both, the red and blue chunks do not arrive from the grey image. Split into planes, every
-chunk arrives.
+The integer reader also returns chunk 1 from the grey image of a three-symbol code (6,300 B,
+chunks 0, 1 and 2 in R, G and B). Split into planes, every chunk arrives.
 
 **Upstream tracking.** All 7 `.sha256` sidecars hold. The receipt `COLOUR-QR-RECEIPT-2026-08-06.hbp`
 has 3 rows:
@@ -230,39 +259,50 @@ has 3 rows:
 
 The tests `every_sidecar_holds` and `every_receipt_row_is_read` pin all of this.
 
-**Tests.** `cargo +1.81.0 test --locked` runs 13 tests (11 carry + 2 upstream) and all pass.
-Clippy `-D warnings` is clean with no allowed lints.
+**Tests.** `cargo +1.81.0 test --locked` runs 14 tests (12 carry + 2 upstream) and all pass;
+with `--features rqrr-secondary` it runs 15 (13 carry + 2 upstream) and all pass. Clippy
+`-D warnings` is clean with no allowed lints in both builds. `cargo tree -e normal` of the default
+build lists no `rqrr`.
 
 ## Floating point
 
-The `.rs` files in `src/`, `tests/` and `examples/` contain no `f32` or `f64`, and the no-float
-gate greps exactly those files. Every step this crate's own code computes is integer: chunking,
-index, base64, plane composition, plane extraction, `atob`, reassembly, the grey weights in
-`examples/grey_read.rs` and the entropy in `examples/order0_entropy.rs`.
+The primary path's own arithmetic is integer-only. The default un-generate read is
+`qr-read-int`, the page's jsQR in integer Rust: exact integers where jsQR computes from integers
+alone, and, for points, distances, scores, the module size and the perspective transform, the
+page's JS numbers held as IEEE-754 binary64 bit patterns and computed in integers with JS's
+rounding, so it holds the page's values bit for bit (`qr/qr-read-int` README). It has no
+dependencies; no floating-point type or cast appears in its text files and no floating-point
+literal in its Rust files. The `.rs` files in this crate's `src/`, `tests/` and
+`examples/` contain no `f32` or `f64` either, and the no-float gate greps exactly those files.
+Every step this crate's own code computes is integer: chunking, index, base64, plane
+composition, plane extraction, `atob`, reassembly, the grey weights in `examples/grey_read.rs`
+and the entropy in `examples/order0_entropy.rs`.
 
-The hot-lane un-generate does run floating point, in its QR read. That read is the third-party
-`rqrr` 0.10.1, not the owner's code. It computes capstone matching and perspective geometry in
-`f64` (35 lines in `geometry.rs`, `identify/grid.rs`, `identify/match_capstones.rs` and
-`prepare.rs`). On every plane where it locates a symbol, `identify/grid.rs:139` maps each module
-centre through the `f64` perspective of `geometry.rs:4`. The-colour-qr README.md:5 says
-"Integer arithmetic and ternary (trits) only — never float." README.md:45 "No custom encoder"
-is the generate step; the un-generate step says "Run an **ordinary QR decode on each plane
-separately.**" (README.md:54) and names no decoder. This crate brings in no integer QR read
-path. Whether the hot lane keeps rqrr's `f64` read or takes an integer one is the owner's
-decision.
+The labelled secondary is the third-party `rqrr` 0.10.1, not the owner's code. It computes
+capstone matching and perspective geometry in `f64` (35 lines in `geometry.rs`,
+`identify/grid.rs`, `identify/match_capstones.rs` and `prepare.rs`); on every plane where it
+locates a symbol, `identify/grid.rs:139` maps each module centre through the `f64` perspective of
+`geometry.rs:4`. It is an optional dependency: the default build does not compile it, and it
+runs only in a build with `--features rqrr-secondary` when `--rqrr-secondary` is given.
 
 `png` 0.17.16 has `f32`/`f64` only in Adam7 interlace sizing and gAMA scaling (16 lines). The
-generated PNGs are not interlaced and carry no gAMA. `qrcode` 0.14.1, the generate side, has
-none. The page's jsQR computes in JS doubles.
+generated PNGs are not interlaced and carry no gAMA. Un-generate decodes whatever PNG it is
+given (`decode_png`, `src/png_io.rs:51`): for an interlaced input, `png`'s `src/adam7.rs:79-92`
+sizes the seven passes in `f64` (each `ceil((size - k) / d)` with `d` 1, 2, 4 or 8, exact for
+every 32-bit size), so on that input the path runs this `f64` code before the integer QR read. Decoding a
+gAMA chunk keeps it as an integer (`ScaledFloat::from_scaled`). `qrcode` 0.14.1, the generate
+side, has none. The page's jsQR computes in JS doubles; `qr-read-int` computes the same doubles
+in integers and reads every measured plane as the page does.
 
 ## Lanes
 
 - **Hot.** Rust in process: `colour_qr` and the `colour-qr` binary. It uses no JSON, no Node and
-  no network. Its QR read is rqrr, which computes in `f64` (see "Floating point").
+  no network. Its QR read is `qr-read-int`, integer-only; the `rqrr` secondary exists only in a
+  `rqrr-secondary` build (see "Floating point").
 - **Cold, CI verification only.** `tools/page_check.py` runs the owner's `index.html` in headless
   Chromium through Python Playwright, reading and writing HBP rows, and checks the page against
-  its `UPSTREAM.sha256` row. `tools/resample_check.py` records Rust and the page on the resampled
-  copies. The Python `playwright` package starts its own bundled driver process. Nothing here
+  its `UPSTREAM.sha256` row. `tools/resample_check.py` runs the integer reader, the `rqrr`
+  secondary and the page on the resampled copies. The Python `playwright` package starts its own bundled driver process. Nothing here
   adds Node code or installs Node separately.
 
 ## Run
@@ -270,15 +310,21 @@ none. The page's jsQR computes in JS doubles.
 ```bash
 cargo +1.81.0 run --release --locked --bin colour-qr -- generate <payload> <out-dir>
 cargo +1.81.0 run --release --locked --bin colour-qr -- ungenerate <out-file> <png>...
-qr/colour-qr/check.sh main                   # pins, fmt, clippy, tests, CLI round trips, no float
+# the labelled secondary read, third-party rqrr:
+cargo +1.81.0 run --release --locked --features rqrr-secondary --bin colour-qr -- \
+  ungenerate --rqrr-secondary <out-file> <png>...
+qr/colour-qr/check.sh main                   # pins, fmt, clippy, tests (both builds), no rqrr in
+                                             # the default build, CLI round trips, no float
 PYTHON=<python with playwright> qr/colour-qr/check.sh page       # the owner's page on every fixture
-PYTHON=<python with playwright> qr/colour-qr/check.sh resample   # Rust and the page on 80 resampled copies
+PYTHON=<python with playwright> qr/colour-qr/check.sh resample   # integer, rqrr and page on 80 copies
 ```
 
 The crate's `.gitattributes` carries lines 9, 11, 15 and 18 of USIM @ `3f9f42d`
 `.gitattributes` (`*.hbp` and `*.sha256` LF, `*.png` and `*.bin` binary), so a
 `core.autocrlf=true` checkout keeps the bytes `UPSTREAM.sha256` and the sidecars name.
 
-Dependencies are pinned exactly and locked for Rust 1.81: `qrcode =0.14.1`, `rqrr =0.10.1` and
-`png =0.17.16` (default features off where they pull in `image`), `base64 =0.22.1` and
-`sha2 =0.10.9`. `Cargo.lock` is version 3.
+Dependencies are pinned exactly and locked for Rust 1.81: the path dependency
+`asolaria-qr-read-int` 0.1.0 (`qr/qr-read-int`, no dependencies of its own), `qrcode =0.14.1`
+and `png =0.17.16` (default features off where they pull in `image`), `base64 =0.22.1`,
+`sha2 =0.10.9`, and `rqrr =0.10.1` as an optional dependency of the `rqrr-secondary` feature
+only. `Cargo.lock` is version 3.

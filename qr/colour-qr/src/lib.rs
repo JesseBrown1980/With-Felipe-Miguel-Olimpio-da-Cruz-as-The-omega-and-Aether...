@@ -7,10 +7,12 @@
 //! `b64`, `take`, `render`, the save handler and the file path, index.html:10228-10289).
 //!
 //! The QR symbols themselves are ordinary: the `qrcode` crate encodes them (README.md:45 "No
-//! custom encoder") and the `rqrr` crate reads them (README.md:54 "ordinary QR decode"; rqrr
-//! computes its geometry in floating point, see README "Floating point"). This crate does
-//! chunking, the index header, base64, plane composition, plane extraction and reassembly, all
-//! in integers.
+//! custom encoder") and `qr-read-int`, the page's own jsQR decoder ported to integer Rust,
+//! reads them (README.md:54 "ordinary QR decode"). The third-party `rqrr` crate, which computes
+//! its geometry in floating point, is a labelled secondary read behind the `rqrr-secondary`
+//! feature, never the default (owner decision 2026-10-17; README "Floating point"). This crate
+//! does chunking, the index header, base64, plane composition, plane extraction and reassembly,
+//! all in integers.
 #![forbid(unsafe_code)]
 
 pub mod generate;
@@ -19,7 +21,9 @@ pub mod ungenerate;
 
 pub use generate::{generate, generate_png, indexed_chunks, symbol, Code, Symbol};
 pub use png_io::{decode_png, encode_png, RgbImage, RgbaImage};
-pub use ungenerate::{atob, take, ungenerate, Chunks, PlaneRead, Reassembled};
+pub use ungenerate::{
+    atob, take, take_with, ungenerate, ungenerate_with, Chunks, PlaneRead, Reader, Reassembled,
+};
 
 /// README.md:41 "Cut it into chunks of **2,100 bytes**. The last chunk is the remainder."
 pub const CHUNK_BYTES: usize = 2100;

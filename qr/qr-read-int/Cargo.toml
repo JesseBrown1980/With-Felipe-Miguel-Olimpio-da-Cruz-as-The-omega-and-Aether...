@@ -1,0 +1,22 @@
+[package]
+name = "asolaria-qr-read-int"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "Apache-2.0"
+description = "Integer-only QR reader: the jsQR decoder of the owner's colour QR page in Rust 1.81, no floating point"
+keywords = ["qr", "decoder", "integer", "jsqr", "colour-qr"]
+categories = ["encoding"]
+
+[lib]
+name = "qr_read_int"
+path = "src/lib.rs"
+
+# No dependencies. The test corpus draws its symbols with the `qrcode` crate (no default
+# features, no floating point in its source).
+[dev-dependencies]
+qrcode = { version = "=0.14.1", default-features = false }
+
+# The page-parity corpus decodes a few hundred images under `cargo test`.
+[profile.dev]
+opt-level = 2
