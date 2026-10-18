@@ -82,9 +82,49 @@ jobs:
           -A clippy::unusual_byte_groupings
           -A clippy::derivable_impls
           -A clippy::needless_range_loop
+      - name: the upstream receipt names these sources and this census
+        run: |
+          grep -q "source_sha256=$(sha256sum omega-path123-v0/omega_path123.rs | cut -c1-64)|" vectors/OMEGA-PATH123-COMPONENT.hbp
+          grep -q "|sha256=$(sha256sum omega-operator-catalog-v0/omega_operator_catalog.rs | cut -c1-64)|" vectors/OMEGA-PATH123-COMPONENT.hbp
+          grep -q '|tests=35of35_PASS|' vectors/OMEGA-PATH123-COMPONENT.hbp
+          test "$(cargo +1.81.0 test --locked --lib -- --list 2>/dev/null | grep -c ': test$')" = 35
       - run: cargo +1.81.0 test --locked
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' omega-path123-v0/ omega-operator-catalog-v0/; then exit 1; fi
+  omega-codecs:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: qprism/recovery-omega-codecs } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: upstream bytes unchanged, catalog identical to the recovery copy
+        run: |
+          sha256sum -c UPSTREAM.sha256
+          cmp omega-operator-catalog-v0/omega_operator_catalog.rs ../recovery/catalog/omega_operator_catalog.rs
+      # Four upstream lints are allowed so the sources stay byte-identical (README lists each site);
+      # every other warning still denies.
+      - run: >
+          cargo +1.81.0 clippy --locked --all-targets --
+          -D warnings
+          -A dead_code
+          -A clippy::unusual_byte_groupings
+          -A clippy::needless_range_loop
+          -A clippy::unnecessary_to_owned
+      - name: test census pinned upstream (floor 11, hyper 34)
+        run: |
+          test "$(cargo +1.81.0 test --locked --bin omega_floor_codec_v0 -- --list 2>/dev/null | grep -c ': test$')" = 11
+          test "$(cargo +1.81.0 test --locked --bin omega_hyper_codec_v0 -- --list 2>/dev/null | grep -c ': test$')" = 34
+      - run: cargo +1.81.0 test --locked
+      - name: self-tests replay the receipt; the hyper codec still reports path123 PENDING
+        shell: bash
+        run: |
+          cargo +1.81.0 build --locked --release
+          T="${CARGO_TARGET_DIR:-target}/release"
+          diff <("$T/omega_floor_codec_v0" self-test) <(grep '^SELFTEST|' vectors/OMEGA-FLOOR-CODEC-V0-VERIFY.hbp)
+          test "$("$T/omega_hyper_codec_v0" self-test)" = 'AOCWMSELFTEST|ok=1|grammar=AOCWM001+STG1|floors=64,256,1024,4096|directions_per_floor=40|raw=PASS|path3_hook=PASS|path123=PENDING|whole_monty=0|json=0|'
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' omega-floor-codec-v0/ omega-hyper-codec-integration-v0/ omega-operator-catalog-v0/; then exit 1; fi
   omega-operator-catalog:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: qprism/recovery/catalog } }

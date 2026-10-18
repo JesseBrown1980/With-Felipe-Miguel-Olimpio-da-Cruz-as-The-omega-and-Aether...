@@ -9,7 +9,7 @@ repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cr
 readme = "README.md"
 keywords = ["qprism", "crt", "lz", "recovery", "integer"]
 categories = ["compression", "algorithms"]
-include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.sha256", "rust-toolchain.toml", "omega-path123-v0/omega_path123.rs", "omega-operator-catalog-v0/omega_operator_catalog.rs"]
+include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.sha256", "rust-toolchain.toml", "omega-path123-v0/omega_path123.rs", "omega-operator-catalog-v0/omega_operator_catalog.rs", "vectors/OMEGA-PATH123-COMPONENT.hbp", "vectors/OMEGA-PATH123-COMPONENT.hbi"]
 
 [lib]
 name = "omega_path123"

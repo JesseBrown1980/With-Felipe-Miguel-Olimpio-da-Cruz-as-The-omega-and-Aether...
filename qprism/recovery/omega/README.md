@@ -32,4 +32,12 @@ inside the package. Three upstream style lints are allowed at CI rather than
 editing the source: `unusual_byte_groupings`, `derivable_impls`,
 `needless_range_loop`. No compression record is claimed.
 
+`vectors/` holds the upstream component receipt, byte-identical to
+`provenance/receipts/path123/OMEGA-PATH123-COMPONENT.hbp` and `.hbi` at the same commit
+(blobs `1c52db8c…` and `b0c74792…`). Its header row pins `source_sha256=d475f067…` and its
+dependency row `sha256=883ca7ec…`; CI checks both against the vendored sources, and checks that
+the library lists 35 tests (17 path123 + 18 catalog), the receipt's `tests=35of35_PASS`. The 9
+`HBIROW` rows of the `.hbi` decode to the `.hbp` at their offsets with matching sha256 (1,841 of
+1,841 bytes; measured 2026-10-18).
+
 License: MIT.

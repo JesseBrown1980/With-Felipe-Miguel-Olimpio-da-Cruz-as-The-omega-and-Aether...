@@ -82,7 +82,25 @@ job qprism-recovery bash -c "set -euo pipefail; $(declare -f rust no_float); ROO
   sha256sum -c UPSTREAM.sha256
   rust qprism/recovery/omega \
     -A clippy::unusual_byte_groupings -A clippy::derivable_impls -A clippy::needless_range_loop
-  no_float omega-path123-v0/ omega-operator-catalog-v0/"
+  no_float omega-path123-v0/ omega-operator-catalog-v0/"'
+  grep -q "source_sha256=$(sha256sum omega-path123-v0/omega_path123.rs | cut -c1-64)|" vectors/OMEGA-PATH123-COMPONENT.hbp
+  grep -q "|sha256=$(sha256sum omega-operator-catalog-v0/omega_operator_catalog.rs | cut -c1-64)|" vectors/OMEGA-PATH123-COMPONENT.hbp
+  grep -q "|tests=35of35_PASS|" vectors/OMEGA-PATH123-COMPONENT.hbp
+  test "$(cargo +1.81.0 test --locked --lib -- --list 2>/dev/null | grep -c ": test$")" = 35'
+
+job omega-codecs bash -c "set -euo pipefail; $(declare -f rust no_float); ROOT='$ROOT'"'
+  cd qprism/recovery-omega-codecs
+  sha256sum -c UPSTREAM.sha256
+  cmp omega-operator-catalog-v0/omega_operator_catalog.rs ../recovery/catalog/omega_operator_catalog.rs
+  rust qprism/recovery-omega-codecs -A dead_code -A clippy::unusual_byte_groupings \
+    -A clippy::needless_range_loop -A clippy::unnecessary_to_owned
+  test "$(cargo +1.81.0 test --locked --bin omega_floor_codec_v0 -- --list 2>/dev/null | grep -c ": test$")" = 11
+  test "$(cargo +1.81.0 test --locked --bin omega_hyper_codec_v0 -- --list 2>/dev/null | grep -c ": test$")" = 34
+  cargo +1.81.0 build -q --locked --release
+  T="${CARGO_TARGET_DIR:-target}/release"
+  diff <("$T/omega_floor_codec_v0" self-test) <(grep "^SELFTEST|" vectors/OMEGA-FLOOR-CODEC-V0-VERIFY.hbp)
+  test "$("$T/omega_hyper_codec_v0" self-test)" = "AOCWMSELFTEST|ok=1|grammar=AOCWM001+STG1|floors=64,256,1024,4096|directions_per_floor=40|raw=PASS|path3_hook=PASS|path123=PENDING|whole_monty=0|json=0|"
+  no_float omega-floor-codec-v0/ omega-hyper-codec-integration-v0/ omega-operator-catalog-v0/'
 
 job omega-operator-catalog bash -c "set -euo pipefail; $(declare -f rust no_float); ROOT='$ROOT'
   cd qprism/recovery/catalog

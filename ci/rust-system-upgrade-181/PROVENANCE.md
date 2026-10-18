@@ -157,6 +157,11 @@ audit's code stays as upstream wrote it; whether `recovery-omega-codecs` carries
 the same bytes (git blob `1535e158…`) in place of the symlink, or this referee reports only
 `READ_TYPE_OR_BOUND` after integration, is the integrator's or the owner's choice.
 
+Resolved (2026-10-18): the path was committed as a regular file with the same bytes (mode 100644,
+blob `1535e158…`; `qprism/recovery-omega-codecs/PROVENANCE.md`), not as a symlink, and
+`ci-snippets/recovery-omega-codecs.txt` was never committed. The `omega-codecs` job in `gate.yml`
+now gates that crate and checks the copy against `qprism/recovery/catalog` with `cmp`.
+
 `verify` against `measured/AETHER-HEAD-85faeb1.hbp` (and against 93c6b69): both HEAD trees and the
 working-tree copy end with `SIDECAR_MISMATCH_PRESENT` (`src/lib.rs:419-421`, reached before the debt
 comparison); the working-tree copy with the symlink present ends with `READ_TYPE_OR_BOUND`.

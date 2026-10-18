@@ -77,8 +77,10 @@ contract bytes against the pins it embeds.
 
 ## Build and test
 
-Run with `CARGO_TARGET_DIR` outside the tree if preferred; CI uses
-`"${CARGO_TARGET_DIR:-target}"`.
+CI runs these steps as the `omega-codecs` job (`.github/workflows/gate.yml`, and the same job in
+`scripts/check-all.sh`), plus the two census counts and an exact match of the hyper self-test
+line, which still reports `path123=PENDING|whole_monty=0`. Run with `CARGO_TARGET_DIR` outside the
+tree if preferred; CI uses `"${CARGO_TARGET_DIR:-target}"`.
 
 ```
 sha256sum -c UPSTREAM.sha256
