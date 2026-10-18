@@ -184,6 +184,8 @@ public corpus `http://mattmahoney.net/dc/enwik9.zip` (`rust/RUN-ENWIK9.md`). Sco
 
 ## License
 
-The owner's honest-compressor code carries no license and was not previously published, so this
-crate is marked `UNLICENSED` with `publish = false` (OWNER-RULES.md rule 4h: ports of unlicensed
-owner code are left out of crates.io publishing).
+`MIT OR Apache-2.0`, `publish = false` until the crates.io pass. The owner's honest-compressor code
+carries no license file of its own; the owner's grant of 2026-10-18 releases it: everything here was
+made by the owner or by Asolaria in Asolaria's white rooms, and anything listed under any license is
+free and public to everyone. Until then this crate was marked `UNLICENSED` (OWNER-RULES.md rule 4h);
+that marking is withdrawn.

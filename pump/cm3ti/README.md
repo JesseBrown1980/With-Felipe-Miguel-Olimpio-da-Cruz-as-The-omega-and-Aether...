@@ -63,5 +63,5 @@ the sites and counts.
 
 ## License
 
-`UNLICENSED` (the owner's unpublished code), `publish = false`; kept out of crates.io
-(OWNER-RULES.md rule 4h).
+`MIT OR Apache-2.0` by the owner's grant of 2026-10-18 (see `PROVENANCE.md`); `publish = false`
+until the crates.io pass.

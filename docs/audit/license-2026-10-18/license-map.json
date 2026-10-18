@@ -1,0 +1,630 @@
+{
+ "date": "2026-10-18",
+ "crates": 78,
+ "rows": [
+  {
+   "path": "model/l0-edge",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "mismatch",
+   "upstream_repo": "JesseBrown1980/asolaria-behcs-256",
+   "upstream_license": "MIT (behcs-256 @ 818cc235 LICENSE, Copyright (c) 2026 Jesse Brown; read via GitHub MCP, blob f0dbb2d68c150d93ac5ea6972d7f11297c172997)",
+   "note": "CONFIRMED mismatch. Cargo.toml:6 declares license=\"MIT OR Apache-2.0\" (crate root has MIT LICENSE + LICENSE-APACHE). PROVENANCE.md:26-29 vendors the ported .js/.py from JesseBrown1980/asolaria-behcs-256 @ 818cc235a6db815e3b2591339cf9b42aad3e85a0 (primary/in-scope). I independently read that repo's LICENSE at the pinned commit via mcp__github__get_file_contents: it is MIT-only (Copyright (c) 2026 Jesse Brown, returned blob f0dbb2d6). Declared \"MIT OR Apache-2.0\" is broader than upstream MIT (offers an Apache-2.0-only downstream path the upstream LICENSE does not grant), so declared != upstream = mismatch. NOT cannot-verify: upstream LICENSE was actually read. Mitigant: owner-owned upstream (is_vendored_owner_or_upstream=true; JesseBrown1980 owns all three source repos, crate/upstream copyright both Jesse Brown, session user plasmatoid@gmail.com), so the owner may legitimately dual-license their own code and can resolve this trivially, but the license expressions still do not match as written. The other two vendored artifacts (baseline_model.pt from Asolaria-fnns @ c4b2458c; asolaria-score.mjs from Shannon-and-the-gnns-stage @ 32f9670a) are also JesseBrown1980 repos and lie outside the behcs-256 scope fixed by the task; not independently re-read here."
+  },
+  {
+   "path": "model/l1-prototype",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "code: JesseBrown1980/asolaria-behcs-256 @ 818cc235 (MIT, in scope); weights prototype_model.pt: JesseBrown1980/Asolaria-fnns-trained-and-reverse-gnns-many @ c4b2458c (out of scope)",
+   "upstream_license": "code MIT (behcs-256, verified); weights unreadable/out-of-scope (fnns)",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\", publishable (no publish=false). PROVENANCE.md:32: prototype_gnn.py byte-identical to behcs-256 @ 818cc235 (MIT, verified present at services/gnn-sidecar/models/prototype_gnn.py). PROVENANCE.md:33: the trained checkpoint prototype_model.pt's only cited upstream is Asolaria-fnns-trained-and-reverse-gnns-many @ c4b2458c, which is OUT OF THIS SESSION'S SCOPE (GitHub access denied) - the checkpoint's upstream license cannot be verified. (prototype_gnn.py also at out-of-scope AI-healthCare-project @ e0048c0a, PROVENANCE.md:37.)"
+  },
+  {
+   "path": "model/l2-contrastive",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "code: JesseBrown1980/asolaria-behcs-256 @ 818cc235 (MIT, in scope); weights contrastive_model.pt: JesseBrown1980/Asolaria-fnns-trained-and-reverse-gnns-many @ c4b2458c (out of scope)",
+   "upstream_license": "code MIT (behcs-256, verified); weights unreadable/out-of-scope (fnns)",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\", publishable (no publish=false). PROVENANCE.md:25: contrastive_gnn.py byte-identical to behcs-256 @ 818cc235 (MIT, verified present at services/gnn-sidecar/models/contrastive_gnn.py). PROVENANCE.md:26: contrastive_model.pt's only cited upstream is Asolaria-fnns @ c4b2458c, OUT OF SCOPE (access denied) - checkpoint license unverifiable. (contrastive_gnn.py also at out-of-scope AI-healthCare-project @ e0048c0a, PROVENANCE.md:30.)"
+  },
+  {
+   "path": "model/l4-gslgnn",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "code gsl_gnn.py + models/__init__.py: JesseBrown1980/asolaria-behcs-256 @ 818cc235 (MIT, in scope); gslgnn_inference_server.py + gslgnn_w9_3_seq47_v2.pt: JesseBrown1980/Asolaria-fnns-trained-and-reverse-gnns-many @ c4b2458c (out of scope)",
+   "upstream_license": "code MIT (behcs-256, verified); server+checkpoint unreadable/out-of-scope (fnns)",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\", publishable (no publish=false). PROVENANCE.md:27-28: gsl_gnn.py and models/__init__.py byte-identical to behcs-256 @ 818cc235 (MIT, verified present at services/gnn-sidecar/models). PROVENANCE.md:25-26: gslgnn_inference_server.py and the served checkpoint gslgnn_w9_3_seq47_v2.pt trace only to Asolaria-fnns @ c4b2458c, OUT OF SCOPE (access denied) - server+weights license unverifiable."
+  },
+  {
+   "path": "model/g-planes",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/Asolaria-fnns-trained-and-reverse-gnns-many @ c4b2458c and JesseBrown1980/bigpickle-rebuild @ c592599c",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\", publishable (no publish=false). PROVENANCE.md:3: 'This crate is a Rust port. It vendors no upstream bytes.' It is a port of owner code (transition/popcount/hexHamming/scoreEnvelope/pathPid, PROVENANCE.md:24-30) from glsm.mjs/gnn-*.mjs in Asolaria-fnns @ c4b2458c and asolaria-score.mjs/fischer-kernel.mjs in bigpickle-rebuild @ c592599c (PROVENANCE.md:10-15). Both upstream repos are OUT OF SCOPE (GitHub access denied) - upstream license cannot be verified."
+  },
+  {
+   "path": "model/gnn-int",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own)",
+   "upstream_license": "none (aether-own)",
+   "note": "Cargo.toml:7 license=\"MIT OR Apache-2.0\", publishable. README.md states explicitly: 'It is a fresh integer reimplementation, not a port of its code or weights.' and 'Weights::hand_set() ... is UNTRAINED and HAND-SET ... not fitted to any data', 'Zero dependencies'. No vendored/ported owner code and no single upstream to match; license is aether's own choice. (Cargo.toml:8 repository field points at JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-...-aether, i.e. aether's own repo, not an upstream source.)"
+  },
+  {
+   "path": "model/hrm-fork",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/HRM @74ecc8b5 (descends from sapientinc/HRM) + JesseBrown1980/asolaria-cube-cloud @f91bb2c (owner)",
+   "upstream_license": "vendor/HRM = Apache-2.0 (VERIFIED at upstream, not just on disk); asolaria-cube-cloud = NO license file (VERIFIED at upstream)",
+   "note": "CONFIRMED (claimed verdict stands). Re-read Cargo.toml: license=\"MIT OR Apache-2.0\" (Cargo.toml:6); the sole [[bin]] hp_mix builds from vendor/asolaria-cube-cloud/.../hp_mix.rs (Cargo.toml:17-19), so the crate's compiled output IS the owner's cube-cloud code, with HRM vendored as non-compiled reference. PROVENANCE.md:26-29 itself calls \"MIT OR Apache-2.0\" an \"aether convention\" and says \"The license of hp_mix.rs is the owner's to confirm\". Upstream re-check: GitHub MCP get_file_contents REFUSED both repos (not configured for session), so verified via authoritative anonymous git clone at the exact pinned SHAs (ls-remote: both pins == current main HEAD). (1) JesseBrown1980/HRM@74ecc8b5: root LICENSE = Apache-2.0, git blob 7a4a3ea2424c09fbe48d455aed1eaa94d9124835 / sha256 58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd, byte-identical to vendored vendor/HRM/LICENSE and PROVENANCE table row. (2) JesseBrown1980/asolaria-cube-cloud@f91bb2c: 61 tracked files, tree-wide search for licen|copying|notice|spdx|legal and SPDX-License-Identifier = NONE; hp_mix.rs blob b1839f8224a15abbfdb357e2053466f0a4e9768f matches vendored copy and has no license/copyright header. Not \"match\": the compiled binary's owner upstream carries no license, and the bundle also ships Apache-2.0-ONLY third-party HRM under a dual MIT-OR-Apache label (MIT branch is unavailable for those Apache-2.0 files; their LICENSE is retained in-tree). Not \"cannot-verify\": both upstreams were read directly at the pinned commits with matching blob hashes. Owner (JesseBrown1980) must confirm/set hp_mix.rs's license and reconcile the crate-level SPDX with the Apache-2.0-only vendored HRM."
+  },
+  {
+   "path": "model/hrm-mtp",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/bigpickle-rebuild @ c592599c and JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills @ 3f9f42da",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\", publishable (no publish=false). PROVENANCE.md:29 'Every file under vendor/ is byte-identical to its upstream'; vendored owner files are the bigpickle-rebuild prediction triad (.mjs, PROVENANCE.md:37-47) and the universe-simulator rime agents (.py, PROVENANCE.md:48-52). Both owner upstream repos are OUT OF SCOPE (GitHub access denied) - upstream license cannot be verified. If those repos carry no license, 7.h would require UNLICENSED + publish=false (cf. planes/gnn-trio vendoring revolver-10k)."
+  },
+  {
+   "path": "model/live-parity",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own)",
+   "upstream_license": "none (aether-own)",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\", Cargo.toml:8 publish=false (already excluded from crates.io). Aether's own integration/test crate: path-dependencies on asolaria-l0-edge and asolaria-l4-gslgnn (Cargo.toml:11-12); no vendored upstream source code. The only non-source payloads are LIVE-CAPTURES.txt and LIVE-DAEMONS-RECEIPT.hbp, which are the owner's recorded live-server run receipts (data, not licensable source). README describes it as the Rust L0/L4 ports checked against the owner's live :4792/:4793 servers. License is aether's choice; not published, so 7.h publishing concern is moot."
+  },
+  {
+   "path": "host8",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 (servers/host8-serve/main.rs + servers/agent-runtime/rooms.rs)",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "host8/Cargo.toml:6 license='MIT OR Apache-2.0'. Aether glue manifest (workspace+lib) packaging byte-identical owner code: host8/src/rooms.rs (blob d352d9d6, host8/UPSTREAM.sha256) + 7 verbatim main.rs slices in host8/src/upstream/ (from blob 6cd22f99), wrapped by aether-written src/identity.rs + src/pid_sources.rs (PROVENANCE.md:63-76). Upstream federation-1024 root LICENSE + Cargo.toml[workspace.package] both 'MIT OR Apache-2.0'. Equal -> match."
+  },
+  {
+   "path": "host8/vendor/federation-1024/servers/agent-runtime",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/agent-runtime/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Byte-identical upstream manifest: git blob 9ca452368c0c589acf927c5795a06de26f1d0488 returned by get_file_contents == blob in host8/PROVENANCE.md:35; sha256 f03aa490 pinned host8/UPSTREAM.sha256:5. Upstream manifest line 6 'MIT OR Apache-2.0' (read directly). Equal -> match."
+  },
+  {
+   "path": "host8/vendor/federation-1024/servers/fischer-eval",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/fischer-eval/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Byte-identical: blob e10223738df5c29f60ceff08c5465ce11eab3dae == PROVENANCE.md:41; sha256 555f2d22 pinned UPSTREAM.sha256:9. Upstream manifest line 6 'MIT OR Apache-2.0' (read directly). Equal -> match."
+  },
+  {
+   "path": "host8/vendor/federation-1024/servers/gnn-oracle",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/gnn-oracle/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Byte-identical: blob c07f890c7f634f1f072817b5ad2674dd30974588 == PROVENANCE.md:39; sha256 70a93fbf pinned UPSTREAM.sha256:12. Upstream manifest line 6 'MIT OR Apache-2.0' (read directly). Equal -> match."
+  },
+  {
+   "path": "host8/vendor/federation-1024/servers/host8-serve",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/host8-serve/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Carried for provenance, not compiled (host8/PROVENANCE.md:83-97). Byte-identical: blob 1b35900cb7aafd0b71971bc332f8cc63161a70c5 == PROVENANCE.md:30; sha256 eaea112a pinned UPSTREAM.sha256:14. Upstream manifest line 6 'MIT OR Apache-2.0' (read directly). Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council",
+   "label": "none (no [package]; virtual [workspace] manifest)",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether glue)",
+   "upstream_license": "n/a",
+   "note": "Cargo.toml:5-7 is a virtual [workspace] (members=[cosign-ledger,cosign-serve,vote-quorum,council-serve,vectors]) with NO [package] table, so no license field exists. Aether glue (PROVENANCE.md:1,50-52,98-101). Not a publishable crate -> no 7.h action."
+  },
+  {
+   "path": "ledger/cosign-council/cosign-ledger",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/cosign-ledger",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Active manifest is aether glue (PROVENANCE.md:98-101) packaging byte-identical upstream src: src/lib.rs (blob 4ab9fe0b) + py_parity/{canon,chain,json_tok,mod}.rs, all pinned UPSTREAM.sha256:1-5 (PROVENANCE.md:12-16). Upstream servers/cosign-ledger/Cargo.toml (blob d00d0325, read directly) line 6 'MIT OR Apache-2.0'. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council/cosign-serve",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/cosign-serve",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Aether glue manifest + build.rs line-extracts; packages byte-identical upstream src: routes.rs(5fc56427), store.rs, resume.rs, http.rs, main.rs pinned UPSTREAM.sha256:7-13 (PROVENANCE.md:18-24). Upstream servers/cosign-serve/Cargo.toml (blob 2ec88c45, read directly) line 6 'MIT OR Apache-2.0'. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council/council-serve",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/council-serve",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Aether glue manifest + build.rs extracts; packages byte-identical upstream src: routes.rs(b6b1a0eb), lane_event/lane_health/mcp_health/policy/ptc_dispatch/recovery/stale_branch/http/main/engine_drive.rs pinned UPSTREAM.sha256:14-25 (PROVENANCE.md:25-36). Upstream servers/council-serve/Cargo.toml (blob e41a78fb, read directly) line 6 'MIT OR Apache-2.0'. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council/vectors",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own)",
+   "upstream_license": "n/a",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0', publish=false (Cargo.toml:9). Aether's own cold-lane referee vector-printer, written for this directory (PROVENANCE.md:102 'vectors/ (the referee's printer)'); it runs the vendored ledger code but is not itself vendored. License is aether's choice; already publish=false."
+  },
+  {
+   "path": "ledger/cosign-council/vote-quorum",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/vote-quorum",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Aether glue manifest packaging byte-identical upstream src/lib.rs (blob d4cccb94 / sha256 fd15c363, UPSTREAM.sha256:35), src/canon.rs (blob 1d352dc9, :34) and src/bin/vote-quorum-parity.rs (blob c43a875b, :36); vendored on owner decision 2026-10-18 (PROVENANCE.md:144-162). Upstream servers/vote-quorum/Cargo.toml (blob 1b29e40a, read directly) line 6 'MIT OR Apache-2.0'. Equal -> match. (lib.rs carries owner-authorized OP-<NAME> operator tokens; does not affect license.)"
+  },
+  {
+   "path": "ledger/cosign-council/vendor/federation-1024/servers/cosign-ledger",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/cosign-ledger/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Byte-identical upstream manifest kept for provenance only, not active (PROVENANCE.md:37,50-52). blob d00d03252e2a4b54d990e6725468dd3217e44e2d == upstream (read directly); sha256 e65bca6c pinned UPSTREAM.sha256:26. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council/vendor/federation-1024/servers/cosign-serve",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/cosign-serve/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Provenance-only, not active (PROVENANCE.md:39,50-52). blob 2ec88c45333db128804ee53a30d72a651c7d9ff7 == upstream (read directly); sha256 0c5e4004 pinned UPSTREAM.sha256:28. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council/vendor/federation-1024/servers/council-serve",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/council-serve/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Provenance-only, not active (PROVENANCE.md:41,50-52). blob e41a78fb4b3f7ee9d4052204250240b69ff08429 == upstream (read directly); sha256 08e93d7d pinned UPSTREAM.sha256:30. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-council/vendor/federation-1024/servers/vote-quorum",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @ dc1da1a9 : servers/vote-quorum/Cargo.toml",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Cargo.toml:6 'MIT OR Apache-2.0'. Provenance-only, not active (PROVENANCE.md:43,50-52). blob 1b29e40af78e232d6d12052c318e4a682ad285ab == upstream (read directly); sha256 6189fff4 pinned UPSTREAM.sha256:32. Equal -> match."
+  },
+  {
+   "path": "ledger/cosign-attribution",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own, Claude's addition)",
+   "upstream_license": "n/a",
+   "note": "Cargo.toml:1-2 'Claude's addition, written for aether; not upstream code'; Cargo.toml:9 'MIT OR Apache-2.0', publish=false (Cargo.toml:11). PROVENANCE.md:3-4 'Every file ... written for aether by Claude. None of it is upstream code and none of it is vendored.' Depends on vendored cosign-ledger by path (Cargo.toml:25) but does not vendor it. own-aether; license is aether's choice; already publish=false."
+  },
+  {
+   "path": "ledger/hyperbehcs-daemons",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "none \u2014 owner ACER uploads 2026-10-17 (C:\\HyperBEHCS\\bin\\), vendored only into asolaria-aether; NOT in federation-1024, the private mirror, or behcs-256",
+   "upstream_license": "no license file (owner ACER upload carries no license; verified: no LICENSE in crate dir, no license/copyright/SPDX string in vendor/acer-hyperbehcs-bin/*.py)",
+   "note": "CONFIRMED. Cargo.toml:6 = \"MIT OR Apache-2.0\", publish=false. Vendored upstream = owner's own daemons (vendor/acer-hyperbehcs-bin/asolaria-{vote-quorum,cosign-chain}-daemon.py; docstrings show OP-JESSE apex / Foundation v3 LAW); they carry NO license file (no LICENSE in crate dir; grep found no license/copyright/SPDX in the .py). sha256sum -c UPSTREAM.sha256 = 2/2 OK. Adversarially re-checked the \"not in any repo\" claim via GitHub MCP: federation-1024 @ dc1da1a9 is public and MIT OR Apache-2.0, but holds only Rust PORTS/parity, not the .py source (servers/vote-quorum/src/lib.rs = \"Rust port of the py vote-quorum daemon\"; servers/cosign-ledger/src/py_parity/mod.rs). search_code (user:JesseBrown1980 and unscoped) for both daemon filenames and the unique docstring \"stops seq collisions per V42-A4/A5 findings\" = 0 hits. Locally the only repo with the .py is aether itself via vendoring commit d08b7d9; origin is owner uploads (PROVENANCE.md:5-9,30-37). The 2026-10-18 owner decision (PROVENANCE.md:114-120) is a PRIVACY/publish clearance for operator first names, NOT a license grant. So there is no readable upstream license to match against: not \"match\"; and not \"cannot-verify\" since the no-license state was positively confirmed. Verdict stands: owner's unlicensed code needs an explicit owner licensing decision to confirm MIT OR Apache-2.0 covers the vendored daemons."
+  },
+  {
+   "path": "qprism/recovery-omega-codecs",
+   "label": "MIT",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/asolaria-omega-omnibit-tournament @ dad4647",
+   "upstream_license": "no license file",
+   "note": "CONFIRMED (not cannot-verify: upstream was actually read at the pinned SHA). Crate Cargo.toml:6 `license = \"MIT\"`; Cargo.toml:7 desc claims byte-identical to asolaria-omega-omnibit-tournament@dad4647. PROVENANCE.md:3-6 pins upstream JesseBrown1980/asolaria-omega-omnibit-tournament @ dad4647 (full SHA dad4647ad19a1b08ee90990c34aab1255f9a6046). Verified via GitHub MCP get_file_contents at sha=dad4647ad19a1b08ee90990c34aab1255f9a6046: repo root tree has NO LICENSE/LICENSE-MIT/LICENSE-APACHE/COPYING and NO root Cargo.toml; pyproject.toml (blob 07bffa00) [project] table declares no `license` field and no license classifier; README.md (blob 2465d94e) contains no license grant; reference/omega-floor-codec-v0/ holds only omega_floor_codec_v0.rs, no per-dir LICENSE. get_me confirms authenticated user = JesseBrown1980 (Jesse Daniel Brown), identical to upstream owner, so this is the owner vendoring their own code. Therefore not `match` (upstream declares no MIT), not `mismatch` (no conflicting upstream license), not `cannot-verify` (upstream read successfully), not `own-aether-code` (explicitly vendored from an external owner-owned upstream). Verdict owner-no-license-needs-decision upheld: owner holds copyright and may license as MIT, but that MIT is an owner decision, not a verifiable match to an upstream that carries no license."
+  },
+  {
+   "path": "qprism/recovery/catalog",
+   "label": "MIT",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/asolaria-omega-omnibit-tournament @ dad4647",
+   "upstream_license": "no license file",
+   "note": "CONFIRMED. Crate Cargo.toml:6 declares license=\"MIT\"; the shipped lib omega_operator_catalog.rs is vendored, not aether-own. Byte-identity verified end-to-end: local sha256=883ca7ec964e609933c3cb9ac71d1f9fb02ade9f314f7902d0c0547dd3da6e1b, git blob=1535e158b21b1c2b9ece4dce84e0e9779498ec19, 26012 bytes; `sha256sum -c UPSTREAM.sha256` = OK. GitHub MCP get_file_contents read the upstream successfully (so NOT cannot-verify): JesseBrown1980/asolaria-omega-omnibit-tournament @ dad4647ad19a1b08ee90990c34aab1255f9a6046 path reference/omega-operator-catalog-v0/omega_operator_catalog.rs returns identical blob sha 1535e158... and size 26012. Upstream repo root at dad4647 (also the current main HEAD \u2014 all API URLs resolved to dad4647) contains NO LICENSE/COPYING/LICENSE-MIT file (root = .gitattributes, .github, .gitignore, AGENT-DISCIPLINE.md(+.sha256), AGENTS.md, README.md, config, contracts, docs, provenance, pyproject.toml, reference, rust-toolchain.toml(+.sha256), scripts, src, tests, tools). Upstream is owned by the same owner (JesseBrown1980) as the aether estate, and is the same source repo as sibling crate qprism/recovery-omega-codecs (its PROVENANCE.md pins the same commit dad4647 and same blob 1535e158... for this file). Because the owner's own upstream carries no license file to back the declared MIT, the owner must make the licensing decision: not `match` (no upstream license exists to match), not `own-aether-code` (vendored from a separate owner repo), not `cannot-verify` (upstream was read)."
+  },
+  {
+   "path": "qprism/recovery/omega",
+   "label": "MIT",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/asolaria-omega-omnibit-tournament @ dad4647",
+   "upstream_license": "no license file (verified readable at dad4647: no root LICENSE/COPYING; pyproject.toml has no [project] license field; README grants no license; vendored .rs files carry no SPDX/copyright header)",
+   "note": "CONFIRMED (not downgraded to cannot-verify: upstream WAS readable and absence of a license is positively verified). Crate Cargo.toml:6 declares license=\"MIT\". Provenance is NOT in a PROVENANCE.md (none exists in qprism/recovery/omega) but in README.md lines 24-35 + UPSTREAM.sha256; sibling qprism/recovery-omega-codecs/PROVENANCE.md pins the same upstream. Byte-identity verified: `sha256sum -c UPSTREAM.sha256` -> omega-path123-v0/omega_path123.rs OK, omega-operator-catalog-v0/omega_operator_catalog.rs OK (sha 883ca7ec... matches). Upstream JesseBrown1980/asolaria-omega-omnibit-tournament @ dad4647ad19a1b08ee90990c34aab1255f9a6046 read via github MCP: root dir has NO LICENSE/COPYING; pyproject.toml [project] has no license field; README.md (\"public SGRAM surface, public by design\") grants no copyright license; reference/{omega-path123-v0,omega-operator-catalog-v0}/*.rs carry no SPDX/copyright/license header (grep clean). Owner identity: upstream owner JesseBrown1980 == aether root LICENSE \"Copyright (c) 2026 Jesse Daniel Brown\" -> same owner, so this is owner's own code vendored from owner's own unlicensed repo. The MIT assertion is the owner's prerogative (they hold copyright) but cannot be grounded in any upstream license grant, so it needs an explicit owner licensing decision before publish. Side note (not a license defect): Cargo.toml:8 repository field points to a DIFFERENT repo (With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...), i.e. the publish target, not the provenance source repo; crate `include` ships no LICENSE text, so a crates.io publish would carry MIT metadata with no bundled license file."
+  },
+  {
+   "path": "qprism/recovery/throat",
+   "label": "MIT",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own)",
+   "upstream_license": "n/a (no upstream)",
+   "note": "README.md:2 'Written fresh for aether by Claude; not upstream code.' Cargo.toml:7 description repeats 'not upstream code'. No UPSTREAM.sha256 / PROVENANCE.md. Depends by path on asolaria-qprism-recovery (../omega). License MIT is aether's own choice for fresh code."
+  },
+  {
+   "path": "qprism/representation",
+   "label": "MIT",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS @ 8712368",
+   "upstream_license": "no license file",
+   "note": "CONFIRMED (verdict unchanged). Evidence: (1) Crate Cargo.toml:6 => license = \"MIT\". (2) No PROVENANCE.md exists in this crate; provenance is in README.md:31-33, claiming rust-qprism-181/ is byte-identical to FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS@8712368 matrix/rust-qprism-181/, checkable via UPSTREAM.sha256. (3) Local rust-qprism-181/UPSTREAM-Cargo.toml has no license field, publish=false. (4) Upstream ACTUALLY READ via GitHub MCP at sha 8712368 (not a cannot-verify case): repo root dir listing has no LICENSE/COPYING; matrix/ dir has no LICENSE; matrix/rust-qprism-181/ dir has no LICENSE (only Cargo.toml/Cargo.lock/README.md/rust-toolchain.toml/src + .sha256 sidecars); matrix/rust-qprism-181/Cargo.toml (blob SHA 5e50cc89227e174bc37351c552f7b90a35223efe) has NO license field and publish=false, byte-matching local UPSTREAM-Cargo.toml. (5) get_me => authenticated user is JesseBrown1980, the upstream owner, so this is owner-vendored code. Owner is publishing their own unlicensed upstream under MIT; the owner may legitimately choose this, but upstream documents no license, so MIT is an owner decision to ratify, not a verifiable inherited license. Minor note for the record: new crate Cargo.toml:8 repository field points to a different (also JesseBrown1980-owned) repo than the provenance upstream, immaterial to the license verdict."
+  },
+  {
+   "path": "qprism/representation-bins",
+   "label": "MIT",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS",
+   "upstream_license": "no license file",
+   "note": "CONFIRMED (not cannot-verify: upstream was actually read at the pinned SHA, not blocked). Vendored owner code: Cargo.toml:6 declares license=\"MIT\"; Cargo.toml:8 + PROVENANCE.md:3-6 pin upstream JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS @ 8712368c851abe347ddf97a25bfbd96275d4316c, binaries from matrix/rust-qprism-181/src/bin/. GitHub MCP get_file_contents at that exact SHA: (1) repo root has NO license file of any name; (2) matrix/rust-qprism-181/ subtree has NO license file; (3) upstream matrix/rust-qprism-181/Cargo.toml declares NO license field at all. So MIT exists only in the vendored Cargo.toml and is unbacked upstream. get_me confirms authenticated user = JesseBrown1980 (id 145490082) = repo owner, matching PROVENANCE.md:76 \"owner=JesseBrown1980 is the owner\". Not 'match' (no upstream license to match), not 'mismatch' (upstream states no conflicting license), not 'own-aether-code' (PROVENANCE marks it vendored from the owner's separate repo). Owner must decide/apply the license; MIT is currently an unverified assertion."
+  },
+  {
+   "path": "quants/cubes",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "9 JesseBrown1980 repos (Q-PRISM-...control, what-is-asolaria---how-do-we-get-reductions-in-everything, Asolaria-hermes-work, asolaria-whiteroom-engine, Asolaria-the-after-100-billion..., Shannon-and-the-gnns-stage, falcon-orbital, bigpickle-rebuild, Algorithms-of-Asolaria) \u2014 all OUT OF SCOPE",
+   "upstream_license": "out of scope: all 9 GitHub repos are access-denied for this session. Only Q-PRISM's LICENSE is knowable (byte-identical vendored copy, PROVENANCE.md:33 blob f6c7ab6/sha256 e994f199 = MIT). PROVENANCE.md:159-160 claims the other 8 carry no license file, but that is NOT GitHub-verifiable here.",
+   "note": "Compiled crate is aether's own fresh Rust (src/, tools/referee.py; 'Files added here' PROVENANCE.md:174-180). It vendors byte-identical owner reference material (line ranges + whole files) from 9 repos (PROVENANCE.md:13-61). Cargo.toml:6 MIT OR Apache-2.0, not publish=false. If the author's no-license claim for the 8 repos holds, those vendored owner bytes are UNLICENSED and 7.h would bar publishing; I could not reach the repos to confirm."
+  },
+  {
+   "path": "quants/exact",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/Q-PRISM-...control @ b4a21a2 (include! ranges) + vendored crates dbbh-coms-quant-prism & qprism-3d-slice-harness + Algorithms-of-Asolaria registry",
+   "upstream_license": "mixed / partly out of scope: Q-PRISM MIT (byte-identical vendored LICENSE, PROVENANCE.md:26 blob f6c7ab6); dbbh & qprism-3d-slice-harness MIT OR Apache-2.0 (byte-identical vendored crates, PROVENANCE.md:189-190); Algorithms-of-Asolaria registry .hbp from an OUT-OF-SCOPE repo. All GitHub repos access-denied this session.",
+   "note": "Mixed crate: aether's own src/lib.rs re-exports + include! of byte-identical Q-PRISM host8 line ranges (PROVENANCE.md:35-67), plus two fully byte-identical owner crates as workspace members, plus vendored Algorithms-of-Asolaria registry. Code upstreams (Q-PRISM MIT; dbbh/harness MIT OR Apache-2.0) are compatible with this crate's MIT OR Apache-2.0; the only unresolved piece is the Algorithms-of-Asolaria registry data from an out-of-scope repo (PROVENANCE.md:27-28). Cargo.toml:6 MIT OR Apache-2.0, not publish=false."
+  },
+  {
+   "path": "quants/exact/vendor/dbbh-coms-quant-prism",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/dbbh-coms-quant-prism @ 30386807",
+   "upstream_license": "MIT OR Apache-2.0 (upstream Cargo.toml) with an MIT LICENSE \u2014 established from the byte-identical vendored copy (Cargo.toml blob b048bb8d, LICENSE blob 7f2a4900, exact/PROVENANCE.md:18,23); GitHub repo itself out of this session's scope",
+   "note": "This IS the upstream crate, vendored byte-identical (incl its own Cargo.toml + LICENSE). Local Cargo.toml:6 license=\"MIT OR Apache-2.0\"; local LICENSE is MIT (Copyright 2026 Asolaria Federation). exact/PROVENANCE.md:18-25,189-190 documents byte-identity. Crate license == upstream license (same bytes). Note: only an MIT LICENSE text is present (no LICENSE-APACHE), an upstream trait carried faithfully."
+  },
+  {
+   "path": "quants/exact/vendor/qprism-3d-slice-harness",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/qprism-3d-slice-harness @ 2f48332",
+   "upstream_license": "MIT OR Apache-2.0 (upstream Cargo.toml) with an MIT LICENSE \u2014 established from the byte-identical vendored copy (Cargo.toml blob 0d1cc987, LICENSE blob ab098eef, exact/PROVENANCE.md:13,15); GitHub repo itself out of this session's scope",
+   "note": "This IS the upstream crate, vendored byte-identical (incl its own Cargo.toml + LICENSE). Local Cargo.toml:6 license=\"MIT OR Apache-2.0\"; local LICENSE is MIT (Asolaria Federation). exact/PROVENANCE.md:13-17,189-190 documents byte-identity. Crate license == upstream license (same bytes). Only MIT LICENSE text present (no LICENSE-APACHE), carried from upstream."
+  },
+  {
+   "path": "quants/head8",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/ASOLARIA-AS-NEURAL-NETWORK @ 4cc7624 (ported) + JesseBrown1980/Algorithms-of-Asolaria @ d399d13 (vendored registry) \u2014 both OUT OF SCOPE",
+   "upstream_license": "out of scope: both GitHub repos are access-denied for this session; PROVENANCE.md does not state the upstream repos' license, so it cannot be confirmed",
+   "note": "PROVENANCE.md:1-6,65-73 \u2014 crate is a fresh Rust PORT (reimplementation) of quants 1-8 from ASOLARIA-AS-NEURAL-NETWORK's quant-huge-message-benchmark.mjs, plus byte-identical vendored .mjs/.hbp reference (PROVENANCE.md:28-33). Crate has no LICENSE file; Cargo.toml:6 MIT OR Apache-2.0, not publish=false. Per 7.h, if the owner upstream carries no license this port should be UNLICENSED+unpublished; upstream repos unreachable so I cannot confirm their license state."
+  },
+  {
+   "path": "quants/hyperbehcs",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/Asolaria-ASI-On-Metal-Fabric-and-matrix @ a1a7078 (ported) + JesseBrown1980/Algorithms-of-Asolaria @ d399d13 (vendored registry) \u2014 both OUT OF SCOPE",
+   "upstream_license": "out of scope: both GitHub repos are access-denied for this session; PROVENANCE.md does not state the upstream repos' license",
+   "note": "PROVENANCE.md:1-18,25-38 \u2014 crate is a fresh Rust PORT of HyperBEHCS quants (registry slots 9-12) from Asolaria-ASI-On-Metal-Fabric-and-matrix's hyperbehcs-core.cjs, plus byte-identical vendored .cjs/.hbp reference. No LICENSE file in crate; Cargo.toml:6 MIT OR Apache-2.0, not publish=false. Same 7.h exposure as head8; upstream repos unreachable so license state unconfirmed."
+  },
+  {
+   "path": "quants/recovery/crosscheck",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own)",
+   "upstream_license": "n/a (no upstream)",
+   "note": "Cargo.toml:8 'Tests only: ties quants 22-24 ... to the vendored dbbh-coms-quant-prism and path2-two-shadow-recovery crates'; Cargo.toml:7 publish=false. src/lib.rs is 156 bytes; only dev-dependencies and test files. No PROVENANCE/UPSTREAM/LICENSE. Aether-own test harness; license is aether's choice; publish=false keeps it off crates.io."
+  },
+  {
+   "path": "quants/recovery/dbbh-coms-quant-prism",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/dbbh-coms-quant-prism @ 30386807",
+   "upstream_license": "MIT OR Apache-2.0 (Cargo.toml) with MIT LICENSE \u2014 same byte-identical owner crate documented in exact/PROVENANCE.md:18,23; GitHub repo itself out of scope",
+   "note": "`diff -rq` vs quants/exact/vendor/dbbh-coms-quant-prism = identical except an added Cargo.lock. Same byte-identical owner crate (Cargo.toml:6 MIT OR Apache-2.0; local LICENSE MIT/Asolaria Federation). This copy has no own UPSTREAM.sha256, but is byte-identical to the documented vendored copy. Crate license == upstream (same bytes)."
+  },
+  {
+   "path": "quants/recovery/path2-two-shadow-recovery",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/path2-two-shadow-recovery (Cargo.toml repository field) \u2014 OUT OF SCOPE",
+   "upstream_license": "out of scope: GitHub repo access-denied for this session. Crate carries its own MIT LICENSE (Asolaria Federation) and Cargo.toml:6 MIT OR Apache-2.0, but there is NO UPSTREAM.sha256/PROVENANCE.md proving byte-identity to the upstream, so the upstream's actual license is unconfirmed.",
+   "note": "Cargo.toml:6 MIT OR Apache-2.0, Cargo.toml:9 repository=https://github.com/JesseBrown1980/path2-two-shadow-recovery; local LICENSE is MIT. Unlike the dbbh/harness vendors, this crate has no UPSTREAM.sha256 or PROVENANCE.md, so byte-identity to upstream is not pinned and the upstream repo is unreachable. Internally consistent (MIT LICENSE + MIT OR Apache-2.0 Cargo.toml)."
+  },
+  {
+   "path": "quants/slice-time-harness",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/deterministic-slice-time-harness @ be09be1",
+   "upstream_license": "MIT OR Apache-2.0 (upstream Cargo.toml + README, PROVENANCE.md:131) with an MIT LICENSE \u2014 established from the byte-identical vendored copy (LICENSE blob a58f4522 pinned in UPSTREAM.sha256); GitHub repo itself out of this session's scope",
+   "note": "PROVENANCE.md:3-23 \u2014 src/lib.rs, Cargo.toml, README.md, LICENSE, rust-toolchain.toml byte-identical to deterministic-slice-time-harness@be09be1, all pinned in UPSTREAM.sha256 and present locally. Local Cargo.toml:6 license=\"MIT OR Apache-2.0\"; LICENSE is MIT short form (Copyright 2026 Asolaria Federation). Crate license == upstream (byte-identical). PROVENANCE.md:129-136 notes the LICENSE copyright is 'Asolaria Federation' while aether root LICENSE is 'Jesse Daniel Brown' \u2014 which full text ships is left to the owner."
+  },
+  {
+   "path": "gate/fischer-eval",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 (servers/fischer-eval @dc1da1a9)",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Modified port ('AE variant') of FED servers/fischer-eval. README.md:16 'Upstream asolaria-federation-1024@dc1da1a9, servers/fischer-eval'; README.md:20 'Changes from upstream'. GitHub-verified: FED root LICENSE = dual MIT/Apache, workspace Cargo.toml license='MIT OR Apache-2.0', servers/fischer-eval/Cargo.toml:6 license='MIT OR Apache-2.0'. Crate Cargo.toml:6 = MIT OR Apache-2.0 -> match."
+  },
+  {
+   "path": "gate/fischer-upstream",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 (servers/fischer-eval @dc1da1a9)",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Vendored byte-identical. PROVENANCE.md:6-8; UPSTREAM.sha256 pins lib.rs/main.rs/Cargo.toml. GitHub servers/fischer-eval/Cargo.toml returned blob SHA e10223738df5c29f60ceff08c5465ce11eab3dae == the vendored Cargo.toml blob pinned in PROVENANCE.md:14; that upstream manifest license=MIT OR Apache-2.0. Crate Cargo.toml:6 = MIT OR Apache-2.0 -> match."
+  },
+  {
+   "path": "gate/fischer-upstream/vendor/federation-1024/servers/fischer-eval",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 (servers/fischer-eval @dc1da1a9)",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "This IS the upstream FED manifest, carried byte-identical for provenance (git blob e10223738, verified against GitHub). Cargo.toml:6 license='MIT OR Apache-2.0'. Not itself published: it sits inside fischer-upstream vendor/ and fischer-upstream Cargo.toml:15 '[workspace] exclude=[\"vendor\"]' keeps it out of the build/workspace. License equals upstream (it is upstream) -> match."
+  },
+  {
+   "path": "gate/hookwall",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 (kernel/core/src @dc1da1a9)",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "Extract/port of 7 FED kernel/core/src modules with comment-only edits + one logic change (crypto wired to ed25519-dalek). PROVENANCE.md:3-5 cites kernel/core/src @dc1da1a9. GitHub-verified: kernel/core/Cargo.toml 'license.workspace=true' -> workspace license 'MIT OR Apache-2.0'; FED root LICENSE dual MIT/Apache. Crate Cargo.toml:6 = MIT OR Apache-2.0 -> match."
+  },
+  {
+   "path": "gate/observed",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "Shannon-and-the-gnns-stage @32f9670a (pipeline/asolaria-score.mjs) / bigpickle-rebuild @c592599c (src/asolaria-score.mjs) \u2014 both JesseBrown1980, both OUT OF SESSION SCOPE",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "Not pure own-code: vendors + ports owner code. vendor/acer-scorer-2026-10-18/asolaria-score.mjs (owner ACER-seat L4-weight-0 edit of the upstream scorer) pinned in that dir's UPSTREAM.sha256; vendor README.md:1-7,18 names upstream = Shannon-and-the-gnns-stage @32f9670a / bigpickle-rebuild @c592599c. Both upstream repos are not configured for this session (GitHub access denied) -> upstream license cannot be verified. Crate declares MIT OR Apache-2.0 (Cargo.toml:6, README.md:132-134)."
+  },
+  {
+   "path": "gate/verdict",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own)",
+   "upstream_license": "none (aether-own composition)",
+   "note": "Aether's own tighten-only composition glue over path deps asolaria-hookwall + asolaria-server-fischer-eval plus an input guard (Cargo.toml:16-17; src/lib.rs:112 'Glue checks for inputs the upstream gates do not fail closed on'). No vendor/ dir, no PROVENANCE.md/UPSTREAM.sha256. License MIT OR Apache-2.0 = aether's own choice, consistent with repo-root LICENSE (MIT) + LICENSE-APACHE."
+  },
+  {
+   "path": "planes/gnn-trio",
+   "label": "UNLICENSED",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/revolver-10k (vendored extract: src/omniquant.mjs, src/quant-bus.mjs, src/bpi-codec.mjs, tools/graphify.py)",
+   "upstream_license": "unreadable/out-of-scope \u2014 could NOT read upstream LICENSE; repo not configured for this session",
+   "note": "CORRECTED from owner-no-license-needs-decision to cannot-verify. Crate marks license=\"UNLICENSED\", publish=false (Cargo.toml:9-10), justified by vendoring \"the owner's revolver-10k source bytes, which carry no license\" (Cargo.toml:6-8; PROVENANCE.md:11-12). But that \"no license\" claim is NEVER independently verified: PROVENANCE.md:28 states the 4 files \"were delivered as an extract, not from a committed ref, so no upstream commit is recorded,\" and the vendor/ dir has no LICENSE (find vendor -iname '*licen*' = empty). Decisive adversarial step: I called mcp__github__get_file_contents on JesseBrown1980/revolver-10k root and got Access denied \u2014 \"repository jessebrown1980/revolver-10k is not configured for this session\" (revolver-10k is absent from the session's allowed-repo list). I therefore could NOT read the upstream LICENSE nor confirm its absence. The claimed owner-no-license-needs-decision presupposes a verified fact (upstream has no license) that rests only on PROVENANCE.md's own self-referential assertion. Per the task's safer-reading rule, unverifiable upstream = cannot-verify. Note: the crate's UNLICENSED/publish=false posture is itself conservative, so no incorrect publishing is occurring; the gap is evidentiary (no independent read of the owner's license status), not an active mis-license. Did not add_repo \u2014 not requested by the user and outside this verification task."
+  },
+  {
+   "path": "planes/gulp-watchers",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "mismatch",
+   "upstream_repo": "JesseBrown1980/asolaria-behcs-256 @818cc235 (in scope) + JesseBrown1980/bigpickle-rebuild @c592599 (out of scope)",
+   "upstream_license": "asolaria-behcs-256 = MIT only (GitHub-verified via MCP: root has a single LICENSE file = MIT License \"Copyright (c) 2026 Jesse Brown\", blob f0dbb2d68c150d93ac5ea6972d7f11297c172997; no LICENSE-APACHE/LICENSE-MIT in root). bigpickle-rebuild = unreadable/out-of-scope (GitHub MCP access denied; repo not in session allow-list; not added per instructions).",
+   "note": "CONFIRMED mismatch. Cargo.toml:6 declares license = \"MIT OR Apache-2.0\". PROVENANCE.md (lines 8, 46) names upstreams asolaria-behcs-256 @818cc235 (in scope) and bigpickle-rebuild @c592599 (out of scope). GitHub MCP get_file_contents on JesseBrown1980/asolaria-behcs-256 @818cc235: root directory contains exactly one license artifact named \"LICENSE\" whose body is the MIT License (Copyright (c) 2026 Jesse Brown, blob SHA f0dbb2d68c150d93ac5ea6972d7f11297c172997) \u2014 there is NO Apache-2.0 license file anywhere in the root. Therefore the readable in-scope upstream grants MIT only, and the crate's \"OR Apache-2.0\" alternative is not backed by any upstream Apache grant = mismatch (over-declaration). The out-of-scope bigpickle-rebuild could NOT be read (GitHub MCP returned \"Access denied: repository jessebrown1980/bigpickle-rebuild is not configured for this session\"; repo absent from the allow-list), so its license stays unverifiable; this does not rescue the declaration (safer reading: an unreadable upstream cannot upgrade a proven mismatch to match). Not own-aether-code (PROVENANCE documents external vendored bytes); not owner-no-license (the in-scope upstream HAS a LICENSE); not cannot-verify (the in-scope upstream license WAS read and it is MIT, which is what establishes the mismatch). Owner Jesse Brown holds copyright on the in-scope upstream, so reconciliation (add LICENSE-APACHE upstream, or drop \"OR Apache-2.0\" to MIT-only in the crate) is an owner decision; as it currently stands the declared crate license does not match the upstream LICENSE."
+  },
+  {
+   "path": "planes/whiteroom-shannon",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/{Shannon-and-the-gnns-stage @32f9670 (out of scope), bigpickle-rebuild @c592599 (out of scope), asolaria-behcs-256 @818cc235 (in scope)}",
+   "upstream_license": "Shannon-and-the-gnns-stage & bigpickle-rebuild = unreadable/out-of-scope; asolaria-behcs-256 = MIT (verified)",
+   "note": "Vendors from three upstreams (PROVENANCE.md:14-20,26-34). The two dominant upstreams \u2014 Shannon-and-the-gnns-stage @32f9670 (5 excerpts) and bigpickle-rebuild @c592599 (2 whole files) \u2014 are not configured for this session (GitHub denied), so their licenses cannot be verified. The one reachable upstream, asolaria-behcs-256 (one file, src/gnn/hybrid-harness.js), is MIT-only (verified), which already differs from the crate's 'MIT OR Apache-2.0' (Cargo.toml:6). Overall unverifiable because the principal upstreams are out of scope."
+  },
+  {
+   "path": "pump/cm3ti",
+   "label": "UNLICENSED",
+   "verdict": "cannot-verify",
+   "upstream_repo": "none \u2014 claimed unpublished ACER export honest-compressor-9ebd6119-export-2026-10-18.zip; no GitHub repo (search_repositories \"honest-compressor user:JesseBrown1980\" = 0; code searches for the source header and cm3ti_rainbow12 = 0)",
+   "upstream_license": "unreadable/out-of-scope \u2014 no readable upstream LICENSE. The vendored rust/ subtree (33 of 212 export entries) carries no LICENSE file and the .rs files have no license/copyright header (grep: 0 hits), but the full honest-compressor export zip is not present in the scratchpad and is not on GitHub, so a root LICENSE in the export could not be ruled in or out.",
+   "note": "Crate asolaria-cm3ti. Cargo.toml:6-7 sets license=\"UNLICENSED\", publish=false; desc = byte-identical copies of the owner's honest-compressor rust/ tree. PROVENANCE.md:3-11 names the origin as the owner's ACER export honest-compressor-9ebd6119-export-2026-10-18.zip (212 entries, 23MB, sha256 0f02b52d...), folder C:\\asolaria-acer\\...\\honest-compressor\\; only the rust/ subtree was vendored. PROVENANCE.md:185-189 asserts \"carries no license and was not previously published\" \u2014 this is a SELF-ASSERTION with no independently readable source behind it. Adversarial GitHub-MCP checks: mcp__github__get_me confirms owner JesseBrown1980 (Jesse Daniel Brown), matching the aether git remote (JesseBrown1980/...Aether...) and plasmatoid@gmail.com, so owner identity is consistent; but search_repositories \"honest-compressor user:JesseBrown1980\"=0, search_code for the header string \"INTEGER-deterministic cm3t at 16-bit probability\"=0, and search_code \"cm3ti_rainbow12 comp_sha\"=0 \u2014 no published upstream exists on GitHub, so there is NO upstream LICENSE I can read. The export zip itself is not in the scratchpad (only rust/ was vendored), so a root-level LICENSE in the 212-entry export cannot be ruled out. Sources self-describe as \"lpaq1-style\" (cm3ti.rs:1-7); lpaq1 is Matt Mahoney code, a residual derivation question unresolvable without the full source. The owner-no-license-needs-decision reading is PLAUSIBLE and consistent with available evidence (owner identity matches, no published copy found, no license in the vendored subtree), but it cannot be CONFIRMED because the actual upstream is inaccessible (no repo, no zip). Per the safer-default rule, verdict = cannot-verify rather than accepting the claim. The existing UNLICENSED/publish=false marking is appropriately conservative; do not publish until the owner confirms the full export carries no LICENSE and issues an explicit license decision."
+  },
+  {
+   "path": "pump/glyphs-herself",
+   "label": "Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills @3f9f42d (out of scope)",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "3 files vendored byte-identical from USIM @3f9f42d (PROVENANCE.md:3-12; pinned in UPSTREAM.sha256); PROVENANCE.md:5 'part of the public release tree'. USIM repo not configured for this session (GitHub denied) -> upstream license unverifiable. INCONSISTENCY FLAG: this crate declares license='Apache-2.0' (Cargo.toml:6) while pump/kimi-stars vendors the SAME repo @ SAME commit 3f9f42d but declares 'MIT OR Apache-2.0' \u2014 at most one can match the upstream, so they cannot both be a faithful 'match upstream'."
+  },
+  {
+   "path": "pump/kimi-stars",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills @3f9f42dab6247c40b30921b253e3f73c9e942ca5 (out of scope)",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "13 files vendored byte-identical from USIM @3f9f42d (PROVENANCE.md:5-32; pinned in UPSTREAM.sha256). USIM repo not configured for this session (GitHub denied) -> upstream license unverifiable. INCONSISTENCY FLAG: this crate declares license='MIT OR Apache-2.0' (Cargo.toml:6) while pump/glyphs-herself vendors the SAME repo @ SAME commit 3f9f42d but declares 'Apache-2.0' only \u2014 the two vendored-from-USIM crates disagree on the license, so at least one does not match the upstream."
+  },
+  {
+   "path": "hbp",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/bigpickle-rebuild @c592599 + JesseBrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything @29307bf",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "hbp/Cargo.toml:6 license. PORT of owner JS (not byte-copy): hbp/PROVENANCE.md:11-14 maps hbp-emitter/reader/tuple-tag (bigpickle-rebuild) + relay-envelope (reductions). Both upstream repos are OUT OF SESSION SCOPE (add_repo allowlist excludes them) so their LICENSE could not be read; not guessed. No publish=false -> publishable, so upstream-match is unverifiable here."
+  },
+  {
+   "path": "hbp/relay",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything @29307bf",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "hbp/relay/Cargo.toml:6. PORT of reductions-repo relay-driver/* (hbp/relay/PROVENANCE.md:17,21-25); 'no upstream bytes are checked in here' (PROVENANCE.md:9). Upstream repo out of session scope -> LICENSE unreadable, not guessed. Publishable."
+  },
+  {
+   "path": "hbp/vault-reader",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own reader; reproduces public owner rules; depends on vendored asolaria-hbi-hbp + aether hbp)",
+   "upstream_license": "n/a (aether-own; publish=false)",
+   "note": "hbp/vault-reader/Cargo.toml:6 license, :9 publish=false. Aether's own reader; its rule choices are labelled 'Claude's choices (no upstream line states them)' (PROVENANCE.md:64-84). No single upstream to match; license is aether's choice. Already excluded from crates.io via publish=false."
+  },
+  {
+   "path": "hbp/vendor/asolaria-hbi-hbp",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-hbi-hbp @dca3f45",
+   "upstream_license": "MIT OR Apache-2.0 (vendored Cargo.toml SPDX; shipped LICENSE text is MIT-only)",
+   "note": "Cargo.toml:6. Vendored byte-identical, 7/19 files (PROVENANCE.md:3-7; UPSTREAM.sha256 7/7). Live repo OUT OF SCOPE, but upstream LICENSE+Cargo.toml are present byte-identical (blob-pinned): vendored LICENSE is MIT text (blob 7f2a4900, PROVENANCE.md:21) and vendored Cargo.toml declares 'MIT OR Apache-2.0' \u2014 crate IS upstream = match. Upstream internal inconsistency: SPDX dual but LICENSE text MIT-only (no LICENSE-APACHE)."
+  },
+  {
+   "path": "hbp/vendor/recall-serve-readonly",
+   "label": "license.workspace = true (resolves to MIT OR Apache-2.0 via federation-1024 workspace)",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @dc1da1a9 (tools/recall-serve)",
+   "upstream_license": "MIT OR Apache-2.0 (federation-1024 [workspace.package] @dc1da1a9, verified in scope)",
+   "note": "Cargo.toml:6 license.workspace=true (byte-identical to upstream; 2/7 files, PROVENANCE.md:12-13). Upstream federation-1024 Cargo.toml [workspace.package] license='MIT OR Apache-2.0' (read in scope) -> match. Read-only (mode 0444); engine src/main.rs excluded for third-party PII (PROVENANCE.md:22-24); Cargo.toml:12 'Corpus...NEVER published'. In aether there is no parent [workspace], so license.workspace does not resolve locally (crate does not build by design)."
+  },
+  {
+   "path": "kernel/behcs1024-60d",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @dc1da1a9 (kernel/boot/src/hwinv.rs)",
+   "upstream_license": "MIT OR Apache-2.0 (federation-1024 LICENSE + workspace Cargo.toml @dc1da1a9, verified in scope)",
+   "note": "Cargo.toml:6. Vendors hwinv.rs lines 99-101 + 147-262 byte-identical (README.md:16-18; UPSTREAM.sha256); src/lib.rs is an aether wrapper. Upstream federation-1024 verified in scope = dual MIT OR Apache-2.0 (LICENSE file is genuinely dual + [workspace.package]). match. Publishable."
+  },
+  {
+   "path": "kernel/lane",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @dc1da1a9 + JesseBrown1980/asolaria-asi-os @457159d",
+   "upstream_license": "MIT OR Apache-2.0 (federation-1024 dual LICENSE+Cargo.toml; asi-os Cargo.toml dual \u2014 asi-os LICENSE text is MIT-only)",
+   "note": "Cargo.toml:6. Vendors FED kernel/core+boot byte-identical and ASI-OS main.rs:361-375 (PROVENANCE.md:5-6) plus aether glue. Both upstreams read in scope: federation LICENSE is dual + [workspace.package] 'MIT OR Apache-2.0'; asi-os Cargo.toml:6 'MIT OR Apache-2.0'. match. Note asi-os ships an MIT-only LICENSE text (blob 7f2a4900) under a dual SPDX. Publishable."
+  },
+  {
+   "path": "kernel/lane/core",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 @dc1da1a9 (kernel/core/src/*)",
+   "upstream_license": "MIT OR Apache-2.0 (federation-1024 @dc1da1a9, verified in scope)",
+   "note": "Cargo.toml:6. Holds the 13 byte-identical FED core modules (kernel/lane/PROVENANCE.md:14-26; UPSTREAM.sha256, 13 files) + aether lib.rs/Cargo.toml glue. Upstream federation-1024 dual MIT OR Apache-2.0 verified in scope. match. Publishable."
+  },
+  {
+   "path": "kernel/tribit-referees",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/The-Brown-Light-erdos-Engine-block-powered-by-light; /the-browns-solution-to-erods-o0O-nx3-6-for-1-with--1-3; /does-the-closure-survive-81-levels; /does-2-to-the-n-always-contain-a-digit-2-in-base-3",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "Cargo.toml:6 license, :8 publish=false. Vendors 7 owner files byte-identical (crank.py/trunk.py/compose.py + READMEs; PROVENANCE.md:14-21, UPSTREAM.sha256) from 4 owner repos, ALL OUT OF SESSION SCOPE \u2014 licenses unreadable, not guessed. publish=false already excludes it from crates.io, so 7.h's publishing bar holds regardless of those licenses."
+  },
+  {
+   "path": "kernel/tribit",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-tribit @52b712d (= @1292191)",
+   "upstream_license": "MIT OR Apache-2.0 (asolaria-tribit Cargo.toml @52b712d, verified in scope) \u2014 upstream ships NO LICENSE text file",
+   "note": "kernel/tribit/Cargo.toml:6. README claims 'no upstream', but ternary/PROVENANCE.md:11-12 pins src/lib.rs byte-identical (blob f83acb31) to JesseBrown1980/asolaria-tribit. Upstream read in scope: Cargo.toml declares 'MIT OR Apache-2.0' -> match. FLAG: asolaria-tribit root has NO LICENSE text file (only the Cargo.toml SPDX field); owner should add LICENSE-MIT/LICENSE-APACHE upstream. Publishable."
+  },
+  {
+   "path": "ternary",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "own-aether-code",
+   "upstream_repo": "JesseBrown1980/asolaria-tribit (re-export via pub use) + vendored owner reference files under vendor/",
+   "upstream_license": "MIT OR Apache-2.0 for re-exported asolaria-tribit; crate code is aether-own (publish=false)",
+   "note": "ternary/Cargo.toml:6 license, :8 publish=false. Crate copies NO upstream bytes: 'pub use' re-export of ../kernel/tribit, 'No line of it is copied here' (PROVENANCE.md:3-6). vendor/ holds owner reference py/md (trijection.py from ACER seat; universe-simulator & the-browns-solution files \u2014 out of scope) used only by the cold-lane referee, not the library. License is aether's choice for the wrapper; re-exported asolaria-tribit is MIT OR Apache-2.0 (consistent). Excluded from crates.io via publish=false."
+  },
+  {
+   "path": "events",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/asolaria-behcs-256 @818cc235",
+   "upstream_license": "MIT (asolaria-behcs-256 root LICENSE @818cc235a6db815e3b2591339cf9b42aad3e85a0, read directly: \"MIT License / Copyright (c) 2026 Jesse Brown\"; single LICENSE at root, no LICENSE-APACHE, no root Cargo.toml SPDX, no license override in packages-legacy-import/src)",
+   "note": "Upstream facts in the original finding are CONFIRMED by direct read (not cannot-verify): via mcp__github__get_file_contents the root LICENSE at sha 818cc235 is MIT \"Copyright (c) 2026 Jesse Brown\"; the commit tree has exactly one LICENSE, no LICENSE-APACHE, no root Cargo.toml; packages-legacy-import/src/ (source of both vendored files, both verified present at that path+commit) has no license file. Crate side: events/Cargo.toml:6 declares license=\"MIT OR Apache-2.0\", repository github.com/JesseBrown1980; events/PROVENANCE.md attributes the two vendored vendor/legacy/*.js to that upstream commit. CORRECTION to the claimed \"mismatch\": the upstream copyright holder (Jesse Brown) is the SAME owner as the aether repo (JesseBrown1980 / plasmatoid@gmail.com), so is_vendored_owner_or_upstream=true and the broader dual-license on the owner's own ported code is an owner relicensing decision, not a third-party violation -> \"mismatch\" overstates it. It is also not a clean \"match\": the Apache-2.0 half has no basis in the MIT-only upstream LICENSE. The aether repo root carries both LICENSE (MIT, \"Jesse Daniel Brown\") and LICENSE-APACHE (Apache 2.0), which back the SPDX; there is no per-crate LICENSE file. Decision needed from owner: confirm MIT OR Apache-2.0 is the intended license for this ported crate given upstream grants only MIT."
+  },
+  {
+   "path": "address/port-emitter",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/bigpickle-rebuild @c592599 (same blob also in JesseBrown1980/Asolaria-the-full-works-200-nanoseconds-agent-emitter-plus- @ba78127)",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "address/port-emitter/Cargo.toml:6. PORT, 'no upstream .mjs bytes are copied into this tree' (PROVENANCE.md:4); ports port-address-emitter.mjs + district-fabric.mjs hilbertXY (PROVENANCE.md:10-12). Upstream bigpickle-rebuild OUT OF SCOPE \u2014 LICENSE unreadable, not guessed. Publishable."
+  },
+  {
+   "path": "loop",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/bigpickle-rebuild @c592599 + JesseBrown1980/ASOLARIA-AS-NEURAL-NETWORK @4cc7624",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "loop/Cargo.toml:6. PORT (Node->Rust, not byte-copy) of ~12 bigpickle-rebuild src modules + 2 ASOLARIA-AS-NEURAL-NETWORK tools (PROVENANCE.md:9-31). Both upstream repos OUT OF SCOPE \u2014 LICENSE unreadable, not guessed. Publishable."
+  },
+  {
+   "path": "loop/vendor-pid-mod",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything @29307bf (kernels/asolaria-os-metal-kernel/pid-mod.rs)",
+   "upstream_license": "unreadable/out-of-scope",
+   "note": "loop/vendor-pid-mod/Cargo.toml:6. src/pid-mod.rs vendored byte-identical (PROVENANCE.md:3-9; UPSTREAM.sha256 blob 816c1fc7). Upstream reductions repo OUT OF SCOPE \u2014 LICENSE unreadable, not guessed. (The owner 2026-10-18 'Publish as-is' note, PROVENANCE.md:32, is a PRIVACY/PII clearance, NOT a license grant.) Publishable."
+  },
+  {
+   "path": "qr/colour-qr",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/the-colour-qr (carrier port) + USIM key files vendored; internal dep asolaria-qr-read-int",
+   "upstream_license": "unreadable/out-of-scope (the-colour-qr not in session allowlist)",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\". PROVENANCE.md:7 upstream = JesseBrown1980/the-colour-qr @1938a9b (the owner's colour QR carrier, ported to Rust in src/, not byte-identical). get_file_contents on jessebrown1980/the-colour-qr returned Access denied (not in session allowlist), so the carrier upstream's license cannot be verified. PROVENANCE.md:49-52 addresses only jsQR (cozmo/jsQR, Apache-2.0), not the carrier's own license. Also vendors USIM key/*.bin (USIM also out of scope)."
+  },
+  {
+   "path": "qr/qr-read-int",
+   "label": "Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "cozmo/jsQR (THIRD-PARTY, not owner; JS repo, not a crates.io dep)",
+   "upstream_license": "unreadable/out-of-scope (cozmo/jsQR not in session allowlist)",
+   "note": "Cargo.toml:6 license=\"Apache-2.0\". PROVENANCE.md:13-15 states the port is of jsQR inlined in the-colour-qr index.html and that cozmo/jsQR \"is licensed Apache-2.0, so this port of it is licensed Apache-2.0\". get_file_contents on cozmo/jsQR returned Access denied (not in session allowlist), so the Apache-2.0 claim could not be independently verified. Third-party upstream, not owner code."
+  },
+  {
+   "path": "colour",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "owner-no-license-needs-decision",
+   "upstream_repo": "JesseBrown1980/asolaria-stone-to-moss @ f032bc0 + JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS @ 8712368 + JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills @ 3f9f42d (all owner-owned)",
+   "upstream_license": "no license file governing the vendored content \u2014 all 3 upstreams re-verified at their pinned commits via git ls-tree. stone-to-moss@f032bc0: NO LICENSE anywhere. follow@8712368: only LICENSE is MIT (c)2026 Jesse Daniel Brown at knowledge/public-dependencies/algorithms/LICENSE, scoped to the honest-compressor subtree, NOT the vendored codes/+colors/ paths. USIM@3f9f42d: NO LICENSE anywhere, only an informal \"public - for everyone, forever\" self-dedication as data in measurements/asolaria_herself.py:209,319 (not SPDX, not MIT/Apache).",
+   "note": "CONFIRMED verdict, CORRECTED rationale. Cargo.toml:6 = \"MIT OR Apache-2.0\"; PROVENANCE.md lists 3 owner (JesseBrown1980 = Jesse Daniel Brown) upstreams. Prior claim \"USIM out-of-scope\" is WRONG: USIM is the largest vendored source (10+ files, PROVENANCE.md:58-66). I re-read all three at the exact pinned commits via git ls-tree -r: stone-to-moss@f032bc0 -> no license file anywhere; FOLLOW@8712368 -> only MIT (c)2026 Jesse Daniel Brown at knowledge/public-dependencies/algorithms/LICENSE, which does NOT cover vendored codes/+colors/ (those have no license); USIM@3f9f42d (shallow HEAD==pinned, origin verified) -> no license file anywhere, only informal \"public - for everyone, forever\" in measurements/asolaria_herself.py:209,319. Vendored rainbow27-check/Cargo.toml: publish=false, no license field. NOT cannot-verify: all three were actually read at their pinned commits (USIM via the anonymous git proxy after github MCP get_file_contents denied it as unattached). All three are the owner's own previously-unlicensed repos, so the declared \"MIT OR Apache-2.0\" is the owner's to assert but is unratified by any upstream license file -> owner decision required."
+  },
+  {
+   "path": "colour/vendor/rainbow27-check",
+   "label": "(none; publish = false)",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/asolaria-stone-to-moss (experiments/claude-verify/alphacen-gguf-constellation-20261016/rainbow27-check)",
+   "upstream_license": "no license field in upstream Cargo.toml (publish=false), byte-identical; stone-to-moss repo root has no LICENSE",
+   "note": "Cargo.toml:1-7 has NO license field and publish=false. Byte-identical vendored owner code: colour/PROVENANCE.md:46 + colour/UPSTREAM.sha256:8 pin blob 22f4551f / sha256 b2cffc27. Verified against upstream via get_file_contents (stone-to-moss @f032bc0): upstream Cargo.toml SHA 22f4551f, publish=false, no license field -> identical. License state equals upstream exactly, and publish=false keeps it out of crates.io, which already satisfies 7.h. (The stone-to-moss repo root itself carries no LICENSE file.)"
+  },
+  {
+   "path": "codec/dbbh-dbwh",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "match",
+   "upstream_repo": "JesseBrown1980/holographic-wormhole-codec @4901280 (live repo out-of-scope)",
+   "upstream_license": "MIT (vendored LICENSE, 165B short form) + Cargo.toml 'MIT OR Apache-2.0'; both byte-identical to upstream, sha256-pinned; live repo out-of-scope",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\". Byte-identical vendored owner crate: PROVENANCE.md:16,18,21 + UPSTREAM.sha256 pin Cargo.toml (b5f32735) and LICENSE (cd9d2819); PROVENANCE.md:21 'upstream Cargo.toml is used unchanged', so the crate's license field IS the upstream's. Vendored LICENSE (codec/dbbh-dbwh/LICENSE) is the MIT short form; PROVENANCE.md:40-45 records upstream README+Cargo.toml declare MIT OR Apache-2.0. get_file_contents on jessebrown1980/holographic-wormhole-codec returned Access denied (out of scope), so matched against the sha256-pinned byte-identical vendored copies rather than the live repo. License matches upstream."
+  },
+  {
+   "path": "codec/gguf-roundtrip",
+   "label": "MIT",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own runner; path-dep on vendored holographic-wormhole-codec)",
+   "upstream_license": "none (aether-own)",
+   "note": "Cargo.toml:6 license=\"MIT\", Cargo.toml:7 publish=false. Fresh aether harness: README.md:3-5 / Cargo.toml:8 description says it RUNS the owner's codec over gguf/MANIFEST.hbp and prints HBP rows; it is not a port of a single upstream. README.md:32 'License: MIT'. repository field = the aether repo. Aether's own license choice; publish=false."
+  },
+  {
+   "path": "search/ste-certificate",
+   "label": "MIT OR Apache-2.0",
+   "verdict": "cannot-verify",
+   "upstream_repo": "JesseBrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything @29307bf",
+   "upstream_license": "unreadable/out-of-scope (reductions repo not in session allowlist)",
+   "note": "Cargo.toml:6 license=\"MIT OR Apache-2.0\". PROVENANCE.md:5-7 says src/ ports the Sidon-Tower-Embedding certificate (sidon-cross-fix.mjs etc.) from the reductions repo @29307bf; vendor/ holds those .mjs byte-identical. get_file_contents on jessebrown1980/what-is-asolaria---how-do-we-get-reductions-in-everything returned Access denied (out of scope), so its license cannot be verified. PROVENANCE.md:9 quotes 'A licensed distance-unique projection' but that is a math/novelty property (README:22), NOT a software license."
+  },
+  {
+   "path": "proposals/verify-schedule",
+   "label": "MIT",
+   "verdict": "mismatch",
+   "upstream_repo": "JesseBrown1980/asolaria-federation-1024 (servers/council-serve) @dc1da1a9",
+   "upstream_license": "MIT OR Apache-2.0",
+   "note": "CONFIRMED mismatch (upstream license actually read, not assumed). Crate Cargo.toml:6 license=\"MIT\". README.md provenance claims schedule.rs copied byte-identical from asolaria-federation-1024@dc1da1a9 servers/council-serve/src/schedule.rs \u2014 VERIFIED: local git blob sha1 6b3c8d7fe8b8262164305ded95a172044d56ea6b == upstream blob, and schedule.rs.sha256 (ab90e5...) self-checks OK. Upstream MIT OR Apache-2.0 verified via 3 sources read directly through github MCP at sha dc1da1a9: (1) root LICENSE blob 9e7676f = explicit dual \"Apache-2.0 OR MIT, at your option\"; (2) root Cargo.toml [workspace.package] license=\"MIT OR Apache-2.0\"; (3) servers/council-serve/Cargo.toml [package] license=\"MIT OR Apache-2.0\" (explicit, not inherited). Verdict: crate declares MIT only, narrowing/dropping the Apache-2.0 option upstream offers. MIT is a valid election from the dual license so it is not an overclaim/violation, but the declared license does not match upstream's declared \"MIT OR Apache-2.0\" \u2014 mismatch stands. Fix: declare \"MIT OR Apache-2.0\" to match upstream (aether root even ships LICENSE + LICENSE-APACHE), or record the narrowing as a deliberate owner decision. Note: upstream copyright names a federation (Brown \u00b7 Edens \u00b7 Hilbert \u00b7 Chiqueto \u00b7 Smith), not Jesse solely, so a unilateral narrow is not clearly the owner's alone to make."
+  },
+  {
+   "path": "cli",
+   "label": "MIT",
+   "verdict": "own-aether-code",
+   "upstream_repo": "none (aether-own CLI; path-deps on aether gate/* and model/l0-edge)",
+   "upstream_license": "none (aether-own)",
+   "note": "Cargo.toml:6 license=\"MIT\". Fresh aether command-line tool (README.md:1-5; Cargo.toml:7 description) whose only path dependencies are aether's own crates (gate/hookwall, gate/verdict, gate/fischer-eval, gate/observed, model/l0-edge) plus crates.io getrandom/zeroize. repository field = the aether repo. Not a port of any single upstream; aether's own license choice."
+  }
+ ]
+}

@@ -5,7 +5,10 @@ Asolaria is the private root repository slice for the Asolaria fabric. The repos
 ## Quick start
 
 This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be
-used under `LICENSE-APACHE`. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
+used under `LICENSE-APACHE`. The owner's grant (2026-10-18): everything here was made by the owner or
+by Asolaria in Asolaria's white rooms, and anything listed under any license is free and public to
+everyone. Two pieces are other authors' and keep their own Apache-2.0 terms and notices: Sapient's HRM
+under `model/hrm-fork/vendor/HRM`, and the jsQR algorithm that `qr/qr-read-int` ports. It runs on Linux, macOS and WSL with Rust (via `rustup`; the scripts pin
 1.81.0) and Python 3.11+; the `time/` and `eval/` checks also need Node 18+.
 
 ```sh

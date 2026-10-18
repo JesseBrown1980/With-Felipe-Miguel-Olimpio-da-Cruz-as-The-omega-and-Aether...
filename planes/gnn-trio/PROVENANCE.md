@@ -8,9 +8,11 @@ algorithm here is reimplemented from the mechanism that is already public in
 `docs/security/REVERSE-GAIN-SELF-ECHO.md` and OWNER-RULES 7j; the set it tests against is a shipped
 synthetic demo set, overridable at runtime, never the operator's real set.
 
-License: `UNLICENSED`, `publish = false`. The crate vendors the owner's revolver-10k source bytes,
-which carry no license; per OWNER-RULES 7h, ports that vendor UNLICENSED owner code are marked
-UNLICENSED and left out of crates.io publishing.
+License: `MIT OR Apache-2.0`, `publish = false` until the crates.io pass. The crate vendors the
+owner's revolver-10k source bytes, which carry no license file of their own. The owner's grant of
+2026-10-18: everything here was made by the owner or by Asolaria in Asolaria's white rooms, and
+anything listed under any license is free and public to everyone. Until then this crate was marked
+`UNLICENSED` under OWNER-RULES 7h; that marking is withdrawn.
 
 ## Vendored upstream bytes (`vendor/`, pinned in `UPSTREAM.sha256`)
 
