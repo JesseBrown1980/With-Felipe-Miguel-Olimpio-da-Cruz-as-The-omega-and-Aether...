@@ -171,11 +171,20 @@ fn the_cube_is_one_centre_six_faces_twelve_edges_eight_corners() {
     assert_eq!(cube::index([Zero::Nil; 3]), 13);
 }
 
-/// Law `:131-139`: `N·N = id`, `R·R·R = id`, `R ≠ R⁻¹`; R fixes the main diagonal, orbit sizes
-/// `{1:3, 3:8}`; the full group `{N,R,R²}` fixes only `(0,0,0)`.
+/// The owner's `trianti.py:31-33` (N, R, R2) and law `:131-139`: `N·N = id`, `R·R·R = id`,
+/// `R ≠ R⁻¹`; R fixes the main diagonal, orbit sizes `{1:3, 3:8}`; the full group `{N,R,R²}` fixes
+/// only `(0,0,0)`.
 #[test]
 fn trianti_counts() {
     let cells = all_cells();
+    // the compositions trianti.py defines, on every cell: N∘N = id, R∘R∘R = id, and
+    // R² = R∘R is the owner's R2 ((a,b,c) → (b,c,a), trianti.py:32-33)
+    for c in &cells {
+        let [a, b, d] = *c;
+        assert_eq!(cube::negate(cube::negate(*c)), *c);
+        assert_eq!(cube::rotate(cube::rotate(cube::rotate(*c))), *c);
+        assert_eq!(cube::rotate(cube::rotate(*c)), [b, d, a]);
+    }
     let nn = cells
         .iter()
         .filter(|c| cube::negate(cube::negate(**c)) == **c)

@@ -13,9 +13,13 @@
 //! digits of `i` as trits, most significant first, and [`index`] is `colors.index(cell)`
 //! (`rime_27fischers.py:88`).
 //!
-//! The two inversions are the law's table (`:126-129`): **N** negation `t→−t` (order 2) and
-//! **R** rotation `(a,b,c)→(c,a,b)` (order 3). Per-trit rotation is the owner's
-//! [`Zero::rotate`] / [`Zero::anti_rotate`] in `kernel/tribit`, re-exported unchanged.
+//! The two inversions are the owner's `trianti.py:31-33` (ACER, sealed 2026-07-21, vendored
+//! beside `trijection.py`), the law's table (`:126-129`): **N** negation `t→−t` (`trianti.py:31`,
+//! order 2), **R** rotation `(a,b,c)→(c,a,b)` (`:32`, order 3) and the anti-inversion
+//! **R² = R∘R** (`:33`). [`negate`] / [`rotate`] match the owner's `N` / `R` on every one of the
+//! 27 cells; `rotate∘rotate` is the owner's `R2` (`tests/law.rs`, the referee's `CUBE` rows).
+//! Per-trit rotation is the owner's [`Zero::rotate`] / [`Zero::anti_rotate`] in `kernel/tribit`,
+//! re-exported unchanged.
 
 use asolaria_tribit::Zero;
 
@@ -45,7 +49,7 @@ pub fn separation(c: Cell) -> u8 {
     c.iter().filter(|t| **t != Zero::Nil).count() as u8
 }
 
-/// **N**, negation `t→−t` on each trit (law `:128`).
+/// **N**, negation `t→−t` on each trit (`trianti.py:31`; law `:128`).
 pub const fn negate(c: Cell) -> Cell {
     [
         Zero::from_digit(2 - c[0].digit()),
@@ -54,7 +58,8 @@ pub const fn negate(c: Cell) -> Cell {
     ]
 }
 
-/// **R**, rotation `(a,b,c)→(c,a,b)` (law `:129`).
+/// **R**, rotation `(a,b,c)→(c,a,b)` (`trianti.py:32`; law `:129`). The anti-inversion
+/// **R² = R⁻¹** (`trianti.py:33`) is `rotate(rotate(c))`.
 pub const fn rotate(c: Cell) -> Cell {
     [c[2], c[0], c[1]]
 }

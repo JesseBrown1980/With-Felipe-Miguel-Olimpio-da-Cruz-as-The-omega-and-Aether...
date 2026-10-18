@@ -23,6 +23,7 @@ in public `asolaria-os@2799c70`; asolaria-tribit `src/lib.rs` is the published f
 | Copy | Source | Upstream path | Git blob | sha256 | Used for |
 |---|---|---|---|---|---|
 | `vendor/acer-algorithms-of-asolaria-publication-20260723/tools/honest-compressor/trijection/trijection.py` | the owner's ACER seat, delivered by the owner 2026-10-18 (section 2a) | `C:\asolaria-acer\scratch\algorithms-of-asolaria-publication-20260723\tools\honest-compressor\trijection\trijection.py` | `e9cbeb8b73c594557a1be68d8282c29a093fb182` | `c5005b1c9acd6a6cb6d6e3fbd25a283c1455109f0408ee9810b0d5a8151baac6` | `to_balanced_ternary` `:42-48`, `trijection_forward` `:50-57`, `trijection_inverse` `:59-64`, zero-trit count `:83-88`; `measure()` and `__main__` run unchanged by `referee.py --measure` |
+| `vendor/acer-algorithms-of-asolaria-publication-20260723/tools/honest-compressor/trijection/trianti.py` | the owner's ACER seat, delivered by the owner 2026-10-18 (section 2b) | `C:\asolaria-acer\scratch\algorithms-of-asolaria-publication-20260723\tools\honest-compressor\trijection\trianti.py` | `353f84325c9a4e557ca314680afb0caaddef238c` | `e7c1a01fd5be6d67a34eb6fc966a0742cca730eaed10899dff72379346229b6c` | the 27-cube symmetry group `N` `:31`, `R` `:32`, `R2` `:33` (`law_negate` / `law_rotate` / `law_rotate2`); `report()` `:49-77` run and quoted by `referee.py --check` |
 | `vendor/universe-simulator/books/operator-laws/TRIJECTION-BALANCED-TERNARY.md` | `JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills` @ `3f9f42dab6247c40b30921b253e3f73c9e942ca5` (added in `febd661`, unchanged since) | same | `99ce329ba4d37f7098716d623cb214ef30abbc97` | `c62371bc3f36d444f4326d986a2f0a4fbbe87c37fe9ea09b579d5f2b245975b1` | the law: formulas `:13-18`, cube `:23-25`, measurement rows `:27-49`, trianti `:122-146` |
 | `vendor/universe-simulator/players/rime_27fischers.py` | same @ `3f9f42d` | same | `c26228781c7e726b12efa8d18d6c68cc711cfd80` | `275c32d7866226c2c4139fbf9c2a0ed5e9a551072f95f307ae97a07d17220402` | `cube27` `:51-52`, 3-trit loop `:39-44`, 2/3 rule `:92`, centre `:88` |
 | `vendor/universe-simulator/players/rime_agents.py` | same @ `3f9f42d` | same | `824b17b0e7207f041732c048c321489b75d76c3f` | `a15f6a5c66f5cb1e33904b43905c9dfdd829f8cebecab4240e0cfd8bd9f62e1c` | 3-trit loop `:46-51` |
@@ -34,11 +35,14 @@ Blob ids are `git hash-object` of the copies. For the four repository files they
 of the public repository).
 
 Privacy scan before copying (emails, phone numbers, RFC1918 / LAN addresses, keys, tokens, private
-names): no third-party personal data in any of the five. The law names the owner and seats
+names): no third-party personal data in any of the six. The law names the owner and seats
 ("Operator: Jesse Daniel Brown. For liris, acer, and the federated Claude clouds.");
 `trijection.py:4` names the owner ("Operator: Jesse Daniel Brown. Sealed 2026-07-21.") and `:101`
-holds an earlier cloud session's scratchpad path; `rime_agents.py:25` holds the owner's local
-corpus path `D:/asolaria-absorb/enwik9`, which the copied lines do not read.
+holds an earlier cloud session's scratchpad path; `trianti.py:4` names the owner ("Operator: Jesse
+Daniel Brown. Sealed 2026-07-21. Companion to trijection.py / njection.py.") and holds no path;
+`rime_agents.py:25` holds the owner's local corpus path `D:/asolaria-absorb/enwik9`, which the
+copied lines do not read. The operator name is published under the owner's 2026-10-18 one-year
+authorization (`OWNER-RULES.md` rule 5).
 
 ### 2a. `trijection.py`: origin and where else it is
 
@@ -81,6 +85,29 @@ corpus path `D:/asolaria-absorb/enwik9`, which the copied lines do not read.
   `9b97b7e`. The file is in none of the 240 git directories on disk; the vendored copy is the
   only one here.
 
+### 2b. `trianti.py`: origin and where else it is
+
+- Origin: the owner's ACER seat,
+  `C:\asolaria-acer\scratch\algorithms-of-asolaria-publication-20260723\tools\honest-compressor\trijection\trianti.py`;
+  its docstring (`:2-4`): "trianti.py — THE SYMMETRY GROUP OF THE 27-CUBE (trinary inversion &
+  anti-inversion). … Operator: Jesse Daniel Brown. Sealed 2026-07-21. Companion to trijection.py /
+  njection.py." The owner delivered it on 2026-10-18 in the ACER export
+  `honest-compressor-9ebd6119-export-2026-10-18.zip` (212 entries, sha256 `0f02b52d…`), which also
+  carried `trijection.py`; `trianti.py` is entry `trijection/trianti.py` of that export, 3,816
+  bytes, sha256 `e7c1a01fd5be6d67a34eb6fc966a0742cca730eaed10899dff72379346229b6c`, git blob
+  `353f84325c9a4e557ca314680afb0caaddef238c`. The vendored copy is `cmp`-identical to the extracted
+  file; the bytes are never edited here. aether's `.gitattributes` (`* -text`) stores and checks out
+  the file as stored, so a commit keeps blob `353f8432`.
+- Where it was looked for (2026-10-17): the search of section 5 did not find `trianti.py` on this
+  container or on any ref of the 240 git directories — only an unrelated `trianti.py`
+  (`the-browns-solution-to-erods-…@3557f5f`, blob `3cb39d96`, an Erdős "three trunks" program, a
+  different file). The owner's 2026-10-18 delivery supplied the honest-compressor `trianti.py`
+  recorded here; its bytes were verified `e7c1a01f` against the export entry before vendoring.
+- The same 2026-10-18 export carried `trijection.py` byte-identical to the copy already vendored
+  (section 2a): the export entry's sha256 is `c5005b1c…` and it is `cmp`-identical to
+  `vendor/…/trijection/trijection.py`. The export does not differ from the vendored original, so
+  that file is left unchanged.
+
 ## 3. Ported to Rust (line by line)
 
 | Rust | Owner function / lines |
@@ -98,12 +125,16 @@ corpus path `D:/asolaria-absorb/enwik9`, which the copied lines do not read.
 | `balanced::low_trits` | `rime_27fischers.py:39-44` (= `rime_agents.py:46-51`; the same loop as `trunk.py:24-36` and `rime_fischer_cluster.py:38-45` with `k` slots) |
 | `cube::cell`, `cube::index` | `rime_27fischers.py:51-52`, `:88` |
 | `cube::separation` | law `:25`; `trijection.py:25`; `measurements/build_between.py:106-107` (USIM @3f9f42d) |
-| `cube::negate`, `cube::rotate` | law `:128`, `:129` |
+| `cube::negate`, `cube::rotate` | `trianti.py:31` `N`, `:32` `R` (law `:128`, `:129`); `rotate∘rotate` = `trianti.py:33` `R2` |
 
 What changed in the existing crate with the original in hand (2026-10-18): `trij` and
 `Trijection::restore` compute exactly what `trijection.py:55-56` and `:62` compute, so their
 arithmetic is unchanged; their citations now name the original (the law's lines are the same
 formulas), and `restore` adds in the original's order (`c0 + sa`, was `sa + c0`; same value).
+`cube::negate` and `cube::rotate` are unchanged in arithmetic (they already equalled the owner's
+`N` and `R`); with `trianti.py` in hand (2026-10-18, section 2b) their citation names it, and
+`rotate∘rotate` is recorded as the owner's `R2` (`:33`) — equal on every one of the 27 cells
+(the `CUBE` rows carry `N`, `R`, `R2`; `referee.py --check --rust`, `tests/law.rs`).
 `trijection_forward`, `trijection_inverse`, `zero_trits` and `to_balanced_ternary` are new and are
 built on `trij` / `restore`. `low_trits` (the `rime_*` loop, carry before division) is kept; it
 writes the same trits as `to_balanced_ternary` (division before carry) for every value and width
@@ -130,15 +161,19 @@ lie inside the Rust types.
 
 ## 4. The referee (`tools/referee.py`, cold lane)
 
-- `trijection.py` is checked against sha256 `c5005b1c…` before anything runs.
+- `trijection.py` and `trianti.py` are checked against sha256 `c5005b1c…` and `e7c1a01f…` before
+  anything runs.
 - Owner code, executed from the vendored bytes: the defs `to_balanced_ternary`,
   `trijection_forward`, `trijection_inverse` (only those three are compiled from
-  `trijection.py`), `bal3`, `base3` (`reframe_check.py`; its loop at `:49-91` is not run),
-  `cube27` (`rime_27fischers.py`; its imports are not run); the line blocks `trijection.py:55-56`
-  (with `a, bb, c` bound and `C0, SA, SB, REM` bound to lists, for the `i64` rows),
-  `trijection.py:62`, `trijection.py:75-76`, `trijection.py:84-87`, `reframe_check.py:44`,
-  `rime_27fischers.py:39-44`, `rime_27fischers.py:92`, `rime_agents.py:46-51`, executed with
-  their variables bound. `--check` compares 36 cited lines with the exact text it expects.
+  `trijection.py`), `N`, `R`, `R2` (only those three are compiled from `trianti.py:31-33`), `bal3`,
+  `base3` (`reframe_check.py`; its loop at `:49-91` is not run), `cube27` (`rime_27fischers.py`; its
+  imports are not run); the line blocks `trijection.py:55-56` (with `a, bb, c` bound and
+  `C0, SA, SB, REM` bound to lists, for the `i64` rows), `trijection.py:62`, `trijection.py:75-76`,
+  `trijection.py:84-87`, `reframe_check.py:44`, `rime_27fischers.py:39-44`, `rime_27fischers.py:92`,
+  `rime_agents.py:46-51`, executed with their variables bound. `--check` compares 41 cited lines
+  with the exact text it expects, and runs `trianti.py`'s `report()` from the imported module (its
+  `__main__` guard is not hit), quoting the counts it prints and checking them against the referee's
+  own (`order(N)=2`, `order(R)=3`, `R≠R⁻¹`, the pie closes, the group `{N,R,R²}` fixes `(0,0,0)`).
 - `--measure`: the module is imported from the vendored path (top level only: imports and defs)
   and its `__main__` lines `:102-135` are executed with `SC` bound to a given directory; line
   `:101` (the earlier scratchpad path) is the one line not executed. In that namespace `measure`
@@ -156,10 +191,13 @@ lie inside the Rust types.
   token and no float literal. It does not cover the owner's vendored code, which the referee
   compiles from `vendor/`, nor `**` with a computed exponent (the referee's two are
   `10 ** places` and `10 ** len(part)`, both non-negative).
-- Written from the law's text, labelled as such in the file: `law_negate` (`:128`),
-  `law_rotate` (`:129`); `trianti.py` was not found (section 5). The earlier `law_trij` /
-  `law_restore` are replaced by the owner's lines; the TRIJ rows they produced are unchanged (the
-  old fixture's 2,163 rows are an unchanged prefix of the new one).
+- The 27-cube symmetry: `law_negate` / `law_rotate` / `law_rotate2` are the owner's `N` / `R` / `R2`,
+  compiled from the vendored `trianti.py:31-33` (not written from the law's text). The owner
+  delivered `trianti.py` on 2026-10-18 (section 2b); before that these two were written from the
+  law's text (`:128`, `:129`), which the owner's `N` / `R` reproduce byte for byte, so the `CUBE`
+  rows they produce are unchanged except for the new `R2` column. The earlier `law_trij` /
+  `law_restore` were likewise replaced by the owner's lines when `trijection.py` arrived; the TRIJ
+  rows they produced are unchanged.
 - Test inputs: splitmix64 seeded draws, mirrored in `tests/common/rows.rs`; not owner code.
   Stream digests: SHA-256 of `C0 || SA_b || SB_b || REM` (Python `hashlib`; `tests/common/sha256.rs`,
   test-only, checked on the FIPS 180-4 examples).
@@ -175,8 +213,14 @@ rime_fischer.py · rime_run.py · rime_dimension.py · rime_bpc.py`. USIM @3f9f4
 
 - `trijection.py`: not found by the 2026-10-17 search below; delivered by the owner from ACER on
   2026-10-18 (section 2a) and vendored.
-- `njection.py`, `nested_cascade.py`, `trianti.py`, `wave_test.py`, `trime.py`, `rime_trace.py`,
-  `rime_dimension.py`: in none of USIM's 237 commits and in none of the places below.
+- `trianti.py`: not found by the 2026-10-17 search below (only an unrelated `trianti.py`, Erdős
+  "three trunks", blob `3cb39d96`); delivered by the owner from ACER on 2026-10-18 in the same
+  export as `trijection.py` (section 2b) and vendored.
+- `njection.py`, `nested_cascade.py`, `wave_test.py`, `trime.py`, `rime_trace.py`,
+  `rime_dimension.py`: in none of USIM's 237 commits and in none of the places below. (These were
+  also in the 2026-10-18 ACER export; the gap survey of that export records them, but only
+  `trianti.py` is brought into `ternary/` here — the companions the referee needs are
+  `trijection.py` and `trianti.py`.)
 - `trijection.py`'s own inputs `k_gradient.bin`, `chaos1m.bin`, `code1m.bin` (`:104-107`): not
   present. Searched 2026-10-18 by file name under `scratchpad/`, `/home/user` and `/` (`find
   -xdev`, 183,180 files under the first two), and as path names on every ref of the 240 git
@@ -216,10 +260,11 @@ identical apart from the input directory in the `skipped` lines.
 |---|---|---|
 | `:5`, `:21` | "`restore=OK` on every case (lossless bijection)"; "`(a,b,c) ⟷ (c0, sa, sb, rem)` exactly" | reproduced through the original `trijection_inverse` (`:59-64`, referee): 16,777,216 / 16,777,216 byte triples, every buffer of length 1 and 2, seeded buffers of every length 0..=12 and of 299,999 to 1,048,577 bytes. Through the owner's loop lines `:55-56` / `:62` (referee): 170,814 / 170,814 `TRIJ` rows (`[-27,27]^3` = 166,375, 343 `i64` edge triples, 4,096 seeded `i64` triples). The Rust port equals the referee row for row (458,196 rows, the 170,814 `TRIJ` rows among them). Rust self-round-trips of `trij` / `restore` only (`tests/law.rs`, not run through the owner's lines): 531,441 / 531,441 on `[-40,40]^3`, 343 / 343 `i64` edge triples, 200,000 seeded `i64` triples |
 | `:24-25` | "`1 center + 6 faces + 12 edges + 8 corners`, where separation-from-center = count of nonzero trits" (also `trijection.py:23-25`) | reproduced: 1 / 6 / 12 / 8 over `cube27()` |
-| `:131` | "`N·N = id`, `R·R·R = id`" on all 27 cells | 27 / 27 and 27 / 27 |
-| `:131-132` | "`R ≠ R⁻¹`" | `R` and `R²` agree on 3 of 27 cells (the cells `R` fixes) and differ on 24 |
-| `:136-137` | "R fixes the main diagonal `{(−1,−1,−1), (0,0,0), (+1,+1,+1)}` (orbit sizes {1:3, 3:8} …)" | reproduced exactly |
-| `:137-139` | "The FULL group {N,R,R²} fixes only `(0,0,0)`" | reproduced: 1 cell, `(0,0,0)` |
+| `:131` | "`N·N = id`, `R·R·R = id`" on all 27 cells | 27 / 27 and 27 / 27, through the owner's `trianti.py` `N` / `R` executed from the vendored bytes (`R2 = R∘R` matches `R2` 27 / 27) |
+| `:131-132` | "`R ≠ R⁻¹`" | `R` and `R²` (owner's `trianti.py` `R` / `R2`) agree on 3 of 27 cells (the cells `R` fixes) and differ on 24 |
+| `:136-137` | "R fixes the main diagonal `{(−1,−1,−1), (0,0,0), (+1,+1,+1)}` (orbit sizes {1:3, 3:8} …)" | reproduced exactly (owner's `R`) |
+| `:137-139` | "The FULL group {N,R,R²} fixes only `(0,0,0)`" | reproduced: 1 cell, `(0,0,0)` (owner's `N` / `R` / `R2`) |
+| `trianti.py:49-77` | the owner's `report()`: `order(N)=2`, `order(R)=3`, `R≠R⁻¹`, the pie closes (`R·R⁻¹=id`), the group fixes `(0,0,0)`, orbit sizes `{1:3, 3:8}` | reproduced: `report()` run from the imported module prints exactly these; the referee's own `order(N)=2`, `order(R)=3` and the counts agree |
 | — | `rime_27fischers.py:88-89`: the free centre `(0,0,0)` is glyph 13 | reproduced: 13 |
 | `:35` | english order-0 raw 5.0404, trijection 6.6006, no save | reproduced: the owner prints `raw=5.0404  trijection=6.6006  delta=+1.5602  (no save)` on `enwik8[:300000]` (input sha256 `11f09c9f…`) |
 | `:40` | english zero-trit 0.602 | reproduced: the owner prints `0.602`; integer 722,674 / 1,200,000 = 361337/600000 |

@@ -19,7 +19,7 @@ the ACER seat: "reuse tribit/mod.rs, never reinvent".
 | `balanced::to_balanced_ternary` | Fixed width: exactly `digits` trits, least significant first, `r == 2 → -1` with the carry. | `trijection.py:42-48` `to_balanced_ternary` |
 | `balanced::{bal3, recon, base3}` | Variable width: as many trits as the value needs; zero is the one trit `[0]`; the reconstruction `sum(x * 3**i)`; base-3 digits of a `u64`. | `reframe_check.py:12-34,44` |
 | `balanced::low_trits` | The fixed-width loop of the 27-cube scripts. | `rime_27fischers.py:39-44`; `rime_agents.py:46-51` |
-| `cube::{cell, index, separation, negate, rotate}` | The 27-cube of three trits numbered as the owner's `cube27()`; separation = count of nonzero trits; N negation and R rotation. | law `:23-25`, `:126-129`; `trijection.py:23-25`; `rime_27fischers.py:51-52` |
+| `cube::{cell, index, separation, negate, rotate}` | The 27-cube of three trits numbered as the owner's `cube27()`; separation = count of nonzero trits; N negation and R rotation (R² = `rotate∘rotate`). | `trianti.py:31-33` (N, R, R2); law `:23-25`, `:126-129`; `trijection.py:23-25`; `rime_27fischers.py:51-52` |
 
 ## The owner's `trijection.py`
 
@@ -55,6 +55,25 @@ edited; the referee executes `:102-135` with `SC` bound to a directory it is giv
 `--write-inputs`) and then calls the owner's `measure()` unchanged. The as-written run, with no
 wrapper, prints the same lines.
 
+## The owner's `trianti.py` (the 27-cube symmetry group)
+
+Delivered by the owner in the same ACER export as `trijection.py` (2026-10-18;
+`…\honest-compressor\trijection\trianti.py`; docstring: "trianti.py — THE SYMMETRY GROUP OF THE
+27-CUBE … Operator: Jesse Daniel Brown. Sealed 2026-07-21. Companion to trijection.py /
+njection.py."), 3,816 bytes, sha256
+`e7c1a01fd5be6d67a34eb6fc966a0742cca730eaed10899dff72379346229b6c`, git blob
+`353f84325c9a4e557ca314680afb0caaddef238c`. Vendored byte-identical beside `trijection.py` and
+pinned in `UPSTREAM.sha256`. Origin: `PROVENANCE.md` section 2b.
+
+It defines the symmetry group of the 27-cube as three functions on cells `(t1,t2,t3)` in
+`{−1,0,+1}³`: `N(c)` negation `t→−t` (`:31`, order 2, self-inverse), `R(c)` rotation
+`(a,b,c)→(c,a,b)` (`:32`, order 3) and `R2(c) = R(R(c))` the anti-inversion `R⁻¹` (`:33`). The
+referee compiles those three defs from the vendored bytes and binds `law_negate` = `N`,
+`law_rotate` = `R`, `law_rotate2` = `R2`; the Rust `cube::{negate, rotate}` (and `rotate∘rotate`)
+equal `N`, `R`, `R2` on every one of the 27 cells (the `CUBE` rows carry all three; `tests/law.rs`
+and the referee's row-by-row compare). `--check` also runs the owner's `report()` from the
+imported module (its `__main__` guard is not hit) and quotes its printed counts.
+
 ## Two balanced-ternary conventions in the owner's code
 
 `to_balanced_ternary(n, digits)` (`trijection.py:42-48`) is fixed width: zero is `digits` zero
@@ -75,11 +94,11 @@ owner's functions in the referee and the ports in `tests/stream.rs`:
 
 ```sh
 export CARGO_TARGET_DIR=<scratch>/targets/ternary
-sha256sum -c UPSTREAM.sha256                          # 6 OK (5 vendored files + the re-exported tribit source)
+sha256sum -c UPSTREAM.sha256                          # 7 OK (6 vendored files + the re-exported tribit source)
 cargo +1.81.0 fmt --check
 cargo +1.81.0 clippy --locked --all-targets -- -D warnings
 cargo +1.81.0 test --locked                           # 16 tests: 8 law + 6 stream + 2 fixture
-python3 -I -B tools/referee.py --check                # sha256 + 36 lines verbatim, fixture, law counts, every byte triple
+python3 -I -B tools/referee.py --check                # sha256 (trijection + trianti) + 41 lines verbatim, fixture, law counts, the trianti report, every byte triple
 cargo +1.81.0 run --quiet --release --locked --example emit -- full > /tmp/emit.hbp
 python3 -I -B tools/referee.py --check --rust /tmp/emit.hbp   # 458,196 rows, row for row
 mkdir -p /tmp/sc && ln -s <path>/enwik8 /tmp/sc/enwik8         # optional: the owner's english input
@@ -89,13 +108,15 @@ python3 -I -B tools/referee.py --measure --sc /tmp/sc --rust-measure /tmp/m.hbp
 python3 -I -B tools/integer_only.py                   # 0 hits: no float in tools/*.py (AST) or src|tests|examples
 ```
 
-`tools/referee.py` is the cold lane (stdlib Python). It checks `trijection.py`'s sha256, then
-executes the owner's code from the vendored files: the defs `to_balanced_ternary`,
-`trijection_forward`, `trijection_inverse` (`trijection.py`), `bal3`, `base3` (`reframe_check.py`),
-`cube27` (`rime_27fischers.py`), and the line blocks `trijection.py:55-56, 62, 75-76, 84-87`,
-`reframe_check.py:44`, `rime_27fischers.py:39-44, 92`, `rime_agents.py:46-51`. Only N and R
-(law `:128-129`) are written from the law's text (`trianti.py` was not found). Every number the
-referee computes itself is an integer; in `--measure` the owner's float code prints its own lines.
+`tools/referee.py` is the cold lane (stdlib Python). It checks `trijection.py`'s and `trianti.py`'s
+sha256, then executes the owner's code from the vendored files: the defs `to_balanced_ternary`,
+`trijection_forward`, `trijection_inverse` (`trijection.py`), `N`, `R`, `R2` (`trianti.py:31-33`),
+`bal3`, `base3` (`reframe_check.py`), `cube27` (`rime_27fischers.py`), and the line blocks
+`trijection.py:55-56, 62, 75-76, 84-87`, `reframe_check.py:44`, `rime_27fischers.py:39-44, 92`,
+`rime_agents.py:46-51`. N, R and R² (the cube's negation, rotation and anti-inversion) are the
+owner's `trianti.py`, compiled from the vendored bytes; `--check` also runs its `report()` from the
+imported module and quotes the counts it prints. Every number the referee computes itself is an
+integer; in `--measure` the owner's float code prints its own lines.
 
 `tools/integer_only.py` (stdlib, run in CI) checks that the code written here stays integer. In
 `tools/*.py`, by AST, it fails on true division, a float or complex literal, a `float()` /
@@ -117,12 +138,17 @@ runs unchanged) and cannot see `**` with a computed exponent (the referee's two 
   lengths 0..=12 (with every buffer of length 1 and 2), 5 large seeded buffers, 2,078 inverse
   argument sets (`zip`, `ValueError`, slice end), 69,738 `to_balanced_ternary` rows, and 256 rows
   covering every byte triple; `TRIJ_BYTES|cases=16777216|restore_ok=16777216` through the
-  original `trijection_inverse`; 36 of 36 executed or cited upstream lines verbatim; fixture 2,565
+  original `trijection_inverse`; 41 of 41 executed or cited upstream lines verbatim; fixture 2,565
   rows; law counts `centre=1 faces=6 edges=12 corners=8`, `N·N=id 27/27`, `R·R·R=id 27/27`,
-  `R=R² on 3/27`, orbits `1:3, 3:8`, the group fixes `(0,0,0)` only, centre glyph 13.
+  `R²=R∘R 27/27`, `R=R² on 3/27`, orbits `1:3, 3:8`, the group fixes `(0,0,0)` only, centre glyph
+  13; the owner's `trianti.py` `report()` quoted: `order(N)=2`, `order(R)=3`, `R≠R⁻¹`, the pie
+  closes, the group fixes `(0,0,0)`, orbit sizes `{1:3, 3:8}`.
 - Mutation test: 19 of 19 mutations reported as failures (Rust stream rows changed, dropped or
   added; the owner's file mutated in a throwaway copy, with and without re-pinning its sha256;
-  the Rust port mutated; the measure rows, the law text and an input byte changed).
+  the Rust port mutated; the measure rows, the law text and an input byte changed). The two new
+  guards bite the same way (2026-10-18): appending a byte to the vendored `trianti.py` makes
+  `--check` exit at the sha256 gate (`want e7c1a01f…`); flipping one `R2` value in the Rust emit
+  makes `--check --rust` report `RUST_STREAM|…|equal=FAIL` at the `CUBE|i=1` row.
 - `tools/integer_only.py`: 0 hits on 2 Python and 11 Rust files. It fails on each of 18 float
   mutations (7 Rust: `0.5`, `1e3`, `2.`, `1f64`, `as f64`, `1.5e-3`, `2e-1`; 11 Python: `/`, `/=`,
   `0.5`, `float()`, `round()`, `import math`, `from fractions import`, `"%.3f" %`, `f"{x:.2f}"`,

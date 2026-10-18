@@ -210,12 +210,14 @@ pub fn third_row(a: i64, b: i64, c: i64) -> String {
 
 pub fn cube_row(i: u8) -> String {
     let c = cube::cell(i);
+    // N, R and R² (= R∘R, trianti.py:33) over the cell; the referee emits the owner's N/R/R2
     format!(
-        "CUBE|i={i}|cell={}|sep={}|N={}|R={}",
+        "CUBE|i={i}|cell={}|sep={}|N={}|R={}|R2={}",
         join_trits(&c),
         cube::separation(c),
         cube::index(cube::negate(c)),
-        cube::index(cube::rotate(c))
+        cube::index(cube::rotate(c)),
+        cube::index(cube::rotate(cube::rotate(c)))
     )
 }
 
