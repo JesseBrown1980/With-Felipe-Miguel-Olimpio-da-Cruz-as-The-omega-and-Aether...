@@ -107,3 +107,27 @@ of 4 pass the spread gate), so weight/count 0 is the right state (OWNER-RULES 7.
 0.5292 at weight 0.15 adds ~0.079 to every composite, which is the weight-0 rationale. The `L4CONST`
 note (0.5292 = single-class train + 30 steps from ~0.5) is the owner's conjecture, measurable by
 replaying `train_gslgnn` with per-step logging.
+
+## ASI OS Windows run, seen (2026-10-18)
+
+`asios-sighting-2026-10-18/`: the owner's operator sighting that ASI OS runs now as a Windows run
+(distinct from the boot run), captured under one operator-approved shell call.
+`FABLE5-ASIOS-WINDOWS-RUN-SEEN-2026-10-18.hbp` records the pixels seen — the "Asolaria ASI OS"
+window (dark navy desktop, a 3D teal/violet/amber cube, the ASOLARIA wordmark, a left vertical dock)
+— and pins `SCREEN-ASIOS-2026-10-18-060853.png` (1920×1080, 597,762 B, sha256 `9fe4f058…`). Both
+`.sha256` sidecars check here. Published at the owner's direction. The frame also shows the owner's
+own Claude Code session and a Tailscale login page; no credentials or third-party private data.
+
+## Running tasks: shells vs sidecars (2026-10-18)
+
+`shells-vs-sidecars-2026-10-18/`: the owner's map of what runs on the ACER seat, from host8's own
+`:5088/task-manager.hbp` (the sidecar vantage) plus the process table for what host8 cannot see.
+Measured: 16 host8 services, 7 running, only **2 real Rust sidecars** (recall `:4796`, host8 `:5088`
+— a debug build, `gnn_ready=0`); the rest are Node/Python services hosted by a PowerShell watchdog
+or the task scheduler, with three PowerShell daemons and two portless node daemons outside host8's
+registry; the GNN servers (`:4792` oracle, `:4793` gsl, `:4794` fischer, and five more) are OFF.
+host8's Linux-loopback vantage cannot see Windows PIDs or portless daemons, so "running=7" is not all
+running. The receipt's own NEXT gate (operator): rerun the L1/L2 verifiers through recall + host8 +
+fabric + office, and move the first shell-hosted daemon (`gnn-dispatch-bridge`) into host8 via
+`/shadow-parity.hbp`, parity before retire. `FABLE5-SHELLS-VS-SIDECARS-2026-10-18.hbp`; its `.sha256`
+sidecar checks here (delivered in a zip of sha256 `4860bf93…`).

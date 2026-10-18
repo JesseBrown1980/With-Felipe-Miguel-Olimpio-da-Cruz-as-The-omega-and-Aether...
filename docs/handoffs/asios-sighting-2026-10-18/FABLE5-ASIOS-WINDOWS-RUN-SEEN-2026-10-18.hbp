@@ -1,0 +1,6 @@
+ASIOSHDR|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|topic=asi-os-windows-run-seen-pixels-first|operator_canon=the_OS_is_running_now_as_a_Windows_run_distinct_from_the_boot_run|json=0
+PIXELS|file=SCREEN-ASIOS-2026-10-18-060853.png|w=1920|h=1080|bytes=597762|sha256=9fe4f05843edc5823c2bef91a68a6dad58d4a96ee64d6cc2a59b9d05c327d127|capture=one_operator_approved_shell_call|local_time=2026-10-18T06:08:53-03:00|tag=MEASURED|json=0
+SEEN|window_title=Asolaria ASI OS|geometry=left_half_approx_930x980|desktop=dark_navy_with_blue_teal_purple_glows|dock=left_vertical_about_14_icons|object=3D_cube_teal_top_with_dot_grid_violet_and_amber_sides|wordmark=ASOLARIA_bottom_right|taskbar=thin_bottom_strip_inside_window|tag=MEASURED_PIXELS|json=0
+CONJ|claim=window_chrome_with_globe_icon_suggests_a_browser_app_window|host_process=UNKNOWN_not_probed_no_shell|tag=CONJECTURE|json=0
+SEAL|png_sidecar=written_from_capture_call_hash|hbp_sidecar=PENDING_no_shell_seal_tool|independent_check=PENDING_sha256sum_c_needs_shell|json=0
+SEAL|sealed_by=office_hbp.py_WSL_lane|operator_go=do_what_you_need_2026-10-18|json=0
