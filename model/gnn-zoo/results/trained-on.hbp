@@ -1,0 +1,54 @@
+# results/trained-on.hbp: written by tools/zoo_torch.py trained-on; --check diffs.
+# Each checkpoint's forward ('pyg' = torch_geometric GCNConv, as train_all_models.py:24 imports it) on a
+# corpus prepared by the trainers' own load_dataset/build_tensors; test = the last 15% (split_data).
+VERSIONS|python=3.13.16|torch=2.14.1+cpu|torch_geometric=2.8.1|kernels=ATEN_CPU_CAPABILITY=default,MKL_CBWR=COMPATIBLE,OMP_NUM_THREADS=1,MKL_NUM_THREADS=1|json=0
+CORPUS|corpus=gnn-training-sample-50k.json|nodes=2053|edges=50000|train_end=35000|val_end=42500|test_positives=32|json=0
+EVAL|file=baseline_model_retrained.pt|corpus=gnn-training-sample-50k.json|tp=27|fp=94|fn=5|tn=7374|training_results.json[EdgeLevelGNN]=tp:27,fp:94,fn:5,tn:7374|equal=1|json=0
+EVAL|file=contrastive_model.pt|corpus=gnn-training-sample-50k.json|tp=27|fp=92|fn=5|tn=7376|training_results.json[ContrastiveGNN]=tp:27,fp:92,fn:5,tn:7376|equal=1|json=0
+EVAL|file=prototype_model.pt|corpus=gnn-training-sample-50k.json|tp=27|fp=92|fn=5|tn=7376|training_results.json[PrototypeGNN]=tp:27,fp:92,fn:5,tn:7376|equal=1|json=0
+EVAL|file=gsl_model.pt|corpus=gnn-training-sample-50k.json|tp=32|fp=0|fn=0|tn=7468|training_results.json[GSLGNN]=tp:32,fp:0,fn:0,tn:7468|equal=1|json=0
+CORPUS|corpus=gnn-training-archive-50k.json|nodes=2053|edges=50000|train_end=35000|val_end=42500|test_positives=32|json=0
+EVAL|file=baseline_model_retrained.pt|corpus=gnn-training-archive-50k.json|tp=27|fp=94|fn=5|tn=7374|training_results.json[EdgeLevelGNN]=tp:27,fp:94,fn:5,tn:7374|equal=1|json=0
+EVAL|file=contrastive_model.pt|corpus=gnn-training-archive-50k.json|tp=27|fp=92|fn=5|tn=7376|training_results.json[ContrastiveGNN]=tp:27,fp:92,fn:5,tn:7376|equal=1|json=0
+EVAL|file=prototype_model.pt|corpus=gnn-training-archive-50k.json|tp=27|fp=92|fn=5|tn=7376|training_results.json[PrototypeGNN]=tp:27,fp:92,fn:5,tn:7376|equal=1|json=0
+EVAL|file=gsl_model.pt|corpus=gnn-training-archive-50k.json|tp=32|fp=0|fn=0|tn=7468|training_results.json[GSLGNN]=tp:32,fp:0,fn:0,tn:7468|equal=1|json=0
+CORPUS|corpus=gnn-training-fresh-50k.json|nodes=8304|edges=50000|train_end=35000|val_end=42500|test_positives=0|json=0
+EVAL|file=baseline_model_retrained.pt|corpus=gnn-training-fresh-50k.json|tp=0|fp=0|fn=0|tn=7500|training_results.json[EdgeLevelGNN]=tp:27,fp:94,fn:5,tn:7374|equal=0|json=0
+EVAL|file=contrastive_model.pt|corpus=gnn-training-fresh-50k.json|tp=0|fp=0|fn=0|tn=7500|training_results.json[ContrastiveGNN]=tp:27,fp:92,fn:5,tn:7376|equal=0|json=0
+EVAL|file=prototype_model.pt|corpus=gnn-training-fresh-50k.json|tp=0|fp=0|fn=0|tn=7500|training_results.json[PrototypeGNN]=tp:27,fp:92,fn:5,tn:7376|equal=0|json=0
+EVAL|file=gsl_model.pt|corpus=gnn-training-fresh-50k.json|skipped=nodes_above_6000|json=0
+CORPUS|corpus=gnn-training-archive-200k.json[--max-edges 50000]|nodes=5831|edges=50000|train_end=35000|val_end=42500|test_positives=32|json=0
+EVAL|file=baseline_model_retrained.pt|corpus=gnn-training-archive-200k.json[--max-edges 50000]|tp=27|fp=94|fn=5|tn=7374|training_results.json[EdgeLevelGNN]=tp:27,fp:94,fn:5,tn:7374|equal=1|json=0
+EVAL|file=contrastive_model.pt|corpus=gnn-training-archive-200k.json[--max-edges 50000]|tp=27|fp=92|fn=5|tn=7376|training_results.json[ContrastiveGNN]=tp:27,fp:92,fn:5,tn:7376|equal=1|json=0
+EVAL|file=prototype_model.pt|corpus=gnn-training-archive-200k.json[--max-edges 50000]|tp=27|fp=93|fn=5|tn=7375|training_results.json[PrototypeGNN]=tp:27,fp:92,fn:5,tn:7376|equal=0|json=0
+EVAL|file=gsl_model.pt|corpus=gnn-training-archive-200k.json[--max-edges 50000]|tp=32|fp=0|fn=0|tn=7468|training_results.json[GSLGNN]=tp:32,fp:0,fn:0,tn:7468|equal=1|json=0
+CORPUS|corpus=gnn-training-500k.json[--max-edges 50000]|load_dataset_raises=UnicodeDecodeError|json=0
+CORPUS|corpus=gnn-training-export.json[--max-edges 50000]|nodes=18964|edges=50000|train_end=35000|val_end=42500|test_positives=32|json=0
+EVAL|file=baseline_model_retrained.pt|corpus=gnn-training-export.json[--max-edges 50000]|tp=27|fp=94|fn=5|tn=7374|training_results.json[EdgeLevelGNN]=tp:27,fp:94,fn:5,tn:7374|equal=1|json=0
+EVAL|file=contrastive_model.pt|corpus=gnn-training-export.json[--max-edges 50000]|tp=26|fp=91|fn=6|tn=7377|training_results.json[ContrastiveGNN]=tp:27,fp:92,fn:5,tn:7376|equal=0|json=0
+EVAL|file=prototype_model.pt|corpus=gnn-training-export.json[--max-edges 50000]|tp=26|fp=91|fn=6|tn=7377|training_results.json[PrototypeGNN]=tp:27,fp:92,fn:5,tn:7376|equal=0|json=0
+EVAL|file=gsl_model.pt|corpus=gnn-training-export.json[--max-edges 50000]|skipped=nodes_above_6000|json=0
+ARCHIVE|corpus=gnn-training-archive-200k.json|nodes=5831|edges=200000|positives=6756|results_total=200000|results_train/val/test=140000/30000/30000|results_pos_sum=6756|pos_sum_equals_positives=1|chronological_test_positives=0|json=0
+# gslgnn_archive_200k_results.json test (a torch.randperm(200000) without a seed, train_gslgnn_archive.py:33): tp=1071 fp=6 fn=10 tn=28913
+ARCHIVEEVAL|file=gsl_model_archive_200k.pt|all_200000=tp:6755,fp:150,fn:1,tn:193094|chronological_test=tp:0,fp:0,fn:0,tn:30000|json=0
+ARCHIVEEVAL|file=gsl_model_archive_200k_shuffled.pt|all_200000=tp:6705,fp:41,fn:51,tn:193203|chronological_test=tp:0,fp:0,fn:0,tn:30000|json=0
+ARCHIVEEVAL|file=gsl_model.pt|all_200000=tp:6728,fp:41,fn:28,tn:193203|chronological_test=tp:0,fp:0,fn:0,tn:30000|json=0
+FIRST|corpus=first-training/gnn-training-export-20260315.json|nodes=309|edges=1730|train_end=1211|val_end=1470|test_positives=9|json=0
+FIRSTEVAL|file=baseline_model.pt|variant=fallback|test=tp:9,fp:0,fn:0,tn:251|all_1730=tp:252,fp:0,fn:10,tn:1468|json=0
+FIRSTEVAL|file=baseline_model.pt|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:252,fp:36,fn:10,tn:1432|json=0
+FIRSTEVAL|file=baseline_model_retrained.pre-L0-rekey-2026-05-26.pt|variant=fallback|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:252,fp:31,fn:10,tn:1437|json=0
+FIRSTEVAL|file=baseline_model_retrained.pre-L0-rekey-2026-05-26.pt|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:252,fp:36,fn:10,tn:1432|json=0
+FIRSTEVAL|file=baseline_model_retrained.pt|variant=fallback|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:252,fp:31,fn:10,tn:1437|json=0
+FIRSTEVAL|file=baseline_model_retrained.pt|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:252,fp:36,fn:10,tn:1432|json=0
+FIRSTEVAL|file=prototype_model.pt|variant=fallback|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:0,fp:0,fn:262,tn:1468|json=0
+FIRSTEVAL|file=prototype_model.pt|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:206,fp:0,fn:56,tn:1468|json=0
+FIRSTEVAL|file=prototype_model.pt.bak|variant=fallback|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:0,fp:0,fn:262,tn:1468|json=0
+FIRSTEVAL|file=prototype_model.pt.bak|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:206,fp:0,fn:56,tn:1468|json=0
+FIRSTEVAL|file=contrastive_model.pt|variant=fallback|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:0,fp:0,fn:262,tn:1468|json=0
+FIRSTEVAL|file=contrastive_model.pt|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:234,fp:0,fn:28,tn:1468|json=0
+FIRSTEVAL|file=contrastive_model.pt.bak|variant=fallback|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:0,fp:0,fn:262,tn:1468|json=0
+FIRSTEVAL|file=contrastive_model.pt.bak|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:234,fp:0,fn:28,tn:1468|json=0
+FIRSTEVAL|file=gsl_model.pt|variant=pyg|test=tp:9,fp:0,fn:0,tn:251|all_1730=tp:261,fp:36,fn:1,tn:1432|json=0
+FIRSTEVAL|file=gsl_model.pt.bak|variant=pyg|test=tp:9,fp:0,fn:0,tn:251|all_1730=tp:261,fp:36,fn:1,tn:1432|json=0
+FIRSTEVAL|file=gsl_model_archive_200k.pt|variant=pyg|test=tp:9,fp:0,fn:0,tn:251|all_1730=tp:261,fp:37,fn:1,tn:1431|json=0
+FIRSTEVAL|file=gsl_model_archive_200k_shuffled.pt|variant=pyg|test=tp:0,fp:0,fn:9,tn:251|all_1730=tp:252,fp:36,fn:10,tn:1432|json=0

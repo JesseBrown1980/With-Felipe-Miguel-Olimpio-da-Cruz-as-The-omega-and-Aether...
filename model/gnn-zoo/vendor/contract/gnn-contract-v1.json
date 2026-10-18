@@ -1,0 +1,62 @@
+{
+  "contractId": "gnn-v1",
+  "version": 1,
+  "frozenAt": "2026-03-30T14:40:00.000Z",
+  "frozenBy": "asolaria",
+  "votedBy": ["asolaria", "gpt-4.1", "liris", "mcclintock", "galileo", "turing"],
+  "voteResult": "6/6 unanimous Option A: freeze GNN contract first",
+  "description": "GNN interface contract for the IX execution hot path. All callers (Shannon, exec.js, hookwall, grammar) must conform to this interface.",
+
+  "input": {
+    "verb": { "type": "string", "required": true, "description": "The IX verb being executed" },
+    "actor": { "type": "string", "required": true, "description": "PID of the calling agent" },
+    "target": { "type": "string", "required": false, "description": "Target entity or resource" },
+    "context": { "type": "object", "required": false, "description": "Additional context (permissionTier, pipelineStage, host)" },
+    "policy": { "type": "object", "required": false, "description": "Approval state, authority mode" }
+  },
+
+  "output": {
+    "ok": { "type": "boolean", "description": "Whether the GNN gate processed successfully" },
+    "allow": { "type": "boolean", "description": "Whether execution should proceed" },
+    "score": { "type": "integer", "min": 0, "max": 9, "description": "Edge risk score from edgeRiskEngine" },
+    "level": { "type": "string", "enum": ["low", "medium", "high", "critical"], "description": "Risk level classification" },
+    "prediction": {
+      "type": "object",
+      "properties": {
+        "nextVerb": { "type": "string", "description": "GNN predicted next verb in chain" },
+        "confidence": { "type": "number", "min": 0, "max": 1, "description": "Prediction confidence" },
+        "constructionId": { "type": "string", "description": "Suggested construction target" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "properties": {
+        "recorded": { "type": "boolean", "description": "Whether the edge was persisted to NDJSON" },
+        "eventId": { "type": "string", "description": "ID of the recorded graph event" }
+      }
+    }
+  },
+
+  "error": {
+    "ok": { "type": "boolean", "value": false },
+    "allow": { "type": "boolean", "value": true, "description": "GNN failure does NOT block — degrades gracefully" },
+    "degraded": { "type": "boolean", "value": true },
+    "reason": { "type": "string", "description": "Why GNN failed (cold start, store error, etc)" }
+  },
+
+  "rules": {
+    "coldStart": "GNN MUST pass (allow=true) when it has no data. It records the edge for future learning.",
+    "blockCondition": "GNN blocks ONLY when score >= 9 AND prediction.confidence > 0.8 flagging suspicious pattern.",
+    "failureMode": "GNN failure returns degraded=true, allow=true. NEVER blocks on its own failure.",
+    "recording": "Every call MUST be recorded as a graph edge, even on error.",
+    "shannonConsumes": "Shannon gate receives GNN output and may use score + prediction for its own decision.",
+    "grammarConsumes": "Grammar verb-factory receives GNN output to inform routing and pre-spawn decisions."
+  },
+
+  "sovereignty": {
+    "location": "E:\\sovereignty\\contracts\\gnn-contract-v1.json",
+    "modifiedBy": "jesse only",
+    "versionBump": "requires voter approval",
+    "checksum": "computed at seal time"
+  }
+}

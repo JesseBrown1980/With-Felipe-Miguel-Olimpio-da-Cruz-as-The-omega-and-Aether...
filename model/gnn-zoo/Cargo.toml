@@ -1,0 +1,17 @@
+[package]
+name = "asolaria-gnn-zoo"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "The first Asolaria GNN zoo from ACER: checkpoints, corpora and their verification, with the aether integer ports run on each checkpoint"
+repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
+keywords = ["gnn", "graph", "integer", "fixed-point"]
+categories = ["algorithms"]
+publish = false
+
+[lib]
+name = "gnn_zoo"
+path = "src/lib.rs"
+
+[dependencies]
