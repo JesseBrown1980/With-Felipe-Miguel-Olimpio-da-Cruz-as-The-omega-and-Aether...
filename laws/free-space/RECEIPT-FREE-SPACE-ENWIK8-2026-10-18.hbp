@@ -1,0 +1,28 @@
+FREESPACE|schema=FREE-SPACE-ENWIK8-V1|date=2026-10-18|laws=0,17,18,22|lane=cloud-x86_64-linux-gnu|integers_only=1|json=0
+INPUT|bytes=100000000|sha256=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8|md5=a1fa5ffddb56f4953e226637dabbb36a|schema_export_0_3=1|canonical=1|json=0
+SOURCE|url=http://mattmahoney.net/dc/enwik8.zip|zip_bytes=36445475|zip_sha256=547994d9980ebed1288380d652999f38a14fe291a6247c157c3d33d4932534bc|member=enwik8|member_date=2011-06-01|json=0
+WHITE|space=13519824|newline=1128023|tab=4358|cr=0|total=14652205|kept=85347795|per10000=1465|json=0
+MODE|rank1=0x20:13519824|rank2=0x65:8001205|rank3=0x74:6154908|json=0
+WROTE|file=enwik8.nows|bytes=85347795|sha256=3cf51e006885900694e1b83ed62df594a9381c1ac9db635f572c067a0eb37fae|json=0
+WROTE|file=e10m|bytes=10000000|sha256=5985c81c39d927ae0e169625790ca4d9e7d1531270c8b09ad73176a375bb3d97|json=0
+WROTE|file=e10m.nows|bytes=8531164|sha256=05fb05f0ac12bb02293936767edaa4662b272e2e3bc4fa55f871be03581f303e|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T1|input=enwik8|in_bytes=100000000|out_bytes=24865244|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T1|input=enwik8.nows|in_bytes=85347795|out_bytes=24171440|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T4|input=enwik8|in_bytes=100000000|out_bytes=24865252|note=multi_threaded_format_adds_8_bytes|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T4|input=enwik8.nows|in_bytes=85347795|out_bytes=24171448|note=multi_threaded_format_adds_8_bytes|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T1|input=e10m|in_bytes=10000000|out_bytes=2721280|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T1|input=e10m.nows|in_bytes=8531164|out_bytes=2640420|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T4|input=e10m|in_bytes=10000000|out_bytes=2721288|note=multi_threaded_format_adds_8_bytes|json=0
+COMPRESS|tool=xz-5.4.5|args=-9 -T4|input=e10m.nows|in_bytes=8531164|out_bytes=2640428|note=multi_threaded_format_adds_8_bytes|json=0
+COMPRESS|tool=cm3ti|source=pump/cm3ti/rust/cm3ti.rs|args=k=7|input=e10m|in_bytes=10000000|payload=2349543|restore=OK|comp_sha=b12071678c141e4f|json=0
+COMPRESS|tool=cm3ti|source=pump/cm3ti/rust/cm3ti.rs|args=k=7|input=e10m.nows|in_bytes=8531164|payload=2475716|restore=OK|comp_sha=a71f9b57dde1aa53|json=0
+COMPRESS|tool=cm3ti|source=pump/cm3ti/rust/cm3ti.rs|args=k=7|input=enwik8|in_bytes=100000000|payload=22737625|restore=OK|comp_sha=a7ddadfa2808d7d7|json=0
+COMPRESS|tool=cm3ti|source=pump/cm3ti/rust/cm3ti.rs|args=k=7|input=enwik8.nows|in_bytes=85347795|payload=23853175|restore=OK|comp_sha=17cb21f613ec8e6a|json=0
+COST|tool=xz-T1|input=enwik8|white_cost_bytes=693804|per10000_of_output=279|millibits_per_white_byte=378|millibits_per_other_byte=2265|rounding=floor|json=0
+COST|tool=xz-T1|input=e10m|white_cost_bytes=80860|per10000_of_output=297|millibits_per_white_byte=440|millibits_per_other_byte=2476|rounding=floor|json=0
+COST|tool=cm3ti-k7|input=e10m|white_cost_bytes=-126173|stripped_larger_per10000_of_raw=537|rounding=floor|meaning=raw_text_compresses_smaller_than_stripped|json=0
+COST|tool=cm3ti-k7|input=enwik8|white_cost_bytes=-1115550|stripped_larger_per10000_of_raw=490|rounding=floor|meaning=raw_text_compresses_smaller_than_stripped|json=0
+SCALE|tool=cm3ti-k7|input=raw|bpc_x10000_10MB=18796|bpc_x10000_100MB=18190|json=0
+SECOND_MACHINE|seat=ACER|class=REPORTED_BY_ACER|enwik8_sha256=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8|zip_sha256=547994d9980ebed1288380d652999f38a14fe291a6247c157c3d33d4932534bc|space=13519824|newline=1128023|tab=4358|form_feed=0|vertical_tab=0|kept=85347795|tool=xz-5.4.5|args=-9 -T1|out_with=24865244|out_without=24171440|white_cost_bytes=693804|json=0
+TWO_MACHINE|white_counts_equal=1|xz_T1_sizes_equal=1|white_cost_equal=1|cm3ti=cloud_only|json=0
+BOUNDARY|stripping_is_lossy=1|models=xz,cm3ti|operator_instrument=feed_raw_text|physical_claim_measured=0|json=0

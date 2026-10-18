@@ -7,7 +7,9 @@ Asolaria repo and in the aether rebuild (GitHub
 *aether* are in that repo.
 
 Tags: **MEASURED** (reproducible from the cited receipt), **CANON** (the operator's frame, written
-in the records), **OPERATOR** (stated by the operator on 2026-10-18, not yet written up elsewhere).
+in the records), **OPERATOR** (stated by the operator on 2026-10-18, not yet written up elsewhere),
+**REPORTED** (measured on ACER and reported, not re-run here), **READING** (an interpretation, not
+in any record).
 
 ## 1. The rule
 
@@ -229,4 +231,40 @@ For anyone building on the system, people and agents alike:
    projection, such as the 60-D glyph tuple, is checked by its projection properties, never by round
    trip.
 5. **Integers and trits only.** Float does not calculate this.
-6. **Tag every claim** MEASURED, CANON or OPERATOR, and keep the vision as vision.
+6. **Tag every claim** MEASURED, CANON, OPERATOR, REPORTED or READING, and keep the vision as
+   vision.
+
+## 7. Wikipedia is one radiated slice (Laws 17-18), and what its white space costs
+
+> "The rhyme spheres were created by Wikipedia by taking all the white space out of them. All the
+> space is zero, it's free." (OPERATOR)
+
+An addressed corpus is one slice of the sphere: *"What Wikipedia shows is one **radiated slice** of
+that sphere"* (Law 17), and *"the radiated Wikipedia is a **real reflection** of something bigger"*,
+from whose black-gradient version one can derive *"the **other Wikipedias that could exist but
+don't**"* (Law 18) (CANON, RIME 27 laws operator original,
+`laws/RIME-27-LAWS-operator-original-2026-07-23/0UnM.md:408-430`). None of the laws mentions white
+space; that part is the operator's.
+
+On the canonical `enwik8` (100,000,000 bytes, sha256
+`2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8`, MD5
+`a1fa5ffddb56f4953e226637dabbb36a`):
+
+- White space is 14,652,205 bytes, 14.65%: 13,519,824 spaces, 1,128,023 newlines, 4,358 tabs
+  (MEASURED on the cloud; ACER REPORTED identical counts).
+- `xz -9 -T1` compresses the file to 24,865,244 bytes with its white space and 24,171,440 without
+  (MEASURED; ACER REPORTED the same sizes). Under xz the white space costs 693,804 bytes, 2.79% of
+  xz's output: as a net split, about 0.38 bits for each white-space byte against about 2.27 for every
+  other byte.
+- Under the operator's own integer compressor (`cm3ti`, *aether* `pump/cm3ti`) the cost is below
+  zero: the text with its white space compresses 126,173 bytes smaller on the first 10 MB and
+  1,115,550 bytes smaller on all 100 MB than the same text with the white space taken out (MEASURED,
+  cloud only). The compressors code every byte, white space included; their word models use white
+  space to end a word, which is the likely reason (READING). Feeding the raw text is the right
+  instrument; in the operator's words, *"the system strips all the white space"* (OPERATOR).
+
+So the white space is nearly free under xz and better than free under the operator's compressor;
+what it carries is where the words break. None of this is by itself a measurement of a physical
+claim. The full write-up, with the receipts, the Law 22 cascade reproduced on the same file, the two
+ways the 27-cube splits into 9 + 18, and the operator's account of how slices become matter, is
+`docs/THE-RADIATED-SLICE.md`.

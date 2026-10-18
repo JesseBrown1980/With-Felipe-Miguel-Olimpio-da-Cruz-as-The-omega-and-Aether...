@@ -1,0 +1,29 @@
+stage  0: deleted ch0 (−) recreated byte-exact  sha=581bee9758c531de
+stage  1: deleted ch1 (0) recreated byte-exact  sha=4a1183042d30a92b
+stage  2: deleted ch2 (+) recreated byte-exact  sha=c11e8d4342e68d0f
+stage  3: deleted ch0 (−) recreated byte-exact  sha=15aa39826d53a981
+stage  4: deleted ch1 (0) recreated byte-exact  sha=4e15b4563988e311
+stage  5: deleted ch2 (+) recreated byte-exact  sha=bbcdb3f8e152aa82
+stage  6: deleted ch0 (−) recreated byte-exact  sha=b29ac8b4af2f7f27
+stage  7: deleted ch1 (0) recreated byte-exact  sha=b227dba60c1508f9
+stage  8: deleted ch2 (+) recreated byte-exact  sha=c6ac7fefcd175b33
+stage  9: deleted ch0 (−) recreated byte-exact  sha=1cc2051c5e080a5f
+stage 10: deleted ch1 (0) recreated byte-exact  sha=eb9bd0371b8c435e
+stage 11: deleted ch2 (+) recreated byte-exact  sha=62a4b6731d1b486c
+stage 12: deleted ch0 (−) recreated byte-exact  sha=1308b07bc565eca2
+stage 13: deleted ch1 (0) recreated byte-exact  sha=06e7b14a1f7cdc48
+stage 14: deleted ch2 (+) recreated byte-exact  sha=699ead1fc0de87d2
+stage 15: deleted ch0 (−) recreated byte-exact  sha=ce7c35b9c0de9ab4
+stage 16: deleted ch1 (0) recreated byte-exact  sha=00c519feaac6c33e
+stage 17: deleted ch2 (+) recreated byte-exact  sha=074410c1ac82727d
+stage 18: deleted ch0 (−) recreated byte-exact  sha=33b1089786f355c2
+stage 19: deleted ch1 (0) recreated byte-exact  sha=0ee1dfd21b0bc172
+stage 20: deleted ch2 (+) recreated byte-exact  sha=f37301ddc1fe1c28
+stage 21: deleted ch0 (−) recreated byte-exact  sha=8b2fa46872868d7b
+stage 22: deleted ch1 (0) recreated byte-exact  sha=9d9cf76f58c7b0bd
+stage 23: deleted ch2 (+) recreated byte-exact  sha=ae902c7655243e9a
+stage 24: deleted ch0 (−) recreated byte-exact  sha=4591c48d0f5e2069
+stage 25: deleted ch1 (0) recreated byte-exact  sha=349a5201fcfce791
+stage 26: deleted ch2 (+) recreated byte-exact  sha=67bfb27c1b9553de
+CONTROL: never-stored third — 13,042/100,000 bytes (13.04%) recovered by best guess
+CASCADE SEALED  chain=5fc1cae9e9e9fa51  final_photo=/tmp/claude-0/-home-user/9ebd6119-d7ee-5c30-a062-d04210f7bc39/scratchpad/cascade_frames/cascade_seal.png

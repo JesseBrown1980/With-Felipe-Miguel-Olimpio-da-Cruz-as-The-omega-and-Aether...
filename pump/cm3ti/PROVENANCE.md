@@ -116,11 +116,16 @@ cm3ti survey (2026-10-18) separately reproduced the 1 MB k=7 anchors byte-exact 
 
 ## Not reproduced in this build (scope)
 
-- The owner's **10 MB** rows used a distinct/dedup slice (sha `adea6c0b`, `RESULTS.md:191`; `c4e72b59`,
-  `RESULTS-cloud-seat.md:110`), not `enwik8`'s first 10 MB; that slice is not on this container, so
-  the 10 MB column is not re-run here.
+- The owner's **10 MB** rows used contiguous windows of `enwik8`, not its first 10 MB: `adea6c0b` is
+  bytes 20,000,000-30,000,000 (sha `RESULTS.md:191`; range from hashing enwik8, and
+  `pump/kernel-pump/keyx/key/KEY-3174.hbp:42`) and `c4e72b59` bytes 10,000,000-20,000,000
+  (sha `RESULTS-cloud-seat.md:110`; range from hashing enwik8). Neither was deduplicated:
+  "distinct" there is a measured property (99.994% of 200-byte blocks unique), not a step. Both can be cut from the public `enwik8`
+  (corrected 2026-10-18; this note first called them dedup slices not on this container). The 10 MB
+  column is not re-run here.
 - The **100 MB** (enwik8) and **1 GB** (enwik9) crown rows are not re-run here (time and RAM; the
-  `tb*`/`vc*` match tables at `TBITS` 26/27/28 need ≈1.6/3.2/6.4 GB, and a 100 MB single-thread run
+  `tb*`/`vc*` hashed-context tables at `TBITS` 26/27/28 take about 1.8/3.6/7.3 GB (`tb*`) and
+  2.0/4.0/8.1 GB (`vc*`) at k=7, and 10.5 GB for `vc28`/`vc65` at k=10, besides an unbounded match map, and a 100 MB single-thread run
   is ~24 min). The 1 MB anchors above are reproduced instead.
 - `k_gradient.bin`, `chaos1m.bin`, `code1m.bin`: these are **not** inputs to any `cm3ti` binary
   (the binaries read any file plus `k`). They are referenced only by a different owner tool,
