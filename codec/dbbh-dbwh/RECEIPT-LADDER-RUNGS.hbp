@@ -1,0 +1,20 @@
+# Metatag ladder rungs — MEASURED receipt (2026-10-18)
+# Extends the seed repo's proven 256<->1024 (byte-8<->symbol-10) rung to every rung this codec represents (width 1..16).
+# Produced by: cargo +1.81.0 test metatag_ladder_rungs_are_lossless_every_width -- --nocapture (codec/dbbh-dbwh).
+RUNG|width=1|alphabet=2|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=2|alphabet=4|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=3|alphabet=8|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=4|alphabet=16|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=5|alphabet=32|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=6|alphabet=64|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=7|alphabet=128|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=8|alphabet=256|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=9|alphabet=512|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=10|alphabet=1024|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|readme_proven_rung=1024|json=0
+RUNG|width=11|alphabet=2048|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=12|alphabet=4096|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=13|alphabet=8192|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=14|alphabet=16384|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=15|alphabet=32768|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+RUNG|width=16|alphabet=65536|tested=85793|roundtrip_failures=0|uniform=1|lossless=1|json=0
+LADDER|widths=1..16|rungs=16|total_tested=1372688|total_failures=0|cross_rung_4rung=1|readme_1024_rung_included=1|receipt_sha256=ed2bc6942cf54db4814f492527fae932efb13e10c8033385ec55c292fb3fe24c|tag=MEASURED|json=0

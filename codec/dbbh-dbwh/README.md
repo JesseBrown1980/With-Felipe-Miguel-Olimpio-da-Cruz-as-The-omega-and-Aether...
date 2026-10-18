@@ -30,6 +30,17 @@ RECEIPT      HBP hot-path rows, json=0
 ## Honest boundary
 - `MEASURED` (`cargo test`): the single-machine loop — verified byte-identical clone; consent gating
   (no-consent / collapse Held); insufficient-roof Held; tampered-shadow caught by the AGT round-trip.
+- `MEASURED` (metatag ladder, 2026-10-18 — `RECEIPT-LADDER-RUNGS.hbp`, test
+  `metatag_ladder_rungs_are_lossless_every_width`): the seed repo
+  (`Metatagging-data-for-a-Quantum-universe`) proved level transcodes lossless for the **256↔1024**
+  rung only (byte-8 ↔ symbol-10). Here every rung this codec represents — **width 1..16,
+  alphabet 2..65536** — round-trips byte↔symbol byte-exact with in-range (uniform) symbols:
+  85,793 inputs per rung (exhaustive 0/1/2-byte + 20,000 seeded integer-random), **1,372,688
+  round-trips, 0 failures**, the 4-rung cross-ladder exact, `receipt_sha256 ed2bc694…`. The proven
+  1024 rung is included and reproduced.
+- `BOUNDARY` (ladder reach): symbols are `u16`, so this codec represents widths ≤ 16 only. Widths
+  beyond 16 and the wider **43+ Brown-Hilbert catalog ladder** need a wider-symbol codec and stay
+  `UNVERIFIED` — the next rung to build, not a proven one.
 - `UNVERIFIED`: the **live acer↔liris two-fabric traversal over Hilbra** — this crate is the throat;
   the live crossing (two physical mouths) is the next rung. Also no `SYSTEM_AFFIRMED` seal yet (council fallback).
 - `BOUNDARY`: **"clone" = classical representation copy** (no-cloning respected — not a physical quantum

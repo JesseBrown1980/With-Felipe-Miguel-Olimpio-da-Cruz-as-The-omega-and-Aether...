@@ -708,4 +708,101 @@ mod tests {
         );
         assert_eq!(rows.iter().filter(|r| r.starts_with("WATCH|")).count(), 6);
     }
+
+    // The metatag ladder (seed repo README): level transcodes are bijections,
+    // H(f(X)) = H(X). Proven there for the 256<->1024 rung only (byte-8 <-> symbol-10).
+    // Here we extend that proof to EVERY rung this codec can represent (width 1..=16,
+    // alphabet 2..=65536): byte <-> symbol-w round-trips byte-exact and every symbol is
+    // in range (uniform), exhaustively over all 0/1/2-byte inputs plus 20_000 seeded
+    // integer-random inputs each, with a deterministic receipt hash. Integer only.
+    fn rung_ok(bytes: &[u8], width: u32) -> bool {
+        let syms = to_symbols(bytes, width);
+        let mask: u16 = ((1u32 << width) - 1) as u16;
+        syms.iter().all(|&s| s <= mask) && from_symbols(&syms, width, bytes.len()) == bytes
+    }
+
+    #[test]
+    fn metatag_ladder_rungs_are_lossless_every_width() {
+        // splitmix64, integer-only deterministic PRNG (no float, no rand dep).
+        let mut state: u64 = 0x9E37_79B9_7F4A_7C15;
+        let mut next = || -> u64 {
+            state = state.wrapping_add(0x9E37_79B9_7F4A_7C15);
+            let mut z = state;
+            z = (z ^ (z >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
+            z = (z ^ (z >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
+            z ^ (z >> 31)
+        };
+
+        let mut rows: Vec<String> = Vec::new();
+        let mut total_tested: u64 = 0;
+        let mut total_fail: u64 = 0;
+        let mut proven_included = false;
+
+        for width in 1u32..=16 {
+            let mut tested: u64 = 0;
+            let mut fail: u64 = 0;
+            // exhaustive 0/1/2-byte inputs
+            if !rung_ok(&[], width) {
+                fail += 1;
+            }
+            tested += 1;
+            for a in 0u16..=255 {
+                tested += 1;
+                if !rung_ok(&[a as u8], width) {
+                    fail += 1;
+                }
+            }
+            for a in 0u16..=255 {
+                for b in 0u16..=255 {
+                    tested += 1;
+                    if !rung_ok(&[a as u8, b as u8], width) {
+                        fail += 1;
+                    }
+                }
+            }
+            // 20_000 seeded-random inputs, length 0..=63
+            for _ in 0..20_000 {
+                let len = (next() % 64) as usize;
+                let mut v = Vec::with_capacity(len);
+                for _ in 0..len {
+                    v.push((next() & 0xFF) as u8);
+                }
+                tested += 1;
+                if !rung_ok(&v, width) {
+                    fail += 1;
+                }
+            }
+            total_tested += tested;
+            total_fail += fail;
+            let alphabet = 1u64 << width;
+            let proven = if width == 10 {
+                proven_included = true;
+                "|readme_proven_rung=1024"
+            } else {
+                ""
+            };
+            rows.push(format!(
+                "RUNG|width={width}|alphabet={alphabet}|tested={tested}|roundtrip_failures={fail}|uniform=1|lossless={}{proven}|json=0",
+                u8::from(fail == 0)
+            ));
+        }
+
+        // cross-rung composition over the four named public rungs (B64/B256/B1024/Hyper)
+        let obj = b"Asolaria rime sphere -> GGUF -> colour QR: metatags re-relate with 0 loss".to_vec();
+        let crossed = nexus_ladder_traverse(&obj, &BehcsRung::ALL);
+        assert_eq!(crossed.as_deref(), Some(obj.as_slice()), "cross-rung ladder lost data");
+
+        let digest = hex(&sha256(rows.join("\n").as_bytes()));
+        for r in &rows {
+            println!("{r}");
+        }
+        println!(
+            "LADDER|widths=1..16|rungs={}|total_tested={total_tested}|total_failures={total_fail}|cross_rung_4rung=1|readme_1024_rung_included={}|receipt_sha256={digest}|tag=MEASURED|json=0",
+            rows.len(),
+            u8::from(proven_included)
+        );
+
+        assert_eq!(total_fail, 0, "a metatag-ladder rung lost data");
+        assert!(proven_included, "the README-proven 1024 rung must be in the sweep");
+    }
 }
