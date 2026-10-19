@@ -1,0 +1,14 @@
+HOST8ROOMS|cmd=probe|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|dir=D:/ASOLARIA-HOST8-ROOMS-100G|sectors=125|rooms_per_sector=100000000|rooms=12500000000|room_bytes=8|bytes=100000000000|seed16=ca41a49fcda8f634|json=0
+TRITWORD|trits=27|kernel=K27_eq_3pow3|half_range=3812798742493|capacity_rooms=7625597484987|occupied_trits=22|free_upper_trits=5|centred_on=ground_room|json=0
+GROUND|room_n=6250000000|balanced=0|sector=62|sector_balanced=0|offset=400000000|balanced_min=-6250000000|balanced_max=6249999999|negative_leads_by=1|sectors_balanced=1_odd_count|json=0
+ROOMLAW|room=n|balanced=n-6250000000|word=balanced+3812798742493|sector=n/100000000|sector_balanced=sector-62|offset=(n%100000000)*8|lookup=one_seek|stub=mix(word^seed)|readback=unmix(stub)^seed=word|mix_invertible=1|collisions=0_by_construction|json=0
+ROOMADDR|n=0|balanced=-6250000000|sector=0|sector_balanced=-62|offset=0|stub16=f5b272ccfc318a40|trits27_msf=00000-++-0--++0---0+0-++---|trits_spell=-6250000000|spell_ok=1|tribit_roundtrip=EXACT|json=0
+ROOMADDR|n=99999999|balanced=-6150000001|sector=0|sector_balanced=-62|offset=799999992|stub16=25b7be3ff786cd62|trits27_msf=00000-++-0+0++--0+-0-000+--|trits_spell=-6150000001|spell_ok=1|tribit_roundtrip=EXACT|json=0
+ROOMADDR|n=100000000|balanced=-6150000000|sector=1|sector_balanced=-61|offset=0|stub16=e28f309eda2a5140|trits27_msf=00000-++-0+0++--0+-0-000+-0|trits_spell=-6150000000|spell_ok=1|tribit_roundtrip=EXACT|json=0
+ROOMADDR|n=6249999999|balanced=-1|sector=62|sector_balanced=0|offset=399999992|stub16=49d528e26b263a55|trits27_msf=00000000000000000000000000-|trits_spell=-1|spell_ok=1|tribit_roundtrip=EXACT|json=0
+ROOMADDR|n=6250000000|balanced=0|sector=62|sector_balanced=0|offset=400000000|stub16=c492fa3972e05ab3|trits27_msf=000000000000000000000000000|trits_spell=0|spell_ok=1|tribit_roundtrip=EXACT|json=0
+ROOMADDR|n=6250000001|balanced=1|sector=62|sector_balanced=0|offset=400000008|stub16=c984e66a191ae979|trits27_msf=00000000000000000000000000+|trits_spell=1|spell_ok=1|tribit_roundtrip=EXACT|json=0
+ROOMADDR|n=12499999999|balanced=6249999999|sector=124|sector_balanced=62|offset=799999992|stub16=ac245f35760776a5|trits27_msf=00000+--+0++--0+++0-0+--++0|trits_spell=6249999999|spell_ok=1|tribit_roundtrip=EXACT|json=0
+WARM|sector=0|bytes=800000000|ms=6216|json=0
+PROBE|test=hot_sector0|span_rooms=100000000|lookups=10000000|bad=0|ns_total=33346045100|ns_per_lookup=3334|lookups_per_s=299885|method=one_seek_read_8B|json=0
+PROBE|test=cold_all|span_rooms=12500000000|lookups=29696|bad=0|ns_total=301669043700|ns_per_lookup=10158575|lookups_per_s=98|method=one_seek_read_8B|json=0

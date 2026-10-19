@@ -1,0 +1,14 @@
+[package]
+name = "host8rooms"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+description = "Make, verify and probe Host8 8-byte stubbed rooms on a drive: room n is 8 bytes at sector n / R, offset (n % R) * 8. Integer only, std only."
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[profile.release]
+opt-level = 3
+overflow-checks = true

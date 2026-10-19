@@ -1,5 +1,8 @@
 # asolaria-host8
 
+(Not to be confused with the Host8 *rooms* of `docs/handoffs/acer-host8-rooms-guide-2026-10-19/`: 8-byte slots at a
+computed place on a drive, positional and collision-free. This crate is the 8-byte host lane and its handle.)
+
 The Host8 8-byte lane as an in-process library. No HTTP listener, no process launch, no file read:
 every function returns a computed value. The launch site (`&fire=1` + EXEC-FREEZE release) stays
 upstream and gated.

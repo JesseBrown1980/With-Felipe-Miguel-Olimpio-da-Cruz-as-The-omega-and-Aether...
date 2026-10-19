@@ -195,6 +195,14 @@ The `host8-serve` server itself is still running. On 2026-10-18 ACER's process l
 the runtime the Node/V8 services are being ported into, under `swap_gate=parity-before-retire` with
 `node_retired=0`.
 
+**Host8 rooms are not the Host8 handle.** On 2026-10-19 ACER built 12,500,000,000 eight-byte *rooms* on the owner's
+USB drive (`docs/handoffs/acer-host8-rooms-guide-2026-10-19/`). A room is positional: its address is its number n,
+and its place, `sector n / R` at offset `(n % R) × 8`, is computed, never looked up. Its 8 bytes are a full 64-bit
+bijection of n's 27-trit word, a check of position rather than an identity, so rooms cannot collide (MEASURED: the
+cloud decoded 300,000,000 of them back to their own numbers). That is rule 1 below applied to storage. The handle above
+stays retired as an identity. One limit follows from rule 3 below: the tool salts every room with the total room count, so
+growing the room count moves every address already written. Growth is a new build, not an extension.
+
 ## 5. How deep is enough
 
 > "You don't need to render it all the way out. I think 60 levels is okay. The point is that this

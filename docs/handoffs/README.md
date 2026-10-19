@@ -581,3 +581,18 @@ and every `IDX` row lands on its line exactly. The records are:
 
 The 2 TB vault map in the same zip is a private drive listing. It is held and pinned by sha256 (`HELD.hbp`).
 Checks and row counts are in `PROVENANCE.md`; `sha256sum -c SHA256SUMS` passes.
+
+## Host8 rooms guide (2026-10-19)
+
+`acer-host8-rooms-guide-2026-10-19/`: ACER's guide, tool source and sealed receipts for the 12,500,000,000 eight-byte
+Host8 rooms it built on the owner's USB drive. The delivery stays byte-identical, except that the Windows binary is
+held (`HELD.hbp`). The folder also holds the owner's screenshot of ACER's report, with its EXIF removed.
+
+This machine regenerated three whole 800 MB sectors (−62, 0, +62) byte-identical to ACER's verify receipt. It also
+recomputed all 125 sector hashes and the merkle from the room law, and decoded 300,000,000 rooms back to their
+numbers (`cloud/CLOUD-ROWS.hbp`). CI rebuilds the tool and re-seals the three receipts byte for byte (job
+`host8-rooms`). `PROVENANCE.md` carries 20 notes on the guide's wording, among them:
+
+- the ground room is the upper of the two middle rooms;
+- the cold probe's 98/s is an upper bound;
+- "GPU-type memory" is the owner's name for a goal: the capacity is GPU-scale, the speed is the drive's.

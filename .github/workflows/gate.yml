@@ -331,3 +331,38 @@ jobs:
           test "$status" -eq 3
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  host8-rooms:
+    # ACER's Host8 rooms tool and receipts (docs/handoffs/acer-host8-rooms-guide-2026-10-19): delivered bytes,
+    # the tribit module equal to aether's, the crate's gates, and the three receipts re-sealing byte for byte.
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: docs/handoffs/acer-host8-rooms-guide-2026-10-19/host8rooms } }
+    env: { CARGO_TARGET_DIR: '${{ runner.temp }}/host8rooms-target' }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: delivered bytes, and the tribit module equal to aether's copies
+        run: |
+          (cd .. && sha256sum -c --quiet SHA256SUMS)
+          sha256sum -c TRIBIT.sha256
+          cmp src/tribit/mod.rs ../../acer-tribit-mod-rs-fb7e786-2026-10-18/kernel/core/src/tribit/mod.rs
+          tail -n +8 ../../../../kernel/tribit/src/lib.rs | cmp - src/tribit/mod.rs
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: the three receipts re-seal byte for byte from the shipped source
+        run: |
+          cargo +1.81.0 build --release --locked
+          bin="$CARGO_TARGET_DIR/release/host8rooms"
+          t="$RUNNER_TEMP/host8rooms-reseal"
+          mkdir -p "$t"
+          for r in MAKE:b6b64a02864356f9 VERIFY:cc391c49c90ee068 PROBE:f06366a0e0002d2e; do
+            name="${r%%:*}"; prior="${r##*:}"
+            cp "../receipts/ROOMS-$name.hbp" "$t/"
+            (cd "$t" && "$bin" seal "ROOMS-$name.hbp" "$prior" > "SEAL-$name.hbp")
+            for f in "SEAL-$name.hbp" "ROOMS-$name.hbp.hbi" "ROOMS-$name.hbp.sha256" "ROOMS-$name.hbp.hbi.sha256"; do
+              cmp "$t/$f" "../receipts/$f"
+            done
+          done
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi

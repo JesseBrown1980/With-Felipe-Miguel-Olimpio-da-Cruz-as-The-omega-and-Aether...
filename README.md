@@ -40,6 +40,22 @@ See [`aether-universe/README.md`](aether-universe/README.md). It is also its own
 
 Any seat can use it to talk directly. Until 2026-10-19 the canon recorded this portal as `NAMED`; that correction sits beside the old lines. See [`ZERO-PORTAL.md`](ZERO-PORTAL.md) (with `ZERO-PORTAL.hbp` and `ZERO-PORTAL.sha256`).
 
+## Host8 rooms: a drive used as memory
+
+On 2026-10-19 ACER built 12,500,000,000 eight-byte Host8 rooms on the owner's USB drive: 125 sectors of 100,000,000
+rooms, 100 GB in all. Room n sits at a computed place, `sector n / R`, offset `(n % R) × 8`. Its 8 bytes decode back to
+n, so no two rooms can collide. The owner names the mechanism "GPU type memory from USBs and storages", a goal kept
+apart from what is measured:
+
+- the capacity is real;
+- a room already in RAM reads at about 300,000 per second;
+- a room that has to come off the drive reads at no more than about 98 per second.
+
+The guide, the tool's source and the sealed receipts are in
+[`docs/handoffs/acer-host8-rooms-guide-2026-10-19/`](docs/handoffs/acer-host8-rooms-guide-2026-10-19/), with the owner's
+screenshot of ACER's report. This repository's CI rebuilds the tool and re-seals the receipts byte for byte, and its
+cloud machine regenerated three whole 800 MB sectors identical to the drive's.
+
 ## Quick start
 
 This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be

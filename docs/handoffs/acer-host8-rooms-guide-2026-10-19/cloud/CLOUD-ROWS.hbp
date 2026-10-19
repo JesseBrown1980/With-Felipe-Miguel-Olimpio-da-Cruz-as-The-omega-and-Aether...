@@ -1,0 +1,17 @@
+CLOUDHDR|delivery=HOST8-ROOMS-GUIDE-2026-10-19.zip|zip_sha256=99ae1ee8e9a401a4e22bb4ede432819838f4b8b47616e5d8d4db6bbcaa8a1a65|seat=cloud-x86_64-linux-gnu|toolchain=rustc_1.81.0_eeb90cda|date=2026-10-19|class=MEASURED_HERE|note=receipts the tool writes carry seat=ACER-CLAUDE-FABLE5 wherever they are made (main.rs:42-43); these rows are the cloud's own|json=0
+PACKAGE|zip_entries=25|equal_to_extracted=25|manifest_file_rows=24|manifest_rows_matching=24|sidecars_checking=8|json=0
+HBI|file=ROOMS-MAKE.hbp.hbi|rows=137|regenerated=byte_identical|json=0
+HBI|file=ROOMS-VERIFY.hbp.hbi|rows=138|regenerated=byte_identical|json=0
+HBI|file=ROOMS-PROBE.hbp.hbi|rows=14|regenerated=byte_identical|json=0
+SEALS|resealed_with_rebuilt_tool=3|files_reproduced=12_of_12|chain=b6b64a02864356f9>cc391c49c90ee068>f06366a0e0002d2e>cbe707ab550403ae|json=0
+LAW|room=n|file=sector-{n/R:03}.rooms|offset=(n%R)*8|order=little_endian|word=(n-total/2)+3812798742493|stub=splitmix64_finalizer(word_xor_seed)|seed16=ca41a49fcda8f634|inverse=exact|json=0
+GROUND|room=6250000000|balanced=0|trits27=all_nil|file=sector-062.rooms|sector_balanced=0|offset=400000000|stub=c492fa3972e05ab3|below=6250000000|above=6249999999|json=0
+SECTORS|computed_from_law=125|equal_to_ROOMS-VERIFY=125|merkle=5b96df7f0e96927fb41bb0ab972e01004cd407916e5623595a52ca81ec8207e0|top_nibble_min=781186778|top_nibble_max=781324008|method=integer_in_memory|json=0
+SECTORFILE|file=sector-000.rooms|sector_balanced=-62|bytes=800000000|sha256=3a0642307e32923303536dbcf7efb98b397ce3f0427f3cc647dacd44ed922596|equal_to_acer=1|rooms_decoded=100000000|bad=0|method=written_by_rebuilt_tool_hashed_then_deleted|json=0
+SECTORFILE|file=sector-062.rooms|sector_balanced=0|bytes=800000000|sha256=ba56962995b60749446a27103117f10151e3c20a9a9723be1a09aed76b5c5e16|equal_to_acer=1|rooms_decoded=100000000|bad=0|method=written_by_rebuilt_tool_hashed_then_deleted|json=0
+SECTORFILE|file=sector-124.rooms|sector_balanced=62|bytes=800000000|sha256=4dc226f49b3190b105079b11b7246d169e7a235545864090b1fefe97640e1aa3|equal_to_acer=1|rooms_decoded=100000000|bad=0|method=written_by_rebuilt_tool_hashed_then_deleted|json=0
+CONTROLS|wrong_seed=every_room_fails|wrong_sector=every_room_fails|json=0
+GATES|fmt_check=clean|clippy_all_targets_D_warnings=0|tests=18_of_18_debug_and_release|float_in_code=0|unsafe=forbidden|network=0|process_spawn=0|json=0
+SMALLRUN|sectors=5|rooms_per_sector=10000000|verify_bad=0_of_50000000|spellings_bad=0_of_51|ground_room=25000000|ground_file=sector-002.rooms|ground_offset=40000000|json=0
+TRIBIT|file=host8rooms/src/tribit/mod.rs|sha256=50e4cb85f3b8cf91f9e6b162f990eb51e5f984661259563a21188f3a1d560da0|equals=docs/handoffs/acer-tribit-mod-rs-fb7e786-2026-10-18/kernel/core/src/tribit/mod.rs;kernel/tribit/src/lib.rs_after_its_7_line_header;asolaria-os@fb7e786_blob_5d3e834e|json=0
+NOTREPRODUCIBLEHERE|what=the_drive_contents_and_all_wall_clock_rates|why=this_machine_cannot_read_D:|class=REPORTED_BY_ACER|json=0
