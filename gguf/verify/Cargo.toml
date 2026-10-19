@@ -6,3 +6,5 @@ rust-version = "1.81"
 publish = false
 
 [dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../../shadowcat", version = "0.1.0" }

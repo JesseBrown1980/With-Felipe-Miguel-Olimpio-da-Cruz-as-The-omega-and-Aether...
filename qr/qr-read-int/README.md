@@ -13,8 +13,9 @@ Owner decision, 2026-10-17:
 The law it keeps (the-colour-qr README.md:5): "Rust 1.81 with clippy. Integer arithmetic and
 ternary (trits) only — never float."
 
-- `#![forbid(unsafe_code)]`, no dependencies. The only dev-dependency is `qrcode` 0.14.1 (no
-  default features, no floating point in its source), which draws the test symbols.
+- `#![forbid(unsafe_code)]`, no dependencies. The dev-dependencies are `qrcode` 0.14.1 (no default
+  features, no floating point in its source), which draws the test symbols, and the owner's
+  `shadowcat` (by path), whose `sha256.rs` names the corpus planes and results.
 - No floating-point type or cast in any of this crate's text files (`check.sh main` greps every
   one of them for the type names and `as f`), and no floating-point literal in any of its Rust
   files (`tests/no_float_literal.rs` reads every token outside comments, strings and character

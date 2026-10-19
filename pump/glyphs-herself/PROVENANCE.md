@@ -19,7 +19,8 @@ The crate depends by path on `asolaria-ternary` (`../../ternary`, library `terna
 re-exports the owner's tribit unit from `../../kernel/tribit` (asolaria-tribit@1292191
 `src/lib.rs`, git blob `f83acb31584c887f1502704a3a9bfcf8e619b64d`, vendored byte-identical and
 pinned in `ternary/UPSTREAM.sha256`, sha256 `93c96b97…`). Nothing from it is copied here. Both are
-path crates with no dependencies of their own; `Cargo.lock` lists them and no third-party crate.
+path crates with no dependencies of their own. The tests also use the owner's `shadowcat` (by path)
+for SHA-256. `Cargo.lock` lists these three and no third-party crate.
 
 `Zero` is used in two places, where the vendored generators carry the value as a trit
 (`SG = np.sign(Dv).astype(np.int8)`, values `{-1, 0, 1}`): `src/herself.rs:253-265` `dir_key`

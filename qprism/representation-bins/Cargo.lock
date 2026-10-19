@@ -11,4 +11,9 @@ name = "asolaria-qprism-representation-bins"
 version = "0.1.0"
 dependencies = [
  "asolaria-qprism-representation",
+ "shadowcat",
 ]
+
+[[package]]
+name = "shadowcat"
+version = "0.1.0"

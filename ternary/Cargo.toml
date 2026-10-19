@@ -18,3 +18,7 @@ asolaria-tribit = { path = "../kernel/tribit", version = "0.1.0" }
 unsafe_code = "forbid"
 
 [workspace]
+
+[dev-dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../shadowcat" }

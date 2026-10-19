@@ -5,3 +5,10 @@ version = 3
 [[package]]
 name = "gguf-verify-hbp"
 version = "0.1.0"
+dependencies = [
+ "shadowcat",
+]
+
+[[package]]
+name = "shadowcat"
+version = "0.1.0"

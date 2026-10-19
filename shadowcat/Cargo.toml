@@ -8,6 +8,11 @@ description = "The owner's SHADOWCAT gear engine with its verify, callingchain a
 keywords = ["shadowcat", "three-gap", "sha256", "hbp", "integer"]
 categories = ["mathematics"]
 
+# The library is the owner's `src/sha256.rs` itself: aether's own code reuses that one SHA-256 by path
+# (owner decision 2026-10-18; parity in `parity/`). The binaries keep their own `mod sha256`.
+[lib]
+path = "src/sha256.rs"
+
 # The five .rs files under src/ are the owner's, kept byte-identical, so the lints they trip are
 # allowed here by name instead of by attributes in the files. Every other warning still denies.
 [lints.rust]
@@ -22,6 +27,8 @@ identity_op = "allow"
 needless_range_loop = "allow"
 # src/main.rs:433, src/bin/callingchain.rs:204,237: column headings passed as `{}` arguments.
 print_literal = "allow"
+# src/sha256.rs:29: as the library root, `Sha256::new` is public API without a `Default` impl.
+new_without_default = "allow"
 
 # The owner's runs used the release profile (USIM books/CHAIN-TOPOLOGY.md:431). At opt-level 0
 # `C_LIGHT.powi(6)` (src/bin/callingchain.rs:116) is computed at run time one ULP lower than the

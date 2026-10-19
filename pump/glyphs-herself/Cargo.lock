@@ -18,4 +18,9 @@ name = "pump-glyphs-herself"
 version = "0.1.0"
 dependencies = [
  "asolaria-ternary",
+ "shadowcat",
 ]
+
+[[package]]
+name = "shadowcat"
+version = "0.1.0"

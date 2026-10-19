@@ -19,6 +19,8 @@ name = "vault-read"
 path = "src/bin/vault-read.rs"
 
 [dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../../shadowcat", version = "0.1.0" }
 asolaria-hbi-hbp = { path = "../vendor/asolaria-hbi-hbp", version = "0.1.0" }
 asolaria-ternary = { path = "../../ternary", version = "0.1.0" }
 hbp = { path = "..", version = "0.1.0" }

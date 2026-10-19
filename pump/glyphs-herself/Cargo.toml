@@ -19,3 +19,7 @@ asolaria-ternary = { path = "../../ternary", version = "0.1.0" }
 
 [profile.release]
 opt-level = 3
+
+[dev-dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../../shadowcat" }

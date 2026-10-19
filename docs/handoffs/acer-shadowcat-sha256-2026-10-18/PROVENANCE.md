@@ -44,3 +44,7 @@ code written for aether (`gguf/verify/src/sha256.rs`, `hbp/vault-reader/src/sha.
 `pump/glyphs-herself/tests/common/mod.rs`, `qr/qr-read-int/tests/corpus/sha256.rs`,
 `ternary/tests/common/sha256.rs`) switches to `src/sha256.rs` once the digests are shown identical on every
 fixture and GGUF. The owner's other vendored SHA-256 code stays byte-identical where it is.
+
+Done 2026-10-19. Parity was shown over 23,486 inputs with 0 mismatches
+(`shadowcat/parity/SHA256-PARITY-2026-10-19.hbp`), and the switch followed. `shadowcat/Cargo.toml` makes `src/sha256.rs` the
+crate's library, and seven aether-written copies are now adapters over it (`shadowcat/parity/README.md`).

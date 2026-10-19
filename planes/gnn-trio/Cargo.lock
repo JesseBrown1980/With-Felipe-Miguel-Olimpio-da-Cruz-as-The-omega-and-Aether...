@@ -15,8 +15,13 @@ version = "0.1.0"
 dependencies = [
  "asolaria-g-planes",
  "asolaria-l0-edge",
+ "shadowcat",
 ]
 
 [[package]]
 name = "asolaria-l0-edge"
+version = "0.1.0"
+
+[[package]]
+name = "shadowcat"
 version = "0.1.0"

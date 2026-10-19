@@ -1,7 +1,7 @@
 # shadowcat: the owner's SHADOWCAT gear engine in Rust 1.81
 
-This crate (`shadowcat`, four binaries, no dependencies) holds the program the owner ran on
-2026-07-26 as `/root/_horizon/shadowcat/`. It came from ACER's `D:/asolaria-absorb/shadowcat` on
+This crate (`shadowcat`: four binaries and a library, no dependencies) holds the program the
+owner ran on 2026-07-26 as `/root/_horizon/shadowcat/`. It came from ACER's `D:/asolaria-absorb/shadowcat` on
 2026-10-18. The five `.rs` files and the five run records are kept byte-identical (`UPSTREAM.sha256`,
 `PROVENANCE.md`). Built here with rustc 1.81.0, `shadowcat`, `verify` and `threegap` print their
 delivered records byte for byte. `shadowcat` writes `shadowcat.hbp` and `shadowcat.hbi` with the
@@ -168,6 +168,14 @@ decimals. That has not been measured here.
 which the test confirms. Its table at `:343` labels tag 0x21 "vertices". In `src/main.rs:476`,
 tag 0x21 is the icosahedral group order. Both are 60, so the bytes are the same.
 
+## The library: one SHA-256 for aether
+
+The crate's library target is the owner's `src/sha256.rs`, unchanged (`Cargo.toml` `[lib]`). The owner
+decided on 2026-10-18 that this file is the one SHA-256 aether's own code reuses. Aether's own crates
+depend on it by path: `gguf/verify`, `hbp/vault-reader` and `planes/gnn-trio`, plus the tests of
+`pump/glyphs-herself`, `qr/qr-read-int`, `ternary` and `qprism/representation-bins`. They switched
+after `parity/` showed the same digests. The binaries keep their own `mod sha256` of the same file.
+
 ## Gates
 
 | Gate | Command | Result, 2026-10-18 |
@@ -178,7 +186,7 @@ tag 0x21 is the icosahedral group order. Both are 60, so the bytes are the same.
 | test | `cargo +1.81.0 test --locked` | 4 passed |
 | reproduction | `check.sh` (main) | 8/8 rows match, exit 0 |
 | opt-level cause | `check.sh opt0` | exit 0 |
-| no float in this crate's own code | `grep -rnE '\bf32\b\|\bf64\b\|as f[0-9]' tests/` | no hits |
+| no float in this crate's own code | `grep -rnE '\bf32\b\|\bf64\b\|as f[0-9]' tests/ parity/` | no hits |
 
 **Format.** `cargo fmt --check` is not run, and it fails. rustfmt would rewrite all five owner files
 (58 hunks; `cargo fmt --check` prints 66, because it reaches `src/sha256.rs` from `src/main.rs` and

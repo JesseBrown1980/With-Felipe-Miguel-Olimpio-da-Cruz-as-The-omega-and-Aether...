@@ -7,8 +7,13 @@ name = "asolaria-ternary"
 version = "0.1.0"
 dependencies = [
  "asolaria-tribit",
+ "shadowcat",
 ]
 
 [[package]]
 name = "asolaria-tribit"
+version = "0.1.0"
+
+[[package]]
+name = "shadowcat"
 version = "0.1.0"

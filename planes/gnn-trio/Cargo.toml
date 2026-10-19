@@ -20,5 +20,7 @@ name = "trio"
 path = "examples/trio.rs"
 
 [dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../../shadowcat", version = "0.1.0" }
 asolaria-g-planes = { path = "../../model/g-planes", version = "0.1.0" }
 asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }

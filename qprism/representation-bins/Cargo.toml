@@ -24,3 +24,7 @@ rust_qprism_181 = { package = "asolaria-qprism-representation", path = "../repre
 overflow-checks = true
 lto = true
 codegen-units = 1
+
+[dev-dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../../shadowcat" }

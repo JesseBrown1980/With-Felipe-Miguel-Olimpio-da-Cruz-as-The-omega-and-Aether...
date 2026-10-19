@@ -48,7 +48,7 @@ case "${1:-main}" in
       fi
       echo "SCREP|bin=$name|path=$path|expected_from=$(field expected_from "$row")|match=1|json=0"
     done
-    if grep -rnE --include='*.rs' '\bf32\b|\bf64\b|as f[0-9]' tests/; then exit 1; fi
+    if grep -rnE --include='*.rs' '\bf32\b|\bf64\b|as f[0-9]' tests/ parity/; then exit 1; fi
     ;;
   opt0)
     work="$(mktemp -d)"

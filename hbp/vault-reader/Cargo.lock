@@ -31,4 +31,9 @@ dependencies = [
  "asolaria-hbi-hbp",
  "asolaria-ternary",
  "hbp",
+ "shadowcat",
 ]
+
+[[package]]
+name = "shadowcat"
+version = "0.1.0"

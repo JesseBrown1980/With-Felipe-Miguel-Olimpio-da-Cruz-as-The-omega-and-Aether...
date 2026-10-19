@@ -13,8 +13,10 @@ name = "qr_read_int"
 path = "src/lib.rs"
 
 # No dependencies. The test corpus draws its symbols with the `qrcode` crate (no default
-# features, no floating point in its source).
+# features, no floating point in its source) and names its files with shadowcat's SHA-256.
 [dev-dependencies]
+# The owner's shadowcat `src/sha256.rs`, the one SHA-256 aether's own code reuses.
+shadowcat = { path = "../../shadowcat" }
 qrcode = { version = "=0.14.1", default-features = false }
 
 # The page-parity corpus decodes a few hundred images under `cargo test`.
