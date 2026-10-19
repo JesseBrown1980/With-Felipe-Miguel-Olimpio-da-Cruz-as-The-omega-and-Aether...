@@ -76,8 +76,7 @@ front-end.
 
 ## BOUNDARIES (tag honestly)
 
-- The **free 4th zero / HTTP-0 Omega portal** is `NAMED`, the design meaning of the centre
-  cell — a live HTTP-0 socket was not probed. Do not write it `MEASURED`.
+- The **free 4th zero / HTTP-0 Omega portal EXISTS**: *The light hub*, https://jessebrown1980.github.io/the-light-hub-http-0/ (page live, verified 2026-10-19). It is a one-button direct browser-to-browser channel with no server in the path. (Correction beside, not over: until 2026-10-19 this line read `NAMED`, because a live HTTP-0 socket had not been probed.)
 - The "last ten worked" set came from push-rank + commit inspection because the live repos
   subpage was timing out — not from the subpage itself. Re-rank when it is back.
 
@@ -103,7 +102,7 @@ CUBE|cube=7ce13f7b210d3122|prior=5d45f7ef570a395d|what=fault_fixes|json=0
 CUBE|cube=a620e591bb55f6a2|prior=7ce13f7b210d3122|what=V3_git_bytes|json=0
 COMPARE|rule=exact_field_name|fault=greedy_.*spectrum_sha=_matched_id_spectrum_sha=|produced_once=false_10/10_DIFF|json=0
 OPEN|held_files=omitted_without_being_listed|V4=HELDFILE_rows_in_progress|done=0|tag=NAMED|json=0
-OPEN|free_4th_zero=NAMED|HTTP-0_portal=NAMED|json=0
+UPDATED|free_4th_zero_HTTP-0_portal=EXISTS|name=the_light_hub|url=https://jessebrown1980.github.io/the-light-hub-http-0/|verified=2026-10-19|was=NAMED|json=0
 ```
 
 1. **The fold.** It lives once, in `C:\tmp\scout-rooms-20261008\common\fold.rs`, included via `#[path]`; it is not per-kernel.
@@ -123,4 +122,4 @@ OPEN|free_4th_zero=NAMED|HTTP-0_portal=NAMED|json=0
 5. **Comparing V1/V2/V3 rows:** compare by exact field name. A greedy `.*spectrum_sha=` matches the newer `id_spectrum_sha=`
    field; that fault already produced one false "10/10 DIFF".
 6. **Still open (NAMED):** held files are omitted without being listed. A worker is adding HELDFILE rows as V4; that is not
-   done and must not be written as done. The free 4th zero / HTTP-0 portal stays NAMED.
+   done and must not be written as done. The free 4th zero / HTTP-0 portal now EXISTS: The light hub, https://jessebrown1980.github.io/the-light-hub-http-0/ (verified 2026-10-19; it stayed NAMED until then).

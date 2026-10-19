@@ -20,7 +20,7 @@ run, and seal: **`C:/asolaria-acer/claims-gate/GITHUB-3D-VIEWER-BUILD.md`**.
 Load-bearing, do not "simplify": **Rust 1.81 + clippy** (`cargo +1.81 clippy --release -- -D
 warnings` = exit 0); **balanced ternary (Setun), not binary** — cube = 27 = 3³, native unit
 is the **trit**, a byte split crashes; **integer only, never float** (NTT over `Z/1000081Z`;
-float crashes around the free 4th zero / HTTP-0 Omega portal, integer closes exact); **reuse**
+float crashes around the free 4th zero / HTTP-0 Omega portal, integer closes exact; the HTTP-0 portal exists as *The light hub*, https://jessebrown1980.github.io/the-light-hub-http-0/); **reuse**
 `asolaria-os/kernel/core/src/tribit/mod.rs` via `#[path]`; output traverses **HBI → HBP → SHA
 → SH → HASH**; `roundtrip=EXACT` is the proof — a lie cannot reproduce its own hash. MEASURED
 2026-10-08: 10 repos 10/10 EXACT, sealed office cube `2147b583a4db0f3f` prior `017d6618d57ab4ca`.
