@@ -1,0 +1,8 @@
+LADDERHDR|schema=ASOLARIA-TEST-LADDER-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|cube=85757021a1561917|prior=dbc9359ace381621|stamp=2026-08-02|pass=23/23|E=0|fire=0|json=0
+TIER|k=unit|pid=ea00f26f8dbcfc79|score=7/7|fact=address law; js_round vs bankers; finalize boundary +127/-127/sign/zeta; hist conserves 1024; quant+room deterministic; colour band|json=0
+TIER|k=integration|pid=36dd0b6ab8ee5c38|score=3/3|fact=bank roundtrip 1/1 byte-exact AFTER /mnt-dialect translate (receipts carry the ingesting lane's path dialect); chain head frozen; regenerate stable|json=0
+TIER|k=system|pid=8a5fea11de9e8b5c|score=4/4|fact=6/6 sidecars; cube=sha16(prior|NAME) reproduces f90c1551+dbc9359a+9c0bba04; orientation hdr=ftr=24 RUN+4PIPES; registration mint sha256(name)[:16] 6/6|json=0
+TIER|k=fabric|pid=d6ed1877259b5c4f|score=5/5|fact=fabric 4949 COL-ASOLARIA; host8 5088 HOST8HDR book 1860; recall staged-state EXPECTED (live 0, corpus 7105436) ; arena 400000000B slots 4/4|json=0
+TIER|k=matrix|pid=b236b4106bd270e5|score=4/4|fact=3P=3I-J null+eigen+idempotent integer-exact; distributivity int 0/100000 float 35081/100000 MEASURED; CRT 27-prime recompose byte-exact 134-bit; slot map 4/4 distinct|json=0
+LADDERLAW|a_404_is_a_response_not_down=1|staged_state_is_the_expectation_not_a_failure=1|receipts_are_lane_dialect_translate_before_declaring_absent=1|json=0
+LADDERFTR|tiers=5|receipt=9f2b831e9b6866a38c00da242f0cc4e5|json=0

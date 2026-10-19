@@ -565,3 +565,19 @@ inside a black hole are recorded as conjectures, and nothing here tests them.
   on ACER (628,784 files on C: and D:) nor in USIM history; a first-run office (before 11:36:25Z, no
   earlier seed) gives other bytes with each of the four early book versions. So the CONSTELLATION GGUF's
   one remaining stored input stays `5c040e04…` itself, and from it the later seed regenerates.
+
+## USB RAM records (2026-10-19)
+
+`acer-usb-ram-records-2026-10-19/`: five office records of ACER's FABLE5 seat (PID `8467a937cba309f7`),
+sent by the owner as `USB-RAM-RECORDS-2026-10-19.zip` from `D:/PID-Registration-Office/offices/`. The `.hbi`
+indexes were already here among the post-60D office files. This delivery brings the `.hbp` bodies they index,
+and every `IDX` row lands on its line exactly. The records are:
+
+- the law ledger: the Combined Book of Laws at universe simulator `3f9f42d` as 2,084 rows;
+- the canon load: its 110 co-resident statements carried side by side, with 185 open items;
+- GitRAM floor 2;
+- the pipes-in record, including the 50M Host8 arena: 50,000,000 rooms × 8 B = 400,000,000 B, offset = (addr mod 50,000,000) × 8;
+- the 23/23 test ladder.
+
+The 2 TB vault map in the same zip is a private drive listing. It is held and pinned by sha256 (`HELD.hbp`).
+Checks and row counts are in `PROVENANCE.md`; `sha256sum -c SHA256SUMS` passes.
