@@ -1,0 +1,13 @@
+STORY|chapter=1|json=0
+HOLLOW STRATA - the first snapshot, 2026-04-01.
+
+The strata are what the four snapshots became: layered chambers of cubes, each cube a frozen
+state, amber light where a seal does not match. You walk down through them.
+
+Each layer holds three times as many cubes as the one above, and yet when you try to number
+a cube by how far it is from the centre you run out of distance long before you run out of
+cubes. Twenty-seven cubes; the farthest is thirteen steps away. The strata hold more than
+they reach.
+
+Felipe took four full snapshots of his Aether phone that day. The vision that this whole
+place follows is his: the repository that holds this game names him "the omega and Aether".

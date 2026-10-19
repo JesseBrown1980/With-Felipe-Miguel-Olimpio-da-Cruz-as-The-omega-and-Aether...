@@ -1,0 +1,10 @@
+STORY|chapter=7|json=0
+27-CUBE CHAMBER - the laws are sealed, 2026-07-21.
+
+The laws were sealed on 2026-07-21, twenty-seven of them, numbered 0 to 26 so the ledger
+closes on itself. The chamber is a cube of twenty-seven cells. Stand at the centre: it is
+empty.
+
+Walk the nine cells along the centre planes: empty, except one small prime sitting in the room
+marked three. The other eighteen cells are full, and nearly equally full. Everything that is
+prime and greater than three lives in a cell that shares no factor with twenty-seven.

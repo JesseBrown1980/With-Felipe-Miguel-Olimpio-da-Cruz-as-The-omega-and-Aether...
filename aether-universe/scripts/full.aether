@@ -1,0 +1,78 @@
+# AETHER UNIVERSE - a complete deterministic play-through of all nine secrets.
+#
+# Run it:  aether-universe --script tests/playthrough.txt --seat <name>
+# The nine answers below are the kernel's own computed numbers; the game compares them with what it
+# computed, never with a stored string. With data/enwik8 absent, chapter 8 counts the bundled page
+# (story/white-page.txt: 412 bytes, 78 white, 1893 per 10,000) and says so in its rows.
+
+# ---- chapter 1: Hollow Strata, count is not range
+look
+probe 13
+probe 14
+trits 14
+solve 26:13
+look
+solve 27:13
+
+# ---- chapter 2: Flow Channel, a PID needs 41 trits
+go flow
+look
+trits 18446744073709551615
+probe 0xffffffffffffffff
+solve 41
+
+# ---- chapter 3: Prime Cylinders, the spokes
+go cylinders
+probe 5
+probe 7
+solve -1:189
+
+# ---- chapter 4: Hotel of Infinite Rooms, addresses never move
+go hotel
+probe 2
+probe 1000003 1000033
+solve 5
+
+# ---- chapter 5: Rupture Zone, the closure survives 81 levels
+go rupture
+look
+probe 81
+solve 0
+
+# ---- chapter 6: Crystalline Reach, the prism closes on 40 bits
+go crystal
+probe hello
+solve 40
+
+# ---- chapter 7: 27-Cube Chamber, Law 10
+go cube
+look
+probe 3
+probe 13
+solve 18:3
+
+# ---- chapter 8: White Field, the page you hold
+go white
+look
+probe the quick brown fox
+probe field
+solve page:1893
+
+# ---- chapter 9: Blue Star, Mythos
+go star
+probe star
+solve 3dd92a42:32,32,33
+
+# ---- the world kept running while you read it: look back through sealed snapshots, read-only
+wait 27
+rewind 10
+map
+rewind live
+timeline
+codex 9
+map
+
+# ---- bridge, verify, and seal
+save finish
+verify
+quit

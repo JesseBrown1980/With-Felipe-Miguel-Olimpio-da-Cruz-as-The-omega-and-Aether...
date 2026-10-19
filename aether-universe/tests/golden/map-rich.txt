@@ -1,0 +1,30 @@
+MAP|cols=40|rows=17|quality=RICH|term_cols=80|rivers=1|json=0
+
+                           ..?
+                      .....
+                 .....
+             .?..                 ....?
+           P.....        ...........
+          .     ....?....  .....
+          .       .  . ....
+  ?.................?..
+         .           . .
+        .             . .
+       .               ...
+       .                 ..
+      .                   ..
+      .                    ..
+     ?                       ?
+
+# hollow_strata            60/40/3/30  ?  (P)
+? flow_channel             70/60/3/20  ?  LOCKED
+? prime_cylinders          50/30/3/25  ?  LOCKED
+? hotel_of_infinite_rooms  80/20/3/10  ?  LOCKED
+? rupture_zone             30/50/3/60  ?  LOCKED  ALERT risk
+? crystalline_reach        90/30/3/10  ?  LOCKED
+? cube_27                  100/27/3/0  ?  LOCKED
+? white_field              40/10/3/40  ?  LOCKED
+? blue_star                50/0/3/50  ?  LOCKED
+STATES|patrolling=0|building=0|exploring=0|waiting=0|idle=27|transporting=0|investigating=0|returning=0|json=0
+HUD|world=aether-universe|tick=0|sim=live|quality=RICH|agents=27|regions=9|alerts=1|evidence=SEALED:9,LOCAL_MEASURED:0,BRIDGE_PUBLISHED:0,VERIFIER_RECEIVED:0,INDEPENDENTLY_VERIFIED:0|promotion=BLOCKED|timeline=ch1|snapshot=e9c2037e6c755330|pending_bridges=0|verifier=none|json=0
+DECIDE|alerts=1|recent_evidence=none|promotion=BLOCKED|snapshot=e9c2037e6c755330|replay=rewind 0|timeline=ch1|verification=none|pending_bridges=0|blocking=ch2 needs secret 1|next=probe 14|json=0

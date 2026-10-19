@@ -1,0 +1,28 @@
+[package]
+name = "aether-universe"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+description = "AETHER UNIVERSE - a crystal-universe terminal game. Nine secrets: eight recomputed in full by an integer-only kernel, the ninth over the page you hold or the genuine enwik8. Rust 1.81, std plus asolaria-tribit, no float, no JSON, no JavaScript."
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+name = "aether_universe"
+path = "src/lib.rs"
+
+[[bin]]
+name = "aether-universe"
+path = "src/main.rs"
+
+[dependencies]
+# The repo's own zero-dependency crate, reused by path and never copied.
+asolaria-tribit = { path = "../kernel/tribit" }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[profile.release]
+opt-level = 3
+# Integer exactness is the point of this game: an overflow must stop the run, never wrap in silence.
+overflow-checks = true

@@ -1,0 +1,10 @@
+STORY|chapter=8|json=0
+WHITE FIELD - a clean public home, 2026-10-16.
+
+On 2026-10-16 the work was given a clean public home. The field is white because most of what
+a page carries is the space between its words. Count the bytes and about one in seven is
+white; squeeze the page and the white nearly vanishes, because space says little once you know
+it is coming.
+
+The field is the Shannon floor seen from above: you cannot go below it, and standing on it
+exactly is the whole point.

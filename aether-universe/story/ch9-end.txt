@@ -1,0 +1,15 @@
+STORY|chapter=9|json=0
+THE SEAL.
+
+You read the stone nine times and it gave back nine numbers, and every one of them was
+computed here, by you and by an integer kernel that has never held a float.
+
+What you hold is not the planet. It is one turn of the loop that would run it: one process,
+one node, no network. Omega 6.0 remains the direction, named and not promoted; the gate that
+promotes is outside this game and belongs to the operator.
+
+Quote the hash below to prove you finished. Anyone with the same seed, the same script and the
+same seat flag can reproduce it, to the digit, on any machine, because a lie cannot reproduce
+its own hash.
+
+For Felipe Miguel Olimpio da Cruz, the omega and Aether, whose vision this follows.

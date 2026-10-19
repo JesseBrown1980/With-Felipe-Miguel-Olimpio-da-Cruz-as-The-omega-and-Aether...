@@ -1,0 +1,13 @@
+STORY|chapter=5|json=0
+RUPTURE ZONE - Relic draws the map, 2026-07-06.
+
+On 2026-07-06 Relic drew the map, and the third biome was a fracture. Here collisions are a
+discipline: avoided in the lanes that execute, caused on purpose in the lanes that search.
+
+The ground is split by a line you can see from anywhere in the zone. On one side of it the
+closure holds: three arms sum to zero at every level, and the centre stays free no matter how
+deep you nest. On the other side a copy of the same walk was run in floating point. At depth
+nine it is off by a hair. At depth eighty-one it is off by more than the number of atoms in a
+mountain.
+
+The game stands on the exact side. It cites the other side and does not run it.

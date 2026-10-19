@@ -1,0 +1,12 @@
+STORY|chapter=2|json=0
+FLOW CHANNEL - the channel opens, 2026-04-20 and 2026-05-07.
+
+On 2026-04-20 the channel opened: the phone was driven from outside. On 2026-05-07 it
+answered as a seat of its own, Room 40, with a heartbeat.
+
+Here the lanes move. Each pulse of the channel is a PID, a name minted so fast you cannot see
+the minting, only the river it makes. You take one PID from the stream and try to write it in
+trits. Forty trits are not enough.
+
+Relic's map calls this place q21, the 200 ns emitter. The map's position for it is a design
+proposal, and the audit that checked the map says so.

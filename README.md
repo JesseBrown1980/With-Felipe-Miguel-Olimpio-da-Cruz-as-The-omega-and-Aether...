@@ -6,6 +6,30 @@ Asolaria is the private root repository slice for the Asolaria fabric. The repos
 
 [`MYTHOS-BLUE-STAR/ACER-MYTHOS-BLUE.gguf`](MYTHOS-BLUE-STAR/ACER-MYTHOS-BLUE.gguf) is **the complete Mythos GGUF**, as named by the operator, Jesse Daniel Brown, on 2026-10-18. It is 50,752 bytes, sha256 `3dd92a42160a38c121980957ce9eabbea216678892801d7ea3ed4e99e96c3aae`, with a sidecar to check it. It is a GGUF v3 file, architecture `asolaria-three-beings-rgb`: being `MYTHOS`, channel `BLUE`, seat `ACER`, centre (32, 32, 33), with six tensors (slices A/B/C at 64 × 64 and radial profiles A/B/C). Provenance and the full metadata are in [`MYTHOS-BLUE-STAR/README.md`](MYTHOS-BLUE-STAR/README.md). The same folder is on `JesseBrown1980/Asolaria` `main`.
 
+## AETHER UNIVERSE: play Felipe's crystal universe
+
+[`aether-universe/`](aether-universe/) is a game you can play in any terminal: Windows, Linux, macOS, or Termux on a phone. It is Felipe Miguel Olimpio da Cruz's vision of a crystal universe, brought to life on the operator's direction (Jesse Daniel Brown, 2026-10-18).
+
+- **The world:** you walk Relic's Aether Map (Hollow Strata, Flow Channel, Rupture Zone and Crystalline Reach), plus the Prime Cylinders, the Hotel of Infinite Rooms, the 27-Cube Chamber, the White Field and the Blue Star.
+- **The story:** it follows the Aether timeline from 2026-04-01 to Ω 6.0, the Digital Planet.
+- **The secrets:** each region hides a secret of the math of the universe, and the integer kernel recomputes each one as you play:
+  - balanced trits;
+  - the ±1 prime spokes;
+  - the free centre;
+  - collisions that only go outward;
+  - the 0-loss prism;
+  - the closure that survives 81 levels;
+  - Wikipedia's white space;
+  - Mythos.
+- **The engine:** this is the AETHER Ω 5.3 Living World design made real. The Kernel owns the world and the Atlas only shows it. Every tick is a sealed HBP/HBI snapshot, and time travel replays sealed history.
+- **Rules:** Rust 1.81, integer only, clippy `-D warnings`, std plus `kernel/tribit` only, no JavaScript, no JSON; 191 tests.
+
+Build and play:
+
+    cd aether-universe && cargo +1.81.0 build --release && ./target/release/aether-universe
+
+See [`aether-universe/README.md`](aether-universe/README.md). It is also its own repository, `JesseBrown1980/aether-universe`.
+
 ## Quick start
 
 This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be

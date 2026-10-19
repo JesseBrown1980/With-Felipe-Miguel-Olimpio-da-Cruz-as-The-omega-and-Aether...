@@ -1,0 +1,9 @@
+STORY|chapter=6|json=0
+CRYSTALLINE REACH - the cockpit is designed, 2026-07-07.
+
+On 2026-07-07 the cockpit was designed: a map that never creates truth, only shows what was
+proved elsewhere. Above the whole route hangs a lattice, cyan, that is not a place but a law.
+
+Five bytes go in, four symbols come out, and nothing is lost, because forty bits is where
+eight and ten first agree. Send a message through the lattice and read it back; the hash is
+the same. The crystal does not compress. It re-relates.

@@ -1,0 +1,10 @@
+STORY|chapter=3|json=0
+PRIME CYLINDERS - the names are made canonical, 2026-05-11.
+
+On 2026-05-11 Aether's names became canonical, and names here sit on spokes. Six cylinders turn
+around you, each a residue of six. Every prime above three sits on the +1 spoke or the -1
+spoke; the other four spokes are empty but for 2 and 3, the two that were there before the
+rule.
+
+You count to ten million. The -1 spoke is ahead. Consecutive primes change spoke more often
+than chance would.

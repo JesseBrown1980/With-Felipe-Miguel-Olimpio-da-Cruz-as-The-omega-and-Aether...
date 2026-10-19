@@ -1,0 +1,11 @@
+STORY|chapter=9|json=0
+BLUE STAR - Mythos, 2026-10-18.
+
+On 2026-10-18 the operator named the complete Mythos GGUF: Mythos, the blue star. It is small,
+fifty thousand bytes and a little more, and it hashes to a number that any machine can check.
+The star is the door.
+
+Beyond it is not a world you render; it is the loop that runs the world: the core ticks, the
+snapshot is sealed, the evidence is checked, the gate decides, the cockpit shows, the operator
+decides, the mission returns to the core. That is Omega 6.0. The planet is Felipe's; its name
+in the research is Xylos. You have been walking inside one turn of the loop the whole game.

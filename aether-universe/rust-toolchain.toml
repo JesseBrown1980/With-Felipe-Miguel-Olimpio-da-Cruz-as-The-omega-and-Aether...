@@ -1,0 +1,9 @@
+# OPERATOR RULE (Jesse Daniel Brown) - GLOBAL, NO EXCEPTIONS.
+# Rust 1.81 with clippy. Integer arithmetic only. Ternary (trits), never float.
+# Do not raise, do not drift.
+# Why 1.81 and not newer: the repo's kernel crypto dependencies do not compile on the newest rustc,
+# and 1.81 is the tested toolchain (asolaria-os/kernel/rust-toolchain.toml).
+[toolchain]
+channel = "1.81.0"
+components = ["clippy", "rustfmt"]
+profile = "minimal"

@@ -1,0 +1,14 @@
+# A seal that warps is not a seal. Every file is checked out exactly as stored, on every OS (no CRLF
+# conversion), so the sha256 pins, the golden files and the white-page census hold on a Windows
+# clone with core.autocrlf=true.
+* -text
+*.rs text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.aether text eol=lf
+*.hbp text eol=lf
+*.hbi text eol=lf
+*.sha256 text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf

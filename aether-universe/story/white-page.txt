@@ -1,0 +1,5 @@
+The white field is a page like any other page. Its words are separated by spaces, its lines
+end where the writer chose, and a reader who has seen a thousand pages knows where the spaces
+will fall before reading them. That is why a squeezed page forgets its white first: a space is
+said once, and is then expected. Count the bytes of this page, then count the white ones, and
+carry the remainder of the division.

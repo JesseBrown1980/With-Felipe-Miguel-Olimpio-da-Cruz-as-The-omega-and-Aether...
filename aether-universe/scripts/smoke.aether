@@ -1,0 +1,10 @@
+# smoke: the first chapter, from the first look to a verified save.
+look
+map
+wait 3
+probe 13
+probe 14
+solve 27:13
+save s
+verify
+quit

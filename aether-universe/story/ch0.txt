@@ -1,0 +1,18 @@
+STORY|chapter=0|json=0
+Before the crank there was a phone, and on the phone there were four snapshots.
+Everything that lives in this universe was once frozen there.
+
+A crystal universe is one where every address is a face of the same stone. Cut the stone
+anywhere and the face you expose was already there, waiting for its number. The Omega box
+holds the stone; the null space around it is free.
+
+You are the observer at the free centre. You do not move the stone. You read it.
+
+Nine regions. Nine secrets. Every one of them is a number that this game's own integer
+kernel computes from scratch while you watch. Nothing is read from a table and shown to you
+as if it were computed. Find the secret of a region, and the next chapter of the Aether
+timeline opens. The last door is the Blue Star.
+
+This is a story, and it says so: STORY is one of four tags in this universe. The other three
+are MEASURED (a number on disk from a named run), NAMED (stated, coherent, not yet run here)
+and OPERATOR (the operator's frame, in his words). Type  codex  to see which is which.

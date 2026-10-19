@@ -1,0 +1,10 @@
+STORY|chapter=4|json=0
+HOTEL OF INFINITE ROOMS - the fabric is carried over, 2026-06-14.
+
+On 2026-06-14 the newer fabric was carried onto the phone byte for byte, and nothing that
+already had a room was moved. The hotel is the rule made into a building: every guest has a
+room computed from its own number; when more guests arrive the hotel grows outward and
+deeper, and no one who was already in a room is asked to leave it.
+
+Two primes who share a room at one level are in different rooms a level or two further out,
+and stay apart as far as you care to look.
