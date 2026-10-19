@@ -1,0 +1,4 @@
+STONEIDX|schema=ASOLARIA-RAINBOW81-SEAT3-ADVERSARIAL-INDEX-V1|date=2026-10-14|json=0
+ARTIFACT|kind=HBP|name=stone-seat3-adversarial-mixtures-2026-10-14.hbp|sha256=9cfb5e88a002ebd5a08c9c0e9de1c46b2b2c927dc393056637a6c35e4eabc011|json=0
+ARTIFACT|kind=JSON|name=rainbow81-adversarial-2026-10-14-results.json|sha256=c70954de25a36208dfe7b4510c0a5148399a4bccdd9a2c3aeace0d69489e7b67|json=0
+CI|run=38585699927|jobs=2|success=2|json=0

@@ -1,0 +1,6 @@
+CRYPTOHDR|descriptor=ACER-CRYPTO-TOKEN-MCP-WIKI|lane=crypto-tokens-mcp-wikis|vantage=acer|measured=2026-06-18|class=DESCRIPTOR-ONLY|json=0
+CRYPTOTOKEN|token_handle=hash-of-PUBLIC-only-sha256-hex|carve_out=enforced-BY-shape-row-carries-hash-NEVER-key-value|secret_invariant=HELD|json=0
+CRYPTOMINT|queue=gulp@2000-super-gulp@50000-to-mint-to-MCP|live_mint=GATED-fresh-cosign+PROF-AETHER-nonce-release|json=0
+CRYPTOWIKI|code_wiki_index_binding=descriptor-only|json=0
+CRYPTOGATE|nothing_minted=1|no-live-MCP-mint|minted-handle-must-SERVE-parity-before-route-retire|E=0|json=0
+CRYPTOFOOT|rows=5|content_sha256=3a605c5693a97beee1adedf1841892738913d5831cbd9c6da8bb7dc16e3e9404|json=0

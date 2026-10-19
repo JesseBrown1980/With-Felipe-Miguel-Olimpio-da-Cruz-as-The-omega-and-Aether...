@@ -1,0 +1,3 @@
+STONEIDX|schema=ASOLARIA-SEAT4-PRECOMMIT-INDEPENDENT-AUDIT-INDEX-V1|date=2026-10-14|json=0
+ARTIFACT|name=stone-seat4-public-precommit-audit-20261014.hbp|sha256=c76a0d17bb0d9d65eccc3f2698934808cbdcb164e831d5742ac15f30f1c42774|json=0
+CI|run=38597348079|python_3.11=PASS|python_3.13=PASS|json=0

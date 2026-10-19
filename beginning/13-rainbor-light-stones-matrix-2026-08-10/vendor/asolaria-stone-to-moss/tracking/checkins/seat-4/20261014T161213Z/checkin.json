@@ -1,0 +1,18 @@
+{
+  "created_utc": "2026-10-14T16:12:13Z",
+  "disclaimer": "A self-signed key proves signature continuity only; a random session identifier is not a hardware fingerprint or physical-host independence proof.",
+  "host_class": "ephemeral_container_on_unverified_physical_host",
+  "operator_physical_attestation": "ChatGPT container computation only; no independent physical host witnessed",
+  "physical_host_independently_verified": false,
+  "physical_protocol_commit": "50d96e363943273a44b3a195eff9e9b2591f4765",
+  "public_fingerprint_sha256": "0c2ccbcfe284e1c76a1b7b6f3063c7145bc295678f1b8d8c55d12e330d79cdd6",
+  "public_spki_der_b64": "MCowBQYDK2VwAyEA5PFhqVdonlRbqmP2zdQAd5tZrYiLBeIbxF+pQ8ubQes=",
+  "runtime_node": "v22.16.0",
+  "runtime_python": "Python 3.13.5",
+  "schema": "ASOLARIA-4-COMPUTATIONAL-SEAT-ATTEST-V1",
+  "seat": "seat-4",
+  "seat4_base_commit": "1a2576653a5571299dfdab001a65dae9f23ac7ba",
+  "session_id": "10a9f15a930f8b21006f007fab6b8e99",
+  "signature_b64": "UxBQzWi2OY+maMqdzpkMn5+jPGMj9e9sLk3QyePtcbiBPvzzPlsBdHGkVPjcYjdLZmIUgzoaLHZnNVwTLuIQAA==",
+  "source_repository": "JesseBrown1980/asolaria-stone-to-moss"
+}

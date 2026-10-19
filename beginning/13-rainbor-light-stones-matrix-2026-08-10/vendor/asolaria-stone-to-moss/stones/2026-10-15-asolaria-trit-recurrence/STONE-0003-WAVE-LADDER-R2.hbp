@@ -1,0 +1,15 @@
+STONE|id=ASOLARIA-TRIT-RECURRENCE-0003|date=2026-10-15|source_0001_commit=7f90d9a8cb850decb419266d9345f2c2005f8328|json=0
+MODEL|base=81|factor=3|rungs=11|new_multiplications_by_three=10|units=logical_steps|physical_clock=NOT_MEASURED|json=0
+GF3|tap_A=0,1,3|tap_B=0,4,7|state_after_81=ZERO|state_after_all_later_power_times=ZERO|reason=T^81_is_zero_map|json=0
+OBSERVER|added_243_position_reversible_ring=1|at_n81=MISSED|at_n243=DETECTED|does_not_restore_old_lost_state=1|json=0
+OBSERVER|ten_added_nested_periods=243,729,2187,6561,19683,59049,177147,531441,1594323,4782969|observed_counts_at_rungs=0,1,2,3,4,5,6,7,8,9,10|json=0
+ODOMETER|digit_position_at_81=4|digit_position_at_243=5|digit_position_at_4782969=14|new_one_hot_trit_each_rung=1|json=0
+FAST_FORWARD|matrix_composition_valid_for_declared_linear_law=1|time_relabel_alone_not_state_transition=1|hash_rewrite_not_chain_proof=1|json=0
+RECEIPT|python_exact_integer=PASS|node_independent_GF3_basis_and_nesting=PASS|hosted_CI_for_this_run=NOT_RUN|json=0
+RECEIPT|full_test_results_json_bytes=10604|full_test_results_sha256=787b6da831d4e657f6cc582f49e9270be0493d4756b731612024511d70034018|json=0
+RECEIPT|python_source_sha256=4eb9be2de90a05512a48ddda2af1f50a194493923c3f80b73955596b14393d9d|node_source_sha256=7d086c7729335ad74c5328ed14b94afadec349c7cfc7f8407391c804eb6c1ee9|json=0
+BOUNDARY|observer_zero_not_necessarily_total_state_zero=1|old_nilpotent_state_zero_cannot_spontaneously_resurrect=1|expanded_state_needed=1|json=0
+PHYSICAL|historical_photon_memory_run=OPERATOR_REPORTED_COMPLETED|new_photon_measurement_in_R2=NO|living_neuron_measurement_in_R2=NO|json=0
+EMERGENCE|engineered_nested_waves_are_not_evidence_of_spontaneous_self_awareness|json=0
+SAFETY|no_auto_merge|no_paid_jobs|no_keys|append_only|json=0
+END|id=ASOLARIA-TRIT-RECURRENCE-0003|status=PUBLIC_MATHEMATICAL_WAVE_EXPERIMENT|json=0

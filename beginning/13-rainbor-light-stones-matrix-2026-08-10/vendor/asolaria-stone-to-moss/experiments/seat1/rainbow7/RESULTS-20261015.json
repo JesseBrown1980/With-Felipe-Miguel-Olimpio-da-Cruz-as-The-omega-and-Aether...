@@ -1,0 +1,57 @@
+{
+  "schema": "ASOLARIA-SEAT1-RAINBOW7-SOFTWARE-RECEIPT-V1",
+  "date": "2026-10-15",
+  "seat": "seat-1",
+  "role": "software_producer_only",
+  "prereg_commit": "83629415d338fa8713c1ca01faaa591fbb14ba04",
+  "challenge_source_commit": "c0fd5bc96c472d9cb8ffe55dd0b0cf87451eff65",
+  "workflow_run_id": 38741109203,
+  "workflow_url": "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38741109203",
+  "hosted_ci": {
+    "ubuntu": "PASS",
+    "windows": "PASS",
+    "cross_os_full_bytes": "PASS",
+    "total_jobs": 3
+  },
+  "source": {
+    "historical_81_memory_dataset_sha256": "02ff42a93d934074ae9c83e1b989f097944c8c7cd2ed80197c2cfd8795391e22",
+    "digital_photocycle_hbp_sha256": "1a4852f498f433d90fabea144c26d2973f7d95c8b01828a9665e7d7eb3dd44bd"
+  },
+  "results": {
+    "logical_bands": [
+      "red",
+      "orange",
+      "yellow",
+      "green",
+      "blue",
+      "indigo",
+      "violet"
+    ],
+    "unique_original_memories": 81,
+    "full_byte_replicated_address_count": 567,
+    "exact_retrievals": 567,
+    "negative_controls_exercised_and_rejected": 7,
+    "missing_violet_band": 81,
+    "intact_other_bands": 486,
+    "bytes_bank_full": 184815,
+    "bytes_index": 70043,
+    "sha256_bank": "52b4e6b9fc10f641e677c87382b137ec21a15e322ef19c20eb03735254b36345",
+    "sha256_index": "6b105769bf236c156cafa4dd4e3647fe45778c191a7e32ac7df63e84d287d0ee",
+    "sha256_manifest": "511b38b155261915c908c4e793c27c48b697f9def53c1f2a083db7ee207318db",
+    "sha256_node_verification": "86fa28430e9e8b3f29f4ccd285172ccc01a3bb921983bb16ac7e03b9780ccd07"
+  },
+  "scope": {
+    "logical_addressing_only": true,
+    "original_payload_retained": true,
+    "compression_claim": false,
+    "source_authentication_held": true,
+    "measured_optical_wavelengths": 0,
+    "physical_optical_storage_claim": false,
+    "calibrated_opsin_kinetics": false,
+    "neural_photocurrent_measured": false,
+    "physically_independent_machines": false
+  },
+  "peer_review": "PENDING_SEATS_2_3_4",
+  "automated_merge": false,
+  "human_release_gate": "NOT_GRANTED"
+}

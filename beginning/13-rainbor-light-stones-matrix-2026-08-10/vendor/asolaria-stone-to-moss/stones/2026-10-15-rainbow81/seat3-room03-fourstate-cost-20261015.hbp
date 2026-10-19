@@ -1,0 +1,14 @@
+PORTAL|schema=ASOLARIA-SEAT3-ROOM03-RECEIPT-V1|date=2026-10-15|seat=3|physical=0|json=0
+SOURCE|room_issue=58|coordinator_issue=55|producer_pr=50|producer_sha256=de2c346a92e626403cc5c59b9ffa688d050163fbb48ab8b1cb6a4cde795b0a8b|prereg_commit=423e00045e570f42f6b02efcaced0aead6a7ae5b|json=0
+MODEL|three=COR|four=C1,O1,O2,C2|Q=1000000|protocols=5|ticks_per_protocol=240|model_tick_rows=2400|identity_count=81|json=0
+TRACE|bytes=365671|sha256=435eccff256d119e608926ba3f3ec46a961d9f0d18801c440de2c3552200101d|python_node_byte_exact=1|json=0
+CURRENT|open_total=250000|I_proxy_a=250000|I_proxy_b=62500|four_state_continuous_peak=631752|four_state_plateau_sum20=5955260|json=0
+CONTROL|candidate_policies=684|train_waves=0..17|heldout_waves=18..26|baseline_lambda_crossing=8407141/38|json=0
+WIN|lambda=0|P=8|D=2|F=0|open_hold_J=1527317694|feedback_hold_J=1545460803|json=0
+WIN|lambda=100000|P=10|D=2|F=0|open_hold_J=1772603352|feedback_hold_J=2152960803|json=0
+WIN|lambda=221240|P=10|D=2|F=0|open_hold_J=2008293912|feedback_hold_J=2889493803|json=0
+WIN|lambda=300000|P=10|D=2|F=0|open_hold_J=2161403352|feedback_hold_J=3367960803|json=0
+NEGATIVE|actually_injected=7|held=7|coherent_false_input_math_green_origin_unauthenticated=1|operator_halt_at_tick73=PASS|json=0
+CI|run=38726796177|ubuntu_windows_python311_313_node22=4/4_PASS|tamper_rejected=4/4|json=0
+LIMIT|quantum_optics=NOT_TESTED|calibrated_physiology=NOT_TESTED|independent_physical_hosts=NOT_ATTESTED|source_authentication=FALSE|peer_review=PENDING|json=0
+END|old_stones_unchanged=1|release_issue10=OPEN|json=0

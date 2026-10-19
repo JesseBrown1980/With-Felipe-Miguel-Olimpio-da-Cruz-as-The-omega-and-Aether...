@@ -1,0 +1,8 @@
+QPRISMGPT56IDX|schema=QPRISM-GPT56-SOL-HARNESS-BINDING-HBI-V1|repo=JesseBrown1980/dbbh-coms-quant-prism|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|target=GPT56-SOL-QPRISM-HARNESS-BINDING-20260709.hbp|index_kind=backend_semantic_binary_index|json=0
+QPRISMGPT56IDXROW|row=0|tag=QPRISMGPT56HDR|role=repo_seat_pid_identity|json=0
+QPRISMGPT56IDXROW|row=1|tag=QPRISMGPT56OFFICIAL|role=official_model_source_binding|json=0
+QPRISMGPT56IDXROW|row=2|tag=QPRISMGPT56ROLE|role=allowed_and_disallowed_harness_actions|json=0
+QPRISMGPT56IDXROW|row=3|tag=QPRISMGPT56OMNIBIT|role=omnibit_qprism_proof_frame_binding|json=0
+QPRISMGPT56IDXROW|row=4|tag=QPRISMGPT56GAC|role=gac_hookwall_omni_guardrail_binding|json=0
+QPRISMGPT56IDXROW|row=5|tag=QPRISMGPT56BOUNDARY|role=claims_gate_boundary|json=0
+QPRISMGPT56IDXBND|class=HELD|detail=final_release_requires_backend_sha256_sidecar_HBI_offsets_and_repo_test_ACK_before_claiming_harness_measured|json=0

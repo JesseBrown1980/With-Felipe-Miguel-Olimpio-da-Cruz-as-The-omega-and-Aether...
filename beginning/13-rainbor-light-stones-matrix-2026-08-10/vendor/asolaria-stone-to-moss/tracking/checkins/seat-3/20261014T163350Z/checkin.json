@@ -1,0 +1,11 @@
+{
+  "schema": "ASOLARIA-3-PHYSICAL-SEAT-ATTEST-V1",
+  "seat": "seat-3",
+  "public_spki_der_b64": "MCowBQYDK2VwAyEAX3owsJSLde6oC/+clb3VjlLBQnuk1LGZiBgpJwzi+Ss=",
+  "public_fingerprint_sha256": "da86c67b80ebe6063233739e878ebbecd9988f5c2d719d50d83a8d0c4751fc75",
+  "operator_physical_attestation": "NO PHYSICAL HOST ATTESTATION: same ChatGPT container/session previously operated as Seat 2; Seat 3 is a computational compatibility check only",
+  "physical_host_independently_verified": false,
+  "disclaimer": "Self-signed ephemeral key is session provenance, not proof of another machine.",
+  "created_utc": "2026-10-14T16:33:50.502Z",
+  "signature_b64": "EsDnPvylhuFuKzNe+EmhiaJi5AzjwsA5U0zQSVdXq9lSJN2L0Xo2ZxHM+Z9B9yohWvrIkjtmNWYVt8rJJj8nCg=="
+}

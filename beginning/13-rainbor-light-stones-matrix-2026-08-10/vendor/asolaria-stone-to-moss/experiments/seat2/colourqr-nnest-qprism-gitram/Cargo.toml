@@ -1,0 +1,9 @@
+[package]
+name = "seat2-colourqr-nnest-gitram"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+publish = false
+
+[dependencies]
+dbbh-coms-quant-prism = { git = "https://github.com/JesseBrown1980/dbbh-coms-quant-prism", rev = "30386807a2d0d6b100c06a40e3d26105849537df" }

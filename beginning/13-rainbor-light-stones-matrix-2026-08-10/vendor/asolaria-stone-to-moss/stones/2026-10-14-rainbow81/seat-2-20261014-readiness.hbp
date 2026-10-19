@@ -1,0 +1,16 @@
+HBP|schema=ASOLARIA-SEAT2-READINESS-2026-10-14|json=0
+SEAT|seat-2|physical_machine_independence_verified=0|same_host_two_langs=1
+SOURCE|JesseBrown1980/asolaria-stone-to-moss|sha=d03d42344d0cc613fce62b012b22c9a75e41a173
+INPUT|seat_witness_csv_sha256=29b7fffd0042ffbe3de73a5ed5dce9e0f17de85ff8f8a0094b9bcf93f610121d
+HORIZONS|steps=1,2,3,10000000000000|laws=CA150,CA90,CA60,CA102,SHIFT|cells=81
+PARITY|cases=1620|pass=1620|fail=0|python=GF2_matrix|node=cyclic_polynomial
+SMALLSTEPS|cases=1215|pass=1215|fail=0
+HASH_MUTATION|cases=81|source_fields=5|cells=81|cell_fields=405|rings=171|all_pass=1
+FUTURE_DELTA_BITS|CA150=35|CA90=38|CA60=38|CA102=38|SHIFT=1
+PERFORMANCE|python_elapsed_ns=63058653|node_elapsed_ns=92600394|hash_fanout_elapsed_ns=202757643
+PYTHON_NODE_RESULTS_SHA256|7de98e173dd6e8038137884a5cc5c6c81d3668cf6b4a91b25677053f5fe67230
+READINESS_JSON_SHA256|af5429ec0aa2cef317cff1fe2d8629f9fc5b5c9c6dbe596d4224c596f5bde330
+ED25519|public_key_fingerprint_sha256=67a9fbe9f2b86824cefc7b4f46c52d89bf3ffcb32bcc17482f0383913ff2741f|signature_of_json_sha256_b64=uJjJEEGSiR7dmnL33RPZVfHi1Y9NHEJhIwWqvTIf6ubPUJGx3Bh0XybQo1F6hUyAHntqNp3U7RM40RgAx509BQ==
+FRESH_COORDINATOR_CHALLENGE|pending=1|secret_revealed=0
+BOUNDARY|no_physical_host_attestation=1|not_FTL_or_quantum_gravity_measurement=1
+HBPEND|schema=ASOLARIA-SEAT2-READINESS-2026-10-14|json=0

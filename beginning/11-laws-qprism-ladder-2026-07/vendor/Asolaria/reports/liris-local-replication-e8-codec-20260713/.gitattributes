@@ -1,0 +1,8 @@
+* text=auto
+*.hbp text eol=lf
+*.hbi text eol=lf
+*.md text eol=lf
+*.sha256 text eol=lf
+*.log text eol=lf
+*.time text eol=lf
+.gitattributes text eol=lf

@@ -1,0 +1,17 @@
+[package]
+name = "behcs1024-60d"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+description = "Source-bounded, no-alloc 60-glyph BEHCS-1024 coordinate and Host8 digest"
+
+[workspace]
+resolver = "2"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "behcs60-demo"
+path = "src/main.rs"

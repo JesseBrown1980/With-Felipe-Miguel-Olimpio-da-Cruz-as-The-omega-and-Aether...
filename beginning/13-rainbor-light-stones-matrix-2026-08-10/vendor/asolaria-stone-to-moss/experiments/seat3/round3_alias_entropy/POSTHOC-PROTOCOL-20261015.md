@@ -1,0 +1,29 @@
+# Seat 3 independent post-hoc replication protocol — Rainbow27 routing information and factorized memory-address evidence
+
+Date: 2026-10-15. **This protocol was written after learning results of PR #80 and #81, not before their experiments.** It is a transparent independent replication and information-theory extension; it is NOT a blinded preregistration or a new biological/physical experiment.
+
+## Frozen exact upstream data
+
+- Seat1 ordered Rainbow27 × Rainbow7 [PR #80](https://github.com/JesseBrown1980/asolaria-stone-to-moss/pull/80), head `7b5faf1103a7b42b603b44b08a5a5bfa994d0f76`. Verified raw source: GitHub [Actions run 38745842295](https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38745842295) artifact `ordered27-rainbow7-ubuntu-latest`, artifact ID `11979425143`. Fixed SHA256 for full 15,309-row `ordered27-rainbow7-index.hbi`: `2480163f9bab77fb4e3730719fce8ef162ba97eac6eceee14bc9c4dfb77ec35e`; 567-row base bank index SHA `6b105769bf236c156cafa4dd4e3647fe45778c191a7e32ac7df63e84d287d0ee`; stored bank SHA `52b4e6b9fc10f641e677c87382b137ec21a15e322ef19c20eb03735254b36345`; original 81-source JSON SHA `02ff42a93d934074ae9c83e1b989f097944c8c7cd2ed80197c2cfd8795391e22`.
+- Seat3 independent normalized, scale-invariant [PR #81](https://github.com/JesseBrown1980/asolaria-stone-to-moss/pull/81), head `c32d472dfe84f352450eb50469e0e9a987c33d78`. Verified raw source: GitHub [Actions run 38747014513](https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38747014513) artifact `rainbow27-v2-ubuntu-latest-py3.11`, artifact ID `11980006384`. Fixed 59,049-row HBP (with one header) SHA256 `8544bb305943d7423f6993cffec4a8232d291811e974c78e7d8ec91a53719672`, 3,886,535 bytes.
+- All downloadable CI artifacts have finite retention; this follow-up CI is a **snapshot verification** against those pinned hosted archives, and must fail if upstream artifacts are unavailable. It is not an independent physical provenance attestation.
+
+## Two new falsifiable interpretations
+
+**A. How much information survives the final software pseudoroute?** Enumerate every `wave∈0..26`, `loc∈0..80`, and `ordered ternary address id∈0..26`. Verify each observed V2 row from scratch using only its `wave,loc,id`: decode RGB; compute raw Fourier intensity `(S²,Q,Q)`; divide by their gcd for primitive normalized integer weights (except zero); obtain one SHA256 `ASOLARIA-R27-V2|TICKET| + LE16(wave)+LE16(loc)+LE32(retry)`; exact UInt256 rejection and modulo to obtain the three-valued pseudo-lane, or held on all zero. Compare to original stored lane for ALL 59,049 rows, not just total counts. Then compute `H(ID|LANE,wave,loc) = (1/27) Σ_{outcomes} count_outcome*log₂(count_outcome)` at each (wave,loc) for UNIFORMLY selected 27 IDs. Compute arithmetic mean across the 2,187 pairs and min/max. Compare with already verified **7 normalized classes**, `H(ID|normalized)≈2.1495962969373235 bits`; report further information discarded when a normalized probability vector becomes only an observed three-lane pseudoroute with dark/held. Note: this is *conditional entropy for a declared uniform input prior*, not a physical random-light distribution and not measured QR camera capacity.
+
+**B. Can the 15,309-address index be factored exactly without storing repeated references?** Verify each original 15,309 row from the independently pinned 567-row original bank index. For every `(band,site)`, all 27 sector rows must have exactly the SAME `offset,length,payload-sha256`. Reconstruct all 15,309 indexed ASCII lines using a separately written algorithm: `sector 0..26` → `r=id//9,g=(id//3)%3,b=id%3`, then seven band labels, then 81 site IDs looked up in the ORIGINAL 567-row bank index. Reconstructed bytes must have exactly the published SHA `2480163...35e`. Calculate measured expanded-index bytes vs original bank-index bytes vs actual retained bank bytes and original 81-site JSON bytes; explicitly distinguish **metadata/alias factorization** from recovered memory compression and physical storage. Observe that changing sector labels at constant offset retains the same source bytes, so trusted source-authenticated *sector assignment* is a separate requirement.
+
+## Negative controls
+
+1. Flipping a source HBP byte must fail fixed digest check; actual per-row wrong pseudo-lane must be rejected even if someone changes printed `lane=` without changing source bytes.
+2. Altering the sector coordinates of an address (e.g. sector 18 → RGB metadata of sector 6) at unchanged `band,site,offset,sha` must be rejected despite collision of symmetric intensity `(S²,Q,Q)`.
+3. Changing bank byte while retaining original pinned index must fail anchored bank/root SHA. A coherently forged bank and equally forged manifest may be math green with a fraudulent new expected anchor, but such local checks must not assert cryptographic source authenticity.
+4. Verify no duplicated/missing addresses, exactly 27 distinct aliases per bank entry, and no new independent base payloads.
+5. Missing source artifact must HOLD rather than silently synthesize evidence.
+
+## Acceptance and claims boundary
+
+- Stdlib-only, independent Python reviewer, no import/execution of either PR80/PR81 production modules; rerun complete raw artifact reads and original SHA each time. Produce stable JSON and HBP result receipts with SHA256 sidecars; verify byte equality across hosted Ubuntu/Windows with Python3.11/3.13.
+- A quantitative information-theory result about a three-lane **digital** pseudo-sampler and a metadata-factorization result about a **digital** index are NOT evidence of 27 optical wavelengths, photons stored on screens, accelerated computation, brain activity, compression of arbitrary source data, cross-host independence, or source-signed origin.
+- Keep all PR80/PR81 and PR75/76/77 original code, receipts, and original issue #10 release gate untouched. This is a **new draft** pending peer review and no automatic merge.

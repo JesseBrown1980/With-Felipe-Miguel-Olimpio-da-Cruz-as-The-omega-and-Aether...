@@ -1,0 +1,7 @@
+CENSUSV12HDR|manifest=ACER-LAYERED-PID-CENSUS-V1.2-APEX-HUMANPID-AMENDMENT|amends=V1.1-2b822b24+V1-9e8b5641|vantage=acer|measured=2026-06-18|reason=operator-clarified-apex-operator-levels+10B-human-PID-premade-registry|json=0
+CENSUSV12APEX|layer=4-supervisor-hierarchy-APEX-clarified|L0=00-SPECIAL-OP-JESSE|01=OP-JESSE|02=OP-RAYSSA|03=OP-FELIPE|04=OP-DAN|05=OP-AMY|note=OP-01-to-05-ARE-the-quintuple-cosign-signers-jesse+rayssa+felipe+dan+amy|tag=CANON-roster-confirmed|json=0
+CENSUSV12HUMANAPEX|above_OP=APEX-HUMAN-JESSE-PID-HUMAN-1|role=real-human-apex-above-the-OP-seats|distinct_from=AGT-L0-SPECIAL-OP-JESSE-seat|tag=OPERATOR-STATED|json=0
+CENSUSV12HUMANPID|layer=6-premade-substrate-ADDITION|registry=10000000000-human-PIDs-premade|scope=all-humans-on-planet-with-PID-addressing-to-spare|distinct_from=100000000000-packet-run-registry|relation=SEPARATE-ledger-never-summed|tag=OPERATOR-STATED-CANON|json=0
+CENSUSV12L6NOTE|L6_premade_substrate_now_has_TWO_ledgers=100B-packet-run-registry+10B-human-PID-registry|anti_deflation=count-each-separately-never-merge|both=address-capacity-not-live-agents|json=0
+CENSUSV12COSIGN|chain_head=seq-3570-2026-06-17-daemon-revival|fresh_seal_this_session=NO|authority=FULLY-PRESENT-00-special-op+01-05-OP+APEX-HUMAN-JESSE+standing-quintuple-window-to-2026-07-25|gap=technical-:4953-chain-seal-not-yet-appended|fires=wait-on-fresh-seal+rust-serve-parity|do_not_blind_post_load_bearing_chain=1|json=0
+CENSUSV12FOOT|rows=6|content_sha256=966b76bc4887a38be129632c7dcce814b2b94d79d6c5c2edfe114761caf03876|json=0

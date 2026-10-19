@@ -1,0 +1,36 @@
+{
+  "actual_qr_camera_image_decode": false,
+  "archive_bytes": 35608276,
+  "archive_sha256": "2f3a0b27a50a562205a500dd7e38e4318f658cdd05202a4b88312c812ae7ba30",
+  "bank_loss_one_reconstructed_byte_identical": true,
+  "bank_loss_two_underdetermined_by_explicit_collision": true,
+  "banks": 27,
+  "cross_os_all_38_files_byte_identical": true,
+  "full_artifact_checksums_checked_on_both_platforms": 37,
+  "indexed_chunks": 16957,
+  "objects": {
+    "faults.hbp": {
+      "bytes": 115829,
+      "sha256": "ad471bc627451f65d6f26797ddf6c03546ac1f74ab8e3698d9825f1409f9bbb2"
+    },
+    "original-phaseA.hbp": {
+      "bytes": 611999,
+      "sha256": "de2c346a92e626403cc5c59b9ffa688d050163fbb48ab8b1cb6a4cde795b0a8b"
+    },
+    "receipt.json": {
+      "bytes": 2751,
+      "sha256": "e63baf8accdfbca43bd23e02b8849fcf312ee904ea3a29e02ab9c11bd8b0dafd"
+    },
+    "ticks.hbp": {
+      "bytes": 34876953,
+      "sha256": "2b9575a8d46c2d2f0842d590081641ed2b20daddccc7153107d76efa0d597277"
+    }
+  },
+  "original_input_bytes": 35607532,
+  "parity_banks": 1,
+  "physical_optical_storage": false,
+  "rgb_frames": 5653,
+  "schema": "ASOLARIA-SEAT4-B3-OFFLINE-THIRD-READER-V1",
+  "sha256sum_entries_checked": 31,
+  "status": "PASS"
+}

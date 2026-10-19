@@ -1,0 +1,10 @@
+STONE|schema=ASOLARIA-STONE-81-HASH-WAVES-V1|date=2026-10-14|kind=VERIFIED_BASELINE|json=0
+SOURCE|repo=JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS|path=matrix/build_timed_86400_flowes_x3x3.py|git_blob_sha=a38ffd2f5b00d2b0008c5be4265f173a1e2e926c|json=0
+RECEIPT|name=asolaria_hash_cascade_waves_2026-10-14.json|sha256=c3bad9daca2bfd8c771571465dcb4cdb3b64342135f0843c24bf56b296585e76|json=0
+RECEIPT|name=asolaria_hash_cascade_waves_2026-10-14.py|sha256=2f349c36baf7f8fec88967a8aeaf5f8221216af8ac7296d210dddb104494f24f|json=0
+RECEIPT|name=asolaria-hash-cascade-9-waves-2026-10-14.zip|sha256=48248b2bdeecad33563dece1ca9b2894bf2ddf272f84e9b9ef46deab5b72e836|json=0
+RUN|waves=9|cells=81|rings=171|registers=5|changed_cells_per_wave=81|changed_rings_per_wave=171|changed_registers_per_wave=405|json=0
+CONTROL|one_stored_cell_tampered=1|peer_stored_cells_changed_before_recompute=0|shared_source_change_global_after_explicit_recompute=1|json=0
+CI|repo=JesseBrown1980/one-click|branch=audit/rainbow81-mixture-2026-10-14|workflow_run=38578220972|python_3.11=success|python_3.13=success|json=0
+EVIDENCE|class=CPU_SYNTHETIC_FIXTURE|physical_signal=NOT_TESTED|quantum_nonlocality=NOT_TESTED|real_GPU=NOT_TESTED|brain=NOT_TESTED|FTL=NOT_ESTABLISHED|json=0
+FOLLOWUP|other_chat_wasm_sha_and_ring_round_40=PRIOR_CHAT_REPORTED_NOT_REVERIFIED_IN_THIS_STONE|json=0

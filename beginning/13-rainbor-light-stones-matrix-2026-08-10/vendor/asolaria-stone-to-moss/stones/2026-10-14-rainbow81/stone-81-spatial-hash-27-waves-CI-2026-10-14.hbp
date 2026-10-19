@@ -1,0 +1,8 @@
+STONE|schema=ASOLARIA-SPATIAL-HASH-CI-VERIFICATION-V1|date=2026-10-14|kind=INDEPENDENT_GITHUB_ACTIONS|json=0
+BASELINE|name=stone-81-spatial-hash-27-waves-2026-10-14.hbp|sha256=88e93b06ccea18bf363671223c1f1f6cb567fc7d255878c39839ec4264886e3f|json=0
+RECEIPT|original_results_sha256=ab3ddad6e7bcb170ec583e2c2626adcc28a3f04d58d26a2f4896bc61e1959a00|original_script_sha256=6783e66b4400b994ce5722da1ac3d2e763e043be3873305993e06231504641a1|json=0
+CI|repo=JesseBrown1980/one-click|branch=audit/rainbow81-mixture-2026-10-14|workflow_run_id=38581376561|head_commit=a56a59be22b29129131686f03b386aedd1a2505d|json=0
+JOB|python=3.11|job_id=115911838635|status=COMPLETED|conclusion=SUCCESS|json=0
+JOB|python=3.13|job_id=115911838806|status=COMPLETED|conclusion=SUCCESS|json=0
+REPRO|class=INDEPENDENT_STD_LIB_CI_CROSS_CHECK|wave_count=27|cells=81|ring_round_0=1|ring_round_1=3|ring_round_40=81|json=0
+LIMIT|physical_distance_not_measured=1|hash_alone_not_distance_estimator=1|no_FTL_inference=1|brain_gpu_not_measured=1|json=0

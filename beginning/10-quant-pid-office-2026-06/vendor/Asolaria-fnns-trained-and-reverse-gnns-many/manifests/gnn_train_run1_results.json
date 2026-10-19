@@ -1,0 +1,13 @@
+{
+  "L2_acc": 0.9992,
+  "L2_recall": 1.0,
+  "L1_ckpt": "prototype_model.pt (72KB 2026-06-01 07:58)",
+  "L1_recall": 1.0,
+  "L2_ckpt": "contrastive_model.pt (97KB 2026-06-01 08:02)",
+  "run": 1,
+  "L1_acc": 0.9992,
+  "L1_prec": 0.9992,
+  "L2_prec": 0.9992,
+  "L1_f1": 0.9996,
+  "L2_f1": 0.9996
+}

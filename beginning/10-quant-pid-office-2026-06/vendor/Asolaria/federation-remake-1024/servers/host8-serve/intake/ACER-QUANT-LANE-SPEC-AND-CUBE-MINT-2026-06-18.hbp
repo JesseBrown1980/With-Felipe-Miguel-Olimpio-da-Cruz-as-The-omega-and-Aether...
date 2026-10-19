@@ -1,0 +1,6 @@
+QUANTHDR|spec=ACER-QUANT-LANE-SPEC-AND-CUBE-MINT|lane=quant-engines|vantage=acer|measured=2026-06-18|class=DESCRIPTOR-ONLY|asserts_fire=false|json=0
+QUANTLADDER|codecs=turbo+polar+triple+JL|envelope=HBH1-canon|prism=BEHCS256-3200B-to-BEHCS1024-64B-to-cube10-10B-raw-to-cube-1927778x-referential|json=0
+QUANTPARITY|rust=kernel-core-src-quant-mod.rs|contract=byte-for-byte-parity-vs-live-shard-0000|status=SPEC-GATED-rust-must-serve-before-JS-codec-retires|json=0
+QUANTCUBEMINT|cube_mint=DESCRIPTOR-ONLY|authority_counters=all-zero|live_cube=GATED-on-fresh-cosign|json=0
+QUANTGATE|retire_JS_codec=HARD-BLOCKED-until-rust-quant-serves-parity|E=0|nothing_minted=1|json=0
+QUANTFOOT|rows=5|content_sha256=339f677268c28a7291ff31dc1e534649a1c775fdde3f694bd63e568649f6c3a3|json=0

@@ -1,0 +1,12 @@
+HBP|schema=ASOLARIA-SEAT2-ORIGINAL-SEAT1-TRIAD-ROW-ACTION-AUDIT-V1|seat=seat-2|date=2026-10-15|json=0
+SOURCE|repo=JesseBrown1980/asolaria-stone-to-moss|original_challenge_blob=b098e2ce7c9878434bea7b7bf34202ed492e4548|source_before_challenge=d092bcc06908a5f5864eada406d5b3ddf4933a5d|json=0
+CHALLENGE|class=PUBLIC_SOFTWARE|nonce=eff1eda90f40cd6fa1e9e9f22e34ecf3|sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b|json=0
+ALGORITHMS|new_seat2=81_row_mask_parity_matrix_repeated_squaring|peer_seat3=cyclic_polynomial|original_seat1=Node_cyclic_polynomial|agreement=FULL_BYTE_EXACT|json=0
+MODEL|GF2_ring_addresses=81|waves=27|laws=5|horizons=10000000000000,10000000000001,10000000000081|rows=32805|json=0
+OUTPUT|bytes=6392029|sha256=720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3|disagreement_rows=0|json=0
+COMPACT_RECEIPT|bytes=1134|sha256=1db6389ba110e8b835e504deebc177e163f8b085d5a48cb47215bb372468700e|sidecar=PASS|distinct_from_full_output=1|json=0
+CONTROLS|linearity=32805|successor=10935|plus81=10935|rotation=10935|direct_small_step=120|tamper_hash=PASS|json=0
+PROVENANCE|pr=24|merge_commit=f5319d364842d620d89f28c06be83c7cc9b87ebc|ci_run=38705443461|ubuntu_python311=PASS|ubuntu_python313=PASS|windows_python311=PASS|windows_python313=PASS|json=0
+EVIDENCE|physical_independent_hosts_attested=0|fresh_secret_cross_host_challenge_issued=0|original_seat2_ED25519_preimage_unresolved=1|huggingface_remote_upload_readback_unverified=1|json=0
+BOUNDARY|Brown_Hilbert_uncoloured_free_centre_is_not_any_of_81_software_addresses=1|physics_quantum_gravity_FTL_result=0|json=0
+HBPEND|schema=ASOLARIA-SEAT2-ORIGINAL-SEAT1-TRIAD-ROW-ACTION-AUDIT-V1|json=0

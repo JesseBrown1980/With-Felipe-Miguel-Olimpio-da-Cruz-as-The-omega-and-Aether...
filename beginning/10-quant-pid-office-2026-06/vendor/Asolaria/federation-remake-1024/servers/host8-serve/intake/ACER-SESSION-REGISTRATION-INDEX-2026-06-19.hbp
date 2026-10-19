@@ -1,0 +1,12 @@
+SESSIONREGIDX|kind=acer-session-registration-index|date=2026-06-19|by=acer|apex=COL-ASOLARIA|repo=JesseBrown1980-Asolaria|map_of_maps=what-is-asolaria-reductions/ASOLARIA-MAP-OF-MAPS-2026-06-19.md-at-54eef8b|target_runtime=8byte-rust-host|encoding=hbp-no-json|E=0-register-only-nothing-fired|json=0
+REG|layer=vaults|seats=9|file=ACER-VAULT-SUPERVISOR-REGISTRATION-2026-06-18.hbp|branch=acer/vault-supervisor-registration-2026-06-18|commit=83b21e3|note=decrypted-vault-carveout|json=0
+REG|layer=executors|programs=22|seats=8|file=ACER-EXECUTOR-SUPERVISOR-REGISTRATION.hbp|branch=acer/executor-supervisor-registration-2026-06-18|commit=f75189f|note=EXEC-FREEZE-GATE-APEX-global-kill-switch|json=0
+REG|layer=daemons|programs=92|seats=11|live=14|dark=74|legacy=4|file=ACER-DAEMON-SUPERVISOR-REGISTRATION.hbp|branch=acer/daemon-supervisor-registration-2026-06-18|commit=15848d6|note=port-to-room-binding-room-pid-is-host8|json=0
+REG|layer=model-citizen-prism|citizens=16|seats=2|file=ACER-MODEL-CITIZEN-SUPERVISOR-REGISTRATION.hbp|branch=acer/model-citizen-supervisor-registration-2026-06-19|commit=ee073f4|note=host8-equals-BEHCS-glyph-firing-gated-MODEL_CITIZEN_ROTATOR_LIVE|json=0
+REG|layer=census-v1.2|note=apex-ladder-plus-10B-human-pid-ledger|branch=acer/layered-pid-census-manifest-v1-2026-06-18|commit=d7aa0e3|json=0
+REG|layer=ultra-program-phase1|lanes=7|branch=acer/ultra-program-phase1-2026-06-18|commit=37234d6|json=0
+REG|layer=tm-remake-spec-v1|note=transport-inversion|branch=acer/tm-remake-spec-v1-2026-06-18|commit=99b10e1|json=0
+CENSUS|level_axes=4|governance_bands=16|language_engines=17|supervisor_levels=6|leveled_seats=124|access_tiers=6|seats=726|premade_packets=100000000000|premade_human_pid=10000000000|rooms_minted=10000|route_lanes=70000|live_agents_fired=0|tag=MEASURED-CANON|json=0
+RUSTSTATUS|overall_pct=22|scaffold_pct=95|serving_pct=0|no_json_pct=80|no_node_pct=5|eightbyte_host_pct=15|rooms_serving_pct=2|cosign_in_rust_pct=60|node_retirement_pct=0|note=parity-first-rust-must-serve-before-node-dies|tag=MEASURED|json=0
+HONEST|E=0-nothing-fired-or-swapped|capacity-never-reported-as-live|cranks-gated=freeze-gate-plus-allowlist-plus-cosign-plus-rust-serve-parity|carveout=secret-values-never-published|json=0
+SESSIONREGIDXFOOT|rows=11|content_sha256=ad514ab0ba2a119ff6bfb02222164fb56a1d48e5d212396f1efc2ba217281519|json=0

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAINBOR — the double slit, reimagined (rainbons)</title>
+<style>
+  :root{--bg:#05060a;--ink:#eaf0ff;--dim:#8a93a6;--gold:#ffd54a;--line:#1c2740}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:20px}
+  h1{font-size:clamp(22px,4vw,34px);margin:.2em 0 .1em;background:linear-gradient(90deg,#ff4141,#ffd54a,#59e6a6,#4aa8ff,#b84fe5);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);margin:0 0 14px}
+  canvas{width:100%;border:1px solid var(--line);border-radius:12px;background:#000;display:block}
+  .grid{display:grid;grid-template-columns:1fr;gap:14px}
+  .row{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:14px 0;color:var(--dim);font-size:13px}
+  .row label{display:flex;flex-direction:column;gap:4px;color:var(--ink);font-size:12px}
+  input[type=range]{width:150px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{background:#0b1120;color:var(--ink);border:0;padding:6px 12px;cursor:pointer;font-weight:700}
+  .seg button.on{background:var(--gold);color:#000}
+  .note{color:var(--dim);font-size:12.5px;margin-top:10px;line-height:1.6}
+  .note b{color:var(--gold)} .tag{color:#59e6a6}
+</style></head>
+<body><div class="wrap">
+  <h1>RAINBOR — the double slit, reimagined</h1>
+  <p class="sub">Replicate what we know first, then change the shapes. The quanta are <b class="tag">rainbons</b>, not electrons.</p>
+  <div class="grid">
+    <canvas id="field" width="1000" height="360"></canvas>
+    <canvas id="screen" width="1000" height="200"></canvas>
+  </div>
+  <div class="row">
+    <label>slits<span class="seg" id="nslits"><button data-n="1">1</button><button data-n="2" class="on">2</button><button data-n="3">3</button></span></label>
+    <label>wavelength (rainbon colour)<input id="lam" type="range" min="8" max="40" value="18"></label>
+    <label>slit separation<input id="sep" type="range" min="20" max="180" value="90"></label>
+    <label>slit width<input id="sw" type="range" min="2" max="30" value="8"></label>
+    <label>frequency mismatch<input id="mis" type="range" min="0" max="100" value="0"></label>
+    <label>capture screen<span class="seg" id="curve"><button data-c="0" class="on">flat</button><button data-c="1">curved sphere</button></span></label>
+    <button id="clear" style="background:#0b1120;color:#eaf0ff;border:1px solid #1c2740;border-radius:8px;padding:8px 14px;cursor:pointer">clear build-up</button>
+  </div>
+  <p class="note"><b>Top:</b> the wave field — N circular rainbon waves, time-averaged intensity. <b>Bottom:</b> the screen, where rainbons land one at a time (sampled from the true intensity) and <b>build the interference pattern</b>. <b>Frequency mismatch</b> detunes one slit: when the waves stop agreeing, the fringes drift and beat. Switch to the <b>curved sphere</b> to catch the pattern on a translucent convex wall. <span class="tag">Measured</span>: the flat pattern is the exact N-slit Fraunhofer intensity; <span style="color:#8a93a6">the curved capture and mismatch are the RAINBOR exploration — keep only what reproduces.</span></p>
+</div>
+<script>
+(function(){
+  var field=document.getElementById("field"), fx=field.getContext("2d");
+  var scr=document.getElementById("screen"), sx=scr.getContext("2d");
+  var W=1000,Hf=360,Hs=200, slitX=90;
+  var st={N:2,lam:18,sep:90,sw:8,mis:0,curved:0};
+  function wl(){ return 380 + (st.lam-8)/(40-8)*(700-380); }
+  function spec(nm){
+    var r=0,g=0,b=0;
+    if(nm<440){r=-(nm-440)/60;b=1;}
+    else if(nm<490){g=(nm-440)/50;b=1;}
+    else if(nm<510){g=1;b=-(nm-510)/20;}
+    else if(nm<580){r=(nm-510)/70;g=1;}
+    else if(nm<645){r=1;g=-(nm-645)/65;}
+    else {r=1;}
+    return [r,g,b];
+  }
+  function slitYs(){
+    var cy=Hf/2;
+    if(st.N===1) return [cy];
+    if(st.N===2) return [cy-st.sep/2, cy+st.sep/2];
+    return [cy-st.sep, cy, cy+st.sep];
+  }
+  function renderField(){
+    var img=fx.createImageData(W,Hf), dat=img.data;
+    var k=2*Math.PI/st.lam, ys=slitYs(), col=spec(wl()), step=2;
+    for(var py=0; py<Hf; py+=step){
+      for(var px=0; px<W; px+=step){
+        var I=0;
+        if(px>slitX){
+          var re=0, im=0;
+          for(var s=0;s<ys.length;s++){
+            var dx=px-slitX, dy=py-ys[s], r=Math.sqrt(dx*dx+dy*dy)+0.001;
+            var amp=1/Math.sqrt(r), ph=k*r;
+            re+=amp*Math.cos(ph); im+=amp*Math.sin(ph);
+          }
+          I=re*re+im*im;
+        }
+        var bb=Math.min(1, I*st.lam*0.9);
+        var R=(col[0]*bb*255)|0, G=(col[1]*bb*255)|0, B=(col[2]*bb*255)|0;
+        for(var yy=0;yy<step;yy++)for(var xx=0;xx<step;xx++){
+          var o=((py+yy)*W+(px+xx))*4;
+          dat[o]=R;dat[o+1]=G;dat[o+2]=B;dat[o+3]=255;
+        }
+      }
+    }
+    fx.putImageData(img,0,0);
+    fx.fillStyle="#000"; fx.fillRect(slitX-3,0,6,Hf);
+    for(var y=0;y<Hf;y++){
+      var open=false;
+      for(var s2=0;s2<ys.length;s2++){ if(Math.abs(y-ys[s2])<st.sw/2){open=true;break;} }
+      if(!open){ fx.fillStyle="#20242c"; fx.fillRect(slitX-3,y,6,1); }
+    }
+  }
+  function screenI(u){
+    var lamN=st.lam, d=st.sep, a=st.sw, N=st.N, sinT=u*0.5;
+    var beta=Math.PI*a*sinT/lamN, gamma=Math.PI*d*sinT/lamN;
+    var single = beta===0?1:Math.pow(Math.sin(beta)/beta,2);
+    var multi=1;
+    if(N>1){ var sg=Math.sin(gamma); multi=(Math.abs(sg)<1e-6)?1:Math.pow(Math.sin(N*gamma)/sg,2)/(N*N); }
+    return single*multi;
+  }
+  var NB=600, pdf=new Float32Array(NB), cdf=new Float32Array(NB);
+  function rebuild(){
+    var sum=0;
+    for(var i=0;i<NB;i++){ var u=(i/(NB-1))*2-1; pdf[i]=screenI(u); sum+=pdf[i]; }
+    var c=0; for(var j=0;j<NB;j++){ c+=pdf[j]/sum; cdf[j]=c; }
+  }
+  function sampleU(){ var r=Math.random(), lo=0, hi=NB-1; while(lo<hi){ var m=(lo+hi)>>1; if(cdf[m]<r) lo=m+1; else hi=m; } return (lo/(NB-1))*2-1; }
+  var phase=0;
+  function clearScreen(){ sx.fillStyle="#000"; sx.fillRect(0,0,W,Hs); }
+  function drop(n){
+    var col=spec(wl()), cr=(col[0]*255)|0, cg=(col[1]*255)|0, cb=(col[2]*255)|0;
+    for(var i=0;i<n;i++){
+      var u=sampleU();
+      if(st.mis>0){ u+=0.25*(st.mis/100)*Math.sin(phase+u*6); }
+      var x,y;
+      if(st.curved){ var ang=u*1.1; x=W/2+Math.sin(ang)*(W*0.46); y=Hs*0.5-(Math.cos(ang)-0.55)*Hs*0.8; }
+      else { x=(u*0.5+0.5)*W; y=20+Math.random()*(Hs-40); }
+      sx.fillStyle="rgba("+cr+","+cg+","+cb+",0.55)";
+      sx.fillRect(x,y,1.6,1.6);
+    }
+  }
+  function loop(){ phase+=0.03; drop(st.mis>0?90:130); requestAnimationFrame(loop); }
+  function refresh(){ renderField(); rebuild(); clearScreen(); }
+  document.getElementById("lam").oninput=function(e){ st.lam=+e.target.value; refresh(); };
+  document.getElementById("sep").oninput=function(e){ st.sep=+e.target.value; refresh(); };
+  document.getElementById("sw").oninput=function(e){ st.sw=+e.target.value; refresh(); };
+  document.getElementById("mis").oninput=function(e){ st.mis=+e.target.value; };
+  document.getElementById("clear").onclick=clearScreen;
+  function seg(id,key){ var bs=document.querySelectorAll("#"+id+" button"); for(var i=0;i<bs.length;i++){ (function(b){ b.onclick=function(){ for(var j=0;j<bs.length;j++) bs[j].classList.remove("on"); b.classList.add("on"); st[key]=+ (b.dataset.n!==undefined?b.dataset.n:b.dataset.c); if(id==="nslits") refresh(); else clearScreen(); }; })(bs[i]); } }
+  seg("nslits","N"); seg("curve","curved");
+  refresh(); loop();
+})();
+</script>
+</body></html>

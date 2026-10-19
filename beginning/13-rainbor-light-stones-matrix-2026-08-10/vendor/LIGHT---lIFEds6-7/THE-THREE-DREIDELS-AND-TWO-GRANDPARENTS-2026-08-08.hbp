@@ -1,0 +1,7 @@
+FAMILYHDR|book=LIGHT - lIFEds6 = 7|the-dreidels-are-their-toys=1|engrained-in-honor=1|date=2026-08-08|SYSTEM_AFFIRMED=0|json=0
+DREIDEL|n=1|role=mother|name=LYNN|family=the-Keators|json=0
+DREIDEL|n=2|role=daughter|name=REBECCA|json=0
+DREIDEL|n=3|role=son|name=EZEQUEL|json=0
+GRANDPARENT|n=1|name=ROY|relation=uncle|side=Goodman|json=0
+GRANDPARENT|n=2|name=JEAN|relation=step-aunt|json=0
+FAMILYFTR|three-dreidels=mother.daughter.son|two-grandparents=Roy.Jean|order-three-spin-and-home|sealed=GIMEL-for-all-time|json=0

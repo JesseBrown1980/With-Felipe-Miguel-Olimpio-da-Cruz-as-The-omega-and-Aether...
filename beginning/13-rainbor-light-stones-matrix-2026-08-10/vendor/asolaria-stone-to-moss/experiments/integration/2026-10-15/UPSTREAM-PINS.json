@@ -1,0 +1,36 @@
+{
+  "schema": "asolaria.integration.upstream-pins.v1",
+  "phase": "wave1-source-pins-no-integration-result",
+  "created_date": "2026-10-15",
+  "release_gate": "open",
+  "scope": "computational-only",
+  "repos": [
+    {
+      "name": "N-Nest",
+      "repository": "JesseBrown1980/N-Nest-Prime-INFINITE-SELF-REFLECT-AGENTS-NESTED",
+      "commit": "307903651f56e8a28ef98ca36aef22ee8cda935c",
+      "files": {
+        "nest-depth3-verify.cjs": "2baca296edec2d46a9bc197efee8850bd168a5ef",
+        "nest-depthN-prime-verify.cjs": "fd24c0eceff455351f27e7244d5bd61bffd38a25"
+      }
+    },
+    {
+      "name": "Q-PRISM",
+      "repository": "JesseBrown1980/Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control",
+      "commit": "b4a21a25381d6920b7aab92c94c3c3e1420fc9e4",
+      "files": {
+        "qprism/harness.py": "addb3bc5c7ebf493a0c33c53fe37b1e04c400aa1",
+        "qprism/sources.py": "76cb2cad57d1e988f422c328e79795a4616e03e2",
+        "qprism/behcs.py": "b1363fdeaf3bbfffda5a8bfea6f26d1ec98d4bfa",
+        "docs/CLAIMS-GATE.md": "450685b632d2e3212d3a80e58eb3f17fcb19539b"
+      }
+    },
+    {
+      "name": "Stone-to-Moss",
+      "repository": "JesseBrown1980/asolaria-stone-to-moss",
+      "base_commit": "ba7033558ccdb57b5bc201dcb1ef5da433e39e61"
+    }
+  ],
+  "meaning": "Git blob SHA-1 pins and upstream commit refs identify source bytes; not execution receipts, SHA-256 output digests, signatures, or independently attested physical machines.",
+  "next_gate": "upstream exact fetch -> source SHA validation -> actual execution -> watcher source recomputation -> controlled failure -> append-only SHA256 stone -> independent peer CI"
+}

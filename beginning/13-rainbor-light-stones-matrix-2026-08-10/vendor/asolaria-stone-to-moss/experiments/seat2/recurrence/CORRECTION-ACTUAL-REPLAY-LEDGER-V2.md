@@ -1,0 +1,7 @@
+# Seat 2 correction — wrong-nonce test is NOT same-request replay resistance
+
+**Post-hoc addendum**. The original signed 72-case recurrence report is unchanged; it verified wrong nonce `R` compared to deterministic `trial_nonce`, not duplicate reception of an otherwise valid signed request. Its earlier `stale_nonce_rejected` field is narrowly interpreted as `wrong_nonce_rejected`, not proof of a consumed-nonce ledger.
+
+Additive `session_replay_gate.py` validates the original pinned public **TEST-ONLY Ed25519 signed source fixture**, generates a new per-run unpredictable random challenge, records accepted sequence in an on-disk ledger and rejects exact duplicate reuse even after Gate reinitialization, past sequence, different challenge, different session, mutated source, extra field and fake HALT bypass. New accepted in-scope ticks remain automatic, no per-tick human permission. This new protocol tests a sequential single-writer on-disk ledger **only**; it does NOT cryptographically sign the new dynamic request with an independently held physical-source key, provide database transactional multi-writer atomicity, certify real hosts or address original Seat 2 signed-byte canonicalization Issue #10.
+
+The new test emits a fresh SHA-sealed JSON receipt and must run on Ubuntu and Windows in the existing workflow. Old HBP/JSON receipts MUST NOT be altered, and corrected scope must not be projected backward onto earlier 72 rows.

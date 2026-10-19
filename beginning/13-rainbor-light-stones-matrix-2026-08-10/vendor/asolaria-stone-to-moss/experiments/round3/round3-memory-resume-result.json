@@ -1,0 +1,10 @@
+{
+  "status": "PASS_DIGITAL_MEMORY_RESTART",
+  "contexts": 216,
+  "recoveries": 648,
+  "site_tick_updates": 9237888,
+  "bad_pair_held": 216,
+  "resume_hbp_sha256": "f6599677f934509604bcbf0f3a1913ce3f473223cbb08504ef7271e078c55d5f",
+  "physical_optical_storage": false,
+  "peer_independence": "same frozen model code reused, no cross-seat acceptance"
+}

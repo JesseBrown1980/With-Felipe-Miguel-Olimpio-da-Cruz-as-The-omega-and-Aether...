@@ -1,0 +1,56 @@
+{
+  "archive_bytes": 35607597,
+  "archive_sha256": "1288a63f2d5895bc555813b2703947b94c8179974a46bcf132b55d82dd9e7b9c",
+  "bank_bytes": {
+    "A": 35608171,
+    "B": 35608171,
+    "P": 35608171
+  },
+  "bank_count": 3,
+  "bank_sha256": {
+    "A": "d0e59818cfc80c7c8ed9f1571c76cf7fed54bd2dc94dae9705a2a0f575f36939",
+    "B": "8931528d3a0eefd14b2743e6a4a4c68703709af95abccc23b408549525b41bb1",
+    "P": "319549787a6633c9f7d3f5eeebcb3d974626f814346b993af4cbb445c182bd18"
+  },
+  "colour_qr_transport": {
+    "bytes": 47731164,
+    "chunks": 16956,
+    "colour_frames": 5652,
+    "last_frame_used_planes": 3,
+    "sha256": "293e02518d7972c89c488d5525231f1a40636d467fb1f7ca1b4cc9c69c503952"
+  },
+  "evidence_class": "SOFTWARE_RGB_SYMBOLIC_ERASURE_STORAGE_NO_PHOTONS",
+  "gf2_retention_loss_test_separate": true,
+  "glyphs_per_source_byte": 2,
+  "negative_controls": {
+    "corrupt_glyph_digest_rejected": 3,
+    "duplicated_colour_qr_index_rejected": 1,
+    "forged_archive_digest_rejected": 1,
+    "malformed_base64_rejected": 1,
+    "missing_colour_qr_index_rejected": 1,
+    "out_of_range_byte_rejected": 1,
+    "out_of_range_glyph_rejected": 1,
+    "physical_hardware_claims": 0,
+    "single_bank_ambiguity_witnesses": 3,
+    "stale_nonce_rejected": 1,
+    "wrong_bank_id_rejected": 1,
+    "wrong_colour_qr_plane_rejected": 1,
+    "wrong_length_rejected": 1
+  },
+  "one_bank_cannot_uniquely_restore": true,
+  "pairwise_full_archive_exact_restore": 3,
+  "physical_photons_or_optical_memory_hardware_measured": false,
+  "projector": {
+    "common_mode_collisions": 1029,
+    "exact_nullity": 1,
+    "exact_rank": 2,
+    "physical_instantaneous_signaling_measured": false,
+    "restored_with_original_sum": 343,
+    "triples": 343
+  },
+  "schema": "ASOLARIA-SEAT4-B3-LIGHTBANK-G27-QR-V1",
+  "source_encryption_or_secret_sharing": false,
+  "status": "PASS",
+  "stripes": 69547,
+  "symbolic_colour_levels": 27
+}

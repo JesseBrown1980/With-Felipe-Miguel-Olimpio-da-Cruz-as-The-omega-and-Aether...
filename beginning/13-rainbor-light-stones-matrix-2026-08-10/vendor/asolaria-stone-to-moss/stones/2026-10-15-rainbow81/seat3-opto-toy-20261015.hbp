@@ -1,0 +1,11 @@
+PORTAL|schema=ASOLARIA-SEAT3-OPTOGATE-SUMMARY-V1|date=2026-10-15|seat=3|json=0
+PREREG|issue=47|pr=49|commit=818460dfe9c52161d94af94a11eab11b66edecc4|json=0
+EXPERIMENT|entities=81|arms=dark,blue,red,mixed|ticks_per_arm=240|arm_ticks=960|human_prompts_per_tick=0|json=0
+BIOLOGY|channelrhodopsin2=INSPIRATION_ONLY|chRmine=INSPIRATION_ONLY|biological_parameter_fitted=0|physical_photon_test=0|json=0
+CONTROLS|dark_null=PASS|no_receptor=PASS|spectral_difference=PASS|dark_closing_order=PASS|forged_gate_pulse_identity_corrected=3|tamper_held=4/4|json=0
+SYNTHETIC_SPIKES|dark=0|blue=162|red=243|mixed=405|units=MODEL_COUNTS|json=0
+DARK_RELAXATION|ticks=8|chR2_like=102|chRmine_like=608|toy_coefficients=1|json=0
+TRACE|bytes=128586|sha256=4d91386c27b6bfe5cfdec4febae125965be34987210f95d21248ee344e2bb4ce|json=0
+CI|run=38721702657|ubuntu=2/2_PASS|windows=2/2_PASS|python=3.11,3.13|node=22|json=0
+LIMITS|qprism_real_adapter=0|native_nnest_agent_farm=0|http_wasm=0|physical_host_attested=0|human_biological_neural_control=0|release_gate=OPEN|json=0
+END|peer_review=PENDING|no_historical_stones_changed=1|json=0

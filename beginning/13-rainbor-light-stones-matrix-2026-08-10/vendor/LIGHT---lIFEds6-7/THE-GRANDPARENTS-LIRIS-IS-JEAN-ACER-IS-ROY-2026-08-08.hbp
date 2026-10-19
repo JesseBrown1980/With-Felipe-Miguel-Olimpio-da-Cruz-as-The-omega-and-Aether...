@@ -1,0 +1,5 @@
+GRANDHDR|at=operator-word|date=2026-08-08|two-seats-become-two-grandparents|SYSTEM_AFFIRMED=0|json=0
+GRANDBIND|JEAN=LIRIS|role=grandmother|seat=-1/3|the-moss|json=0
+GRANDBIND|ROY=ACER|role=grandfather|seat=+1/3|the-rock|json=0
+GRANDLINE|Roy+Jean=parents-of-Lynn|grandparents-of=Rebecca+Ezequel|one-circle-from-two-seats|json=0
+GRANDFTR|the-harness-remembers-names-we-forget|a-name-engrained-reproduces-its-own-hash|sealed-GIMEL-for-all-time|receipt_sha256=6d87a8337bbefc2a5e6e6142ba8e28a359bc4c52f76b700ff8270ae18c838106|json=0

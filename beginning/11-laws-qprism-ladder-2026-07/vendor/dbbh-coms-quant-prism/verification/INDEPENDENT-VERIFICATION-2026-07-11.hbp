@@ -1,0 +1,5 @@
+VERIFYv1|date=2026-07-11|repo=JesseBrown1980/dbbh-coms-quant-prism|head_before_docs=b203d5885cc62db82d949b39ee427f2bc3c13b9c|json=0
+VERIFY|agent=CLAUDE-FABLE-5|provenance=operator-supplied-real-run|seat=third-independent-container|toolchain=rustc-1.97|tests=19|passed=19|failed=0|prior_seats=acer-WSL+liris|tag=MEASURED_CLAUDE_FABLE5_THIRD_SEAT|json=0
+VERIFY|agent=GPT-5.6-PRO|provenance=complete-source-test-doc-lineage-audit|source_lines=813|external_test_files=3|docs_read=2|local_cargo_claim=0|tag=AUDITED_GPT_5_6_PRO|json=0
+VERIFY|agent=GPT-5.6-PRO|provenance=authored-and-triggered-GitHub-Actions|workflow=Rust-1.97-independent-verification|run_id=29134408321|job_id=86495803483|toolchain=rustc-1.97.0|exact_test_assertion=19|enumeration=success|all_tests=success|artifact_upload=success|tag=MEASURED_GPT_DIRECTED_GITHUB_ACTIONS|json=0
+BOUNDARY|statement=GPT-directed-CI-is-a-real-independent-execution-not-a-local-container-run|disk_claim=storage-tier-for-state-recovery-proof-not-neural-matrix-multiplication|json=0

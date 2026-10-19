@@ -1,0 +1,15 @@
+QUANTADDENDUMv1|date=2026-07-13|source_pr=JesseBrown1980/HYPER-BECHS--the-third-set#16|merged_commit=a018036d012366ada2200fc54b32cc57432aa1a0|run=29221617743|job=86727717107|artifact=8268416200|artifact_sha256=cbb4298502e3cad0c5782ccb3b3a1d51fd9d7bd259f3f4ab001f91604262a2cd|status=PASS|json=0
+SUPPLIED|seat=CLAUDE_FABLE_5|receipt_sha256=21056f77d1284ede41a64840d795611a311be1b2298a82d70dfeea402897a544|sidecar=PASS|json=0
+E8LADDER|raw=100000000|glyphs=80000000|info_rate=1.0|sha256=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8|readback=PASS|json=0
+CODECV01|raw=1000000|compressed=392002|bpc=3.136016|compressed_sha256=d04ecbeea11d5e909c3c20457628eabc714d9e9e5e7860cf61e46e7919d2aad5|readback=PASS|json=0
+Q8|raw=100000000|q4_bytes=3200|q8v2_bytes=3260|q4_sha_gain=29873.284774|q8_sha_gain=29332.708315|q4_compare_gain=36895.672171|q8_compare_gain=36020.952584|restore_capable=0|json=0
+MULTILEVEL|levels=1|merges_per_level=512|catalog=2068|tokens=446900|payload=322929|total=324997|bpc=2.599976|raw_zstd19_bpc=2.400600|restore=PASS|json=0
+MULTILEVEL|levels=2|merges_per_level=512|catalog=4122|tokens=375174|payload=321102|total=325224|bpc=2.601792|raw_zstd19_bpc=2.400600|restore=PASS|json=0
+MULTILEVEL|levels=3|merges_per_level=512|catalog=6176|tokens=336938|payload=320408|total=326584|bpc=2.612672|raw_zstd19_bpc=2.400600|restore=PASS|json=0
+MULTILEVELLaw|tokens_fall=446900>375174>336938|payload_bpc_falls=2.583432>2.568816>2.563264|total_best_level=1|economic_gate=payload_savings_must_exceed_catalog_cost|json=0
+PRIORCURVE|reads=20|first_bpc=3.136016|read10_bpc=3.110864|read11_bpc=3.088536|last_bpc=2.979336|overall_change_pct=-4.996148|cumulative_payload_bpc=3.085201|final_checkpoint_bytes=327612|payload_plus_checkpoint_bpc=3.216246|all_restore=1|all_state_match=1|json=0
+HOLDOUT|train_reads=1|dict_bytes=2048|payload_bpc=2.659512|standalone_bpc=2.675896|restore=PASS|json=0
+HOLDOUT|train_reads=19|dict_bytes=19456|payload_bpc=2.410832|standalone_bpc=2.566480|restore=PASS|json=0
+BASELINE|slice=read20|gzip9_bpc=2.769200|zstd19_bpc=2.225368|xz6_bpc=2.152960|bzip2_bpc=2.076680|json=0
+E100ADDR|roundtrips=100000|min_glyphs=34|capacity60=2^600|log10_capacity60=180.617997398389|status=PASS|body_enumerated=0|json=0
+BOUNDARY|claude_2.130_curve=OPERATOR_REPORTED_UNSEALED|hutter_record=NOT_CLAIMED|zstd_beaten=0|subentropy=0|physical_quantum=0|json=0

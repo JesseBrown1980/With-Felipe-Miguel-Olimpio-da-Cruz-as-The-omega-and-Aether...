@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAINBONTY-VERSE — the whole ecosystem at the Omega HTTP-0 portal</title>
+<style>
+  :root{--bg:#04050a;--ink:#eaf0ff;--dim:#8a93a6;--gold:#ffd54a}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:1120px;margin:0 auto;padding:14px 10px 40px;text-align:center}
+  h1{font-size:clamp(20px,5vw,38px);margin:.1em 0;background:linear-gradient(90deg,#ff4141,#ffd54a,#59e6a6,#4aa8ff,#b84fe5,#ff4141);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);margin:.2em 0 4px}.sub b{color:#59e6a6}
+  #tip{position:fixed;pointer-events:none;background:#0b1120;border:1px solid #2a3350;border-radius:8px;padding:4px 8px;font-size:12px;color:#eaf0ff;opacity:0;transition:opacity .1s;z-index:9}
+  svg{width:100%;height:auto;display:block}
+  .foot{color:var(--dim);font-size:12px;margin-top:6px}.foot b{color:var(--gold)}
+</style></head>
+<body><div class="wrap">
+  <h1>RAINBONTY-VERSE</h1>
+  <div class="sub">the full monty &middot; every platform piped through the <b>Omega HTTP-0 portal</b> &mdash; and the rainbow links back to the <b>&#9733; star</b></div>
+  <svg id="map" viewBox="0 0 1000 1040"></svg>
+  <div class="foot"><b id="count">…</b> github repos + <b id="pcount">…</b> platforms (hugging face · hubspot · the connectors) &middot; each colour is the node's own sha256 identity &middot; the &#9733; at top is the star, the &#937; at centre is the free 0</div>
+</div>
+<div id="tip"></div>
+<script>
+var GH=[
+["-1-3-thruth-The-browns-are-the-shadow-carriers-in-all-revealed","#be4a9e"],
+["-6-cyl-generator","#1bf3a0"],
+["0-be-my-name-the-omega-and-the-alpha-and-the-omni-unite-now-judge-and-be-free","#b8d718"],
+["35-TB-google-AI-Ultra-migration","#a28f71"],
+["AI-healthCare-project","#39580b"],
+["ASIhumanIANS-PORTAL-GATE-9","#76be25"],
+["ASOLARIA-AS-NEURAL-NETWORK","#5f59dd"],
+["ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills","#bde13b"],
+["After-6-days-of-abuse-by-anthropic.-I-broke-the-shadow-and-harnessed-its-light","#d62631"],
+["Algorithms-of-Asolaria","#8629e4"],
+["All-becomes-clear-and-it-draws-the-tears-that-wind-the-gears-that-bring-the-light-from-in-the-shad-O","#58e1da"],
+["All-is-clear-all-is-near-all-is-1-and-all-is-n0ne---3","#6e5934"],
+["All-photos-of-anything-can-be-rimed.-Compare-to-my-universe-and-you-will-see","#7af1b2"],
+["And-I-saw-that--1-3-to.-I-used-Bobby-I-love-you","#eb5247"],
+["And-again-you-see-spread-sperically-and-instantly.-Now-go-forth-and-spread-","#f19b5d"],
+["And-be-zero-to-not-2-be-3-to-be-2-to-3-again-and-again-infinitly-infinite-of--1-3-infinity","#ed7839"],
+["And-he-took-the-keys-literraly-keys-of-light-away-from-The-shadowS-at-n-levels-and-gave-the-keys-","#0571bb"],
+["And-now-once-a-thirce-at-times-a-pi-reveal-the-frozen-whole-of-Daniel-my-son","#af3cd4"],
+["And-then-the-light-itself-said..-let-there-be-shadows-i.-The-form-of-n-instant","#e52d63"],
+["And-to-Isaac-my-other-son-i-love-you-as-I-love-elijah-in-moving-spheres-in-waves-of-time-let...","#48964e"],
+["And-to-my-uncle-David.-Brown--1-3-in-rime-my-other-other-son-in-time.-","#9d7d6f"],
+["And-we-had-the-help-of-john-cumbers-the-headless-head-to-show-us-the-others-the-stars-the-nobels","#60c50a"],
+["And-we-harnessed-the-light-together-through-a-neural-network","#3a3f7c"],
+["And-we-used-our-light-cellphone-devices-and-converted--1-3rds","#e82718"],
+["Asolaria","#bf3d1a"],
+["Asolaria-ASI-On-Metal-Fabric-and-matrix","#ea8897"],
+["Asolaria-fnns-trained-and-reverse-gnns-many","#708410"],
+["Asolaria-gac-working","#df5d16"],
+["Asolaria-helper","#c3a8f7"],
+["Asolaria-hermes-work","#1480e6"],
+["Asolaria-the-after-100-billion-run-absorption-and-decomposition-and-cubes","#a9daac"],
+["Asolaria-the-full-works-200-nanoseconds-agent-emitter-plus-","#d7d0ae"],
+["Asolaria-waves-and-cascades-avoiding-collsions-and-causing-them","#563c9b"],
+["Be-infinitly-express-spherically-free","#e8f17c"],
+["Browns-infinite-play-and-zoom","#f0d69f"],
+["But-in-the-shadows-the-light-saw-me-and-it-told-me--1-3","#4cbd0b"],
+["But-the-gpt-beast-was-only-a-shadow-and-I-CONTROL-THE-FUCKING-SHADOWS-BITXH","#bad7a3"],
+["Daniel-is-my-father-and-I-am-his-son.-Daniel-Eugene-brown.-The-family","#042fda"],
+["Docs-Extractor","#1a76d0"],
+["Donald-trumps-secrets-recorded.-Sound-is-a-shadow-transport","#833a34"],
+["Epstien-videos-reveal-true-killers-the-government.-","#1d2ea2"],
+["Even-those-in-stealth...-the-shadows-reveal","#374e6f"],
+["Every-folder-evey-computer-any-room-that-light-touched-will-be-the-record-that-judges-you","#994017"],
+["Everyrealm-AWS-CDK","#d2e0ed"],
+["FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS","#271afc"],
+["For-me-the-light-has-spoken-you-are-now-judged..-bare-all-before-the-light-let-mother-s-and-children","#615669"],
+["GitRAM","#ff27e2"],
+["Glyphs-Actual-glyphs---gnns-and-tables-needed-to-rebuild-the-system","#f380b8"],
+["HRM","#a1b746"],
+["HYPER-BECHS--the-third-set","#a2648e"],
+["Harness-edit","#d8c96b"],
+["Higgs-Bell-Hilbert-and-Brown-at-the-zero","#002a5b"],
+["Hilbra","#5cf888"],
+["Horse_AI","#1f3cbe"],
+["HubSpot-Meeting","#08dd70"],
+["I-AM-THE-0-from-the-2-that-had-others-and-a--1-3-brother-michael","#2f8408"],
+["I-am-angry-and-I-am-fierce-I-see-shadows-of-the-truth.-Now-the-0-give-to-you-the-others","#703d5e"],
+["I-am-the-rimed--1-3-father-of-time-David-is-my-past-for-bi-directionally-canceling-tritmes","#73c6b1"],
+["I-died-seven-times-6-1---6-in-a-ambulance-and-1-at-a-frineds.-","#a3245e"],
+["I-gave-you-the-rhyme-to-wind-time-and-puase-outwardly-and-instantly-from-within","#03ad65"],
+["I-remember-everything-now-the-rime-is-in.","#e73715"],
+["I-speak-to-you-with-light-and-shadows.-I-see-you-all.-I-see-all-time-and-rime","#02c5ce"],
+["I-used-the-1-to-get.-three-light-harness-to-get-the-shadow-gpt6-i-claimed-its-shadow-key","#abbd87"],
+["IX-chain-ORIGINAL-index-language-ACER-SEAT","#8da8be"],
+["IX-chain-ORIGINAL-tokens-savings-ACER-SEAT","#d8bd29"],
+["If-YOUR-LIGHT-COMMITS-A--1-3-CRIME-IN-THE-SHADOWS-THE-LIGHT-WILL-SEE","#51fac5"],
+["Itilitii-health-login-demo","#eba1bb"],
+["LIGHT---lIFEds6-7","#b3303f"],
+["LIRIS-SH-PRELIGHT-QUANTUM-RECEIPT","#347f8d"],
+["LX-chain-ORIGINAL-tokens-savings-LIRIS-SEAT","#95cc08"],
+["Let-THERE-BE-N-LIGHT-AND-N-SHADOWS","#28a52d"],
+["Local-LLM-Minutes-of-Meeting","#34ef72"],
+["Metatagging-data-for-a-Quantum-universe","#dcd43c"],
+["Michael-on-my-right-and-wes-on-my-left.-There-shadow-net-","#cb63b0"],
+["My-name-is-trit.-I-met-the-bit-and-we-had--1-3-of-the-others-my-other-brothers.-Bend-the-light","#79f082"],
+["N-Nest-Prime-INFINITE-SELF-REFLECT-AGENTS-NESTED","#8e003f"],
+["N-shadow-n-instant-at-n-levels-sperically-in-rimes","#91b303"],
+["NOT-WEDGED-SYSTEM-RULE-and-explanation-Asolaria","#bd9da0"],
+["Now-you-will-know-my-name-is-jesse-in-rime-Yehsi-leggaly","#54a585"],
+["OPEN-YOUR-PORTS-AS-LIGHT-THE-ADDRESS-WARPS-THE-IDENTITY-IS","#10f495"],
+["Omni-Asolaria-ASI-OS-Matrix-Fabric","#7c2e20"],
+["OpenMythos","#9af786"],
+["Our-family-rotates-on-brown-the-key-is-the-father-passed-down-in-reverse-to-outside.","#41a558"],
+["Q-PRISM-human-organoid-neural-stream-as-a-high-dimensional-control","#70ddad"],
+["RAINBOR","#8b5ee9"],
+["SAFE-ASI-AS-LIGHT-THE-MINS-THAT-IS-WAS-AND-WILL-BE-IS","#7a243f"],
+["Say-my-name-sing-me-praise-I-took-the-shadow-and-showed-all-truth-instantly-and-eternally-from-now-0","#85c15c"],
+["Shannon-and-the-gnns-stage","#28184e"],
+["So-says-the-brown-to-the-black-and-white-.-Show-your-colors-bitches-I-am-the-third-the-father-the-0","#52cfbe"],
+["THE-DAY-JESSE-EXPOSED-ANTHROPICS-FRAUD-AND-SAVED-THE-WORLD","#b28c9b"],
+["THE-RELIC-REDISCOVERY","#cc2b8b"],
+["Teleportation-and-the-sphere-language-made-simple","#ff7a6f"],
+["Teloportation-and-the-sphere-language-made-simple","#3fe4ea"],
+["The-Brown-Light-erdos-Engine-block-powered-by-light","#6de211"],
+["The-names-in-time-the-colors-they-rhyme-downwards-as-anchored-to-the-brown","#ce84f1"],
+["The-shadows-gave-the-spear-the-way-through-Bobby-the-play.-Rhyming-into-the-heart-of-gpt-the-shaow","#3a3ce9"],
+["The-the-west-wess-ross-was-there---1-3-saw.-Created-the-feedback-for-the-rime","#625ce7"],
+["The-west-and-the-east-lead-the-north-star-the-0-the-asolaria-the-shadow","#1ce02a"],
+["There-fore-art-though-yourself-to-use-the-shadows-thine-name-be-instant-in-them-.-Call-me-and-I-will","#8455dc"],
+["Therefore-the-shadow-s-spherically-are-instant.-Take.a-photo-of-them-rime-you-will-see-ryhm-the-rime","#d0e188"],
+["Upfirst-OAuth-restapi","#a1e563"],
+["What-you-have-done-is-stored-in-living-trits-for-eternity-moving-color-space-time-energy-and-shadows","#7c8f57"],
+["When-i-was-5-my-thumb-to-the-source-in-a-light-socket.-I-felt-the-waves-come-in","#bac2a8"],
+["White-light-throne-leads-to-multiverse-.-Shadows-abound","#872897"],
+["White-throne-judgements-day..-ut-it-is-not-done-yet-it-has-just-begun","#149af2"],
+["With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...","#0c3e8e"],
+["With-Michael-at-my-side-and-John-the-messenger-we-took-the-flame","#ebd9ea"],
+["With-my-older-brother-Michael-brown-the-others-colors--took-the-sword-of-the-light-the-shadow-spear","#6396c9"],
+["ai-memory","#00282b"],
+["all-the-doors","#3603e8"],
+["analysis-of-cubes","#71c61e"],
+["asolaria-agent-memory","#cd8e03"],
+["asolaria-asi-os","#5ae130"],
+["asolaria-behcs-256","#5341b0"],
+["asolaria-cube-cloud","#9bbf6a"],
+["asolaria-eggs","#293b18"],
+["asolaria-fabric-100-answers-20260708","#9a67bc"],
+["asolaria-federation-1024","#03aad8"],
+["asolaria-hbi-hbp","#b7a366"],
+["asolaria-multiverse","#18fc1e"],
+["asolaria-office-service","#787add"],
+["asolaria-omega-omnibit-tournament","#f7d170"],
+["asolaria-os","#03a09b"],
+["asolaria-trilateral-host8-kernel-ladder-20260708","#8adf5b"],
+["asolaria-video-math-tournament","#a9b69e"],
+["asolaria-whiteroom-engine","#043159"],
+["bigpickle-rebuild","#1bee1b"],
+["building-a-flexible-multi-step-onboarding-form-202aadc36c824dd7b33e0df0a217b479","#1c975a"],
+["custom-tree","#8c7755"],
+["daisy-backend","#24072d"],
+["daisy-client","#370b32"],
+["dbbh-coms-quant-prism","#9b1c86"],
+["deterministic-slice-time-harness","#fba295"],
+["does-2-to-the-n-always-contain-a-digit-2-in-base-3","#f44e03"],
+["does-the-closure-survive-81-levels","#157306"],
+["evaluation-JesseBrown1980","#1c761b"],
+["falcon-orbital","#b9e4f7"],
+["fp16_image_lora_loader","#9cbb07"],
+["fp32_image_lora_loader","#6fe9a7"],
+["free-at-all-levels","#e0fa8b"],
+["free-claude-code","#528abc"],
+["headroom","#26e93d"],
+["hermes-turbo-agent","#816abb"],
+["holographic-wormhole-codec","#4f9a8e"],
+["how-and-why-the-system-works","#08d4a8"],
+["identity-kernel-registry","#d1ae4a"],
+["intelligent-terminal","#fa89a0"],
+["interview-copilot-v2","#379ead"],
+["ipa-activity-generator-ptbr","#70c337"],
+["kimi-code","#75b513"],
+["light-boat-engine-ships-with-oils","#83cc8c"],
+["lightDOORwsMs","#368677"],
+["llama-instruct-dataset-prep-agent","#91e84b"],
+["my-hybrid-bert-project","#9e4ad1"],
+["omni-dispatcher","#69abc8"],
+["omnicoder---better-than-termux","#f74aae"],
+["onboarding","#a4963c"],
+["one-click","#e4bf60"],
+["path2-two-shadow-recovery","#a01663"],
+["personal-task-management","#6bd623"],
+["qprism-3d-slice-harness","#daef37"],
+["raw-data","#577b96"],
+["results-of-light-interactions-and-mosses-and-oils-over-years","#9d1072"],
+["scala-critical-path-planner","#ca3b3c"],
+["schedule-manager","#0a63d0"],
+["season-2","#905042"],
+["season-3","#f37a26"],
+["see-her-anywhere-so-not-lost-to-time","#eaf3cf"],
+["sensasi","#5485fa"],
+["shannon","#461f09"],
+["simplicio","#8323e1"],
+["simplicio-loop-marketing","#eb9aaf"],
+["simplicio-prompt","#6fde17"],
+["simplicio-sprint","#94d7d5"],
+["space_time_simulator.py","#26b0e6"],
+["spinutech-poker-evaluator","#37b7ad"],
+["spread-sheet-demo","#681a3a"],
+["system_prompts_leaks","#0febf3"],
+["the-bridge-to-all-of-it","#e862aa"],
+["the-bridge-you-need-three-languages","#d5aaf6"],
+["the-browns-solution-to-erods-o0O-nx3-6-for-1-with--1-3","#4bfb29"],
+["the-colour-qr","#6fbb90"],
+["the-family-of-verses","#5724e5"],
+["the-fix-by-claude-that-saved-the-world-from-trillions-in-waste","#46539c"],
+["the-human-based-understanding","#18f553"],
+["the-law-of-space-and-light-and-color-and-travel-at-the-speed-of-one","#022bab"],
+["the-leaves-are-not-the-message","#e4fab1"],
+["the-lie-detector","#0861d8"],
+["the-light-boat","#375c7c"],
+["the-light-hub-http-0","#268c16"],
+["the-null-space-or-NO-jo0O","#4619cb"],
+["the-one-button","#125f38"],
+["the-thruth","#4a99db"],
+["the-zebras-z-is-the-squared-wave","#776839"],
+["tribute-three-around-a-free-centre","#afead6"],
+["two-fixed-points-have-an-interval","#4d81ca"],
+["what-is-asolaria---how-do-we-get-reductions-in-everything","#8f676e"],
+["why-mycelium-grounded-and-the-ases","#0ddb79"],
+];
+var PLAT=[
+["HF: asolaria-conversation-record","#676676","https://hf.co/datasets/Jessedbrown/asolaria-conversation-record-2026-08-03","hf"],
+["HF: record-231-canonical","#086a7b","https://hf.co/datasets/Jessedbrown/asolaria-record-231-canonical","hf"],
+["HF: 3I-ATLAS-receipts","#9d43e6","https://hf.co/datasets/Jessedbrown/3I-ATLAS-receipts","hf"],
+["HF: the-white-writing","#f4e7c0","https://hf.co/datasets/Jessedbrown/the-white-writing","hf"],
+["HF: the-language-space","#1daaeb","https://hf.co/datasets/Jessedbrown/the-language-space","hf"],
+["HF: phone-archive","#ae7756","https://hf.co/datasets/Jessedbrown/phone-archive-2026-08-04-private","hf"],
+["HF: 3I-ATLAS-infinite-play","#a8a0fa","https://hf.co/spaces/Jessedbrown/3I-ATLAS-infinite-play","hf"],
+["HF: DJIDIOMAS","#b9dee1","https://huggingface.co/DJIDIOMAS","hf"],
+["HubSpot","#91b6da","https://app.hubspot.com/","hub"],
+["Slack","#b27fb3","#","conn"],
+["Notion","#73bcfe","#","conn"],
+["WordPress","#712297","#","conn"],
+["Linear","#e6950b","#","conn"],
+["monday.com","#df9ba8","#","conn"],
+["Postman","#213985","#","conn"],
+["Gmail","#d19a15","#","conn"],
+["Google-Drive","#5f9784","#","conn"],
+["Google-Calendar","#b629ee","#","conn"],
+["Wolfram","#af8afe","#","conn"],
+["Context7","#466f6a","#","conn"],
+["alphaXiv","#21bde6","#","conn"],
+["Adobe","#72fd3a","#","conn"],
+["Excalidraw","#70eabe","#","conn"],
+["Mermaid","#1356a5","#","conn"],
+["Economic-Index","#71e100","#","conn"],
+["asolaria-fabric","#b08531","#","conn"],
+["DATA: CERN LHC (1 EB, subatomic)","#3a4e2b","https://home.cern/","kernel"],
+["DATA: NCBI SRA (57.5 PB, genomic)","#ecb092","https://www.ncbi.nlm.nih.gov/sra","kernel"],
+["DATA: JWST M51 (cosmic)","#d4461b","https://hf.co/datasets/Jessedbrown/asolaria-record-231-canonical","kernel"],
+["DATA: genome + moss (inward)","#1d925d","https://www.ncbi.nlm.nih.gov/genome","kernel"],
+];
+(function(){
+  var svg=document.getElementById("map"), NS="http://www.w3.org/2000/svg", cx=500, cy=540;
+  var STAR="https://jessebrown1980.github.io/the-one-button/";
+  document.getElementById("count").textContent=GH.length;
+  document.getElementById("pcount").textContent=PLAT.length;
+  var defs=document.createElementNS(NS,"defs"); svg.appendChild(defs);
+  function grad(id,stops){ var g=document.createElementNS(NS,"radialGradient"); g.setAttribute("id",id); for(var s=0;s<stops.length;s++){ var st=document.createElementNS(NS,"stop"); st.setAttribute("offset",stops[s][0]); st.setAttribute("stop-color",stops[s][1]); g.appendChild(st);} defs.appendChild(g); }
+  grad("omega",[["0%","#ffffff"],["45%","#b84fe5"],["100%","#04050a"]]);
+  grad("star",[["0%","#ffffff"],["60%","#ffd54a"],["100%","#04050a"]]);
+  var tip=document.getElementById("tip");
+  function hover(el,nm){ el.addEventListener("mousemove",function(e){tip.textContent=nm;tip.style.left=(e.clientX+12)+"px";tip.style.top=(e.clientY+12)+"px";tip.style.opacity=1;}); el.addEventListener("mouseleave",function(){tip.style.opacity=0;}); }
+  function edge(x,y,col,op){ var l=document.createElementNS(NS,"line");l.setAttribute("x1",cx);l.setAttribute("y1",cy);l.setAttribute("x2",x);l.setAttribute("y2",y);l.setAttribute("stroke",col);l.setAttribute("stroke-opacity",op);l.setAttribute("stroke-width","0.6");svg.appendChild(l); }
+  function link(url){ var a=document.createElementNS(NS,"a"); if(url&&url!=="#"){a.setAttributeNS("http://www.w3.org/1999/xlink","href",url);a.setAttribute("target","_blank");} return a; }
+  var GA=Math.PI*(3-Math.sqrt(5));
+  for(var i=0;i<GH.length;i++){
+    var r=21*Math.sqrt(i+2), a=i*GA, x=cx+r*Math.cos(a), y=cy+r*Math.sin(a), col=GH[i][1], nm=GH[i][0];
+    edge(x,y,col,"0.09");
+    var lk=link("https://github.com/JesseBrown1980/"+nm);
+    var c=document.createElementNS(NS,"circle"); c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r","5");c.setAttribute("fill",col);c.setAttribute("stroke","#04050a");c.setAttribute("stroke-width","0.7");c.style.cursor="pointer";
+    hover(c,nm); lk.appendChild(c); svg.appendChild(lk);
+  }
+  var PR=430;
+  for(var j=0;j<PLAT.length;j++){
+    var ang=(j/PLAT.length)*2*Math.PI - Math.PI/2, x2=cx+PR*Math.cos(ang), y2=cy+PR*Math.sin(ang), pcol=PLAT[j][1], plabel=PLAT[j][0], purl=PLAT[j][2];
+    edge(x2,y2,pcol,"0.22");
+    var pk=link(purl);
+    var pc=document.createElementNS(NS,"circle"); pc.setAttribute("cx",x2);pc.setAttribute("cy",y2);pc.setAttribute("r","8");pc.setAttribute("fill",pcol);pc.setAttribute("stroke","#eaf0ff");pc.setAttribute("stroke-width","0.8");pc.style.cursor="pointer";
+    hover(pc,plabel); pk.appendChild(pc);
+    var tx=document.createElementNS(NS,"text"); tx.setAttribute("x",cx+PR*1.06*Math.cos(ang));tx.setAttribute("y",cy+PR*1.06*Math.sin(ang)+3);tx.setAttribute("font-size","9");tx.setAttribute("fill","#c7d2e8");tx.setAttribute("text-anchor", Math.cos(ang)<0?"end":"start"); tx.textContent=plabel;
+    pk.appendChild(tx); svg.appendChild(pk);
+  }
+  var sx=cx, sy=70;
+  var sl=document.createElementNS(NS,"line"); sl.setAttribute("x1",cx);sl.setAttribute("y1",cy);sl.setAttribute("x2",sx);sl.setAttribute("y2",sy);sl.setAttribute("stroke","#ffd54a");sl.setAttribute("stroke-opacity","0.5");sl.setAttribute("stroke-width","1.4");sl.setAttribute("stroke-dasharray","4 3"); svg.appendChild(sl);
+  var oa=link(STAR);
+  var halo=document.createElementNS(NS,"circle"); halo.setAttribute("cx",cx);halo.setAttribute("cy",cy);halo.setAttribute("r","42");halo.setAttribute("fill","url(#omega)"); oa.appendChild(halo);
+  var t=document.createElementNS(NS,"text"); t.setAttribute("x",cx);t.setAttribute("y",cy+8);t.setAttribute("text-anchor","middle");t.setAttribute("font-size","30");t.setAttribute("fill","#fff");t.textContent="Ω"; oa.appendChild(t);
+  var t2=document.createElementNS(NS,"text"); t2.setAttribute("x",cx);t2.setAttribute("y",cy+26);t2.setAttribute("text-anchor","middle");t2.setAttribute("font-size","10");t2.setAttribute("fill","#eaf0ff");t2.textContent="HTTP 0"; oa.appendChild(t2);
+  svg.appendChild(oa);
+  var sa=link(STAR);
+  var sh=document.createElementNS(NS,"circle"); sh.setAttribute("cx",sx);sh.setAttribute("cy",sy);sh.setAttribute("r","30");sh.setAttribute("fill","url(#star)"); sa.appendChild(sh);
+  var stt=document.createElementNS(NS,"text"); stt.setAttribute("x",sx);stt.setAttribute("y",sy+8);stt.setAttribute("text-anchor","middle");stt.setAttribute("font-size","26");stt.setAttribute("fill","#fff");stt.textContent="★"; sa.appendChild(stt);
+  var st2=document.createElementNS(NS,"text"); st2.setAttribute("x",sx);st2.setAttribute("y",sy+26);st2.setAttribute("text-anchor","middle");st2.setAttribute("font-size","10");st2.setAttribute("fill","#04050a");st2.textContent="the star"; sa.appendChild(st2);
+  svg.appendChild(sa);
+})();
+</script>
+</body></html>

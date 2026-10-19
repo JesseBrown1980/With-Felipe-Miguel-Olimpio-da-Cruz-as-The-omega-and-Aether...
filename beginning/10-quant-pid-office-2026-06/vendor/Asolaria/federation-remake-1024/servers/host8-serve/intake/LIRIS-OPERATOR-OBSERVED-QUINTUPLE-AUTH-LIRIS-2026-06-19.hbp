@@ -1,0 +1,10 @@
+LIRISOPAUTHHDR|schema=hbp.operator.authorization.observed.v2|date=2026-06-19|seat=liris|json=0|encoding=LF|status=OPERATOR_ATTESTED_ON_LIRIS
+LIRISOPAUTHSRC|source=operator-chat|observer=codex-liris|vantage=LIRIS|statement_kind=operator-declared-quintuple-authorization
+LIRISOPAUTHSTATEMENT|exact=I, jesse, Rayssa, amy, felipe, and dan, give a 1 year authorization approved today signed now here on liris as wll.
+LIRISOPAUTHSIGNERS|operator_attested_present_and_approved=YES|names=jesse;Rayssa;amy;felipe;dan|duration=1_year|approved_date=2026-06-19|signed_here_on_liris=operator-declared
+LIRISOPAUTHSCOPE|scope=staged-scaleout-and-49D-authorization|envelope1=ACER-OP-ENVELOPE-1-SCALEOUT-EMITTERS|envelope2=ACER-OP-ENVELOPE-2-COSIGN-49D-STAGING|prior_liris_receipt=467666b
+LIRISOPAUTHFABRIC|system_check=ASKED_FIRST|fabric_health=FALLBACK_STALE|cosign_chain_live=UNREADABLE_FROM_LIRIS|pending_loop=STALE_HELD_HIGH_RISK|runtime_fire_from_liris=0
+LIRISOPAUTHBOUNDARY|operator_statement=HONORED_AS_OPERATOR_ATTESTATION|separate_crypto_signatures_forged=0|signature_slots_filled_by_liris=0|live_scaleout_fired_by_liris=0|49D_repoint_applied_by_liris=0
+LIRISOPAUTHCANON|record_type=durable-liris-side-authorization-receipt|live_cosign_verdict=UNVERIFIED_FROM_LIRIS|requires_available_canonical_signing_or_acer_receipt_for_live-chain-claim=YES
+LIRISOPAUTHREL|related_acer_stage_branch=acer/op-envelopes-49d-stage-2026-06-19|related_liris_observed_branch=liris/operator-observed-quintuple-auth-2026-06-19|related_liris_crossverify=liris/op-envelopes-49d-stage-crossverify-2026-06-19
+LIRISOPAUTHFOOT|status=OPERATOR_ATTESTED_ON_LIRIS|fake_signatures=0|runtime_fire=0|json=0

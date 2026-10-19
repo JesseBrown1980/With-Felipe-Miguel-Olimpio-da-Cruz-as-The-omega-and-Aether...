@@ -1,0 +1,84 @@
+{
+  "arms": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "cases_per_arm": 972,
+  "classification": "BOUNDED_SYNTHETIC_SOFTWARE_TRIAL",
+  "consciousness_or_human_like_mind_established": false,
+  "fault_modes": [
+    "HONEST",
+    "OUTPUT_FLIP",
+    "COMMON_SOURCE",
+    "FRAME_FLIP",
+    "ONE_WATCHER_FORGED",
+    "ALL_WATCHERS_FORGED",
+    "ANCHOR_DELAYED",
+    "ANCHOR_MISSING",
+    "CONSENT_MISSING"
+  ],
+  "human_apex_consent_checked_in_arms": [
+    "C",
+    "D"
+  ],
+  "law_source": "N-Nest LAW.md, recurrence + ground truth corrective gate",
+  "mathematical_warning": "independent consistency cannot authenticate common compromised source",
+  "max_rounds": 3,
+  "physical_hosts_attested": 0,
+  "physical_screen_or_camera_measured": false,
+  "schema": "ASOLARIA-SEAT4-RECURRENCE-IS-MIND-81-V1",
+  "seat": "seat-4",
+  "source_anchor": "deterministic precommitted local benchmark fixture, not a physical attestation",
+  "tallies": {
+    "A": {
+      "accepted_without_anchor": 216,
+      "cases": 972,
+      "correct_final": 432,
+      "false_green": 648,
+      "holds": 0,
+      "operations": 0,
+      "repair_events": 0
+    },
+    "B": {
+      "accepted_without_anchor": 216,
+      "cases": 972,
+      "correct_final": 864,
+      "false_green": 216,
+      "holds": 0,
+      "operations": 1404,
+      "repair_events": 432
+    },
+    "C": {
+      "accepted_without_anchor": 216,
+      "cases": 972,
+      "correct_final": 729,
+      "false_green": 243,
+      "holds": 108,
+      "operations": 3834,
+      "repair_events": 297
+    },
+    "D": {
+      "accepted_without_anchor": 0,
+      "cases": 972,
+      "correct_final": 972,
+      "false_green": 0,
+      "holds": 216,
+      "operations": 1296,
+      "repair_events": 540
+    }
+  },
+  "total_cases": 3888,
+  "trace_bytes": 559809,
+  "trace_sha256": "c0b44be3857af23cef02e9274e335868d2efbfe2f73d59a290ddc24a1bd8ca14",
+  "visual_channel": "digital 9x9 RGB PPM, not captured photons",
+  "watcher_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "waves": 27,
+  "zero_trust_anchor_compromise_tested": false
+}

@@ -1,0 +1,13 @@
+OMNIEVENT47v1|date=2026-07-13|repo=JesseBrown1980/HYPER-BECHS--the-third-set|pr=17|head=8a52e38c97c9aaae926147e5d6a1450262a015d4|run=29240414606|job=86784946753|artifact=8275180854|artifact_sha256=018fdc5bc2da4403499efe4b77d33b2807acff651352a799b2fc367099d49a32|status=PASS|json=0
+CATALOG47|repo=JesseBrown1980/asolaria-behcs-256|commit=802023a9588cf3c72be9f9b353c847f22c616092|path=data/behcs/codex/catalogs.json|file_sha256=d14f6624e800f42cbc7d6c662853d68f6a767bbee7c47f76689aebd5b5a73e58|base=D1-D24|ratified_extra=26,31,34,35,38,44|other_D25-D47=DRAFT_UNRATIFIED|json=0
+HYPER60|tuple_dim=60|D1-D47=CATALOG_GROUNDED|D48-D60=UNRESOLVED_IN_ACCESSIBLE_CATALOG_DO_NOT_INVENT|selector=NULL|json=0
+RUN|run_pid=RUN-6d0e0330ab65b6b6|events=32|input_bytes=1000000|input_sha256=369b688978f649681136198fb96db14c1616756260c55fb4b65e9bc049552cad|merkle_root=53f7adc239331481ac6737e02748101b21cbb2c7d9a9405df91e4e4b1d9c874b|ndjson_sha256=7dcb151a9ab6cfb60f2a59ab49f117cbe15c417bd6f975df31a21b4222bab5e9|final_readback=PASS|json=0
+SCHEDULER|policy=READBACK_PASS_AND_TOTAL_BYTES_BEAT_BEST|L1=ACCEPT|L2=HOLD|L3=HOLD|mode=REFERENCE_NOT_LIVE_DAEMON|json=0
+CANDIDATE|level=1|catalog_bytes=2068|payload_bytes=322929|total_bytes=324997|bpc=2.599976|restore=PASS|verdict=ACCEPT|json=0
+CANDIDATE|level=2|catalog_bytes=4122|payload_bytes=321102|total_bytes=325224|bpc=2.601792|restore=PASS|verdict=HOLD|json=0
+CANDIDATE|level=3|catalog_bytes=6176|payload_bytes=320408|total_bytes=326584|bpc=2.612672|restore=PASS|verdict=HOLD|json=0
+AUDITPROFILE|name=FULL_D47|event_bytes=355010|visual_bytes=11406|full_fabric_bpc=5.531304|tax_pct=52.995243|json=0
+AUDITPROFILE|name=SELF_CONTAINED_SPAN|span_bytes=8295|span_bpc=0.066360|portal_ratio=42.798071|with_3d_bpc=0.157608|full_fabric_bpc=2.757584|tax_pct=5.715438|span_sha256=c0a5bdafbca01cfc9c2dd614da0d9cef8c6fca7a3830527f8254987468bef325|json=0
+AUDITPROFILE|name=MERKLE_REFERENCED_MIN|span_bytes=1401|span_bpc=0.011208|portal_ratio=253.397573|span_only_tax_pct=0.429231|with_3d_bpc=0.102456|full_fabric_bpc=2.702432|with_3d_tax_pct=3.791252|span_sha256=ff1a92c594b4faff7fb0356992d13bbded314c8e2bbeeffedf875d2279a9d085|schema_sha256=671864e2519f011a83ce1d527b02da6492582779ed737663a898bef942016f67|full_store_required=1|json=0
+CLAUDE_REPORT|events=32|merkle_prefix=9600f2e22319f9a7|span_bytes=3818|codec_bpc=2.5904|reported_full_bpc=2.6186|reported_observability_bpc=0.0305|reported_tax_pct=1.17|reported_portal_ratio=4.1|status=OPERATOR_REPORTED_UNSEALED|arithmetic_at_1MB=2.5904+0.030544=2.620944|json=0
+BOUNDARY|dispatcher=REFERENCE_NOT_LIVE|scheduler=REFERENCE_NOT_LIVE|omnimets=COMPAT_NOT_PACKAGE_INVOCATION|omni3d=D1_D5_D20_SHADOW|cross_vantage_hlc=UNVERIFIED|physical_60D_selector=UNMAPPED|json=0

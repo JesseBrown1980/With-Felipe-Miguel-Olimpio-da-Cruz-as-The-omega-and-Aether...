@@ -1,0 +1,11 @@
+STONE|schema=ASOLARIA-81-SPATIAL-HASH-CONTROL-STONE-V1|date=2026-10-14|kind=MEASURED_CPU_CONSTRUCTED_FIXTURE|json=0
+ARTIFACT|name=test_spatial_hash_waves.py|sha256=6783e66b4400b994ce5722da1ac3d2e763e043be3873305993e06231504641a1|json=0
+ARTIFACT|name=results-spatial-hash-waves.json|sha256=ab3ddad6e7bcb170ec583e2c2626adcc28a3f04d58d26a2f4896bc61e1959a00|json=0
+WAVES|count=27|mutation_bodies=9|coordinate_scales=1,1000000,1000000000|bodies=81|json=0
+IDENTITY|positions_excluded_from_identity_hash=1|stable_ids_across_scales=81|all_body_hashes_across_scale_equal=1|json=0
+RECOMPUTE|shared_root_changed_cells_per_wave=81|five_registers_changed_per_wave=405|before_recompute_peer_changes=0|json=0
+CONTROL|no_shared_root_changed_cells=1|isolated_40_rounds_changed_cells=1|json=0
+RING|round_0=1|round_1=3|round_2=5|round_10=21|round_39=79|round_40=81|json=0
+COMPLETE|round_1=81|logical_metadata_fanout=1|physical_signaling=0|json=0
+DISTANCE|body0_to_body80_scale1_km=1472.9562111617574|scale1000000_km=1472956211.1617575|scale1000000000_km=1472956211161.7576|same_identity_hash=1|hash_only_distance_inference=IMPOSSIBLE_IN_THIS_MODEL|json=0
+SCOPE|physical_gravity=NOT_TESTED|FTL=NOT_TESTED|real_GPU=NOT_TESTED|brain=NOT_TESTED|free_center=SEPARATE|json=0

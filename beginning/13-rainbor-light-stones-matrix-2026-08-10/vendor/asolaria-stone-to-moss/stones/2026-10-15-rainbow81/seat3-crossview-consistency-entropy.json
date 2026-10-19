@@ -1,0 +1,92 @@
+{
+  "algorithms": [
+    "Python GF2 cyclic-polynomial power",
+    "Node 81x81 column transfer matrix repeated squaring"
+  ],
+  "challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "controlled_cases": 30560,
+  "first_triple_witness": {
+    "A": "CA150",
+    "A_kernel": "0db6db6db6db6db6db6db",
+    "B": "CA90",
+    "B_kernel": "1ffffffffffffffffffff",
+    "C": "CA60",
+    "blind_probability": "2^-158",
+    "counts_per_arm": 191,
+    "cross_source_constraints": 158,
+    "horizon": 1,
+    "joint_rank": 81,
+    "ranks": [
+      79,
+      80,
+      80
+    ],
+    "reject_basis_bit": 0,
+    "source_tuple_count": "2^85"
+  },
+  "frozen_laws": {
+    "A": "CA150(0,1,80)",
+    "B_C": [
+      "CA90(1,80)",
+      "CA60(0,1)",
+      "CA102(0,80)",
+      "TAP1(0,2)",
+      "TAP4(0,1,5,9)"
+    ]
+  },
+  "horizons": [
+    1,
+    10000000000000,
+    10000000000001,
+    10000000000081
+  ],
+  "limitations": [
+    "targeted substitution may be accepted",
+    "B-kernel source differences are invisible",
+    "no authenticated source provenance",
+    "no physical hardware attestation",
+    "no quantum/gravity/FTL claim"
+  ],
+  "negative_controls": {
+    "alternate_accepted": 7640,
+    "honest": 7640,
+    "invisible_B_change": 7640,
+    "rejected": 7640
+  },
+  "pair": {
+    "accepted_independent_source_tuples": "2^84 of 2^162",
+    "blind_acceptance": "2^-78",
+    "configurations": 20,
+    "cross_source_constraints": 78,
+    "joint_rank": 81,
+    "ranks": [
+      79,
+      80
+    ]
+  },
+  "schema": "ASOLARIA-SEAT3-CROSSVIEW-CONSISTENCY-ENTROPY-V1",
+  "seat": "seat-3-computational-only",
+  "status": "LOCAL_PYTHON_NODE_BYTE_IDENTICAL_PENDING_HOSTED_CI",
+  "theorem": "Given GF(2) maps with individual ranks ri and stacked rank r, independent uniform source views appear consistent with probability 2^(r-sum(ri)). This is a consistency-counting identity, NOT authentication.",
+  "toy": {
+    "accepted_pairs": 128,
+    "accepted_triples": 256,
+    "n": 4,
+    "source_pairs": 256,
+    "source_triples": 4096
+  },
+  "trace_bytes": 5906257,
+  "trace_sha256": "6bfeccf834d67440e6864039b53767205cf1a85678e05f6f99c89b83ce3b4156",
+  "triple": {
+    "accepted_independent_source_tuples": "2^85 of 2^243",
+    "blind_acceptance": "2^-158",
+    "configurations": 40,
+    "cross_source_constraints": 158,
+    "joint_rank": 81,
+    "ranks": [
+      79,
+      80,
+      80
+    ]
+  }
+}

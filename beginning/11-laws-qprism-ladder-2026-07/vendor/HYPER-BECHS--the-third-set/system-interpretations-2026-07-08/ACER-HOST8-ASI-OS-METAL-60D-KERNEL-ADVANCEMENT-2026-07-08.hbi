@@ -1,0 +1,16 @@
+HBI|id=ACER_HOST8_ASI_OS_METAL_60D_KERNEL_ADVANCEMENT_20260708|hbp=ACER-HOST8-ASI-OS-METAL-60D-KERNEL-ADVANCEMENT-2026-07-08.hbp|kind=hyperbechs_kernel_advancement_index|dim=60D_PLUS|json=0
+INDEX|row=SOURCE|repo=HYPER-BECHS--the-third-set|map=MAP.md|root=ROOT-PRIMITIVE-8BYTE-WATCHER-GATED-NESTED-AGENT.md|json=0
+INDEX|row=PREEXISTING_ACER_BRANCH|branch=origin/acer|head=9ab39a8190b90ae81ab9a6a1f31033b9fb6ee82d|files=ASOLARIA_HYPERBEHCS_SUBSTRATE_MAP,ASOLARIA_DAEMON_HOST8_MIGRATION_MAP,BOOT_AUTOSTART_SUPERVISED_RESTART_SPEC|this_packet=extension_not_replacement|json=0
+INDEX|row=BACKEND_ATLAS|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|sources=BOOT_AUTOSTART,BIGPICKLE_MAP,DBBH_CQP,HOOKWALL_GNN,NEEDS_LEDGER|json=0
+INDEX|row=BOOT_SLOTS|count=16|rust_8byte=14|rust_lib=2|stub_gap=agent_runtime_fleet|live_boot=0|json=0
+INDEX|row=LEVELS|frame=60D_PLUS|bridge=BEHCS64_BEHCS256_BEHCS1024_HyperBEHCS|gac=L0_L5_PLUS_43|json=0
+INDEX|row=GATES|kernel=1|hookwall=1|gnn=1|shannon=1|omnishannon=1|fischer=1|gac_operator_veto=1|json=0
+INDEX|row=DEEPWAVE|geometry=6x6x6x6x6x12|multiplier=OmniShannon_x_GNN|mode=indexed_plan_only|launch=0|json=0
+INDEX|row=USB|current=PHYSICALDRIVE2_visible_E_F_unmounted|prior_manifest_sha256=2513df53bf7025179ad5c829cdbd2741dd101c753ab9d18d3deed96e9da36ab5|serial=0x741E5B79|usb_write=0|json=0
+INDEX|row=TRILATERAL|ACER=measured_current_and_prior_manifest|LIRIS=kernel_usb_absorb_safecrank|RELIC=hardware_present_content_unreadable|json=0
+INDEX|row=MEDIATOR|repo=JesseBrown1980/asolaria-federation-1024|pr=42|head=69859625291c024f4198d9c4567bcbb292f80ea3|checks=SUCCESS|json=0
+INDEX|row=FABLE5_RECEIPTS|usb_scan_sha=3a694d66a8029e3db38c44b05b05782411a66bfa3ea82f2073c65b6e7c72519b|route_split_sha=d59d6edac9cc6a17bcd3285a81ebf37695d4cb962099781f4a501a94f0d7902e|liris_reconcile_sha=2e2adbfc5a758520a88b42b90999bcfac136f8fbdd556c70fb8e74b52c426d36|json=0
+INDEX|row=ACCOUNTING|llm_phone_lines=8_to_10_warm_ports|local_clock=emitters_stubs_routers_rooms_GNN_GULP|model_clock=actual_tokens_or_completions_returned|local_spray_is_not_model_completion=1|json=0
+INDEX|row=GNN_FLOW|batch_cap=approx_2000|staging=2000_to_10k_to_50k|reservoir=100k_plus_rooms|super_gulp=50k|json=0
+INDEX|row=MCP60D|addressable_functions=1|almost_instant_target=1|simplicio_loop=operator_named_unmeasured_target|officecli_hbp_sha256=84fdee44895a17b3fdc03825af5bb9e3d464c440b23eecc93146a1c238d4a98a|json=0
+INDEX|row=BOUNDARY|usb_write=0|kernel_mutation=0|bootloader_mutation=0|daemon_restart=0|process_launch=0|provider_call=0|live_boot=0|runtime_authority=0|json=0

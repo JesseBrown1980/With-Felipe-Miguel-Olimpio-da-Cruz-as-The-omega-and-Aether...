@@ -1,0 +1,131 @@
+{
+  "catalog": "C:/Users/acer/Asolaria/.history/staging/compiled-unified-agent-index.json",
+  "documents": 224,
+  "codebook_bytes_shared_once": 13890,
+  "vocab_sizes": {
+    "type": 9,
+    "layer": 1,
+    "sourceKind": 1,
+    "prefix": 1,
+    "array_tokens": 969
+  },
+  "per_row_avg_bytes": {
+    "json_full": 2620.5,
+    "json_meta": 467.9,
+    "tuple_meta": 312.6,
+    "verb_meta_payload": 235.1,
+    "body_corpus": 1550.5
+  },
+  "GROWTH_CURVE": [
+    {
+      "N": 1,
+      "json_full_bytes": 2207,
+      "json_meta_bytes": 381,
+      "tuple_meta_bytes": 233,
+      "verb_meta_bytes": 14043,
+      "ref_full_bytes": 14139,
+      "glyph_ref_bytes": 8,
+      "body_corpus_bytes": 1310,
+      "r_jsonmeta/verb": 0.03,
+      "r_jsonmeta/tuple": 1.64,
+      "r_jsonfull/refindex": 0.16,
+      "r_jsonfull/tuplemeta": 9.47,
+      "r_jsonfull/glyphref": 275.88
+    },
+    {
+      "N": 5,
+      "json_full_bytes": 12052,
+      "json_meta_bytes": 2004,
+      "tuple_meta_bytes": 1264,
+      "verb_meta_bytes": 14797,
+      "ref_full_bytes": 15234,
+      "glyph_ref_bytes": 40,
+      "body_corpus_bytes": 7410,
+      "r_jsonmeta/verb": 0.14,
+      "r_jsonmeta/tuple": 1.59,
+      "r_jsonfull/refindex": 0.79,
+      "r_jsonfull/tuplemeta": 9.53,
+      "r_jsonfull/glyphref": 301.3
+    },
+    {
+      "N": 20,
+      "json_full_bytes": 50304,
+      "json_meta_bytes": 8893,
+      "tuple_meta_bytes": 5857,
+      "verb_meta_bytes": 18131,
+      "ref_full_bytes": 20067,
+      "glyph_ref_bytes": 160,
+      "body_corpus_bytes": 30012,
+      "r_jsonmeta/verb": 0.49,
+      "r_jsonmeta/tuple": 1.52,
+      "r_jsonfull/refindex": 2.51,
+      "r_jsonfull/tuplemeta": 8.59,
+      "r_jsonfull/glyphref": 314.4
+    },
+    {
+      "N": 50,
+      "json_full_bytes": 120070,
+      "json_meta_bytes": 22535,
+      "tuple_meta_bytes": 14901,
+      "verb_meta_bytes": 24989,
+      "ref_full_bytes": 29591,
+      "glyph_ref_bytes": 400,
+      "body_corpus_bytes": 68693,
+      "r_jsonmeta/verb": 0.9,
+      "r_jsonmeta/tuple": 1.51,
+      "r_jsonfull/refindex": 4.06,
+      "r_jsonfull/tuplemeta": 8.06,
+      "r_jsonfull/glyphref": 300.18
+    },
+    {
+      "N": 100,
+      "json_full_bytes": 277536,
+      "json_meta_bytes": 47018,
+      "tuple_meta_bytes": 31541,
+      "verb_meta_bytes": 37313,
+      "ref_full_bytes": 47031,
+      "glyph_ref_bytes": 800,
+      "body_corpus_bytes": 170256,
+      "r_jsonmeta/verb": 1.26,
+      "r_jsonmeta/tuple": 1.49,
+      "r_jsonfull/refindex": 5.9,
+      "r_jsonfull/tuplemeta": 8.8,
+      "r_jsonfull/glyphref": 346.92
+    },
+    {
+      "N": 150,
+      "json_full_bytes": 412431,
+      "json_meta_bytes": 71558,
+      "tuple_meta_bytes": 48127,
+      "verb_meta_bytes": 49836,
+      "ref_full_bytes": 64417,
+      "glyph_ref_bytes": 1200,
+      "body_corpus_bytes": 249572,
+      "r_jsonmeta/verb": 1.44,
+      "r_jsonmeta/tuple": 1.49,
+      "r_jsonfull/refindex": 6.4,
+      "r_jsonfull/tuplemeta": 8.57,
+      "r_jsonfull/glyphref": 343.69
+    },
+    {
+      "N": 224,
+      "json_full_bytes": 586993,
+      "json_meta_bytes": 104813,
+      "tuple_meta_bytes": 70020,
+      "verb_meta_bytes": 66555,
+      "ref_full_bytes": 87494,
+      "glyph_ref_bytes": 1792,
+      "body_corpus_bytes": 347313,
+      "r_jsonmeta/verb": 1.57,
+      "r_jsonmeta/tuple": 1.5,
+      "r_jsonfull/refindex": 6.71,
+      "r_jsonfull/tuplemeta": 8.38,
+      "r_jsonfull/glyphref": 327.56
+    }
+  ],
+  "notes": {
+    "lossless_metadata": "r_jsonmeta/verb is MEASURED lossless metadata compression; climbs with N as the shared vocabulary codebook amortizes.",
+    "referential_index": "r_jsonfull/refindex is MEASURED for the INDEX: the rich record keeps metadata + a 16B content-hash; the body/summary corpus (body_corpus_bytes) is stored ONCE and referenced. This is the legitimate index-vs-corpus compression and the regime the operator anchors live in.",
+    "anchors": "Operator anchors 12:1 -> 21,141:1 -> ~3B:1 stand REAL on provenance; this run is a descendant curve, NOT a re-derivation of them."
+  }
+}

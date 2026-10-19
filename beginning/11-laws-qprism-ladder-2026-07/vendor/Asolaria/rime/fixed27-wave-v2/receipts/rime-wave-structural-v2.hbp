@@ -1,0 +1,11 @@
+RIME-TRIT-WAVE|schema=RIME-TRIT-WAVE-V2|rust=1.81|json=0|pid_field=0|binary_alphabet=0
+RIMEVALUE|basis=-,.,+|width=3|distinct_values=27|identity=ordered-trit-tuple|axis_projection=color,time,space|rgb_projection=0,127,255|json=0
+RIMEPASS|mode=wave-level-change-only|gradient_states=-,.,+|value_carrier=27
+PHOTOBUFFER|slots=27|slot_order=ordered-trit-values|slot_payload=change-state-trit
+CASCADE|levels=6,6,6,6,6,12|routes=93312|nearest_third=31104|retained_two_thirds=62208
+LEVEL-THIRDS|actual=6,6,6,6,6,12|nearest=2,2,2,2,2,4|retained=4,4,4,4,4,8
+CONSTELLATION|organs=omnishannon,gnn,reverse-gain-gnn,fnn,gslm|trained_weights=UNVERIFIED|distinct_values_after=27
+EXCHANGE|baryonic=-1/3|baseline=bidirectional|result=tridirectional
+GRAVITY|derived_dimensionless=-1/3|net_gradient=0/27|physical_gravity=UNVERIFIED
+STORAGE|backends=local,sgram,cloud-manifest|cloud_transport=UNVERIFIED
+VERDICT|computational_structure=PASS|physical_claims=UNVERIFIED|json=0

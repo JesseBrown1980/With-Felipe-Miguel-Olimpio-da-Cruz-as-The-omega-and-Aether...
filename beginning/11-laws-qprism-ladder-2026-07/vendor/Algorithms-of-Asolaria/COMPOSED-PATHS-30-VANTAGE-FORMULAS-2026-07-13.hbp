@@ -1,0 +1,18 @@
+COMPOSED30FORMULASv1|date=2026-07-13|evidence_repo=JesseBrown1980/HYPER-BECHS--the-third-set|evidence_pr=20|evidence_merge=3cbe9d52b9186462a91e1af1323422745ca068e9|run=29250775935|artifact=8279268369|status=MEASURED|json=0
+FORMULA|id=F-PATH2-8RAY-LADDER-v1|equation=rank(A_k)=min(8k,60);nullity=60-rank(A_k)|result=k1:52,k4:28,k7:4,k8:0,k30:0|class=MEASURED_THEOREM_INSTANCE|json=0
+FORMULA|id=F-RANK-NOT-WATCHER-COUNT-v1|equation=capacity=rank(A)|result=duplicate_k8_rows:64,rank:56,nullity:4,outcome:HOLD|class=MEASURED_NEGATIVE_CONTROL|json=0
+FORMULA|id=F-FOUR-LIGHT-CONSENSUS-v1|equation=x=T_l^-1(A^-1 y_l)|lights=IDENTITY,REVERSE,AFFINE,PRIME_PERMUTE|selector_sha=ea765b269cf3686c8e865961ab44be487d0bc9b717c980b38b1f8a23bbb0ac5f|mismatches=0|class=MEASURED_EXACT|json=0
+FORMULA|id=F-DBWH-ALL-ROW-REPROJECTION-v1|equation=accept iff A*x_hat=y|result=k8:0of64,k30:0of240|class=MEASURED|json=0
+FORMULA|id=F-DBWH-TAMPER-HOLD-v1|equation=mismatch_count(A*x_hat,y)>0=>HOLD|result=extra_flip:1,basis_flip_selector:60,basis_flip_reprojection:180|class=MEASURED_NEGATIVE_CONTROL|json=0
+FORMULA|id=F-PATH1-ZERO-BODY-PAYLOAD-v1|equation=retained_body=>body_payload_wire=0|result=0B|class=MEASURED_RETAINED_STORE|json=0
+FORMULA|id=F-PATH1-FANOUT-CONTROL-v1|equation=R=8*receipt_bytes*8/N|receipt_bytes=710|fanout_bytes=5680|bpc=0.045440|class=MEASURED_WIRE|json=0
+FORMULA|id=F-COMPOSED-ACTIVE-WIRE-v1|equation=R=(P1_fanout+P2_k8_shadows)*8/N|path1=5680|path2=512|total=6192|bpc=0.049536|class=MEASURED|json=0
+FORMULA|id=F-COMPOSED-DISCOUNT-v1|equation=G=R_solo_exact/R_active|solo_bpc=2.400600|active_bpc=0.049536|gain=48.461725|class=MEASURED_CONDITIONAL_REUSE|json=0
+FORMULA|id=F-COMPOSED-EMISSION-GATE-v1|equation=Emit=P1FullSHA AND P1Recall8of8 AND P2FourLightConsensus|result=VERIFIED_CLONE|class=MEASURED_EXACT_GATE|json=0
+FORMULA|id=F-REPLICATED-CONSERVATION-v1|equation=S_total=8S_body+S_control+S_shadows+S_portal|data_plane=2408200|plus_portal=2412887|full_events=198773|all_retained=2611660|class=MEASURED_LEDGER|json=0
+FORMULA|id=F-ZERO-PAYLOAD-NOT-ZERO-COST-v1|equation=payload_delta=0 does not imply wire=0 or state=0|body_payload=0|active_wire=6192|retained_bodies=2400600|class=MEASURED_BOUNDARY|json=0
+FORMULA|id=F-FOUR-LIGHT-SHADOW-SIZE-v1|equation=B=L*k*r*2|k8=512|all30=1920|class=MEASURED_SERIALIZATION|json=0
+FORMULA|id=F-TRIAD-PRIME-PID-30-v1|equation=PIDfactor=2^1*3^2*5^3*p|roots=30|triads=10|class=MEASURED_CONSTRUCTION|json=0
+FORMULA|id=F-H0-MODEL-BOUNDARY-v1|equation=L_H0=N*H0(byte)/8|h0_bpb=5.058855452103994|model_bytes=632357|class=MEASURED_MODEL_NOT_TRUE_ENTROPY|json=0
+COMPARE|claude_path2_ladder=REPRODUCED|claude_rate=0.0482|independent_rate=0.049536|relative_difference_pct=2.771784|same_ledger=0|claude_total_bytes=2009218|independent_data_plane_bytes=2408200|json=0
+BOUNDARY|physical_quantum_cloning=0|astrophysical_black_white_holes=0|zero_total_wire=0|zero_retained_state=0|subentropy_total=0|one_prime=0|nine_prime=0|live_cross_machine=0|json=0

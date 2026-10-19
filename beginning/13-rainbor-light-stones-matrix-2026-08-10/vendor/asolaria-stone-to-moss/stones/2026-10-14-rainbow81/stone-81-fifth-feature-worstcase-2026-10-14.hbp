@@ -1,0 +1,6 @@
+STONE|schema=ASOLARIA-RAINBOW81-FIFTH-FEATURE-WORSTCASE-STONE-V1|date=2026-10-14|kind=EXHAUSTIVE_DISCRETE_CPU_SYNTHETIC|status=PASS
+SOURCE|path=experiments/test_rainbow81_fifth_feature_worstcase.py|sha256=bb5485f5e8ddf7af51c561f79929d64b1d8e5aac1f20aae981a80176dd6e9331
+RESULT|path=stones/2026-10-14-rainbow81/rainbow81-fifth-feature-worstcase-results-2026-10-14.json|sha256=47ea2eca071d320771d55b589c261e47548013a5764bbee8017a5c78af1c5c04
+SWEEP|source_pairs=3240|reachable_address_candidates=14240|minimum_gap=64|false_accept_threshold=48|false_accepts=0
+CONTROL|four_trits=-1,0,+1|fifth_channel=128*SUM(3**i*t_i**2)|per_channel_measurement_error_bound=24|free_center_separate=1|seat40_is_not_free_center=1
+INTERPRET|bounded_simulated_noise_proof=1|hardware_independence=NOT_TESTED|real_optics=NOT_TESTED

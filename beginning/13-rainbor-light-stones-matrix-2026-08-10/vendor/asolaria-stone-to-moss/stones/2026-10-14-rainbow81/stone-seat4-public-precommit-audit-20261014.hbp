@@ -1,0 +1,12 @@
+STONE|schema=ASOLARIA-SEAT4-PRECOMMIT-INDEPENDENT-AUDIT-V1|date=2026-10-14|kind=GIT_PINNED_CRYPTOGRAPHIC_AUDIT|json=0
+SEAT|seat=seat-4|class=COMPUTATIONAL_ADDITIONAL_WITNESS|physical_host_independence=UNVERIFIED|json=0
+CHECKIN|repo=JesseBrown1980/asolaria-stone-to-moss|commit=59d1e99ba7cec64c2a21c041895e81d5a20cedb3|blob_sha=f9a8e16e6ad276f3ab794b2e07a83bdb7c2bf98f|json=0
+COMMIT|blob_sha=df13bb276bed305b0e0256dbd282ff4833f4aac5|stage=PRE_CHALLENGE_COMMITMENT|json=0
+KEY|ed25519_spki_fingerprint_sha256=0c2ccbcfe284e1c76a1b7b6f3063c7145bc295678f1b8d8c55d12e330d79cdd6|json=0
+SIGNATURE|checkin=PASS|commit=PASS|tampered_commit_rejected=PASS|json=0
+SIGNED_PAYLOAD|checkin_sha256=91e538e260345183a2f425a5b155236175d508019506cb933bff1bf9c9ab64d7|commit_sha256=017bb6e07b3382f6e0ee69d7710961ea97b041498f98e45a58968417f9054091|json=0
+PRIVATE_COMMIT|sha256=db400edf79185e5c57e3332533ea0440d82449256018693f4e4580059a7b7fc4|salt_revealed=0|json=0
+SOURCE|protocol_commit=50d96e363943273a44b3a195eff9e9b2591f4765|laws=0+1;0+2;0+1+3;0+4+7;0+1+5+9|steps=10000000000000|json=0
+INDEPENDENT_CI|run=38597348079|python_3.11=PASS|python_3.13=PASS|json=0
+COORDINATION|three_physical_hosts_attested=0|coordinator_fresh_challenge=NOT_ISSUED|seat4_is_not_physical_seat=1|json=0
+LIMIT|verification=CRYPTOGRAPHIC_AUTHENTICITY_ONLY|physical_signaling=NOT_TESTED|gravity=NOT_TESTED|json=0

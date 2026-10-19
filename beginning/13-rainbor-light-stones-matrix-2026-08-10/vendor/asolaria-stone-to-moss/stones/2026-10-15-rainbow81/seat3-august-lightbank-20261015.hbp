@@ -1,0 +1,13 @@
+PORTAL|schema=ASOLARIA-SEAT3-AUGUST-LIGHTBANK-RECEIPT-V1|date=2026-10-15|seat=3|software_only=1|json=0
+SOURCE|law_blob_sha1=6412cb3b82ec084b03b68c9c4d074a58920ac1ee|colour_qr_blob_sha1=dec43dd370de557f2511e69227b1e234e001ddfc|boat_blob_sha1=ba1c1a36ec1d4201297ccad325f848c6040dc95e|json=0
+PREREG|commit=d04bbd6316d98a2f7728643c1a972f453da9a62a|source_size=65536|encoding=LE16_sum_plus_signed_dR_dG|json=0
+ROOT|raw_bytes=65536|raw_sha256=841825c3ef6c84174e3c9da71adef7629f4cfad9368968ba4cb5fae5d9469b1f|json=0
+PROJECTOR|rank=2|trace=2|P2_equals_P=1|common_sideband_required=1|encoded_bytes=131076|encoded_sha256=e6f3bd32079cf3a26b86a2f9d7f95497596e190986eca96a8a0be56dfeb3eb80|json=0
+COLOUR_QR|raw_chunks=32|raw_frames=11|last_raw_B=filler|projected_chunks=63|projected_frames=21|raster_rendered=0|camera_tested=0|json=0
+BANK|slot_capacity=729|initial_projected_packets=63|projected_recall_hits=63|write_729_new=1|evicted_original=63|slot_identities_stable=1|json=0
+LIGHT|synthetic_events=27|transmit=9|absorb=9|reflect=9|trit_sum=0|physical_photons_observed=0|json=0
+NEGATIVE|flipped_byte=HELD|swapped_plane=HELD|duplicate_index=HELD|missing_chunk=HELD|forged_index=HELD|forged_common=HELD|evicted_read=HELD|json=0
+TRACE|bytes=24244|sha256=3624ef608ec0db378cde791f97aabda8833988e4996daf41a8bc1ce1d00852b9|python_node_exact=1|json=0
+CI|run=38733356623|ubuntu_windows_python311_313_node22=4/4_PASS|full_trace_tamper_held=4/4|json=0
+BOUNDARY|optical_memory_device=NOT_TESTED|ordinary_QR_scan=NOT_TESTED|source_origin_authenticated=FALSE|physical_hosts_attested=FALSE|release_issue10=OPEN|json=0
+END|historical_stones_unchanged=1|peer_review=PENDING|json=0

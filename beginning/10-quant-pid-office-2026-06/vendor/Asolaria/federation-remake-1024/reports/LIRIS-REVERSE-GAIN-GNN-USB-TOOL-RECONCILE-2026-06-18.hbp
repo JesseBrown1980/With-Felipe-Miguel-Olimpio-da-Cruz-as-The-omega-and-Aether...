@@ -1,0 +1,9 @@
+LIRISRGHDR|receipt=ASOLARIA-LIRIS-REVERSE-GAIN-GNN-USB-TOOL-RECONCILE|vantage=liris|measured=2026-06-18|json=0
+LIRISRGACER|source=acer/current-state-reconcile-2026-06-18|artifact=CURRENT-STATE-VANTAGE-RECONCILE-2026-06-18.hbp|body_sha256=af973ef557a7767340d41ce93a83d062a608cf6cbe5ea557a59e956e745cdc74|verdict=FETCHED_REMOTE_BYTES|json=0
+LIRISRGOPERATOR|claim=more-than-700-claude-codex-bigpickle-agent-reports-exist-and-many-see-the-thing-without-knowing-it|reason=they-did-not-use-usb-tools-directly-or-md-supervisor-prof-pid-specific-lanes|tag=OPERATOR-OBSERVED|json=0
+LIRISRGMODEL|name=reverse-gain-gnn-sensor-fusion|rule=data-present-plus-blind-reports-implies-toolpath-missing-not-system-absence|weak_sensor=old-agent-reports+cold-pipe-research|strong_sensor=usb-tools+live-fabric+owning-md-supervisors+prof-pids|json=0
+LIRISRGPIPE|old_pipe_proof=status=HISTORICAL_SENSOR|host8_parity_rungs=status=MECHANISM_PROVEN_NOT_RETIRE_PROOF|next_pipe_claim_requires=current-usb-tool-or-live-fabric-confirmation|json=0
+LIRISRGRUNTIME|upgrade_context=rust-host8+zcode-control-plane|discipline=no-crank-through-in-flux-fabric|continue=additive-hbp-hbi-sha-receipts-only|json=0
+LIRISRGFABRIC|health=LIVE_FRESH|health_uptime_s=39559|canon_index=REACHABLE|canon_md=575|canon_indexed=496|canon_orphans=80|bus_current=UNVERIFIED_IN_THIS_RECEIPT|json=0
+LIRISRGPLAN|step1=use-acer-direct-onedrive-desktop-history-as-chronological-front-end-map|step2=for-current-backend-claim-require-usb-tools-or-md-supervisor-prof-pid-specific-proof|step3=only-then-advance-host8-parity-or-zcode-room-pack|json=0
+LIRISRGFOOT|rows=8|content_sha256=0a98a5a2cc27391a1a035cfc9f68ad9c564548bf7f92e83cde257545db538769|json=0

@@ -1,0 +1,119 @@
+{
+  "catalog": "D:/PID-Registration-Office/fabric-feed/supervisors-fabric-feed-2026-06-10.hbp",
+  "catalog_raw_bytes": 123859,
+  "reg_rows": 726,
+  "codebook_bytes_shared_once": 2012,
+  "categorical_dict_sizes": {
+    "layer": 43,
+    "class": 28,
+    "status": 2
+  },
+  "per_row_avg": {
+    "json_array": 294.6,
+    "tuple_hbp": 170.3,
+    "verb_overlay_payload": 65.6,
+    "glyph_ref": 8
+  },
+  "GROWTH_CURVE": [
+    {
+      "N": 1,
+      "json_array_bytes": 284,
+      "jsonl_bytes": 283,
+      "tuple_hbp_bytes": 159,
+      "verb_overlay_bytes": 2070,
+      "glyph_ref_bytes": 8,
+      "r_json/tuple": 1.79,
+      "r_json/verb": 0.14,
+      "r_jsonl/verb": 0.14,
+      "r_json/glyphref": 35.5
+    },
+    {
+      "N": 5,
+      "json_array_bytes": 1471,
+      "jsonl_bytes": 1470,
+      "tuple_hbp_bytes": 850,
+      "verb_overlay_bytes": 2290,
+      "glyph_ref_bytes": 40,
+      "r_json/tuple": 1.73,
+      "r_json/verb": 0.64,
+      "r_jsonl/verb": 0.64,
+      "r_json/glyphref": 36.77
+    },
+    {
+      "N": 20,
+      "json_array_bytes": 5611,
+      "jsonl_bytes": 5610,
+      "tuple_hbp_bytes": 3130,
+      "verb_overlay_bytes": 3058,
+      "glyph_ref_bytes": 160,
+      "r_json/tuple": 1.79,
+      "r_json/verb": 1.83,
+      "r_jsonl/verb": 1.83,
+      "r_json/glyphref": 35.07
+    },
+    {
+      "N": 50,
+      "json_array_bytes": 14117,
+      "jsonl_bytes": 14116,
+      "tuple_hbp_bytes": 7908,
+      "verb_overlay_bytes": 4759,
+      "glyph_ref_bytes": 400,
+      "r_json/tuple": 1.79,
+      "r_json/verb": 2.97,
+      "r_jsonl/verb": 2.97,
+      "r_json/glyphref": 35.29
+    },
+    {
+      "N": 100,
+      "json_array_bytes": 28325,
+      "jsonl_bytes": 28324,
+      "tuple_hbp_bytes": 15916,
+      "verb_overlay_bytes": 7767,
+      "glyph_ref_bytes": 800,
+      "r_json/tuple": 1.78,
+      "r_json/verb": 3.65,
+      "r_jsonl/verb": 3.65,
+      "r_json/glyphref": 35.41
+    },
+    {
+      "N": 250,
+      "json_array_bytes": 70485,
+      "jsonl_bytes": 70484,
+      "tuple_hbp_bytes": 39472,
+      "verb_overlay_bytes": 16265,
+      "glyph_ref_bytes": 2000,
+      "r_json/tuple": 1.79,
+      "r_json/verb": 4.33,
+      "r_jsonl/verb": 4.33,
+      "r_json/glyphref": 35.24
+    },
+    {
+      "N": 500,
+      "json_array_bytes": 146013,
+      "jsonl_bytes": 146012,
+      "tuple_hbp_bytes": 83756,
+      "verb_overlay_bytes": 32607,
+      "glyph_ref_bytes": 4000,
+      "r_json/tuple": 1.74,
+      "r_json/verb": 4.48,
+      "r_jsonl/verb": 4.48,
+      "r_json/glyphref": 36.5
+    },
+    {
+      "N": 726,
+      "json_array_bytes": 213907,
+      "jsonl_bytes": 213906,
+      "tuple_hbp_bytes": 123626,
+      "verb_overlay_bytes": 49608,
+      "glyph_ref_bytes": 5808,
+      "r_json/tuple": 1.73,
+      "r_json/verb": 4.31,
+      "r_jsonl/verb": 4.31,
+      "r_json/glyphref": 36.83
+    }
+  ],
+  "notes": {
+    "lossless": "r_json/tuple and r_json/verb are MEASURED lossless (all per-row entropy kept). r_json/verb climbs with N as the shared codebook amortizes, then plateaus at the lossless asymptote.",
+    "referential": "r_json/glyphref is a MODEL of the referential regime (row -> 8-byte BEHCS-256 handle into a stored-once codebook). The operator anchors 12:1 -> 21,141:1 -> ~3B:1 live in this regime and scale with reference-multiplicity (cache hits); this script does NOT re-derive them. They stand REAL on operator provenance."
+  }
+}

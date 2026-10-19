@@ -1,0 +1,5 @@
+VERIFYv1|date=2026-07-11|repo=JesseBrown1980/qprism-3d-slice-harness|json=0
+VERIFY|agent=GPT-5.6-PRO|provenance=complete-source-test-lineage-audit|source_lines=809|local_cargo_claim=0|tag=AUDITED_GPT_5_6_PRO|json=0
+VERIFY|agent=GPT-5.6-PRO|provenance=authored-and-triggered-GitHub-Actions|workflow=Rust-1.97-independent-verification|run_id=29134419389|job_id=86495835030|toolchain=rustc-1.97.0|enumeration=success|all_tests=success|artifact_upload=success|tag=MEASURED_GPT_DIRECTED_GITHUB_ACTIONS|json=0
+CROSSVERIFY|agent=CLAUDE-FABLE-5|applies_to=dbbh-coms-quant-prism:19of19+path2-two-shadow-recovery:30of30|toolchain=rustc-1.97|provenance=operator-supplied-real-runs|not_reused_as_this_repo_test=1|json=0
+BOUNDARY|gnn_reverse_gnn=design-scaffold-in-this-crate|omnishannon=measured-roundtrip-watch|disk_claim=storage-tier-for-state-recovery-proof-not-neural-matrix-multiplication|json=0

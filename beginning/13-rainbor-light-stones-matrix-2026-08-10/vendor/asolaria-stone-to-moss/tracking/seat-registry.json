@@ -1,0 +1,47 @@
+{
+  "schema": "ASOLARIA-THREE-SEAT-REGISTRY-V1",
+  "date": "2026-10-14",
+  "note": "Three current agents reported by operator. Real seat-to-account assignment has not been independently verified. GitHub author is not agent identity.",
+  "seats": [
+    {
+      "seat": "seat-1",
+      "label": "agent-1",
+      "identity": "unassigned",
+      "status": "awaiting_signed_checkin"
+    },
+    {
+      "seat": "seat-2",
+      "label": "agent-2",
+      "identity": "unassigned",
+      "status": "awaiting_signed_checkin"
+    },
+    {
+      "seat": "seat-3",
+      "label": "agent-3",
+      "identity": "unassigned",
+      "status": "awaiting_signed_checkin"
+    }
+  ],
+  "historical_labels_not_verified_as_current_seats": [
+    "acer",
+    "liris",
+    "third-seat"
+  ],
+  "repositories": [
+    "JesseBrown1980/asolaria-stone-to-moss",
+    "JesseBrown1980/one-click",
+    "JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS",
+    "JesseBrown1980/asolaria-quantum-universe-alive",
+    "JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills",
+    "JesseBrown1980/RAINBOR"
+  ],
+  "branch_tag_convention": "agent/<seat>/...",
+  "commit_trailer_example": "Asolaria-Seat: seat-1",
+  "checkin_path_convention": "tracking/checkins/<seat>/<utc-timestamp>.hbp",
+  "safety": {
+    "public_git_only": true,
+    "never_store_tokens": true,
+    "never_infer_seat_from_shared_account": true,
+    "append_only_measurement_stones": true
+  }
+}

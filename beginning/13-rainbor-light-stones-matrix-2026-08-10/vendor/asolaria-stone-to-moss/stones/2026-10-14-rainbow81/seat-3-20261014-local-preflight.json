@@ -1,0 +1,85 @@
+{
+  "agreements": 4860,
+  "bodies": 81,
+  "case_count": 4860,
+  "claimed_status": "COMPUTATIONAL_ONLY_SAME_CHATGPT_ENVIRONMENT_AS_SEAT_2",
+  "commit_challenge_status": "BEFORE_ANY_NEW_COMMON_CHALLENGE",
+  "disagreements": 0,
+  "ed25519_checkin_sha256": "d0d5e7fe1f77030b04815896d122a6f15933164e8ea0a9d2301c79d48a526db4",
+  "ed25519_commit_sha256": "cdef731e102f7451e28d2447daa97c50f8bef3993113c4482f4616249ea9512c",
+  "environment": {
+    "node": "v22.16.0",
+    "os": "Linux",
+    "python": "3.13.5"
+  },
+  "experimental_fixture": "SYNTHETIC_PUBLIC_PREFLIGHT_NOT_COORDINATOR_CHALLENGE",
+  "fixture_origin": "same fields and commitments as pinned physical/make_preflight_fixture.js; manually reconstructed and independently crosschecked by two locally written solvers",
+  "fixture_sha256": "7bc8a77f825c904962e90874e14093e635fafd7eaa70f52fce6188ba40cb8197",
+  "host_attestation": "No verified physical independence; this session previously executed Seat 2",
+  "independent_physical_host": false,
+  "isolated_from_seat_2_physical_host": false,
+  "law_taps": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "laws": 5,
+  "model_steps": "10000000000000",
+  "negative_controls": {
+    "node_rejects_tampered_laws": true,
+    "python_rejects_tampered_laws": true,
+    "tampered_ed25519_checkin_rejected": true,
+    "tampered_ed25519_commit_rejected": true
+  },
+  "node_implementation": {
+    "algorithm": "GF(2) cyclic polynomial",
+    "output_bytes": 632278,
+    "output_sha256": "031367b1da1a368dc7471141a9799b79c694a0c9900f65a047438ccaa5f76600",
+    "source_sha256": "e89308f2b63e5787b679b92863e8dc504c5ed6ad8fcddaf5316a6f215454c237"
+  },
+  "pinned_node_git_blob": "a7c672ca8b8035df8354e82f14f8f4b996e8e94e",
+  "pinned_protocol_schema": "ASOLARIA-81-3PHYSICAL-GF2-V1",
+  "pinned_python_git_blob": "85223c583ee5ced579ad562b9ee4d849c513da82",
+  "private_salt_committed_sha256": "1e14999e1c037150720d14e246b5a6b8ec6f4b58ab6da4134b560709cca60ebe",
+  "public_ed25519_spki_der_b64": "MCowBQYDK2VwAyEAX3owsJSLde6oC/+clb3VjlLBQnuk1LGZiBgpJwzi+Ss=",
+  "public_key_fingerprint_sha256": "da86c67b80ebe6063233739e878ebbecd9988f5c2d719d50d83a8d0c4751fc75",
+  "python_implementation": {
+    "algorithm": "GF(2) full 81-column matrix",
+    "output_bytes": 632278,
+    "output_sha256": "031367b1da1a368dc7471141a9799b79c694a0c9900f65a047438ccaa5f76600",
+    "source_sha256": "66456487044de3137f9b49a9a8edbb7e5d4829b9a2db9e472a6d942d4704f2f9"
+  },
+  "python_node_byte_agreement": true,
+  "run_finished_utc": "2026-10-14T16:35:48.899183+00:00",
+  "schema": "ASOLARIA-SEAT3-LOCAL-COMPUTATIONAL-PREFLIGHT-V1",
+  "scientific_limit": "This is a local synthetic software parity test. No actual three-computer physical challenge, emergent gravity, time-of-flight or FTL signaling measured.",
+  "seat": "seat-3",
+  "secret_revealed": false,
+  "signature_b64": "pzoXmD2Cvt/8r9LOZzu87XoilwI09ko0OfgzlXAUl6Hgg12UcyDdTtmZnOwyx6W6a9DHNaontiKWTYBi8VF+Bw==",
+  "signed_preimage": "UTF-8 json.dumps(payload, sort_keys=True, separators=(comma,colon), ensure_ascii=False); exclude signature_b64, public SPKI is included",
+  "small_step_controls_per_implementation": 120,
+  "source_reference_sha": "2dadc995f460da957879bca7fd558cb037428ece",
+  "source_repo": "JesseBrown1980/asolaria-stone-to-moss",
+  "waves": 12
+}

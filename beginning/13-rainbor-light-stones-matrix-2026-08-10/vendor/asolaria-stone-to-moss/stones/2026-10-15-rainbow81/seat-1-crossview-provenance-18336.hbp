@@ -1,0 +1,9 @@
+HBP|schema=ASOLARIA-SEAT1-CROSSVIEW-PROVENANCE-V1|date=2026-10-15|json=0
+SEAT|id=seat-1|role=software_computational_only|physical_host_attested=0|json=0
+SOURCE|sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b|lawA=CA150|lawB=CA90,CA60,CA102,TAP0,TAP1,TAP4|json=0
+MODELED|horizons=1,10000000000000,10000000000001,10000000000081|rank81_pairs=24|sources_per_pair=191|json=0
+TEST|cases=18336|valid=4584|inconsistent_rejected=4584|wrong_source_consistent=4584|invisible_B_source_mismatch=4584|json=0
+IMPLEMENTATIONS|python=cyclic_polynomial|node=81x81_transfer_matrix|ubuntu=PASS|windows=PASS|json=0
+TRACE|size=4320118|sha256=b8ca261a6e0e4712e7457af80b8136e19d218a9edbec796730006670d07045a1|ci_run=38705591885|json=0
+BOUNDARY|math_inversion_not_provenance_authentication=1|physical_host_verified=0|fresh_private_host_nonce=0|json=0
+HBPEND|schema=ASOLARIA-SEAT1-CROSSVIEW-PROVENANCE-V1|json=0

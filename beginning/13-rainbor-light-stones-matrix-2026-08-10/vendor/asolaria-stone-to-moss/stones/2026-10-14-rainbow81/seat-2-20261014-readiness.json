@@ -1,0 +1,39 @@
+{
+  "agreements": 1620,
+  "at_long_horizon_changed_bits": {
+    "CA102": 38,
+    "CA150": 35,
+    "CA60": 38,
+    "CA90": 38,
+    "SHIFT": 1
+  },
+  "cases_python_vs_node": 1620,
+  "disagreements": 0,
+  "evidence_class": "independent-algorithm parity on ONE container host; challenge not issued; no physical independence claim",
+  "explicit_smallstep_controls": 1215,
+  "explicit_smallstep_failures": 0,
+  "hash_fanout_elapsed_ns": 202757643,
+  "local_hash_roots_changed": 81,
+  "long_jump_steps": "10000000000000",
+  "model_not_physical": "No measurement of optical or gravity dynamics, latency between real hosts or faster-than-light transport.",
+  "new_three_host_challenge": "PENDING ALL SIGNED CHECKINS",
+  "node_elapsed_ns": 92600394,
+  "node_results_sha256": "7de98e173dd6e8038137884a5cc5c6c81d3668cf6b4a91b25677053f5fe67230",
+  "physical_host_independence_verified": false,
+  "pinned_commit": "d03d42344d0cc613fce62b012b22c9a75e41a173",
+  "private_early_commit_revealed": false,
+  "python_elapsed_ns": 63058653,
+  "python_results_sha256": "7de98e173dd6e8038137884a5cc5c6c81d3668cf6b4a91b25677053f5fe67230",
+  "schema": "ASOLARIA-SEAT2-SAMEHOST-READINESS-V1",
+  "source_mutation_controls": 81,
+  "source_mutation_failures": 0,
+  "source_repo": "JesseBrown1980/asolaria-stone-to-moss",
+  "time_horizons": [
+    "1",
+    "2",
+    "3",
+    "10000000000000"
+  ],
+  "utc_finished": "2026-10-14T16:08:03.595252+00:00",
+  "witness_csv_sha256": "29b7fffd0042ffbe3de73a5ed5dce9e0f17de85ff8f8a0094b9bcf93f610121d"
+}

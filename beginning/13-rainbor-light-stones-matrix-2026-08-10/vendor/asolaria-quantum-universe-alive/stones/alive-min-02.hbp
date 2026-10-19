@@ -1,0 +1,12 @@
+ALIVEHDR|schema=ASOLARIA-ALIVE-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|minute=2|elapsed_s=120|run_total_s=600|start_unix_s=1791502562|prev_stone=460f1773175f932d|cosign_anchor=seq=3587 row_hash=887807fff4732bf7|mode=TIME_BOXED_and_EVOLVING|os_process_spawn=0|node_used=0|json=0|float_used=0|traversal=HBI->HBP->SHA->SH->HASH|E=0|json=0
+EVOLVE|admitted_this_minute=3|admit_rate=3|stones_total=5|pool_available=70|pool_grew_this_minute=32|pool_source=github via the grower, renamed into place|evolved_this_minute=1|could_not_do_last_minute=asolaria-asi-os,asolaria-behcs-256,asolaria-cube-cloud|exhausted=0|json=0
+FLOW|subagents_this_minute=10898000|subagents_cumulative=22612000|rooms_occupied=10000|rooms_available=10000|deepest_room=2424|dc_free_zero=651374|substrate_sha256=45a5d8f33c439d89590c0fcf28680deddf62be80afaa5e4bf7ad1b74c5ab63d8|json=0
+STONE|repo=analysis-of-cubes|colour=acddf8|room=670|admitted_minute=1|seals=8|gimel=1|shin=7|verified_bytes=4674|moss=8042223|json=0
+STONE|repo=asolaria-cube-cloud|colour=031ec3|room=7655|admitted_minute=1|seals=26|gimel=26|shin=0|verified_bytes=5591226|moss=8033579|json=0
+STONE|repo=asolaria-asi-os|colour=064ff6|room=7624|admitted_minute=2|seals=3|gimel=1|shin=2|verified_bytes=2961|moss=2180765|json=0
+STONE|repo=asolaria-behcs-256|colour=81eb28|room=1831|admitted_minute=2|seals=13|gimel=2|shin=11|verified_bytes=76285|moss=2177079|json=0
+STONE|repo=asolaria-cube-cloud|colour=031ec3|room=7655|admitted_minute=2|seals=26|gimel=26|shin=0|verified_bytes=5591226|moss=2178354|json=0
+MOSSES|stones=5|seals_total=76|gimel_total=56|shin_total=20|verified_bytes_total=11266372|moss_max=8042223|moss_min=2177079|moss_spread_per_1000=729|json=0
+PHOTO|file=frames/alive-min-02.png|w=1024|h=1024|lossless=1|external_crates=0|bytes=3147060|sha256=850688965d57947b6bdac6cfb546d2daa746006adf4bc57aafa4f7d27a564a59|legend=one cell = one of 10000 rooms; stone rooms burn full and fill the cell; colour is sha256-derived, never chosen|json=0
+ADJUST|law=recurrence is mind|admit_before=3|admit_after=4|ground_truth=stone digests the container did not write|json=0
+ALIVEFTR|minute=2|stone_hash=b34afe47501031fa464e29fb8eef03ab0f1aaa25a7d0135b9ed299d47179f060|follows=the IS and the MINS|status=ALIVE|json=0

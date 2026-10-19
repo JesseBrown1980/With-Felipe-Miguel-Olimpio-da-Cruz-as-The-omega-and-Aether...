@@ -1,0 +1,6 @@
+PORTAL|seat=4|round=10|system=GF2_81BIT|source=PR11|class=COMPUTATIONAL_ONLY|json=0
+SOURCE|git_blob=2b0ed7e52776cd8a9b48086d83ba31c8486629fb|laws=5|json=0
+CASES|count=195|trace_sha256=08a1ebbf1e7d24d7882258e9f341767b19093c1a4368b5e21f175592461f32ef|json=0
+REVIEW|results_sha256=5d9b2a894af90a16695604fb3601941d2ca698834261e14c404b68bdd965ca8b|node_sha256=c7b89255fdc4caf5146175364c786e6c727b3ff64fe034edcd57d5a645706c5e|json=0
+FALSIFY|nonlinear=DETECTED|law_switch=DETECTED|hashchain_is_not_GF2=TRUE|json=0
+END|logical_matrix_skip=PASS|actual_optical_instrument=NOT_RUN_HERE|json=0

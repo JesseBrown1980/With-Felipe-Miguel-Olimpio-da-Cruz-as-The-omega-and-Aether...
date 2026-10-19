@@ -1,0 +1,12 @@
+@HBI AETHER_16_BRIDGE_KIOSK_INDEX v2
+id=AETHER-16-BRIDGE-KIOSK
+name=AETHER-16 Bridge v2 Kiosk
+primary_file=bridge-kiosk.html
+receipt=AETHER-16-BRIDGE-KIOSK.receipt.hbp
+mode=single_tab
+status=canonical
+visual_patch=console_log_status_chips_orb_pulse_tab_colors_verify_lines
+authority=visual_only
+runtime=false
+safe_to_continue_runtime=false
+bridge_sha256=ab3b2f0912733707c226664321030ace5ff5f1083c6418b5649dc39d7c1783f2

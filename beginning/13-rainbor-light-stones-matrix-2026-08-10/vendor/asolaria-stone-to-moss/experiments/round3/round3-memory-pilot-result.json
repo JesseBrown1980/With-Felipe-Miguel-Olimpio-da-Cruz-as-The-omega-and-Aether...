@@ -1,0 +1,19 @@
+{
+  "biological_kinetics_calibrated": false,
+  "byte_count": 65536,
+  "channel_erasure_detected": true,
+  "level_cycle_sum": 0,
+  "logical_rgb_frames": 11,
+  "negative_modified_payload_hold": true,
+  "optical_closure_27_of_27": true,
+  "physical_photon_storage": false,
+  "rgb_qr_test_bytes": 96,
+  "rgb_real_qr_render_and_decode": 3,
+  "source_sha256": "6a6b291953336c22632691a22561f19d40fb5c782385803b398381174275f9bc",
+  "status": "PASS_SOFTWARE_RGB_PILOT",
+  "three_shard_bytes_each": 32768,
+  "transport_chunk_size": 2100,
+  "transport_chunks": 32,
+  "trit_census_sum": 0,
+  "two_of_three_recovered": true
+}

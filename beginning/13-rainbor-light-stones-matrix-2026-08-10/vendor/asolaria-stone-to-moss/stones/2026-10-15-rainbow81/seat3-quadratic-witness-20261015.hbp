@@ -1,0 +1,11 @@
+PORTAL|schema=ASOLARIA-SEAT3-3BIT-QUADRATIC-WITNESS-V1|date=2026-10-15|digital_only=1|json=0
+UPSTREAM|pr81_head=c32d472dfe84f352450eb50469e0e9a987c33d78|source_hbp_sha256=8544bb305943d7423f6993cffec4a8232d291811e974c78e7d8ec91a53719672|json=0
+IDENTITY|states=27|normalized_or_dark_classes=7|defined_probabilities=6|largest_class=6|source_root_signed=0|json=0
+WITNESS|formula=(r+4g+3b+4rg)%8|additional_fixed_bits=3|inverse_unique_with_class=27|total_fixed_bits_including_class=6|direct_id_bits=5|json=0
+AFFINE|family=(ar+bg+cb)%m|m2_to_m10_valid_triples=0|m11_valid_triples=60|m11_first=1,3,4|json=0
+QUADRATIC|family=(ar+bg+cb+dT)%8|monomials=r2,g2,b2,rg,rb,gb|counts=0,0,0,8,8,8|first_rg=1,4,3,4|json=0
+TRACE|original_route_rows=59049|witness_hbp_bytes=3260349|witness_hbp_sha256=18e611242d5d48ceb35b0bba14a13bbae192fd51141fe659f6052ada7f5c506a|json=0
+RECEIPT|json_bytes=2981|json_sha256=98fbe2a386c72700934e86aaf1f02da94a78d680ece533aeb7df824fd0ac4f7c|auditor_sha256=beb22f9ebb0bea52790adfbfdec61a4dcfaf0ce1b1f9bcc4c084911348f3542c|json=0
+CI|run=38763638453|ubuntu_windows_python311_313_node22=4/4_PASS|four_artifacts_byte_equal=PASS|tamper=HELD|json=0
+BOUNDARY|external_origin_authenticated=0|physical_spectrum_measured=0|photon_storage_measured=0|quantum_hardware_measured=0|json=0
+END|protocol_post_hoc_discovery=1|old_source_untouched=1|release_issue10=OPEN|peer_reviews=PENDING|json=0

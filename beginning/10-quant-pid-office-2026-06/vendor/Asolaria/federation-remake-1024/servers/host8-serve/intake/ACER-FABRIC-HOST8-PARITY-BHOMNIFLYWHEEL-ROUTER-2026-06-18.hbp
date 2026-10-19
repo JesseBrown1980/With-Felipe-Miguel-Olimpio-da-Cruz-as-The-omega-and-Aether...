@@ -1,0 +1,6 @@
+FABRICH8HDR|rung=ACER-HOST8-PARITY-BHOMNIFLYWHEEL-ROUTER|lane=fabric-upgrade|vantage=acer|measured=2026-06-18|pipe=bhOmniflywheel-router|swap_class=dark-retire|class=DESCRIPTOR-ONLY|asserts_fire=false|json=0
+FABRICH8PRIOR|prior_rungs=redis-bridge-28137bd8188082ae+cosign-streams-ec2162b7ff98d586|routes=/health.hbp+/room.hbp+/feed.hbp|json=0
+FABRICH8HANDLE|host_handle8=TO-COMPUTE-VIA-HOST8-SERVE-FNV1A64|status=PENDING-SERVE-COMPUTE|rule=do-not-invent-hex|json=0
+FABRICH8STATE|confirm_DARK_first=1|spine_live_DONT_TOUCH=4947-bus+4781-gateway+4950-omnidispatcher+4953-cosign+4949-dashboard|json=0
+FABRICH8GATE|serve_fire=GATED-rust-host-must-serve-room+health+feed-with-parity|swap_retire=GATED-on-parity+fresh-cosign|nothing_run=1|E=0|json=0
+FABRICH8FOOT|rows=5|content_sha256=66fee2ec8932b6efc6a1533a852a7ae66e091c54c99d8e3107e51ee07345a2eb|json=0

@@ -1,0 +1,18 @@
+[package]
+name = "dbbh-coms-quant-prism"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.63"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Double Binary Black Hole Comms Quant Prism (first cell) — pure-Rust, zero-dep, HBP json=0: BEHCS 64/256/1024/HyperBEHCS(60D) ladder + PID-specific 60D Q-PRISM cube + IX-737 double-black-hole session capsule + AI<->AI / AI<->HW / HW<->HW coms. Shadow crosses as an address, reconstructs lossless."
+
+[lib]
+name = "dbbh_coms_quant_prism"
+path = "src/lib.rs"
+
+# ZERO external dependencies — pure std + a pure-Rust sha256. No JSON, no Node.
+
+[profile.release]
+opt-level = 3
+lto = true

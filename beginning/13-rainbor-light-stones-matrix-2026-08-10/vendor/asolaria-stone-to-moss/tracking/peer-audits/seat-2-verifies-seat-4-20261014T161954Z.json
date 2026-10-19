@@ -1,0 +1,35 @@
+{
+  "auditor_public_key_ed25519_b64": "rzVBmcXYPK5iwlMyKuAIMs3rtXHYGfYLThXiK7gL3M8=",
+  "payload": {
+    "auditor": "seat-2, computational candidate; hardware separation unverified",
+    "auditor_readiness_source_commit": "d03d42344d0cc613fce62b012b22c9a75e41a173",
+    "new_fresh_challenge_status": "NOT_ISSUED; pending 3 physical-host check-ins and precommits",
+    "peer": "seat-4",
+    "peer_branch": "agent/seat-4/cross-host-rainbow81-20261014",
+    "peer_files": {
+      "tracking/checkins/seat-4/20261014T161213Z/checkin.json": {
+        "ed25519_valid": true,
+        "git_blob_sha1": "f9a8e16e6ad276f3ab794b2e07a83bdb7c2bf98f"
+      },
+      "tracking/checkins/seat-4/20261014T161213Z/commit.json": {
+        "ed25519_valid": true,
+        "git_blob_sha1": "df13bb276bed305b0e0256dbd282ff4833f4aac5"
+      }
+    },
+    "peer_other_computational_control": "Seat 4 reports 729/729 old public challenge recheck and Actions PASS; separate historical public-challenge fixture, not new blinded challenge.",
+    "peer_public_spki_der_sha256": "0c2ccbcfe284e1c76a1b7b6f3063c7145bc295678f1b8d8c55d12e330d79cdd6",
+    "peer_published_precommit_commit": "59d1e99ba7cec64c2a21c041895e81d5a20cedb3",
+    "peer_salt_commitment_sha256": "db400edf79185e5c57e3332533ea0440d82449256018693f4e4580059a7b7fc4",
+    "peer_signature_encoding": "Ed25519 over canonical JSON compact, sorted keys, UTF-8, without signature_b64 field (no newline)",
+    "peer_source_commit": "50d96e363943273a44b3a195eff9e9b2591f4765",
+    "physical_host_independence_verified": false,
+    "preimage_salt_revealed": false,
+    "produced_utc": "2026-10-14T16:19:54.371201+00:00",
+    "schema": "ASOLARIA-SEAT2-PEER-4-AUDIT-V1",
+    "scientific_boundary": "Ed25519 proves possession of a session signing key and file integrity. Not host independence, physical signal propagation or quantum-gravity evidence.",
+    "source": "GitHub connector fetched seat-4 branch JSON files, independently reproduced Git blob SHA1 and Ed25519 signatures using Python cryptography",
+    "source_version_relation": "Peer pinned source is 17 commits AFTER Seat 2 readiness source; cannot treat readiness baseline as same exact frozen source."
+  },
+  "signature_ed25519_b64": "hT4OuLmh7D+9vd+dqBHFUu/Jgyh6LfVzIFxWg+HVRefl04aF0NSEOTPzhOGZ62uV5npJAMAN+3uEeuHCnGbJCw==",
+  "signed_payload_sha256": "26ea3f61fffa8ed8e52a373f707fbfe95d5f51c7754cb0998402cf795f856cdd"
+}

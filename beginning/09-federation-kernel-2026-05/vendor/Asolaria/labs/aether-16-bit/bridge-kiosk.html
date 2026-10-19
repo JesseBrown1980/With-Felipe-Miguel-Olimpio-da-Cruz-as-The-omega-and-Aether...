@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AETHER-16 Bridge v2 Kiosk</title>
+  <style>
+    :root {
+      --bg: #02040d;
+      --panel: rgba(5, 14, 24, 0.94);
+      --cyan: #5cf2ff;
+      --green: #7dffb2;
+      --gold: #ffe680;
+      --red: #ff5c7a;
+      --text: #d9faff;
+      --muted: rgba(217, 250, 255, 0.62);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(92, 242, 255, 0.13), transparent 28%),
+        radial-gradient(circle at 50% 58%, rgba(255, 230, 128, 0.10), transparent 22%),
+        linear-gradient(180deg, #07111f, #02040d 74%);
+      color: var(--text);
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .app {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(217,250,255,0.55) 1px, transparent 1px),
+        radial-gradient(circle, rgba(125,255,178,0.30) 1px, transparent 1px);
+      background-size: 58px 58px, 91px 91px;
+      background-position: 0 0, 24px 18px;
+      opacity: 0.32;
+      animation: drift 18s linear infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(58px, 58px, 0); }
+    }
+
+    .map-core {
+      position: absolute;
+      width: min(78vw, 720px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: 1px solid rgba(92, 242, 255, 0.16);
+      box-shadow:
+        inset 0 0 42px rgba(92, 242, 255, 0.08),
+        0 0 80px rgba(92, 242, 255, 0.08);
+      opacity: 0.72;
+    }
+
+    .map-core::before,
+    .map-core::after {
+      content: "";
+      position: absolute;
+      inset: 16%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 230, 128, 0.20);
+    }
+
+    .map-core::after {
+      inset: 31%;
+      border-color: rgba(125, 255, 178, 0.22);
+      transform: rotate(23deg);
+    }
+
+    .packet-line {
+      position: absolute;
+      width: min(78vw, 720px);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(125,255,178,0.62), transparent);
+      transform: rotate(-18deg);
+      opacity: 0.75;
+      filter: drop-shadow(0 0 9px rgba(125,255,178,0.32));
+    }
+
+    .phone {
+      position: relative;
+      z-index: 3;
+      width: min(390px, calc(100vw - 26px));
+      min-height: min(720px, calc(100vh - 28px));
+      border: 2px solid rgba(92, 242, 255, 0.38);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(4,13,24,0.96), rgba(3,6,15,0.98));
+      box-shadow:
+        0 0 0 5px rgba(0,0,0,0.32),
+        0 0 42px rgba(92,242,255,0.22),
+        inset 0 0 24px rgba(125,255,178,0.05);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(92,242,255,0.18);
+    }
+
+    .kicker {
+      color: var(--green);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .screen {
+      padding: 18px 16px;
+      display: grid;
+      align-content: center;
+      gap: 14px;
+    }
+
+    .bridge-orb {
+      justify-self: center;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(125,255,178,0.55);
+      background:
+        radial-gradient(circle, rgba(255,230,128,0.34), transparent 34%),
+        radial-gradient(circle, rgba(92,242,255,0.18), rgba(5,14,24,0.2) 62%);
+      box-shadow:
+        0 0 26px rgba(125,255,178,0.22),
+        inset 0 0 22px rgba(255,230,128,0.10);
+    }
+
+    .bridge-orb strong {
+      text-align: center;
+      color: var(--gold);
+      font-size: 15px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+    }
+
+    .readout {
+      border: 1px solid rgba(92,242,255,0.28);
+      background: rgba(0,0,0,0.22);
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 180px;
+    }
+
+    .readout h2 {
+      margin: 0 0 8px;
+      color: var(--cyan);
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+
+    .readout p {
+      margin: 0;
+      color: rgba(217,250,255,0.78);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .locks {
+      display: grid;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .locks span {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed rgba(217,250,255,0.12);
+      padding-bottom: 4px;
+    }
+
+    .locks b {
+      color: var(--red);
+      font-weight: normal;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid rgba(92,242,255,0.18);
+      background: rgba(0,0,0,0.18);
+    }
+
+    button {
+      min-height: 58px;
+      border: 1px solid rgba(92,242,255,0.34);
+      border-radius: 14px;
+      background: rgba(5,18,30,0.92);
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    button.active,
+    button:hover {
+      border-color: rgba(255,230,128,0.88);
+      color: var(--gold);
+      box-shadow: 0 0 14px rgba(255,230,128,0.14);
+    }
+
+    .footer {
+      padding: 0 14px 12px;
+      color: rgba(217,250,255,0.45);
+      font-size: 10px;
+      text-align: center;
+    }
+
+    @media (max-height: 670px) {
+      .phone {
+        min-height: calc(100vh - 18px);
+      }
+
+      .bridge-orb {
+        width: 96px;
+        height: 96px;
+      }
+
+      .readout {
+        min-height: 132px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="stars"></div>
+    <div class="map-core"></div>
+    <div class="packet-line"></div>
+
+    <section class="phone" aria-label="AETHER-16 Bridge v2 Kiosk">
+      <header class="topbar">
+        <p class="kicker">Hermes Prism Relay</p>
+        <h1>AETHER Bridge</h1>
+        <div class="status">
+          <span>packet: 0x9948</span>
+          <span>local only</span>
+        </div>
+      </header>
+
+      <section class="screen">
+        <div class="bridge-orb">
+          <strong>AETHER<br>16</strong>
+        </div>
+
+        <article class="readout" id="readout">
+          <p class="kicker">OBSERVE SYSTEM</p>
+          <h2>Observação local ativa</h2>
+          <p>Hermes observa o campo visual 16-bit como Prism Relay Operator. Nenhuma rota real é executada. O sistema permanece fail-closed.</p>
+        </article>
+
+        <div class="locks">
+          <span>backend <b>disabled</b></span>
+          <span>route execution <b>disabled</b></span>
+          <span>core mutation <b>disabled</b></span>
+          <span>runtime authority <b>false</b></span>
+        </div>
+      </section>
+
+      <nav class="nav" aria-label="single tab controls">
+        <button class="active" type="button" data-tab="observe">Observe</button>
+        <button type="button" data-tab="plan">Plan</button>
+        <button type="button" data-tab="verify">Verify</button>
+      </nav>
+
+      <div class="footer">AETHER-16 Bridge v2 · single-tab console cockpit · visual/local only</div>
+    </section>
+  </main>
+
+  <script>
+    const readout = document.querySelector("#readout");
+    const buttons = document.querySelectorAll("[data-tab]");
+
+    const copy = {
+      observe: {
+        kicker: "OBSERVE SYSTEM",
+        title: "Observação local ativa",
+        body: "Hermes observa o campo visual 16-bit como Prism Relay Operator. Nenhuma rota real é executada. O sistema permanece fail-closed."
+      },
+      plan: {
+        kicker: "PLAN ACCESS",
+        title: "Plano visual preparado",
+        body: "AETHER desenha intenção de acesso apenas como prévia local. Não há rede ativa, canal remoto, persistência local, despacho, aplicação de alteração ou execução de rota."
+      },
+      verify: {
+        kicker: "VERIFY GATE",
+        title: "Gate verificado: bloqueado",
+        body: "A verificação confirma autoridade zero: sem mutação de core, sem provider, sem MCP, sem GNN e sem runtime. A ponte é visual e local."
+      }
+    };
+
+    function setTab(name) {
+      const data = copy[name] || copy.observe;
+
+      buttons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.tab === name);
+      });
+
+      readout.innerHTML = `
+        <p class="kicker">${data.kicker}</p>
+        <h2>${data.title}</h2>
+        <p>${data.body}</p>
+      `;
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => setTab(button.dataset.tab));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+MATRIXHDR|doc=ACER-MATRIX-REGISTER-USB113-GLM-CUBELAND|lane=matrix-upgrade|vantage=acer|measured=2026-06-18|class=PROPOSAL-HELD-SAFE|json=0
+MATRIXUSB|substrate_anchor=2TB-SOVLINUX-USB-D-PHYSICALDRIVE2|sectors=113-100shard+12lane+1scaled|geometry=500GB-exFAT-visible+1.5TB-continuity-tail|tag=MEASURED-geometry|json=0
+MATRIXGLM|seat=AGT-PROVIDER-GLM-5.2-ZAI-BIGPICKLE|bh_index=302282-recomputed-EXACT-MATCH|host8_lane_bh=37081-CANON-PRIOR-pending-name|json=0
+MATRIXCUBELAND|path=router-surface-to-rule-of-3-to-gulp-to-GNN+reverse-GNN+shannon+whiteroom-to-CUBE-to-catalog-at-REALMATHPOS-bh|json=0
+MATRIXGATE|promotion_into_fabric_canon=GATED-fresh-cosign+dual-apex|drive_upload=0-auth-gated|usb_write=0-HARD-DENY|nothing_minted=1|E=0|json=0
+MATRIXFOOT|rows=5|content_sha256=53e1676bd2333bbc6767cffde6addd7ba3ce27adbb56572f0c087abb4e38d4b2|json=0

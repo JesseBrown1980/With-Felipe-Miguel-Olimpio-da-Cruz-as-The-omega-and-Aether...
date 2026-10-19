@@ -1,0 +1,36 @@
+# llms.txt - Shannon-and-the-gnns-stage
+
+Purpose: agent-readable front door for the post-trigger scoring/proof stage.
+
+Status: docs-first / E=0. This repo documents/holds clean pipeline slices; it is not a runtime fire.
+
+Read order:
+1. README.md - after-trigger pipeline: HOOKWALL -> GNNs -> Shannon/OmniShannon -> white rooms -> GULP.
+2. TRAINED-MODELS.md - link to the trained FNN/GNN model repo and imbalance caveat.
+3. MAP.md - whole-system placement.
+4. pipeline/asolaria-hookwall.mjs - hookwall scoring shape.
+5. pipeline/asolaria-score.mjs - ensemble signal shape.
+6. pipeline/whiteroom-consumer-index.mjs - white-room digest mirror.
+
+Core meaning:
+- This is the result-side PRISM reduction stage: many answers/signals collapse into kept genius and
+  compacted mistakes.
+- Reverse-gain GNNs invert deception; Shannon/OmniShannon gates proof/reporting.
+- It is linked to trained models, but metrics with class imbalance are not universal proof.
+
+Evidence boundaries:
+- MEASURED repo bytes: clean pipeline modules included here.
+- BOUNDARY: PII-heavy reverse-gain configs and corpus are intentionally withheld.
+- BOUNDARY: external `shannon` framework comparison is separate from this Asolaria Shannon gate.
+- BOUNDARY: live runtime requires owning-seat process/port evidence.
+
+Hard holds:
+- No live scoring fire.
+- No corpus publication.
+- No adversary PII publication.
+- No automatic promotion from score to PID/supervisor.
+
+Useful attack-verify:
+- Check TRAINED-MODELS.md before quoting model metrics.
+- Preserve `GENIUS keeps / MISTAKE compacts` without claiming deletion.
+- Recompute this file's sidecar.

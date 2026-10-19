@@ -1,0 +1,13 @@
+PIDROOMV2XVERIFYHDR|receipt=ASOLARIA-HOST8-PID-OFFICE-ROOMSTUB-MANIFEST-V2-CROSSVERIFY|vantage=liris|measured=2026-06-18|source_repo=JesseBrown1980/Asolaria|source_branch=acer/pid-office-roomstub-manifest-v2-2026-06-18|source_commit=a771d225|json=0
+PIDROOMV2FABRIC|fabric_health=ok|health_ts=2026-06-18T13:12:41.823Z|uptime_s=3306|supervisors_hbp_entries=726|canon_indexed=496|canon_orphans=80|local_http_supervisors=refused_on_liris|tag=MEASURED|json=0
+PIDROOMV2SOURCE|manifest=PID-OFFICE-ROOMSTUB-MANIFEST-v2.hbp|source_body_sha=16e5afcd3f4b11cc25cc2f2f203cae935d1fec8689c9957a81b8cf5c502ba579|sidecar_sha=16e5afcd3f4b11cc25cc2f2f203cae935d1fec8689c9957a81b8cf5c502ba579|sidecar_match=1|body_sha_match=1|json=0
+PIDROOMV2COUNT|line_count=729|content_rows=728|pidroom_rows=726|header_seats=726|foot_seats=726|hbi_fallback_resolved=8|json=0
+PIDROOMV2HANDLE|algorithm=host8-serve-fnv1a64-canonicalized|preimage=seat_id-pipe-room_stub|recomputed=726|mismatches=0|unique_seats=726|duplicate_seats=0|unique_handles=726|duplicate_handles=0|json=0
+PIDROOMV2COMPARE|v1_rows=726|v2_rows=726|new_seats=0|missing_from_v2=0|changed_handles=0|handles_unchanged_from_v1=1|json=0
+PIDROOMV2CONTRACT|required_fields=seat_id+seat_class+provider_hint+room_stub+host_handle8+source_hbp_sha256+source_hbi_sha256+supervisor_pid+prof_pid+target_runtime+stub_state|required_missing=0|verdict=PASS_DESCRIPTOR_CONTRACT|json=0
+PIDROOMV2HBI|source_hbi_sha256_missing=0|hbi_src_hbi=718|hbi_src_hbp_sha256_sidecar=8|prior_v1_hbi_gap=8|gap_resolved=1|json=0
+PIDROOMV2SUPERVISION|supervisor_pid_unique=43|prof_pid_unique=52|primary_prof_anchor=ASOLARIA-PROF-SUPERVISOR-CONSTELLATION-PID-2026-05-22|primary_prof_anchor_rows=675|nonconstellation_prof_rows=51|model_row_present=1|json=0
+PIDROOMV2SUPERVISIONMODEL|accepted_model=flat-office-plus-prof-supervisor-constellation-plus-layer-tier|boundary=distinct-per-seat-supervisor-to-prof-parent-chain-not-proven-by-liris-local-http|activation_requires=fabric-roster-or-md-lane-current-proof|json=0
+PIDROOMV2SAMPLE|first_seat=agent-ASOLARIA-FOUNDATION-V3-LAW-V39-LOAD-DIVISION-PID-2026-05-23-b2220e442125efa7|first_handle=3340e89ed9bd5c21|first_calc=3340e89ed9bd5c21|last_seat=usb-AMC-USB-WHITE-ROOM-PID-SLOT9-ffb5d48143f07d78|last_handle=92f0db20895f7385|last_calc=92f0db20895f7385|json=0
+PIDROOMV2NEXT|next_consumer=host8_manifest_loader|allow=read_only_descriptor_loader|block=swap+retire+runtime_activation|reason=current_evidence_gate_still_applies|node_start=0|node_stop=0|hbp_hot=1|json_hot=0|json=0
+PIDROOMV2FOOT|rows=12|content_sha256=a311c9510110ebaa8212ef9a7f3ec41a76c18ba2d537238f253b8f05ac72452e|json=0

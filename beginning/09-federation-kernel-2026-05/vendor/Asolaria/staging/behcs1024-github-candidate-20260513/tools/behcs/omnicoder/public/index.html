@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OMNICODER</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080b10;
+      --panel: #101722;
+      --panel2: #121d2b;
+      --line: #233247;
+      --text: #e8f0fb;
+      --muted: #8fa2b9;
+      --ok: #5ff0b2;
+      --warn: #ffd166;
+      --accent: #72d6ff;
+      --bad: #ff6f91;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #0b111a;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    .subtitle { color: var(--muted); font-size: 12px; }
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(300px, .8fr);
+      gap: 12px;
+      padding: 12px;
+    }
+    section {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel2);
+      font-weight: 700;
+    }
+    .body { padding: 12px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 5px; }
+    input, select, textarea {
+      width: 100%;
+      background: #08101a;
+      color: var(--text);
+      border: 1px solid #2b405a;
+      border-radius: 6px;
+      padding: 9px;
+      font: inherit;
+      min-width: 0;
+    }
+    textarea { resize: vertical; min-height: 110px; font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+    .code { min-height: 290px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    button {
+      border: 1px solid #31536f;
+      background: #14283a;
+      color: var(--text);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button.primary { background: #123349; border-color: #2c8db8; color: #eafbff; }
+    button:active { transform: translateY(1px); }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .kpi { border: 1px solid var(--line); border-radius: 6px; padding: 8px; background: #0b121c; }
+    .kpi .v { font-size: 20px; color: var(--ok); font-weight: 800; }
+    .kpi .k { font-size: 11px; color: var(--muted); }
+    .list { display: grid; gap: 7px; }
+    .item { border: 1px solid var(--line); border-radius: 6px; padding: 8px; background: #0b121c; }
+    .item .name { font-family: ui-monospace, Consolas, monospace; font-size: 11px; overflow-wrap: anywhere; }
+    .item .meta { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .status { font-family: ui-monospace, Consolas, monospace; color: var(--muted); font-size: 12px; }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    @media (max-width: 860px) {
+      main { grid-template-columns: 1fr; }
+      .grid, .kpis { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>OMNICODER</h1>
+      <div class="subtitle">Falcon visual coder · white-room packets · Acer/Liris backend pilots</div>
+    </div>
+    <div class="status" id="topStatus">loading</div>
+  </header>
+  <main>
+    <section>
+      <div class="section-head">
+        <span>White-Room Packet</span>
+        <span class="status" id="saveStatus">ready</span>
+      </div>
+      <div class="body">
+        <div class="grid">
+          <div>
+            <label for="pilot">Pilot</label>
+            <input id="pilot" value="acer-pilot-agent">
+          </div>
+          <div>
+            <label for="target">Target</label>
+            <input id="target" value="behcs-1024">
+          </div>
+          <div>
+            <label for="lane">Lane</label>
+            <select id="lane">
+              <option value="white_room">white_room</option>
+              <option value="hookwall">hookwall</option>
+              <option value="gnn">gnn</option>
+              <option value="shannon">shannon</option>
+              <option value="omniwhite_room">omniwhite_room</option>
+              <option value="gc">gc</option>
+            </select>
+          </div>
+          <div>
+            <label for="language">Language</label>
+            <select id="language">
+              <option value="plain">plain</option>
+              <option value="javascript">javascript</option>
+              <option value="powershell">powershell</option>
+              <option value="shell">shell</option>
+              <option value="json">json</option>
+              <option value="markdown">markdown</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label for="title">Title</label>
+          <input id="title" value="OMNICODER work packet">
+        </div>
+        <div style="margin-top:10px">
+          <label for="objective">Objective</label>
+          <textarea id="objective">Build the next safe BEHCS-1024 improvement through white-room review.</textarea>
+        </div>
+        <div style="margin-top:10px">
+          <label for="code">Code / Patch / Draft</label>
+          <textarea id="code" class="code"></textarea>
+        </div>
+        <div style="margin-top:10px">
+          <label for="command">Requested Command</label>
+          <input id="command" placeholder="optional, gated by backend authority">
+        </div>
+        <div style="margin-top:10px">
+          <label for="notes">Notes</label>
+          <textarea id="notes"></textarea>
+        </div>
+        <div class="actions">
+          <button class="primary" id="sendBtn">Send White-Room Packet</button>
+          <button id="refreshBtn">Refresh</button>
+          <button id="clearBtn">Clear Draft</button>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="section-head">
+        <span>Fabric State</span>
+        <span class="status" id="rootStatus">-</span>
+      </div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><div class="v" id="kWhite">0</div><div class="k">white rooms</div></div>
+          <div class="kpi"><div class="v" id="kRoom">0</div><div class="k">room-40</div></div>
+          <div class="kpi"><div class="v" id="kInbox">0</div><div class="k">auto inbox</div></div>
+          <div class="kpi"><div class="v" id="kPackets">0</div><div class="k">packets</div></div>
+        </div>
+        <h3>Recent Packets</h3>
+        <div class="list" id="packetList"></div>
+        <h3>Room-40</h3>
+        <div class="list" id="roomList"></div>
+        <h3>Auto Inbox</h3>
+        <div class="list" id="inboxList"></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const fields = ["pilot", "target", "lane", "language", "title", "objective", "code", "command", "notes"];
+    function item(row) {
+      return `<div class="item"><div class="name">${escapeHtml(row.name || "")}</div><div class="meta">${escapeHtml(row.mtime || "")} · ${row.bytes || 0} bytes</div></div>`;
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+    function collect() {
+      const data = {};
+      for (const id of fields) data[id] = $(id).value;
+      return data;
+    }
+    async function refresh() {
+      try {
+        const r = await fetch("/api/status", { cache: "no-store" });
+        const s = await r.json();
+        $("topStatus").innerHTML = s.ok ? '<span class="ok">live</span> :8789' : '<span class="bad">down</span>';
+        $("rootStatus").textContent = s.root || "-";
+        $("kWhite").textContent = s.white_room?.count ?? 0;
+        $("kRoom").textContent = s.room40?.count ?? 0;
+        $("kInbox").textContent = s.inbox?.count ?? 0;
+        $("kPackets").textContent = s.packets?.count ?? 0;
+        $("packetList").innerHTML = (s.packets?.latest || []).map(item).join("") || '<div class="status">none</div>';
+        $("roomList").innerHTML = (s.room40?.latest || []).map(item).join("") || '<div class="status">none</div>';
+        $("inboxList").innerHTML = (s.inbox?.latest || []).map(item).join("") || '<div class="status">none</div>';
+      } catch (err) {
+        $("topStatus").innerHTML = '<span class="bad">offline</span>';
+      }
+    }
+    async function sendPacket() {
+      $("saveStatus").textContent = "sending";
+      const r = await fetch("/api/packet", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(collect())
+      });
+      const out = await r.json();
+      $("saveStatus").innerHTML = out.ok ? '<span class="ok">packet written</span>' : '<span class="bad">failed</span>';
+      await refresh();
+    }
+    $("sendBtn").addEventListener("click", sendPacket);
+    $("refreshBtn").addEventListener("click", refresh);
+    $("clearBtn").addEventListener("click", () => { $("code").value = ""; $("notes").value = ""; $("command").value = ""; });
+    refresh();
+    setInterval(refresh, 10000);
+  </script>
+</body>
+</html>

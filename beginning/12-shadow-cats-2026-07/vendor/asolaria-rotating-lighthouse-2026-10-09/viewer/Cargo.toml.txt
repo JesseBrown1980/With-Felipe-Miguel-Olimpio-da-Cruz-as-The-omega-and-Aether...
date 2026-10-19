@@ -1,0 +1,12 @@
+[package]
+name = "asolaria-github-3d-viewer"
+version = "0.1.0"
+edition = "2021"
+description = "Balanced-ternary (Setun-class) kernel that reads frozen git bytes and emits a 3x3x3 ternary spectral view, sealed HBI->HBP->SHA->SH->HASH. Reuses the canonical asolaria-os kernel tribit module."
+
+[[bin]]
+name = "github3d"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3

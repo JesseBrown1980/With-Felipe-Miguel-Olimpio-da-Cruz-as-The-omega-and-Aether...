@@ -1,0 +1,34 @@
+@HPB AETHER_16_BRIDGE_KIOSK_RECEIPT v1
+project=AETHER 16 BIT
+component=bridge-kiosk.html
+canon=AETHER-16 Bridge v2
+interface_model=single-tab console cockpit
+visual_mode=cellphone_xbox_emulation
+packet=0x9948
+hermes_role=Prism Relay Operator
+access=local_visual_only
+runtime_authority=false
+safe_to_continue_runtime=false
+json_dependency=removed
+
+[FILES]
+html=bridge-kiosk.html
+lab=index.html
+style=style.css
+script=app.js
+
+[BOUNDARY]
+backend=disabled
+fetch=disabled
+websocket=disabled
+storage=disabled
+route_execution=disabled
+dispatch_execution=disabled
+patch_execution=disabled
+core_mutation=disabled
+provider_mutation=disabled
+mcp_mutation=disabled
+gnn_mutation=disabled
+
+[CANON]
+statement=AETHER-16 Bridge v2 uses a single-tab kiosk cockpit. The bridge is visual, local, fail-closed, and operated through Hermes as Prism Relay Operator.

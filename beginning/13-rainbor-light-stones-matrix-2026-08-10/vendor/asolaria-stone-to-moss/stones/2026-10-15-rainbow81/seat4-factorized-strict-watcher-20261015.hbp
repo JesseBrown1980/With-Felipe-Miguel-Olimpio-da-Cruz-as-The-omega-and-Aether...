@@ -1,0 +1,5 @@
+PORTAL|seat=4|digital=1|source_signature=0|json=0
+INDEX|aliases=15309|saved_bytes=2274718|json=0
+TRACE|rows=59049|reads=413343|sha256=8544bb305943d7423f6993cffec4a8232d291811e974c78e7d8ec91a53719672|json=0
+FAULTS|tested=14|verdict=HELD|json=0
+END|physical_optics=0|release_gate=OPEN|json=0

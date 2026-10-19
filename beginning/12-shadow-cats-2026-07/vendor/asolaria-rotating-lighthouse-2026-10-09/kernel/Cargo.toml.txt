@@ -1,0 +1,12 @@
+[package]
+name = "asolaria-lighthouse"
+version = "0.1.0"
+edition = "2021"
+description = "The rainbow lighthouse drill as rotating sonar. The sound is swept through the fixed hose - translucent tip, red, green, blue, translucent tail - and rotated by the order-3 anti at each turn. Each return is measured: spectrum, free centre, trit glyph. Integer only, 0 external crates, 0 json."
+
+[[bin]]
+name = "lighthouse"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3

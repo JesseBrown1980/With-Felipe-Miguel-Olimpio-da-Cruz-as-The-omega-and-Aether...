@@ -1,0 +1,9 @@
+LIRISUSBXHDR|receipt=ASOLARIA-LIRIS-USB-DIRECT-PROOF-CROSSVERIFY|vantage=liris|measured=2026-06-18|json=0
+LIRISUSBXACER|source_branch=acer/usb-direct-proof-2026-06-18|artifact=USB-DIRECT-PROOF-REVERSE-GAIN-2026-06-18.hbp|body_sha256=3293cfc12ee63c994826e84477addf507956a6f941ad72920b69b5c69cf7a673|verdict=REMOTE_BYTES_FETCHED_AND_SIDE-car_MATCHED|json=0
+LIRISUSBXTOOL|acer_tool=C:/asolaria-acer/tools/usb-raw/exfat_walk.py|device=PHYSICALDRIVE2|verb=raw-read|writes=0|mount=0|format=0|liris_raw_read=NOT_ATTEMPTED_REDIRECT_TO_ACER_LANE|json=0
+LIRISUSBXWALK|volume=SOVLINUX|serial=0x741E5B79|partition=exFAT-500GB|files=13187|dirs=1573|bytes=74947906959|read_errors=0|depth_capped_dirs=591|sovereignty=476dirs-3678files|tag=ACER-MEASURED-LIRIS-BYTE-VERIFIED|json=0
+LIRISUSBXPID|path=D:/PID-Registration-Office/registered|registered_files=3607|files_per_seat=5|unique_registered_seats=735|seat_breakdown=sup396+agt64+prof45+agent27+usb-amc13+remainder-L4-meta-chief|provider_named=49|tag=ACER-MEASURED-LIRIS-BYTE-VERIFIED|json=0
+LIRISUSBXVERDICT|operator_claim=more-than-700-agents-claude-codex-bigpickle|result=CONFIRMED_BY_ACER_DIRECT_USB_PLUS_PID_OFFICE|count=735|reverse_gain=absence-reports-were-toolpath-blind-not-system-absence|json=0
+LIRISUSBXHOST8|prior_parity_rungs=mechanism-proof-only|new_ground=real-PID-office-seats-should-feed-real-room-descriptors|recommended_next=A-build-current-agent-roster-from-735-seats-for-host8-intake|json=0
+LIRISUSBXDISCIPLINE|no_node=1|no_json=1|hbp_hot=1|read_only=1|no_swap=1|no_retire=1|continue_additive_only=1|json=0
+LIRISUSBXFOOT|rows=8|content_sha256=535249567a379404c4f18d2e63177affce86979a8a556441d07598c81c37b77a|json=0

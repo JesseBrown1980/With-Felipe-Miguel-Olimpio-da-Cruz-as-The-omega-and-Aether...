@@ -1,0 +1,185 @@
+name: Composed Path1 Path2 30-vantage bench
+
+on:
+  pull_request:
+    paths:
+      - 'composed-paths-30-vantage-v1/**'
+      - '.github/workflows/composed-paths-30-vantage.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  composed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python and Rust dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==2.4.4' zstandard
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git-lfs
+          rustup toolchain install 1.97.0 --profile minimal
+
+      - name: Re-run public Path-1 and Path-2 Rust crates
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/JesseBrown1980/dbbh-coms-quant-prism.git /tmp/path1
+          git clone --depth 1 https://github.com/JesseBrown1980/path2-two-shadow-recovery.git /tmp/path2
+          (cd /tmp/path1 && cargo +1.97.0 test --all-targets -- --nocapture) | tee /tmp/path1-rust.log
+          (cd /tmp/path2 && cargo +1.97.0 test --all-targets -- --nocapture) | tee /tmp/path2-rust.log
+          grep -q 'test result: ok' /tmp/path1-rust.log
+          grep -q 'test result: ok' /tmp/path2-rust.log
+
+      - name: Fetch and verify Catalog47 and BEHCS alphabet
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/asolaria-catalog
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/catalogs.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/catalogs.json
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/alphabet.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/alphabet.json
+          test "$(git hash-object /tmp/asolaria-catalog/catalogs.json)" = 51af0b536c45e8e769066bfd886bf6f08daff75d
+          test "$(git hash-object /tmp/asolaria-catalog/alphabet.json)" = 8d4a3298576ce2c9d4a1683ffab667c8a743fc42
+
+      - name: Fetch and verify public enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/e8
+          fetched=0
+          if curl -L --fail --retry 4 --retry-delay 3 --connect-timeout 20 \
+            -o /tmp/e8/enwik8.zip https://mattmahoney.net/dc/enwik8.zip; then
+            if unzip -p /tmp/e8/enwik8.zip > /tmp/e8/enwik8; then fetched=1; fi
+          fi
+          if [ "$fetched" = 0 ]; then
+            if curl -L --fail --retry 4 --retry-delay 3 --connect-timeout 20 \
+              -o /tmp/e8/enwik8 \
+              https://media.githubusercontent.com/media/amkillam/compression-test-data/e8da60efe169a1eadc74213f85ce0eaf6c382fa5/enwik/enwik8; then
+              fetched=1
+            fi
+          fi
+          if [ "$fetched" = 0 ]; then
+            git lfs install
+            git clone --depth 1 https://github.com/amkillam/compression-test-data.git /tmp/e8/repo
+            cp /tmp/e8/repo/enwik/enwik8 /tmp/e8/enwik8
+          fi
+          test "$(stat -c%s /tmp/e8/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  /tmp/e8/enwik8' | sha256sum -c -
+
+      - name: Compile composed bench and dependencies
+        run: |
+          python -m py_compile \
+            composed-paths-30-vantage-v1/composed_paths_30_vantage_v1.py \
+            omni-event-v1/omnievent_catalog47_60d_v1.py \
+            omni-event-v1/omniportal_v2.py \
+            n-lens-v1/n_lens_flashlight_array_v1.py
+
+      - name: Run composed 30-vantage benchmark
+        run: |
+          set -euo pipefail
+          rm -rf composed-paths-30-vantage-v1/out
+          mkdir -p composed-paths-30-vantage-v1/out
+          python composed-paths-30-vantage-v1/composed_paths_30_vantage_v1.py \
+            --input /tmp/e8/enwik8 \
+            --bytes 1000000 \
+            --catalog47 /tmp/asolaria-catalog/catalogs.json \
+            --alphabet256 /tmp/asolaria-catalog/alphabet.json \
+            --omnievent-script omni-event-v1/omnievent_catalog47_60d_v1.py \
+            --omniportal-script omni-event-v1/omniportal_v2.py \
+            --nlens-script n-lens-v1/n_lens_flashlight_array_v1.py \
+            --output-dir composed-paths-30-vantage-v1/out | tee composed-paths-30-vantage-v1/out/run.log
+          grep -q 'final=VERIFIED_CLONE' composed-paths-30-vantage-v1/out/run.log
+
+      - name: Validate capacity ladder, tamper holds, and conservation namespaces
+        run: |
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          s=json.load(open('composed-paths-30-vantage-v1/out/composed_summary.json'))
+          assert s['path1']['watchers']==8
+          assert s['path1']['receipt_bytes']==710
+          assert s['path1']['receipt_valid'] is True
+          assert s['path1']['all_recall_exact'] is True
+          assert s['path1']['body_payload_wire_bytes']==0
+          assert s['path1']['tampered_replica_valid']==7
+          assert s['path1']['tampered_replica_held']==1
+          assert s['path1']['tampered_strict_unanimity_emits'] is False
+          assert s['path2']['vantages']==30
+          assert s['path2']['equations_per_vantage']==8
+          assert s['path2']['canonical_consensus'] is True
+          for light,info in s['path2']['lights'].items():
+              by={row['k']:row for row in info['ladder']}
+              assert (by[1]['rank'],by[1]['nullity'],by[1]['outcome'])==(8,52,'HOLD_INSUFFICIENT_CAPACITY')
+              assert (by[4]['rank'],by[4]['nullity'],by[4]['outcome'])==(32,28,'HOLD_INSUFFICIENT_CAPACITY')
+              assert (by[7]['rank'],by[7]['nullity'],by[7]['outcome'])==(56,4,'HOLD_INSUFFICIENT_CAPACITY')
+              assert (by[8]['rank'],by[8]['nullity'],by[8]['outcome'])==(60,0,'RECOVER_EXACT')
+              assert (by[30]['rank'],by[30]['nullity'],by[30]['outcome'])==(60,0,'RECOVER_EXACT')
+              assert by[8]['reprojection_mismatches']==0 and by[30]['reprojection_mismatches']==0
+              assert by[8]['selector_mismatches']==0 and by[30]['selector_mismatches']==0
+              assert info['warp_metric_delta']==0
+          assert s['path2']['shadow_bytes_k8_all_four_lights']==512
+          assert s['path2']['shadow_bytes_all_four_lights']==1920
+          assert s['path2']['duplicate_watcher_k8_rank']==56
+          assert s['path2']['duplicate_watcher_k8_outcome']=='HOLD_INSUFFICIENT_INDEPENDENCE'
+          assert s['path2']['extra_tamper_reprojection_mismatches']>=1
+          assert s['path2']['basis_tamper_reprojection_mismatches']>=1
+          assert s['composed_emission']=='VERIFIED_CLONE'
+          assert s['final_readback'] is True
+          assert s['data_ledger']['body_payload_wire_bytes']==0
+          assert s['data_ledger']['active_wire_bytes']==6192
+          assert abs(s['data_ledger']['active_wire_bpc']-0.049536)<1e-12
+          assert s['data_ledger']['data_plane_total_replicated_bytes'] >= s['data_ledger']['one_copy_exact_zstd_bytes']
+          assert s['claude_claim_crosscheck']['path2_ladder_matches_1_4_7_8_30'] is True
+          assert s['claude_claim_crosscheck']['same_ledger'] is False
+          assert s['event_count']==50
+          assert len(s['merkle_root'])==64 and re.fullmatch('[0-9a-f]{64}',s['merkle_root'])
+          assert s['portal_ratio']>1
+          print('COMPOSED30VERIFY|'+'|'.join([
+            'path1=PASS','path2=PASS','composed=VERIFIED_CLONE',
+            f"active_wire_bpc={s['data_ledger']['active_wire_bpc']:.6f}",
+            f"solo_exact_code_bpc={s['path1']['solo_exact_code_bpc']:.6f}",
+            f"discount={s['data_ledger']['discount_vs_solo_exact_code']:.6f}",
+            f"replicated_data_plane_bytes={s['data_ledger']['data_plane_total_replicated_bytes']}",
+            f"event_count={s['event_count']}",f"portal_ratio={s['portal_ratio']:.6f}",
+            f"merkle_root={s['merkle_root']}",'status=PASS','json=0']))
+          PY
+
+      - name: Seal generated evidence
+        run: |
+          set -euo pipefail
+          cp /tmp/path1-rust.log composed-paths-30-vantage-v1/out/
+          cp /tmp/path2-rust.log composed-paths-30-vantage-v1/out/
+          cd composed-paths-30-vantage-v1/out
+          sha256sum \
+            path1_receipt.bin \
+            path2_shadows_4lights_30v.bin \
+            path1.json \
+            path2.json \
+            composed_summary.json \
+            composed_summary.hbp \
+            composed_events_full.ndjson \
+            composed_events_portal_v2.hbp \
+            path1-rust.log \
+            path2-rust.log \
+            run.log > SHA256SUMS
+          sha256sum -c SHA256SUMS
+
+      - name: Upload composed evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: composed-paths-30-vantage
+          path: |
+            composed-paths-30-vantage-v1/COMPOSED-PATHS-30-VANTAGE-SPEC.md
+            composed-paths-30-vantage-v1/composed_paths_30_vantage_v1.py
+            composed-paths-30-vantage-v1/out/**

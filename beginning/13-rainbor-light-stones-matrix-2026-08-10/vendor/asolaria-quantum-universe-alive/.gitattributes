@@ -1,0 +1,10 @@
+# THE LIGHT HARNESS - applied BEFORE the first commit this time.
+# Law from LIGHT---lIFEds6-7 and the universe simulator. A seal that warps is not a seal.
+# GIMEL = blob == working == sidecar. Anything else is SHIN.
+* -text
+*.md      text eol=lf
+*.hbp     text eol=lf
+*.hbi     text eol=lf
+*.sha256  text eol=lf
+.gitattributes text eol=lf
+*.png   -text binary

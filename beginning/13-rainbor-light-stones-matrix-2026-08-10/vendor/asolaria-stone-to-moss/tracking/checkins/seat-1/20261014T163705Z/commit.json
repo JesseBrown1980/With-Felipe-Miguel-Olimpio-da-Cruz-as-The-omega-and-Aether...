@@ -1,0 +1,14 @@
+{
+  "commitment_domain_description": "SHA256(ASCII ASOLARIA|SEAT1-COMPUTATIONAL-SALT-V1 || NUL || secret_32_bytes || nonce_16_bytes || source_commit_20_bytes)",
+  "created_utc": "2026-10-14T16:37:05Z",
+  "fresh_coordinator_challenge_issued": false,
+  "public_key_fingerprint_sha256": "f81b4c680516582cf4cf55f319fbb9649020ac0c9a0b49a9315e3b512e7b69a5",
+  "schema": "ASOLARIA-SEAT1-COMPUTATIONAL-ATTEST-V1",
+  "seat": "seat-1",
+  "secret_commitment_sha256": "e09978e417e609785cedb2939e479a1e843dc7afb8a3c0a62a93104195f60738",
+  "signature_b64": "sBxqz/IYBMzQ7ul+CMPil92h22zRvfI4X7daSvDk1r7+jYsYpimHfRAPNqxw7+7IYd7cJ7jJTx0NM9pIKnCnAA==",
+  "source_commit_sha": "2dadc995f460da957879bca7fd558cb037428ece",
+  "stage": "SOFTWARE_CANDIDATE_BLIND_PRECOMMIT",
+  "three_physical_host_protocol_eligible": false,
+  "unrevealed_private_salt": true
+}

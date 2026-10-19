@@ -1,0 +1,35 @@
+====================================================================
+QPRISM-MUSCLE-SIM  (Acer build) -- spatial Talbot-Lau, calibrated to Nature s41586-025-09917-9
+  d=133 nm  L=0.983 m  v=160 m/s  m=172 kDa  rho_res=0.806
+====================================================================
+
+  coupling=0.00  budget=80  repeats=30  (score = fraction of ground-truth SNR)
+    random     0.840 +/- 0.076
+    optimizer  0.842 +/- 0.275
+    prism      0.848 +/- 0.108
+    -> no significant prism advantage   (Welch t=+0.12, p=0.9087)
+
+  coupling=0.30  budget=80  repeats=30  (score = fraction of ground-truth SNR)
+    random     0.840 +/- 0.076
+    optimizer  0.842 +/- 0.275
+    prism      0.949 +/- 0.043
+    -> prism > optimizer (significant)   (Welch t=+2.11, p=0.0432)
+
+  coupling=0.60  budget=80  repeats=30  (score = fraction of ground-truth SNR)
+    random     0.840 +/- 0.076
+    optimizer  0.842 +/- 0.275
+    prism      0.989 +/- 0.012
+    -> prism > optimizer (significant)   (Welch t=+2.93, p=0.0066)
+
+  coupling=0.90  budget=80  repeats=30  (score = fraction of ground-truth SNR)
+    random     0.840 +/- 0.076
+    optimizer  0.842 +/- 0.275
+    prism      1.000 +/- 0.002
+    -> prism > optimizer (significant)   (Welch t=+3.14, p=0.0038)
+
+  SELF-VALIDATION (claim-gate precondition):
+    coupling=0.0 -> no significant prism advantage   [expected: no significant prism advantage]
+    coupling=0.9 -> prism > optimizer (significant)   [expected: prism > optimizer (significant)]
+    harness power check: PASS
+
+  wrote results/coupling-sweep-calibrated.json

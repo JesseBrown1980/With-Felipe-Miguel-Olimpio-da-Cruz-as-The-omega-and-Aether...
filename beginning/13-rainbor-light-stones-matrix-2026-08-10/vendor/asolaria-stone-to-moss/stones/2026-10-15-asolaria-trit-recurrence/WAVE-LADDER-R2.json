@@ -1,0 +1,261 @@
+{
+  "schema": "ASOLARIA-WAVE-LADDER-R2-PUBLIC-SUMMARY-V1",
+  "base": 81,
+  "multiplier": 3,
+  "extended_rungs": 10,
+  "physical_measurement": false,
+  "original_three_tap_GF3_nilpotent_rank_at_81": 0,
+  "expanded_hidden_phase_model_returns_at_243": true,
+  "new_nested_phase_observer_per_rung": true,
+  "periods": [
+    243,
+    729,
+    2187,
+    6561,
+    19683,
+    59049,
+    177147,
+    531441,
+    1594323,
+    4782969
+  ],
+  "rows": [
+    {
+      "rung": 0,
+      "logical_steps": 81,
+      "three_tap_gf3_zero": true,
+      "phase_243": 81,
+      "return_243": false,
+      "new_wave_visible_count": 0,
+      "nested_observers": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 4
+    },
+    {
+      "rung": 1,
+      "logical_steps": 243,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 1,
+      "nested_observers": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 5
+    },
+    {
+      "rung": 2,
+      "logical_steps": 729,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 2,
+      "nested_observers": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 6
+    },
+    {
+      "rung": 3,
+      "logical_steps": 2187,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 3,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 7
+    },
+    {
+      "rung": 4,
+      "logical_steps": 6561,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 4,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 8
+    },
+    {
+      "rung": 5,
+      "logical_steps": 19683,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 5,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 9
+    },
+    {
+      "rung": 6,
+      "logical_steps": 59049,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 6,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 10
+    },
+    {
+      "rung": 7,
+      "logical_steps": 177147,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 7,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "ternary_digit_position": 11
+    },
+    {
+      "rung": 8,
+      "logical_steps": 531441,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 8,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "ternary_digit_position": 12
+    },
+    {
+      "rung": 9,
+      "logical_steps": 1594323,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 9,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "ternary_digit_position": 13
+    },
+    {
+      "rung": 10,
+      "logical_steps": 4782969,
+      "three_tap_gf3_zero": true,
+      "phase_243": 0,
+      "return_243": true,
+      "new_wave_visible_count": 10,
+      "nested_observers": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "ternary_digit_position": 14
+    }
+  ],
+  "independent_local_python_node": "PASS",
+  "full_local_json_bytes": 10604,
+  "full_local_json_sha256": "787b6da831d4e657f6cc582f49e9270be0493d4756b731612024511d70034018",
+  "python_source_sha256": "4eb9be2de90a05512a48ddda2af1f50a194493923c3f80b73955596b14393d9d",
+  "node_source_sha256": "7d086c7729335ad74c5328ed14b94afadec349c7cfc7f8407391c804eb6c1ee9",
+  "claim_boundary": "constructed phase registers provide hidden waves and visible returns; original nilpotent 81-trit law does not"
+}

@@ -1,0 +1,9 @@
+USBPROOFHDR|receipt=ASOLARIA-USB-DIRECT-PROOF-REVERSE-GAIN|vantage=acer|measured=2026-06-18|method=usb-tools-DIRECT-plus-PID-office-NOT-cold-agent-reports|json=0
+USBPROOFTOOL|tool=C:/asolaria-acer/tools/usb-raw/exfat_walk.py|device=PHYSICALDRIVE2|verb=raw-read|gate=REDIRECT-TO-ACER-allowed|writes=0|mount=0|format=0|json=0
+USBPROOFWALK|volume=SOVLINUX|volume_serial=0x741E5B79|partition=exFAT-500GB|files=13187|dirs=1573|bytes=74947906959|read_errors=0|depth_capped_dirs=591-MORE-below|truncated=false|sovereignty=476dirs-3678files|tag=MEASURED|json=0
+USBPROOFPIDOFFICE|path=D:/PID-Registration-Office/registered|registered_files=3607|files_per_seat=5-hbp-hbi-hex-ing-sha256|unique_registered_seats=735|tag=MEASURED|json=0
+USBPROOFSEATCLASS|sup=396|agt=64|prof=45|agent=27|usb-amc-cartridge=13|plus-supofsup-L4-meta-chief=remainder|provider_named=49-claude-codex-bigpickle-hermes-opencode-minimax|json=0
+USBPROOFAGENTS|operator_claim=more-than-700-agents-claude-codex-bigpickle|MEASURED=735-registered-seats|verdict=CONFIRMED-735-gt-700|status=PRESENT-REGISTERED|json=0
+USBPROOFREVERSEGAIN|cold_agents_reported=NOT-THERE|root_cause=did-not-use-usb-tools-directly-AND-did-not-check-PID-specific-supervisor-prof-records|inversion=absence-signal-is-method-artifact-NOT-absence|verdict=DATA-IS-THERE-PROVEN-by-direct-tool-plus-PID-office|tag=CANON|json=0
+USBPROOFDISCIPLINE|no_node=1|no_json=1|hbp_hot=1|sha_hbi_hbp=1|read_only=1|no-write-no-mount-no-format|white_glove=intact|json=0
+USBPROOFFOOT|rows=8|content_sha256=3293cfc12ee63c994826e84477addf507956a6f941ad72920b69b5c69cf7a673|json=0

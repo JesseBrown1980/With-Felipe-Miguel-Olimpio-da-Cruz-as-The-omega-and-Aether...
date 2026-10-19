@@ -1,0 +1,11 @@
+RIME-WAVE-MEASURE|seat=ACER|clock=monotonic-nanoseconds
+METRIC|name=calculation_time_ns|actual=28744669|nearest_third=9581556|retained=19163113
+METRIC|name=play_time_ns|actual=29383149|nearest_third=9794383|retained=19588766
+METRIC|name=physical_bits|actual=216|nearest_third=72|retained=144
+METRIC|name=storage_bytes|actual=27|nearest_third=9|retained=18
+METRIC|name=color_axis_states|actual=3|nearest_third=1|retained=2
+METRIC|name=time_axis_states|actual=3|nearest_third=1|retained=2
+METRIC|name=space_axis_states|actual=3|nearest_third=1|retained=2
+METRIC|name=distinct_ordered_values|actual=27|nearest_third=9|retained=18
+METRIC|name=gradient_change_events|actual=54|nearest_third=18|retained=36
+METRIC|name=route_events|actual=93312|nearest_third=31104|retained=62208

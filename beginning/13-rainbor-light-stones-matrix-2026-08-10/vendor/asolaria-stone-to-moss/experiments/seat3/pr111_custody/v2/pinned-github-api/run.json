@@ -1,0 +1,9 @@
+{
+  "id": 38783337268,
+  "event": "pull_request",
+  "conclusion": "success",
+  "head_sha": "e2532396bbd42bb2a0bace2f26d4b5d6b8f2e966",
+  "run_attempt": 1,
+  "run_started_at": "2026-10-15T18:09:55Z",
+  "updated_at": "2026-10-15T18:11:06Z"
+}

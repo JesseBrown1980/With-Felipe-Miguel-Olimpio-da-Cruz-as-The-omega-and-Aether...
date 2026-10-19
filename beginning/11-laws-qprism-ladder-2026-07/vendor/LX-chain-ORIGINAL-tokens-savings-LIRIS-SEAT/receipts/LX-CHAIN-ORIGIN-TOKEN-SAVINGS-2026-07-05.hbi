@@ -1,0 +1,9 @@
+HBI|schema=asolaria.lx_chain_origin_index.v1|json=0|seat=LIRIS|created_utc=2026-07-05T18:57:33.572Z
+IDX|0|class=OPERATOR_OBSERVED|key=original_chain_sentence|ref=chat_2026_07_05
+IDX|1|class=MEASURED_LIRIS_LOCAL|key=LX-001|ref=local-cache/sovereignty/index/sub-colonies/liris-merged-20260324/identity/LX-001.md
+IDX|2|class=MEASURED_LIRIS_LOCAL|key=LX_chain_format|ref=local-cache/sovereignty/index/CROSS-EXAMINATION-REPORT.md:433
+IDX|3|class=MEASURED_LIRIS_LOCAL|key=tuple_plus_lx_chain|ref=.claude/projects/E--/memory/project_scientific_significance.md:53
+IDX|4|class=MEASURED_LIRIS_LOCAL|key=lx_001_to_lx_210|ref=.claude/projects/C--Users-rayss/memory/project/project_session_status_20260324.md:13
+IDX|5|class=MEASURED_LIRIS_LOCAL|key=281_lx_entries_join_compress_test|ref=Asolaria/reports/slack-direct-watch-latest.ndjson:179
+IDX|6|class=MEASURED_LIRIS_LOCAL|key=xref_lx_real_routing_semantics|ref=Asolaria/reports/slack-direct-watch-latest.ndjson:200
+IDX|7|class=DESIGN_CARRY_FORWARD|key=BEHCS_64_256_1024_HyperBEHCS|ref=this_public_receipt_ladder_boundary

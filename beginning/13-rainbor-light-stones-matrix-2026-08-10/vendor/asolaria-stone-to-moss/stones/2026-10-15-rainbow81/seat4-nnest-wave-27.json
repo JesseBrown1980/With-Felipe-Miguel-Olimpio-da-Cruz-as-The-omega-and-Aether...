@@ -1,0 +1,113 @@
+{
+  "asolaria": {
+    "challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+    "full_hbp_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+    "implementations": [
+      {
+        "full_hbp_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+        "implementation": "agent",
+        "record_count": 32805,
+        "smallstep": 120
+      },
+      {
+        "full_hbp_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+        "implementation": "watcher",
+        "record_count": 32805,
+        "smallstep": 120
+      },
+      {
+        "full_hbp_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+        "implementation": "referee",
+        "record_count": 32805,
+        "smallstep": 120
+      }
+    ],
+    "records": 32805,
+    "records_per_wave": 1215,
+    "waves": 27
+  },
+  "evidence_class": "MEASURED_SOFTWARE_CORRECTIVE_GATE",
+  "falsifier": "Change a verified wave without failing a descendant watcher or root gate",
+  "findings": [
+    {
+      "class": "MEASURED_IS",
+      "falsifier": "any 1215-row wave mismatch, any child/watcher digest disagreement accepted, or any injected descendant fault that leaves the apex green",
+      "is": "27 wave leaves, 40 nodes, 40 independent node watcher gates, 4 injected depth failures caught",
+      "obtained": "python experiments/seat4/nnest_wave_gate.py --nnest n-nest-upstream --receipt receipt.json",
+      "scope": "original Seat1 public 27-wave GF2 challenge; pinned N-Nest commit 307903651f56e8a28ef98ca36aef22ee8cda935c; Python 3.11/3.13 and Node 22; software-only",
+      "subject": "Seat4 27-wave N-Nest corrective software gate"
+    }
+  ],
+  "gate_verdict": "MEASURED_PASS",
+  "limitations": "bounded 3^3 digital watcher tree + original N-Nest prime depth7 verification; no actual autonomous LLM agent farm or physical light/gravity/FTL measurement",
+  "nested": {
+    "all_child_verdicts_AND_to_root": true,
+    "branching": 3,
+    "depth": 3,
+    "human_scale_authorization": "NOT_REQUESTED",
+    "injected_node_faults": [
+      {
+        "at_depth_detected": true,
+        "depth": 0,
+        "path": "R",
+        "root_blocked": true
+      },
+      {
+        "at_depth_detected": true,
+        "depth": 1,
+        "path": "R.0",
+        "root_blocked": true
+      },
+      {
+        "at_depth_detected": true,
+        "depth": 2,
+        "path": "R.0.0",
+        "root_blocked": true
+      },
+      {
+        "at_depth_detected": true,
+        "depth": 3,
+        "path": "R.0.0.0",
+        "root_blocked": true
+      }
+    ],
+    "leaves": 27,
+    "nodes": 40,
+    "original_clean_apex": "MEASURED_PASS",
+    "pids": 80,
+    "root_truth_sha256": "5a2674f79d83c2709372f882da9fd15e3a3d11869b8d67326de242773dc7bfb7",
+    "tampered_wave_13_rejected": true,
+    "unbounded_agent_spawning": false,
+    "watcher_per_node": true
+  },
+  "nnest_upstream": {
+    "commit": "307903651f56e8a28ef98ca36aef22ee8cda935c",
+    "discipline_loaded": true,
+    "law_loaded": true,
+    "original_script_results": [
+      {
+        "clean_tree": "MEASURED_PASS",
+        "fault_levels_detected": 1,
+        "hbp_size_bytes": 462,
+        "pinned_git_blob_sha1": "2baca296edec2d46a9bc197efee8850bd168a5ef",
+        "scope": "local software demonstration under pinned upstream source",
+        "script": "nest-depth3-verify.cjs",
+        "timestamped_hbp_sidecar_verified": true
+      },
+      {
+        "clean_tree": "MEASURED_PASS",
+        "fault_levels_detected": 7,
+        "hbp_size_bytes": 886,
+        "pinned_git_blob_sha1": "fd24c0eceff455351f27e7244d5bd61bffd38a25",
+        "scope": "local software demonstration under pinned upstream source",
+        "script": "nest-depthN-prime-verify.cjs",
+        "timestamped_hbp_sidecar_verified": true
+      }
+    ],
+    "repository": "JesseBrown1980/N-Nest-Prime-INFINITE-SELF-REFLECT-AGENTS-NESTED"
+  },
+  "physical_host_independence": "NOT_MEASURED",
+  "physical_host_reason": "NO_INDEPENDENT_HARDWARE_ATTESTATIONS",
+  "schema": "ASOLARIA-SEAT4-NNEST-CORRECTIVE-81-V1",
+  "seat": "seat-4"
+}

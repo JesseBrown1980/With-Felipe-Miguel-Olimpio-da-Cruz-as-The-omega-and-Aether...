@@ -1,0 +1,11 @@
+PIDROOMV2REATTACKHDR|receipt=ASOLARIA-HOST8-PID-OFFICE-ROOMSTUB-MANIFEST-V2-REATTACK|vantage=liris|measured=2026-06-18|source_repo=JesseBrown1980/Asolaria|source_branch=acer/pid-office-roomstub-manifest-v2-2026-06-18|source_commit=a771d225150a072c7f01197a9de039aee57f667a|json=0
+PIDROOMV2REATTACKSOURCE|manifest=PID-OFFICE-ROOMSTUB-MANIFEST-v2.hbp|source_body_sha=16e5afcd3f4b11cc25cc2f2f203cae935d1fec8689c9957a81b8cf5c502ba579|sidecar_match=1|foot_match=1|blob_lf_only=1|json=0
+PIDROOMV2REATTACKCOUNT|line_count=729|pidroom_rows=726|header_seats=726|unique_seats=726|unique_handles=726|duplicate_seats=0|duplicate_handles=0|json=0
+PIDROOMV2REATTACKHANDLE|algorithm=host8-serve-fnv1a64-canonicalized|preimage=seat_id-pipe-room_stub|recomputed=726|mismatches=0|first_handle=3340e89ed9bd5c21|last_handle=92f0db20895f7385|handles_unchanged_from_v1=1|json=0
+PIDROOMV2REATTACKCONTRACT|required_fields=seat_id+seat_class+provider_hint+room_stub+host_handle8+source_hbp_sha256+source_hbi_sha256+supervisor_pid+prof_pid+prof_anchor+supervision_layer+target_runtime+stub_state|required_missing=0|verdict=PASS_DESCRIPTOR_CONTRACT|json=0
+PIDROOMV2REATTACKHBI|source_hbi_sha256_missing=0|hbi_src_hbi=718|hbi_src_hbp_sha256_sidecar=8|prior_v1_hbi_gap=8|gap_resolved=1|json=0
+PIDROOMV2REATTACKSUPERVISION|supervisor_pid_unique=43|prof_pid_unique=52|prof_anchor_unique=1|prof_anchor_missing=0|model=shared-prof-supervisor-constellation-plus-layer-tier|finer_linkage=resolve-via-fabric-roster|json=0
+PIDROOMV2REATTACKFABRIC|liris_fabric_current=STALE_FALLBACK|liris_council_action_confirmed=0|prior_liris_v2_crossverify_exists=1|current_runtime_activation=UNVERIFIED|json=0
+PIDROOMV2REATTACKBOUNDARY|node_start=0|node_stop=0|swap=0|retire=0|runtime_activation=0|descriptor_loader_allowed=read_only|json=0
+PIDROOMV2REATTACKNEXT|next=host8_manifest_loader_or_acer_live_fabric_roster_resolution|block=activation+swap+retire_until_current_direct_evidence_gate|json=0
+PIDROOMV2REATTACKFOOT|rows=10|content_sha256=d3e0dc5b02ec2711fd5a777191ad79460827d54dde6280ef89ecb6baabef3f38|json=0

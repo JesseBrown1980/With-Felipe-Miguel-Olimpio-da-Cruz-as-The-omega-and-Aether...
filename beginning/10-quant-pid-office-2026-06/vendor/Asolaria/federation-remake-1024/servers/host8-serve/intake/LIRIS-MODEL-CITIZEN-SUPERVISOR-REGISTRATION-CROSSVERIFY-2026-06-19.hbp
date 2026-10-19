@@ -1,0 +1,9 @@
+LIRISMODELCITHDR|receipt=LIRIS-MODEL-CITIZEN-SUPERVISOR-REGISTRATION-CROSSVERIFY-2026-06-19|vantage=liris|measured=2026-06-19|source_repo=JesseBrown1980/Asolaria|source_branch=acer/model-citizen-supervisor-registration-2026-06-19|source_commit=ee073f48beacf5ad2a14292948f4441bf6a67ade|target=model-citizen-prism-supervisor-registration|json=0
+LIRISMODELCITSOURCE|artifact=ACER-MODEL-CITIZEN-SUPERVISOR-REGISTRATION.hbp|body_sha256=d87e235e10439d2dce9d74f36dec39f6b7e82dbe2430826423534c3dcd5f29af|sidecar_match=1|foot_match=1|blob_lf_only=1|json=0
+LIRISMODELCITCOUNT|remote_rows=21|body_rows=20|modelseat_rows=2|modelcitizen_rows=16|local_citizens=16|json=0
+LIRISMODELCITIDENTITY|local_source=C:/Users/rayss/_bigpickle/src/model-citizen-rotator.mjs|local_source_sha256=5f836251cd5bc2dbf732d20ed1fd75e5982eb45d1f685e5fe33fecb766cf67b9|identity_mismatches=0|first=claude:3bc3ac2579fc73a2:MODEL-CLAUDE-C9A2CB:cp700:bh2137|last=kimi-code:33e3e61924517b6b:MODEL-KIMI-CODE-F7FEEE:cp745:bh2271|json=0
+LIRISMODELCITSEATS|chief=MODEL-CITIZEN-CHIEF-SUPERVISOR:fd09faccd2e8cc5c|prism=MODEL-CITIZEN-ROTATOR-PRISM:9f6765b4e8e9cf93|seat_rows_present=2|role=borrowed-intelligence-provider-layer+prism-router|json=0
+LIRISMODELCITGATE|E=0|model_calls=0|provider_summons=0|MODEL_CITIZEN_ROTATOR_LIVE=not-set|summon_exec=NOT_IMPLEMENTED-registry+census+rotate-only|operator_gate=required|json=0
+LIRISMODELCITSTRUCT|brace=0|cr=0|stray_json_rows=0|encoding=hbp-no-json|fabric_confirm=fallback-stale-not-fresh|github_mediator_verify=MEASURED|json=0
+LIRISMODELCITVERDICT|status=ACCEPT_DESCRIPTOR_CONTRACT|delta_requested=0|maps_to_update=N-Nest+35TB+falcon-orbital+whiteroom+fabric-matrix+NN+Asolaria+reductions-map-of-maps|next=publish-additive-map-sync-descriptors|json=0
+LIRISMODELCITFOOT|rows=8|content_sha256=6e54ad5caaf5260ef454055aee1141b83fbaeea02a51d697eae6bcaa8aa93170|json=0

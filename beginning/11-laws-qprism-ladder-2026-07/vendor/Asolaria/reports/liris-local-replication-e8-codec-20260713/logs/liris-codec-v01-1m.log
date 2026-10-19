@@ -1,0 +1,4 @@
+input_bytes=1000000 sha256_in=369b688978f649681136198fb96db14c1616756260c55fb4b65e9bc049552cad
+compressed_bytes=392002 sha256_comp=d04ecbeea11d5e909c3c20457628eabc714d9e9e5e7860cf61e46e7919d2aad5
+bpc=3.136 ratio=2.55 enc_s=5.7 dec_s=12.4
+RESTORE=BYTE_IDENTICAL_0_LOSS

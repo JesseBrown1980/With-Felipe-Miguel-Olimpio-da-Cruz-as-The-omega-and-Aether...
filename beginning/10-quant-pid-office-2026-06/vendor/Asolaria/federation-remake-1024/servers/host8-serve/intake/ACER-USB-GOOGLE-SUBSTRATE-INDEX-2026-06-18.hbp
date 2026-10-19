@@ -1,0 +1,6 @@
+USBGHDR|index=ACER-USB-GOOGLE-SUBSTRATE-INDEX|lane=usb-google-substrate|vantage=acer|measured=2026-06-18|mode=READ-ONLY-DESCRIPTOR|writes=0|uploads=0|json=0
+USBGGEOM|device=2TB-SOVLINUX-USB-D-PHYSICALDRIVE2|size=1953GB|mbr_sha16=3126770d103a3bed|part1=exFAT-0x07-500GB-visible|tail=1.5TB-continuity-lba-1048576001-to-4095999999|sectors=113|tag=MEASURED-geometry|json=0
+USBGWALK|plan=113-sector-read-only-walk-via-usb_raw_io.py+substrate-sector-walk.ps1|tail_content=UNVERIFIED-deep-read-deferred|json=0
+USBGDRIVE|drive=35TB-Google-cold-backup-mirror-map|upload=GATED-ON-ADC-operator-auth|adapter=GoogleDriveStore-NOT-built|json=0
+USBGGATE|usb_raw_write=HARD-DENY-always|read_only=1|nothing_written=1|E=0|json=0
+USBGFOOT|rows=5|content_sha256=dde8f7d567764e96d1ac117d7263e7cb66457b743077900c0cfbef57a191d920|json=0

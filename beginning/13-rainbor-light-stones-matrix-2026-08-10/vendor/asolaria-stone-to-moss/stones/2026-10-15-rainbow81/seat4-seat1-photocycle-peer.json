@@ -1,0 +1,67 @@
+{
+  "actual_optogenetic_kinetic_rates_validated": false,
+  "arm_results": [
+    {
+      "arm": "dark",
+      "final_open_population": 0,
+      "identities": 81,
+      "light_commands": 0,
+      "ticks": 1080,
+      "total_absolute_open_error": 11664000000,
+      "total_closed_to_open_transitions": 0,
+      "waves": 27
+    },
+    {
+      "arm": "open_loop",
+      "final_open_population": 9639513,
+      "identities": 81,
+      "light_commands": 11664,
+      "ticks": 1080,
+      "total_absolute_open_error": 5878733220,
+      "total_closed_to_open_transitions": 884303244,
+      "waves": 27
+    },
+    {
+      "arm": "feedback_truth",
+      "final_open_population": 9395703,
+      "identities": 81,
+      "light_commands": 17820,
+      "ticks": 1080,
+      "total_absolute_open_error": 4516776378,
+      "total_closed_to_open_transitions": 900481374,
+      "waves": 27
+    },
+    {
+      "arm": "feedback_corrupt",
+      "final_open_population": 8389953,
+      "identities": 81,
+      "light_commands": 2835,
+      "ticks": 1080,
+      "total_absolute_open_error": 8221918824,
+      "total_closed_to_open_transitions": 565459866,
+      "waves": 27
+    }
+  ],
+  "biased_feedback_degrades_vs_truth": true,
+  "classification": "INDEPENDENT_SOFTWARE_RECOMPUTATION",
+  "feedback_control_error_lower_than_open_loop": true,
+  "independence_limit": "third mathematical implementation on public synthetic input, not independent physical custody",
+  "no_per_tick_human_approval": true,
+  "one_byte_tamper_rejected": true,
+  "physical_host_independence_verified": false,
+  "physical_photons_measured": false,
+  "schema": "ASOLARIA-SEAT4-SEAT1-OPTO-PHOTOCYCLE-INDEPENDENT-PEER-V1",
+  "seat": "seat-4",
+  "seat1_commit": "dd5e47db9522141de3949a23759a5d647ecdafbd",
+  "sha256": "de2c346a92e626403cc5c59b9ffa688d050163fbb48ab8b1cb6a4cde795b0a8b",
+  "source_blobs": {
+    "PREREG-LIGHT-GATED-IDENTITY-1080.md": "a9752cee6bd833af0ad1dbef7b01a50125c8baa1",
+    "opto_gate.py": "32667d1172eae4856a1c31499c04509e96b1771f",
+    "opto_gate_node.js": "d5e5644b3e4d65759b3f7c44e006da8cc3310261",
+    "verify_opto.py": "31cc1d5abc8ba5c9bda51aac3017de9d7af39701"
+  },
+  "source_node_full_trace_match": true,
+  "source_pr_branch": "agent/seat-1/optogenetic-photocycle-20261015",
+  "source_python_full_trace_match": true,
+  "third_algorithm_recomputed_snapshots": 8748
+}

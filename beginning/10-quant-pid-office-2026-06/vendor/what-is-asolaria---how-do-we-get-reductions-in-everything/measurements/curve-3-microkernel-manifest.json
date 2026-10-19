@@ -1,0 +1,127 @@
+{
+  "catalog": "D:/asolaria-micro-kernels-v1/manifest.hbp",
+  "schema": "ASOLARIA-MICRO-KERNEL-V1",
+  "mk_rows": 10000,
+  "derivability_verified": {
+    "beat_const": true,
+    "lanes_const": true,
+    "status_const": true,
+    "anchor_deriv_from_idx_prime": true,
+    "result_path_deriv_from_idx": true,
+    "idx_sequential": true
+  },
+  "structural_regime_valid": true,
+  "verb_codebook_bytes": 102,
+  "structural_codebook_bytes": 189,
+  "per_row_avg_bytes": {
+    "json_full": 233.5,
+    "tuple": 169.5,
+    "verb_lossless_payload": 97.5,
+    "structural_payload": 21.9,
+    "glyph": 8
+  },
+  "GROWTH_CURVE": [
+    {
+      "N": 1,
+      "json_full_bytes": 225,
+      "tuple_bytes": 161,
+      "verb_lossless_bytes": 191,
+      "structural_bytes": 208,
+      "glyph_bytes": 8,
+      "r_json/tuple": 1.4,
+      "r_json/verb": 1.18,
+      "r_json/structural": 1.08,
+      "r_json/glyph": 28.13
+    },
+    {
+      "N": 5,
+      "json_full_bytes": 1127,
+      "tuple_bytes": 807,
+      "verb_lossless_bytes": 549,
+      "structural_bytes": 284,
+      "glyph_bytes": 40,
+      "r_json/tuple": 1.4,
+      "r_json/verb": 2.05,
+      "r_json/structural": 3.97,
+      "r_json/glyph": 28.18
+    },
+    {
+      "N": 20,
+      "json_full_bytes": 4542,
+      "tuple_bytes": 3262,
+      "verb_lossless_bytes": 1924,
+      "structural_bytes": 579,
+      "glyph_bytes": 160,
+      "r_json/tuple": 1.39,
+      "r_json/verb": 2.36,
+      "r_json/structural": 7.84,
+      "r_json/glyph": 28.39
+    },
+    {
+      "N": 100,
+      "json_full_bytes": 22932,
+      "tuple_bytes": 16532,
+      "verb_lossless_bytes": 9434,
+      "structural_bytes": 2179,
+      "glyph_bytes": 800,
+      "r_json/tuple": 1.39,
+      "r_json/verb": 2.43,
+      "r_json/structural": 10.52,
+      "r_json/glyph": 28.66
+    },
+    {
+      "N": 500,
+      "json_full_bytes": 115996,
+      "tuple_bytes": 83996,
+      "verb_lossless_bytes": 48098,
+      "structural_bytes": 10579,
+      "glyph_bytes": 4000,
+      "r_json/tuple": 1.38,
+      "r_json/verb": 2.41,
+      "r_json/structural": 10.96,
+      "r_json/glyph": 29
+    },
+    {
+      "N": 1000,
+      "json_full_bytes": 232496,
+      "tuple_bytes": 168496,
+      "verb_lossless_bytes": 96598,
+      "structural_bytes": 21079,
+      "glyph_bytes": 8000,
+      "r_json/tuple": 1.38,
+      "r_json/verb": 2.41,
+      "r_json/structural": 11.03,
+      "r_json/glyph": 29.06
+    },
+    {
+      "N": 5000,
+      "json_full_bytes": 1166920,
+      "tuple_bytes": 846920,
+      "verb_lossless_bytes": 487022,
+      "structural_bytes": 109079,
+      "glyph_bytes": 40000,
+      "r_json/tuple": 1.38,
+      "r_json/verb": 2.4,
+      "r_json/structural": 10.7,
+      "r_json/glyph": 29.17
+    },
+    {
+      "N": 10000,
+      "json_full_bytes": 2334950,
+      "tuple_bytes": 1694950,
+      "verb_lossless_bytes": 975052,
+      "structural_bytes": 219079,
+      "glyph_bytes": 80000,
+      "r_json/tuple": 1.38,
+      "r_json/verb": 2.39,
+      "r_json/structural": 10.66,
+      "r_json/glyph": 29.19
+    }
+  ],
+  "notes": {
+    "lossless": "r_json/verb keeps ALL per-row entropy; only the 3 constant categoricals are dict-coded. MEASURED.",
+    "structural": "r_json/structural is MEASURED but valid ONLY because derivability was VERIFIED row-by-row (anchor & result_path derive from idx; beat_range/lanes/status constant; idx sequential). Each row reduces to {idx,pid}; the reconstruction rules live in the codebook ONCE. This is the tabular-repetitive regime where the old index-language ratios came from.",
+    "glyph": "r_json/glyph = 8-byte handle (pid); idx is row-position. The addressing floor.",
+    "anchors": "Operator anchors 12:1 -> 21,141:1 -> ~3B:1 stand REAL; descendant curve only, NOT re-derived."
+  }
+}

@@ -1,0 +1,6 @@
+THREERUNSHDR|protocol=OP-JESSE|three-runs=sound.light.instant|field=7371=3^4*7*13=81*91=273*27|date=2026-08-08|SYSTEM_AFFIRMED=0|json=0
+STAGE1|run2|change=1-point|global_bits=141/256=55.1pct|regions@81=1|json=0
+STAGE1|run3|change=4-points-square|global_bits=124/256=48.4pct|regions@81=4|json=0
+STAGE2|run3|change=27-points|global_bits=127/256=49.6pct|regions@81=27|regions@273=27|json=0
+THREERUNSLOOK|global-hash=~50pct-avalanche-for-1-4-or-27|detects-THAT-not-shape|instant-no-light-collapses-nothing|region-grid=draws-the-shape-1.4.27|json=0
+THREERUNSFTR|the-hash-sees-the-change-without-light|shape-from-the-pattern-of-hashes|receipt_sha256=47f00f7d491c63409132623549d2defe04e1608efba3fef5326eeaa5cf070222|json=0

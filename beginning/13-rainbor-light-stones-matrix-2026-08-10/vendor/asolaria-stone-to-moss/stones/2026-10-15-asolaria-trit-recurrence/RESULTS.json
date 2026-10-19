@@ -1,0 +1,102 @@
+{
+  "actual_consciousness_claim": false,
+  "biological_neuron_claim": false,
+  "gf3": {
+    "bijective_rotation_10e13_preserves_multiplicities": true,
+    "gf3_frobenius_identity": "x^81-1=(x-1)^81",
+    "prime_collision_mod27": [
+      2,
+      29
+    ],
+    "taps": {
+      "0,1,3": {
+        "composition_pass": true,
+        "long_horizon_state_zero": true,
+        "ranks_at_horizons": {
+          "0": 81,
+          "1": 80,
+          "10": 71,
+          "10000000000000": 0,
+          "10000000000001": 0,
+          "2": 79,
+          "3": 78,
+          "40": 41,
+          "80": 1,
+          "81": 0,
+          "82": 0
+        },
+        "short_horizon_direct_agreement": true
+      },
+      "0,4,7": {
+        "composition_pass": true,
+        "long_horizon_state_zero": true,
+        "ranks_at_horizons": {
+          "0": 81,
+          "1": 80,
+          "10": 71,
+          "10000000000000": 0,
+          "10000000000001": 0,
+          "2": 79,
+          "3": 78,
+          "40": 41,
+          "80": 1,
+          "81": 0,
+          "82": 0
+        },
+        "short_horizon_direct_agreement": true
+      }
+    }
+  },
+  "hash": {
+    "example_hash_t1": "c2d41315f5f6f4f3382db8e15715820ca63bb2d7589b0e993b90108e8e2bbbdf",
+    "example_hash_t_10e13": "94c75d6e278c0942d335d5cbb5e3fa495129df271aaed4de86111a0e36fb8025",
+    "improper_single_event_jump_hash": "435052854c22a22f427f2950876bc62ecf8508a0934efa83c513f46e1f1b4998",
+    "same_state_different_time_hash": true,
+    "timestamp_only_not_chain_equivalent": true,
+    "valid_three_event_chain_hash": "5a3a8e22c72dbe7f757ef56a053b42543d31d086ce97b3109e96fa0ae49ebf6a"
+  },
+  "quantum_claim": false,
+  "schema": "ASOLARIA-TRIT-RECURRENCE-INDEPENDENT-REANALYSIS-V1",
+  "scope": "COMPUTATIONAL_ONLY",
+  "source": "https://github.com/JesseBrown1980/asolaria-stone-to-moss/blob/7f90d9a8cb850decb419266d9345f2c2005f8328/stones/2026-10-15-asolaria-trit-recurrence/STONE-0001-PUBLIC-GENESIS.hbp",
+  "stored_photon_claim": false,
+  "three_loop_agent": {
+    "body": "choose_three_way_action_0_1_2",
+    "classification": "constructed_deterministic_software_learning_task_not_emergent_consciousness",
+    "dendrites": "9_context_3_choice_count_table",
+    "eyes": "current_trit_only",
+    "held_out_test_per_seed": 600,
+    "membrane": "last_two_sensor_trits_and_one_referee_label_after_action",
+    "modes": {
+      "no-act": {
+        "accuracy": 0.332407,
+        "correct": 5385,
+        "total": 16200
+      },
+      "no-feedback": {
+        "accuracy": 0.332407,
+        "correct": 5385,
+        "total": 16200
+      },
+      "no-memory": {
+        "accuracy": 0.329506,
+        "correct": 5338,
+        "total": 16200
+      },
+      "no-sensor": {
+        "accuracy": 0.331975,
+        "correct": 5378,
+        "total": 16200
+      },
+      "three-loop": {
+        "accuracy": 1.0,
+        "correct": 16200,
+        "total": 16200
+      }
+    },
+    "seeds": 27,
+    "self_model": "explicitly_recorded_correct_wrong_counts",
+    "task": "learn_hidden_two-step_ternary_target_from_ground_truth_feedback",
+    "train_per_seed": 600
+  }
+}

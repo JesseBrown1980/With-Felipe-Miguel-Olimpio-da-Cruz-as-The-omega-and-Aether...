@@ -1,0 +1,372 @@
+{
+  "bodies": 81,
+  "date": "2026-10-14",
+  "evidence_class": "local CPU mathematical simulation of specified models",
+  "geometry_and_gravity_controls": {
+    "all_81_force_pairs_symmetric": true,
+    "coordinate_translation_rotation_covariant": true,
+    "gravity_law_is_explicit_positive_control": true,
+    "inserted_newton_potential_force_ratio_r10_over_r1": 0.01,
+    "light_intensity_gradient_force_ratio_r10_over_r1": 0.001,
+    "metadata_only_force_without_position_input": 0,
+    "spatial_waves": [
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 1,
+        "wave": 0
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 2,
+        "wave": 1
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 3,
+        "wave": 2
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 10,
+        "wave": 3
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 30,
+        "wave": 4
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 100,
+        "wave": 5
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 1000,
+        "wave": 6
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 1000000,
+        "wave": 7
+      },
+      {
+        "gravity_force_scale_exponent": -2,
+        "identities_unchanged": 81,
+        "light_gradient_force_scale_exponent": -3,
+        "pairwise_force_sum_near_zero": true,
+        "scale": 1000000000,
+        "wave": 8
+      }
+    ]
+  },
+  "ghz_81_party_compressed_measurement_waves": [
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.05078125,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0234375,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.044921875,
+          "shots": 1024
+        }
+      },
+      "wave": 0
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.0390625,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.00390625,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0458984375,
+          "shots": 1024
+        }
+      },
+      "wave": 1
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.0380859375,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0048828125,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0302734375,
+          "shots": 1024
+        }
+      },
+      "wave": 2
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.033203125,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.03125,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0390625,
+          "shots": 1024
+        }
+      },
+      "wave": 3
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.041015625,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.00390625,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.03515625,
+          "shots": 1024
+        }
+      },
+      "wave": 4
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.046875,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.009765625,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0419921875,
+          "shots": 1024
+        }
+      },
+      "wave": 5
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.0341796875,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.025390625,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0439453125,
+          "shots": 1024
+        }
+      },
+      "wave": 6
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.044921875,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.037109375,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0400390625,
+          "shots": 1024
+        }
+      },
+      "wave": 7
+    },
+    {
+      "basis_controls": {
+        "all_X": {
+          "Z_consistency_passes": 0,
+          "global_X_parity_passes": 1024,
+          "max_single_site_marginal_deviation": 0.0380859375,
+          "shots": 1024
+        },
+        "all_Z": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.025390625,
+          "shots": 1024
+        },
+        "mixed_Z40_X41": {
+          "Z_consistency_passes": 1024,
+          "global_X_parity_passes": 0,
+          "max_single_site_marginal_deviation": 0.0390625,
+          "shots": 1024
+        }
+      },
+      "wave": 8
+    }
+  ],
+  "interpretation": "Hash-only identity has no spatial force; passing Bell/GHZ law programmed into a simulator is not observed quantum nonlocality; a Newton-like force is an imposed positive control.",
+  "not_tested": [
+    "physical quantum entanglement",
+    "human brain",
+    "real light hardware",
+    "GPU physical signal",
+    "emergent physical gravity",
+    "FTL communication"
+  ],
+  "quantum_singlet_explicit_reference": {
+    "chsh": 2.82842712474619,
+    "classical_limit": 2,
+    "correlations": [
+      [
+        -0.7071067811865475,
+        -0.7071067811865475
+      ],
+      [
+        -0.7071067811865475,
+        0.7071067811865475
+      ]
+    ],
+    "local_marginals_each": 0.5,
+    "quantum_law_explicitly_programmed": true,
+    "quantum_limit": 2.8284271247461903
+  },
+  "schema": "ASOLARIA-81-QUANTUM-GRAVITY-CPU-GATES-V1",
+  "seat": "seat-3",
+  "sha_seeded_local_hidden_variable_waves": [
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 0
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 1
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 2
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 3
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 4
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 5
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 6
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 7
+    },
+    {
+      "chsh": 2.0,
+      "events_per_setting": 4096,
+      "wave": 8
+    }
+  ],
+  "status": "PASS"
+}

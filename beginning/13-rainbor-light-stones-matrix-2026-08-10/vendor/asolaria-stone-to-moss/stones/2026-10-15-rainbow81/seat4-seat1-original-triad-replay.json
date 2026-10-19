@@ -1,0 +1,38 @@
+{
+  "schema": "ASOLARIA-SEAT4-SEAT1-TRIAD-PEER-20261015-V1",
+  "seat": "seat-4",
+  "evidence_class": "INDEPENDENT_PUBLIC_SOFTWARE_REPLAY",
+  "source_pr": 14,
+  "seat3_prior_replay_pr": 21,
+  "source_git_blobs": {
+    "experiments/seat1/TRIAD-27-CHALLENGE-20261014.json": "b098e2ce7c9878434bea7b7bf34202ed492e4548",
+    "experiments/seat1/triad_27_python.py": "64a69452ebde97cf97cc76200b96e1985b6c6521",
+    "experiments/seat1/triad_27_node.js": "ee4128040f9aa4aee468e100bcad406b6ecc323a"
+  },
+  "challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "full_output_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+  "full_output_bytes": 6392029,
+  "compact_receipt_sha256": "1db6389ba110e8b835e504deebc177e163f8b085d5a48cb47215bb372468700e",
+  "compact_receipt_bytes": 1134,
+  "compact_and_full_distinct_artifacts": true,
+  "verified_original_state_records": 32805,
+  "verification_algorithms": [
+    "seat1_python_column_matrix",
+    "seat1_node_cyclic_polynomial",
+    "seat4_independent_cyclic_polynomial"
+  ],
+  "independent_seat4_smallstep_controls": 120,
+  "linearity_controls": 32805,
+  "successor_controls": 10935,
+  "plus81_controls": 10935,
+  "rotation_controls": 10935,
+  "output_full_byte_agreement_expected": true,
+  "challenge_tamper_rejection_expected": true,
+  "full_output_tamper_rejection_expected": true,
+  "physical_hosts_attested": 0,
+  "fresh_blinded_three_device_challenge": false,
+  "physical_signaling_claim": false,
+  "huggingface_remote_published_verified": false,
+  "signed_zip_untouched": true,
+  "note": "Computational replay of fixed original Seat1 public triad challenge. No physical host independence, crypto signature repair, remote HuggingFace publication, or FTL evidence."
+}

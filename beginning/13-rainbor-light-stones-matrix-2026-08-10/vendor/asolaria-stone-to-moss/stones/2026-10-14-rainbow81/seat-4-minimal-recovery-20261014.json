@@ -1,0 +1,134 @@
+{
+  "schema": "ASOLARIA-SEAT4-MINIMAL-RECOVERY-RESULT-V1",
+  "seat": "seat-4",
+  "date": "2026-10-14",
+  "evidence_class": "public deterministic digital GF2 source-reconstruction experiment",
+  "repository": "JesseBrown1980/asolaria-stone-to-moss",
+  "root_reference_commit": "161f10460abd586002aa8a9ee9058572aaba9572",
+  "source_challenge": "experiments/seat1/TRIAD-27-CHALLENGE-20261014.json",
+  "source_challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "baseline_retention": "stones/2026-10-14-rainbow81/retention-81-rank40.json",
+  "test_sources": [
+    "experiments/seat4/minimal_recovery_python.py",
+    "experiments/seat4/minimal_recovery_matrix.js",
+    "experiments/seat4/verify_minimal_recovery.py"
+  ],
+  "test_dimensions": {
+    "site_count": 81,
+    "law_families": 2,
+    "laws": 10,
+    "horizons": [
+      1,
+      10000000000000,
+      10000000000001,
+      10000000000081
+    ],
+    "deterministic_samples_per_case": 211,
+    "law_horizon_cases": 40
+  },
+  "result": {
+    "exact_source_roundtrips": 8440,
+    "mismatched_reconstructions": 0,
+    "exact_reconstructions_without_extra_bits": 2532,
+    "exact_reconstructions_with_minimal_side_bits": 5908,
+    "constructed_nonzero_kernel_collisions": 36,
+    "wrong_tag_selects_different_valid_preimage": 28,
+    "python_node_full_trace_identical": true,
+    "complete_trace_sha256": "1d9a57dc908ad206d64ab336cd9f9de402614821c41369fb19dfb5f2f2c46bfe",
+    "cross_os_cross_version_ci": "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38657547788",
+    "four_ci_jobs_passed": true
+  },
+  "method": "Choose independent 81x81 output columns by GF(2) elimination; preserve precisely the bits at free input coordinates. Invert the pivot-column map on the reachable output and insert the free source bits. Python separately builds cyclic polynomial powers, while Node builds transfer matrix powers. For each lossy map an explicit nonzero kernel vector collides with zero without the side bits. Lower bound is nullity=81-rank, making k additional bits necessary and sufficient to reconstruct arbitrary inputs.",
+  "law_results": [
+    {
+      "family": "legacy",
+      "law": "CA150",
+      "rank": 79,
+      "unrecoverable_without_sidebits": 2,
+      "minimal_recovery_tag_bits": 2
+    },
+    {
+      "family": "legacy",
+      "law": "CA90",
+      "rank": 80,
+      "unrecoverable_without_sidebits": 1,
+      "minimal_recovery_tag_bits": 1
+    },
+    {
+      "family": "legacy",
+      "law": "CA60",
+      "rank": 80,
+      "unrecoverable_without_sidebits": 1,
+      "minimal_recovery_tag_bits": 1
+    },
+    {
+      "family": "legacy",
+      "law": "CA102",
+      "rank": 80,
+      "unrecoverable_without_sidebits": 1,
+      "minimal_recovery_tag_bits": 1
+    },
+    {
+      "family": "legacy",
+      "law": "SHIFT",
+      "rank": 81,
+      "unrecoverable_without_sidebits": 0,
+      "minimal_recovery_tag_bits": 0
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP0",
+      "rank": 80,
+      "unrecoverable_without_sidebits": 1,
+      "minimal_recovery_tag_bits": 1
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP1",
+      "rank": 80,
+      "unrecoverable_without_sidebits": 1,
+      "minimal_recovery_tag_bits": 1
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP2",
+      "rank": 81,
+      "unrecoverable_without_sidebits": 0,
+      "minimal_recovery_tag_bits": 0
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP3",
+      "rank": 81,
+      "unrecoverable_without_sidebits": 0,
+      "minimal_recovery_tag_bits": 0
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP4",
+      "rank": 80,
+      "unrecoverable_without_sidebits": 1,
+      "minimal_recovery_tag_bits": 1
+    }
+  ],
+  "controls": {
+    "zero_and_all_ones_inputs": true,
+    "all_81_single_basis_vectors_per_case": true,
+    "sha256_seeded_inputs_per_case": 128,
+    "kernel_vectors_demonstrated": true,
+    "post_operator_hash_cannot_restore_source_distinctions": true,
+    "incorrect_side_tag_selects_different_valid_input": true,
+    "incorrect_side_tag_is_not_authenticated": true,
+    "pinned_complete_trace_sha256": true
+  },
+  "boundaries": {
+    "physical_host_independently_attested": false,
+    "physical_three_device_challenge_issued": false,
+    "photons_or_gravity_or_entanglement_measured": false,
+    "real_world_faster_than_light_signaling": false,
+    "huggingface_remote_sha_verified": false,
+    "seat2_original_signature_fixed": false,
+    "represents_compression_gain": false
+  },
+  "note": "This additive stone does not replace original four-seat results, the 40-row rank proof, or any physical-host verification."
+}

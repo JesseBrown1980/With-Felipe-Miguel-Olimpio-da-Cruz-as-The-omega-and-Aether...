@@ -1,0 +1,139 @@
+name: E8-E100 independent quant cross-check
+
+on:
+  pull_request:
+    paths:
+      - 'third-seat-2026-07-12/**'
+      - '.github/workflows/e8-e100-independent-crosscheck.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  crosscheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==2.4.4' zstandard
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git-lfs
+
+      - name: Verify supplied receipt and source package
+        working-directory: third-seat-2026-07-12
+        run: |
+          sha256sum -c E8-E100-THIRD-SEAT-RECEIPT-2026-07-12.md.sha256
+          python -m py_compile asolaria_codec_v0_1.py behcs_ladder_roundtrip.py
+          sha256sum E8-E100-THIRD-SEAT-RECEIPT-2026-07-12.md \
+                    asolaria_codec_v0_1.py behcs_ladder_roundtrip.py | tee supplied-package.sha256
+
+      - name: Run local property and smoke tests
+        working-directory: third-seat-2026-07-12
+        run: |
+          set -euo pipefail
+          python gpt-crosscheck/behcs_ladder_framed_v1.py --property | tee framed-property.log
+          python gpt-crosscheck/quant8_corpus_crosscheck_v1.py --selftest | tee quant8-selftest.log
+          python gpt-crosscheck/persistent_order2_curve_v1.py --selftest | tee prior-selftest.log
+          python gpt-crosscheck/catalog_zstd_holdout_v1.py --selftest | tee catalog-selftest.log
+          python - <<'PY' | tee codec-fuzz.log
+          import importlib.util, hashlib, os, random
+          spec=importlib.util.spec_from_file_location('codec','asolaria_codec_v0_1.py')
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          rng=random.Random(20260713)
+          cases=[b'',b'a',b'ab',b'abcde',bytes(range(256)),b'A'*4096,b'abracadabra\n'*512,os.urandom(4096)]
+          cases += [bytes(rng.randrange(256) for _ in range(rng.randrange(0,8193))) for _ in range(12)]
+          for i,data in enumerate(cases):
+              comp=m.compress(data); restored=m.decompress(comp,len(data))
+              assert restored==data
+              print(f'CODECFUZZ|case={i}|raw={len(data)}|compressed={len(comp)}|restore=1|sha256={hashlib.sha256(data).hexdigest()}|json=0')
+          src=b'the quick brown fox jumps over the lazy dog\n'*100
+          comp=bytearray(m.compress(src)); comp[len(comp)//2]^=1
+          assert m.decompress(bytes(comp),len(src)) != src
+          print('CODECCORRUPTION|changed_bit=1|restore_equal=0|readback_would_hold=1|json=0')
+          PY
+
+      - name: Fetch and verify enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/e8
+          if curl -L --fail --retry 3 --connect-timeout 20 -o /tmp/e8/enwik8.zip https://mattmahoney.net/dc/enwik8.zip; then
+            unzip -p /tmp/e8/enwik8.zip > /tmp/e8/enwik8
+          else
+            git lfs install
+            git clone --depth 1 https://github.com/amkillam/compression-test-data.git /tmp/e8/repo
+            cp /tmp/e8/repo/enwik/enwik8 /tmp/e8/enwik8
+          fi
+          test "$(stat -c%s /tmp/e8/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  /tmp/e8/enwik8' | sha256sum -c -
+
+      - name: Re-run supplied E8 ladder and codec v0.1
+        working-directory: third-seat-2026-07-12
+        run: |
+          set -euo pipefail
+          python behcs_ladder_roundtrip.py /tmp/e8/enwik8 | tee original-e8-ladder.log
+          grep -q 'READBACK=VERIFIED_CLONE_0_LOSS' original-e8-ladder.log
+          python asolaria_codec_v0_1.py /tmp/e8/enwik8 1000000 | tee original-codec-v01.log
+          grep -q 'RESTORE=BYTE_IDENTICAL_0_LOSS' original-codec-v01.log
+
+      - name: Run corpus quant8/Q8v2 cross-check
+        working-directory: third-seat-2026-07-12
+        run: |
+          python gpt-crosscheck/quant8_corpus_crosscheck_v1.py /tmp/e8/enwik8 --output quant8-enwik8.json | tee quant8-enwik8.log
+
+      - name: Run fully gated 20-read persistent-prior curve
+        working-directory: third-seat-2026-07-12
+        run: |
+          python gpt-crosscheck/persistent_order2_curve_v1.py /tmp/e8/enwik8 \
+            --chunk-bytes 1000000 --reads 20 --checkpoint-every 5 \
+            --output persistent-prior-20.json | tee persistent-prior-20.log
+          test "$(grep -c 'restore=True' persistent-prior-20.log)" = 20
+          grep -q 'all_restore=1|all_state_match=1' persistent-prior-20.log
+
+      - name: Run fixed-holdout learned-catalog control
+        working-directory: third-seat-2026-07-12
+        run: |
+          python gpt-crosscheck/catalog_zstd_holdout_v1.py /tmp/e8/enwik8 \
+            --chunk-bytes 1000000 --holdout-index 19 \
+            --train-points 1,2,4,8,12,16,19 --dict-max 20480 \
+            --output catalog-holdout-read20.json | tee catalog-holdout-read20.log
+          test "$(grep -c 'restore=True' catalog-holdout-read20.log)" = 7
+
+      - name: Verify E100 address-plane mathematics
+        working-directory: third-seat-2026-07-12
+        run: |
+          python - <<'PY' | tee e100-address-math.log
+          import hashlib, math, random
+          assert 1024**33 < 10**100 <= 1024**34
+          assert 1024**60 == 2**600
+          rng=random.Random(20260713)
+          for _ in range(100000):
+              n=rng.randrange(10**100)
+              x=n; glyphs=[]
+              for _ in range(34): glyphs.append(x%1024); x//=1024
+              assert x==0
+              restored=0
+              for g in reversed(glyphs): restored=restored*1024+g
+              assert restored==n
+          print(f'E100ADDR|roundtrips=100000|minimum_glyphs=34|capacity_34_log10={34*math.log10(1024):.12f}|capacity_60_log10={60*math.log10(1024):.12f}|capacity_60_exact=2^600|status=PASS|json=0')
+          PY
+
+      - name: Upload cross-check evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e8-e100-independent-crosscheck
+          path: |
+            third-seat-2026-07-12/*.log
+            third-seat-2026-07-12/*.json
+            third-seat-2026-07-12/*.sha256
+            third-seat-2026-07-12/gpt-crosscheck/*.py
+            third-seat-2026-07-12/E8-E100-THIRD-SEAT-RECEIPT-2026-07-12.md

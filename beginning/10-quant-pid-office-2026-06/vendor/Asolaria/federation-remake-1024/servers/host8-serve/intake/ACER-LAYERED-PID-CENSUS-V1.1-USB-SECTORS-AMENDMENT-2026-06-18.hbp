@@ -1,0 +1,9 @@
+CENSUSV11HDR|manifest=ACER-LAYERED-PID-CENSUS-V1.1-USB-SECTORS-AMENDMENT|amends=ACER-LAYERED-PID-SUPERVISOR-CENSUS-MANIFEST-V1-body-9e8b5641|vantage=acer|measured=2026-06-18|reason=operator-caught-missing-2TB-SOVLINUX-USB-plus-113-sectors-in-v1|json=0
+CENSUSV11USB|device=USB-SOVLINUX-2TB|raw=PHYSICALDRIVE2|size=1953GB-~2TB-4096000000-sectors|bus=USB|scheme=MBR|state=Online|mbr_sector0_sha256=3126770d103a3bed41b27269ff560e18027cb1130de0dc3bfb813128bef54506|boot_sig=0x55aa-valid|tag=MEASURED|json=0
+CENSUSV11PART|partition1=type-0x07-exFAT-NTFS|lba_start=2048|lba_size=1048576000-sectors|bytes=536870912000-~500GB-VISIBLE|partitions_2_3_4=EMPTY|tag=MEASURED|json=0
+CENSUSV11TAIL|continuity_tail=BEYOND-declared-500GB-partition|range_lba=1048576001-to-4095999999|approx=1.5TB-raw|role=SOVLINUX-Asolaria-OS-on-metal-substrate|content=UNVERIFIED-this-turn-deep-read-deferred|structure=CANON-from-substrate-sector-walk-8-anchors|tag=CANON|json=0
+CENSUSV11SECTORS|structure=113-room-sectors|breakdown=100-shard+12-lane+1-scaled|matches=quant-proof-sector_coverage-113of113+census-L5|W113_inventory=C:/HyperBEHCS/store/substrate-inventory-W113-2026-05-21.hbp|walker=substrate-sector-walk.ps1|tag=CANON|json=0
+CENSUSV11TOOLS|reader=Asolaria-usb-raw-toolkit-NOT-windows-FS|tools=usb_raw_io.py-raw-block+exfat_walk.py+probe_root.py+substrate-sector-walk.ps1|windows_FS_cannot_read=exFAT-drift+continuity-tail|access=read-only-allowed-writes-preflight+auth-token-gated|tag=MEASURED|json=0
+CENSUSV11FIX|adds_to_v1=LAYER6-substrate+LAYER7-route+LAYER8-storage|2TB-USB-was-MISSING-from-v1-Layer8|now=2TB-SOVLINUX-USB-is-anchor-1-substrate-NOT-just-35TB-Drive+local-disk|json=0
+CENSUSV11BOUNDARY|nothing_written=1|read_only=1|no_format-no-repartition|deep_exFAT_walk=DEFERRED-operator-declined|tail_content=UNVERIFIED|E=0|json=0
+CENSUSV11FOOT|rows=8|content_sha256=2b822b2409a3645915f6a0dd8dfc8f7bf4c540da17157d01e58cbf3a20cabb74|json=0

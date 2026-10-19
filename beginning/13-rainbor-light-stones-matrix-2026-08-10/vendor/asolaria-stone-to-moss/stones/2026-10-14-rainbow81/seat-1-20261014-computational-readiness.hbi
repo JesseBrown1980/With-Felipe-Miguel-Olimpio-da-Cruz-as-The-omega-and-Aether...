@@ -1,0 +1,7 @@
+STONEIDX|schema=ASOLARIA-SEAT1-COMPUTATIONAL-READINESS-INDEX-V1|date=2026-10-14|seat=seat-1|json=0
+CHECKIN|name=tracking/checkins/seat-1/20261014T163705Z/checkin.json|sha256=8775061533291398cf076a0c44f01ecd6e8dc74a7bb0b5cd2911d6c2a58fe822|json=0
+PRECOMMIT|name=tracking/checkins/seat-1/20261014T163705Z/commit.json|sha256=bdbac2b4eecb790e7509486060613f07aa27c376571a9a28fba93b3dea6f6e48|json=0
+RESULT|name=seat-1-20261014-computational-readiness.hbp|sha256=4fdd92e52303ee2780dec639262c571b6391faa0fed34605febae591b344cd37|json=0
+RESULT|name=seat-1-20261014-computational-readiness.json|sha256=553168cf944733ce6872b11ce5c9d9b85f304cfa578477cfb4ec925b73253053|json=0
+CI|run=38599984188|ubuntu=PASS|windows=PASS|cases=4860|json=0
+BOUNDARY|physical_host_verified=0|fresh_three_host_challenge=NOT_ISSUED|json=0

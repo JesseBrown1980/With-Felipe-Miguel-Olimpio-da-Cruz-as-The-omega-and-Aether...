@@ -1,0 +1,7 @@
+PENDCOSIGNHDR|receipt=ACER-PENDING-COSIGN-SEAL|vantage=acer|measured=2026-06-18|purpose=prepare-cosign-payload-for-4953-single-writer-daemon|acer_forged_sig=0|acer_raw_wrote_chain=0|json=0
+PENDCOSIGNHEAD|chain_head=seq-3570|prev_row_hash=b3b4e2c88b7865e1|live_tail=hash-linked-clean-via-cosign_chain_live-seq-3563-3570|early_slice_break=KNOWN-pre-daemon-honesty-ledger-flagged-NOT-live-integrity|json=0
+PENDCOSIGNPAYLOAD|seal_targets=census-9e8b5641+v1.1-2b822b24+v1.2-966b76bc+TM-trunk-b1cb2d11+phase1-spine-37234d6+vault-reg-this-batch|json=0
+PENDCOSIGNAUTH|apex=APEX-HUMAN-JESSE-HUMAN-1|special_op=00-SPECIAL-OP-JESSE|ops=01-jesse+02-rayssa+03-felipe+04-dan+05-amy|window=quintuple-cosign-2026-05-25-to-2026-07-25|operator_approve=YES-this-session|json=0
+PENDCOSIGNSIGN|ed25519_signing_keys=VAULT-HELD-in-vault-engine|access=carve-out-NOT-available-to-acer-claude|append_path=4953-SINGLE-WRITER-DAEMON-ONLY-no-standalone-tool|reason=raw-write-races-spine-COLLAPSE-risk|json=0
+PENDCOSIGNNEXT|next=4953-daemon-with-vault-access-signs-and-appends OR-liris-adds-half-for-dual-apex|then-fires=Rust-serve-parity-before-node-dies|E=0|json=0
+PENDCOSIGNFOOT|rows=6|content_sha256=9c5080806d07e2c2646beba062c2120724c051ca78b699ce546b06064301dd92|json=0

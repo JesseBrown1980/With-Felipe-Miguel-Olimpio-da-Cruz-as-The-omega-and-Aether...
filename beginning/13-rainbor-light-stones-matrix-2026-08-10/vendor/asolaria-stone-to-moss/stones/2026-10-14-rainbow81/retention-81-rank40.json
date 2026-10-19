@@ -1,0 +1,154 @@
+{
+  "schema": "ASOLARIA-GF2-81-INFORMATION-RETENTION-STONE-V1",
+  "date": "2026-10-14",
+  "evidence_class": "independent-algorithm digital GF2 rank/nullspace/retention audit",
+  "seat": "seat-4 computational verifier, no independently attested physical host",
+  "reference_experiment": "Seat 1 triad PR 14 (merged); original Seat 2/4 CA laws separately compared",
+  "challenge_path": "experiments/seat1/TRIAD-27-CHALLENGE-20261014.json",
+  "challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "model_horizons": [
+    1,
+    10000000000000,
+    10000000000001,
+    10000000000081
+  ],
+  "system_size_bits": 81,
+  "results": [
+    {
+      "family": "legacy",
+      "law": "CA150",
+      "taps": [
+        0,
+        1,
+        80
+      ],
+      "rank": 79,
+      "lost_bits": 2,
+      "preimages_per_reachable_output": 4
+    },
+    {
+      "family": "legacy",
+      "law": "CA90",
+      "taps": [
+        1,
+        80
+      ],
+      "rank": 80,
+      "lost_bits": 1,
+      "preimages_per_reachable_output": 2
+    },
+    {
+      "family": "legacy",
+      "law": "CA60",
+      "taps": [
+        0,
+        1
+      ],
+      "rank": 80,
+      "lost_bits": 1,
+      "preimages_per_reachable_output": 2
+    },
+    {
+      "family": "legacy",
+      "law": "CA102",
+      "taps": [
+        0,
+        80
+      ],
+      "rank": 80,
+      "lost_bits": 1,
+      "preimages_per_reachable_output": 2
+    },
+    {
+      "family": "legacy",
+      "law": "SHIFT",
+      "taps": [
+        1
+      ],
+      "rank": 81,
+      "lost_bits": 0,
+      "preimages_per_reachable_output": 1
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP0",
+      "taps": [
+        0,
+        1
+      ],
+      "rank": 80,
+      "lost_bits": 1,
+      "preimages_per_reachable_output": 2
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP1",
+      "taps": [
+        0,
+        2
+      ],
+      "rank": 80,
+      "lost_bits": 1,
+      "preimages_per_reachable_output": 2
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP2",
+      "taps": [
+        0,
+        1,
+        3
+      ],
+      "rank": 81,
+      "lost_bits": 0,
+      "preimages_per_reachable_output": 1
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP3",
+      "taps": [
+        0,
+        4,
+        7
+      ],
+      "rank": 81,
+      "lost_bits": 0,
+      "preimages_per_reachable_output": 1
+    },
+    {
+      "family": "triad-stress",
+      "law": "TAP4",
+      "taps": [
+        0,
+        1,
+        5,
+        9
+      ],
+      "rank": 80,
+      "lost_bits": 1,
+      "preimages_per_reachable_output": 2
+    }
+  ],
+  "cross_language": {
+    "python": "polynomial exponentiation, GF2 GCD, explicit matrix-column rank",
+    "node": "independent 81x81 matrix exponentiation, Gaussian rank and kernel witnesses",
+    "exact_parity_rows": 40,
+    "mismatches": 0,
+    "canonical_tsv_sha256": "f4a0f2f19eb72930035b92356f0b2099655ba2f0d5e4640a4c0a1df29209de78"
+  },
+  "finding": "For uniformly distributed 81-bit source states, rank r yields 2^r reachable outputs and 2^(81-r) equally likely preimages for each reachable output; output loses 81-r source bits. At all tested positive horizons, the loss is unchanged.",
+  "controls": {
+    "kernel_collision_witnesses": "verified for every singular operator and modeled horizon",
+    "sha_of_equal_evolved_outputs": "identical after original distinct inputs collide; a post-evolution SHA cannot undo information loss",
+    "invertibility": "rank 81 precisely for legacy SHIFT, stress TAP2 and stress TAP3",
+    "independent_cross_language_ci": "pending"
+  },
+  "scope": {
+    "physical_time_or_distance_measured": false,
+    "optical_or_gravity_data_measured": false,
+    "physical_host_independence_verified": false,
+    "fresh_cross_host_blinded_challenge": false,
+    "repairs_original_seat2_signature": false,
+    "huggingface_remote_publication_verified": false
+  }
+}

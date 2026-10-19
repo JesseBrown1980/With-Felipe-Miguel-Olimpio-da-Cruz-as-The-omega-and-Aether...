@@ -1,0 +1,16 @@
+# This book holds seals. A seal that warps is not a seal.
+# Text stays LF on every platform; binaries are binary and are never touched.
+*.md      text eol=lf
+*.hbp     text eol=lf
+*.hbi     text eol=lf
+*.txt     text eol=lf
+*.html    text eol=lf
+*.sha256  text eol=lf
+.gitattributes text eol=lf
+.nojekyll text eol=lf
+*.svg     text eol=lf
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.gguf    binary

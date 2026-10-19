@@ -1,0 +1,8 @@
+PORTAL|schema=ASOLARIA-SEAT3-CROSSVIEW-CONSISTENCY-ENTROPY-V1|seat=seat-3|physical=0|json=0
+FROZEN|challenge_sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b|sources=191|json=0
+TOY|n=4|pair=128/256|triple=256/4096|json=0
+PAIR|configs=20|ranks=79,80|stacked=81|blind=2^-78|constraints=78|json=0
+TRIPLE|configs=40|ranks=79,80,80|stacked=81|blind=2^-158|constraints=158|json=0
+CONTROLS|cases=30560|honest=7640|rejected=7640|alternate_accepted=7640|invisible_B_change=7640|json=0
+REPLAY|trace_bytes=5906257|trace_sha256=6bfeccf834d67440e6864039b53767205cf1a85678e05f6f99c89b83ce3b4156|python_node_byte_identical=true|hosted_ci=pending|json=0
+END|authentication=unproven|physical_hosts=0|physics_claims=0|json=0

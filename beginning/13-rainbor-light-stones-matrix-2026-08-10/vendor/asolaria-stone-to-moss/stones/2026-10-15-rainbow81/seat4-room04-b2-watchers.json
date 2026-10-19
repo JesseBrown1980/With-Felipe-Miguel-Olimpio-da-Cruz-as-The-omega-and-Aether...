@@ -1,0 +1,82 @@
+{
+  "b2_clean_checkpoints_accepted": 108,
+  "b2_negative_mutations_rejected": 1296,
+  "b2_verified_site_tick_transitions": 349920,
+  "coherent_fake_source_plus_fake_watcher_without_anchor": "PROVENANCE_HOLD",
+  "evidence_class": "INDEPENDENT_DIGITAL_SOFTWARE_SOURCE_WATCHER",
+  "external_authorization_granted": false,
+  "fault_hbp_bytes": 115829,
+  "fault_hbp_sha256": "ad471bc627451f65d6f26797ddf6c03546ac1f74ab8e3698d9825f1409f9bbb2",
+  "fault_types": [
+    "alter_rgb_frame_bytes",
+    "alter_frame_digest",
+    "swap_pid",
+    "alter_total_population",
+    "wrong_light_pulse",
+    "stale_source_state",
+    "stale_tick",
+    "stale_nonce",
+    "mass_preserving_wrong_output",
+    "forge_watcher_digest",
+    "coherent_forged_report_and_watcher",
+    "external_privilege_request"
+  ],
+  "faults_rejected_by_type": {
+    "alter_frame_digest": 108,
+    "alter_rgb_frame_bytes": 108,
+    "alter_total_population": 108,
+    "coherent_forged_report_and_watcher": 108,
+    "external_privilege_request": 108,
+    "forge_watcher_digest": 108,
+    "mass_preserving_wrong_output": 108,
+    "stale_nonce": 108,
+    "stale_source_state": 108,
+    "stale_tick": 108,
+    "swap_pid": 108,
+    "wrong_light_pulse": 108
+  },
+  "frozen_phase_a_sha256": "de2c346a92e626403cc5c59b9ffa688d050163fbb48ab8b1cb6a4cde795b0a8b",
+  "frozen_phase_a_snapshots": 8748,
+  "halt": {
+    "accepted_before_halt": 17,
+    "external_privileges_granted": 0,
+    "halt_idempotent": true,
+    "human_prompts": 0,
+    "post_halt_denied": 64
+  },
+  "independent_physical_source_authenticated": false,
+  "metrics": {
+    "dark": {
+      "final_open_population": 0,
+      "light_commands": 0,
+      "total_absolute_open_error": 11664000000,
+      "total_closed_to_open_transitions": 0
+    },
+    "feedback_corrupt": {
+      "final_open_population": 8389953,
+      "light_commands": 2835,
+      "total_absolute_open_error": 8221918824,
+      "total_closed_to_open_transitions": 565459866
+    },
+    "feedback_truth": {
+      "final_open_population": 9395703,
+      "light_commands": 17820,
+      "total_absolute_open_error": 4516776378,
+      "total_closed_to_open_transitions": 900481374
+    },
+    "open_loop": {
+      "final_open_population": 9639513,
+      "light_commands": 11664,
+      "total_absolute_open_error": 5878733220,
+      "total_closed_to_open_transitions": 884303244
+    }
+  },
+  "physical_light_or_biology_measured": false,
+  "prereg": "experiments/seat4/PREREG-ROOM04-PHOTOCYCLE-WATCHER-B2-20261015.md",
+  "schema": "ASOLARIA-SEAT4-ROOM04-ADVERSARIAL-WATCHER-B2-V1",
+  "seat": "seat-4",
+  "stable_immutable_pids": 81,
+  "synthetic_rgb_bytes": true,
+  "tick_hbp_bytes": 34876953,
+  "tick_hbp_sha256": "2b9575a8d46c2d2f0842d590081641ed2b20daddccc7153107d76efa0d597277"
+}

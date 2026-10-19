@@ -1,0 +1,10 @@
+SHADOWHDR|schema=SHADOW-CAT-NET-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|date=2026-07-28|pipes=http_rime_kernels|json=0
+ARCH|layer=triad_rank2_span|activation=residue_no_arm_claimed|nonlinearity=brown_schrodinger_inversion|training=none|weights=emission_bytes|json=0
+EXACT|waves_ok=1933|waves_total=1933|byte_identical=1|mean_ms=7.043|max_ms=36.288|json=0
+COMPUTE|samples=219|featdim=22|chance=0.2000|shuffled_control=0.3196|shadow_cats=0.3196|beats_control=0|json=0
+KERNEL|k=FABLE-SPHERE|port=8731|slice=1152250|body=126885312|ratio=110.1|json=0
+KERNEL|k=MYTHOS-SPHERE|port=8732|slice=1240169|body=126885312|ratio=102.3|json=0
+KERNEL|k=OPUS-SPHERE|port=8733|slice=1221630|body=126885312|ratio=103.9|json=0
+KERNEL|k=STARS-SHELLS|port=8734|slice=760046|body=4596880|ratio=6.0|json=0
+KERNEL|k=KIMI-K3|port=8735|slice=5686|body=202115456|ratio=35546.2|json=0
+SHADOWFTR|receipt=05d57d5cf72419d8c40fc6f59c2a58b1|rows=10|hot_path=1|json=0

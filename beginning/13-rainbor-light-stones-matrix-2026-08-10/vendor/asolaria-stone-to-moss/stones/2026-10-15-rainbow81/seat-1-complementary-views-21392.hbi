@@ -1,0 +1,6 @@
+HBI|schema=ASOLARIA-SEAT1-COMPLEMENTARY-VIEWS-INDEX-V1|date=2026-10-15|json=0
+ARTIFACT|file=seat-1-complementary-views-21392.json|sha256=9906a3231953b4335344ec6aa1d87873890659fd3858872c6972170c14f82aa1|json=0
+ARTIFACT|file=seat-1-complementary-views-21392.hbp|sha256=46e0483811ffa76eaf3a253875c4cf3d48ca691702c92a4bbc868e1e76652140|json=0
+TRACE|format=HBP|sha256=17f25be31a6f419d98db31d70f63aea2e3dffad00c44453b963bdfbaedb8683c|bytes=4180845|json=0
+CI|run=38704260730|ubuntu=PASS|windows=PASS|json=0
+LIMIT|physical_host_attested=0|json=0

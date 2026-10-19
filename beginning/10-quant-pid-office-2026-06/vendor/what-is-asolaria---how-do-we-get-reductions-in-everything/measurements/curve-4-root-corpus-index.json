@@ -1,0 +1,65 @@
+{
+  "corpus_root": "C:/Users/acer/Asolaria/data/agent-index",
+  "doc_count": 1084,
+  "corpus_total_bytes": 2532729,
+  "corpus_total_MB": 2.415,
+  "per_doc_avg_bytes": 2336.5,
+  "sha_index_total_bytes": 65733,
+  "glyph_index_total_bytes": 8672,
+  "GROWTH_CURVE": [
+    {
+      "N": 1,
+      "corpus_bytes": 2097,
+      "sha_index_bytes": 39,
+      "glyph_index_bytes": 8,
+      "r_corpus/sha_index": 53.77,
+      "r_corpus/glyph_index": 262.13
+    },
+    {
+      "N": 10,
+      "corpus_bytes": 101648,
+      "sha_index_bytes": 524,
+      "glyph_index_bytes": 80,
+      "r_corpus/sha_index": 193.98,
+      "r_corpus/glyph_index": 1270.6
+    },
+    {
+      "N": 50,
+      "corpus_bytes": 219926,
+      "sha_index_bytes": 3639,
+      "glyph_index_bytes": 400,
+      "r_corpus/sha_index": 60.44,
+      "r_corpus/glyph_index": 549.82
+    },
+    {
+      "N": 200,
+      "corpus_bytes": 718901,
+      "sha_index_bytes": 16367,
+      "glyph_index_bytes": 1600,
+      "r_corpus/sha_index": 43.92,
+      "r_corpus/glyph_index": 449.31
+    },
+    {
+      "N": 500,
+      "corpus_bytes": 1457997,
+      "sha_index_bytes": 32842,
+      "glyph_index_bytes": 4000,
+      "r_corpus/sha_index": 44.39,
+      "r_corpus/glyph_index": 364.5
+    },
+    {
+      "N": 1084,
+      "corpus_bytes": 2532729,
+      "sha_index_bytes": 65733,
+      "glyph_index_bytes": 8672,
+      "r_corpus/sha_index": 38.53,
+      "r_corpus/glyph_index": 292.06
+    }
+  ],
+  "notes": {
+    "what": "ROOT of the lineage: the IX/LX agent-index source corpus (the docs the index language indexed) vs a referential index that content-addresses each doc. This is the corpus-vs-index reduction the index language was built for.",
+    "sha_index": "r_corpus/sha_index = full source corpus / a human content-addressed index (relpath|sha16|bytes per doc). MEASURED.",
+    "glyph_index": "r_corpus/glyph_index = corpus / 8-byte BEHCS handle per doc. Pure addressing floor.",
+    "anchors": "Operator anchors 12:1 -> 21,141:1 -> ~3B:1 stand REAL; descendant measurement, NOT a re-derivation. The literal |PID|device|agent|tools|skills|...| pipe-catalog does NOT survive as a discrete file; the index language is materialized as this corpus -> compiled unified-agent-index.json (point 2 family)."
+  }
+}

@@ -1,0 +1,8 @@
+PIDROOMHDR|contract=ASOLARIA-HOST8-PID-OFFICE-ROOMSTUB-INTAKE|vantage=liris|measured=2026-06-18|json=0
+PIDROOMSOURCE|source=acer-usb-direct-proof|usb_proof_sha=3293cfc12ee63c994826e84477addf507956a6f941ad72920b69b5c69cf7a673|unique_registered_seats=735|registered_files=3607|files_per_seat=5|json=0
+PIDROOMINVARIANT|target_runtime=8byte-rust-host|hbp_hot=1|json_hot=0|node_start=0|node_stop=0|swap=0|retire=0|json=0
+PIDROOMROW|name=PIDROOM|required_fields=seat_id+seat_class+provider_hint+room_stub+host_handle8+source_hbp_sha256+source_hbi_sha256+supervisor_pid+prof_pid+target_runtime+stub_state|json=0
+PIDROOMHANDLE|algorithm=host8-serve-fnv1a64-canonicalized|preimage=seat_id-pipe-room_stub|length=16hex-8bytes|must_match=acer+liris-recompute|json=0
+PIDROOMSUPERVISION|requires=pid-specific-md-supervisor-prof-records|missing_record=TO_REGISTER_NOT_DARK|cold_absence=weak_sensor_not_negative_truth|json=0
+PIDROOMOUTPUT|artifact=PID-OFFICE-ROOMSTUB-MANIFEST.hbp|rows=one-PIDROOM-per-seat|first_batch=735-measured-seats|next_consumer=asolaria-host8-serve-room-stub-loader|json=0
+PIDROOMFOOT|rows=7|content_sha256=07cfd007652ff3c7ded20f7fbda2c7918043564bccb93b64edea87e87219136e|json=0

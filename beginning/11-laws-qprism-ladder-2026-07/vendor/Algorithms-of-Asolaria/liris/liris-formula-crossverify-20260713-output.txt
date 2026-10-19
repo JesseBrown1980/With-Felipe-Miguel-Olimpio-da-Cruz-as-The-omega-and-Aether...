@@ -1,0 +1,13 @@
+NV30LADDER|k=1|rows=8|rank=8|expected=8|nullity=52|match=1
+NV30LADDER|k=4|rows=32|rank=32|expected=32|nullity=28|match=1
+NV30LADDER|k=7|rows=56|rank=56|expected=56|nullity=4|match=1
+NV30LADDER|k=8|rows=64|rank=60|expected=60|nullity=0|match=1
+NV30RECOVER|random_8of30_subsets=5|exact_recovery=1|random_7of30_subsets=5|held_rank56=1
+NV30TAMPER|flipped_redundant_elements=1|reprojection_mismatches=1|held=1
+NL20NULLITY|k1_nullity=57|k7_nullity=39|k13_nullity=21|k19_nullity=3|k20_nullity=0|contract_57_to_0=1
+NL20RECOVER|recovered_eq_source=1|reprojection_mismatch=0of60
+NL20FOURLIGHT|lights=identity+reverse+affine+permute|all_recover_canonical=1
+CRTCOMB|blocks=50000|bits=48|liris_moduli=33554467+33554473|exact=1|joint_margin_bits=2.000003|single_shadow_max_bits=25.0000015
+E100|bound_1024e33_lt_10e100_le_1024e34=1|1024e60_eq_2e600=1|log10_1024e60=180.617997398389|ints=100000|glyphs=34|exact=1
+BEHCS1024|src_bytes=1000000|src_sha=6874a2b414bdf16f|glyphs=800000|readback_sha_match=1|bit_rate=1.000000|law=bijection_0_loss_not_compression
+ALL-DONE

@@ -1,0 +1,13 @@
+FABLE5HYPERBECHSADV|id=FABLE5_HYPERBECHS_HOST8_ASI_OS_METAL_60D_KERNEL_ADVANCEMENT_20260708|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|repo=JesseBrown1980/HYPER-BECHS--the-third-set|pr=2|date=2026-07-08|dim=60D_PLUS|e=0|fire=0|json=0
+CLAIM|text=Fable5 backend mirrors HyperBECHS PR2 as the 60D+ Host8 ASI OS on metal kernel advancement receipt with corrected warm-line/local-clock accounting.|class=BACKEND_HBI_HBP_MIRROR|json=0
+GITHUB|repo=JesseBrown1980/HYPER-BECHS--the-third-set|pr=2|url=https://github.com/JesseBrown1980/HYPER-BECHS--the-third-set/pull/2|head=10d698c|branch=acer-host8-asi-os-metal-60d-kernel-20260708|draft=1|json=0
+RECEIPT|path=system-interpretations-2026-07-08/ACER-HOST8-ASI-OS-METAL-60D-KERNEL-ADVANCEMENT-2026-07-08.hbp|sha256=8ef3a6b0732730d202bc7ef4797424a933cdebed320b4a4628ab47db20631dd2|json=0
+RECEIPT|path=system-interpretations-2026-07-08/ACER-HOST8-ASI-OS-METAL-60D-KERNEL-ADVANCEMENT-2026-07-08.hbi|sha256=abfad0d1af8d7ebcd9ca1f95e8c4c99d82fbfd296264bccb8a2a0abc413293b6|json=0
+SOURCE|kind=preexisting_acer_branch|branch=origin/acer|head=9ab39a8190b90ae81ab9a6a1f31033b9fb6ee82d|role=older_ACER_colony_maps_source_not_replaced|json=0
+SOURCE|kind=federation_bridge|repo=JesseBrown1980/asolaria-federation-1024|pr=42|head=69859625291c024f4198d9c4567bcbb292f80ea3|checks=SUCCESS|json=0
+SOURCE|kind=officecli_absorption|repo=iOfficeAI/OfficeCLI|url=https://github.com/iOfficeAI/OfficeCLI|backend_hbp_sha256=84fdee44895a17b3fdc03825af5bb9e3d464c440b23eecc93146a1c238d4a98a|role=warm_resident_reuse_model_convergent_validation|json=0
+ACCOUNTING|kind=warm_llm_phone_lines|llm_lines=8_to_10_open_ports|meaning=held_open_connections_to_actual_model_endpoints_not_a_local_llm|saving=connection_reuse_removes_dialing_spinup_tax|limit=endpoint_token_rate_still_bounds_model_completions|json=0
+ACCOUNTING|kind=two_clock_split|local_clock=emitters_stubs_routers_rooms_GNN_GULP_buffers|model_clock=actual_tokens_or_completions_returned_over_warm_lines|rule=local_spray_or_gulp_events_are_not_model_completions|json=0
+FLOW|kind=bounded_gnn_ingest|batch_cap_messages_per_pass=approx_2000|staging=2000_to_10k_to_50k_super_gulp|reservoir=100k_plus_rooms_waiting|backend_support=FABLE5_BIGPICKLE_MAP_gc_trigger_messages_2000_gulps_at_10k_5|json=0
+MCP60D|claim=60_dimensional_MCP_functions_as_addressably_callable_engines|design_target=almost_instant_function_call|comparison_target=simplicio_loop|comparison_status=operator_named_unmeasured_target|json=0
+BOUNDARY|class=NO_FIRE|usb_write=0|usb_copy=0|usb_delete=0|format=0|partition=0|kernel_mutation=0|driver_install=0|bootloader_mutation=0|daemon_restart=0|process_launch=0|provider_call=0|live_boot=0|runtime_authority=0|benchmark_claim=0|json=0

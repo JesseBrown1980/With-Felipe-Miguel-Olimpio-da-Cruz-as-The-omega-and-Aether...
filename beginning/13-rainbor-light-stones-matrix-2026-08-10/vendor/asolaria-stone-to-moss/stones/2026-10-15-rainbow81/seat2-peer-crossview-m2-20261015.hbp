@@ -1,0 +1,10 @@
+HBP|schema=ASOLARIA-SEAT2-PEER-RANK-AND-M2-VIEW-SELECTION-V1|json=0
+FROZEN|peer_pr=34|peer_commit=a1c3573d4e036d21d590d0d1a499a206fd827682|challenge_sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b
+THEOREM|P=2^(r-sum_ri)|independent_uniform_sources_only=1|source_authentication=0
+EXHAUSTIVE|n=4|pairs=128/256|triples=256/4096
+RANK|horizons=4|nonempty_subsets=252|A_B_pairs=20|A_B_C_triples=40
+M2|targets=78,158,238,318,398|minimal_unit_view_counts=2,3,4,5,6
+NEGATIVE|two_B_rank=80|two_B_constraints=80|A_B_rank=81|A_B_constraints=78
+ORIGIN|correlated_forged_source_accepts=1|crossview_not_provenance=1
+BOUNDARY|physical_hosts_verified=0|fresh_cross_host_challenge=0|N_NEST_and_QPRISM_source_authentication_separate=1
+END|status=PASS|scope=software_Gf2_rank_audit|json=0

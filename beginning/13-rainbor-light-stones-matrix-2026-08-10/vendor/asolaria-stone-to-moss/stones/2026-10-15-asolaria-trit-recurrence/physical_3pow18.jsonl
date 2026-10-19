@@ -1,0 +1,3 @@
+{"kind":"GF3_ACTUAL_CPU_DIRECT","logical_steps":387420489,"taps":[0,1,3],"initial_fingerprint":"9e7f71a496595a3a","fingerprint_at_81":"612025cd6cb2ced9","final_fingerprint":"612025cd6cb2ced9","final_nonzero":0,"rolling_checksum":"7e0b2ed221401fa5","cpu_ms":65099.948,"wall_ms":65122.741}
+{"kind":"GF3_ACTUAL_CPU_DIRECT","logical_steps":387420489,"taps":[0,4,7],"initial_fingerprint":"9e7f71a496595a3a","fingerprint_at_81":"612025cd6cb2ced9","final_fingerprint":"612025cd6cb2ced9","final_nonzero":0,"rolling_checksum":"dc3d4129c48255b6","cpu_ms":65986.512,"wall_ms":66008.494}
+{"kind":"EXPANDED_PHASE_ACTUAL_CPU_DIRECT","logical_steps":387420489,"exponent":18,"phase_registers":13,"return_count":13,"cpu_ms":1929.312,"wall_ms":1929.372,"rolling_checksum":"f97895facd257730"}

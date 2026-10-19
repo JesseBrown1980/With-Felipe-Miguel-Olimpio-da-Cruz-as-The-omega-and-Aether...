@@ -1,0 +1,82 @@
+{
+  "schema": "ASOLARIA-SEAT3-ONE-BIT-RECOVERY-FIXTURE-V2",
+  "evidence_class": "PUBLIC_SOFTWARE_ONLY",
+  "legacy_fixture_sha256": "f5482cd24c7d51b039b875188b9d72318c2d24b21e09010d178f4ba82edc81b5",
+  "domain": "ASOLARIA|CROSSSEAT|PUBLIC-RETENTION|V1",
+  "public_challenge_nonce": "eff1eda90f40cd6fa1e9e9f22e34ecf3",
+  "public_challenge_blob": "b098e2ce7c9878434bea7b7bf34202ed492e4548",
+  "seats": [
+    [
+      "seat-1",
+      "e09978e417e609785cedb2939e479a1e843dc7afb8a3c0a62a93104195f60738",
+      "86bf6979a69ad072e0030b8e36808142e97d10c4"
+    ],
+    [
+      "seat-2",
+      "122960f1b8603fee7af6ba8ddd3d63d5a243da0b47cb0e8ec6224275dd09e0fb",
+      "be5f3bfa758193d8f8e85800b3a069681357ab38"
+    ],
+    [
+      "seat-3",
+      "1e14999e1c037150720d14e246b5a6b8ec6f4b58ab6da4134b560709cca60ebe",
+      "103fd664a3d4244c51e29979c6dca12fb2e2e278"
+    ],
+    [
+      "seat-4",
+      "db400edf79185e5c57e3332533ea0440d82449256018693f4e4580059a7b7fc4",
+      "df13bb276bed305b0e0256dbd282ff4833f4aac5"
+    ]
+  ],
+  "laws": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "horizons": [
+    10000000000000,
+    10000000000001,
+    10000000000081
+  ],
+  "time": [
+    "past",
+    "now",
+    "future"
+  ],
+  "color": [
+    "R",
+    "G",
+    "B"
+  ],
+  "space": [
+    "x",
+    "y",
+    "z"
+  ],
+  "wave_count": 27,
+  "bodies": 81,
+  "expected_rows": 131220,
+  "public_seed_only": true,
+  "fresh_physical_challenge": false,
+  "physical_hosts_verified": 0
+}

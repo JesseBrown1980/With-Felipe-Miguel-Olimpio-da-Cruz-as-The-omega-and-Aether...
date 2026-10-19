@@ -1,0 +1,17 @@
+COLOUR3DHDR|schema=ASOLARIA-3D-GITHUB-COLOUR-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|stamp=2026-10-09|repo=C:\\tmp\\scout-rooms-20261008\\results-repo|files=12|corpus_bytes=85368|corpus_sha256=6b4e471fda8379a91a831c9e0e9cd22f3221e00e5bf3df120f9b48d48d77522b|cube=3x3x3=27|img=1728x1728|img_note=1728 = 12^3 = 64*27, divides into 27 exactly|png_bytes=8960428|png_sha256=4342a31c1f7a2f073614a66fe872a4119cac1d264f2c9de489ced995463e37c5|lossless=1|deflate=stored_blocks_only|external_crates=0|float_used=0|roundtrip_corpus=EXACT|glyph_27=+++--...-+.+...+.+-++.--+-.|free_centre_X0=539298|chariots=LYNN,EZEQUEL,REBECCA|chariot_law=LYNN rides the whole band; EZEQUEL if red exceeds blue, REBECCA otherwise; derived never chosen|traversal=HBI->HBP->SHA->SH->HASH|E=0|json=0
+VOXEL|name=.gitattributes|bytes=163|col=1|row=2|depth=0|cell=7|register=GREEN|free_centre_X0=960692|roundtrip=EXACT|json=0
+VOXEL|name=LIGHTHOUSE.hbp|bytes=4730|col=1|row=1|depth=1|cell=13|register=RED|free_centre_X0=85936|roundtrip=EXACT|json=0
+VOXEL|name=LIGHTHOUSE.hbp.sha256|bytes=81|col=0|row=2|depth=1|cell=15|register=BLUE|free_centre_X0=1576|roundtrip=EXACT|json=0
+VOXEL|name=POOL-GROWN-ADDRESS.hbp|bytes=42674|col=0|row=1|depth=2|cell=21|register=BLUE|free_centre_X0=18997|roundtrip=EXACT|json=0
+VOXEL|name=POOL-GROWN-ADDRESS.hbp.sha256|bytes=90|col=2|row=2|depth=0|cell=8|register=GREEN|free_centre_X0=40723|roundtrip=EXACT|json=0
+VOXEL|name=README.md|bytes=5685|col=2|row=2|depth=0|cell=8|register=GREEN|free_centre_X0=783581|roundtrip=EXACT|json=0
+VOXEL|name=RESULTS-2026-10-09.hbi|bytes=11031|col=2|row=0|depth=0|cell=2|register=RED|free_centre_X0=408511|roundtrip=EXACT|json=0
+VOXEL|name=RESULTS-2026-10-09.hbi.sha256|bytes=89|col=0|row=2|depth=1|cell=15|register=GREEN|free_centre_X0=561382|roundtrip=EXACT|json=0
+VOXEL|name=RESULTS-2026-10-09.hbp|bytes=5375|col=2|row=1|depth=1|cell=14|register=RED|free_centre_X0=518449|roundtrip=EXACT|json=0
+VOXEL|name=RESULTS-2026-10-09.hbp.sha256|bytes=89|col=2|row=1|depth=0|cell=5|register=GREEN|free_centre_X0=387573|roundtrip=EXACT|json=0
+VOXEL|name=kernel/Cargo.toml.txt|bytes=466|col=2|row=2|depth=1|cell=17|register=GREEN|free_centre_X0=512705|roundtrip=EXACT|json=0
+VOXEL|name=kernel/lighthouse.rs|bytes=14895|col=2|row=1|depth=0|cell=5|register=BLUE|free_centre_X0=674026|roundtrip=EXACT|json=0
+MEASURED|subject=cube_occupancy|cells=27|occupied=9|empty=18|cells_with_more_than_one=3|files=12|note=empty cells are drawn as empty, not hidden; 12 files cannot fill 27 cells and the plate shows that|json=0
+MEASURED|subject=chariot_allocation|LYNN=whole_band|EZEQUEL=warm_side|REBECCA=cool_side|fourth_seat=held_open_unnamed_not_invented_here|register_RED=3|register_GREEN=6|register_BLUE=3|derived_from=three_way_max_over_spec[1]_spec[2]_spec[3]|chosen_by_me=0|fault_fixed=blue_channel_was_clamped_to_45..60_by_divisor_65521_when_P_is_1000081|blue_share_before_fix_lit_pixels_pct=11.4|json=0
+MEASURED|subject=per_file_roundtrip|files=12|all_exact=1|falsifier=a file whose unprism(prism(lanes)) != lanes|json=0
+BOUNDARY|subject=what_this_plate_does_not_prove|scope=fold_lanes is NOT injective - two different corpora can share lanes, so EXACT roundtrip proves the transform closes, never that the repo is intact|intactness_proof=the per-file sha256 sidecars, verified GIMEL=4 SHIN=0 on a fresh clone|json=0

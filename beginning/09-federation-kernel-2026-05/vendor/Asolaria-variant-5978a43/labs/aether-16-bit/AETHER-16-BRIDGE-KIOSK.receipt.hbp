@@ -1,0 +1,45 @@
+@HPB AETHER_16_BRIDGE_KIOSK_RECEIPT v2
+project=AETHER 16 BIT
+component=bridge-kiosk.html
+canon=AETHER-16 Bridge v2
+interface_model=single-tab console cockpit
+visual_mode=cellphone_xbox_emulation
+visual_evolution=console_log_status_chips_orb_pulse_tab_colors_verify_lines_planet_link
+packet=0x9948
+hermes_role=Prism Relay Operator
+access=local_visual_only
+runtime_authority=false
+safe_to_continue_runtime=false
+json_dependency=removed
+updated_at=2026-05-22T20:46:11-03:00
+bridge_sha256=c582e95e30dde181821ae94a0c18f9f2548dba3690fdd672b18e897a3ddee3cf
+
+[FILES]
+html=bridge-kiosk.html
+lab=index.html
+style=style.css
+script=app.js
+
+[VISUAL_EVOLUTION]
+console_log=Hermes prism relay online|AETHER bridge packet 0x9948|local visual cockpit active|fail-closed boundary preserved
+header_chips=LOCAL ONLY|FAIL-CLOSED|NO RUNTIME
+orb=css_only_cyan_ring_gold_ring_light_pulse
+active_tabs=observe_cyan|plan_gold|verify_green
+verify_lines=forbidden_APIs_none|SHA256_receipts_present|runtime_locked|safe_to_continue_runtime_false
+planet_link=PLANET LINK|HPB source C:\AETHER_16BIT\output\cosmos_AETHER-COSMOS-016.hpb|Hermes receipt C:\AETHER_16BIT\hermes\receipts.hpb|Repo bridge hyperbehcs-hermes/aether_receipts/*.hpb|Format HPB|JSON dependency removed|Status observable only
+
+[BOUNDARY]
+backend=disabled
+fetch=disabled
+websocket=disabled
+storage=disabled
+route_execution=disabled
+dispatch_execution=disabled
+patch_execution=disabled
+core_mutation=disabled
+provider_mutation=disabled
+mcp_mutation=disabled
+gnn_mutation=disabled
+
+[CANON]
+statement=AETHER-16 Bridge v2 uses a single-tab kiosk cockpit. The bridge is visual, local, fail-closed, and operated through Hermes as Prism Relay Operator. PLANET LINK is an observable-only HPB source display inside OBSERVE, not a route, backend, dispatch, or authority surface.

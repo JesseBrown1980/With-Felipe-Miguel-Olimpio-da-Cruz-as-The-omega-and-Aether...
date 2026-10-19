@@ -1,0 +1,12 @@
+STONE|schema=ASOLARIA-THREE-PHYSICAL-HOSTS-PREFLIGHT-V1|date=2026-10-14|seat=seat-3|class=CLOUD_SOFTWARE_ONLY|json=0
+BRANCH|name=agent/seat-3/2026-10-14-three-physical-hosts|json=0
+SOURCE|python=physical/evolve_gf2_python.py|node=physical/evolve_gf2_node.js|json=0
+LAWS|tap_sets=0+1;0+2;0+1+3;0+4+7;0+1+5+9|new_not_verified_original_five_laws=1|json=0
+RUN|id=38594662695|python_matrix=PASS|node_cyclic=PASS|ubuntu=PASS|windows=PASS|json=0
+RUN|id=38595090929|three_seat_software_ceremony=PASS|signed_checkins=3|signed_commitments=3|referee=PASS|json=0
+CALCULATION|waves=12|laws=5|bodies=81|steps=10000000000000|records_per_runner=4860|json=0
+DIGEST|hbp_sha256=031367b1da1a368dc7471141a9799b79c694a0c9900f65a047438ccaa5f76600|ubuntu_equal_windows=1|python_equal_node=1|json=0
+CONTROL|tampered_signature_rejected=1|tampered_result_rejected=1|json=0
+PROVENANCE|separate_cloud_runners=1|three_physical_hosts_verified=0|physical_machine_receipts=0|json=0
+MEASUREMENT|quantum=NOT_TESTED|gravity=NOT_TESTED|FTL=NOT_TESTED|real_light=NOT_TESTED|json=0
+NEXT|three_signed_prechallenge_commits=AWAITED|external_physical_host_attestations=AWAITED|json=0

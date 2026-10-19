@@ -1,0 +1,17 @@
+QFSPEC4HDR|id=quant4-fidelity-spec.v1|target=live-QUANT4-sha-tag-PID-address-engine|scope=address-and-evidence-fidelity-not-vector-reconstruction|json=0
+QFSPEC4ONTOLOGY|fabric_answer=quants-are-address-and-evidence-classes-not-raw-material|species=vector-quants-compress-continuous-signals+address-quants-classify-integer-hash-PID-addresses|json=0
+QFSPEC4LANGBOUND|claim_17_languages=THESIS-NOT-ENUMERATED-AS-17-LIVE-IMPLEMENTED-LANGUAGES|grounded_surfaces=6-core-dialects+2-implemented-translation-pairs+7-D22-verbs+10-planned-fabric-endpoints+7-auto-translate-layers+BEHCS1024-glyph|rule=SPEC4-does-not-assume-17-live-languages|json=0
+QFSPEC4PIDPLACE|placement=sha256-preimage-residue-addressing-not-resident-agent-object|fields=tier-A00-A15+role-triad+lane_mod3+quad_mod4+glyph5+glyph1024+sector113+hilbert+cube_bh-BH.sector.lane.glyph1024|three_systems=LOGICAL-WAVE+FROZEN-BRAIN+REAL-FREE|json=0
+QFSPEC4PRIMEWHY|rule_of_three=lane_mod3-three-cylinder-partition-for-triad-routing|mod6=primes_gt3-reside-in-1-or-5-phase|von_mangoldt=prime_power_class-address-evidence|p3_collision_reserve=PROPOSAL-not-gating|json=0
+QFSPEC4FIREWALL|separate_from=QUANT8-JL-cosine-fidelity-sweep|rule=QUANT4-inherits-neither-QUANT8-pass-nor-QUANT8-fail|metric_cosine=not-applicable-for-hash-tail|json=0
+QFSPEC4FIELDS|identity=register_identity_sha16+pid+sha16|route=lane_mod3+quad_mod4+sector113+glyph1024+cube_bh|evidence=bh_ppow+agent_type|json=0
+QFSPEC4METRICS|m1=determinism|m2=duplicate-stability|m3=identity-collisions|m4=route-bucket-collisions-expected-finite|m5=lane-quad-sector-glyph-coverage|m6=mutation-identity-separation|json=0
+QFSPEC4PASSFAIL|pass_requires=bounds-ok+duplicate-stable+identity-collisions-0+pid-collisions-0+non-catastrophic-route-spread|on_pass=ROUTING_HINT_MEASURED_NOT_GATING|on_fail=QUANT4_REMAINS_UNMEASURED_FOR_PROMOTION|json=0
+QFSPEC4SAFETY|mutates=0|no_live_publish=1|no_mint=1|no_cube_mutation=1|no_secret_material=1|rows_time_free=1|json=0
+QF4RUNHDR|samples=8192|duplicates=512|mutations=1024|seed=0x51554634|route_space_effective=347136|json=0
+QF4BOUNDS|bounds_ok=1|cube_consistent=1|fields=lane_mod3+quad_mod4+sector113+glyph1024+cube_bh|json=0
+QF4DUPLICATE|duplicates=512|duplicate_stable=512|identity_collisions=0|pid_collisions=0|json=0
+QF4ROUTE|route_unique=8096|route_collisions=96|route_unique_ratio=0.988281|finite_bucket_collisions=EXPECTED_NOT_IDENTITY_FAILURE|json=0
+QF4DIST|lane_counts=2799,2646,2747|lane_max_skew=0.031006|quad_counts=2074,2005,2130,1983|quad_max_skew=0.040039|sector_coverage=113|glyph_coverage=1024|json=0
+QF4MUTATION|mutations=1024|identity_changed=1024|route_changed=1024|route_unchanged=0|route_unchanged_meaning=finite-address-bucket-not-identity-collapse|json=0
+QF4VERDICT|result=PASS|grade=ROUTING_HINT_MEASURED_NOT_GATING|min_sector_coverage=101|min_glyph_coverage=921|not_semantic_fidelity=1|not_gating=1|json=0

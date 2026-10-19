@@ -1,0 +1,13 @@
+HBP|schema=ASOLARIA-SEAT1-TRIAD-27WAVE-THREE-HORIZON-RECEIPT-V1|date=2026-10-14|seat=seat-1|json=0
+SCOPE|PUBLIC_SOFTWARE_CHALLENGE|physical_host_independence=UNVERIFIED|json=0
+CHALLENGE|sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b|source_commit=d092bcc06908a5f5864eada406d5b3ddf4933a5d|json=0
+GRID|time=3|color=3|space=3|waves=27|bodies=81|laws=5|horizons=3|json=0
+HORIZONS|T=10000000000000|Tplus1=10000000000001|Tplus81=10000000000081|json=0
+AGREEMENTS|records=32805|python=32805|node=32805|mismatches=0|json=0
+METAMORPHIC|linearity=32805|successor=10935|plus81=10935|rotation=10935|json=0
+SMALLSTEP|python=120|node=120|json=0
+NEGATIVE|bad_challenge_rejections=6|nonce_changes_result=1|one_byte_tamper_detected=1|json=0
+RECEIPT|hbp_full_bytes=6392029|sha256=720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3|json=0
+CI|initial=38651853055|full_negative=38651920771|ubuntu=PASS|windows=PASS|json=0
+LIMIT|real_physical_machines_verified=0|physical_signaling_measured=0|gravity_measured=0|quantum_entanglement_measured=0|json=0
+HBPEND|ASOLARIA-SEAT1-TRIAD-27WAVE-THREE-HORIZON-RECEIPT-V1|json=0

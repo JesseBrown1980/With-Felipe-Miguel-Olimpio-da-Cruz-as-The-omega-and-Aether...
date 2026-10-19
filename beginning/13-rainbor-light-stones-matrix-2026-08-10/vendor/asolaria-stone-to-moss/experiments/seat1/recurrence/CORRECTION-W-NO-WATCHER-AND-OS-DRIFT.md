@@ -1,0 +1,11 @@
+# Seat 1 additive correction — W scenario has no watcher in arms A/B
+
+2026-10-15. This correction follows direct comparison of Seat 1 [PR #41](https://github.com/JesseBrown1980/asolaria-stone-to-moss/pull/41) with Seat 2's [PR #43](https://github.com/JesseBrown1980/asolaria-stone-to-moss/pull/43) and coordinator prereg [PR #39](https://github.com/JesseBrown1980/asolaria-stone-to-moss/pull/39).
+
+The **first** Seat 1 source-run artifacts (Actions [38718317046](https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38718317046), Ubuntu and Windows PASSED their local gates) injected an SNR error in W cells of arms A and B. This mistakenly treated a nonexistent watcher as if it could be compromised; under these arms W should be `attack_exercised=false` and the normal forward program is left unchanged. Do NOT erase or reinterpret the first artifacts. They remain useful evidence of the initial mistake.
+
+Corrected protocol: W = fabricated watcher verdict/score **only for arms C/D**, whose separate watcher process exists. A/B W case cells stay in the 72-cell factorial matrix for balance but mark `attack_exercised=false` and must not produce the false output corruption found in initial CI.
+
+A separate cross-seat methodological difference remains: E in Seat 1 corrupts the report **after** computing the source, and B recomputes the unmodified source to detect it; Seat 2's PR #43 expects B to keep an initial faulty reported state under its repetition rule. The coordinator must fix the exact error-injection stage/replay semantics before interpreting combined A/B case results as a single controlled comparison. Do not silently count two fault models as the same intervention.
+
+Evidence note: the initial raw Q-PRISM proposal hashes differed on Ubuntu and Windows for all 72 cases; *every* other case field agreed. Raw trace SHA Ubuntu `d7068ca481ed65b5c6e09099b2266c5f4bfbe95756c691d00da000defdf4a7c9`, Windows `08aa622c7115008ee77486588750a55e2ba0a8936fa14399b02b7225f14e5434`; original semantic-only SHA `30fcc0cef4bd0b8a1b25c4773781474d362ec93978d853626b3d2f13b752e545` was **for the old W scenario only**. The new audit must produce a distinct hash, state exactly which field is excluded from numerical byte parity, and preserve both original source traces. No physical-host or human-authorization claims changed.

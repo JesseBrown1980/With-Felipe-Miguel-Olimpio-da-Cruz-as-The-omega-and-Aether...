@@ -1,0 +1,42 @@
+{
+  "automatic_independent_watcher_checks": 6561,
+  "classification": "MEASURED_SOFTWARE_PASS",
+  "immutable_distinct_pids": 2187,
+  "injected_faults_rejected": {
+    "field": 81,
+    "gate_occupancy": 81,
+    "pid": 81,
+    "pixel": 81,
+    "pulse": 81
+  },
+  "light_gate_open_counts": {
+    "DARK": 0,
+    "FAST": 1170,
+    "SLOW": 1681
+  },
+  "model": "synthetic unitless light-sensitive gate, NOT validated optogenetic physiology",
+  "modes": [
+    "DARK",
+    "FAST",
+    "SLOW"
+  ],
+  "no_real_light_or_ion_channel_data": true,
+  "optical_photon_readout": "NOT_MEASURED",
+  "physical_host_independence": "NOT_MEASURED",
+  "schema": "ASOLARIA-SEAT4-OPTOINSPIRED-DIGITAL-GATE-V1",
+  "seat": "seat-4",
+  "source": "Nobel medicine 2026 optogenetics; Chen et al Nat Biotechnol doi:10.1038/s41587-020-0679-9",
+  "source_forgery_anchored_rejections": 81,
+  "synthetic_position_updates": 531441,
+  "tick_records": 6561,
+  "ticks_per_wave_mode": 81,
+  "toy_spike_counts": {
+    "DARK": 0,
+    "FAST": 253,
+    "SLOW": 348
+  },
+  "trace_bytes": 2092959,
+  "trace_sha256": "3ca42d274909f3ba7b03a3a00662eda0375e2515acb93f769ec072d2695a0b93",
+  "waves": 27,
+  "zero_human_prompts_per_tick": true
+}

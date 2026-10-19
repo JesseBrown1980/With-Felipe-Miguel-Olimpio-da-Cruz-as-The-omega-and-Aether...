@@ -1,0 +1,11 @@
+HBP|schema=asolaria.lx_chain_origin_receipt.v1|json=0|seat=LIRIS|created_utc=2026-07-05T18:57:33.572Z
+CLAIM|class=OPERATOR_OBSERVED|text=original LX one-direction chain language linked to measured Liris LX-chain surfaces
+CLAIM|class=MEASURED_LIRIS_LOCAL|text=sovereignty index snapshot has 1050 files 24 dirs 2314939 bytes 221 LX-named files 767 IX-named files 169 tool_or_skill files
+CLAIM|class=MEASURED_LIRIS_LOCAL|text=liris merged 20260324 sub-colony has 230 files 10 dirs 464282 bytes 212 LX-named files 54 tool_or_skill files
+CLAIM|class=SYSTEM_AFFIRMED|text=fabric archaeology timeline includes 2026-03-24 CATALOG CHAINS REFERENCES stratum
+CHAIN|original=@from [liris] machine [lx 1] time [1-24-2026] ask [ix-1] (acer) tool [eds18] skill [38] run program [1873]
+DOC|path=docs/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.md|sha256=d878e02171928555a6af345dd0b18249d83d38c02ad2ffcb25e99c6bf985897d
+DOC|path=docs/measured-liris-lx-census-2026-07-05.csv|sha256=ce6882be12ea29d03d9b82fa2f89a4c3aa0e9203095ced21ec8b3b6c830d11b5
+DOC|path=docs/evidence-pointers-2026-07-05.csv|sha256=b52867e477621036ee89550480bdff94603cf97bf51a6bdb4fcb817c97df4a68
+BOUNDARY|text=public receipt only; no private vault token password raw hidden-memory dump or secret material published
+ANTI_DEFLATION|text=LX files are slices but LX chain is addressable routing semantics over LX IX tools skills catalogs bridges hooks gates PIDs checksums and chain sequences

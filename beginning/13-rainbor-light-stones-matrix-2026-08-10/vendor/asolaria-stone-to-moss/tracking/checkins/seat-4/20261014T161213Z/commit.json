@@ -1,0 +1,38 @@
+{
+  "created_utc": "2026-10-14T16:12:13Z",
+  "intended_law_taps": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "model_steps": 10000000000000,
+  "note": "Bound only to private salt, not a common challenge. Compute/reveal is withheld until coordinator freezes a fresh challenge after physical seat commitments.",
+  "public_fingerprint_sha256": "0c2ccbcfe284e1c76a1b7b6f3063c7145bc295678f1b8d8c55d12e330d79cdd6",
+  "salt_commitment_sha256": "db400edf79185e5c57e3332533ea0440d82449256018693f4e4580059a7b7fc4",
+  "schema": "ASOLARIA-4-COMPUTATIONAL-SEAT-ATTEST-V1",
+  "seat": "seat-4",
+  "signature_b64": "nkvLZFwZHF5MVUAgJ6CWbBnPv2xlt4pOFz9vpQRH8V4xXBocsHZffH7Ns16aDac3qrjnn/AbYytaLcnHzxjKAQ==",
+  "source_commit_sha": "50d96e363943273a44b3a195eff9e9b2591f4765",
+  "stage": "PRE_CHALLENGE_COMMITMENT"
+}

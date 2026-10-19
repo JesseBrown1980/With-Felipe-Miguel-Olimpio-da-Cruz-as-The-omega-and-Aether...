@@ -1,0 +1,71 @@
+{
+  "schema": "ASOLARIA-SEAT3-TWO-HORIZON-STRESS-RECEIPT-V1",
+  "seat": "seat-3",
+  "role": "computational_only",
+  "physical_host_independent": false,
+  "physical_signal_speed_measured": false,
+  "fresh_three_physical_host_challenge": false,
+  "evidence_class": "synthetic reproducible local GF(2) evolution; separate GitHub Actions replay pending",
+  "source_base_commit": "becc9a5b63f746be6c8cfa11536ca06f1a30c72c",
+  "languages": [
+    "Python 3.13 matrix exponentiation",
+    "Node.js 22 cyclic polynomial"
+  ],
+  "seed_sha256": "9665710444b81097c508027c11be28cfa4ef32f210879cb1a8d585603d939390",
+  "law_taps": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "modeled_horizons": [
+    10000000000000,
+    10000000000001
+  ],
+  "waves": 12,
+  "bodies_per_law": 81,
+  "laws": 5,
+  "records_per_language": 9720,
+  "exact_state_agreements": 9720,
+  "disagreements": 0,
+  "short_step_checks_per_language": 120,
+  "one_step_metamorphic_controls_per_language": 9720,
+  "one_bit_delta_matches_operator": 9720,
+  "output_sha256_python": "245ab02b30cbdd9215d161c6561adc6a6c3bf72dd3fa2cb62979b2fb74031cef",
+  "output_sha256_node": "245ab02b30cbdd9215d161c6561adc6a6c3bf72dd3fa2cb62979b2fb74031cef",
+  "output_bytes": 1195980,
+  "changed_bits": {
+    "law0_t": 38,
+    "law0_tplus1": 44,
+    "law1_t": 38,
+    "law1_tplus1": 44,
+    "law2_t": 39,
+    "law2_tplus1": 43,
+    "law3_t": 53,
+    "law3_tplus1": 47,
+    "law4_t": 36,
+    "law4_tplus1": 38
+  },
+  "sha_depends_on_full_model": "The SHA-256 digest is a commitment to calculated full states; SHA alone is not the evolution law.",
+  "boundary": "No independent physical host attested; no entanglement, gravity, photon propagation, or superluminal communication measured."
+}

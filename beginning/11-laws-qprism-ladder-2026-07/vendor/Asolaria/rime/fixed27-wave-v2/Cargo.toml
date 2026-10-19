@@ -1,0 +1,13 @@
+[package]
+name = "new-rime-fixed27-wave"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+name = "new_rime_fixed27_wave"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rime-wave"
+path = "src/main.rs"

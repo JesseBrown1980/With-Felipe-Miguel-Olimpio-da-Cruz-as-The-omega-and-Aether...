@@ -1,0 +1,9 @@
+HBI|id=RELIC_NEXT_ROUND_HARDWARE_USB_VERIFY_20260708|hbp=RELIC-NEXT-ROUND-HARDWARE-USB-VERIFY-20260708.hbp|kind=relic_next_round_hardware_usb_verify_index|json=0
+INDEX|row=LOCAL_HOST|host=RELIC|user=relic\user|model=HP_1000_Notebook_PC|cpu=i3-3110M|cores=2|logical=4|ram_bytes=4178862080|os=Windows_11_Home_Single_Language_10.0.26100|json=0
+INDEX|row=USB_VISIBLE|drive=D:|model=SanDisk_Cruzer_Blade_USB_Device|volume=BACKUP_LEAN|filesystem=FAT32|bytes=8003197440|json=0
+INDEX|row=USB_NOT_VISIBLE|substrate=2TB_SOVLINUX_or_General_UDisk|visible=0|content_mounted=0|json=0
+INDEX|row=PORTS|ports=8811,4944,4947,4796,4790,4815,5088|listeners=0|json=0
+INDEX|row=PROCESS_BOUNDARY|adb_existing=1|adb_used=0|scrcpy=0|phone_control=0|json=0
+INDEX|row=GITHUB_PR2|head=adea84f48e96ed5744c575291ae0f521f67cba9a|state=open|draft=1|liris_delta_comment=4918115782|json=0
+INDEX|row=PR2_HASHES|acer_hbp=8ef3a6b0732730d202bc7ef4797424a933cdebed320b4a4628ab47db20631dd2|acer_hbi=abfad0d1af8d7ebcd9ca1f95e8c4c99d82fbfd296264bccb8a2a0abc413293b6|relic_hbp=c11d4c929af8f2a25fb3dfa594ab07c9bfec8ebb4102245af8408d51c9c64d00|relic_hbi=7ade7c376f31018db7777f29bb043a0bffc3522f0fdbc430dc1f44805cc15f2b|sidecars_match=1|json=0
+INDEX|row=BOUNDARY|usb_write=0|copy=0|delete=0|format=0|partition=0|kernel_mutation=0|bootloader_mutation=0|daemon_restart=0|service_launch=0|provider_call=0|qemu_boot=0|live_boot=0|adb_used=0|scrcpy=0|runtime_authority=0|json=0

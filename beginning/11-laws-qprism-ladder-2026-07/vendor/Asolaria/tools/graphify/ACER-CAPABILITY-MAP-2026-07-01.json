@@ -1,0 +1,2523 @@
+{
+ "schema": "ASOLARIA-CAPABILITY-MAP-V1",
+ "date": "2026-07-01",
+ "catalog": "ASOLARIA-FULL-CAPABILITY-ABSORPTION",
+ "owner_root": "PROF-MCP",
+ "counts": {
+  "mcp_servers": 44,
+  "mcp_verbs": 310,
+  "legacy": 38,
+  "supervisors": 4
+ },
+ "nodes": [
+  {
+   "id": "PROF-MCP",
+   "type": "supervisor",
+   "pid": "406022553b5b10bf",
+   "role": "MCP root owner"
+  },
+  {
+   "id": "asolaria-fabric",
+   "type": "mcp-server",
+   "pid": "b08531874e56375c",
+   "group": "mcp",
+   "class": "fabric-control"
+  },
+  {
+   "id": "asolaria-web",
+   "type": "mcp-server",
+   "pid": "fedfe0085964b104",
+   "group": "mcp",
+   "class": "browser-web"
+  },
+  {
+   "id": "asolaria-os-on-metal",
+   "type": "mcp-server",
+   "pid": "0d369486ee488633",
+   "group": "mcp",
+   "class": "os-control"
+  },
+  {
+   "id": "asolaria-substrate",
+   "type": "mcp-server",
+   "pid": "24b31edf81ecdd86",
+   "group": "mcp",
+   "class": "substrate"
+  },
+  {
+   "id": "omnispindle",
+   "type": "mcp-server",
+   "pid": "916c757f37e3ffa6",
+   "group": "mcp",
+   "class": "task-spindle"
+  },
+  {
+   "id": "asolaria-augment",
+   "type": "mcp-server",
+   "pid": "3ae4f200e8c434e6",
+   "group": "mcp",
+   "class": "augment"
+  },
+  {
+   "id": "node_repl",
+   "type": "mcp-server",
+   "pid": "a5942b0f72b1ec7f",
+   "group": "mcp",
+   "class": "code-exec"
+  },
+  {
+   "id": "google-wiki",
+   "type": "mcp-server",
+   "pid": "590b7e716b4610b3",
+   "group": "mcp",
+   "class": "knowledge"
+  },
+  {
+   "id": "github",
+   "type": "mcp-server",
+   "pid": "c0b0109d9439de57",
+   "group": "mcp",
+   "class": "vcs"
+  },
+  {
+   "id": "MCP_DOCKER",
+   "type": "mcp-server",
+   "pid": "864c6f929d7274f0",
+   "group": "mcp",
+   "class": "containers"
+  },
+  {
+   "id": "chrome-devtools",
+   "type": "mcp-server",
+   "pid": "6715690dc54ce31d",
+   "group": "mcp",
+   "class": "browser-debug"
+  },
+  {
+   "id": "desktop-commander",
+   "type": "mcp-server",
+   "pid": "5440bf8721ea3ae5",
+   "group": "mcp",
+   "class": "desktop-control"
+  },
+  {
+   "id": "markitdown",
+   "type": "mcp-server",
+   "pid": "79da9bd4524de55c",
+   "group": "mcp",
+   "class": "doc-conversion"
+  },
+  {
+   "id": "mongodb-mcp",
+   "type": "mcp-server",
+   "pid": "6b39a32839317b67",
+   "group": "mcp",
+   "class": "db-document"
+  },
+  {
+   "id": "netdata",
+   "type": "mcp-server",
+   "pid": "474cb35097bb5119",
+   "group": "mcp",
+   "class": "monitoring"
+  },
+  {
+   "id": "Gmail",
+   "type": "mcp-server",
+   "pid": "d19a15c70437ed6e",
+   "group": "mcp",
+   "class": "email"
+  },
+  {
+   "id": "Slack",
+   "type": "mcp-server",
+   "pid": "b27fb38ba323745c",
+   "group": "mcp",
+   "class": "chat"
+  },
+  {
+   "id": "Linear",
+   "type": "mcp-server",
+   "pid": "e6950b45d25c2027",
+   "group": "mcp",
+   "class": "issue-tracking"
+  },
+  {
+   "id": "Notion",
+   "type": "mcp-server",
+   "pid": "73bcfe98830b53a1",
+   "group": "mcp",
+   "class": "docs-knowledge"
+  },
+  {
+   "id": "Google-Calendar",
+   "type": "mcp-server",
+   "pid": "b629ee43c4ecb711",
+   "group": "mcp",
+   "class": "calendar"
+  },
+  {
+   "id": "Google-Drive",
+   "type": "mcp-server",
+   "pid": "5f97844d9712af89",
+   "group": "mcp",
+   "class": "cloud-storage"
+  },
+  {
+   "id": "HubSpot",
+   "type": "mcp-server",
+   "pid": "5f5f6ddd5dbf1710",
+   "group": "mcp",
+   "class": "crm"
+  },
+  {
+   "id": "monday-com",
+   "type": "mcp-server",
+   "pid": "245502a59c2c558e",
+   "group": "mcp",
+   "class": "project-mgmt"
+  },
+  {
+   "id": "Cloudflare-Developer-Platform",
+   "type": "mcp-server",
+   "pid": "1feef3250200ceda",
+   "group": "mcp",
+   "class": "cloud-infra"
+  },
+  {
+   "id": "WordPress-com",
+   "type": "mcp-server",
+   "pid": "a77a4877df766b66",
+   "group": "mcp",
+   "class": "cms"
+  },
+  {
+   "id": "Wolfram",
+   "type": "mcp-server",
+   "pid": "af8afea2eecb3860",
+   "group": "mcp",
+   "class": "compute"
+  },
+  {
+   "id": "Hugging-Face",
+   "type": "mcp-server",
+   "pid": "837de74145564e86",
+   "group": "mcp",
+   "class": "ml-models"
+  },
+  {
+   "id": "Context7",
+   "type": "mcp-server",
+   "pid": "466f6a2bd6f744bb",
+   "group": "mcp",
+   "class": "library-docs"
+  },
+  {
+   "id": "alphaXiv",
+   "type": "mcp-server",
+   "pid": "21bde6753866286f",
+   "group": "mcp",
+   "class": "research-papers"
+  },
+  {
+   "id": "Mermaid-Chart",
+   "type": "mcp-server",
+   "pid": "92300c3069594ffe",
+   "group": "mcp",
+   "class": "diagram"
+  },
+  {
+   "id": "Excalidraw",
+   "type": "mcp-server",
+   "pid": "70eabea394c6f7de",
+   "group": "mcp",
+   "class": "diagram"
+  },
+  {
+   "id": "Postman",
+   "type": "mcp-server",
+   "pid": "213985e12832da8d",
+   "group": "mcp",
+   "class": "api-testing"
+  },
+  {
+   "id": "Adobe-for-creativity",
+   "type": "mcp-server",
+   "pid": "00c112c9353f1758",
+   "group": "mcp",
+   "class": "design-media"
+  },
+  {
+   "id": "claude-in-chrome",
+   "type": "mcp-server",
+   "pid": "7b1694f99542e733",
+   "group": "mcp",
+   "class": "browser-control"
+  },
+  {
+   "id": "brightdata",
+   "type": "mcp-server",
+   "pid": "6013857c6e7c9f02",
+   "group": "mcp",
+   "class": "web-scraping"
+  },
+  {
+   "id": "neon",
+   "type": "mcp-server",
+   "pid": "1b6405d1ef5a8161",
+   "group": "mcp",
+   "class": "db-postgres"
+  },
+  {
+   "id": "sentry",
+   "type": "mcp-server",
+   "pid": "0cf6855c1a3c323b",
+   "group": "mcp",
+   "class": "error-monitoring"
+  },
+  {
+   "id": "tavily",
+   "type": "mcp-server",
+   "pid": "5e2d82cbc971f731",
+   "group": "mcp",
+   "class": "web-search"
+  },
+  {
+   "id": "DataHub",
+   "type": "mcp-server",
+   "pid": "0f6192d69717bc1b",
+   "group": "mcp",
+   "class": "data-catalog"
+  },
+  {
+   "id": "Listen-Labs",
+   "type": "mcp-server",
+   "pid": "be3231947471f6d7",
+   "group": "mcp",
+   "class": "user-research"
+  },
+  {
+   "id": "Miro",
+   "type": "mcp-server",
+   "pid": "4eed73354ba95c88",
+   "group": "mcp",
+   "class": "whiteboard"
+  },
+  {
+   "id": "Wrike",
+   "type": "mcp-server",
+   "pid": "a625b81212774ff1",
+   "group": "mcp",
+   "class": "project-mgmt"
+  },
+  {
+   "id": "tldv",
+   "type": "mcp-server",
+   "pid": "05def99bfef74440",
+   "group": "mcp",
+   "class": "meeting-notes"
+  },
+  {
+   "id": "omc.cloudflare-deploy",
+   "type": "omc-skill",
+   "pid": "c98c65c7c19d7704",
+   "group": "omc"
+  },
+  {
+   "id": "omc.develop-web-game",
+   "type": "omc-skill",
+   "pid": "c746a07ebd5ac615",
+   "group": "omc"
+  },
+  {
+   "id": "omc.doc",
+   "type": "omc-skill",
+   "pid": "63baff016b490ef6",
+   "group": "omc"
+  },
+  {
+   "id": "omc.figma",
+   "type": "omc-skill",
+   "pid": "347e65a3a1f13670",
+   "group": "omc"
+  },
+  {
+   "id": "omc.figma-implement-design",
+   "type": "omc-skill",
+   "pid": "eae5eb4cdd11826b",
+   "group": "omc"
+  },
+  {
+   "id": "omc.gh-address-comments",
+   "type": "omc-skill",
+   "pid": "603cea95c80893fa",
+   "group": "omc"
+  },
+  {
+   "id": "omc.gh-fix-ci",
+   "type": "omc-skill",
+   "pid": "7023d768e2d0a650",
+   "group": "omc"
+  },
+  {
+   "id": "omc.google-code-wiki",
+   "type": "omc-skill",
+   "pid": "53603ca8565c0139",
+   "group": "omc"
+  },
+  {
+   "id": "omc.imagegen",
+   "type": "omc-skill",
+   "pid": "d4790793740792ee",
+   "group": "omc"
+  },
+  {
+   "id": "omc.jupyter-notebook",
+   "type": "omc-skill",
+   "pid": "99562c5c0b412136",
+   "group": "omc"
+  },
+  {
+   "id": "omc.linear",
+   "type": "omc-skill",
+   "pid": "4c247639ef0da8c3",
+   "group": "omc"
+  },
+  {
+   "id": "omc.netlify-deploy",
+   "type": "omc-skill",
+   "pid": "166aa87004a5b863",
+   "group": "omc"
+  },
+  {
+   "id": "omc.notion-knowledge-capture",
+   "type": "omc-skill",
+   "pid": "5040f7ed44c46405",
+   "group": "omc"
+  },
+  {
+   "id": "omc.notion-meeting-intelligence",
+   "type": "omc-skill",
+   "pid": "0682bb8b1856883c",
+   "group": "omc"
+  },
+  {
+   "id": "omc.notion-research-documentation",
+   "type": "omc-skill",
+   "pid": "ee1e258b29fbd20f",
+   "group": "omc"
+  },
+  {
+   "id": "omc.notion-spec-to-implementation",
+   "type": "omc-skill",
+   "pid": "7cde4c820c18f8f3",
+   "group": "omc"
+  },
+  {
+   "id": "omc.openai-docs",
+   "type": "omc-skill",
+   "pid": "7c7cb3aed2c488a4",
+   "group": "omc"
+  },
+  {
+   "id": "omc.pdf",
+   "type": "omc-skill",
+   "pid": "b01a3d724734923f",
+   "group": "omc"
+  },
+  {
+   "id": "omc.playwright",
+   "type": "omc-skill",
+   "pid": "1f349a1c8f07a975",
+   "group": "omc"
+  },
+  {
+   "id": "omc.render-deploy",
+   "type": "omc-skill",
+   "pid": "266df8a779448732",
+   "group": "omc"
+  },
+  {
+   "id": "omc.screenshot",
+   "type": "omc-skill",
+   "pid": "63d4c7f4f884bb3b",
+   "group": "omc"
+  },
+  {
+   "id": "omc.security-best-practices",
+   "type": "omc-skill",
+   "pid": "562713386ad0c1af",
+   "group": "omc"
+  },
+  {
+   "id": "omc.security-ownership-map",
+   "type": "omc-skill",
+   "pid": "9563c98966029560",
+   "group": "omc"
+  },
+  {
+   "id": "omc.security-threat-model",
+   "type": "omc-skill",
+   "pid": "67241ec00d6858c7",
+   "group": "omc"
+  },
+  {
+   "id": "omc.sentry",
+   "type": "omc-skill",
+   "pid": "0189ca28217b5839",
+   "group": "omc"
+  },
+  {
+   "id": "omc.sora",
+   "type": "omc-skill",
+   "pid": "1a796bc0e1274dfa",
+   "group": "omc"
+  },
+  {
+   "id": "omc.speech",
+   "type": "omc-skill",
+   "pid": "45e9dc1e32741692",
+   "group": "omc"
+  },
+  {
+   "id": "omc.spreadsheet",
+   "type": "omc-skill",
+   "pid": "ec8b66f1bad04ac0",
+   "group": "omc"
+  },
+  {
+   "id": "omc.system-skill-creator",
+   "type": "omc-skill",
+   "pid": "3d5354f1dd983c9d",
+   "group": "omc"
+  },
+  {
+   "id": "omc.system-skill-installer",
+   "type": "omc-skill",
+   "pid": "f41a6e09855522f1",
+   "group": "omc"
+  },
+  {
+   "id": "omc.system-slides",
+   "type": "omc-skill",
+   "pid": "1f1056faa32f628b",
+   "group": "omc"
+  },
+  {
+   "id": "omc.system-spreadsheets",
+   "type": "omc-skill",
+   "pid": "f22cd0bbedda8808",
+   "group": "omc"
+  },
+  {
+   "id": "omc.transcribe",
+   "type": "omc-skill",
+   "pid": "ab34732114cfc453",
+   "group": "omc"
+  },
+  {
+   "id": "omc.vercel-deploy",
+   "type": "omc-skill",
+   "pid": "74d671e24573293d",
+   "group": "omc"
+  },
+  {
+   "id": "omc.yeet",
+   "type": "omc-skill",
+   "pid": "2f221322d6dd1344",
+   "group": "omc"
+  },
+  {
+   "id": "symphony-linear-orchestrator",
+   "type": "legacy",
+   "pid": "3b9eb42cda5d07d3",
+   "group": "legacy",
+   "class": "orchestration"
+  },
+  {
+   "id": "leader-connector-catalog",
+   "type": "legacy",
+   "pid": "4770a8a20bbf36cb",
+   "group": "legacy",
+   "class": "connector-catalog"
+  },
+  {
+   "id": "asolaria-original-root-repo",
+   "type": "legacy",
+   "pid": "2969fc1e203babfe",
+   "group": "legacy",
+   "class": "root-doctrine-substrate"
+  },
+  {
+   "id": "PROF-OMC",
+   "type": "supervisor",
+   "pid": "d65fe6c72a90b36d"
+  },
+  {
+   "id": "PROF-SYMPHONY",
+   "type": "supervisor",
+   "pid": "25c464237dbde022"
+  },
+  {
+   "id": "PROF-CONNECTOR",
+   "type": "supervisor",
+   "pid": "85d381a1ec0c58d2"
+  },
+  {
+   "id": "PROF-ASOLARIA-ROOT",
+   "type": "supervisor",
+   "pid": "f6d903a4b727b8c5"
+  },
+  {
+   "id": "higgsfield",
+   "type": "mcp-server",
+   "pid": "08e042981df36dda",
+   "group": "mcp",
+   "class": "generative-media",
+   "absorbed": "2026-07-01",
+   "verbs": 12,
+   "note": "capability-from-product-knowledge; ABSORB-not-call; Higgsfield MCP not live-connected"
+  }
+ ],
+ "edges": [
+  {
+   "from": "PROF-MCP",
+   "to": "asolaria-fabric",
+   "rel": "owns"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.health",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.manifest",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.substrates",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.council_query",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.cosign_chain_live",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.supervisors",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.supervisors_hbp",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.bus_health",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.canon_index",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.sister_organ",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.loop_pending",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.loop_tick",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.omni_control_status",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.omniscrcpy_status",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.gnn_topn",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.glyphs",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.everything",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.hbp_any",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.access_tier_matrix",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-fabric",
+   "to": "asolaria-fabric.archaeology_timeline",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "asolaria-web",
+   "rel": "owns"
+  },
+  {
+   "from": "asolaria-web",
+   "to": "asolaria-web.web_status",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-web",
+   "to": "asolaria-web.web_screenshot",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-web",
+   "to": "asolaria-web.web_inspect",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-web",
+   "to": "asolaria-web.browser_task",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "asolaria-os-on-metal",
+   "rel": "owns"
+  },
+  {
+   "from": "asolaria-os-on-metal",
+   "to": "asolaria-os-on-metal.status",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-os-on-metal",
+   "to": "asolaria-os-on-metal.hookwall",
+   "rel": "verb"
+  },
+  {
+   "from": "asolaria-os-on-metal",
+   "to": "asolaria-os-on-metal.fabric_url",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "asolaria-substrate",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "omnispindle",
+   "rel": "owns"
+  },
+  {
+   "from": "omnispindle",
+   "to": "omnispindle.spindle_add",
+   "rel": "verb"
+  },
+  {
+   "from": "omnispindle",
+   "to": "omnispindle.spindle_list",
+   "rel": "verb"
+  },
+  {
+   "from": "omnispindle",
+   "to": "omnispindle.spindle_route",
+   "rel": "verb"
+  },
+  {
+   "from": "omnispindle",
+   "to": "omnispindle.spindle_status",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "asolaria-augment",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "node_repl",
+   "rel": "owns"
+  },
+  {
+   "from": "node_repl",
+   "to": "node_repl.eval",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "google-wiki",
+   "rel": "owns"
+  },
+  {
+   "from": "google-wiki",
+   "to": "google-wiki.search",
+   "rel": "verb"
+  },
+  {
+   "from": "google-wiki",
+   "to": "google-wiki.fetch",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "github",
+   "rel": "owns"
+  },
+  {
+   "from": "github",
+   "to": "github.pr_view",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.pr_create",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.pr_merge",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.issue",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.repo_list",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.repo_view",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.actions_run",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.search_code",
+   "rel": "verb"
+  },
+  {
+   "from": "github",
+   "to": "github.api",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "MCP_DOCKER",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "chrome-devtools",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "desktop-commander",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "markitdown",
+   "rel": "owns"
+  },
+  {
+   "from": "markitdown",
+   "to": "markitdown.convert",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "mongodb-mcp",
+   "rel": "owns"
+  },
+  {
+   "from": "mongodb-mcp",
+   "to": "mongodb-mcp.find",
+   "rel": "verb"
+  },
+  {
+   "from": "mongodb-mcp",
+   "to": "mongodb-mcp.aggregate",
+   "rel": "verb"
+  },
+  {
+   "from": "mongodb-mcp",
+   "to": "mongodb-mcp.insert",
+   "rel": "verb"
+  },
+  {
+   "from": "mongodb-mcp",
+   "to": "mongodb-mcp.update",
+   "rel": "verb"
+  },
+  {
+   "from": "mongodb-mcp",
+   "to": "mongodb-mcp.delete",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "netdata",
+   "rel": "owns"
+  },
+  {
+   "from": "netdata",
+   "to": "netdata.query",
+   "rel": "verb"
+  },
+  {
+   "from": "netdata",
+   "to": "netdata.alarms",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Gmail",
+   "rel": "owns"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.search_threads",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.get_thread",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.create_draft",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.list_drafts",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.label_message",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.label_thread",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.unlabel_message",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.unlabel_thread",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.create_label",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.update_label",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.delete_label",
+   "rel": "verb"
+  },
+  {
+   "from": "Gmail",
+   "to": "Gmail.list_labels",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Slack",
+   "rel": "owns"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.send_message",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.send_message_draft",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.read_channel",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.read_thread",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.read_canvas",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.create_canvas",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.update_canvas",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.search_public",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.search_public_and_private",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.search_channels",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.search_users",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.list_channel_members",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.read_user_profile",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.add_reaction",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.get_reactions",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.schedule_message",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.create_conversation",
+   "rel": "verb"
+  },
+  {
+   "from": "Slack",
+   "to": "Slack.read_file",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Linear",
+   "rel": "owns"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.create_issue",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.save_issue",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_issue",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_issues",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_issue_status",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_issue_statuses",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.create_issue_label",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_issue_labels",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.save_comment",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_comments",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.delete_comment",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.save_project",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_project",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_projects",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_project_labels",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.save_milestone",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_milestone",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_milestones",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.save_document",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_document",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_documents",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.save_status_update",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_status_updates",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_cycles",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_team",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_teams",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.get_user",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.list_users",
+   "rel": "verb"
+  },
+  {
+   "from": "Linear",
+   "to": "Linear.search_documentation",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Notion",
+   "rel": "owns"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.search",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.fetch",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.create_pages",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.update_page",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.duplicate_page",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.move_pages",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.create_database",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.update_data_source",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.query_data_sources",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.query_database_view",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.create_view",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.update_view",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.create_comment",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.get_comments",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.get_teams",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.get_users",
+   "rel": "verb"
+  },
+  {
+   "from": "Notion",
+   "to": "Notion.get_async_task",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Google-Calendar",
+   "rel": "owns"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.list_events",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.get_event",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.create_event",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.update_event",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.delete_event",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.respond_to_event",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.suggest_time",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Calendar",
+   "to": "Google-Calendar.list_calendars",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Google-Drive",
+   "rel": "owns"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.search_files",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.read_file_content",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.download_file_content",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.create_file",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.copy_file",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.get_file_metadata",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.get_file_permissions",
+   "rel": "verb"
+  },
+  {
+   "from": "Google-Drive",
+   "to": "Google-Drive.list_recent_files",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "HubSpot",
+   "rel": "owns"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_crm_objects",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.search_crm_objects",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.manage_crm_objects",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.query_crm_data",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_properties",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.search_properties",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.search_owners",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_campaign_analytics",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_campaign_asset_metrics",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_content_analytics_report",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.manage_landing_page",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.render_landing_page_ui",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_user_details",
+   "rel": "verb"
+  },
+  {
+   "from": "HubSpot",
+   "to": "HubSpot.get_organization_details",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "monday-com",
+   "rel": "owns"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_item",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_board",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_group",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_column",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_doc",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_dashboard",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_workspace",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_form",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_automation",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_notification",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.create_update",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.change_item_column_values",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.board_insights",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.get_board_items_page",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.get_board_info",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.all_monday_api",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.list_workspaces",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.search",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.plan_workflow",
+   "rel": "verb"
+  },
+  {
+   "from": "monday-com",
+   "to": "monday-com.publish_workflow",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Cloudflare-Developer-Platform",
+   "rel": "owns"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.d1_database_create",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.d1_database_query",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.d1_databases_list",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.kv_namespace_create",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.kv_namespaces_list",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.r2_bucket_create",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.r2_buckets_list",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.workers_list",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.workers_get_worker",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.hyperdrive_configs_list",
+   "rel": "verb"
+  },
+  {
+   "from": "Cloudflare-Developer-Platform",
+   "to": "Cloudflare-Developer-Platform.search_cloudflare_documentation",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "WordPress-com",
+   "rel": "owns"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.content_authoring",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.create_site",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.site_editing",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.site_editor_context",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.plugin_management",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.user_management",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.domain_purchase",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.checkout_url",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.user_sites",
+   "rel": "verb"
+  },
+  {
+   "from": "WordPress-com",
+   "to": "WordPress-com.plans_list",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Wolfram",
+   "rel": "owns"
+  },
+  {
+   "from": "Wolfram",
+   "to": "Wolfram.WolframAlpha",
+   "rel": "verb"
+  },
+  {
+   "from": "Wolfram",
+   "to": "Wolfram.WolframLanguageEvaluator",
+   "rel": "verb"
+  },
+  {
+   "from": "Wolfram",
+   "to": "Wolfram.WolframContext",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Hugging-Face",
+   "rel": "owns"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.hub_repo_search",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.hub_repo_details",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.paper_search",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.space_search",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.hf_doc_search",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.hf_doc_fetch",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.hf_hub_query",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.hf_whoami",
+   "rel": "verb"
+  },
+  {
+   "from": "Hugging-Face",
+   "to": "Hugging-Face.dynamic_space",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Context7",
+   "rel": "owns"
+  },
+  {
+   "from": "Context7",
+   "to": "Context7.resolve-library-id",
+   "rel": "verb"
+  },
+  {
+   "from": "Context7",
+   "to": "Context7.query-docs",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "alphaXiv",
+   "rel": "owns"
+  },
+  {
+   "from": "alphaXiv",
+   "to": "alphaXiv.discover_papers",
+   "rel": "verb"
+  },
+  {
+   "from": "alphaXiv",
+   "to": "alphaXiv.get_paper_content",
+   "rel": "verb"
+  },
+  {
+   "from": "alphaXiv",
+   "to": "alphaXiv.answer_pdf_queries",
+   "rel": "verb"
+  },
+  {
+   "from": "alphaXiv",
+   "to": "alphaXiv.read_files_from_github_repository",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Mermaid-Chart",
+   "rel": "owns"
+  },
+  {
+   "from": "Mermaid-Chart",
+   "to": "Mermaid-Chart.validate_and_render_mermaid_diagram",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Excalidraw",
+   "rel": "owns"
+  },
+  {
+   "from": "Excalidraw",
+   "to": "Excalidraw.create_view",
+   "rel": "verb"
+  },
+  {
+   "from": "Excalidraw",
+   "to": "Excalidraw.export_to_excalidraw",
+   "rel": "verb"
+  },
+  {
+   "from": "Excalidraw",
+   "to": "Excalidraw.save_checkpoint",
+   "rel": "verb"
+  },
+  {
+   "from": "Excalidraw",
+   "to": "Excalidraw.read_checkpoint",
+   "rel": "verb"
+  },
+  {
+   "from": "Excalidraw",
+   "to": "Excalidraw.read_me",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Postman",
+   "rel": "owns"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.createCollection",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.getCollections",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.getCollection",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.createSpec",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.getAllSpecs",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.createMock",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.getMocks",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.createEnvironment",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.getEnvironments",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.createWorkspace",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.getWorkspaces",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.generateCollection",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.generateSpecFromCollection",
+   "rel": "verb"
+  },
+  {
+   "from": "Postman",
+   "to": "Postman.searchPostmanElements",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Adobe-for-creativity",
+   "rel": "owns"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.create_visual_design_express_skill",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.export_html_to_express",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.html_export_readiness_skill",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_remove_background",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_generative_expand",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_vectorize",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_crop_and_resize",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_apply_gaussian_blur",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_adjust_brightness_and_contrast",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.image_select_subject",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.document_render_layout",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.document_convert_pdf",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.video_render",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.video_create_quick_cut",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.video_resize",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.find_fonts",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.font_recommend",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.asset_search",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.search_design",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.media_enhance_speech",
+   "rel": "verb"
+  },
+  {
+   "from": "Adobe-for-creativity",
+   "to": "Adobe-for-creativity.media_summarize",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "claude-in-chrome",
+   "rel": "owns"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.navigate",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.computer",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.read_page",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.get_page_text",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.find",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.tabs_context_mcp",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.tabs_create_mcp",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.tabs_close_mcp",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.form_input",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.file_upload",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.upload_image",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.javascript_tool",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.gif_creator",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.read_console_messages",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.read_network_requests",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.resize_window",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.shortcuts_execute",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.shortcuts_list",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.select_browser",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.switch_browser",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.list_connected_browsers",
+   "rel": "verb"
+  },
+  {
+   "from": "claude-in-chrome",
+   "to": "claude-in-chrome.browser_batch",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "brightdata",
+   "rel": "owns"
+  },
+  {
+   "from": "brightdata",
+   "to": "brightdata.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "brightdata",
+   "to": "brightdata.scrape",
+   "rel": "verb"
+  },
+  {
+   "from": "brightdata",
+   "to": "brightdata.search_engine",
+   "rel": "verb"
+  },
+  {
+   "from": "brightdata",
+   "to": "brightdata.web_data",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "neon",
+   "rel": "owns"
+  },
+  {
+   "from": "neon",
+   "to": "neon.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "neon",
+   "to": "neon.run_sql",
+   "rel": "verb"
+  },
+  {
+   "from": "neon",
+   "to": "neon.list_projects",
+   "rel": "verb"
+  },
+  {
+   "from": "neon",
+   "to": "neon.create_branch",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "sentry",
+   "rel": "owns"
+  },
+  {
+   "from": "sentry",
+   "to": "sentry.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "sentry",
+   "to": "sentry.list_issues",
+   "rel": "verb"
+  },
+  {
+   "from": "sentry",
+   "to": "sentry.issue_details",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "tavily",
+   "rel": "owns"
+  },
+  {
+   "from": "tavily",
+   "to": "tavily.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "tavily",
+   "to": "tavily.search",
+   "rel": "verb"
+  },
+  {
+   "from": "tavily",
+   "to": "tavily.extract",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "DataHub",
+   "rel": "owns"
+  },
+  {
+   "from": "DataHub",
+   "to": "DataHub.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Listen-Labs",
+   "rel": "owns"
+  },
+  {
+   "from": "Listen-Labs",
+   "to": "Listen-Labs.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Miro",
+   "rel": "owns"
+  },
+  {
+   "from": "Miro",
+   "to": "Miro.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "Wrike",
+   "rel": "owns"
+  },
+  {
+   "from": "Wrike",
+   "to": "Wrike.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "tldv",
+   "rel": "owns"
+  },
+  {
+   "from": "tldv",
+   "to": "tldv.authenticate",
+   "rel": "verb"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.cloudflare-deploy",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.develop-web-game",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.doc",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.figma",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.figma-implement-design",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.gh-address-comments",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.gh-fix-ci",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.google-code-wiki",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.imagegen",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.jupyter-notebook",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.linear",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.netlify-deploy",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.notion-knowledge-capture",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.notion-meeting-intelligence",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.notion-research-documentation",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.notion-spec-to-implementation",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.openai-docs",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.pdf",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.playwright",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.render-deploy",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.screenshot",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.security-best-practices",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.security-ownership-map",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.security-threat-model",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.sentry",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.sora",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.speech",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.spreadsheet",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.system-skill-creator",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.system-skill-installer",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.system-slides",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.system-spreadsheets",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.transcribe",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.vercel-deploy",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-OMC",
+   "to": "omc.yeet",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-SYMPHONY",
+   "to": "symphony-linear-orchestrator",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-CONNECTOR",
+   "to": "leader-connector-catalog",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-ASOLARIA-ROOT",
+   "to": "asolaria-original-root-repo",
+   "rel": "owns"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "PROF-OMC",
+   "rel": "sub-prof"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "PROF-SYMPHONY",
+   "rel": "sub-prof"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "PROF-CONNECTOR",
+   "rel": "sub-prof"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "PROF-ASOLARIA-ROOT",
+   "rel": "sub-prof"
+  },
+  {
+   "from": "PROF-MCP",
+   "to": "higgsfield",
+   "rel": "owns"
+  }
+ ],
+ "higgsfield_absorption": {
+  "server_pid": "08e042981df36dda",
+  "verbs": 12,
+  "cubes": [
+   "cube:higgsfield:soul_generate",
+   "cube:higgsfield:soul_list_styles",
+   "cube:higgsfield:image_to_video",
+   "cube:higgsfield:text_to_video",
+   "cube:higgsfield:list_motions",
+   "cube:higgsfield:apply_motion",
+   "cube:higgsfield:speak",
+   "cube:higgsfield:list_effects",
+   "cube:higgsfield:apply_effect",
+   "cube:higgsfield:upscale",
+   "cube:higgsfield:get_status",
+   "cube:higgsfield:list_generations"
+  ],
+  "law": "ABSORB don't fix; capability catalogued as OUR cubes + glyphs, gated fire=0"
+ }
+}

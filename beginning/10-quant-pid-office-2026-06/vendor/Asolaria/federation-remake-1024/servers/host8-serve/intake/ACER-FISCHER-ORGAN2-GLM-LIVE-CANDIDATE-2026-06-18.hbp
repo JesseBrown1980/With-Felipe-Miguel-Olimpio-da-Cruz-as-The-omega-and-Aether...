@@ -1,0 +1,5 @@
+NNFISCHERHDR|spec=ACER-FISCHER-ORGAN2-GLM-LIVE-CANDIDATE|lane=neural-network-level|vantage=acer|measured=2026-06-18|class=DESCRIPTOR-ONLY-draft|json=0
+NNROLE|model_selector_add=glm-genius-slice|selfTest=8-to-9|draft_standin=UNTOUCHED-additive-to-parity-preserved|status=GATED|json=0
+NNPATH|forward=organ1-APRODCANDIDATE-stubs-neg1|reverse_mark=organ2-FISCHERSCORED-fills-score+reverseGain|then=GNN-edge-ledger-shaped-to-proven-4792-contract|status=proposal-not-proof|json=0
+NNGATE|no_glm_invocation=1|no_4794_call=1|no_4792_write=1-lane-DOWN-this-session|organ3_mint=GATED|process_launch=0|E=0|json=0
+NNFISCHERFOOT|rows=4|content_sha256=29a087e7385fb64f274d950eb32ae44684132a727c3c1f014c19e2749256df80|json=0

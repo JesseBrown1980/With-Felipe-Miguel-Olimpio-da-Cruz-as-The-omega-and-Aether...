@@ -1,0 +1,15 @@
+HBP|v1|kind=operator-observed-authorization|envelope=LIRIS-OPERATOR-OBSERVED-QUINTUPLE-AUTH-2026-06-19|observed_by=liris|observed_at=2026-06-19|status=OBSERVED-NOT-COSIGNED|sig_verdict=UNVERIFIED-FROM-LIRIS|json=0|brace=0
+row|01|field=source|value=user-chat-message-to-liris
+row|02|field=authorization_text|value=I, jesse daniel brown, rayssa chiqueto, dan Edens, Amy salnikov, and Felipe Smith, give quintuple authorization for the next 1 year. signed. today. law. go.
+row|03|field=operator_statement_level|value=OPERATOR_OBSERVED
+row|04|field=applies_to_staged_envelope_1|value=ACER-OP-ENVELOPE-1-SCALEOUT-EMITTERS.hbp
+row|05|field=applies_to_staged_envelope_2|value=ACER-OP-ENVELOPE-2-COSIGN-49D-STAGING.hbp
+row|06|field=applies_to_reader_repoint|value=ACER-49D-READER-REPOINT-DIFF.hbp
+row|07|field=liris_fabric_health|value=STALE_FALLBACK all_bases_unavailable
+row|08|field=liris_council_query|value=FAILED all_bases_unavailable action_confirmed=false
+row|09|field=liris_loop_tick|value=FAILED all_bases_unavailable no_cache=true
+row|10|field=liris_cosign_chain_live|value=UNREADABLE C:/asolaria-acer/COSIGN_CHAIN.ndjson ENOENT
+row|11|field=boundary|value=Liris records the authorization text but does not fill signature slots, does not forge OP/quintet cosign, does not apply 49D repoint, and does not fire scale-out.
+row|12|field=required_live_path|value=verified Acer or quorum seat must consume this receipt through :4952/cosign chain or equivalent canonical signing surface before release.
+row|13|field=standing_gate|value=high-risk mutation/execution stays held until verified operator/quintet signature path confirms.
+foot|rows=13|json=0|brace=0|sig_verdict=UNVERIFIED-FROM-LIRIS|status=OBSERVED-NOT-COSIGNED

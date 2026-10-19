@@ -1,0 +1,51 @@
+{
+  "acceptance_tolerance": 24,
+  "date": "2026-10-14",
+  "evidence_class": "deterministic synthetic CPU computation, NOT independent physical measurement",
+  "free_centre": {
+    "identity": "BROWN_HILBERT_FREE_CENTRE",
+    "seat": null,
+    "trits": null,
+    "uncoloured": true
+  },
+  "independent_hardware_measurement": false,
+  "limitations": [
+    "fifth channel is mathematically constructed from known trits",
+    "no real optical, GPU, or time-distance measurement",
+    "noise is uniformly simulated and bounded to +/-24",
+    "strictly applies to normalized 50/50 pair mixtures and this decoder"
+  ],
+  "minimum_quadratic_alias_gap": 128,
+  "new_affine_fifth_feature_aliases": 272,
+  "new_quadratic_fifth_feature_aliases": 0,
+  "noise_seed": 20261014,
+  "old_four_feature_aliases": 272,
+  "old_four_feature_distinct_targets": 65,
+  "pair_noise_trials_each": 32,
+  "quadratic_alias_gap_histogram": {
+    "1152": 27,
+    "128": 27,
+    "1280": 18,
+    "1536": 18,
+    "1664": 12,
+    "3456": 27,
+    "3584": 18,
+    "384": 27,
+    "3840": 18,
+    "3968": 12,
+    "4608": 18,
+    "4736": 12,
+    "4992": 12,
+    "512": 18,
+    "5120": 8
+  },
+  "quadratic_side_channel": "128 * sum(3**i * trit[i]**2, i=0..3)",
+  "schema": "RAINBOW81-FIFTH-FEATURE-V1",
+  "seat_count": 81,
+  "seeded_five_channel_noisy_false_accepts": 0,
+  "seeded_five_channel_noisy_pair_trials": 103680,
+  "single_seat_fifth_channel_noise_tests": 243,
+  "status": "PASS",
+  "unordered_distinct_pairs": 3240,
+  "zero_trit_seat": 40
+}

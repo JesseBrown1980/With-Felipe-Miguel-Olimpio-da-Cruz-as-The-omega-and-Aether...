@@ -1,0 +1,60 @@
+{
+  "schema": "ASOLARIA-SEAT1-COMPLEMENTARY-VIEWS-RECOVERY-V1",
+  "date": "2026-10-15",
+  "seat": "seat-1",
+  "participant": "computational_only",
+  "physical_host_independently_attested": false,
+  "physical_three_host_challenge_issued": false,
+  "input_challenge": "experiments/seat1/TRIAD-27-CHALLENGE-20261014.json",
+  "input_challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "pre_registration": "experiments/seat1/PREREG-MULTIVIEW-81-20261015.md",
+  "laws": [
+    "CA150",
+    "CA90",
+    "CA60",
+    "CA102",
+    "TAP0",
+    "TAP1",
+    "TAP4"
+  ],
+  "horizons": [
+    1,
+    10000000000000,
+    10000000000001,
+    10000000000081
+  ],
+  "view_configurations_per_horizon": 28,
+  "rank_cases": 112,
+  "original_sources_per_configuration": 191,
+  "exact_reconstructions": 21392,
+  "zero_side_bit_reconstructions": 4584,
+  "one_side_bit_reconstructions": 16044,
+  "two_side_bit_reconstructions": 764,
+  "kernel_collision_witnesses": 96,
+  "wrong_tag_controls": 88,
+  "no_gain_from_later_same_law_outputs": 14,
+  "rank_predictions": {
+    "CA150_only": 79,
+    "other_six_singletons": 80,
+    "CA150_plus_each_other_lossy_law": 81,
+    "pair_of_other_six_lossy_laws": 80
+  },
+  "source_algorithms": [
+    "Python independent GF2 cyclic polynomial",
+    "Node.js independent 81x81 transfer matrix"
+  ],
+  "python_node_trace_byte_identical": true,
+  "trace_size_bytes": 4180845,
+  "trace_sha256": "17f25be31a6f419d98db31d70f63aea2e3dffad00c44453b963bdfbaedb8683c",
+  "github_actions_url": "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38704260730",
+  "github_actions_ubuntu": "PASS",
+  "github_actions_windows": "PASS",
+  "interpretation": "Two different lossy views may jointly recover the exact source if their kernel intersection is zero; repeated later observations of the same map cannot repair earlier information loss.",
+  "excluded_claims": [
+    "no recovery from a single collapsed output without extra data",
+    "no compression ratio improvement",
+    "no new blinded challenge nonce",
+    "no independent physical-host attestation",
+    "no physical light gravity quantum or FTL measurement"
+  ]
+}

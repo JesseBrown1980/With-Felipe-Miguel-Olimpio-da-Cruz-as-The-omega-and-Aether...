@@ -1,0 +1,13 @@
+PORTAL|schema=ASOLARIA-SEAT3-AUGUST-LIGHTBANK-STONE-V1|date=2026-10-15|seat=3|json=0
+PREREG|commit=1db86832abbc32228f0b83334f60ceb7facbac37|new_b1b2_memory_trial=1|json=0
+B1|source_pr=53|commit=c1fc2c85e5684d2c1190662ba57e889d996b792b|bytes=611999|sha256=de2c346a92e626403cc5c59b9ffa688d050163fbb48ab8b1cb6a4cde795b0a8b|json=0
+B2|source_pr=62|commit=f6df567f9d36697f2fc895167c04ac3c46152409|bytes=365671|sha256=435eccff256d119e608926ba3f3ec46a961d9f0d18801c440de2c3552200101d|json=0
+FORMAT|source_bytes=977670|fischer_index_u32le=1|chunk_payload_bytes=2100|indexed_packets=466|rgb_frames=156|lane_counts=156,155,155|json=0
+LAW|projector=P:I-J/3|rank=2|shared_sum_retained=1|projection_alone_is_lossy=1|triple_stored_bytes=6|source_triple_bytes=3|json=0
+MEMORY|rgb_banks=3|capacity_each=729|source_packets_evicted=0|churn_writes=756|churn_evictions=27|evicted_without_archive=HELD|json=0
+STICK|bytes=1978290|sha256=54bd7fbd5de20dee1cc409b8e1fa52ea0c2bdbf64777adf1abd2cf5077fac5f2|cold_cross_language_decode=PASS|json=0
+RECEIPT|bytes=65621|sha256=c1cfdeca37da66b91f38da617081b0836ed8b9036eed3cf10e0fdd2539ab57cc|hbi_sha256=595868d29142a1e6857dde29cf3fa38ebfac1bafd844e1c02a1e6cc789e144b4|json=0
+NEGATIVE|actually_held=9|projection_only=AMBIGUOUS_HELD|consistent_fake_source_local_math_green_origin_unauthenticated=1|json=0
+CI|run=38734497453|ubuntu_windows=4/4_PASS|python=3.11,3.13|node=22|corrupted_stick_rejected_both_readers=4/4|json=0
+BOUNDARY|real_qr_raster=0|camera=0|physical_photon_storage=0|compression=0|source_authenticated=0|physical_host_attested=0|json=0
+END|original_frozen_sources_unchanged=1|physical_release_issue10=OPEN|peer_review=PENDING|json=0

@@ -1,0 +1,50 @@
+{
+  "schema": "ASOLARIA-SEAT1-CROSSVIEW-PROVENANCE-V1",
+  "date": "2026-10-15",
+  "seat": "seat-1",
+  "evidence_class": "synthetic public-input software GF2 negative controls",
+  "preregistration": "experiments/seat1/PREREG-CROSSVIEW-PROVENANCE-20261015.md",
+  "frozen_source": "experiments/seat1/TRIAD-27-CHALLENGE-20261014.json",
+  "frozen_source_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "reference_prior_seat1_pr": 22,
+  "reference_seat3_triad_replay_pr": 21,
+  "law_a": "CA150",
+  "law_b": [
+    "CA90",
+    "CA60",
+    "CA102",
+    "TAP0",
+    "TAP1",
+    "TAP4"
+  ],
+  "horizons": [
+    1,
+    10000000000000,
+    10000000000001,
+    10000000000081
+  ],
+  "joint_rank81_pairs": 24,
+  "sources_per_pair": 191,
+  "case_level_checks": 18336,
+  "valid_common_source_roundtrips": 4584,
+  "mathematically_inconsistent_mismatches_rejected": 4584,
+  "source_identity_substitutions_accepted_as_different_valid_source": 4584,
+  "invisible_second_source_mismatches": 4584,
+  "python_node_exact_byte_agreement": true,
+  "operating_systems": [
+    "ubuntu-latest",
+    "windows-latest"
+  ],
+  "github_ci_run": 38705591885,
+  "full_trace_bytes": 4320118,
+  "full_trace_sha256": "b8ca261a6e0e4712e7457af80b8136e19d218a9edbec796730006670d07045a1",
+  "full_trace_artifacts": "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38705591885",
+  "interpretation": "Joint injectivity does not authenticate source identity. An inconsistent composite observation may be rejected, but an adversary can manufacture consistent observations from different originals; changed B inputs can also be invisible under its kernel.",
+  "limitations": {
+    "physical_host_attested": false,
+    "new_three_physical_host_challenge_issued": false,
+    "scientific_physical_measurement": false,
+    "compression_gain_observed": false,
+    "cryptographic_source_authentication_established": false
+  }
+}

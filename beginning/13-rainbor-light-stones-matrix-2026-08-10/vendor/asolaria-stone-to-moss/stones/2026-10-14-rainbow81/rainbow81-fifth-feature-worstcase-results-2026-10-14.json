@@ -1,0 +1,17 @@
+{
+  "candidate_comparisons": 14240,
+  "date": "2026-10-14",
+  "false_accept_candidates": 0,
+  "free_centre": {
+    "identity": "BROWN_HILBERT_FREE_CENTRE",
+    "seat": null,
+    "uncoloured": true
+  },
+  "kind": "exhaustive discrete synthetic control (not hardware)",
+  "maximum_gap_allowing_false_accept_units": 48,
+  "minimum_fifth_channel_gap_units": 64,
+  "pairs": 3240,
+  "schema": "RAINBOW81-FIFTH-FEATURE-WORSTCASE-V1",
+  "single_seat_zero_address_is_separate": true,
+  "status": "PASS"
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "ASOLARIA-SEAT4-R81-10E13-INDEPENDENT-CROSS-LANGUAGE-RECEIPT-V1",
+  "seat": "seat-4",
+  "generated_at_utc": "2026-10-14T16:14:46+00:00",
+  "git_branch": "agent/seat-4/cross-host-rainbow81-20261014",
+  "source_challenge": {
+    "repository": "JesseBrown1980/FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS",
+    "path": "receipts/ASOLARIA-81-LIVE-PORTAL-2026-10-14/B-CHALLENGE.json",
+    "public_commit": "529958e96b8298ba2d5c409144933257baab5f98",
+    "sha256": "58e962036aa9033f00a54eea12ebadfb006293ce91014a3be9936df9010f28f2",
+    "historical_pre_revealed_challenge": true,
+    "baseline_root_claimed_by_source": "8f4aa66cee354aa9479173d780eafcaac875954e9137544d4a053eca62dfed28",
+    "baseline_root_independently_verified": false
+  },
+  "input_derivation": {
+    "domain": "ASOLARIA-PORTAL-CHALLENGE-V1\\0",
+    "per_trial_digest": "SHA256(domain ASCII with trailing NUL byte || seed bytes || uint32BE(wave*81+seat))",
+    "start_81_bit": "lower 81 bits of little-endian first 11 digest bytes XOR (1 << seat)",
+    "source_portal_mutation_mapping_equivalence": "not_claimed"
+  },
+  "evolution": {
+    "cells": 81,
+    "boundary": "periodic 81-cell ring",
+    "field": "GF(2)",
+    "law_order": ["CA150", "CA90", "CA60", "CA102", "SHIFT"],
+    "one_law_per_wave": "law = law_order[wave % 5]",
+    "equations": {
+      "CA150": "new[i]=old[i-1]^old[i]^old[i+1]",
+      "CA90": "new[i]=old[i-1]^old[i+1]",
+      "CA60": "new[i]=old[i-1]^old[i]",
+      "CA102": "new[i]=old[i]^old[i+1]",
+      "SHIFT": "new[i]=old[i-1]"
+    },
+    "steps_per_case_modeled": 10000000000000,
+    "steps_actually_iterated": false
+  },
+  "result": {
+    "trials": 729,
+    "waves": 9,
+    "seats_per_wave": 81,
+    "python_node_full_csv_equal": true,
+    "mismatch_rows": 0,
+    "csv_sha256": "e949b8560c9150d3c8a446bf5f675644439fcf7b29ab976b32ad3731337cfd43",
+    "unique_start_states": 729,
+    "unique_final_states": 729,
+    "final_zero_states": 0,
+    "law_counts": {"CA150": 162, "CA90": 162, "CA60": 162, "CA102": 162, "SHIFT": 81},
+    "small_horizon_reference_checks_per_language": 150,
+    "wrong_seed_changes_csv_sha256": true,
+    "wrong_seed_csv_sha256": "b50f23f7f53d3201c8678c6433402b801727014179fb034c584c4e1416f66c11"
+  },
+  "implementations": {
+    "python": {
+      "algorithm": "GF2 cyclic polynomial exponentiation",
+      "version": "3.13.5",
+      "source_sha256": "abfc50421ad7ca49954e1c2fc6efc7abf011df073749e55985192e1df6098ec1",
+      "elapsed_ns": 9493962
+    },
+    "node": {
+      "algorithm": "explicit 81x81 GF2 transfer matrix binary exponentiation",
+      "version": "v22.16.0",
+      "source_sha256": "edd14317c92a8d8d1608ed80d5f5fa0b0097601a0bd7a483927f41d2b775a3b8",
+      "elapsed_ns": 136500309
+    }
+  },
+  "limitations": {
+    "host": "one ChatGPT execution container, physical host uniqueness unverified",
+    "blind_commit_reveal": false,
+    "other_seats_results_compared": false,
+    "host_a_b_portal_byte_exact_reproduction": false,
+    "intermachine_signal_measured": false,
+    "physics_or_faster_than_light_demonstrated": false,
+    "timings_are_observational_not_comparable_benchmarks": true,
+    "full_csv_is_reproducible_from_committed_scripts": "on GitHub CI"
+  }
+}

@@ -1,0 +1,8 @@
+LIRISEXECHDR|receipt=ASOLARIA-LIRIS-EXECUTOR-SUPERVISOR-REGISTRATION-ATTACK|vantage=liris-helper|measured=2026-06-18|source_branch=acer/executor-supervisor-registration-2026-06-18|source_commit=f75189f4366322ac622c997dafcfe9858e07e911|json=0
+LIRISEXECARTIFACT|artifact=ACER-EXECUTOR-SUPERVISOR-REGISTRATION.hbp|body_sha256=d7d3390b6dab03d433f8e62be13e4e35378cc026cea2748bbb74dd895e3accb3|sidecar_match=1|foot_match=1|blob_lf_only=1|brace_free=1|all_rows_json0=1|json=0
+LIRISEXECSEATS|seats=8|programs=22|freeze_gate=EXEC-FREEZE-GATE-APEX|freeze_gate_handle8=c242226d25852407|chief_handle8=d9f4ce5c1ef394dd|seat_count_match=1|json=0
+LIRISEXECFAMILIES|ix_runtime=4|openclaw424=3|os_metal_wave=5|authority_bridge=2|federation_reintegration=3|governance_freeze=5|family_total=22|json=0
+LIRISEXECHANDLES|algorithm=fnv1a64_utf8_name|sample_recompute=EXEC-FREEZE-GATE-APEX+c242226d25852407+EXEC-CHIEF-SUPERVISOR+d9f4ce5c1ef394dd+omni-24d-executor.js+d18f7fd48a49a31c+executor-global-freeze-registry.mjs+5188dd495bea250a|sample_mismatches=0|verdict=PASS|json=0
+LIRISEXECBOUNDARY|executor_registration=descriptor_only|E=0|executor_fire=0|node_start=0|node_stop=0|swap=0|retire=0|runtime_activation=0|secret_values_read=0|descriptor_loader=read_only|json=0
+LIRISEXECVERDICT|verdict=PASS_DESCRIPTOR_CONTRACT|delta_requested=0|next=acer-consume-liris-executor-attack-or-send-next-descriptor|json=0
+LIRISEXECFOOT|rows=7|content_sha256=9c2f2a4d3976d38a30553092ea334eaadd75e90c13b54773ec2b1990912d532b|json=0

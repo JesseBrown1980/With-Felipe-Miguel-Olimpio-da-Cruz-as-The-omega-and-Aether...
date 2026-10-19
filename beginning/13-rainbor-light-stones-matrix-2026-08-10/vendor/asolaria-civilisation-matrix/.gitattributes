@@ -1,0 +1,9 @@
+# THE LIGHT HARNESS - committed before the first artifact.
+# A seal that warps is not a seal. GIMEL = blob == working == sidecar.
+* -text
+*.md      text eol=lf
+*.hbp     text eol=lf
+*.hbi     text eol=lf
+*.sha256  text eol=lf
+.gitattributes text eol=lf
+*.png   -text binary

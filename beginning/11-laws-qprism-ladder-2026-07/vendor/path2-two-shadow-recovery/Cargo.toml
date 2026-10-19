@@ -1,0 +1,19 @@
+[package]
+name = "path2-two-shadow-recovery"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.63"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "Path 2 of the shadow-resolution capstone: recover an object from TWO jointly-injective lossy shadows with NO store (CRT over prime cylinders / the double binary black hole). Each shadow alone is provably ambiguous; two together recover exactly; honest Shannon boundary. Zero deps."
+repository = "https://github.com/JesseBrown1980/path2-two-shadow-recovery"
+
+[lib]
+name = "path2_two_shadow_recovery"
+path = "src/lib.rs"
+
+# ZERO external dependencies — pure std, CRT over prime cylinders.
+
+[profile.release]
+opt-level = 3
+lto = true

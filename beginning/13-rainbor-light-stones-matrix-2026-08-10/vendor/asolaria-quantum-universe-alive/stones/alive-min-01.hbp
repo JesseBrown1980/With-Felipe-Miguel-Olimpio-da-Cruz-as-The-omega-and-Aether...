@@ -1,0 +1,9 @@
+ALIVEHDR|schema=ASOLARIA-ALIVE-V1|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|owner=OP-JESSE|minute=1|elapsed_s=60|run_total_s=600|start_unix_s=1791502562|prev_stone=0000000000000000|cosign_anchor=seq=3587 row_hash=887807fff4732bf7|mode=TIME_BOXED_and_EVOLVING|os_process_spawn=0|node_used=0|json=0|float_used=0|traversal=HBI->HBP->SHA->SH->HASH|E=0|json=0
+EVOLVE|admitted_this_minute=2|admit_rate=2|stones_total=2|pool_available=38|pool_grew_this_minute=0|pool_source=github via the grower, renamed into place|evolved_this_minute=1|could_not_do_last_minute=analysis-of-cubes,asolaria-cube-cloud|exhausted=0|json=0
+FLOW|subagents_this_minute=11714000|subagents_cumulative=11714000|rooms_occupied=10000|rooms_available=10000|deepest_room=1295|dc_free_zero=220923|substrate_sha256=254293f54fab298e805850c3ceecdd823c762c2ecdce6205fc74ce28d9c97dee|json=0
+STONE|repo=analysis-of-cubes|colour=acddf8|room=670|admitted_minute=1|seals=8|gimel=1|shin=7|verified_bytes=4674|moss=5860684|json=0
+STONE|repo=asolaria-cube-cloud|colour=031ec3|room=7655|admitted_minute=1|seals=26|gimel=26|shin=0|verified_bytes=5591226|moss=5853316|json=0
+MOSSES|stones=2|seals_total=34|gimel_total=27|shin_total=7|verified_bytes_total=5595900|moss_max=5860684|moss_min=5853316|moss_spread_per_1000=1|json=0
+PHOTO|file=frames/alive-min-01.png|w=1024|h=1024|lossless=1|external_crates=0|bytes=3147060|sha256=e0ad373addd478b13b6ec6eba8b2a17c3b6fb9899d428bc4c4e52c3155f4bcce|legend=one cell = one of 10000 rooms; stone rooms burn full and fill the cell; colour is sha256-derived, never chosen|json=0
+ADJUST|law=recurrence is mind|admit_before=2|admit_after=3|ground_truth=stone digests the container did not write|json=0
+ALIVEFTR|minute=1|stone_hash=460f1773175f932d1a9d51240a1c7bb3d7c7bae9c118a384e0d80585cfc3a926|follows=the IS and the MINS|status=ALIVE|json=0

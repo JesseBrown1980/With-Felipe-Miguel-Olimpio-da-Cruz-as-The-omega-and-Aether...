@@ -1,0 +1,67 @@
+{
+  "schema": "RAINBOW81-ADVERSARIAL-MIXTURES-V1",
+  "date": "2026-10-14",
+  "seat": "seat-3",
+  "status": "PASS",
+  "evidence_class": "synthetic CPU calculations of an algebraically constructed fifth signal; no hardware physics",
+  "prereg": "experiments/PREREG-fifth-feature-adversarial-waves-2026-10-14.md",
+  "source": "experiments/test_rainbow81_adversarial_mixtures.py",
+  "source_commit": "b0eff1f8d3062c6179c246197a00d715e5f78460",
+  "ci_run": "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38585699927",
+  "ci_jobs": [
+    "Python 3.11 SUCCESS",
+    "Python 3.13 SUCCESS"
+  ],
+  "original_equal_weight": {
+    "pairs": 3240,
+    "four_aliases": 272,
+    "affine_survivors": 272,
+    "quadratic_survivors": 0
+  },
+  "unequal_weight": {
+    "pair_cases": 411480,
+    "four_accepted": 384160,
+    "five_accepted": 42688,
+    "five_accepted_mid_weights": 14500,
+    "accepted_weight_count": 112,
+    "example": {
+      "a": 0,
+      "b": 2,
+      "weight_numerator": 1,
+      "denominator": 128,
+      "decoded_seat": 2
+    }
+  },
+  "three_body": {
+    "triples": 85320,
+    "four_exact_aliases": 1080,
+    "four_with_tolerance": 85320,
+    "five_with_tolerance": 748,
+    "example": {
+      "a": 0,
+      "b": 1,
+      "c": 54,
+      "decoded_seat": 27
+    }
+  },
+  "adversarial": {
+    "bounded_noise_feasible_four": 411480,
+    "bounded_noise_feasible_five": 123904,
+    "feasible_weight_count": 126,
+    "per_channel_error_bound": 24,
+    "acceptance_bound": 24,
+    "example": {
+      "a": 0,
+      "b": 1,
+      "weight_numerator": 1,
+      "denominator": 128,
+      "decoded_seat": 1
+    }
+  },
+  "meaning": "constructed fifth nonlinear feature rejects all original exact 50:50 pair aliases, but does not reject every unequal or triple mixture; adversarial feasibility is not a random noise frequency",
+  "brown_hilbert_free_center": {
+    "seat": null,
+    "uncoloured": true
+  },
+  "physical_nonlocality_demonstrated": false
+}

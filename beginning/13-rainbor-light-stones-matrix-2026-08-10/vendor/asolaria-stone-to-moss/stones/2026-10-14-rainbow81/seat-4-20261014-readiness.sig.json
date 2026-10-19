@@ -1,0 +1,11 @@
+{
+  "public_key_ed25519_b64": "lUku+tIB9e9hq1ZnBBjoHGd1GroxbRazV0AMoC1UHkg=",
+  "public_key_fingerprint_sha256": "148ff70123110be98cbf0b94a4899b3f6ce9972e39a7c318c4531b5ca80b6fb5",
+  "schema": "ASOLARIA-SEAT4-RECEIPT-ED25519-V1",
+  "seat": "seat-4",
+  "signature_ed25519_b64": "C7cfWapk1ZHOFbFG6vQ88AXoCU7j6FFPm3ukub40cXRUHJ6VUejjjKwU+Jd+cyjBSNNpzEz57AD08wzYpYFHAg==",
+  "signature_format": "raw exact UTF-8 file bytes",
+  "signature_verified_locally": true,
+  "signed_file": "stones/2026-10-14-rainbow81/seat-4-20261014-readiness.json",
+  "signed_file_sha256": "62cb8d1fe6c4a345a933c976880ce0072e8c623290dd3d940fe074efb1eee3aa"
+}

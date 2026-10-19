@@ -1,0 +1,10 @@
+PORTAL|schema=ASOLARIA-SEAT3-AUTONOMOUS-IDENTITY-STONE-V1|date=2026-10-15|seat=3|json=0
+SOURCE|prereg_commit=f1ea18fa24632e7ac5840316c658053af6e4a308|nnest_commit=307903651f56e8a28ef98ca36aef22ee8cda935c|law_blob_sha1=f84710d3018882b7282b9fda227638c57568ffe4|json=0
+WORKLOAD|initial_entities=81|ticks=1080|virtual_spawns=27|final_entities=108|max_depth=7|prompts_per_tick=0|json=0
+CORRECTIONS|tick31=light|tick401=phase|tick799=position|tick1000=identity|detected=4|corrected=4|json=0
+OPERATOR|halt_before_tick=777|no_advance=1|authorized_resume=1|unprivileged_resume_held=1|external_hardware_held=1|child109_held=1|json=0
+WORLD|baseline_faulted_and_resumed_identical=1|sha256=b756cece77eca7ad2b7bd19ea4c57bca8c73ffe117a0940c1021f4272ff020f0|json=0
+TRACE|bytes=121239|sha256=7dfed579564a17c11e9291194819dae4dc9aa8749c297cbf356c0fd6e887ecff|json=0
+CI|run=38720117338|os=ubuntu,windows|python=3.11,3.13|node=22|jobs=4/4_PASS|tamper_held=4/4|artifacts=4|json=0
+BOUNDARY|synthetic_digital_light=1|physical_light_proved=0|physical_hosts_attested=0|real_human_authentication=0|upstream_nnest_native_external_leaf=0|http_wasm_runtime=0|json=0
+END|immutable_old_stones=1|peer_review=pending|release_gate=OPEN|json=0

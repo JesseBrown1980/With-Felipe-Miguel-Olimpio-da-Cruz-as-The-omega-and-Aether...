@@ -1,0 +1,9 @@
+{
+  "schema": "ASOLARIA-3-PHYSICAL-SEAT-ATTEST-V1",
+  "seat": "seat-3",
+  "public_fingerprint_sha256": "da86c67b80ebe6063233739e878ebbecd9988f5c2d719d50d83a8d0c4751fc75",
+  "salt_commitment_sha256": "1e14999e1c037150720d14e246b5a6b8ec6f4b58ab6da4134b560709cca60ebe",
+  "created_utc": "2026-10-14T16:33:50.561Z",
+  "stage": "PRE_CHALLENGE_COMMITMENT",
+  "signature_b64": "Ul1xHmANBWmRbGpjJdm5kcUwgx9Hj8+q2cojjWK7+DfNNMuL9b91E4mLpXGYqrl/fwMMSuOJ+uK6wa/vsqEsCg=="
+}

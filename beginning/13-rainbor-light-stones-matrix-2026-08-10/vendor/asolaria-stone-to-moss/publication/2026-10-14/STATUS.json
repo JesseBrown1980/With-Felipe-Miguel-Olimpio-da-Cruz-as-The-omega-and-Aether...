@@ -1,0 +1,155 @@
+{
+  "schema": "ASOLARIA-FOUR-SEAT-COMPUTATIONAL-COMPLETION-V1",
+  "as_of": "2026-10-14",
+  "coordinator_mode": "public GitHub provenance; no physical host custody",
+  "publication": {
+    "public_technical_report": "published",
+    "path": "publication/2026-10-14/REPORT.md",
+    "github_archive": "complete",
+    "huggingface_verified": "not_done",
+    "huggingface_existing_repo": "Jessedbrown/asolaria-wasm81-rainbow-audit",
+    "huggingface_tests_repo": "not_found",
+    "last_verified_hf_upload_run": 38591770211,
+    "last_verified_hf_upload": "failed_missing_GitHub_Actions_HF_TOKEN",
+    "credential_action": "GitHub repository administrator must configure a NEW protected write-scoped HF_TOKEN secret and rerun publish-and-download-verify workflow",
+    "journal_peer_review": "not_done",
+    "doi": "not_issued",
+    "license_and_authorship_review": "pending"
+  },
+  "seats": [
+    {
+      "seat": 1,
+      "role": "computational",
+      "software_status": "complete",
+      "physical_host_independently_attested": false,
+      "pr": 8,
+      "pr_merged": true,
+      "case_count": 4860,
+      "passed": 4860,
+      "ci_run": 38600483453,
+      "result_sha256": "031367b1da1a368dc7471141a9799b79c694a0c9900f65a047438ccaa5f76600",
+      "law_family": "new_five_GF2_stress_taps",
+      "ed25519_public_signature": "independently_verified",
+      "note": "Ephemeral container signing key, cannot count as physical-host precommit"
+    },
+    {
+      "seat": 2,
+      "role": "computational",
+      "software_status": "reported_complete_partial_peer_audit",
+      "physical_host_independently_attested": false,
+      "pr": 9,
+      "pr_merged": true,
+      "reported_case_count": 1620,
+      "reported_passed": 1620,
+      "reported_smallsteps_passed": 1215,
+      "law_family": "CA150_CA90_CA60_CA102_SHIFT",
+      "ed25519_public_signature": "unresolved_signed_bytes_canonicalization",
+      "note": "Published SHA sidecars and reference changed-bit counts cross-audited; full claimed Python/Node witness not rerun by this publication audit"
+    },
+    {
+      "seat": 3,
+      "role": "computational",
+      "software_status": "complete",
+      "physical_host_independently_attested": false,
+      "pr": 7,
+      "pr_merged": true,
+      "case_count": 4860,
+      "passed": 4860,
+      "ci_run": 38599964836,
+      "result_sha256": "031367b1da1a368dc7471141a9799b79c694a0c9900f65a047438ccaa5f76600",
+      "law_family": "new_five_GF2_stress_taps",
+      "ed25519_public_signature": "independently_verified",
+      "note": "Public report indicates same computational environment as Seat 2, not independent physical host"
+    },
+    {
+      "seat": 4,
+      "role": "additional_computational_observer",
+      "software_status": "complete",
+      "physical_host_independently_attested": false,
+      "pr": 5,
+      "pr_merged": true,
+      "case_count": 729,
+      "passed": 729,
+      "ci_run": 38597752716,
+      "law_family": "CA150_CA90_CA60_CA102_SHIFT",
+      "ed25519_public_signature": "independently_verified_original_public_precommit_and_secondary_receipt",
+      "note": "Old publicly revealed B challenge; fourth computational participant, not fourth physical host"
+    }
+  ],
+  "distinct_followon_software_results": [
+    {
+      "source_pr": 11,
+      "seat_label": "seat-3",
+      "experiment": "two_horizon_stress",
+      "state_rows_verified": 9720,
+      "evidence": "reproducible_software_only",
+      "full_hbp_sha256": "245ab02b30cbdd9215d161c6561adc6a6c3bf72dd3fa2cb62979b2fb74031cef",
+      "physical_device_attested": false
+    },
+    {
+      "source_pr": 14,
+      "seat_label": "seat-1",
+      "experiment": "triad_27_waves_three_horizons",
+      "state_rows_verified": 32805,
+      "evidence": "reproducible_software_only",
+      "full_hbp_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+      "physical_device_attested": false
+    },
+    {
+      "source_pr": 15,
+      "experiment": "gf2_information_retention",
+      "law_horizon_cases_verified": 40,
+      "law_families": ["legacy_CA", "new_five_tap_stress"],
+      "evidence": "computational_rank_nullspace_only",
+      "canonical_tsv_sha256": "f4a0f2f19eb72930035b92356f0b2099655ba2f0d5e4640a4c0a1df29209de78",
+      "physical_device_attested": false
+    }
+  ],
+  "experimental_conclusions": {
+    "hash_avalanche": "measured_after_explicit_software_recomputation",
+    "long_range_physical_signaling": "not_tested",
+    "gravity_emergence": "not_demonstrated",
+    "quantum_entanglement_from_asolaria": "not_demonstrated",
+    "three_physically_independent_hosts": 0,
+    "physical_common_challenge_issued": false,
+    "private_physical_seat_precommits_verified": 0
+  },
+  "outstanding": [
+    {
+      "key": "hf-publish",
+      "priority": "external_access",
+      "owner": "repository administrator",
+      "action": "Add a new write-capable HF_TOKEN as GitHub Actions protected secret, rerun upload-and-verify; do not publish token in chat or repo"
+    },
+    {
+      "key": "physical-hosts",
+      "priority": "independent_hardware",
+      "owner": "three physical device custodians",
+      "action": "Sign new physical-host attestations and prereveal commits on three separately witnessed machines"
+    },
+    {
+      "key": "seat2-signature",
+      "priority": "cryptographic_audit",
+      "owner": "Seat 2 original signing agent",
+      "action": "Publish exact bytes and domain separator (no key material) for its original Ed25519 signature and verify independently"
+    },
+    {
+      "key": "source-reconciliation",
+      "priority": "protocol",
+      "owner": "experiment coordinator",
+      "action": "Freeze exact common source/laws/input SHA for new challenge; legacy CA laws differ from new stress taps"
+    },
+    {
+      "key": "publication-credit-license",
+      "priority": "publication",
+      "owner": "repo owner",
+      "action": "Confirm author names, permission, license and desired manuscript/DOI repository before scholarly deposit"
+    },
+    {
+      "key": "empirical-physics",
+      "priority": "research",
+      "owner": "hardware experimental team",
+      "action": "Acquire independent measurements with known distance and calibrated clocks, preregistered controls"
+    }
+  ]
+}

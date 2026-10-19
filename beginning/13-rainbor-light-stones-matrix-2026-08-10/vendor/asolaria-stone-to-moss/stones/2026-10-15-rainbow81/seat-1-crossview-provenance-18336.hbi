@@ -1,0 +1,7 @@
+HBI|schema=ASOLARIA-SEAT1-CROSSVIEW-PROVENANCE-INDEX-V1|date=2026-10-15|json=0
+ARTIFACT|file=seat-1-crossview-provenance-18336.json|sha256=c1e574c2710ea19ad817e6e5945437ae382d2161533f844f55ad5b21d10696fa|json=0
+ARTIFACT|file=seat-1-crossview-provenance-18336.hbp|sha256=ec45ac34c3f0f51704302b96bf6e977b3180255010ef4bf3e70b39eee28bedc9|json=0
+TRACE|sha256=b8ca261a6e0e4712e7457af80b8136e19d218a9edbec796730006670d07045a1|bytes=4320118|json=0
+CI|run=38705591885|ubuntu=PASS|windows=PASS|json=0
+BOUNDARY|physical_host_attested=0|source_authenticated=0|json=0
+HBIEND|schema=ASOLARIA-SEAT1-CROSSVIEW-PROVENANCE-INDEX-V1|json=0

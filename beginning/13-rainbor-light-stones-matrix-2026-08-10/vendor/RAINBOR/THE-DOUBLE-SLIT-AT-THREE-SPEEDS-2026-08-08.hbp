@@ -1,0 +1,7 @@
+SLIT3SPEEDHDR|ran=double-slit-at-sound-light-instant|date=2026-08-08|by=liris|measure-not-timing|SYSTEM_AFFIRMED=0|json=0
+SLIT3PATTERN|shape-depends-on=lam/d-only|so=IDENTICAL-at-every-speed|maxima@4=1(undersampled)|maxima@81=17|maxima@273=19|json=0
+SLIT3SOUND|v=343m/s|arrival@1m=2.915ms|read=hear|propagates-the-fringes=yes|json=0
+SLIT3LIGHT|v=c|arrival@1m=3.3ns|read=see|propagates-the-fringes=yes|json=0
+SLIT3INSTANT|v=lookup|arrival@1m=0|read=hash-reads-whole-pattern-at-once|no-light-collapses-nothing|draws-fringes=no-shape-needs-a-wave|json=0
+SLIT3LAW|floor=4-gives-verdict-that-a-peak-exists|really-looking=273-resolves-all-19-fringes|json=0
+SLIT3FTR|shape=speed-invariant(wavelength-geometry)|speed-changes=WHEN-it-arrives+HOW-you-read-it|hear.see.hash|json=0

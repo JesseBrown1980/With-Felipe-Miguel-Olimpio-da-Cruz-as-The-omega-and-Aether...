@@ -1,0 +1,213 @@
+name: Glyph hyperstack first floor
+
+on:
+  pull_request:
+    paths:
+      - 'glyph-hyperstack-first-floor-v1/**'
+      - '.github/workflows/glyph-hyperstack-first-floor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  first-floor-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Compile with the standard library only
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            glyph-hyperstack-first-floor-v1/glyph_hyperstack_first_floor_v1.py \
+            glyph-hyperstack-first-floor-v1/test_glyph_hyperstack_first_floor_v1.py
+
+      - name: Run unit contract
+        run: |
+          set -euo pipefail
+          python -m unittest discover \
+            -s glyph-hyperstack-first-floor-v1 \
+            -p 'test_*.py' \
+            -v 2>&1 | tee glyph-hyperstack-first-floor-v1/unittest.log
+
+      - name: Run the 27-cube cold plus 10 x 3 self-test
+        run: |
+          set -euo pipefail
+          rm -rf glyph-hyperstack-first-floor-v1/out
+          python glyph-hyperstack-first-floor-v1/glyph_hyperstack_first_floor_v1.py \
+            selftest \
+            --cubes 27 \
+            --passes-per-cycle 10 \
+            --three-rule-cycles 3 \
+            --merges-per-pass 1 \
+            --output-dir glyph-hyperstack-first-floor-v1/out \
+            2>&1 | tee glyph-hyperstack-first-floor-v1/selftest.log
+
+      - name: Verify topology, reverse gates, and sealed receipts
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import pathlib
+          import re
+          import sys
+          from collections import Counter
+          from collections.abc import Mapping
+
+          root = pathlib.Path('glyph-hyperstack-first-floor-v1')
+          out = root / 'out'
+          sys.path.insert(0, str(root.resolve()))
+          import glyph_hyperstack_first_floor_v1 as subject
+
+          def tlv(tag, payload):
+              return tag + str(len(payload)).encode('ascii') + b':' + payload
+
+          def canonical_tlv(value):
+              if value is None:
+                  return tlv(b'N', b'')
+              if isinstance(value, bool):
+                  return tlv(b'B', b'1' if value else b'0')
+              if isinstance(value, int):
+                  return tlv(b'I', str(value).encode('ascii'))
+              if isinstance(value, float):
+                  return tlv(b'F', value.hex().encode('ascii'))
+              if isinstance(value, str):
+                  return tlv(b'S', value.encode('utf-8'))
+              if isinstance(value, bytes):
+                  return tlv(b'Y', value)
+              if isinstance(value, Mapping):
+                  pairs = []
+                  for key, item in value.items():
+                      encoded_key = canonical_tlv(key)
+                      pairs.append((encoded_key, encoded_key + canonical_tlv(item)))
+                  return tlv(b'M', b''.join(pair for _, pair in sorted(pairs)))
+              if isinstance(value, (list, tuple)):
+                  return tlv(b'L', b''.join(canonical_tlv(item) for item in value))
+              raise TypeError(type(value).__name__)
+
+          result = subject.build_first_floor(
+              subject._selftest_cubes(27),
+              passes_per_cycle=10,
+              three_rule_cycles=3,
+              merges_per_pass=1,
+              source_manifest_format='SELFTEST',
+          )
+
+          assert result['schema'] == 'ASOLARIA-GLYPH-HYPERSTACK-FIRST-FLOOR-V1'
+          assert result['evidence'] == 'SHADOW_MEASURED_NO_LIVE_PROMOTION'
+          assert result['digest_codec'] == 'HBP_TLV_V1'
+          assert result['topology']['canonical_seats'] == 27
+          assert result['topology']['input_cubes'] == 27
+          assert result['topology']['status'] == 'MEASURED_27_SEAT_FIRST_FLOOR'
+          assert result['training']['triads'] == 10
+          assert result['training']['vantages'] == 30
+          assert result['training']['passes_per_cycle'] == 10
+          assert result['training']['three_rule_cycles'] == 3
+          assert result['training']['passes_per_cube'] == 30
+          assert result['summary']['cubes_completed'] == 27
+          assert result['summary']['measured_pass_rows'] == 810
+          assert result['summary']['all_restore'] is True
+          assert result['summary']['accepted_merges'] > 0
+          assert result['summary']['held_events'] > 0
+          assert all(cube['restore'] for cube in result['cubes'].values())
+          assert result['intake']['legacy_json_intake'] == 0
+          assert result['intake']['source_manifest_format'] == 'SELFTEST'
+          assert result['formation_27_power_4']['arithmetic_objects'] == 27 ** 4
+          assert result['formation_27_power_4']['status'] == 'HELD_UNDEFINED_AXES'
+          assert result['claim_boundary']['compression_record'] == 'NOT_CLAIMED'
+          assert result['claim_boundary']['live_absorption'] == 'HELD'
+
+          body = dict(result)
+          result_hash = body.pop('result_sha256')
+          assert hashlib.sha256(canonical_tlv(body)).hexdigest() == result_hash
+          assert hashlib.sha256(canonical_tlv(subject.CANONICAL_SEATS)).hexdigest() == \
+              subject.CANONICAL_SEATS_SHA256
+          assert hashlib.sha256((root / 'canonical-l3-27.hbp').read_bytes()).hexdigest() == \
+              subject.CANONICAL_L3_HBP_SHA256
+          assert not list(out.rglob('*.json'))
+
+          for manifest_name in ('SHA256SUMS', 'SHA256SUMS.sha256'):
+              assert (out / manifest_name).is_file()
+
+          for line in (out / 'SHA256SUMS').read_text(encoding='ascii').splitlines():
+              expected, name = line.split('  ', 1)
+              body = (out / name).read_bytes()
+              assert hashlib.sha256(body).hexdigest() == expected, name
+
+          manifest_sidecar = (out / 'SHA256SUMS.sha256').read_text(
+              encoding='ascii'
+          ).strip()
+          expected, name = manifest_sidecar.split('  ', 1)
+          assert name == 'SHA256SUMS'
+          assert hashlib.sha256((out / name).read_bytes()).hexdigest() == expected
+
+          hbp_rows = (out / 'FIRST-FLOOR-RESULT.hbp').read_text(
+              encoding='utf-8'
+          ).splitlines()
+          hbi_rows = (out / 'FIRST-FLOOR-RESULT.hbi').read_text(
+              encoding='ascii'
+          ).splitlines()
+          assert all(row.endswith('|json=0') for row in hbp_rows)
+          assert all(row.endswith('|json=0') for row in hbi_rows)
+          assert len(hbp_rows) == len(hbi_rows)
+          tags = Counter(row.split('|', 1)[0] for row in hbp_rows)
+          assert tags == Counter({
+              'FIRSTFLOORHDR': 1,
+              'SEAT': 27,
+              'VANTAGE': 30,
+              'CUBE': 27,
+              'MERGE': result['summary']['accepted_merges'],
+              'PASS': 810,
+              'FORMATION': 1,
+              'COMPLETE': 1,
+          })
+          for row_number, (expected_row, hbi) in enumerate(
+                  zip(hbp_rows, hbi_rows, strict=True), 1):
+              number_match = re.search(r'\|row=(\d+)\|', hbi)
+              sha_match = re.search(r'\|sha256=([0-9a-f]{64})\|', hbi)
+              hex_match = re.search(r'\|hex=([0-9a-f]+)\|', hbi)
+              assert number_match and int(number_match.group(1)) == row_number
+              assert sha_match and hex_match
+              decoded = bytes.fromhex(hex_match.group(1))
+              assert decoded.decode('utf-8') == expected_row
+              assert hashlib.sha256(decoded).hexdigest() == sha_match.group(1)
+
+          complete = next(row for row in hbp_rows if row.startswith('COMPLETE|'))
+          assert f'|result_sha256={result_hash}|' in complete
+
+          log = (root / 'selftest.log').read_text(encoding='utf-8')
+          assert 'FIRSTFLOORVERDICT' in log
+          assert 'formation_27p4=HELD_UNDEFINED_AXES' in log
+          assert 'status=PASS' in log
+          assert f'|result_sha256={result_hash}|' in log
+          print(
+              'FIRSTFLOORCIVERIFY|cubes=27|cold=27|passes=810|triads=10|'
+              f'vantages=30|accepted={result["summary"]["accepted_merges"]}|'
+              f'held={result["summary"]["held_events"]}|restore=1|'
+              'formation_27p4=HELD_UNDEFINED_AXES|'
+              'live=0|record_claim=0|status=PASS|json=0'
+          )
+          PY
+
+      - name: Upload first-floor receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: glyph-hyperstack-first-floor
+          if-no-files-found: warn
+          path: |
+            glyph-hyperstack-first-floor-v1/GLYPH-HYPERSTACK-FIRST-FLOOR-SPEC.md
+            glyph-hyperstack-first-floor-v1/canonical-l3-27.hbp
+            glyph-hyperstack-first-floor-v1/glyph_hyperstack_first_floor_v1.py
+            glyph-hyperstack-first-floor-v1/test_glyph_hyperstack_first_floor_v1.py
+            glyph-hyperstack-first-floor-v1/unittest.log
+            glyph-hyperstack-first-floor-v1/selftest.log
+            glyph-hyperstack-first-floor-v1/out/**
+

@@ -1,0 +1,5 @@
+VERIFYv1|date=2026-07-11|repo=JesseBrown1980/path2-two-shadow-recovery|head_before_docs=7d89852e7759aa704e98401457223c732d1ed6c7|json=0
+VERIFY|agent=CLAUDE-FABLE-5|provenance=operator-supplied-real-run|seat=third-independent-container|toolchain=rustc-1.97|tests=30|passed=30|failed=0|prior_seats=acer-WSL+liris|tag=MEASURED_CLAUDE_FABLE5_THIRD_SEAT|json=0
+VERIFY|agent=GPT-5.6-PRO|provenance=complete-source-test-doc-lineage-audit|source_lines=1344|external_test_files=4|embedded_tests=5|docs_read=2|local_cargo_claim=0|tag=AUDITED_GPT_5_6_PRO|json=0
+VERIFY|agent=GPT-5.6-PRO|provenance=authored-and-triggered-GitHub-Actions|workflow=Rust-1.97-independent-verification|run_id=29134413119|job_id=86495817651|toolchain=rustc-1.97.0|exact_test_assertion=30|enumeration=success|all_tests=success|artifact_upload=success|tag=MEASURED_GPT_DIRECTED_GITHUB_ACTIONS|json=0
+BOUNDARY|statement=GPT-directed-CI-is-a-real-independent-execution-not-a-local-container-run|disk_claim=storage-tier-for-state-recovery-proof-not-neural-matrix-multiplication|json=0

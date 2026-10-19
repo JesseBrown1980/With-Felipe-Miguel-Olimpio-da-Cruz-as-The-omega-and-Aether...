@@ -1,0 +1,6 @@
+PORTAL|seat=4|round=5|signed_test_fixture=1|physical_spectra=0|json=0
+SOURCE|bank_sha256=52b4e6b9fc10f641e677c87382b137ec21a15e322ef19c20eb03735254b36345|authority_public=9c64cddd3be7b57eb498f3809f78a346fa3e4ce5bc80869adb867edec8b21c6f|witness_public=eba347587f749f6a0e58e7a6be83081cf1a204e880fe527f82a38063f1da1a0d|json=0
+MAP|sha256=b5aa41903936d18f8ad05d87ce7cc44a83989786b452ce717d9d3beb5ac7fc56|bands=7|sectors=27|sites=81|json=0
+OBS|frames=2187|channels=15309|sha256=72eaf241f5be67e24832e348cb3eac1764a56a2fd4ad24e0be83fc3ec394ffe7|json=0
+ATTACKS|permutations=5039|discrete_cases=19|verdict=HELD|json=0
+END|fixture_signatures=PASS|external_custody=HOLD|physical_optics=0|release_gate=OPEN|json=0

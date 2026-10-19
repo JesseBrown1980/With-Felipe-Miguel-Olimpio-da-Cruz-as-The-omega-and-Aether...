@@ -1,0 +1,15 @@
+{
+  "envelope": {
+    "schema": "ASOLARIA-SEAT1-RIM-SIGNED-TEST-FIXTURE-V1",
+    "purpose": "synthetic-recurrence-ablation-not-real-authentication",
+    "session_nonce": "3a4ca528f12176026ec8ac5e56bd490d",
+    "source_sha256": "fbd45109f1c5cbccf31591e79bc7e1c55d927b15d665e9bb40f86313eb5e0c8c",
+    "qprism_commit": "b4a21a25381d6920b7aab92c94c3c3e1420fc9e4",
+    "nnest_commit": "307903651f56e8a28ef98ca36aef22ee8cda935c",
+    "consent": "SIMULATED_TEST_CONSENT_ONLY"
+  },
+  "public_key_hex": "caf1d530709535853dfd17cf24852ac74de4946ff0559d598a3bad6ac283659f",
+  "signature_hex": "38625756514e143a03e4c15bd1f7e0d2bcae312041c5a681635537a0763668c7e5863917d2e9773fc1f85296bf2ad9fac2c9b2e2052bed8fa8880bce181faa0b",
+  "signature_message_sha256": "0847aaf0fd1fd7ec637f0867a1cd4f11fff669584660b5439d2c0aa1fc5dfc45",
+  "credential_class": "PUBLIC_TEST_VECTOR_NO_AUTHENTICATED_PHYSICAL_OR_HUMAN_CUSTODY"
+}

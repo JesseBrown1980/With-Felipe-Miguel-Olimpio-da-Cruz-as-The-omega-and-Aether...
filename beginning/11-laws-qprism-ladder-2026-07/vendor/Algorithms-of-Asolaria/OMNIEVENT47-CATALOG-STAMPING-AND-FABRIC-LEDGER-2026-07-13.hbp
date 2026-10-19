@@ -1,0 +1,14 @@
+OMNIEVENTFORMULAv1|date=2026-07-13|source_pr=JesseBrown1980/HYPER-BECHS--the-third-set#17|source_merge=c002123e17b6ca532ba2499592fb3cc34ef00cb9|json=0
+CATALOG|repo=JesseBrown1980/asolaria-behcs-256|commit=802023a9588cf3c72be9f9b353c847f22c616092|path=data/behcs/codex/catalogs.json|D1-D24=OMNI_V3_BASE|ratified_extra=26,31,34,35,38,44|other_D25-D47=DRAFT_UNRATIFIED|json=0
+STAMP|actor=D1|operation=D2|layer=D5|gate=D6|state=D7|chain=D8|pid=D16|level=D19|time=D20|translation=D22|provenance=D28|ledger=D32|cross_colony=D34|hyperlanguage=D35|audit=D41|quorum=D43|heartbeat=D44|manifold=D45|signature=D46|omega=D47|json=0
+HYPER60|frame=CANON|tuple_dim=60|D1-D47=GROUNDED|D48-D60=UNRESOLVED_DO_NOT_INVENT|selector=NULL|json=0
+HASHLAW|row_hash_i=sha256(canonical_event_without_row_hash)|antecedent_i=row_hash_i_minus_1|merkle_parent=sha256(left||right)|json=0
+SCHEDULERLAW|B_l=payload+catalog+residual+required_state+framing|accept=readback_PASS_AND_B_l_less_than_best_prior|json=0
+CANDIDATE|L1_total=324997|L1_bpc=2.599976|L1=ACCEPT|L2_total=325224|L2_bpc=2.601792|L2=HOLD|L3_total=326584|L3_bpc=2.612672|L3=HOLD|json=0
+LEDGER|input=1000000|codec_catalog=324997|full_events=355010|span_self=8295|span_min=1401|visual=11406|json=0
+PROFILE|name=FULL_AUDIT_3D|observability_bpc=2.931328|fabric_bpc=5.531304|tax_pct=52.995243|json=0
+PROFILE|name=SELF_CONTAINED_SPAN_3D|ratio=42.798071|observability_bpc=0.157608|fabric_bpc=2.757584|tax_pct=5.715438|json=0
+PROFILE|name=MERKLE_MIN_3D|ratio=253.397573|observability_bpc=0.102456|fabric_bpc=2.702432|tax_pct=3.791252|full_store_required=1|json=0
+PROFILE|name=MERKLE_MIN_SPAN_ONLY|ratio=253.397573|observability_bpc=0.011208|fabric_bpc=2.611184|tax_pct=0.429231|full_store_required=1|json=0
+OMNI3D|axes=D1_ACTOR,D5_LAYER,D20_TIME_SEQUENCE|status=DERIVED_3D_SHADOW_NOT_FULL_47D_OR_60D_OBJECT|json=0
+BOUNDARY|scheduler=REFERENCE_NOT_LIVE|dispatcher=REFERENCE_NOT_LIVE|omnimets=COMPAT_NOT_LIVE|hlc=SINGLE_HOST|D48-D60=OWNER_INPUT_REQUIRED|json=0

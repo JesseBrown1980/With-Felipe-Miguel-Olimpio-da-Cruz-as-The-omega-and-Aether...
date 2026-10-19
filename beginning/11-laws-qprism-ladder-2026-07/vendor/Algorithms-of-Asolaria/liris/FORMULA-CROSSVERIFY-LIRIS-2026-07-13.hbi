@@ -1,0 +1,10 @@
+LIRISXVERINDEX|host=liris|target=FORMULA-CROSSVERIFY-LIRIS-2026-07-13.hbp|rows=9|row_proof=len_bytes+sha16_first16_of_sha256_of_row_text|json=0
+INDEXROW|row=1|kind=hdr|len=182|sha16=B00C10FC4EDEE825|json=0
+INDEXROW|row=2|kind=packs|len=228|sha16=BBEF1FCE266BDD84|json=0
+INDEXROW|row=3|kind=nv30|len=219|sha16=E0F29CA6F7AC4CF4|json=0
+INDEXROW|row=4|kind=nl20|len=183|sha16=483EC25FCB95CB32|json=0
+INDEXROW|row=5|kind=crt|len=165|sha16=A5C99828D0C5B105|json=0
+INDEXROW|row=6|kind=e100|len=162|sha16=427599553E059114|json=0
+INDEXROW|row=7|kind=behcs1024|len=190|sha16=4404E51904860154|json=0
+INDEXROW|row=8|kind=boundary|len=256|sha16=D13AB23B2633307D|json=0
+INDEXROW|row=9|kind=end|len=101|sha16=124BA17560E3C88F|json=0

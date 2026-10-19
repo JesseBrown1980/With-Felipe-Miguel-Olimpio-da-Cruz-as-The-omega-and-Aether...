@@ -1,0 +1,7 @@
+HBP1|schema=ASOLARIA-BEHCS1024-60D-CROSS-HOME-EVIDENCE-V1|json=0
+FROZEN|repo=JesseBrown1980/asolaria-tribit|commit=52b712d8e8555b6f963121c2b464168c6a4de53a|source_sha256=a3cc883151b9ed538b93a9b797d7f5fdf5249dd4970b303f800862107a535d9d|json=0
+CANONICAL_CI|run=38973390806|rust181=PASS|rust_unit_tests=9of9|clippy=ZERO_WARNINGS|python_hashlib=6_VECTORS_PASS|privacy_scan=17_FILES_PASS|sidecars=PASS|json=0
+CANONICAL_PR|number=1|merged=YES|merge_commit=52b712d8e8555b6f963121c2b464168c6a4de53a|json=0
+FALSIFIER|length_509_512=REPEATED_16_GLYPH_BLOCKS|checked_api=REJECTS|json=0
+NEW_HOME|name=stone|source_bytes_copied=NO|federation_sensitive_operational_data=EXCLUDED|json=0
+BOUNDARY|SHA256_DIGEST_SHORT=64_BITS_COLLISION_POSSIBLE|DH=UNIMPLEMENTED|physical_host_attestation=NOT_PROVEN|source_FITS_data=NOT_INCLUDED|json=0

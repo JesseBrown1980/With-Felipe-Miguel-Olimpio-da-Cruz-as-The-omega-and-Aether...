@@ -1,0 +1,56 @@
+{
+  "case_count": 4860,
+  "challenge_kind": "PUBLIC_SYNTHETIC_PREFLIGHT_ONLY",
+  "challenge_sha256": "7bc8a77f825c904962e90874e14093e635fafd7eaa70f52fce6188ba40cb8197",
+  "created_utc": "2026-10-14T16:37:05Z",
+  "cross_machine_communication_tested": false,
+  "cryptographic_identity_fingerprint_sha256": "f81b4c680516582cf4cf55f319fbb9649020ac0c9a0b49a9315e3b512e7b69a5",
+  "failed_cases": 0,
+  "frozen_common_three_host_challenge": "NOT_ISSUED",
+  "languages": {
+    "node": "v22.16.0",
+    "python": "3.13.5"
+  },
+  "laws": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "matches_preexisting_public_cloud_preflight_sha256": true,
+  "modeled_steps": 10000000000000,
+  "os_family": "Linux",
+  "output_sha256": "031367b1da1a368dc7471141a9799b79c694a0c9900f65a047438ccaa5f76600",
+  "physical_gravity_or_quantum_measured": false,
+  "physical_host_independence_verified": false,
+  "private_commitment_sha256": "e09978e417e609785cedb2939e479a1e843dc7afb8a3c0a62a93104195f60738",
+  "private_salt_revealed": false,
+  "python_vs_node_agreement": 4860,
+  "schema": "ASOLARIA-SEAT1-COMPUTATIONAL-READINESS-V1",
+  "scope": "independent reimplementation under one ephemeral container; not the formal physical three-seat challenge",
+  "seat": "seat-1",
+  "signature_b64": "mHxCTxaG8oVMkqiJEzkDqkI+PJFd3AH5XX2MqDrBhhrskKhRHdtiuybU7plU2CaG8GxXOtX4cHkdyPW3eOHHAA==",
+  "small_steps_node": 120,
+  "small_steps_python": 120,
+  "source_reference_commit": "2dadc995f460da957879bca7fd558cb037428ece"
+}

@@ -1,0 +1,47 @@
+{
+  "created_utc": "2026-10-14T16:37:05Z",
+  "host_class": "ephemeral_execution_container",
+  "identity_claim": "computational seat-1 candidate only, not operator-assigned physical machine",
+  "independent_physical_custodian_verified": false,
+  "laws": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "model_steps": 10000000000000,
+  "not_eligible_for_three_physical_host_gate": true,
+  "physical_host_independently_verified": false,
+  "private_key_persistence": "ephemeral container only; not a durable physical host identity",
+  "public_key_fingerprint_sha256": "f81b4c680516582cf4cf55f319fbb9649020ac0c9a0b49a9315e3b512e7b69a5",
+  "public_spki_der_b64": "MCowBQYDK2VwAyEA4spPO8So4Eo7M4bDTedXK1adkDkIuB6GzykquUde0Pg=",
+  "schema": "ASOLARIA-SEAT1-COMPUTATIONAL-ATTEST-V1",
+  "scope": "fresh container-based computational reproduction of existing published synthetic preflight",
+  "seat": "seat-1",
+  "secret_revealed": false,
+  "session_nonce_hex": "ef1d21116e1d29f93f15f53eb0223ff5",
+  "signature_b64": "OMDK1FroFUM/b1aWw0Qd3C9Ioh/hcbr3bIcXr3CzDR7HMB6fsOTOEoUbLJEzBCVcLRUFtKK8/xBnHoq/xiyVDw==",
+  "source_commit_sha": "2dadc995f460da957879bca7fd558cb037428ece",
+  "source_repo": "JesseBrown1980/asolaria-stone-to-moss",
+  "stage": "SOFTWARE_ONLY_CANDIDATE_CHECKIN"
+}

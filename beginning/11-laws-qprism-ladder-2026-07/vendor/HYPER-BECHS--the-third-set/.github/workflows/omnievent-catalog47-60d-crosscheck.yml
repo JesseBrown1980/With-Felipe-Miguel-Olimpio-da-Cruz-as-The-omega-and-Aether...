@@ -1,0 +1,153 @@
+name: Catalog47 Hyper60 OMNIEVENT cross-check
+
+on:
+  pull_request:
+    paths:
+      - 'omni-event-v1/**'
+      - '.github/workflows/omnievent-catalog47-60d-crosscheck.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  instrument:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install zstandard jsonschema
+
+      - name: Fetch pinned Catalog47 and BEHCS-256 alphabet
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/asolaria-catalog
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/catalogs.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/catalogs.json
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/alphabet.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/alphabet.json
+          test "$(git hash-object /tmp/asolaria-catalog/catalogs.json)" = 51af0b536c45e8e769066bfd886bf6f08daff75d
+          test "$(git hash-object /tmp/asolaria-catalog/alphabet.json)" = 8d4a3298576ce2c9d4a1683ffab667c8a743fc42
+          python - <<'PY'
+          import json
+          c=json.load(open('/tmp/asolaria-catalog/catalogs.json'))
+          a=json.load(open('/tmp/asolaria-catalog/alphabet.json'))
+          assert len(c['catalogs']) == 47
+          assert [x['D'] for x in c['catalogs']] == list(range(1,48))
+          assert c['ratified_catalogs'] == [26,31,34,35,38,44]
+          assert a['base'] == 256 and len(a['glyphs']) == 256 and a['canonical_width'] == 8
+          print('CATALOGVERIFY|catalogs=47|base_dimensions=24|ratified_extensions=26,31,34,35,38,44|alphabet=256|status=PASS|json=0')
+          PY
+
+      - name: Fetch and verify public enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/e8
+          curl -L --fail --retry 3 --connect-timeout 20 \
+            -o /tmp/e8/enwik8.zip https://mattmahoney.net/dc/enwik8.zip
+          unzip -p /tmp/e8/enwik8.zip > /tmp/e8/enwik8
+          test "$(stat -c%s /tmp/e8/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  /tmp/e8/enwik8' | sha256sum -c -
+
+      - name: Compile reference harness
+        run: |
+          python -m py_compile \
+            omni-event-v1/omnievent_catalog47_60d_v1.py \
+            third-seat-2026-07-12/gpt-crosscheck/multilevel_bpe_zstd_v1.py
+
+      - name: Run 32-event instrumented quant lifecycle
+        run: |
+          set -euo pipefail
+          rm -rf omni-event-v1/out
+          python omni-event-v1/omnievent_catalog47_60d_v1.py \
+            --input /tmp/e8/enwik8 \
+            --bytes 1000000 \
+            --levels 3 \
+            --merges 512 \
+            --catalog47 /tmp/asolaria-catalog/catalogs.json \
+            --alphabet256 /tmp/asolaria-catalog/alphabet.json \
+            --output-dir omni-event-v1/out | tee omni-event-v1/out/run.log
+          grep -q 'OMNIVERDICT|status=PASS' omni-event-v1/out/run.log
+
+      - name: Validate all full events against OMNIEVENTv1 schema
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator, FormatChecker
+          schema=json.load(open('omni-event-v1/omnievent-v1.schema.json'))
+          validator=Draft202012Validator(schema, format_checker=FormatChecker())
+          events=[json.loads(x) for x in Path('omni-event-v1/out/omni_events_full.ndjson').read_text().splitlines() if x]
+          assert len(events)==32
+          for i,e in enumerate(events,1):
+              errors=list(validator.iter_errors(e))
+              assert not errors, f'event {i}: {[x.message for x in errors]}'
+              assert len(e['d47_ext']['dims'])==47
+              assert len(e['hyper60']['selector'])==60
+          print('SCHEMAVERIFY|events=32|catalog47=PASS|hyper60=PASS|status=PASS|json=0')
+          PY
+
+      - name: Check scheduler, integrity, and metric namespaces
+        run: |
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          s=json.load(open('omni-event-v1/out/omni_run_summary.json'))
+          assert s['event_count']==32
+          assert s['accepted_levels']==[1]
+          assert s['held_levels']==[2,3]
+          assert s['final_readback'] is True
+          assert len(s['merkle_root'])==64 and re.fullmatch('[0-9a-f]{64}',s['merkle_root'])
+          assert s['real_omnidispatcher_exercised'] is False
+          assert s['real_cross_vantage_hlc_exercised'] is False
+          assert s['reference_omni3d_emitted'] is True
+          assert s['codec_plus_catalog_bpc'] < 2.61
+          assert s['fabric_span_bpc'] > s['codec_plus_catalog_bpc']
+          assert s['fabric_full_bpc'] > s['fabric_span_bpc']
+          assert s['portal_quant_ratio'] > 1
+          portal=Path('omni-event-v1/out/omni_events_span.hbp').read_text()
+          assert f"merkle_root={s['merkle_root']}" in portal
+          assert portal.count('\nSPAN|')==32
+          print('OMNIMETRICVERIFY|'+'|'.join([
+            f"codec_plus_catalog_bpc={s['codec_plus_catalog_bpc']:.6f}",
+            f"observability_span_bpc={s['observability_span_bpc']:.6f}",
+            f"fabric_span_bpc={s['fabric_span_bpc']:.6f}",
+            f"fabric_full_bpc={s['fabric_full_bpc']:.6f}",
+            f"portal_quant_ratio={s['portal_quant_ratio']:.6f}",
+            f"merkle_root={s['merkle_root']}",
+            'status=PASS','json=0']))
+          PY
+
+      - name: Seal generated artifacts
+        run: |
+          set -euo pipefail
+          cd omni-event-v1/out
+          sha256sum \
+            omni_events_full.ndjson \
+            omni_events_span.hbp \
+            omni_events_3d.ndjson \
+            omni_run_summary.json \
+            omni_run_summary.hbp \
+            run.log > SHA256SUMS
+          sha256sum -c SHA256SUMS
+
+      - name: Upload instrumented run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog47-hyper60-omnievent-run
+          path: |
+            omni-event-v1/OMNIEVENT-CATALOG47-HYPER60-SPEC.md
+            omni-event-v1/omnievent-v1.schema.json
+            omni-event-v1/omnievent_catalog47_60d_v1.py
+            omni-event-v1/out/**

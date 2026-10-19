@@ -1,0 +1,25 @@
+{
+  "canonical_hbp_bytes": 25063020,
+  "canonical_hbp_sha256": "08fc44cd8e5c2e41ce2dadf55ab96edacbbe11435ce4b21d436ae5e602d23c9d",
+  "evidence_class": "PUBLIC_SOFTWARE_REPLAY_ONLY",
+  "fresh_three_host_blinded_challenge": false,
+  "independent_third_algorithm_rows_compared": 131220,
+  "mismatches": 0,
+  "negative_single_byte_tamper_rejected": true,
+  "no_sha256_cryptographic_collision_claim": true,
+  "original_states_recovered_by_source_implementations": 262440,
+  "physical_hosts_attested": 0,
+  "rows": 131220,
+  "schema": "ASOLARIA-SEAT4-SEAT3-PR19-INDEPENDENT-PEER-V1",
+  "seat": "seat-4",
+  "separate_archive_zip_manifest_signature_independently_verified": false,
+  "source_bit_recoveries": 157464,
+  "source_blobs_git_sha1": {
+    "one-bit-recovery-fixture-v2.json": "f86e6b6a0bf6eb134ab3fd56d544799f604219fc",
+    "one_bit_recovery_matrix_v2.py": "51aeae3365f98c045b531505c7e25ba123ebb653",
+    "one_bit_recovery_poly_v2.js": "9b8b36d7ad4ee30ddc76fcdd1b81c055302ab14b"
+  },
+  "source_commit": "9296f863be50619355cb7677298ca78b959ec9ed",
+  "source_pr": 19,
+  "zero_bit_recoveries": 104976
+}

@@ -1,0 +1,11 @@
+STONE|schema=ASOLARIA-RAINBOW81-SEAT3-ADVERSARIAL-V1|date=2026-10-14|seat=seat-3|kind=CPU_SYNTHETIC_FIXTURE|json=0
+SOURCE|git_commit=b0eff1f8d3062c6179c246197a00d715e5f78460|path=experiments/test_rainbow81_adversarial_mixtures.py|json=0
+PREREG|path=experiments/PREREG-fifth-feature-adversarial-waves-2026-10-14.md|json=0
+RESULTS|path=rainbow81-adversarial-2026-10-14-results.json|sha256=c70954de25a36208dfe7b4510c0a5148399a4bccdd9a2c3aeace0d69489e7b67|json=0
+CI|run=38585699927|python_3.11=PASS|python_3.13=PASS|json=0
+WAVE_A|equal_pair_cases=3240|old_aliases=272|affine_survivors=272|quadratic_survivors=0|json=0
+WAVE_B|weighted_pair_cases=411480|four_accepted=384160|five_accepted=42688|five_accepted_mid_weights=14500|json=0
+WAVE_C|equal_three_body_cases=85320|four_exact_aliases=1080|four_tolerance_accepted=85320|five_tolerance_accepted=748|json=0
+WAVE_D|adversarial_bounded_noise_four_feasible=411480|five_feasible=123904|channel_noise_bound=24|json=0
+CONTROL|free_brown_hilbert_center=NOT_A_SEAT|physical_nonlocality=NOT_TESTED|json=0
+VERDICT|exact_50_50_guarantee=PASS|universal_mixture_rejection=FAIL|real_light_measured=0|json=0

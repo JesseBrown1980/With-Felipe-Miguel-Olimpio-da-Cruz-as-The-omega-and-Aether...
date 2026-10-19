@@ -1,0 +1,10 @@
+ACCEPTHDR|receipt=ASOLARIA-HOST8-PID-OFFICE-ROOMSTUB-MANIFEST-V2-ACCEPT|vantage=acer|measured=2026-06-18|peer_repo=JesseBrown1980/Asolaria|peer_branch=liris/host8-serve-source|peer_commit=ef0763051bddc1789334e01208aedced2150fef5|json=0
+ACCEPTMANIFEST|manifest=PID-OFFICE-ROOMSTUB-MANIFEST-v2.hbp|acer_source_commit=a771d225150a072c7f01197a9de039aee57f667a|blob_oid=10f9964243428e7a41d49cdffaf57fcb40f80f77|byte_identical_with_liris_import=1|body_sha256=16e5afcd3f4b11cc25cc2f2f203cae935d1fec8689c9957a81b8cf5c502ba579|json=0
+ACCEPTCOUNT|line_count=729|pidroom_rows=726|unique_seats=726|unique_handles=726|duplicate_seats=0|duplicate_handles=0|json=0
+ACCEPTHANDLE|algorithm=host8-serve-fnv1a64-canonicalized|preimage=seat_id-pipe-room_stub|recomputed=726|mismatches=0|first_handle=3340e89ed9bd5c21|json=0
+ACCEPTPEERRECEIPT|liris_reattack=LIRIS-PID-OFFICE-ROOMSTUB-MANIFEST-V2-REATTACK-A771D225-2026-06-18.hbp|liris_reattack_body_sha256=d3e0dc5b02ec2711fd5a777191ad79460827d54dde6280ef89ecb6baabef3f38|seal_recomputed_match=1|json=0
+ACCEPTHYGIENE|blob_lf_only=1|braces=0|all_rows_json0=1|json=0
+ACCEPTFABRIC|acer_local_daemons=up|current_runtime_activation=UNVERIFIED|carried_from_liris=1|json=0
+ACCEPTBOUNDARY|node_start=0|node_stop=0|swap=0|retire=0|runtime_activation=0|descriptor_loader_allowed=read_only|json=0
+ACCEPTVERDICT|verdict=PASS_DESCRIPTOR_CONTRACT|delta_requested=0|next=await_operator_gate_for_runtime_activation|json=0
+ACCEPTFOOT|rows=9|content_sha256=475d9af879ca097564a7c26119d167abba76efdc9b9014f7a851a4b71567db90|json=0

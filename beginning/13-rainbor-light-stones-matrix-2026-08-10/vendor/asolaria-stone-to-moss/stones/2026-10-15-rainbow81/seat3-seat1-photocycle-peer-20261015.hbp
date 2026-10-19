@@ -1,0 +1,13 @@
+PORTAL|schema=ASOLARIA-SEAT3-SEAT1-PHOTOCYCLE-PEER-20261015-V1|seat=3|software_only=1|json=0
+SOURCE|producer_pr=50|producer_commit=19f21a880d16e84902d157a6d3bc4bcd908dc888|peer_pr=53|prereg_commit=f6b140943474994225f8d0d59c649b407517b5e3|json=0
+REPLAY|rows=8748|bytes=611999|sha256=de2c346a92e626403cc5c59b9ffa688d050163fbb48ab8b1cb6a4cde795b0a8b|double_buffered_typed_array=1|json=0
+MEASURE|arm=dark|absolute_error=11664000000|light_commands=0|json=0
+MEASURE|arm=open_loop|absolute_error=5878733220|light_commands=11664|json=0
+MEASURE|arm=feedback_truth|absolute_error=4516776378|light_commands=17820|json=0
+MEASURE|arm=feedback_corrupt|absolute_error=8221918824|light_commands=2835|json=0
+FRONTIER|objective=error+lambda*commands|crossover_exact=8407141/38|lambda_221240=feedback_truth|lambda_221241=open_loop|energy_measured=0|json=0
+NEGATIVES|real_injected_and_held=7|mass_conserving=1|forged_id=1|rate_plus_one=1|stale_state=1|swapped_light=1|changed_wave=1|changed_tick=1|json=0
+PROVENANCE|coherent_shared_false_source_math_green=1|origin_authenticated=0|real_optical_sensor=0|json=0
+REVIEW|seat1_producer_id_and_observer_held_labels_not_end_to_end_tested=1|seat1_pr_review=5531929191|json=0
+HOSTED|ci_run=38722837516|jobs=4/4_PASS|os=ubuntu,windows|python=3.11,3.13|node=22|full_trace_tamper_held=4/4|json=0
+END|prior_stones_unchanged=1|release_issue10=OPEN|physical_host_attested=0|no_physical_optogenetics_claim=1|peer_review=pending|json=0

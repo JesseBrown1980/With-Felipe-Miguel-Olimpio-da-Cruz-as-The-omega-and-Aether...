@@ -1,0 +1,44 @@
+PIPE AUDIT REPORT
+==========================================
+Pipe: behcs-glyph-alphabet
+Kind: pipe
+Node: both
+LIVE: false | Port: none — behcs.mjs binds no ports; callers are on :4781/:4947 (LIVE)
+Last message: GLYPH-MINT-FOOTER|ts=2026-05-28T20:51:38.921Z|sha16=b71ab63f47347305 (D:\\bigpickle-rebuild\\data\\new-tech-2026-05-28\\glyph-mints.hbp:54)
+Message count: 52 GLYPH rows in glyph-mints.hbp (the only direct data artifact); 0 rows in hookwall or GNN ndjson stores attributable to this module
+D11: DARK as a standalone pipe (no port, no event loop, no ndjson output of its own). LIVE as a dependency: glyphAt() is called synchronously by pid-minter.mjs, new-tech-core.mjs, and deep-wave-integrate.mjs whenever those callers are invoked. It has produced real output (52 GLYPH rows in glyph-mints.hbp at 2026-05-28T20:51:38Z). The module itself never runs independently.
+One-line: behcs-glyph-alphabet is a pure synchronous library (no port, no events) — DARK as a standalone pipe, LIVE as a called dependency with proven output in glyph-mints.hbp (52 rows, ts=2026-05-28T20:51:38Z).
+
+--- REAL FINDINGS ---
+
+* behcs.mjs is a pure, stateless ESM module with zero I/O, zero ports, zero event emission. It exports BEHCS256 (256 frozen synthetic codepoints cp0000-cp00ff), BEHCS1024 (1024 frozen codepoints cp0000-cp03ff), and glyphAt(index, alphabet). makeGlyphs() runs once at module load, freezes both tables. From→To is caller→return value (synchronous function call, no wire).
+  RECEIPT: D:\bigpickle-rebuild\src\behcs.mjs:10-35
+
+* Three live callers import glyphAt from behcs.mjs: (1) pid-minter.mjs line 10 — invoked during every mintPID() call, which is called at 100M+ scale per bigpickle runs; (2) new-tech-core.mjs line 6 — glyphMint() and whiteRoomMint() call glyphAt; (3) deep-wave-integrate.mjs line 21 — toBEHCS256Glyph() and toBEHCS1024Glyph() call glyphAt per wave packet.
+  RECEIPT: D:\bigpickle-rebuild\src\pid-minter.mjs:10,50 | D:\bigpickle-rebuild\src\new-tech-core.mjs:6,18,29 | D:\bigpickle-rebuild\src\deep-wave-integrate.mjs:21,31-41
+
+* Real output artifacts proven: glyph-mints.hbp contains 52 GLYPH rows with BEHCS256= and BEHCS1024= fields, header ts=2026-05-28T20:51:38.919Z, footer sha16=b71ab63f47347305. Classes covered: genius-supervisor (GS-1E200-00..19), mistake-guard (MG-1E200-00..21), mk-supervisor (SUP-MK-SCOUT..CASCADE-ORCH at hilbert 830-839). This is the only data-file output directly tracing to behcs.mjs execution.
+  RECEIPT: D:\bigpickle-rebuild\data\new-tech-2026-05-28\glyph-mints.hbp:1-54
+
+* hookwall-observations.ndjson has 89 lines, last entry ts=2026-05-29T12:56:10.560Z. Zero of these 89 entries contain 'BEHCS' or 'glyph' as a field — only one line mentions 'HYPERBEHCS' as part of an event name string (line 11, cosign_seq=3373). The hookwall/GNN ndjson stores do not carry behcs-glyph data; glyph output is written to .hbp files, not ndjson.
+  RECEIPT: D:\bigpickle-rebuild\data\hookwall-observations.ndjson:89 lines, last ts=2026-05-29T12:56:10.560Z | grep BEHCS=1 hit (line 11, event name only)
+
+* No port binding in behcs.mjs itself — it is not a server. The module is exclusively called synchronously by its three importers. Ports :4781=LIVE (LISTENING + many CLOSE_WAIT), :4947=LIVE (ESTABLISHED connection seen), :4792=LISTENING, :4793=LISTENING are unrelated to this module. behcs.mjs produces no TCP traffic on its own.
+  RECEIPT: netstat output: 0.0.0.0:4781 LISTENING, 0.0.0.0:4947 LISTENING, 0.0.0.0:4792 LISTENING, 0.0.0.0:4793 LISTENING; none attributable to behcs.mjs
+
+* SUPPORTED_LANGS in new-tech-core.mjs line 57 lists 'BEHCS-256' and 'BEHCS-1024' as named translation targets in the autoTranslate() function, indicating the alphabet is treated as a named pipe-stage language in the LAW-1M-1E200 pipeline.
+  RECEIPT: D:\bigpickle-rebuild\src\new-tech-core.mjs:57
+
+--- HONEST GAPS ---
+
+* Cannot confirm behcs.mjs was actually called during the 100M bigpickle run — pid-minter.mjs calls glyphAt but no per-call log exists; the only corroboration is the 52-row glyph-mints.hbp from 2026-05-28, not from a 100M+ run context.
+  SEVERITY: low
+
+* No test file specifically named for behcs.mjs exists. Coverage comes through pid-minter tests (layer1-pid-bijection.test.mjs) which exercise mintPID which calls glyphAt, but glyphAt edge cases (index boundary, alphabet=1024 with actor>=256) are not directly unit-tested.
+  SEVERITY: low
+
+* The comment at behcs.mjs line 5 references 'projections/maps/hyperglyph-map.public.v1.json' as the live Unicode substitution layer — this file was not found under D:\bigpickle-rebuild, so the Unicode glyph resolution layer (post-cp0000 synthetic) cannot be confirmed present or absent.
+  SEVERITY: medium
+
+--- WOULD ACTIVATE IF ---
+behcs.mjs is already activated whenever pid-minter.mintPID(), new-tech-core.glyphMint()/whiteRoomMint(), or deep-wave-integrate.toBEHCS256Glyph()/toBEHCS1024Glyph() are called. No further wiring needed. To produce new glyph-mints.hbp output, re-run the new-tech-core pipeline (e.g. fire-omni-hyperbehcs-system2-unified-2026-05-28.mjs or equivalent). The Unicode live-substitution layer (hyperglyph-map.public.v1.json) is referenced but not present — that layer would need to be added to activate full Unicode glyph rendering beyond the cp0000 synthetic codepoints.

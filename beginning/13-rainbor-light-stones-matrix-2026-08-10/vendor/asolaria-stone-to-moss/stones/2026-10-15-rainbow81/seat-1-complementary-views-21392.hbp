@@ -1,0 +1,11 @@
+HBP|schema=ASOLARIA-SEAT1-COMPLEMENTARY-VIEWS-RECOVERY-V1|json=0
+DATE|2026-10-15|seat=seat-1|role=COMPUTATIONAL_ONLY|json=0
+SOURCE|challenge_sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b|prereg=PREREG-MULTIVIEW-81-20261015.md|json=0
+VIEWS|laws=CA150,CA90,CA60,CA102,TAP0,TAP1,TAP4|horizons=1,10000000000000,10000000000001,10000000000081|configs=112|json=0
+RANK|CA150=79|six_other_single_laws=80|CA150_plus_other_pair=81|other_pair=80|json=0
+RECOVER|total=21392|exact=21392|zero_sidebits=4584|one_sidebit=16044|two_sidebits=764|json=0
+FALSIFY|kernel_collision_witnesses=96|wrong_tags=88|same_law_future_no_gain=14|json=0
+CROSS_LANGUAGE|python_cyclic_polynomial=PASS|node_transfer_matrix=PASS|ubuntu=PASS|windows=PASS|json=0
+FULL_TRACE|bytes=4180845|sha256=17f25be31a6f419d98db31d70f63aea2e3dffad00c44453b963bdfbaedb8683c|ci_run=38704260730|json=0
+LIMIT|physical_host_independence_verified=0|common_blinded_challenge_issued=0|physical_quantum_gravity_FTL_measured=0|json=0
+HBPEND|schema=ASOLARIA-SEAT1-COMPLEMENTARY-VIEWS-RECOVERY-V1|json=0

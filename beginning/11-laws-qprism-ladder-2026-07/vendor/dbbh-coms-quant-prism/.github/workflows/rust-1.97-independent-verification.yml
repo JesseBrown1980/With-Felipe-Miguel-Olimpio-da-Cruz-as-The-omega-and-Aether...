@@ -1,0 +1,49 @@
+name: Rust 1.97 independent verification
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust 1.97.0
+        run: |
+          rustup toolchain install 1.97.0 --profile minimal
+          rustup override set 1.97.0
+          rustc -Vv | tee rustc-version.txt
+          cargo -V | tee cargo-version.txt
+
+      - name: Enumerate the exact test surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo test --all-targets -- --list | tee test-list.txt
+          count="$(grep -Ec ': test$' test-list.txt)"
+          printf 'enumerated_tests=%s\n' "$count" | tee test-count.txt
+          test "$count" -eq 19
+
+      - name: Run all tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo test --all-targets -- --nocapture 2>&1 | tee cargo-test.txt
+
+      - name: Upload verification receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbbh-rust-1.97-verification
+          path: |
+            rustc-version.txt
+            cargo-version.txt
+            test-list.txt
+            test-count.txt
+            cargo-test.txt

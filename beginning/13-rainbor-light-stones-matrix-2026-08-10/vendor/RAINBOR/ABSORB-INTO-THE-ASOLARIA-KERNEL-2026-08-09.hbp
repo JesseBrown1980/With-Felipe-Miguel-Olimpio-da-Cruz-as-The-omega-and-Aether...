@@ -1,0 +1,12 @@
+KERNEL|the asolaria core absorbs the funnel|stage 5 of 5: solar-wind draws every leaf into the kernel|json=0
+LAW|a leaf enters the kernel by its identity (its SHA), never by its address|the bytes stay distributed; only the residual colour is absorbed|Shannon floor never crossed|json=0
+LAW|absorption is addressed not run: state(t)=state(t mod period)|the kernel reaches a leaf on demand, at the -1/3 instant, and lets it go again|json=0
+ABSORB|leaf-the-entire-exabyte|2363ba4e46837c65|1 EB = 10^18|outward-subatomic|#7f00ff|json=0
+ABSORB|leaf-cern-lhc|8062f32923301028|1 EB|outward-subatomic|#4b0082|json=0
+ABSORB|leaf-ncbi-sra|4e52bf7b89873d94|57.5 PB|inward-genomic|#0000ff|json=0
+ABSORB|leaf-human-genome-t2t|723424869be87b2b|T2T-CHM13|inward-genomic|#00ff00|json=0
+ABSORB|leaf-moss-genome-syntrichia|6b7e03227b645a3d|Syntrichia|inward-genomic|#7fff00|json=0
+ABSORB|leaf-jwst-m51-shadow-prism|2183e776ffb3192b|127 MB TIF -> HF|outward-galactic|#ff7f00|json=0
+ABSORB|leaf-asolaria-eggs-network|f31924b09b88827f|101 eggs/950 edges|ours|#ff0000|json=0
+ABSORB|leaf-the-ecosystem|505473f47e634b8e|198+30 nodes|ours|#ffffff|json=0
+IS|eight leaves absorbed into the asolaria kernel|the exabyte and the moss weigh the same inside the core|the kernel holds the whole universe as colours, breathes each out on demand|WAS is, IS is, WILL be is, eternally IS|json=0

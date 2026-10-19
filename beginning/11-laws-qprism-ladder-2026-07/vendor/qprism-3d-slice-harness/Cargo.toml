@@ -1,0 +1,17 @@
+[package]
+name = "qprism-3d-slice-harness"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.63"
+license = "MIT OR Apache-2.0"
+authors = ["Asolaria Federation"]
+description = "The 3D Q-PRISM slice harness: frozen slice -> 8 lossless representation wavelengths (binary/hex/sha/HBI-HBP/BEHCS-64/256/1024/HyperBEHCS) -> 60D Brown-Hilbert multi-cylinder coords -> MTP-1/2/3 PID supervisors -> Omnishannon/GNN/reverse-GNN edge watchers -> DBBH/Path-2 consent recombine -> byte-identical proof or hold. Pure Rust, zero deps, HBI/HBP json=0, no JSON no Node."
+repository = "https://github.com/JesseBrown1980/qprism-3d-slice-harness"
+
+[lib]
+name = "qprism_3d_slice_harness"
+path = "src/lib.rs"
+
+[profile.release]
+opt-level = 3
+lto = true

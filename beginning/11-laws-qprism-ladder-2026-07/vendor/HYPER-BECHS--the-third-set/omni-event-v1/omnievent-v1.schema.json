@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JesseBrown1980/HYPER-BECHS--the-third-set/omni-event-v1/omnievent-v1.schema.json",
+  "title": "Asolaria OMNIEVENTv1 — Catalog47 + HyperBEHCS-60D",
+  "type": "object",
+  "required": [
+    "schema", "catalog_ref", "id", "ts", "src", "kind", "body", "actor", "mode",
+    "run_pid", "trace_id", "span_id", "actor_sequence", "event_ts_utc", "hlc",
+    "actor_agent_pid", "surface_pid", "host_pid", "outcome", "dimensional_tags",
+    "d47_ext", "hyper60", "prev_event_hash", "event_hash"
+  ],
+  "properties": {
+    "schema": { "const": "OMNIEVENTv1" },
+    "catalog_ref": {
+      "type": "object",
+      "required": ["repo", "commit", "git_blob_sha", "spec", "catalog_count"],
+      "properties": {
+        "repo": { "const": "JesseBrown1980/asolaria-behcs-256" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "git_blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "spec": { "const": "IX-700" },
+        "catalog_count": { "const": 47 },
+        "base_dimensions": { "type": "string" },
+        "ratified_extensions": {
+          "type": "array", "items": { "type": "integer", "minimum": 25, "maximum": 47 }
+        }
+      },
+      "additionalProperties": true
+    },
+    "id": { "type": "string", "pattern": "^EVT-[0-9a-f]{16}$" },
+    "ts": { "type": "string", "format": "date-time" },
+    "src": { "type": "string", "minLength": 1 },
+    "dst": { "type": "string" },
+    "kind": { "type": "string", "minLength": 1 },
+    "body": { "type": "object" },
+    "actor": { "type": "string", "minLength": 1 },
+    "mode": { "enum": ["real", "shadow"] },
+    "run_pid": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "trace_id": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+    "span_id": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "parent_span_id": { "type": ["string", "null"] },
+    "actor_sequence": { "type": "integer", "minimum": 1 },
+    "event_ts_utc": { "type": "string", "format": "date-time" },
+    "ingest_ts_utc": { "type": "string", "format": "date-time" },
+    "hlc": { "type": "string", "pattern": "^[0-9]+:[0-9]+:[A-Za-z0-9_-]+$" },
+    "mono_start_ns": { "type": "integer", "minimum": 0 },
+    "mono_end_ns": { "type": "integer", "minimum": 0 },
+    "actor_agent_pid": { "$ref": "#/$defs/pid8" },
+    "surface_pid": { "$ref": "#/$defs/pid8" },
+    "requested_by_pid": { "$ref": "#/$defs/pid8" },
+    "scheduler_pid": { "$ref": "#/$defs/pid8" },
+    "dispatcher_pid": { "$ref": "#/$defs/pid8" },
+    "worker_pid": { "$ref": "#/$defs/pid8" },
+    "target_pid": { "$ref": "#/$defs/pid8" },
+    "observer_pid": { "$ref": "#/$defs/pid8" },
+    "host_pid": { "$ref": "#/$defs/pid8" },
+    "actor_os_pid": { "type": "integer", "minimum": 0 },
+    "vantage": { "enum": ["acer", "liris", "third"] },
+    "outcome": { "enum": ["PASS", "HOLD", "ERROR"] },
+    "dimensional_tags": {
+      "type": "object",
+      "minProperties": 35,
+      "maxProperties": 35,
+      "patternProperties": {
+        "^d([1-9]|[12][0-9]|3[0-5])$": { "type": "string", "minLength": 8, "maxLength": 16 }
+      },
+      "additionalProperties": false
+    },
+    "d47_ext": {
+      "type": "object",
+      "required": ["dims", "catalog", "reserved"],
+      "properties": {
+        "dims": { "type": "array", "minItems": 47, "maxItems": 47, "items": { "type": "string" } },
+        "catalog": { "type": "string" },
+        "reserved": {
+          "type": "object",
+          "required": ["ratified_mask"],
+          "properties": { "ratified_mask": { "type": "string", "pattern": "^[01]{47}$" } }
+        }
+      },
+      "additionalProperties": true
+    },
+    "hyper60": {
+      "type": "object",
+      "required": ["algorithm", "selector", "selector_sha256"],
+      "properties": {
+        "algorithm": { "const": "QPRISM-SHA256-PID-COUNTER-CONTENT-v1" },
+        "selector": {
+          "type": "array", "minItems": 60, "maxItems": 60,
+          "items": { "type": "integer", "minimum": 0, "maximum": 1023 }
+        },
+        "selector_sha256": { "$ref": "#/$defs/sha256" },
+        "semantic_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "prev_event_hash": { "$ref": "#/$defs/sha256" },
+    "event_hash": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "pid8": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "additionalProperties": true
+}

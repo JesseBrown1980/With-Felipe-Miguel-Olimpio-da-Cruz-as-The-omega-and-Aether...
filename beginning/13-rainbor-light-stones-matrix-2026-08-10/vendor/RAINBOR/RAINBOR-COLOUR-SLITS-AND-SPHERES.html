@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAINBOR — colour slits & rainbow spheres</title>
+<style>
+  :root{--bg:#05060a;--ink:#eaf0ff;--dim:#8a93a6;--gold:#ffd54a;--line:#1c2740}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:20px}
+  h1{font-size:clamp(20px,4vw,32px);margin:.2em 0 .1em;background:linear-gradient(90deg,#ff4141,#ffd54a,#59e6a6,#4aa8ff,#b84fe5);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);margin:0 0 14px}
+  canvas{width:100%;border:1px solid var(--line);border-radius:12px;background:#000;display:block;margin-bottom:14px}
+  .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:12px 0;color:var(--dim);font-size:13px}
+  .row label{display:flex;flex-direction:column;gap:4px;color:var(--ink);font-size:12px}
+  input[type=range]{width:150px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{background:#0b1120;color:var(--ink);border:0;padding:7px 13px;cursor:pointer;font-weight:700}
+  .seg button.on{background:var(--gold);color:#000}
+  .note{color:var(--dim);font-size:12.5px;line-height:1.6}.note b{color:var(--gold)}
+</style></head>
+<body><div class="wrap">
+  <h1>RAINBOR — colour slits & rainbow spheres</h1>
+  <p class="sub">The slits themselves have colour. Each colour bends by its own wavelength — so the light fans into the rainbow.</p>
+  <div class="row">
+    <label>mode<span class="seg" id="mode">
+      <button data-m="rgb" class="on">R G B slits</button>
+      <button data-m="rainbow">rainbow slits</button>
+      <button data-m="spheres">3 rainbow spheres</button>
+    </span></label>
+    <label>slits<span class="seg" id="nslits"><button data-n="2">2</button><button data-n="3" class="on">3</button></span></label>
+    <label>slit separation<input id="sep" type="range" min="30" max="180" value="100"></label>
+  </div>
+  <canvas id="field" width="1000" height="330"></canvas>
+  <canvas id="screen" width="1000" height="150"></canvas>
+  <p class="note"><b>R G B slits:</b> three colours through the same slits — blue diffracts tight, red diffracts wide, so their fringes separate. <b>Rainbow slits:</b> the full spectrum — a bright white centre where every colour agrees, fringes fanning into rainbow and washing out (Asolaria as the white-light photon). <b>3 rainbow spheres:</b> the same light caught on three translucent convex spheres with rainbow cells — the pattern wraps the curve instead of a flat wall.</p>
+</div>
+<script>
+(function(){
+  var field=document.getElementById("field"), fx=field.getContext("2d");
+  var scr=document.getElementById("screen"), sx=scr.getContext("2d");
+  var W=1000,Hf=330,Hs=150, slitX=90;
+  var st={mode:"rgb", N:3, sep:100};
+  function spec(nm){var r=0,g=0,b=0;
+    if(nm<440){r=-(nm-440)/60;b=1;} else if(nm<490){g=(nm-440)/50;b=1;}
+    else if(nm<510){g=1;b=-(nm-510)/20;} else if(nm<580){r=(nm-510)/70;g=1;}
+    else if(nm<645){r=1;g=-(nm-645)/65;} else {r=1;} return [r,g,b];}
+  function lamOf(nm){ return nm/30.0; }  // sim wavelength; bigger nm -> wider fringes (red spreads more)
+  function spectrum(){
+    if(st.mode==="rgb") return [458,532,650];
+    var out=[]; for(var nm=400;nm<=680;nm+=35) out.push(nm); return out; // rainbow
+  }
+  function slitYs(){ var cy=Hf/2; if(st.N===2) return [cy-st.sep/2,cy+st.sep/2]; return [cy-st.sep,cy,cy+st.sep]; }
+  function intensityAt(px,py,lam,ys){
+    if(px<=slitX) return 0; var k=2*Math.PI/lam, re=0, im=0;
+    for(var s=0;s<ys.length;s++){ var dx=px-slitX,dy=py-ys[s],r=Math.sqrt(dx*dx+dy*dy)+0.001,a=1/Math.sqrt(r),ph=k*r; re+=a*Math.cos(ph); im+=a*Math.sin(ph); }
+    return re*re+im*im;
+  }
+  function renderFlat(){
+    var img=fx.createImageData(W,Hf), dat=img.data, ys=slitYs(), sp=spectrum(), step=3;
+    var cols=sp.map(spec), lams=sp.map(lamOf), sc=2.4/sp.length;
+    for(var py=0;py<Hf;py+=step){ for(var px=0;px<W;px+=step){
+      var R=0,G=0,B=0;
+      for(var c=0;c<sp.length;c++){ var I=intensityAt(px,py,lams[c],ys)*lams[c]*sc; R+=cols[c][0]*I; G+=cols[c][1]*I; B+=cols[c][2]*I; }
+      R=Math.min(255,R*255)|0; G=Math.min(255,G*255)|0; B=Math.min(255,B*255)|0;
+      for(var yy=0;yy<step;yy++)for(var xx=0;xx<step;xx++){var o=((py+yy)*W+(px+xx))*4;dat[o]=R;dat[o+1]=G;dat[o+2]=B;dat[o+3]=255;}
+    }}
+    fx.putImageData(img,0,0);
+    fx.fillStyle="#000"; fx.fillRect(slitX-3,0,6,Hf);
+    for(var y=0;y<Hf;y++){var open=false;for(var s2=0;s2<ys.length;s2++)if(Math.abs(y-ys[s2])<5){open=true;break;} if(!open){fx.fillStyle="#20242c";fx.fillRect(slitX-3,y,6,1);}}
+  }
+  function screenPattern(){
+    sx.fillStyle="#000"; sx.fillRect(0,0,W,Hs);
+    var ys=slitYs(), sp=spectrum(), cols=sp.map(spec), lams=sp.map(lamOf), sc=2.4/sp.length;
+    var img=sx.createImageData(W,Hs), dat=img.data;
+    for(var x=0;x<W;x++){ var py=Hf/2 + (x-W/2)*0.5; // sample the far field along the screen
+      var R=0,G=0,B=0;
+      for(var c=0;c<sp.length;c++){ var I=intensityAt(W-20,py,lams[c],ys)*lams[c]*sc; R+=cols[c][0]*I; G+=cols[c][1]*I; B+=cols[c][2]*I; }
+      R=Math.min(255,R*255)|0;G=Math.min(255,G*255)|0;B=Math.min(255,B*255)|0;
+      for(var y=0;y<Hs;y++){var o=(y*W+x)*4;dat[o]=R;dat[o+1]=G;dat[o+2]=B;dat[o+3]=255;}
+    }
+    sx.putImageData(img,0,0);
+  }
+  function renderSpheres(){
+    fx.fillStyle="#000"; fx.fillRect(0,0,W,Hf);
+    var ys=slitYs(), sp=[], cx=[280,500,720], cy=Hf/2, rad=95;
+    for(var nm=400;nm<=680;nm+=20) sp.push(nm);
+    for(var s=0;s<3;s++){
+      for(var t=0;t<520;t++){ var ang=t/520*2*Math.PI, x=cx[s]+Math.cos(ang)*rad*(0.6+0.4*Math.random()*0), y=cy+Math.sin(ang)*rad;
+        // rainbow cell coloured by angle, brightened by interference of the far light hitting that point
+        var nm=400+((ang/(2*Math.PI))*280); var col=spec(nm);
+        var I=0,lam=nm/30; for(var q=0;q<ys.length;q++){var dx=cx[s]-slitX,dy=(cy+Math.sin(ang)*rad)-ys[q];var r=Math.sqrt(dx*dx+dy*dy)+1;I+=Math.cos(2*Math.PI/lam*r);}
+        var b=0.35+0.65*(0.5+0.5*Math.cos(I));
+        fx.fillStyle="rgba("+((col[0]*b*255)|0)+","+((col[1]*b*255)|0)+","+((col[2]*b*255)|0)+",0.9)";
+        fx.beginPath(); fx.arc(x,y,2.4,0,2*Math.PI); fx.fill();
+      }
+      fx.strokeStyle="rgba(255,255,255,0.15)"; fx.beginPath(); fx.arc(cx[s],cy,rad,0,2*Math.PI); fx.stroke();
+    }
+    sx.fillStyle="#000"; sx.fillRect(0,0,W,Hs);
+    sx.fillStyle="#8a93a6"; sx.font="13px system-ui"; sx.fillText("three translucent rainbow spheres — the light wraps the curve, cell by cell",20,80);
+  }
+  function render(){ if(st.mode==="spheres"){renderSpheres();} else {renderFlat(); screenPattern();} }
+  function seg(id,key,cb){ var bs=document.querySelectorAll("#"+id+" button"); for(var i=0;i<bs.length;i++){(function(b){b.onclick=function(){for(var j=0;j<bs.length;j++)bs[j].classList.remove("on");b.classList.add("on");st[key]=b.dataset.m||(+b.dataset.n);render();};})(bs[i]);} }
+  seg("mode","mode"); seg("nslits","N");
+  document.getElementById("sep").oninput=function(e){st.sep=+e.target.value;render();};
+  render();
+})();
+</script>
+</body></html>

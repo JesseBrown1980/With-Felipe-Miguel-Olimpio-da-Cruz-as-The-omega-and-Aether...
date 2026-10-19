@@ -1,0 +1,8 @@
+ec89fd9b074af9de9b163742ddbededcfd420bafccb4f6c7198e8b5c0cf01907 *curve-1-lean-office-roster.json
+c99692448b8c7ebd0c85f1e938349d4ce40f581d34f9197ecfb521c6d9887255 *curve-2-rich-ix-lx-index.json
+09c0c8b23a94534909cba81ba2d0397563b6f8e0a0bff6c28c6aa482eec94cbf *curve-3-microkernel-manifest.json
+ac65ad4cdaa22a8b022ae291af7e2c5f9de74f5de8436c26389139a229aee601 *curve-4-root-corpus-index.json
+7213ae5d63671e1e3c4d48b608388053e88135fafcf82dc88ac350a7aed6fa95 *measure-1-office-roster.mjs
+4d8b851cc84a009c96dcd8ec7eecf5990cf0b595e6ab26dff4a228027bc42aa7 *measure-2-rich-index.mjs
+f2f271709fdb63d4713a9bf7fda0458a8ed84b7f6dda0af675a3b823cb0286d4 *measure-3-microkernel.mjs
+bb15a660f151228b617176e93853b605dddf3e6b1731e06d72a9a50e5d0a9c75 *measure-4-root-corpus-index.mjs

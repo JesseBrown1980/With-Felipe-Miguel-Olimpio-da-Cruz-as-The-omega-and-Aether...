@@ -1,0 +1,147 @@
+name: E8-E100 quant cross-check
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip numpy
+      - name: Verify receipt seal and script syntax
+        working-directory: third-seat-2026-07-12
+        run: |
+          sha256sum -c E8-E100-THIRD-SEAT-RECEIPT-2026-07-12.md.sha256
+          python -m py_compile *.py crosscheck/*.py
+          python crosscheck/audit_uploaded_package.py | tee package-audit.json
+      - name: Smoke-test uploaded codec and arbitrary-length ladder
+        working-directory: third-seat-2026-07-12
+        run: |
+          python - <<'PY'
+          import hashlib, importlib.util, os, pathlib
+          spec=importlib.util.spec_from_file_location('codec','asolaria_codec_v0_1.py')
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          for data in [b'',b'a',b'hello world',bytes(range(256)),b'abcd'*1000,os.urandom(4096)]:
+              c=m.compress(data); r=m.decompress(c,len(data))
+              assert hashlib.sha256(r).digest()==hashlib.sha256(data).digest()
+          pathlib.Path('arbitrary.bin').write_bytes(os.urandom(100003))
+          PY
+          python crosscheck/behcs_ladder_v2.py arbitrary.bin --chunk 33333 | tee ladder-arbitrary.log
+          python crosscheck/virtual_e100_probe.py --windows 20 --window-bytes 1000000 --coordinates 100000 --json e100.json | tee e100.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: package-audit-and-e100
+          path: |
+            third-seat-2026-07-12/package-audit.json
+            third-seat-2026-07-12/ladder-arbitrary.log
+            third-seat-2026-07-12/e100.json
+            third-seat-2026-07-12/e100.log
+
+  e8-crosscheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd p7zip-full
+          python -m pip install --upgrade pip numpy zstandard
+      - name: Fetch and verify enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p corpora results
+          if curl -fL --retry 4 --retry-delay 3 -o corpora/enwik8.zip https://mattmahoney.net/dc/enwik8.zip; then
+            unzip -q -o corpora/enwik8.zip -d corpora
+          else
+            curl -fL --retry 4 --retry-delay 3 -o corpora/enwik8 https://media.githubusercontent.com/media/amkillam/compression-test-data/e8da60efe169a1eadc74213f85ce0eaf6c382fa5/enwik/enwik8
+          fi
+          test "$(stat -c %s corpora/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  corpora/enwik8' | sha256sum -c -
+      - name: Reproduce E8 ladder and codec v0.1
+        run: |
+          set -euo pipefail
+          python third-seat-2026-07-12/behcs_ladder_roundtrip.py corpora/enwik8 | tee results/e8-original-ladder.log
+          grep -q 'READBACK=VERIFIED_CLONE_0_LOSS' results/e8-original-ladder.log
+          python third-seat-2026-07-12/crosscheck/behcs_ladder_v2.py corpora/enwik8 --chunk 20000003 | tee results/e8-framed-ladder.log
+          grep -q 'READBACK=VERIFIED_CLONE_0_LOSS' results/e8-framed-ladder.log
+          (cd results && python ../third-seat-2026-07-12/asolaria_codec_v0_1.py ../corpora/enwik8 1000000 | tee codec-v0-1.log)
+          grep -q 'compressed_bytes=392002' results/codec-v0-1.log
+          grep -q 'RESTORE=BYTE_IDENTICAL_0_LOSS' results/codec-v0-1.log
+      - name: Run corpus-bound quant8 head
+        run: |
+          python third-seat-2026-07-12/crosscheck/quant8_corpus_benchmark.py corpora/enwik8 --json results/e8-quant8.json | tee results/e8-quant8.log
+      - name: Run fully gated 20-read persistent order-2 curve
+        run: |
+          python third-seat-2026-07-12/crosscheck/persistent_order2_curve.py corpora/enwik8 --reads 20 --chunk-bytes 1000000 --json results/e8-persistent-prior.json | tee results/e8-persistent-prior.log
+          test "$(grep -c 'restore_match=True' results/e8-persistent-prior.log)" = 20
+      - name: Run exact monotonic glyph mint and held-out curve
+        run: |
+          python third-seat-2026-07-12/crosscheck/mint_catalog_v2.py corpora/enwik8 --reads 20 --chunk-bytes 1000000 --same-read-merges 512 --merges-per-read 256 --zstd-level 19 --json results/e8-mint-prior.json | tee results/e8-mint-prior.log
+          test "$(grep -c 'restore_match=True' results/e8-mint-prior.log)" = 21
+      - name: Seal result files
+        run: |
+          (cd results && sha256sum *.json *.log > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e8-crosscheck-results
+          path: results/
+
+  e9-e10-scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip numpy
+      - name: Fetch and verify enwik9
+        run: |
+          set -euo pipefail
+          mkdir -p corpora results
+          if curl -fL --retry 4 --retry-delay 3 -o corpora/enwik9.zip https://mattmahoney.net/dc/enwik9.zip; then
+            unzip -q -o corpora/enwik9.zip -d corpora
+          else
+            curl -fL --retry 4 --retry-delay 3 -o corpora/enwik9 https://media.githubusercontent.com/media/amkillam/compression-test-data/e8da60efe169a1eadc74213f85ce0eaf6c382fa5/enwik/enwik9
+          fi
+          test "$(stat -c %s corpora/enwik9)" = 1000000000
+          echo '159b85351e5f76e60cbe32e04c677847a9ecba3adc79addab6f4c6c7aa3744bc  corpora/enwik9' | sha256sum -c -
+      - name: Reproduce E9 exact ladder
+        run: |
+          set -euo pipefail
+          python third-seat-2026-07-12/behcs_ladder_roundtrip.py corpora/enwik9 | tee results/e9-original-ladder.log
+          grep -q 'READBACK=VERIFIED_CLONE_0_LOSS' results/e9-original-ladder.log
+          python third-seat-2026-07-12/crosscheck/behcs_ladder_v2.py corpora/enwik9 --chunk 20000003 | tee results/e9-framed-ladder.log
+          grep -q 'READBACK=VERIFIED_CLONE_0_LOSS' results/e9-framed-ladder.log
+      - name: Run E9 corpus-bound quant8 head
+        run: |
+          python third-seat-2026-07-12/crosscheck/quant8_corpus_benchmark.py corpora/enwik9 --json results/e9-quant8.json | tee results/e9-quant8.log
+      - name: Run cumulative ten-pass E10-equivalent exactness probe
+        run: |
+          python third-seat-2026-07-12/crosscheck/e10_stream_probe.py corpora/enwik9 --passes 10 --chunk 20000000 --json results/e10.json | tee results/e10.log
+          test "$(grep -c 'match=True' results/e10.log)" = 10
+      - name: Seal result files
+        run: |
+          (cd results && sha256sum *.json *.log > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e9-e10-scale-results
+          path: results/

@@ -1,0 +1,91 @@
+{
+  "bodies": 81,
+  "challenge": "experiments/seat1/TRIAD-27-CHALLENGE-20261014.json",
+  "challenge_sha256": "e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b",
+  "ci": [
+    "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38651853055",
+    "https://github.com/JesseBrown1980/asolaria-stone-to-moss/actions/runs/38651920771"
+  ],
+  "cross_platform": [
+    "ubuntu-latest",
+    "windows-latest"
+  ],
+  "date": "2026-10-14",
+  "disagreements": 0,
+  "expected_rows": 32805,
+  "fresh_three_host_challenge": false,
+  "hbp_full_bytes": 6392029,
+  "hbp_sha256": "720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3",
+  "horizons_count": 3,
+  "laws": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      1,
+      5,
+      9
+    ]
+  ],
+  "laws_count": 5,
+  "linearity_controls_per_implementation": 32805,
+  "logical_axes": {
+    "color": [
+      "R",
+      "G",
+      "B"
+    ],
+    "space": [
+      "x",
+      "y",
+      "z"
+    ],
+    "time": [
+      "past",
+      "now",
+      "future"
+    ]
+  },
+  "model_horizons": [
+    10000000000000,
+    10000000000001,
+    10000000000081
+  ],
+  "negative_controls_per_runner": {
+    "invalid_challenge_rejections": 6,
+    "nonce_mutation_changes_result": true,
+    "output_byte_tamper_detected": true
+  },
+  "physical_host_independently_verified": false,
+  "plus81_composition_checks_per_implementation": 10935,
+  "preregistration": "experiments/seat1/PREREG-TRIAD-27WAVE-THREE-HORIZON-20261014.md",
+  "python_node_exact_rows": 32805,
+  "role": "software_computational_only",
+  "rotation_controls_per_implementation": 10935,
+  "schema": "ASOLARIA-SEAT1-TRIAD-27WAVE-THREE-HORIZON-RECEIPT-V1",
+  "scientific_boundary": "GF2 digital simulations; no physical optical, spacetime, gravity, quantum entanglement or faster-than-light measurement.",
+  "seat": "seat-1",
+  "smallstep_controls_per_implementation": 120,
+  "source_commit_before_challenge": "d092bcc06908a5f5864eada406d5b3ddf4933a5d",
+  "source_negative": "experiments/seat1/triad_negative_controls.py",
+  "source_node": "experiments/seat1/triad_27_node.js",
+  "source_python": "experiments/seat1/triad_27_python.py",
+  "successor_checks_per_implementation": 10935,
+  "wave_count": 27
+}

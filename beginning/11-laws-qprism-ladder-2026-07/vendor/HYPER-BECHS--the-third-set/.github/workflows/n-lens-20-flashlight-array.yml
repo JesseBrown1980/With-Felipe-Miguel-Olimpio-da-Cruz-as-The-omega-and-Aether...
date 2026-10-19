@@ -1,0 +1,156 @@
+name: N-LENS 20 prime-PID flashlight array
+
+on:
+  pull_request:
+    paths:
+      - 'n-lens-v1/**'
+      - '.github/workflows/n-lens-20-flashlight-array.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  n-lens:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==2.4.4' zstandard
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git-lfs
+
+      - name: Fetch and verify Catalog47 and BEHCS-256 alphabet
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/asolaria-catalog
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/catalogs.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/catalogs.json
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/alphabet.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/alphabet.json
+          test "$(git hash-object /tmp/asolaria-catalog/catalogs.json)" = 51af0b536c45e8e769066bfd886bf6f08daff75d
+          test "$(git hash-object /tmp/asolaria-catalog/alphabet.json)" = 8d4a3298576ce2c9d4a1683ffab667c8a743fc42
+
+      - name: Fetch and verify public enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/e8
+          if curl -L --fail --retry 4 --retry-delay 3 --connect-timeout 20 \
+            -o /tmp/e8/enwik8.zip https://mattmahoney.net/dc/enwik8.zip; then
+            unzip -p /tmp/e8/enwik8.zip > /tmp/e8/enwik8
+          else
+            git lfs install
+            git clone --depth 1 https://github.com/amkillam/compression-test-data.git /tmp/e8/repo
+            cp /tmp/e8/repo/enwik/enwik8 /tmp/e8/enwik8
+          fi
+          test "$(stat -c%s /tmp/e8/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  /tmp/e8/enwik8' | sha256sum -c -
+
+      - name: Compile the flashlight array and dependencies
+        run: |
+          python -m py_compile \
+            n-lens-v1/n_lens_flashlight_array_v1.py \
+            omni-event-v1/omnievent_catalog47_60d_v1.py \
+            third-seat-2026-07-12/gpt-crosscheck/multilevel_bpe_zstd_v1.py
+
+      - name: Run twenty prime-PID lenses on one shared object
+        run: |
+          set -euo pipefail
+          rm -rf n-lens-v1/out
+          mkdir -p n-lens-v1/out
+          python n-lens-v1/n_lens_flashlight_array_v1.py \
+            --input /tmp/e8/enwik8 \
+            --bytes 1000000 \
+            --catalog47 /tmp/asolaria-catalog/catalogs.json \
+            --alphabet256 /tmp/asolaria-catalog/alphabet.json \
+            --bpe-script third-seat-2026-07-12/gpt-crosscheck/multilevel_bpe_zstd_v1.py \
+            --omnievent-script omni-event-v1/omnievent_catalog47_60d_v1.py \
+            --output-dir n-lens-v1/out | tee n-lens-v1/out/run.log
+          grep -q 'NLENSVERDICT|lenses=20' n-lens-v1/out/run.log
+          grep -q '|status=PASS|json=0' n-lens-v1/out/run.log
+
+      - name: Validate the twenty formulas and exact gates
+        run: |
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          results=json.load(open('n-lens-v1/out/n_lens_results.json'))
+          summary=json.load(open('n-lens-v1/out/n_lens_summary.json'))
+          assert len(results)==20
+          assert [x['lens'] for x in results]==list(range(1,21))
+          assert len({x['prime'] for x in results})==20
+          assert len({x['actor_pid'] for x in results})==20
+          assert len({x['prime_factor_pid'] for x in results})==20
+          by={x['lens']:x for x in results}
+          assert all(row['restore'] for row in by[11]['details']['levels'])
+          assert by[12]['details']['restore'] is True
+          assert by[13]['details']['join_exact'] is True
+          assert by[14]['details']['restore'] is True
+          assert by[15]['value']==20 and by[15]['details']['rank_curve'][-1]['nullity']==0
+          assert by[16]['value']==0 and by[16]['details']['selector_value_mismatches']==0
+          assert by[17]['value']==0 and by[17]['details']['decoded_match'] is True
+          assert by[18]['details']['recall_exact'] is True
+          assert by[20]['value']==0 and by[20]['details']['final_rank']==60
+          assert summary['lens_count']==20
+          assert summary['event_count']==23
+          assert summary['lenses_to_zero_nullity']==20
+          assert summary['final_selector_mismatches']==0
+          assert summary['final_reprojection_mismatches']==0
+          assert len(summary['merkle_root'])==64 and re.fullmatch('[0-9a-f]{64}',summary['merkle_root'])
+          assert summary['result_portal_ratio']>1
+          assert summary['event_portal_ratio']>1
+          print('NLENSVERIFY|'+'|'.join([
+            'lenses=20',
+            f"events={summary['event_count']}",
+            f"zero_nullity_lens={summary['lenses_to_zero_nullity']}",
+            f"result_portal_ratio={summary['result_portal_ratio']:.6f}",
+            f"event_portal_ratio={summary['event_portal_ratio']:.6f}",
+            f"merkle_root={summary['merkle_root']}",
+            'status=PASS','json=0']))
+          PY
+
+      - name: Print concise measured formula table
+        run: |
+          python - <<'PY'
+          import json
+          rows=json.load(open('n-lens-v1/out/n_lens_results.json'))
+          print('| lens | actor | formula | metric | value | units | status |')
+          print('|---:|---|---|---|---:|---|---|')
+          for x in rows:
+              print(f"| {x['lens']} | {x['actor']} | `{x['formula_id']}` | {x['metric']} | {x['value']} | {x['units']} | {x['status']} |")
+          PY
+
+      - name: Seal all generated evidence
+        run: |
+          set -euo pipefail
+          cd n-lens-v1/out
+          sha256sum \
+            n_lens_results.json \
+            n_lens_results.hbp \
+            n_lens_results_portal.hbp \
+            n_lens_summary.json \
+            n_lens_events_full.ndjson \
+            n_lens_events_portal_v1.hbp \
+            n_lens_3d_views.ndjson \
+            run.log > SHA256SUMS
+          sha256sum -c SHA256SUMS
+
+      - name: Upload the permanent flashlight-array evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: n-lens-20-flashlight-array
+          path: |
+            n-lens-v1/N-LENS-20-FLASHLIGHT-SPEC.md
+            n-lens-v1/n_lens_flashlight_array_v1.py
+            n-lens-v1/out/**

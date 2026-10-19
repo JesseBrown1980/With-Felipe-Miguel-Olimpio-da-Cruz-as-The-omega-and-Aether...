@@ -1,0 +1,7 @@
+STONEIDX|schema=ASOLARIA-SEAT1-TRIAD-27WAVE-THREE-HORIZON-INDEX-V1|date=2026-10-14|json=0
+RECEIPT|name=seat-1-20261014-triad27-three-horizon.hbp|sha256=1db6389ba110e8b835e504deebc177e163f8b085d5a48cb47215bb372468700e|json=0
+RECEIPT|name=seat-1-20261014-triad27-three-horizon.json|sha256=c7d60f4f28873d86ae0dee447ce8a042a399225b8a2572f12b483c13b479f244|json=0
+FULL_OUTPUT|sha256=720d0c44ede086c9ff3cccb807f4ba222145455c80614cdf3abcd710b93a11c3|bytes=6392029|json=0
+CHALLENGE|sha256=e02346f41a43ecf6f772a16cb585b4c214a01b9513f1f34f2c9ba1ad52f5773b|json=0
+CI|run=38651920771|ubuntu=PASS|windows=PASS|json=0
+BOUNDARY|computational_only=1|physical_host_attested=0|json=0

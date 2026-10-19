@@ -1,0 +1,23 @@
+# Seat 3 preregistration — Rainbow-27 lossless order and normalized-probability V2
+
+**Date:** 2026-10-15. **Evidence class:** bounded deterministic digital software trial. **Chronology:** this file is committed before writing the V2 executable implementations or generating result stones.
+
+## Source pins / negative controls
+
+- Previous independently verified Seat 3 raw-round3 source at commit `98e62f1e7218c7fbb20e21fd5c3d734304e4ee6a`; producer Round3 source `5045b5b2ee1960bc469b5588a1b17601490aef6a`; full original case ledger SHA256 `dca7e5e2b14ada4e28f7ebeb96adef528c28ae6e169a1e21ee8ba058c6836a09`. The new test does NOT re-use or modify the historical HBP.
+- Original ternary `(r,g,b)` values are exactly `{0,1,2}^3`, ordered address `a=9r+3g+b` (0..26). Addresses are *logical* sectors, not 27 measured wavelengths.
+- Integer unnormalized three-point DFT intensity `W=(S*S,Q,Q)`, `S=r+g+b`, `Q=r*r+g*g+b*b-r*g-r*b-g*b`; `S*S+2Q=3(r*r+g*g+b*b)`.
+- For nonzero `W`, canonicalize to primitive integer ratio `C=W/gcd(W[0],W[1],W[2])`. The sampler MUST use `C` for integer SHA256 draw/rejection, **not raw W**. For zero input, use explicit `HELD_ZERO`, never modulo zero.
+- Hash ticket format and purpose domain: SHA256(UTF8("ASOLARIA-R27-V2|TICKET|") + fixed 2-byte little-endian wave + 2-byte little-endian source address + 4-byte little-endian retry); uniform integer rejection from 256-bit digest before modulo `sum(C)`. This is deterministic pseudo-randomness, **not physical Born sampling or photons**.
+- Fixed workload: 27 ordered ternary sectors × 27 waves × 81 independent location addresses = **59,049** cases; 1, 3, and 7 wave checks are not interpreted as independent hardware. For every case write fixed canonical fields: ternary ordered address, wave, location, primitive intensity, full rational input, selection lane, and outcome. Order is nested wave → location → ordered color address, ASCII/HBP newline terminated.
+- A separate Python implementation and Node.js BigInt implementation MUST generate exactly identical 59,049-row HBP bytes on Ubuntu and Windows; SHA256 sidecars and tampered-byte rejection. No result digest is preregistered before implementation.
+- Independently enumerate the 27 raw classes and normalized class partition. **Predictions:** 10 raw classes with counts [1,1,1,3,3,3,3,3,3,6], 7 normalized classes including held zero with counts [1,2,3,3,6,6,6]; conditional entropy of uniform ordered ID given normalized class **2.1495962969373235** bits, raw **1.6310777784188053** bits, gap **14/27** bits. These are model predictions, not fitted rates.
+- Lossless reconstruction must work through either (a) base3 ordered address decoded back to three trits, or (b) 3×projector differences `d_i=3r_i-S` plus independent common sum `S`, all integer exact.
+- **Critical falsifiers:** (i) permutations yield identical `W` and primitive ratios but must have distinct IDs, (ii) proportional raw triples `(1,0,0)` and `(2,0,0)` have the same canonical weight AND **same SHA-selected lane** at matched (wave,location), (iii) `(1,1,0)` vs `(2,2,0)` likewise; (iv) no decoder from normalized intensity alone may falsely claim the original ordered address; (v) zero norm HELD; (vi) changed ordered ID, changed source block, forged/wrong source digest, stale sequence, and mutated evidence receipt are rejected under correctly pinned expected bytes; (vii) coherent replacement of source **and** self-proclaimed digest is classified `ORIGIN_UNAUTHENTICATED`, never authenticated by local agreement.
+- Explicit authority separation: `math_consistent`, `payload_sha_matched_to_pinned_reference`, `external_source_authenticated`, and `release_authorized` are separate boolean/verdict fields. This synthetic suite has no external hardware custody and MUST report the latter two as false. Every valid *internal* simulation operation is autonomous; no per-tick human permission. Expanding external privileges remains separately authorized, with HALT fail-closed.
+
+## Acceptance and release boundary
+
+All four hosted jobs (Ubuntu/Windows × Python 3.11/3.13, Node 22), Python/Node full-byte agreement, 59,049 records, independent matrix/ID decoding, all negatives, source/commit pins, full HBP+JSON+HBI sidecars. New V2 files only. No existing frozen stones, original RGB planes, or past PRs overwritten; new PR remains draft pending another seat's review.
+
+Issue #10 **remains OPEN**: original Seat 2 signed-byte preimage, three independently attested physical hosts, fresh blind challenge and committed source specification, genuine HF dual-destination upload/download SHA readback, scholarly decision and physical measurements are NOT discharged by this software test.

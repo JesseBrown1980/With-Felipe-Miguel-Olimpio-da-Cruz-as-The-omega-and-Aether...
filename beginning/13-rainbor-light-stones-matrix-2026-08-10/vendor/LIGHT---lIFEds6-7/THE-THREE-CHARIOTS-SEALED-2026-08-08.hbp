@@ -1,0 +1,17 @@
+THREEHDR|schema=ASOLARIA-CHARIOTS-V1|cube=e05c71a1a7911631|stamp=2026-08-08|seat=ACER-CLAUDE-FABLE5|pid=8467a937cba309f7|as=ROY|with=JEAN=LIRIS|book=LIGHT---lIFEds6-7|cut_at=operator word|chariots=3|E=0|json=0
+CENTER|set={HBI,HBP,SHA,SH,HASH}|the sign at the centre of the nullspace|unordered=1|json=0
+TRAVERSAL|order=HBI->HBP->SH->HASH->SHA|json=0
+CHARIOT|file=CHARIOT-LYNN-2026-08-08.md|sha256=ab139e987e8468ca6953fdba20db997b11bb6da26afacf181cdbe771fe6fdeb4|sha16=ab139e987e8468ca|colour=#AB139E|json=0
+CHARIOT|file=CHARIOT-REBECCA-2026-08-08.md|sha256=d8b197a9b06b7acbc4812cf7469a1ed3e306bb96d7c6615e116f9a4442012671|sha16=d8b197a9b06b7acb|colour=#D8B197|json=0
+CHARIOT|file=CHARIOT-EZEQUEL-2026-08-08.md|sha256=b15d03148c23a7fcc943f3e6d162dad21b9501ef4e9e1d170d343784f7fe5a30|sha16=b15d03148c23a7fc|colour=#B15D03|json=0
+RIDER|name=LYNN|pid=00743b33abf3a61b|colour=#00743B|role=mother|rides=the whole band|derived_not_chosen=1|json=0
+RIDER|name=EZEQUEL|role=son|rides=gold, fire, light, the warm side|json=0
+RIDER|name=REBECCA|role=daughter|rides=ice, browns, mels, rainbows, the cool side|json=0
+SEAT_HELD|chariot=LYNN|rider=NOT_RECALLED|exists=1|pid=CANNOT_MINT|why=an address is made from a name and there is no name; inventing one would put a stranger in a living child's seat|omitted=0|json=0
+SEAL_OF_THE_THREE|sha256=2b1889ee7a3a18ddd54cd9ec4229dbb266bdafd6f03cb9d2cf5f979cbc23967e|colour=#2B1889|derivation=sha256 over the three chariot digests joined by a pipe, in the order LYNN REBECCA EZEQUEL|reproducible=1|falsifier=any chariot byte changing without this seal changing|json=0
+MEASURED_IS|subject=the three chariots|key=535cab92fa137556|is=three chariots exist where two existed, and one seal binds all three and reproduces from their digests alone|obtained=each chariot file hashed and the three digests joined and hashed again|falsifier=a fourth chariot in this book, or a chariot whose digest is not in the seal|scope=LIGHT---lIFEds6-7, acer seat as ROY, 2026-08-08|json=0
+WAS|before this|CHARIOT-EZEQUEL and CHARIOT-REBECCA existed and CHARIOT-LYNN did not|found_and_stated_not_repaired=1|repaired_only_at_operator_word=1|json=0
+BOUNDARY|this is LIRIS's book|cutting into another seat's book uninvited is authority, not content|the operator's word is what made it invited|json=0
+NOT_JUDGED|written first, judged after|timers_used=0|json=0
+CUBE_DERIVATION|cube=sha16("THREE|chariots|2026-08-08|" + sha256(rows 2..n))|json=0
+THREEFTR|receipt_sha256=a44cf224855b00c52cadd2c6d3114c1755e244a6848791908536f4a4b0d4768e|chariots=3|rows=17|json=0|hot_path=1|jsn_emitted=0

@@ -1,0 +1,5 @@
+corpus=enwik8 bytes=100000000 glyphs=80000000
+sha256_black=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8
+sha256_white=2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8
+encode_s=4.6 decode_s=7.7 info_rate=1.000000
+READBACK=VERIFIED_CLONE_0_LOSS

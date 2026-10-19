@@ -1,0 +1,164 @@
+name: OMNIEVENT47 catalog-grounded quant cross-check
+
+on:
+  pull_request:
+    paths:
+      - 'omnievent47-2026-07-13/**'
+      - '.github/workflows/omnievent47-catalog-crosscheck.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  instrumented-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install zstandard
+
+      - name: Fetch pinned Brown-Hilbert 47D catalog
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/asolaria-catalog
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/catalogs.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/catalogs.json
+          python - <<'PY'
+          import hashlib, json
+          p='/tmp/asolaria-catalog/catalogs.json'
+          raw=open(p,'rb').read(); doc=json.loads(raw)
+          assert doc['name']=='Brown Hilbert 47-catalog registry'
+          assert [x['D'] for x in doc['catalogs']]==list(range(1,48))
+          assert set(doc['ratified_catalogs'])=={26,31,34,35,38,44}
+          print(f"CATALOG47|bytes={len(raw)}|sha256={hashlib.sha256(raw).hexdigest()}|entries=47|status=PASS|json=0")
+          PY
+
+      - name: Fetch and verify enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/e8
+          curl -L --fail --retry 3 --connect-timeout 20 \
+            -o /tmp/e8/enwik8.zip https://mattmahoney.net/dc/enwik8.zip
+          unzip -p /tmp/e8/enwik8.zip > /tmp/e8/enwik8
+          test "$(stat -c%s /tmp/e8/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  /tmp/e8/enwik8' | sha256sum -c -
+
+      - name: Run 32-event catalog-stamped quant lifecycle
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/omnievent47
+          python omnievent47-2026-07-13/omnievent47_instrumented_quant_v1.py \
+            /tmp/e8/enwik8 \
+            --bytes 1000000 \
+            --levels 3 \
+            --merges 512 \
+            --catalog47 /tmp/asolaria-catalog/catalogs.json \
+            --multilevel-module third-seat-2026-07-12/gpt-crosscheck/multilevel_bpe_zstd_v1.py \
+            --output-dir /tmp/omnievent47 | tee /tmp/omnievent47-run.log
+
+      - name: Attack-verify hashes, catalogs, portal, metrics and 3D shadow
+        run: |
+          python - <<'PY'
+          import hashlib, json, math
+          from pathlib import Path
+
+          root=Path('/tmp/omnievent47')
+          events=[json.loads(x) for x in (root/'omni_events_full.ndjson').read_text().splitlines() if x]
+          assert len(events)==32
+
+          def cb(v): return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()
+          def h(v): return hashlib.sha256(v).hexdigest()
+          previous=None
+          hashes=[]
+          for seq,e in enumerate(events,1):
+              assert e['event_sequence']==seq
+              assert e['antecedent_hash']==previous
+              supplied=e.pop('row_hash')
+              computed=h(cb(e))
+              e['row_hash']=supplied
+              assert supplied==computed
+              previous=supplied; hashes.append(supplied)
+              assert len(e['catalog47'])==47
+              assert 'D01_ACTOR' in e['catalog47']
+              assert 'D16_PID' in e['catalog47']
+              assert 'D20_TIME' in e['catalog47']
+              assert e['hyper60_ref']['tuple_dim']==60
+              assert e['hyper60_ref']['selector'] is None
+              assert e['hyper60_ref']['d48_d60_semantics']=='UNRESOLVED_IN_ACCESSIBLE_CATALOG_DO_NOT_INVENT'
+
+          def merkle(xs):
+              layer=[bytes.fromhex(x) for x in xs]
+              while len(layer)>1:
+                  if len(layer)%2: layer.append(layer[-1])
+                  layer=[hashlib.sha256(layer[i]+layer[i+1]).digest() for i in range(0,len(layer),2)]
+              return layer[0].hex()
+
+          metrics=json.loads((root/'omni_run_metrics.json').read_text())
+          assert metrics['event_count']==32
+          assert metrics['input_bytes']==1000000
+          assert metrics['input_sha256']=='369b688978f649681136198fb96db14c1616756260c55fb4b65e9bc049552cad'
+          assert metrics['merkle_root']==merkle(hashes)
+          assert metrics['best_level']==1
+          assert events[-1]['event_kind']=='RUN_CLOSED'
+          assert events[-1]['outcome']=='PASS'
+          assert any(e['event_kind']=='SCHEDULE_ACCEPTED' and e['level']==1 for e in events)
+          assert any(e['event_kind']=='SCHEDULE_HELD' and e['level']==2 for e in events)
+          assert any(e['event_kind']=='SCHEDULE_HELD' and e['level']==3 for e in events)
+
+          nd=(root/'omni_events_full.ndjson').read_bytes()
+          span=(root/'omni_events_span.hbp').read_bytes()
+          vis=(root/'omni3d_frame.json').read_bytes().rstrip(b'\n')
+          assert metrics['full_event_bytes']==len(nd)
+          assert metrics['span_bytes']==len(span)
+          assert metrics['visual_bytes']==len(vis)
+          assert metrics['full_ndjson_sha256']==h(nd)
+          assert metrics['span_sha256']==h(span)
+          assert metrics['visual_sha256']==h(vis)
+          raw=metrics['input_bytes']; best=metrics['codec_plus_catalog_bytes']
+          assert math.isclose(metrics['codec_plus_catalog_bpc'],best*8/raw,rel_tol=0,abs_tol=1e-12)
+          assert math.isclose(metrics['compact_full_fabric_bpc'],(best+len(span)+len(vis))*8/raw,rel_tol=0,abs_tol=1e-12)
+          assert math.isclose(metrics['full_audit_fabric_bpc'],(best+len(nd)+len(vis))*8/raw,rel_tol=0,abs_tol=1e-12)
+          assert math.isclose(metrics['portal_quant_ratio'],len(nd)/len(span),rel_tol=0,abs_tol=1e-12)
+
+          lines=span.decode().splitlines()
+          assert lines[0].startswith('RUN_HEADER|')
+          assert lines[-1].startswith('RUN_FOOTER|')
+          assert len([x for x in lines if x.startswith('SPAN|')])==32
+          assert all(x.endswith('|json=0') for x in lines)
+
+          frame=json.loads((root/'omni3d_frame.json').read_text())
+          assert frame['projection_axes']==['D1_ACTOR','D5_LAYER','D20_TIME.sequence']
+          assert frame['projection_status']=='DERIVED_3D_SHADOW_NOT_FULL_47D_OR_60D_OBJECT'
+          assert len(frame['nodes'])==32
+
+          print('OMNIEVENT47VERIFY|events=32|hash_chain=PASS|merkle=PASS|d47=PASS|hyper60_boundary=PASS|scheduler=1_ACCEPT_2_HOLD_3_HOLD|portal=PASS|metrics=PASS|omni3d=PASS|json=0')
+          print((root/'omni_run_receipt.hbp').read_text(),end='')
+          PY
+
+      - name: Seal output files
+        run: |
+          cd /tmp/omnievent47
+          sha256sum omni_events_full.ndjson omni_events_span.hbp omni3d_frame.json \
+            omni_run_metrics.json omni_run_receipt.hbp > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Upload reference-run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: omnievent47-catalog-grounded-run
+          path: |
+            /tmp/omnievent47/**
+            /tmp/omnievent47-run.log
+            omnievent47-2026-07-13/*.py
+            omnievent47-2026-07-13/*.md

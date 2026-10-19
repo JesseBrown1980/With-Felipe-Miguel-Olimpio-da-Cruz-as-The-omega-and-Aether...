@@ -1,0 +1,15 @@
+ASOLARIA-AGENTv1|date=2026-07-19|name=ASOLARIA-UNIFIED-OBSERVER|roles=observer+builder+verifier|scope=repo-wide|json=0
+FRAME|system=source+local-bodies+live-engines+rooms+pipes+agents+supervisors+gnns+gates+storage+cubes+receipts+atlas+recall+hilbra|repo=mediator-slice|json=0
+LINEAGE|approval_switch=1|accelerator_agent=1|message_observer=1|mistake_catalog=1|brown_hilbert_cubes=1|self_reflection_rooms=1|omnispindles=1|atlas_recall=1|json=0
+REFLECTION|source=explicit_messages+tool_results+files+receipts|hidden_chain_of_thought=not_claimed|delay_commit_boundary=required|json=0
+IDENTITY|authoritative=full_sha256+canonical_tuple|short_handles=route+display|identity_collision=forbid|semantic_convergence=separate_search_lane|json=0
+AUTHORITY|default=E0|missing_or_stale=HOLD|operator_authority=preserved|evidence_not_authority=1|json=0
+RECALL-PARITY|source=operator_screenshot|terms=2614638|rows=591286|acer_rust_latency_ms=2..16|prior_liris_latency_ms=56..67|json_hot_path=0|linear_fallback=0|json=0
+SPAWN-LIRIS|source=operator_screenshot|acer_fix=d35f0f2|tests=111/111|A_per_sec=534136675|B_per_sec=72775013|C_per_sec=75926339|typed_soa_per_sec=187821997|push=2b81d3b|json=0
+ADDRESS-CAPACITY|source=operator_screenshot|omni_stack_exp10=196|verb_noun_exp10=361|conversation50_exp10=9030|conversation50_lang17_exp10=9092|materialized_storage_claim=0|json=0
+SCALING|source=session_measured_reported|warm_bytes=2097152|size_100kb_gain_pct=86.3|size_1mb_gain_pct=52.9|size_10mb_gain_pct=13.2|warm_floor_approx=0.0106|json=0
+NULLSPACE|source=session_measured_reported|targeted_beams=56|random_beams=56|free_beam_result=neutral|constrained_watcher_value=preserved|json=0
+CUBE-CHAIN|source=session_measured_reported|L1=0.0330|L2=0.2224|L3=0.0529|L4=0.0341|bad_fold_shock=1|later_recovery=1|production_fold=unverified|json=0
+PATH2|repo=path2-two-shadow-recovery|third_seat_rust=1.97|tests=30/30|store=none|joint_crt=exact|watcher_gate=reproject+compare|insufficient=HELD|json=0
+LAW|no_deflate=1|no_inflate=1|old_new_both_preserved=1|mistakes_become_guardrails=1|selected_knowledge_recovery=exact_contract|json=0
+NEXT|recall_first=1|read_whole_cell=1|emit_receipt=1|one_ordered_writer_per_ledger=1|no_secrets=1|json=0

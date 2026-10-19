@@ -1,0 +1,14 @@
+VAULTREGHDR|doc=ACER-VAULT-SUPERVISOR-REGISTRATION|vantage=acer|measured=2026-06-18|purpose=register-vaults-as-fabric-supervisors-so-never-lost|target_runtime=8byte-rust-host|cold_path=json-disappearing|class=DESCRIPTOR-ONLY|council_q=1781821410749-nzeebx|json=0
+VAULTSUP|seat=VAULT-SUP-vault-engine|host_handle8=0ee7987169f538b4|holds=MCP-API-engine-map+pointer-planning+receipt-helper|secret_scope=pointers-not-values|json=0
+VAULTSUP|seat=VAULT-SUP-sovlinux-vault-pointer|host_handle8=64b03c501c680e6e|holds=USB-SOVLINUX-vault-pointers|secret_scope=pointers-not-values|json=0
+VAULTSUP|seat=VAULT-SUP-authority-bridge-executor-vault|host_handle8=756c65ccfa552693|holds=executor-authority-bridge|secret_scope=authority-not-keys|json=0
+VAULTSUP|seat=VAULT-SUP-vault-modernization|host_handle8=9d2a7518232df40f|holds=modernization+status-reveal-hardening|json=0
+VAULTSUP|seat=VAULT-SUP-data-vault|host_handle8=8d9b4d2f39fb119c|holds=data-vault-store|json=0
+VAULTSUP|seat=VAULT-SUP-infra-vault|host_handle8=0b8fdeece8330194|holds=infra-vault-config|json=0
+VAULTSUP|seat=VAULT-SUP-decrypted-vault|host_handle8=89c7a02e988243fe|holds=SECRET-VALUES|secret_scope=CARVE-OUT-NEVER-PUBLISH-the-one-held-invariant|json=0
+VAULTSUP|seat=VAULT-SUP-vault-zero-loss-backup|host_handle8=dc774aa381745c61|holds=zero-loss-backup|json=0
+VAULTSUP|seat=VAULT-SUP-legacy-vault-bloat|host_handle8=7c20d8af4e7ce31c|holds=legacy-retire-candidate|json=0
+VAULTREGSECRET|crypto_as_tokens=immutable|secret_keys=secure-the-8byte-host-rooms|seats_register=EXISTENCE+PID+role+pointers-NEVER-key-values|carve_out=the-one-held-invariant|backend_only-front-is-raw-pixel-projection=1|json=0
+VAULTREGFABRIC|register_via=fabric-council-registration-lane|council_q=1781821410749-nzeebx-held-safe|roster_mutation=GATED-fresh-cosign|so_vaults_never_lost=1|json=0
+VAULTREGGATE|nothing_run=1|no_vault_value_read=1|E=0|target=fabric-matrix-NN-all-8byte-rust-host-rooms-backed-HDD-USB-Drive|json=0
+VAULTREGFOOT|rows=13|content_sha256=ce6aebdda368b4f89be44bf6ab0fb9cc492d60bfd52221dd5b14484dbd0f58b2|json=0

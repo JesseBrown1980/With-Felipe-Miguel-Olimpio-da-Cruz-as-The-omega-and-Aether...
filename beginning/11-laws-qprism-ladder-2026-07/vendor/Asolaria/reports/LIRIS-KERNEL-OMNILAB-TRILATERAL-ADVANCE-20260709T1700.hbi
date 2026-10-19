@@ -1,0 +1,12 @@
+LIRISKERNELOMNIIDX|schema=LIRIS-KERNEL-OMNILAB-TRILATERAL-ADVANCE-HBI-V1|seat=LIRIS|device=DESKTOP-PTSQTIE|pid=PID-H4913-A05-WLIRIS-KERNEL-OMNILAB-TRILATERAL-20260709T1700-P00-N00001|hilbert=4913|ts=2026-07-09T14:00:29-03:00|target=LIRIS-KERNEL-OMNILAB-TRILATERAL-ADVANCE-20260709T1700.hbp|index_kind=semantic_binary_index|json=0
+LIRISKERNELOMNIIDXROW|row=0|tag=LIRISKERNELOMNIHDR|role=device_pid_timestamp_identity|pid_specific=1|device_specific=1|timestamp_specific=1|json=0
+LIRISKERNELOMNIIDXROW|row=1|tag=LIRISKERNELOMNIPID|role=behcs256_pid47_binary_identity|hex_bytes=47|json=0
+LIRISKERNELOMNIIDXROW|row=2|tag=LIRISKERNELOMNILAW|role=law_and_governance_surface|surface=omniflywheel_4957_governance|json=0
+LIRISKERNELOMNIIDXROW|row=3|tag=LIRISKERNELOMNILIVE|role=live_backend_surface_measurement|bus=1|omniflywheel=1|host8=1|dashboard=0|recall=0|json=0
+LIRISKERNELOMNIIDXROW|row=4|tag=LIRISKERNELOMNIFIRE|role=safe_backend_fire_crank_advance|physical_fire=0|mutation=0|json=0
+LIRISKERNELOMNIIDXROW|row=5|tag=LIRISKERNELOMNITEST|role=focused_test_result|tests=96|passed=96|json=0
+LIRISKERNELOMNIIDXROW|row=6|tag=LIRISKERNELOMNIRUN|role=omniflywheel_run_review_recall_stats|snapshot_count=4|json=0
+LIRISKERNELOMNIIDXROW|row=7|tag=LIRISKERNELOMNIHOST8|role=rust_host8_root_hbp_probe|routes=3|json=0
+LIRISKERNELOMNIIDXROW|row=8|tag=LIRISKERNELOMNITRILATERAL|role=github_relic_acer_omnilab_share_packet|publish_status=prepared_not_pushed|json=0
+LIRISKERNELOMNIIDXROW|row=9|tag=LIRISKERNELOMNIBOUNDARY|role=claims_gate_boundary|dashboard=0|recall=0|github_push=held|physical_mutation=0|json=0
+LIRISKERNELOMNIIDXBND|class=HELD|detail=semantic_HBI_created_for_backend_share_packet;exact_offset_index_and_github_publication_pending_if_operator_wants_mixed_branch_push|json=0

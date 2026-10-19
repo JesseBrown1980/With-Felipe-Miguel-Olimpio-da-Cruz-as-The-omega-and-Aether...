@@ -1,0 +1,210 @@
+name: N-VANTAGE 30 composed Path1 Path2 learning bench
+
+on:
+  pull_request:
+    paths:
+      - 'n-vantage-30-v1/**'
+      - '.github/workflows/n-vantage-30-composed-learning.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  composed-bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python and Rust dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==2.4.4' zstandard
+          rustup toolchain install 1.97.0 --profile minimal
+          rustup override set 1.97.0
+          rustc -Vv | tee rustc-version.txt
+          cargo -V | tee cargo-version.txt
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git-lfs
+
+      - name: Run pinned public Path 1 crate — exact 19 tests
+        run: |
+          set -euo pipefail
+          git clone https://github.com/JesseBrown1980/dbbh-coms-quant-prism.git /tmp/path1
+          git -C /tmp/path1 checkout 48d66ace742fc87c5f1a783b47d8b9e2e86c4aa4
+          cd /tmp/path1
+          cargo test --all-targets -- --list | tee "$GITHUB_WORKSPACE/path1-test-list.txt"
+          count="$(grep -Ec ': test$' "$GITHUB_WORKSPACE/path1-test-list.txt")"
+          echo "path1_tests=$count" | tee "$GITHUB_WORKSPACE/path1-test-count.txt"
+          test "$count" -eq 19
+          cargo test --all-targets -- --nocapture 2>&1 | tee "$GITHUB_WORKSPACE/path1-cargo-test.txt"
+
+      - name: Run pinned public Path 2 crate — exact 30 tests
+        run: |
+          set -euo pipefail
+          git clone https://github.com/JesseBrown1980/path2-two-shadow-recovery.git /tmp/path2
+          git -C /tmp/path2 checkout c7fa4a417eb0fc281d30be81104d98bb80dd2edb
+          cd /tmp/path2
+          cargo test --all-targets -- --list | tee "$GITHUB_WORKSPACE/path2-test-list.txt"
+          count="$(grep -Ec ': test$' "$GITHUB_WORKSPACE/path2-test-list.txt")"
+          echo "path2_tests=$count" | tee "$GITHUB_WORKSPACE/path2-test-count.txt"
+          test "$count" -eq 30
+          cargo test --all-targets -- --nocapture 2>&1 | tee "$GITHUB_WORKSPACE/path2-cargo-test.txt"
+
+      - name: Fetch and verify Catalog47 and BEHCS-256 alphabet
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/asolaria-catalog
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/catalogs.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/catalogs.json
+          curl -L --fail --retry 3 \
+            -o /tmp/asolaria-catalog/alphabet.json \
+            https://raw.githubusercontent.com/JesseBrown1980/asolaria-behcs-256/802023a9588cf3c72be9f9b353c847f22c616092/data/behcs/codex/alphabet.json
+          test "$(git hash-object /tmp/asolaria-catalog/catalogs.json)" = 51af0b536c45e8e769066bfd886bf6f08daff75d
+          test "$(git hash-object /tmp/asolaria-catalog/alphabet.json)" = 8d4a3298576ce2c9d4a1683ffab667c8a743fc42
+
+      - name: Fetch and verify public enwik8
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/e8
+          fetched=0
+          if curl -L --fail --retry 4 --retry-delay 3 --connect-timeout 20 \
+            -o /tmp/e8/enwik8.zip https://mattmahoney.net/dc/enwik8.zip; then
+            if unzip -p /tmp/e8/enwik8.zip > /tmp/e8/enwik8; then fetched=1; fi
+          fi
+          if [ "$fetched" = 0 ]; then
+            if curl -L --fail --retry 4 --retry-delay 3 --connect-timeout 20 \
+              -o /tmp/e8/enwik8 \
+              https://media.githubusercontent.com/media/amkillam/compression-test-data/e8da60efe169a1eadc74213f85ce0eaf6c382fa5/enwik/enwik8; then
+              fetched=1
+            fi
+          fi
+          if [ "$fetched" = 0 ]; then
+            git lfs install
+            git clone --depth 1 https://github.com/amkillam/compression-test-data.git /tmp/e8/repo
+            cp /tmp/e8/repo/enwik/enwik8 /tmp/e8/enwik8
+          fi
+          test "$(stat -c%s /tmp/e8/enwik8)" = 100000000
+          echo '2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  /tmp/e8/enwik8' | sha256sum -c -
+
+      - name: Compile the composed bench and dependencies
+        run: |
+          python -m py_compile \
+            n-vantage-30-v1/n_vantage_30_composed_bench_v1.py \
+            omni-event-v1/omnievent_catalog47_60d_v1.py \
+            omni-event-v1/omniportal_v2.py \
+            third-seat-2026-07-12/gpt-crosscheck/multilevel_bpe_zstd_v1.py \
+            third-seat-2026-07-12/gpt-crosscheck/persistent_order2_curve_v1.py
+
+      - name: Run the 30-vantage composed mirror bench
+        run: |
+          set -euo pipefail
+          rm -rf n-vantage-30-v1/out
+          mkdir -p n-vantage-30-v1/out
+          python n-vantage-30-v1/n_vantage_30_composed_bench_v1.py \
+            --input /tmp/e8/enwik8 \
+            --bytes 250000 \
+            --catalog47 /tmp/asolaria-catalog/catalogs.json \
+            --alphabet256 /tmp/asolaria-catalog/alphabet.json \
+            --bpe-script third-seat-2026-07-12/gpt-crosscheck/multilevel_bpe_zstd_v1.py \
+            --prior-script third-seat-2026-07-12/gpt-crosscheck/persistent_order2_curve_v1.py \
+            --omnievent-script omni-event-v1/omnievent_catalog47_60d_v1.py \
+            --portal-script omni-event-v1/omniportal_v2.py \
+            --output-dir n-vantage-30-v1/out | tee n-vantage-30-v1/out/run.log
+          grep -q 'NV30VERDICT' n-vantage-30-v1/out/run.log
+          grep -q 'composed=VERIFIED_CLONE' n-vantage-30-v1/out/run.log
+          grep -q 'status=PASS' n-vantage-30-v1/out/run.log
+
+      - name: Validate capacity, exactness, learning, and conservation
+        run: |
+          python - <<'PY'
+          import json, re
+          s=json.load(open('n-vantage-30-v1/out/nv30_summary.json'))
+          p1=s['path1']; p2=s['path2']; learn=s['learning']; cons=s['conservation']
+          assert s['vantages']==30 and s['triads']==10
+          assert len(p2['vantage_rows'])==30
+          assert len({x['actor_pid'] for x in p2['vantage_rows']})==30
+          assert len({x['prime_factor_pid'] for x in p2['vantage_rows']})==30
+          assert s['one_is_prime'] is False and s['one_is_emirp'] is False
+          assert p2['k1']['nullity']==52
+          assert p2['k4']['nullity']==28
+          assert p2['k7']['nullity']==4 and p2['k7']['gate'].startswith('HELD')
+          assert p2['k8']['nullity']==0 and p2['k8']['gate']=='RECOVER'
+          assert p2['k30']['nullity']==0
+          assert p2['restore_exact'] is True
+          assert p2['k8_reprojection_mismatches']==0
+          assert p2['k30_reprojection_mismatches']==0
+          assert all(x['restore'] and x['reprojection_mismatches']==0 and x['rank']==60 for x in p2['dropout8'])
+          assert all(x['gate']=='HELD' and x['nullity']==4 for x in p2['dropout7'])
+          assert all(x['mismatches']>0 and x['gate'].startswith('HELD') for x in p2['four_light_tamper'])
+          assert p2['core_tamper']['body_sha_match'] is False
+          assert p2['slice3_rank_curve'][18]['nullity']==3
+          assert p2['slice3_rank_curve'][19]['nullity']==0
+          assert p1['capsule_valid'] is True and p1['retained_recall'] is True
+          assert p1['missing_store_gate']=='HELD_MISSING_RETAINED_BODY'
+          assert p1['missing_store_recall'] is False
+          assert all(x['restore'] and x['recall'] for x in p1['repeat_capsule_curve'])
+          assert all(x['restore'] and x['state_match'] for x in learn['same_object_prior'])
+          assert learn['unseen_object_cold_prior']['restore'] and learn['unseen_object_cold_prior']['state_match']
+          assert all(x['restore'] and x['state_match'] for x in learn['unseen_object_warm_prior'])
+          assert learn['capsule_schema_transfer']['restore'] and learn['capsule_schema_transfer']['valid']
+          assert learn['capsule_schema_transfer']['pre_retained_recall'] is True
+          assert learn['capsule_schema_transfer']['missing_body_recall'] is False
+          assert all(x.get('restore') is True for x in learn['unseen_bpe_catalog_transfer'])
+          assert all(x.get('restore') is True for x in learn['unseen_zstd_dictionary_control'] if 'restore' in x)
+          assert s['composed']['verified_clone'] is True
+          assert cons['path1_ge_source'] and cons['path2_ge_source'] and cons['composed_ge_source']
+          assert s['events']['count']==41
+          assert len(s['events']['merkle_root'])==64 and re.fullmatch('[0-9a-f]{64}',s['events']['merkle_root'])
+          assert s['events']['portal_v2_ratio']>1
+          print('NV30VERIFY|'+'|'.join([
+            'vantages=30','triads=10',
+            f"k7_nullity={p2['k7']['nullity']}",
+            f"k8_nullity={p2['k8']['nullity']}",
+            f"path1_bpc={p1['compact_capsule8_bpc']:.6f}",
+            f"solo_bpc={p1['solo_zstd19_bpc']:.6f}",
+            f"repeat1_bpc={learn['same_object_prior'][0]['bpc']:.6f}",
+            f"repeat6_bpc={learn['same_object_prior'][-1]['bpc']:.6f}",
+            f"unseen_cold_bpc={learn['unseen_object_cold_prior']['bpc']:.6f}",
+            f"unseen_warm6_bpc={learn['unseen_object_warm_prior'][-1]['bpc']:.6f}",
+            f"merkle_root={s['events']['merkle_root']}",
+            'status=PASS','json=0']))
+          PY
+
+      - name: Seal all generated evidence
+        run: |
+          set -euo pipefail
+          cd n-vantage-30-v1/out
+          sha256sum \
+            nv30_summary.json \
+            nv30_summary.hbp \
+            nv30_events_full.ndjson \
+            nv30_events_portal_v1.hbp \
+            nv30_events_portal_v2.hbp \
+            nv30_views3d.ndjson \
+            run.log > SHA256SUMS
+          sha256sum -c SHA256SUMS
+
+      - name: Upload composed bench evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: n-vantage-30-composed-learning
+          path: |
+            rustc-version.txt
+            cargo-version.txt
+            path1-test-list.txt
+            path1-test-count.txt
+            path1-cargo-test.txt
+            path2-test-list.txt
+            path2-test-count.txt
+            path2-cargo-test.txt
+            n-vantage-30-v1/N-VANTAGE-30-COMPOSED-BENCH-SPEC.md
+            n-vantage-30-v1/n_vantage_30_composed_bench_v1.py
+            n-vantage-30-v1/out/**

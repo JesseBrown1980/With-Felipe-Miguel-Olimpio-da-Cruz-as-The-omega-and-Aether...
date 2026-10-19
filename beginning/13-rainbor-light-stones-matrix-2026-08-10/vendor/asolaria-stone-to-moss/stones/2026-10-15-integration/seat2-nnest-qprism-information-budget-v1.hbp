@@ -1,0 +1,9 @@
+HBP|schema=ASOLARIA-SEAT2-NNEST-QPRISM-INFORMATION-BUDGET-V1|json=0
+PROVENANCE|nest_commit=307903651f56e8a28ef98ca36aef22ee8cda935c|qprism_commit=b4a21a25381d6920b7aab92c94c3c3e1420fc9e4|pinned_blobs=6
+ADDRESS|qprism_Behcs_schedule_id=REAL_UPSTREAM_CALL|bits=60|quantized_alias_confirmed=1
+GF2|individual_ranks=80,81|stacked_rank=81|physical_source_authentication=0
+CRT|slice_bits=64|two_shadow_product_bits=50|three_shadow_product_bits=75|exact_restores=5
+NEGATIVE|source_swap=HOLD|score_tamper=HOLD|missing_consent=HOLD|failed_child=HOLD|missing_store=HOLD|duplicate_shadow=HOLD
+LIMIT|compromised_watcher_can_self_agree=1|physical_origin_verified=0|synthetic_only=1
+BOUNDARY|brown_hilbert_free_centre_not_an_81_Gf2_site=1|no_physical_or_quantum_inference=1
+HBPEND|status=PASS|gate=INFORMATION_CONSISTENCY_ONLY|json=0

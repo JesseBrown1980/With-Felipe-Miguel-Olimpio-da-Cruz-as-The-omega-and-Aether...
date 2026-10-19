@@ -1,0 +1,19 @@
+# RAINBOW81 FIFTH CHANNEL — STONE / OCTOBER 14, 2026
+
+Evidence class: deterministic synthetic CPU computation; not physical light measurements.
+
+The user-defined uncoloured Brown-Hilbert free centre is an independent origin at zero. It is not seat 40, not a trit vector, and not part of the 81 individually addressed seats. Seat 40 is the four-trit all-zero *address*, separate from the free centre.
+
+The original four spectral peaks at 430, 530, 630 and 730 nm produce 81 unique single-source addresses, but 272 of 3,240 normalized equal-weight mixtures exactly reproduce a third valid signature at all 401 tested wavelengths; 65 distinct targets are susceptible.
+
+Adding an affine fifth feature preserves all 272 ambiguities. Adding a nonlinear fifth feature f(t)=128*(t0^2+3*t1^2+9*t2^2+27*t3^2), sampled as a constructed *separate channel*, rejects all 272 ambiguities without adding the free centre as a seat. Minimum fifth-channel difference for these 272 alias pairs is 128 units against a 24-unit acceptance threshold.
+
+The falsification sweep includes 103,680 five-channel, bounded-noise pair trials (3,240 pairs x 32 trials) with zero false accepts for the implemented candidate decoder; 243 single-seat fifth-channel tolerance checks also passed.
+
+A fifth feature built from known source trits is an additional nonlinear readout, not an independent physical source of information. To call it independently *measured*, acquire separately calibrated optical/emission detector data and predeclare noise, normalization, wavelength/frequency sampling, timestamps, mixture ratio and blinded controls. Physical gravity, signaling speed, optical effects, actual GPU behavior and quantum behavior are NOT measured here.
+
+Reproduce: python3 experiments/test_rainbow81_fifth_feature.py
+
+Script SHA-256: 841950e0ab49e4dbe2bb5d78ecaa5959aa9a445d9b721fbdda89daf6add18a68
+Results SHA-256: d2a795b052b4f7b836bad646b16390559a7ad5eb96916ed59096db4db832b687
+Status: PASS (digital fixture only)

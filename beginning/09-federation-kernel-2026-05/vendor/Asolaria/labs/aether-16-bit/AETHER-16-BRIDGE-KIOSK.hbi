@@ -1,0 +1,9 @@
+@HBI AETHER_16_BRIDGE_KIOSK_INDEX v1
+id=AETHER-16-BRIDGE-KIOSK
+name=AETHER-16 Bridge v2 Kiosk
+primary_file=bridge-kiosk.html
+receipt=AETHER-16-BRIDGE-KIOSK.receipt.hbp
+mode=single_tab
+status=canonical
+authority=visual_only
+runtime=false

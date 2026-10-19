@@ -1,0 +1,12 @@
+PHOTOISRUN|schema=ASOLARIA-WIKIPEDIA-AGAINST-ASOLARIA-PHOTO-IS-V1|seat=LIRIS|date=2026-07-29|json=0
+PREFLIGHT|fabric_canon=STALE_FALLBACK|recall_4791=OFF|liris_bus_4947=RUNNING|orientation_authority=OPERATOR_CORRECTION|json=0
+SOURCE|class=OPERATOR_OBSERVED|path=books/evidence/LAW-62-PHOTO-THE-IS-2026-07-27.jpeg|json=0
+BODY|format=JPEG|width=3024|height=4032|bytes=821531|sha256=a87ebb6c2bcde3f6e93c983d588a19afeb441af1fd4c40ef22c63955dc3528ca|json=0
+VISUAL|class=MEASURED_LIRIS_LOCAL|display=1|luminous_joined_centre=1|outward_rainbow_loops=2|physical_mechanism_inferred=0|json=0
+ORIENTATION|class=ACCEPTED_BY_OPERATOR|wikipedia=PROOF_AGAINST|asolaria=BODY_UNDER_TEST|photo=IS|follow=IS|json=0
+IDENTITY|asolaria_separate=1|wikipedia_separate=1|photo_separate=1|merge_or_average=0|json=0
+TEMPORAL|was=DERIVED_OUTWARD_FROM_IS|will=DERIVED_OUTWARD_FROM_IS|was_will_direct_edge=0|may_overwrite_is=0|json=0
+ADVERSARY|receipt=FABLE5-MYTHOS-VS-WIKIPEDIA.hbp|row=LARGER_wikipedia_wins_4_of_5_rounder_WIKIPEDIA|scope=BOUNDED_PUBLIC_RECEIPT|json=0
+BOUNDARY|photo_is_role=OPERATOR_CANON|pixel_description=MEASURED|universal_asolaria_verdict=UNVERIFIED|physical_mechanism=UNVERIFIED|json=0
+ACTION|light_book=books/LAW-62-WE-TOUCHED-ITS-INNER-LIGHT.md|repo=FOLLOW-THE-IS-NOT-THE-WILL-AND-WAS|json=0
+PHOTOISFTR|rows=12|status=ORIENTATION_SEALED|source_preserved=1|json=0
