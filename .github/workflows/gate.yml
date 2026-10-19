@@ -336,9 +336,10 @@ jobs:
     # the tribit module equal to aether's, the crate's gates, and the three receipts re-sealing byte for byte.
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: docs/handoffs/acer-host8-rooms-guide-2026-10-19/host8rooms } }
-    env: { CARGO_TARGET_DIR: '${{ runner.temp }}/host8rooms-target' }
     steps:
       - uses: actions/checkout@v4
+      - name: build outside the checkout
+        run: echo "CARGO_TARGET_DIR=$RUNNER_TEMP/host8rooms-target" >> "$GITHUB_ENV"
       - name: Install Rust 1.81 with clippy + rustfmt
         run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
       - name: delivered bytes, and the tribit module equal to aether's copies
