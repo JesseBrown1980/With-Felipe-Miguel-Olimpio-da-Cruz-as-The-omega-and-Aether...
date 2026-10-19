@@ -366,3 +366,31 @@ jobs:
           done
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  canon-archive:
+    # canon-archive/ is the owner's Brown-Hilbert canon, published read-only: every file must match its pin in cube
+    # FABLE5-BROWN-HILBERT-PASS-2026-10-18. Corrections go beside it (docs/handoffs/), never over it.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 46 of 46 files match their cube pins
+        run: |
+          set -euo pipefail
+          cube=docs/handoffs/FABLE5-BROWN-HILBERT-PASS-2026-10-18.hbp
+          (cd docs/handoffs && sha256sum -c FABLE5-BROWN-HILBERT-PASS-2026-10-18.hbp.sha256)
+          ok=0; total=0; sum=0
+          while IFS= read -r row; do
+            arc=$(sed -n 's/.*|arc=\([^|]*\)|.*/\1/p' <<<"$row")
+            want_b=$(sed -n 's/.*|bytes=\([0-9]*\)|.*/\1/p' <<<"$row")
+            want_s=$(sed -n 's/.*|sha256=\([0-9a-f]*\)|.*/\1/p' <<<"$row")
+            case "$arc" in
+              */CLAUDE.md|*/AGENTS.md|*/CODEX.md) p="canon-archive/${arc%.md}.archived.md" ;;
+              *) p="canon-archive/$arc" ;;
+            esac
+            total=$((total+1))
+            got_b=$(wc -c < "$p"); got_s=$(sha256sum "$p" | cut -d' ' -f1); sum=$((sum+got_b))
+            if [ "$got_b" = "$want_b" ] && [ "$got_s" = "$want_s" ]; then ok=$((ok+1)); else echo "FAIL $p"; fi
+          done < <(grep '^FILE|' "$cube")
+          echo "canon-archive pins: $ok/$total, $sum bytes"
+          [ "$ok" = 46 ] && [ "$total" = 46 ] && [ "$sum" = 213855 ]
+      - name: the zero-portal delivery kept beside it
+        run: cd docs/handoffs/acer-zero-portal-update-2026-10-19 && sha256sum -c --quiet SHA256SUMS

@@ -596,3 +596,15 @@ numbers (`cloud/CLOUD-ROWS.hbp`). CI rebuilds the tool and re-seals the three re
 - the ground room is the upper of the two middle rooms;
 - the cold probe's 98/s is an upper bound;
 - "GPU-type memory" is the owner's name for a goal: the capacity is GPU-scale, the speed is the drive's.
+
+## Zero portal update (2026-10-19)
+
+`acer-zero-portal-update-2026-10-19/`: ACER's zip for the note that the HTTP-0 portal exists as *The light hub*. ACER
+pushed it to `main` here (`76e7e92`, `44bf8f5`) and in Asolaria. Every file is kept byte-identical; `seat/CLAUDE.md`
+is renamed `.archived.md` so it does not auto-load. A second machine confirmed the commits, the sidecars and the live
+page (`cloud/CLOUD-ROWS.hbp`).
+
+`76e7e92` had edited three files of `canon-archive/` in place, which broke their pins (43/46). They are restored to
+their pinned bytes (46/46 again), and ACER's new wording of them is kept in this folder, beside the archive. The gate
+job `canon-archive` now checks all 46 pins. `PROVENANCE.md` adds nine notes on the note. The first one corrects the
+how-to: the second person must press *join someone's*, not *OPEN THE LIGHT*.

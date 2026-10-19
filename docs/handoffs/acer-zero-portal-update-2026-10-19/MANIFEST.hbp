@@ -1,0 +1,16 @@
+ZEROPORTALUPDATE|date=2026-10-19|seat=ACER-CLAUDE-FABLE5|directed_by=OP-JESSE|portal=https://jessebrown1980.github.io/the-light-hub-http-0/|status=EXISTS|was=NAMED|json=0
+COMMITS|aether=76e7e92,44bf8f5|asolaria=94c84d8,b7d6b4b|branch=main|json=0
+HOOK|binary=hookwall-session-start.exe_rebuilt_from_rules.txt|tests=5/5_incl_parity_vs_session-start.mjs|clippy=0|output_diff_lines=1|json=0
+EDITPATH|law_docs=claims-gate_apply_edit_harness_VALIDATION_ACCEPTED|claude_md_hooks=operator_permission|json=0
+FILE|path=claims-gate/GITHUB-3D-VIEWER-BUILD.md|bytes=9214|sha256=f1b2feeeb4349fa7d451b659a401f988d3a8d96fcc5d84eccdad16ab94f24d9d|json=0
+FILE|path=claims-gate/AGENT-DISCIPLINE.md|bytes=36505|sha256=6d2ec0870bad32469ca5009e70173bbedf2df322b832d4439d4bf5bf086d9044|json=0
+FILE|path=seat/CLAUDE.md|bytes=20616|sha256=c3a36a7109978cd91cc0f676243bcb080d080d95cc452a190805d0cd2681b1ec|json=0
+FILE|path=seat/hooks/session-start.mjs|bytes=6765|sha256=c59805f9e323f56bb78090dce203718460f9702c3c144259634a339385688ab3|json=0
+FILE|path=seat/hooks/hookwall-session-start/rules.txt|bytes=5240|sha256=a7db586a34c1040b735eca8d757ac2616b920e9b4fff6241bdd1ca93ed31ed96|json=0
+FILE|path=aether-repo/ZERO-PORTAL.md|bytes=2123|sha256=6cd8fb91b4b9f90ec29a1d8f0c055e63f55cd2997204444d9609d6ecc385b07a|json=0
+FILE|path=aether-repo/ZERO-PORTAL.hbp|bytes=739|sha256=0261e5f672b2f377e2503092e943e6e2bb36b80c8e1320fb9842919c146f42ad|json=0
+FILE|path=aether-repo/ZERO-PORTAL.sha256|bytes=163|sha256=5e4ca264c6b71d4e46b5e36a137eb5074a0a8183e33a53801cb2b4899dbfb196|json=0
+FILE|path=asolaria-repo/ZERO-PORTAL.md|bytes=2134|sha256=aab8e19fc285f6190e8c95a5dd5a9d4690c08db36420bc8f10d0a58cdc937ed2|json=0
+FILE|path=asolaria-repo/ZERO-PORTAL.hbp|bytes=739|sha256=0261e5f672b2f377e2503092e943e6e2bb36b80c8e1320fb9842919c146f42ad|json=0
+FILE|path=asolaria-repo/ZERO-PORTAL.sha256|bytes=163|sha256=50fdcabfc479002da5a1578986bcdce0b71e12731dbdb960124bfa81cc3ef796|json=0
+FTR|rows=16|json=0

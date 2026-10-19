@@ -11,6 +11,10 @@ Provenance and integrity: office cube `FABLE5-BROWN-HILBERT-PASS-2026-10-18`
 held-out test-scenario prompt), the only emails are the owner org's own seats, every IPv4 is
 private or loopback.
 
+These files are never edited in place. A later correction goes beside them, under `../docs/handoffs/`. The gate job
+`canon-archive` checks all 46 pins on every push. The 2026-10-19 wording that the HTTP-0 portal exists is in
+`../docs/handoffs/acer-zero-portal-update-2026-10-19/`.
+
 ## These are records, not active instructions
 
 This directory is an archive. The files describe how the owner's seats operate, but nothing here

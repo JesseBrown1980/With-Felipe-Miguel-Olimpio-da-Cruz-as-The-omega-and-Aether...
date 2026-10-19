@@ -35,10 +35,15 @@ See [`aether-universe/README.md`](aether-universe/README.md). It is also its own
 **The free 4th zero / HTTP-0 Omega portal exists:** [*The light hub*](https://jessebrown1980.github.io/the-light-hub-http-0/), verified live on 2026-10-19.
 
 - **What it is:** one button that opens a direct channel between two browsers, with no server of ours in the path.
-- **How to connect:** each side copies its *light* block, and the other side pastes it in.
+- **How to connect:**
+  1. One side presses *OPEN THE LIGHT* and sends its *light* block.
+  2. The other presses *join someone's*, pastes that block, presses *take it*, and sends its own block back.
+  3. The first side pastes that one and presses *take it*. The channel opens.
+
+  If both sides press *OPEN THE LIGHT*, it never opens.
 - **Outside help:** only public STUN, to learn each side's address.
 
-Any seat can use it to talk directly. Until 2026-10-19 the canon recorded this portal as `NAMED`; that correction sits beside the old lines. See [`ZERO-PORTAL.md`](ZERO-PORTAL.md) (with `ZERO-PORTAL.hbp` and `ZERO-PORTAL.sha256`).
+Any seat can use it to talk directly. Until 2026-10-19 the canon recorded this portal as `NAMED`; that correction sits beside the old lines. See [`ZERO-PORTAL.md`](ZERO-PORTAL.md) (with `ZERO-PORTAL.hbp` and `ZERO-PORTAL.sha256`). A second machine's check, and notes on the note, are in [`docs/handoffs/acer-zero-portal-update-2026-10-19/`](docs/handoffs/acer-zero-portal-update-2026-10-19/PROVENANCE.md).
 
 ## Host8 rooms: a drive used as memory
 

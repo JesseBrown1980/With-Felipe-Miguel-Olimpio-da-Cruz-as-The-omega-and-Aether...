@@ -1,0 +1,11 @@
+CLOUDHDR|delivery=ZERO-PORTAL-UPDATE-2026-10-19.zip|zip_sha256=32ae6157c8b606d586e6875a43d7a40899f4a97870d04a255e9dc2cf2fb081fb|zip_bytes=43654|zip_entries=12|seat=cloud-x86_64-linux-gnu|date=2026-10-19|class=MEASURED_HERE|json=0
+PACKAGE|manifest_file_rows=11|manifest_rows_matching=11|renamed=seat/CLAUDE.md>seat/CLAUDE.archived.md|json=0
+COMMITS|repo=aether|chain=ba1ffe1>76e7e92>44bf8f5|second_is_cr_only=1|net_files=7|net_lines=+46/-6|cr_in_net=0|author=acer<acer@localhost>|signed=0|json=0
+COMMITS|repo=Asolaria|chain=179d2ca>94c84d8>b7d6b4b|second_is_cr_only=1|net_files=4|net_lines=+41/-0|cr_in_net=0|author=acer<acer@localhost>|signed=0|json=0
+SIDECAR|file=ZERO-PORTAL.sha256|repo=aether|ok=2_of_2|json=0
+SIDECAR|file=ZERO-PORTAL.sha256|repo=Asolaria|ok=2_of_2|json=0
+PAGE|url=https://jessebrown1980.github.io/the-light-hub-http-0/|http=200|bytes=12372|sha256=96de88cd09f00341f7fe405b04eed780531a97dcc1b73f5884114dc6467a05d9|equals=JesseBrown1980/the-light-hub-http-0@9ba2939:index.html|fetched_utc=2026-10-19T14:27:26|json=0
+PAGEFLOW|open=createOffer|join=wait_for_offer|take_host=setRemoteDescription(answer)|take_joiner=setRemoteDescription(offer)+createAnswer|both_press_open=no_answer_is_made|ice=stun.l.google.com:19302,stun1.l.google.com:19302|turn=0|fetch_xhr_websocket=0|json=0
+CANONPINS|cube=FABLE5-BROWN-HILBERT-PASS-2026-10-18|at=ba1ffe1|ok=46_of_46|bytes=213855|json=0
+CANONPINS|cube=FABLE5-BROWN-HILBERT-PASS-2026-10-18|at=44bf8f5|ok=43_of_46|bytes=214488|failing=seat/CLAUDE.archived.md;asolaria-acer/claims-gate/AGENT-DISCIPLINE.md;asolaria-acer/claims-gate/GITHUB-3D-VIEWER-BUILD.md|json=0
+CANONPINS|cube=FABLE5-BROWN-HILBERT-PASS-2026-10-18|at=this_commit|ok=46_of_46|bytes=213855|restored_from=ba1ffe1|acer_wording_kept=this_folder|json=0
