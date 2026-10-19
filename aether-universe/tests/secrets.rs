@@ -285,8 +285,15 @@ fn secret_7_equals_every_integer_line_of_compose_stdout() {
         println!("NOT_MEASURED|subject=compose.stdout|reason=NOT_REACHABLE_FROM_HERE|json=0");
         return;
     }
-    let text = fs::read_to_string(root().join("../kernel/tribit-referees/receipts/compose.stdout"))
-        .unwrap();
+    // the aether repository's own file, or its byte-exact mirror in the standalone repository
+    let rel = "kernel/tribit-referees/receipts/compose.stdout";
+    let mirrored = root().join("../aether-sources").join(rel);
+    let path = if mirrored.is_file() {
+        mirrored
+    } else {
+        root().join("..").join(rel)
+    };
+    let text = fs::read_to_string(path).unwrap();
     let o = out(7);
     assert_eq!(o.token, "0");
     let mut section = 0;

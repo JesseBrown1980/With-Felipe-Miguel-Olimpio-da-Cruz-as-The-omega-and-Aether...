@@ -178,12 +178,10 @@ pub fn load_inputs(cfg: &Config) -> Inputs {
     match fs::metadata(&enwik) {
         Ok(m) if m.len() == ENWIK8_BYTES => {
             match fs::File::open(&enwik).and_then(|mut f| secrets::census_reader(&mut f)) {
-                Ok(c) => {
-                    match enwik8_identity(&c, ENWIK8_BYTES, sources::GENUINE_ENWIK8_SHA256) {
-                        Ok(()) => inputs.enwik8 = Some(c),
-                        Err(note) => inputs.enwik8_note = Some(note),
-                    }
-                }
+                Ok(c) => match enwik8_identity(&c, ENWIK8_BYTES, sources::GENUINE_ENWIK8_SHA256) {
+                    Ok(()) => inputs.enwik8 = Some(c),
+                    Err(note) => inputs.enwik8_note = Some(note),
+                },
                 Err(e) => inputs.enwik8_note = Some(format!("unreadable: {e}")),
             }
         }
@@ -1362,7 +1360,10 @@ mod tests {
         // right size, wrong hash: refused, and the note carries the hash that was seen
         let err = enwik8_identity(&c, 3, sources::GENUINE_ENWIK8_SHA256).unwrap_err();
         assert!(err.contains("ba7816bf8f01cfea"), "{err}");
-        assert!(err.contains("2b49720ec4d78c3c") && err.contains("MEASURED"), "{err}");
+        assert!(
+            err.contains("2b49720ec4d78c3c") && err.contains("MEASURED"),
+            "{err}"
+        );
         assert!(err.contains("not the genuine enwik8"), "{err}");
         // right hash prefix, wrong size: refused
         let err2 = enwik8_identity(&c, 4, "ba7816bf").unwrap_err();

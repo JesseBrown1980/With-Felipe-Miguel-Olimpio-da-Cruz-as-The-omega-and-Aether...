@@ -321,8 +321,15 @@ fn the_crate_refuses_float_arithmetic_at_compile_time_and_has_one_dependency() {
         .filter(|l| !l.trim().is_empty() && !l.trim_start().starts_with('#'))
         .collect();
     assert_eq!(deps.len(), 1, "{deps:?}");
+    // Inside the aether repository the crate is reused by path; in the standalone aether-universe
+    // repository it is the same crate pinned by commit. Either way it is the one dependency.
     assert!(
-        deps[0].starts_with("asolaria-tribit") && deps[0].contains("path = \"../kernel/tribit\"")
+        deps[0].starts_with("asolaria-tribit")
+            && (deps[0].contains("path = \"../kernel/tribit\"")
+                || (deps[0]
+                    .contains("git = \"https://github.com/JesseBrown1980/asolaria-tribit\"")
+                    && deps[0].contains("rev = \""))),
+        "{deps:?}"
     );
     let tc = fs::read_to_string(root.join("rust-toolchain.toml")).unwrap();
     assert!(tc.contains("channel = \"1.81.0\""));

@@ -186,7 +186,7 @@ pub static FACTS: &[Fact] = &[
     fact("X04", 5, Named, Visit, "ACER-EVOLUTION-LINE-FOR-RELIC-AETHER-MAP-2026-07-06.md, node q22", None,
         "Relic's map gives the Rupture Zone the discipline: avoid collisions in execution, cause them in search. Position (4,-1,1), INFERIDO."),
     // ---- chapter 6: Crystalline Reach, the alphabet changes
-    fact("Y01", 6, Measured, Solve, "README.md:92 (Q-PRISM commit 53023b6)", Some("README.md"),
+    fact("Y01", 6, Measured, Solve, "README.md, section Prism/Comb 0-loss (2026-07-01), the MEASURED rung (Q-PRISM commit 53023b6)", Some("README.md"),
         "Five bytes and four symbols of 1024 close exactly at lcm(8,10) = 40 bits, with remainder 0; the round trip is sha256-identical at code rate exactly 1."),
     fact("Y02", 6, Measured, Solve, "codec/dbbh-dbwh/RECEIPT-LADDER-RUNGS.hbp:16", Some("codec/dbbh-dbwh/RECEIPT-LADDER-RUNGS.hbp"),
         "Rung width 10, alphabet 1024: 85,793 tested, 0 round-trip failures."),
@@ -254,8 +254,12 @@ pub fn repo_root() -> Option<&'static Path> {
 
 /// Does a repository-relative citation point at a file? `None` when the game runs outside the
 /// checkout (a path that cannot be reached from here is not a path that does not exist).
+///
+/// Citations are paths of the aether repository. In the standalone `aether-universe` repository the
+/// cited files are mirrored byte-exact under `aether-sources/`, which is looked at first, so that a
+/// citation of the aether `README.md` never resolves to the standalone repository's own README.
 pub fn repo_path_exists(rel: &str) -> Option<bool> {
-    repo_root().map(|r| r.join(rel).is_file())
+    repo_root().map(|r| r.join("aether-sources").join(rel).is_file() || r.join(rel).is_file())
 }
 
 #[cfg(test)]

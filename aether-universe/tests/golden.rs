@@ -138,9 +138,14 @@ fn the_full_script_and_the_playthrough_are_pinned_and_are_the_same_run() {
     check("full_final_seal", &seal, "6c6ebcea60c08f9c");
     check("full_seal_chain_head", &chain, "732160b13ff0824a");
     check("full_seal_tick", &tick, "47");
+    // RE-PIN 2026-10-18 (second, in the open): the stdout moved by exactly one line, the codex FACT
+    // row Y01, whose source changed from `README.md:92` to the section name, because adding the
+    // AETHER UNIVERSE section to the aether README moved that line to 116. No world rule, chain hash
+    // or seal moved (measured: diff of two play-through stdouts = that one line). Was
+    // a44a97c2320c263e416c9e89bbb8578f976533cca7c0d375490f5eb71d722fcb.
     check(
         "full_stdout_sha256",
         &sha_full,
-        "a44a97c2320c263e416c9e89bbb8578f976533cca7c0d375490f5eb71d722fcb",
+        "e436986ec8d53ec39d3909563ac3bcf4b2c2cb65bb56ec31f3d78f7816a8f551",
     );
 }
