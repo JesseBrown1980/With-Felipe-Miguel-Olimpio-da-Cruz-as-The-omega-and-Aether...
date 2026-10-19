@@ -8,7 +8,7 @@ and builds the `VerifiedEnvelope` the tighten-only verdict (`gate/verdict`) read
 the caller. Crate `asolaria-observed`, `#![forbid(unsafe_code)]`, Rust 1.81, no `f32`/`f64`.
 
 **Lane.** Hot lane: everything in `src/` runs per request, in process, on integers, HBP text and
-SHA-256 (`sha2`), with no Python, torch, Node, JSON or HTTP. `tools/score_referee.py` is the cold
+SHA-256 (`sha2` for the baseline, shadowcat's `sha256.rs` for the observation chain), with no Python, torch, Node, JSON or HTTP. `tools/score_referee.py` is the cold
 lane: a stdlib Python mirror of `asolaria-score.mjs`, on integers (an integer emulation of binary64:
 a double is its 64-bit pattern, `+ - * /` the round-to-nearest-even integer operations), that CI uses
 to regenerate the expected fixture.
@@ -21,6 +21,9 @@ to regenerate the expected fixture.
 | `observe(events, policy) -> Observed` | The L0 reading, the signals, the composite, the reverse gain and the gate envelope. |
 | `observe_and_compose(events, policy) -> (Observed, Composed)` | `observe`, then `asolaria_verdict::compose` over its envelope. |
 | `L0Reading { score_q24, score_e4 }` | The sigmoid output in Q24 and `+l0.toFixed(4)` (asolaria-score.mjs:122) in e4 units. |
+| `Observed.benched` | The L1, L2 and L4 readings (`bench::BenchReading`: level, provenance `Real` or `Absent`, Q24 score): reported, never weighted. |
+| `bench::{read_benched, Level, Provenance}` | L1 and L2 on the request edge's two nodes, the six features L0 reads; L4 on pid and payload. `Level::voting()` is true for L0 only. |
+| `bench::{observation_rows, watch, RowInputs, Watch, GENESIS}` | The chain the CLI writes with `observe --rows`, and the watcher that recomputes it (`cli/README.md`, "The observation chain and `watch`"). |
 | `score::{shannon_e4, sha_baseline_e4, composite_e4, reverse_gain, forward_score_q, reverse_risk_q, Signals, ReverseGain}` | The asolaria-score.mjs signals and gates in e4 units (1/10000). |
 
 ## What `observe` computes
@@ -29,7 +32,9 @@ to regenerate the expected fixture.
 |---|---|---|
 | L0 reading | `l0_edge::observe_pair(events, actor, target)`: node features of the request's actor (node 0) and target (node 1) from the events, edge `[[0, 1]]`; `None` when either id never appears | asolaria-score.mjs:121-122; inference_server.py:24 |
 | `signals.l0` | the reading's e4 value, when present | asolaria-score.mjs:122 |
-| `signals.l4`, `g1`, `g2`, `g3` | absent: `observe` sets them to `None` (src/lib.rs:79-82); this crate calls no L4 model (the repo's L4 port, `model/l4-gslgnn`, is not one of its dependencies) and no :4949 fabric service | asolaria-score.mjs:126-138 |
+| `signals.l4` | the L4 reading's e4 value: `l4_gslgnn::score_request(pid, payload)` over `[node(sha16(pid)), node(sha16(content))]` and edge `[[0, 1]]`; reported, not in the weights | asolaria-score.mjs:112-113, 126-128 |
+| `signals.g1`, `g2`, `g3` | absent: `observe` sets them to `None`; this crate calls no :4949 fabric service | asolaria-score.mjs:130-138 |
+| L1, L2 readings (`Observed.benched`) | `l1_prototype::model::pair_output` and `l2_contrastive::edge_output` on the actor and target nodes L0 reads; `Absent` when either id never appears; reported, never weighted | prototype_inference_server.py, contrastive trainer `train_contrastive.py:25-36` |
 | `signals.shannon` | `shannon_e4(payload)` | asolaria-score.mjs:86-95, 141 |
 | `signals.baseline` | `sha_baseline_e4(pid, payload)` | asolaria-score.mjs:98-101, 145 |
 | composite | `composite_e4(signals)`: weights `l0 .30, g1 .10, g2 .10, g3 .10, shannon .15, baseline .10` over the present signals, in that order, divided by their summed weight, `toFixed(4)`; binary64 throughout, via `l0_edge::jsnum`. `l4` is a reported signal with no weight (the owner's 2026-10-18 edit; before it, `l4 .15`) | served asolaria-score.mjs:151-164 (`vendor/acer-scorer-2026-10-18/`) |

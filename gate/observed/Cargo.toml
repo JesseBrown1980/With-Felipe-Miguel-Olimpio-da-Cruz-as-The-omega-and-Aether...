@@ -14,6 +14,10 @@ path = "src/lib.rs"
 
 [dependencies]
 asolaria-l0-edge = { path = "../../model/l0-edge", version = "0.1.0" }
+asolaria-l1-prototype = { path = "../../model/l1-prototype", version = "0.1.0" }
+asolaria-l2-contrastive = { path = "../../model/l2-contrastive", version = "0.1.0" }
+asolaria-l4-gslgnn = { path = "../../model/l4-gslgnn", version = "0.1.0" }
+shadowcat = { path = "../../shadowcat", version = "0.1.0" }
 asolaria-verdict = { path = "../verdict", version = "0.1.0" }
 asolaria-hookwall = { path = "../hookwall", version = "0.1.0" }
 asolaria-server-fischer-eval = { path = "../fischer-eval", version = "0.1.0" }

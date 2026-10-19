@@ -3,12 +3,14 @@
 
 #![forbid(unsafe_code)]
 
+pub mod bench;
 pub mod score;
 
 use asolaria_hookwall::hookwall::HookTier;
 use asolaria_hookwall::syscall::AccessTier;
 use asolaria_server_fischer_eval::{FischerEnvelope, FischerScore};
 use asolaria_verdict::{compose, Composed, VerifiedEnvelope};
+use bench::{read_benched, BenchReading};
 use l0_edge::event::Event;
 use l0_edge::model::q24_to_e4;
 use score::{
@@ -55,6 +57,8 @@ pub struct Observed {
     pub envelope: VerifiedEnvelope,
     /// L0 reading; `None` when the actor or target was never observed.
     pub l0: Option<L0Reading>,
+    /// L1, L2 and L4 readings: reported, never weighted.
+    pub benched: [BenchReading; 3],
     /// asolaria-score.mjs signals.
     pub signals: Signals,
     /// `+composite.toFixed(4)` (asolaria-score.mjs:164) in e4 units.
@@ -74,9 +78,10 @@ pub fn observe(events: &[Event], policy: PolicyInputs) -> Observed {
             score_q24,
             score_e4: q24_to_e4(score_q24),
         });
+    let benched = read_benched(events, &request.actor, &request.target, pid, content);
     let signals = Signals {
         l0: l0.map(|reading| reading.score_e4),
-        l4: None,
+        l4: benched[2].score_e4(),
         g1: None,
         g2: None,
         g3: None,
@@ -109,6 +114,7 @@ pub fn observe(events: &[Event], policy: PolicyInputs) -> Observed {
     Observed {
         envelope,
         l0,
+        benched,
         signals,
         composite_e4,
         reverse_gain,

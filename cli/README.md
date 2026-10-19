@@ -59,7 +59,8 @@ file path goes. A wrapper that runs `gate` or `observe` therefore passes `--` be
 | `sign --key <seed-file> <file\|->` | Ed25519 signature (128 hex) over the exact input bytes. |
 | `verify --pub <64 hex> --sig <128 hex> <file\|->` | `VERIFY\|ok=1` or `VERIFY\|ok=0\|reason=signature_invalid` / `reason=key_malformed`. |
 | `gate <envelope\|-> [--pub <hex> --sig <hex>]` | `GATE\|verdict=…\|hookwall=…\|spawn_gate=…\|tier_gate=…\|fischer=…\|input_guard=…\|signature=…\|reason=…\|json=0` |
-| `observe --events <events\|-> <envelope\|-> [--pub <hex> --sig <hex>]` | The `GATE\|…` row of `gate` with `score`, `l0_real`, `mark` and `reverse_risk` after the verdict (see [`observe`](#observe)) |
+| `observe --events <events\|-> <envelope\|-> [--pub <hex> --sig <hex>] [--rows <new-file> [--prev <64 hex>]]` | The `GATE\|…` row of `gate` with `score`, `l0_real`, `mark` and `reverse_risk` after the verdict (see [`observe`](#observe)); with `--rows`, also the observation chain in a new file (see [the chain](#the-observation-chain-and-watch)) |
+| `watch --events <events> --rows <rows-file> <envelope> [--pub <hex> --sig <hex>]` | `WATCH\|verdict=PROCEED\|rows=5\|head=…\|json=0` when the chain recomputes byte for byte, else `WATCH\|verdict=HOLD\|row=…\|reason=…\|json=0` |
 | `help`, `--version` | Usage summary; `VERSION\|name=asolaria\|version=…\|json=0`. |
 
 `gate` with `--pub`/`--sig` first verifies the signature over the exact envelope bytes. A signature
@@ -84,8 +85,8 @@ In `reason` and `seed_file`, `%`, `|` and control characters are percent-encoded
 |---|---|
 | 0 | Success; `gate` or `observe` verdict PROCEED |
 | 1 | `verify` failed, an I/O error, or the result row could not be written (closed pipe, full disk) |
-| 2 | Usage error: bad arguments, malformed hex or seed file, `keygen` target already exists, envelope or events parse error, envelope over 1 MiB, or an `observe` envelope with a score key or without `payload` |
-| 3 | `gate` or `observe` verdict HOLD |
+| 2 | Usage error: bad arguments, malformed hex or seed file, `keygen` or `observe --rows` target already exists, `--prev` not 64 lowercase hex or without `--rows`, envelope or events parse error, envelope over 1 MiB, or an `observe` envelope with a score key or without `payload` |
+| 3 | `gate` or `observe` verdict HOLD; `watch` found a row that does not recompute |
 | 4 | `gate` or `observe` verdict BLOCK |
 
 Only exit 0 means PROCEED. Treat every other exit code (including 1, 2 and any crash) as
@@ -220,14 +221,69 @@ The model was trained with `BCELoss` on the `gnnDataExport.js` edge label (train
 which is 1 for risk >= 6, status blocked or denied, or an action containing blocked or denied
 (gnnDataExport.js:74-77). asolaria-score adds L0 to the composite with weight 0.30
 (served asolaria-score.mjs:157-160). These are the upstream definitions; `observe` reproduces them.
-L4, G1, G2 and G3 are absent in this stack, so the figures above are the same before and after the
-owner's 2026-10-18 edit that took `l4` out of the weights.
+G1, G2 and G3 are absent in this stack. L4 is read and reported (`signals.l4`) but has no weight
+since the owner's 2026-10-18 edit that took `l4` out of the weights, so the figures above are the
+same with or without it.
 
 `--pub`/`--sig` work as for `gate` and cover the exact envelope bytes only. The events file is
 not signed, so `signature=verified` says nothing about it. The events file decides the L0 term:
 with `examples/observe-envelope.hbp`, the single row
 `EVENT|actor=agent:benign|target=svc:ledger|risk=9` gives `score=0.7375` and PROCEED (exit 0),
 where the fixture gives `score=0.2139` and HOLD (exit 3).
+
+## The observation chain and `watch`
+
+`observe` also reads the benched GNNs, which are connected, observed and non-voting:
+
+- L1 PrototypeGNN (`model/l1-prototype`) and L2 ContrastiveGNN (`model/l2-contrastive`) read the same
+  request edge as L0. They take the six node features L0 reads from the events: their trainers build
+  them in the same order (`train_prototype.py:24-35`, `train_contrastive.py:25-36`,
+  `train_baseline.py:31-38`).
+- L4 GSLGNN (`model/l4-gslgnn`) reads the pid and the payload, as asolaria-score does
+  (asolaria-score.mjs:112-113, 127).
+
+Only L0 is weighted. The verdict and the `GATE` row are the same with or without these readings.
+Promoting a benched level to a weight is an owner decision, not a flag.
+
+`--rows <new-file>` writes five rows to a new file before the `GATE` row is printed:
+
+- one `OBSERVE` row each for L0, L1, L2 and L4. A row carries the model crate, the sha256 of the
+  trained checkpoint its weights come from, the provenance (`real`, or `absent` when the edge was
+  never observed), the score in Q24 and e4, `voting=1|0`, and the sha256 of the events file and of
+  the envelope. The request text itself is not in the rows.
+- one `OBSERVEGATE` row with the sha256 of the printed `GATE` row.
+
+Each row ends `prev=<64 hex>|row_sha256=<64 hex>|json=0`. `row_sha256` is the SHA-256 (shadowcat's
+`sha256.rs`) of the row's text before it, and `prev` links to the row before, from `--prev` (default
+64 zeros). Pass the last `row_sha256` of one run as `--prev` to continue a chain across runs. If the
+file exists the command refuses (exit 2). If it cannot be written, it exits 1 with no `GATE` row.
+
+`watch` is the independent watcher, run as its own process. It recomputes the chain from the same
+events file, envelope and `--pub`/`--sig`, starting from the file's first `prev`, and compares it
+line by line. Any difference is a HOLD (exit 3) naming the first row and why:
+
+- `row_sha256_differs`: the row was edited and not re-hashed;
+- `reading_differs`: it was re-hashed;
+- `events_differ`: the events file was swapped;
+- `envelope_differs`, `chain_broken` or `gate_row_differs`: the envelope, the chain link or the
+  printed GATE row is not the one that ran;
+- `row_count_differs`: rows were deleted or appended.
+
+The watcher proves the rows are what these inputs give. It does not prove the inputs are the ones
+the caller meant: the events file is still unsigned.
+
+With the SYNTHETIC fixture and `examples/observe-envelope.hbp`, the readings in e4 units are:
+
+| `actor -> target` | L0 | L1 | L2 | L4 |
+|---|---|---|---|---|
+| `agent:benign -> svc:ledger` | 0 | 10000 | 10000 | 5292 |
+| `agent:rogue -> svc:vault` | 10000 | 10000 | 10000 | 5292 |
+| `agent:ghost -> svc:ledger` | absent | absent | absent | 5292 |
+
+On these edges L1 and L2 give the same reading for the benign and the rogue history, and L4 gives
+the same reading for both request pids tested. Their provenance records that L1, L2 and L4 were
+trained on a single class (`model/l1-prototype/PROVENANCE.md`, the `SPLIT` row), which is one reason
+they do not vote.
 
 ## Scope
 
@@ -242,7 +298,8 @@ where the fixture gives `score=0.2139` and HOLD (exit 3).
 - `signature=verified` means the exact bytes were signed by the private key matching `--pub`,
   nothing more. There is no key registry or pinning, and envelopes carry no expiry or nonce, so a
   signed envelope can be replayed.
-- Nothing persists. No ledger, log or chain row is written; `keygen` writes only the seed file.
+- Nothing persists except two files. `keygen` writes the seed file, and `observe --rows` writes the
+  observation chain to the new file it is given. No ledger is appended.
 - There is no physical attestation. The `sovereignty` tier is a policy label; nothing detects
   hardware or operator presence.
 - A seed file is a secret. Keep it mode 0600, outside any repository, and never commit it. The seed is held in hookwall's
@@ -263,7 +320,8 @@ cargo +1.81.0 clippy --locked --all-targets -- -D warnings
 ```
 
 `Cargo.lock` pins every crate shared with `gate/hookwall/Cargo.lock` to the same version.
-`observe` adds only path dependencies (`gate/observed`, `model/l0-edge`); no new crates.io crate.
+`observe` and `watch` add only path dependencies: `gate/observed`, `model/l0-edge`, `model/l1-prototype`,
+`model/l2-contrastive`, `model/l4-gslgnn` and `shadowcat`. They add no new crates.io crate.
 
 ## License
 

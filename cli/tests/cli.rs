@@ -753,10 +753,12 @@ fn observe_rows_are_what_the_library_computes() {
             js_number(reverse.reverse_risk_e4)
         );
         let signals = &observed.signals;
+        // L4 reads pid and payload, reported and not weighted: the composite above ignores it.
         assert_eq!(
             (signals.l4, signals.g1, signals.g2, signals.g3),
-            (None, None, None, None)
+            (observed.benched[2].score_e4(), None, None, None)
         );
+        assert!(signals.l4.is_some());
         assert_eq!(field(gate, "verdict"), composed.verdict.as_str());
         for (name, severity) in composed.per_gate {
             assert_eq!(field(gate, name), severity.as_str(), "{name}");
@@ -970,4 +972,185 @@ fn observe_usage_and_io_errors() {
         assert_eq!(code(&out), 1, "{args:?}: {out:?}");
         assert!(String::from_utf8_lossy(&out.stderr).starts_with("ERROR|kind=io|"));
     }
+}
+
+/// `observe --rows` in a fresh directory: the GATE output, and the chain file's text.
+fn observe_with_rows(text: &str, extra: &[&str]) -> (Output, String, TempDir) {
+    let dir = TempDir::new("chain");
+    let env = dir.file("observe.hbp", text.as_bytes());
+    let rows_path = dir.path("rows.hbp");
+    let events = fixture_events();
+    let mut args = vec![
+        "observe",
+        "--events",
+        p(&events),
+        "--rows",
+        p(&rows_path),
+        p(&env),
+    ];
+    args.extend_from_slice(extra);
+    let out = run(&args);
+    let chain = std::fs::read_to_string(&rows_path).unwrap_or_default();
+    (out, chain, dir)
+}
+
+fn watch_rows(dir: &TempDir, events: &Path, chain: &str, extra: &[&str]) -> Output {
+    let rows_path = dir.file("watched.hbp", chain.as_bytes());
+    let env = dir.path("observe.hbp");
+    let mut args = vec![
+        "watch",
+        "--events",
+        p(events),
+        "--rows",
+        p(&rows_path),
+        p(&env),
+    ];
+    args.extend_from_slice(extra);
+    run(&args)
+}
+
+#[test]
+fn observe_rows_leave_the_gate_row_unchanged_and_watch_recomputes_them() {
+    for (actor, target) in [
+        ("agent:benign", "svc:ledger"),
+        ("agent:rogue", "svc:vault"),
+        ("agent:ghost", "svc:ledger"),
+    ] {
+        let text = with_edge(actor, target);
+        let plain = observe_text(&text, &[]);
+        let (out, chain, dir) = observe_with_rows(&text, &[]);
+        assert_eq!((code(&out), stdout(&out)), (code(&plain), stdout(&plain)));
+        let lines: Vec<&str> = chain.lines().collect();
+        assert_eq!(lines.len(), 5, "{chain}");
+        for (row, level) in lines.iter().zip(["L0", "L1", "L2", "L4"]) {
+            assert!(row.starts_with(&format!("OBSERVE|level={level}|")), "{row}");
+            assert_eq!(field(row, "voting"), if level == "L0" { "1" } else { "0" });
+        }
+        let absent = actor == "agent:ghost";
+        for row in &lines[..3] {
+            let want = if absent { "absent" } else { "real" };
+            assert_eq!(field(row, "provenance"), want, "{row}");
+        }
+        assert_eq!(field(lines[3], "provenance"), "real");
+        assert!(lines[4].starts_with("OBSERVEGATE|gate_sha256="));
+        assert_eq!(field(lines[0], "prev"), "0".repeat(64));
+
+        let watched = watch_rows(&dir, &fixture_events(), &chain, &[]);
+        assert_eq!(code(&watched), 0, "{watched:?}");
+        let row = stdout(&watched);
+        assert!(
+            row.starts_with("WATCH|verdict=PROCEED|rows=5|head="),
+            "{row}"
+        );
+        assert_eq!(field(&row, "head"), field(lines[4], "row_sha256"));
+    }
+}
+
+#[test]
+fn watch_holds_on_tampered_rows_swapped_events_and_a_different_signature_state() {
+    let (_, chain, dir) = observe_with_rows(OBSERVE_EXAMPLE, &[]);
+    let hold = |out: &Output, row: &str, reason: &str| {
+        assert_eq!(code(out), 3, "{out:?}");
+        let printed = stdout(out);
+        assert_eq!(field(&printed, "verdict"), "HOLD", "{printed}");
+        assert_eq!(
+            (field(&printed, "row"), field(&printed, "reason")),
+            (row.into(), reason.into())
+        );
+    };
+    let l4 = chain.lines().nth(3).expect("L4 row").to_string();
+    let edited = chain.replacen(
+        &format!("|score_e4={}|", field(&l4, "score_e4")),
+        "|score_e4=1|",
+        1,
+    );
+    hold(
+        &watch_rows(&dir, &fixture_events(), &edited, &[]),
+        "4",
+        "row_sha256_differs",
+    );
+    let fewer = chain.lines().take(4).collect::<Vec<_>>().join("\n") + "\n";
+    hold(
+        &watch_rows(&dir, &fixture_events(), &fewer, &[]),
+        "0",
+        "row_count_differs",
+    );
+
+    let events = std::fs::read(fixture_events()).expect("events fixture");
+    let mut swapped = events.clone();
+    swapped.extend_from_slice(b"# swapped\n");
+    let swapped_path = dir.file("swapped-events.hbp", &swapped);
+    hold(
+        &watch_rows(&dir, &swapped_path, &chain, &[]),
+        "1",
+        "events_differ",
+    );
+
+    // observe ran unchecked; a watcher given a valid signature recomputes a different GATE row.
+    let keys = keygen("watch-key");
+    let sig = sign_file(&keys, &dir.path("observe.hbp"));
+    hold(
+        &watch_rows(
+            &dir,
+            &fixture_events(),
+            &chain,
+            &["--pub", &keys.public, "--sig", &sig],
+        ),
+        "5",
+        "gate_row_differs",
+    );
+}
+
+#[test]
+fn observe_rows_refuse_to_overwrite_and_check_prev() {
+    let (out, chain, dir) = observe_with_rows(OBSERVE_EXAMPLE, &[]);
+    assert_eq!(code(&out), 3);
+    let env = dir.path("observe.hbp");
+    let rows_path = dir.path("rows.hbp");
+    let events = fixture_events();
+    let again = run(&[
+        "observe",
+        "--events",
+        p(&events),
+        "--rows",
+        p(&rows_path),
+        p(&env),
+    ]);
+    assert_eq!(code(&again), 2, "{again:?}");
+    assert!(stdout(&again).is_empty());
+    assert_eq!(std::fs::read_to_string(&rows_path).unwrap(), chain);
+
+    let head = field(chain.lines().last().unwrap(), "row_sha256");
+    let next = dir.path("next.hbp");
+    let out = run(&[
+        "observe",
+        "--events",
+        p(&events),
+        "--rows",
+        p(&next),
+        "--prev",
+        &head,
+        p(&env),
+    ]);
+    assert_eq!(code(&out), 3, "{out:?}");
+    let continued = std::fs::read_to_string(&next).unwrap();
+    assert_eq!(field(continued.lines().next().unwrap(), "prev"), head);
+
+    for bad in [&head[..63], "G".repeat(64).as_str()] {
+        let other = dir.path("bad.hbp");
+        let out = run(&[
+            "observe",
+            "--events",
+            p(&events),
+            "--rows",
+            p(&other),
+            "--prev",
+            bad,
+            p(&env),
+        ]);
+        assert_eq!(code(&out), 2, "{out:?}");
+        assert!(!other.exists());
+    }
+    let out = run(&["observe", "--events", p(&events), "--prev", &head, p(&env)]);
+    assert_eq!(code(&out), 2, "{out:?}");
 }

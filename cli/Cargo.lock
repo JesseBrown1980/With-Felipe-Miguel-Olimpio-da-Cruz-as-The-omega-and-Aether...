@@ -29,14 +29,33 @@ name = "asolaria-l0-edge"
 version = "0.1.0"
 
 [[package]]
+name = "asolaria-l1-prototype"
+version = "0.1.0"
+
+[[package]]
+name = "asolaria-l2-contrastive"
+version = "0.1.0"
+
+[[package]]
+name = "asolaria-l4-gslgnn"
+version = "0.1.0"
+dependencies = [
+ "sha2",
+]
+
+[[package]]
 name = "asolaria-observed"
 version = "0.1.0"
 dependencies = [
  "asolaria-hookwall",
  "asolaria-l0-edge",
+ "asolaria-l1-prototype",
+ "asolaria-l2-contrastive",
+ "asolaria-l4-gslgnn",
  "asolaria-server-fischer-eval",
  "asolaria-verdict",
  "sha2",
+ "shadowcat",
 ]
 
 [[package]]
@@ -220,6 +239,10 @@ dependencies = [
  "cpufeatures",
  "digest",
 ]
+
+[[package]]
+name = "shadowcat"
+version = "0.1.0"
 
 [[package]]
 name = "signature"

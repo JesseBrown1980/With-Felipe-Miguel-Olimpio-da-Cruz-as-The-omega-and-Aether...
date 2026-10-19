@@ -1,5 +1,6 @@
-//! `asolaria`: Ed25519 keygen / sign / verify, the tighten-only gate verdict and the observed
-//! L0 path, from the shell. Results are HBP rows (`json=0`); only `keygen` writes a file.
+//! `asolaria`: Ed25519 keygen / sign / verify, the tighten-only gate verdict, the observed GNN path
+//! and its watcher, from the shell. Results are HBP rows (`json=0`); only `keygen` and
+//! `observe --rows` write a file.
 
 #![forbid(unsafe_code)]
 
@@ -15,7 +16,8 @@ use asolaria_hookwall::crypto::{
     derive_public, sign, verify, CryptoErr, PrivateKey, PublicKey, Signature, PRIVATE_KEY_LEN,
     PUBLIC_KEY_LEN, SIGNATURE_LEN,
 };
-use asolaria_observed::{observe_and_compose, Observed};
+use asolaria_observed::bench::{observation_rows, watch, RowInputs, Watch, GENESIS};
+use asolaria_observed::{observe_and_compose, Observed, PolicyInputs};
 use asolaria_verdict::{compose, strictest, Composed, Severity, GATE_NAMES};
 use l0_edge::event::parse_events;
 use zeroize::Zeroizing;
@@ -28,6 +30,9 @@ const SEED_FILE_READ_LIMIT: u64 = 80;
 /// Envelopes larger than this are a usage error; real envelopes are a few hundred bytes.
 const ENVELOPE_READ_LIMIT: u64 = 1024 * 1024;
 
+/// Observation chains larger than this are a usage error; one is five rows of under 600 bytes.
+const ROWS_READ_LIMIT: u64 = 64 * 1024;
+
 const HELP: &str = "\
 asolaria - Ed25519 signing and tighten-only gate verdicts for the Asolaria Aether stack
 
@@ -38,6 +43,8 @@ USAGE
   asolaria verify --pub <64 hex> --sig <128 hex> <file|->
   asolaria gate   <envelope-file|-> [--pub <64 hex> --sig <128 hex>]
   asolaria observe --events <events.hbp|-> <envelope-file|-> [--pub <64 hex> --sig <128 hex>]
+                   [--rows <new-file> [--prev <64 hex>]]
+  asolaria watch  --events <events.hbp> --rows <rows-file> <envelope-file> [--pub <64 hex> --sig <128 hex>]
   asolaria help [<command>] | <command> --help | --version
 
 OUTPUT
@@ -45,7 +52,7 @@ OUTPUT
   Errors go to stderr as ERROR|kind=<usage|io>|reason=<escaped>|json=0.
 
 EXIT CODES
-  0  success / gate or observe PROCEED     3  HOLD
+  0  success / gate or observe PROCEED     3  HOLD (watch: the rows disagree)
   1  verify failed, I/O error, or the result row could not be written
   2  usage, envelope or events parse error
   4  BLOCK
@@ -60,8 +67,8 @@ SCOPE
   does not cover it.
   signature=verified only means the exact bytes were signed by the key passed as --pub: take
   --pub from a trusted channel. No key registry; signed envelopes have no expiry or nonce and
-  can be replayed. Nothing persists. No physical attestation. A seed file is a secret: keep it
-  0600 and outside any repository.
+  can be replayed. Nothing persists except the files keygen and observe --rows create. No physical
+  attestation. A seed file is a secret: keep it 0600 and outside any repository.
 ";
 
 const HELP_KEYGEN: &str = "\
@@ -113,6 +120,7 @@ Exit 0 PROCEED, 3 HOLD, 4 BLOCK, 2 usage/parse error, 1 I/O error. Only 0 means 
 const HELP_OBSERVE: &str = "\
 USAGE
   asolaria observe --events <events.hbp|-> <envelope-file|-> [--pub <64 hex> --sig <128 hex>]
+                   [--rows <new-file> [--prev <64 hex>]]
 
 Reads EVENT rows and an envelope with a payload key and without score keys (see README; a missing
 payload, or forward_score_q, reverse_risk_q, composite, l0_real, shannon_q, shannon_above or
@@ -121,7 +129,27 @@ the events, computes the asolaria-score signals, composite and reverse gain, com
 gates and prints the GATE|.. row of `gate` with the score keys of asolaria-hookwall.mjs:48-51
 after the verdict: score=<composite>|l0_real=<true|false>|mark=..|reverse_risk=<1 - composite>.
 --pub/--sig cover the envelope bytes only, not the events file, which decides the L0 term.
+The benched L1, L2 (on the same edge) and L4 (on pid and payload) are read too, reported, never
+weighted: the verdict is the same with or without them.
+--rows writes the observation chain to a NEW file (never overwritten, exit 2) before the GATE
+row is printed: one OBSERVE row per level (L0, L1, L2, L4: model, checkpoint sha256, provenance
+real|absent, score, voting 1|0, the events and envelope sha256), then OBSERVEGATE with the sha256
+of the GATE row; each row carries prev= and row_sha256=, chained from --prev (default 64 zeros).
+If the file cannot be written the command exits 1 and prints no GATE row.
 Exit codes as for gate.
+";
+
+const HELP_WATCH: &str = "\
+USAGE
+  asolaria watch --events <events.hbp> --rows <rows-file> <envelope-file> [--pub <64 hex> --sig <128 hex>]
+
+The independent watcher, run as its own process: recomputes the observation chain that observe
+--rows wrote from the same events file, envelope and --pub/--sig, chained from the file's first
+prev=, and compares it line by line. Prints WATCH|verdict=PROCEED|rows=<n>|head=<row_sha256>|json=0
+(exit 0) when every row recomputes byte for byte, else WATCH|verdict=HOLD|row=<n>|reason=<why>|json=0
+(exit 3; row 0 means the row count). Reasons: row_sha256_differs, events_differ, envelope_differs,
+chain_broken, gate_row_differs, reading_differs, row_count_differs, no_prev.
+Inputs that do not parse are a usage error (exit 2).
 ";
 
 /// Per-command usage text, for `<command> --help` and `help <command>`.
@@ -133,6 +161,7 @@ fn command_help(command: &str) -> Option<&'static str> {
         "verify" => Some(HELP_VERIFY),
         "gate" => Some(HELP_GATE),
         "observe" => Some(HELP_OBSERVE),
+        "watch" => Some(HELP_WATCH),
         _ => None,
     }
 }
@@ -666,8 +695,31 @@ fn observation_keys(observed: &Observed) -> String {
     )
 }
 
+/// The parsed envelope and events of `observe` and `watch`, or the BLOCK report of a forged signature over input
+/// that does not parse.
+fn observe_inputs(
+    bytes: &[u8],
+    events_bytes: &[u8],
+    signature: &SignatureCheck,
+) -> Result<Result<(PolicyInputs, Vec<l0_edge::event::Event>), Report>, Fail> {
+    let parsed = std::str::from_utf8(bytes)
+        .map_err(|_| "envelope is not UTF-8".to_string())
+        .and_then(|text| envelope::parse_policy(text).map_err(|e| format!("envelope: {e}")));
+    let policy = match parsed {
+        Ok(policy) => policy,
+        Err(why) => return unparseable(why, "envelope", signature).map(Err),
+    };
+    let parsed = std::str::from_utf8(events_bytes)
+        .map_err(|_| "events file is not UTF-8".to_string())
+        .and_then(|text| parse_events(text).map_err(|e| format!("events: {e}")));
+    match parsed {
+        Ok(events) => Ok(Ok((policy, events))),
+        Err(why) => unparseable(why, "events", signature).map(Err),
+    }
+}
+
 fn cmd_observe(raw: &[String]) -> Result<Report, Fail> {
-    let args = Args::parse(raw, &["--events", "--pub", "--sig"])?;
+    let args = Args::parse(raw, &["--events", "--pub", "--sig", "--rows", "--prev"])?;
     if args.help {
         return Ok(Report::help(HELP_OBSERVE));
     }
@@ -678,29 +730,94 @@ fn cmd_observe(raw: &[String]) -> Result<Report, Fail> {
             "--events and the envelope cannot both be read from stdin",
         ));
     }
+    let rows_path = args.get("--rows");
+    let prev = match (rows_path, args.get("--prev")) {
+        (_, None) => GENESIS,
+        (None, Some(_)) => return Err(usage("--prev needs --rows")),
+        (Some(_), Some(prev)) if is_hex64(prev) => prev,
+        (Some(_), Some(_)) => return Err(usage("--prev must be 64 lowercase hex characters")),
+    };
     let check = signature_option(&args)?;
     let bytes = read_input_limited(source, ENVELOPE_READ_LIMIT)?;
     let events_bytes = read_input(events_source)?;
     let signature = check_signature(check, &bytes);
-
-    let parsed = std::str::from_utf8(&bytes)
-        .map_err(|_| "envelope is not UTF-8".to_string())
-        .and_then(|text| envelope::parse_policy(text).map_err(|e| format!("envelope: {e}")));
-    let policy = match parsed {
-        Ok(policy) => policy,
-        Err(why) => return unparseable(why, "envelope", &signature),
-    };
-    let parsed = std::str::from_utf8(&events_bytes)
-        .map_err(|_| "events file is not UTF-8".to_string())
-        .and_then(|text| parse_events(text).map_err(|e| format!("events: {e}")));
-    let events = match parsed {
-        Ok(events) => events,
-        Err(why) => return unparseable(why, "events", &signature),
+    let (policy, events) = match observe_inputs(&bytes, &events_bytes, &signature)? {
+        Ok(inputs) => inputs,
+        Err(block) => return Ok(block),
     };
 
     let (observed, composed) = observe_and_compose(&events, policy);
     let (row, code) = verdict_row(&composed, &observation_keys(&observed), &signature);
+    if let Some(path) = rows_path {
+        let inputs = RowInputs::of(&events_bytes, &bytes);
+        let mut text = observation_rows(&observed, &inputs, &row, prev).join("\n");
+        text.push('\n');
+        write_new_file(path, text.as_bytes())?;
+    }
     Ok(Report::row(row, code))
+}
+
+fn cmd_watch(raw: &[String]) -> Result<Report, Fail> {
+    let args = Args::parse(raw, &["--events", "--rows", "--pub", "--sig"])?;
+    if args.help {
+        return Ok(Report::help(HELP_WATCH));
+    }
+    let source = &args.positionals(1, "one envelope file")?[0];
+    let (events_source, rows_source) = (args.require("--events")?, args.require("--rows")?);
+    if [source.as_str(), events_source, rows_source].contains(&"-") {
+        return Err(usage("watch reads files only, not stdin"));
+    }
+    let check = signature_option(&args)?;
+    let bytes = read_input_limited(source, ENVELOPE_READ_LIMIT)?;
+    let events_bytes = read_input(events_source)?;
+    let rows_bytes = read_input_limited(rows_source, ROWS_READ_LIMIT)?;
+    let rows_text =
+        std::str::from_utf8(&rows_bytes).map_err(|_| usage("rows file is not UTF-8"))?;
+    let signature = check_signature(check, &bytes);
+    let (policy, events) = match observe_inputs(&bytes, &events_bytes, &signature)? {
+        Ok(inputs) => inputs,
+        Err(_) => {
+            return Err(usage(
+                "envelope or events do not parse; nothing to recompute",
+            ))
+        }
+    };
+
+    let (observed, composed) = observe_and_compose(&events, policy);
+    let (gate_row, _) = verdict_row(&composed, &observation_keys(&observed), &signature);
+    let inputs = RowInputs::of(&events_bytes, &bytes);
+    Ok(match watch(&observed, &inputs, &gate_row, rows_text) {
+        Watch::Agree { rows, head } => Report::row(
+            format!("WATCH|verdict=PROCEED|rows={rows}|head={head}|json=0"),
+            0,
+        ),
+        Watch::Disagree { row, reason } => Report::row(
+            format!("WATCH|verdict=HOLD|row={row}|reason={reason}|json=0"),
+            severity_exit(Severity::Hold),
+        ),
+    })
+}
+
+fn is_hex64(text: &str) -> bool {
+    text.len() == 64 && text.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f'))
+}
+
+/// Writes `bytes` to a NEW file and syncs it; an existing file is never overwritten.
+fn write_new_file(path: &str, bytes: &[u8]) -> Result<(), Fail> {
+    let mut file = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(path)
+        .map_err(|e| {
+            if e.kind() == io::ErrorKind::AlreadyExists {
+                usage(format!("{path} already exists; refusing to overwrite"))
+            } else {
+                Fail::Io(format!("creating {path}: {e}"))
+            }
+        })?;
+    file.write_all(bytes)
+        .and_then(|()| file.sync_all())
+        .map_err(|e| Fail::Io(format!("writing {path}: {e}")))
 }
 
 fn run(raw: Vec<String>) -> Result<Report, Fail> {
@@ -714,6 +831,7 @@ fn run(raw: Vec<String>) -> Result<Report, Fail> {
         "verify" => cmd_verify(rest),
         "gate" => cmd_gate(rest),
         "observe" => cmd_observe(rest),
+        "watch" => cmd_watch(rest),
         "help" | "--help" | "-h" => match rest {
             [] => Ok(Report::help(HELP)),
             [topic] => command_help(topic)

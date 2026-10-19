@@ -177,7 +177,8 @@ fn same_request_benign_and_suspicious_histories() {
     );
     for observed in [&benign, &suspicious] {
         let s = &observed.signals;
-        assert_eq!((s.l4, s.g1, s.g2, s.g3), (None, None, None, None));
+        // L4 reads the request (pid, payload), the same for both histories; reported, not weighted.
+        assert_eq!((s.l4, s.g1, s.g2, s.g3), (Some(5292), None, None, None));
         assert_eq!((s.shannon, s.baseline), (6129, 6350));
     }
 

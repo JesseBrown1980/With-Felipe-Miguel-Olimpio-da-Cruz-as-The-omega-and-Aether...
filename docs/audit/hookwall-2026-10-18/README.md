@@ -155,3 +155,35 @@ For each benched GNN (L1, L2, L4, then L3 and L5+), the same five steps:
 
 Then the tamper table above becomes the regression suite: each "no" row is a test that should flip to
 "yes" as the wiring lands.
+
+## Wired since (2026-10-19)
+
+The benched levels L1, L2 and L4 are now connected, observed and non-voting in the one composed
+path (`gate/observed` → `gate/verdict` → `cli`). Steps 1 to 4 of the five above are done:
+
+1. `gate/observed` depends on the three model crates and reads them on the real request. L1 and L2
+   read the actor and target nodes L0 reads; L4 reads pid and payload.
+2. `Observed.benched` holds each reading with its provenance `real` or `absent`. `Signals.l4` carries
+   L4's reading, and the composite does not weight it.
+3. `asolaria observe --rows` writes an `OBSERVE` row per level and an `OBSERVEGATE` row with the
+   GATE row's sha256. The rows are hashed and chained, and carry the model, the checkpoint sha256,
+   the reading, `voting` and the sha256 of the events and envelope.
+4. `asolaria watch` recomputes the chain in a separate process and HOLDs on the first difference.
+
+Step 5, the spread gate, waits on decision 2 above. Voting stays off by construction: `voting()` is
+true for L0 only. On the SYNTHETIC fixture, L1 and L2 read 10000 for both the benign and the rogue
+edge, and L4 reads 5292 for both request pids tested (`cli/README.md`).
+
+Rows of the tamper table that flip to fail-closed when `watch` runs:
+
+| Injection | Now |
+|---|---|
+| GATE row edited downstream | `gate_row_differs`, HOLD |
+| Events file swapped under a valid envelope signature | `events_differ`, HOLD |
+| An observation row of the composed path altered (new; the loop's own rows are still unchecked) | `row_sha256_differs` or `reading_differs`, HOLD |
+| Observation unwritable | `observe --rows` exits 1 with no GATE row |
+
+The rest of the table is unchanged: L0's sign, an absent L0 raising the score, the loop's lanes,
+the cosign and vote-quorum ledgers, the kernel lane and the whiteroom. Tests:
+`gate/observed/tests/bench.rs`, plus the `observe_rows_*` and `watch_*` tests in `cli/tests/cli.rs`.
+
