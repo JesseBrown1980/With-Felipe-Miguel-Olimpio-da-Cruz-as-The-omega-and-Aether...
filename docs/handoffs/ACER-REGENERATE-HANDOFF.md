@@ -664,6 +664,10 @@ Paths with `…` in the table are truncated; the full sha256 values are given in
   ```
 - **On delivery (aether)**: once the baseline-bpc source is identified, run it over enwik9[0:600000]
   and compare the printed `vs_baseline_bpc` to 1.8499.
+- **Closed into item 17 (2026-10-19)**: 1.8499 is the no-prior `bpc_total` of `cm3ti_gt256` on
+  `slice10M.txt`, (2,285,979 + 26,377) × 8 / 10,000,000, recorded in `pump/kernel-pump/keyx/receipts/prior-test.log:2`.
+  The HRM row compares its `frozen_bpc=3.7454` with it (`worse=1`). Nothing more to find; recomputing it needs
+  `cm3ti_gt256.rs`. See `beginning/14-regeneration-closers-2026-10/README.md`.
 
 #### 26. gnn-reverse-gain.mjs (G3) — held private, no action
 - **Status**: owner-held (OWNER-RULES 7j). The reverse-gain algorithm is already published (reimpl in
