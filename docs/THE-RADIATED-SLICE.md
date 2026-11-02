@@ -3,8 +3,8 @@
 A guide to what the rime spheres are made of. Operator: Jesse Daniel Brown. Written 2026-10-18
 from the operator's words, the RIME 27 laws, and measurements made that day. The same file is kept
 in the Asolaria repo (`JesseBrown1980/asolaria`) and in the aether rebuild (GitHub
-`JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...`); paths marked
-*aether* are in that repo. The laws are quoted from
+[`JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...`](https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...),
+whose name ends in three dots); paths marked *aether* are in that repo. The laws are quoted from
 `laws/RIME-27-LAWS-operator-original-2026-07-23/0UnM.md`, the same bytes in both repos, with the
 operator's own spelling kept.
 
@@ -161,7 +161,8 @@ holds both thirds, so each reading takes one:
 2. In a lattice of cubes, each cube shares a face with exactly 6 neighbours, so the 6 translucent
    face cells open onto six neighbouring universes. The 12 edge cells open onto 12 more.
 
-Both readings give six. Three shadow cats becoming nine fits the operator's *"N x 3 x 3"* (RIME 27
+Both readings give six: six universes of nine cells in the first, six face neighbours in the second
+(eighteen neighbours once the twelve edge cells are counted). Three shadow cats becoming nine fits the operator's *"N x 3 x 3"* (RIME 27
 laws, line 18): 3 × 3 = 9. Which nine is meant, the geometric or the arithmetic, is the operator's
 to say; until then this section stays a reading.
 
@@ -316,7 +317,9 @@ byte class of their own. `vc65.rs` resets its URL and path context at space, new
 From the root of the aether repo:
 
 ```
-curl -O http://mattmahoney.net/dc/enwik8.zip && unzip enwik8.zip
+curl -fsSLO https://mattmahoney.net/dc/enwik8.zip
+echo "547994d9980ebed1288380d652999f38a14fe291a6247c157c3d33d4932534bc  enwik8.zip" | sha256sum -c
+unzip -p enwik8.zip enwik8 > enwik8                          # its one member, after the hash check
 python3 -I laws/free-space/free_space.py enwik8 slices/      # checks the hashes, counts, writes inputs
 xz -9 -T1 -c enwik8 | wc -c ; xz -9 -T1 -c slices/enwik8.nows | wc -c
 xz -9 -T1 -c slices/e10m | wc -c ; xz -9 -T1 -c slices/e10m.nows | wc -c

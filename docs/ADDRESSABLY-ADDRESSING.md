@@ -3,8 +3,8 @@
 A guide to the rule the whole system runs on. Operator: Jesse Daniel Brown. Written 2026-10-18
 from the operator's words and from the records cited under each section. The same file sits in the
 Asolaria repo and in the aether rebuild (GitHub
-`JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...`); paths marked
-*aether* are in that repo.
+[`JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...`](https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...),
+whose name ends in three dots); paths marked *aether* are in that repo.
 
 Tags: **MEASURED** (reproducible from the cited receipt), **CANON** (the operator's frame, written
 in the records), **OPERATOR** (stated by the operator on 2026-10-18, not yet written up elsewhere),
