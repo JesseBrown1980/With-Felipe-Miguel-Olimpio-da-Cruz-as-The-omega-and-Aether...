@@ -1,0 +1,15 @@
+VAULTOBJ|path=contracts/ANALYSIS-OF-CUBES.hbi|kind=hbi|bytes=521|sha256=12be5f41447128b6189ca65e09c6065ac05b5696fb9280b65cbd4608bffa1c72|pointer=self|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=contracts/ANALYSIS-OF-CUBES.hbp|kind=hbp|bytes=1228|sha256=3eb5a81879dec2edacbf0a51a30e3fadb5892301b94d00db14ff19e0413487a1|pointer=pair:contracts/ANALYSIS-OF-CUBES.hbi|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=seats/liris/LIRIS-SEAT.hbi|kind=hbi|bytes=441|sha256=5d3c60adbbfcebe17761074e50118f51f644890e5c743707ed2baef8b0d4429c|pointer=self|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=seats/liris/LIRIS-SEAT.hbp|kind=hbp|bytes=598|sha256=0414c29e64e3598dfccb2d559c559ffe09cbc0b14449c19f13aa812f1303b566|pointer=pair:seats/liris/LIRIS-SEAT.hbi|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTKIND|kind=hbi|objects=2|verified=0|failed=2|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=2|verified=0|failed=2|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=-1:sidecar_name_differs|count=4|json=0
+VAULTREASON|reason=-1:sidecar_sha256_differs|count=4|json=0
+VAULTTOTAL|hbi=2|files=31|objects=4|verified=0|failed=4|unresolved=0|json=0

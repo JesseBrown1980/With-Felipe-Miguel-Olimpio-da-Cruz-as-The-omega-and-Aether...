@@ -1,0 +1,12 @@
+VAULTOBJ|path=matrix/PUBLIC-OWNER-3D-TREE.hbi|kind=hbi|bytes=601|sha256=22ef24cbd9adde64a6938432e2a80d925c85f6394af757fe44d90879ce3c3476|pointer=self|verified=+1|reason=ok:sidecar_exact+footer_body_sha256|json=0
+VAULTOBJ|path=matrix/PUBLIC-OWNER-3D-TREE.hbp|kind=hbp|bytes=66190|sha256=a7f81e9e4f796980140e90258634a85dcca8e264b0e6cf3fcc3b1c868e3fa912|pointer=pair:matrix/PUBLIC-OWNER-3D-TREE.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=matrix/PUBLIC-OWNER-3D-TREE.hbp|kind=file|bytes=66190|sha256=a7f81e9e4f796980140e90258634a85dcca8e264b0e6cf3fcc3b1c868e3fa912|pointer=matrix/PUBLIC-OWNER-3D-TREE.hbi:3:path|verified=+1|reason=ok:sha256|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=1|files=97|objects=3|verified=3|failed=0|unresolved=0|json=0

@@ -1,0 +1,14 @@
+VAULTOBJ|path=receipts/ACER-IX-ORIGINAL-INDEX-LANGUAGE-2026-07-05.hbi|kind=hbi|bytes=486|sha256=0b330ce983b3595917ba9f532c9e75808b39db24adf9bd5770d4b2b79ba4c8f3|pointer=self|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/ACER-IX-ORIGINAL-INDEX-LANGUAGE-2026-07-05.hbp|kind=hbp|bytes=1039|sha256=0d4c3e84d8cc75346d6dad5ce9687af4b535939a6f036e29dc7111a221227408|pointer=pair:receipts/ACER-IX-ORIGINAL-INDEX-LANGUAGE-2026-07-05.hbi|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/IX-LX-CROSS-SEAT-BRIDGE-2026-07-05.hbi|kind=hbi|bytes=444|sha256=779fc8596be2284ca3403a18ff49262d54b1af45043d3d4f03cd53fecc4150f6|pointer=self|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/IX-LX-CROSS-SEAT-BRIDGE-2026-07-05.hbp|kind=hbp|bytes=714|sha256=a458573f6470c24533449734a83bc943b10f347c2f8a3ae6e8b127388f928fe7|pointer=pair:receipts/IX-LX-CROSS-SEAT-BRIDGE-2026-07-05.hbi|verified=-1|reason=sidecar_name_differs|json=0
+VAULTKIND|kind=hbi|objects=2|verified=0|failed=2|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=2|verified=0|failed=2|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=-1:sidecar_name_differs|count=4|json=0
+VAULTTOTAL|hbi=2|files=29|objects=4|verified=0|failed=4|unresolved=0|json=0

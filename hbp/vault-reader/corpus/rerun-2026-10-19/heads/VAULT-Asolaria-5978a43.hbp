@@ -1,0 +1,13 @@
+VAULTOBJ|path=labs/aether-16-bit/AETHER-16-BRIDGE-KIOSK.hbi|kind=hbi|bytes=485|sha256=04245263e46437616ec43449b1c5c79d1af40a605946bc9ec33e52203be04525|pointer=self|verified=0|reason=no_check_declared|json=0
+VAULTOBJ|path=labs/aether-16-bit/AETHER-16-BRIDGE-KIOSK.hbp|kind=hbp|bytes=0|sha256=|pointer=pair:labs/aether-16-bit/AETHER-16-BRIDGE-KIOSK.hbi|verified=0|reason=hbp_absent|json=0
+VAULTKIND|kind=hbi|objects=1|verified=0|failed=0|unresolved=1|json=0
+VAULTKIND|kind=hbp|objects=1|verified=0|failed=0|unresolved=1|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=0:hbp_absent|count=1|json=0
+VAULTREASON|reason=0:no_check_declared|count=1|json=0
+VAULTTOTAL|hbi=1|files=4|objects=2|verified=0|failed=0|unresolved=2|json=0

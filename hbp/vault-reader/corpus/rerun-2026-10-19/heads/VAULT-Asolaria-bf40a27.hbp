@@ -1,0 +1,13 @@
+VAULTOBJ|path=reports/chain-language-grid-origin-20260705/CHAIN-LANGUAGE-GRID-ORIGIN-2026-07-05.hbi|kind=hbi|bytes=581|sha256=c5314cd58c86936dfa9264bf17d8e21b90f2dc778be56604d14938c45198078a|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=reports/chain-language-grid-origin-20260705/CHAIN-LANGUAGE-GRID-ORIGIN-2026-07-05.hbp|kind=hbp|bytes=696|sha256=8123833505dd5f3794a52cc1fbe5985627d7c2663caef8b24a02f5491dd1321e|pointer=pair:reports/chain-language-grid-origin-20260705/CHAIN-LANGUAGE-GRID-ORIGIN-2026-07-05.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=reports/free-model-possibility-ladder-20260705/FREE-MODEL-POSSIBILITY-LADDER-2026-07-05.hbi|kind=hbi|bytes=636|sha256=811b8fa21c5d7db49e3f61d7164d0346d7cdafecfcce6d22f04135a41033458a|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=reports/free-model-possibility-ladder-20260705/FREE-MODEL-POSSIBILITY-LADDER-2026-07-05.hbp|kind=hbp|bytes=1067|sha256=0b0424c30bf32fe77733f7fff30cf8aeb92c874ef8a65268e09c3b73de4faac3|pointer=pair:reports/free-model-possibility-ladder-20260705/FREE-MODEL-POSSIBILITY-LADDER-2026-07-05.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTKIND|kind=hbi|objects=2|verified=2|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=2|verified=2|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=2|files=39|objects=4|verified=4|failed=0|unresolved=0|json=0

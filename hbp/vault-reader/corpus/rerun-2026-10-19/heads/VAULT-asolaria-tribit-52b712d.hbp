@@ -1,0 +1,12 @@
+VAULTOBJ|path=kernel/behcs1024-60d/PROJECTION-60D.hbi|kind=hbi|bytes=770|sha256=b2523242a72582484134a75ee42f5f090c4fbb3416b7cd4482e3379b37bf36fe|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=kernel/behcs1024-60d/PROJECTION-60D.hbp|kind=hbp|bytes=0|sha256=|pointer=pair:kernel/behcs1024-60d/PROJECTION-60D.hbi|verified=0|reason=hbp_absent|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=0|failed=0|unresolved=1|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=0:hbp_absent|count=1|json=0
+VAULTTOTAL|hbi=1|files=34|objects=2|verified=1|failed=0|unresolved=1|json=0

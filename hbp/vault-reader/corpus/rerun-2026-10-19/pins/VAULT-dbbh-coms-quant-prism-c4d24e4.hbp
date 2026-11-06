@@ -1,0 +1,12 @@
+VAULTOBJ|path=results/GPT56-SOL-QPRISM-HARNESS-BINDING-20260709.hbi|kind=hbi|bytes=931|sha256=01d4005b1b4640ab7799a883f9466ce13d7184341abfc383601de4d5fdd8f177|pointer=self|verified=0|reason=no_check_declared|json=0
+VAULTOBJ|path=results/GPT56-SOL-QPRISM-HARNESS-BINDING-20260709.hbp|kind=hbp|bytes=1571|sha256=b001c32f8aea0498da949dd61c2a66372d02f4b692150092fa2cfb1dc184873c|pointer=pair:results/GPT56-SOL-QPRISM-HARNESS-BINDING-20260709.hbi|verified=0|reason=no_check_declared|json=0
+VAULTKIND|kind=hbi|objects=1|verified=0|failed=0|unresolved=1|json=0
+VAULTKIND|kind=hbp|objects=1|verified=0|failed=0|unresolved=1|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=0:no_check_declared|count=2|json=0
+VAULTTOTAL|hbi=1|files=12|objects=2|verified=0|failed=0|unresolved=2|json=0

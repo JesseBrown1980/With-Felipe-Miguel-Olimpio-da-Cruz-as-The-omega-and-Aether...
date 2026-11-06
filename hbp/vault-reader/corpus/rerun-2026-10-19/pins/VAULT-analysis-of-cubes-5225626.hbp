@@ -1,0 +1,17 @@
+VAULTOBJ|path=contracts/ANALYSIS-OF-CUBES.hbi|kind=hbi|bytes=521|sha256=12be5f41447128b6189ca65e09c6065ac05b5696fb9280b65cbd4608bffa1c72|pointer=self|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=contracts/ANALYSIS-OF-CUBES.hbp|kind=hbp|bytes=1228|sha256=3eb5a81879dec2edacbf0a51a30e3fadb5892301b94d00db14ff19e0413487a1|pointer=pair:contracts/ANALYSIS-OF-CUBES.hbi|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=seats/acer/ACER-SEAT.hbi|kind=hbi|bytes=393|sha256=3382519137b31702d104d99b6aad17a9acd7340bb01ffafadb119810ec329407|pointer=self|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=seats/acer/ACER-SEAT.hbp|kind=hbp|bytes=539|sha256=2e61ebfe53c5d0582c3321b306066210712f256fd6d41bc0026ecb13f5db77f3|pointer=pair:seats/acer/ACER-SEAT.hbi|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=seats/acer/ACER-UAP-CUBESET.hbi|kind=hbi|bytes=421|sha256=7e84baafe788497194ffc282775175ae26e6c5c5053a1c201f3993925ab3a083|pointer=self|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTOBJ|path=seats/acer/ACER-UAP-CUBESET.hbp|kind=hbp|bytes=722|sha256=b6b783a9b30bc7429fb691636ea473823a0709761124e922d3be46c6f5b88845|pointer=pair:seats/acer/ACER-UAP-CUBESET.hbi|verified=-1|reason=sidecar_name_differs+sidecar_sha256_differs|json=0
+VAULTKIND|kind=hbi|objects=3|verified=0|failed=3|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=3|verified=0|failed=3|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=-1:sidecar_name_differs|count=6|json=0
+VAULTREASON|reason=-1:sidecar_sha256_differs|count=6|json=0
+VAULTTOTAL|hbi=3|files=35|objects=6|verified=0|failed=6|unresolved=0|json=0

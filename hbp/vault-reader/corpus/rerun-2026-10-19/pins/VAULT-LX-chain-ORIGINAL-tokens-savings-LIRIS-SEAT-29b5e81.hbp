@@ -1,0 +1,12 @@
+VAULTOBJ|path=receipts/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.hbi|kind=hbi|bytes=1059|sha256=62cdf8c69625bd3fc5f4779411d69a35943ccc840675bae99b828eae7e4c8f4b|pointer=self|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.hbp|kind=hbp|bytes=1437|sha256=0520592759d67754668ccaa4d7e32f2feb355282e0c927548533457bbbc3ffaf|pointer=pair:receipts/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.hbi|verified=-1|reason=sidecar_name_differs|json=0
+VAULTKIND|kind=hbi|objects=1|verified=0|failed=1|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=0|failed=1|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=-1:sidecar_name_differs|count=2|json=0
+VAULTTOTAL|hbi=1|files=12|objects=2|verified=0|failed=2|unresolved=0|json=0

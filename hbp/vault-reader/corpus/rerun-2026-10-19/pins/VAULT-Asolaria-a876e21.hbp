@@ -1,0 +1,17 @@
+VAULTOBJ|path=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbi|kind=hbi|bytes=722|sha256=e63189c2f28bc425e0c337d79d7aabf4095a5d2d2564359f811d03a67ba3b84c|pointer=self|verified=-1|reason=sidecar_sha256_differs|json=0
+VAULTOBJ|path=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbp|kind=hbp|bytes=663|sha256=deb80b11d2609c72fd4b211a6c949cef23468068a424a2eb9ff8e1181583bc93|pointer=pair:reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbi|verified=-1|reason=sidecar_sha256_differs|json=0
+VAULTOBJ|path=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbp|kind=file|bytes=663|sha256=deb80b11d2609c72fd4b211a6c949cef23468068a424a2eb9ff8e1181583bc93|pointer=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbi:2:name|verified=-1|reason=sha256_differs|json=0
+VAULTOBJ|path=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.json|kind=file|bytes=6830|sha256=c5a28900681d21dd7a4842c8f9ead94dfbe2ea152811924f2a3be2b5bf7b0a5b|pointer=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbi:3:name|verified=-1|reason=sha256_differs|json=0
+VAULTOBJ|path=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.md|kind=file|bytes=1723|sha256=5c44e4b662a4e6fd17a914483fa197705eeb649e243052bd59916f69c93c3ed2|pointer=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbi:4:name|verified=-1|reason=sha256_differs|json=0
+VAULTOBJ|path=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.diff|kind=file|bytes=9642|sha256=186c5f62cfa4439d8e8810d4479b3dc43c376ef2340ce5ce9a11a74fbc6ddd6f|pointer=reports/liris-502-route-reconciliation-20260706/LIRIS-502-ROUTE-RECONCILIATION-2026-07-06.hbi:5:name|verified=-1|reason=sha256_differs|json=0
+VAULTKIND|kind=hbi|objects=1|verified=0|failed=1|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=0|failed=1|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=4|verified=0|failed=4|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=-1:sha256_differs|count=4|json=0
+VAULTREASON|reason=-1:sidecar_sha256_differs|count=2|json=0
+VAULTTOTAL|hbi=1|files=835|objects=6|verified=0|failed=6|unresolved=0|json=0

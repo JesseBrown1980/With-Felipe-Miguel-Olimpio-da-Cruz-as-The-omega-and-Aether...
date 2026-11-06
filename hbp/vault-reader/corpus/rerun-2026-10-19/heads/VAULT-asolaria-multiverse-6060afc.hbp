@@ -1,0 +1,16 @@
+VAULTOBJ|path=FABLE5-KERNELS81-ROOMS50M-BRIDGE874X-2026-08-02.hbi|kind=hbi|bytes=1880|sha256=62e164197d5e7ba73fb9ad980d94f0b04a374cc77aabbc26208c1206e068d1b2|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=FABLE5-KERNELS81-ROOMS50M-BRIDGE874X-2026-08-02.hbp|kind=hbp|bytes=1705|sha256=fdd406fa270ddd6fef34a6ea5209c123548159f7346dffc180b85d5d1788eaa0|pointer=pair:FABLE5-KERNELS81-ROOMS50M-BRIDGE874X-2026-08-02.hbi|verified=+1|reason=ok:sidecar_exact+footer_receipt|json=0
+VAULTOBJ|path=MOSS-KERNEL-2026-08-06.hbi|kind=hbi|bytes=2126|sha256=7f4948a14e7d484ac0c4d7dca0699de29113515fff3177dad2bd6a2c124fe82e|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=MOSS-KERNEL-2026-08-06.hbp|kind=hbp|bytes=0|sha256=|pointer=pair:MOSS-KERNEL-2026-08-06.hbi|verified=0|reason=hbp_absent|json=0
+VAULTOBJ|path=MULTIVERSE-GENESIS-2026-08-06.hbi|kind=hbi|bytes=422|sha256=cbc40ab7c3652d685dddda7567bed63b6ce4686ec27fc6dc4954c33fc0f2f0c4|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=MULTIVERSE-GENESIS-2026-08-06.hbp|kind=hbp|bytes=1393|sha256=cdee7fc8c1735643e8949d3321f758d60c036a5d820113af799b70adcbb45bda|pointer=pair:MULTIVERSE-GENESIS-2026-08-06.hbi|verified=+1|reason=ok:sidecar_exact+footer_receipt|json=0
+VAULTKIND|kind=hbi|objects=3|verified=3|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=3|verified=2|failed=0|unresolved=1|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=0:hbp_absent|count=1|json=0
+VAULTTOTAL|hbi=3|files=132|objects=6|verified=5|failed=0|unresolved=1|json=0

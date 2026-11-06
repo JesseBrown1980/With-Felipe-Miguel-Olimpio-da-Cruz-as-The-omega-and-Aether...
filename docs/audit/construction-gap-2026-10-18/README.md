@@ -32,8 +32,8 @@ repository's history (an ed25519 supervisor key, an SSH key, the Bearer token in
 | 14 | Regeneration closers | **Open.** One closer found in part (Liris's callings return, which pins both inputs). The rest are not in any public history, local store or the owner's phone photos; each has an acceptance test. | `beginning/14-regeneration-closers-2026-10/` (`a0c0ad4`) |
 | 15a | aether's own SHA-256 is shadowcat's `sha256.rs` | Done, after digest parity | `shadowcat/parity/` (`171a461`) |
 | 15b | Benched GNNs L1, L2, L4 wired through the one hookwall | Done: connected, observed, non-voting; `asolaria watch` recomputes the chain in a separate process | `gate/observed/` (`ad9b22a`) |
-| 15c | Vault-reader re-run over every vendored repo | **Running.** 58 repositories at their vendored commits: 1,102,126 objects, 1,101,801 verified, 24 failed, 301 unresolved, and the Rust reader equals the Python referee on all 61 rows. A second pass over the other 386 pinned commits is still running. | to be committed under `hbp/vault-reader/` |
+| 15c | Vault-reader re-run over every vendored repo | Done. 58 repositories at their vendored commits and the 386 commits aether pins: 455 rows, 7,912,614 objects, 7,901,266 verified, 2,615 failed, 8,733 unresolved, every non-verified pinned object explained by a cause note, and the Rust reader equals the Python referee on all 455 rows. Audited 2026-11-06. | `hbp/vault-reader/corpus/rerun-2026-10-19/` |
 
 The audit trail is followed to its end in the sense the owner asked: every step that can be done
-from public bytes is done or running. What remains open needs the owner or ACER: step 0's
+from public bytes is done. What remains open needs the owner or ACER: step 0's
 rotation, and step 14's closers (their find commands are in `docs/handoffs/ACER-REGENERATE-HANDOFF.md`).

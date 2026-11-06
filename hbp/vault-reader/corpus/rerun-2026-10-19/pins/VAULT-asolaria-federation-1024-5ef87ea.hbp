@@ -1,0 +1,12 @@
+VAULTOBJ|path=docs/receipts/FABLE5-HBI-PROJECTED-DASHBOARD-FULL-SYNTHESIS-2026-07-03.hbi|kind=hbi|bytes=6542|sha256=90d6522592fbde389837e8ae1ebbb13df699304ef32f85c75e5fb3763c4fcacd|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=docs/receipts/FABLE5-HBI-PROJECTED-DASHBOARD-FULL-SYNTHESIS-2026-07-03.hbp|kind=hbp|bytes=0|sha256=|pointer=pair:docs/receipts/FABLE5-HBI-PROJECTED-DASHBOARD-FULL-SYNTHESIS-2026-07-03.hbi|verified=0|reason=hbp_absent|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=0|failed=0|unresolved=1|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=0:hbp_absent|count=1|json=0
+VAULTTOTAL|hbi=1|files=211|objects=2|verified=1|failed=0|unresolved=1|json=0

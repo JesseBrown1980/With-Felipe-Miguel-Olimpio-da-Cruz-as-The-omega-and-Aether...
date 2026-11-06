@@ -1,0 +1,15 @@
+VAULTOBJ|path=system-interpretations-2026-07-08/ACER-HOST8-ASI-OS-METAL-60D-KERNEL-ADVANCEMENT-2026-07-08.hbi|kind=hbi|bytes=2563|sha256=abfad0d1af8d7ebcd9ca1f95e8c4c99d82fbfd296264bccb8a2a0abc413293b6|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=system-interpretations-2026-07-08/ACER-HOST8-ASI-OS-METAL-60D-KERNEL-ADVANCEMENT-2026-07-08.hbp|kind=hbp|bytes=13650|sha256=8ef3a6b0732730d202bc7ef4797424a933cdebed320b4a4628ab47db20631dd2|pointer=pair:system-interpretations-2026-07-08/ACER-HOST8-ASI-OS-METAL-60D-KERNEL-ADVANCEMENT-2026-07-08.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=system-interpretations-2026-07-08/RELIC-HOST8-ASI-OS-METAL-60D-KERNEL-PERSPECTIVE-2026-07-08.hbi|kind=hbi|bytes=1681|sha256=7ade7c376f31018db7777f29bb043a0bffc3522f0fdbc430dc1f44805cc15f2b|pointer=self|verified=+1|reason=ok:sidecar_named|json=0
+VAULTOBJ|path=system-interpretations-2026-07-08/RELIC-HOST8-ASI-OS-METAL-60D-KERNEL-PERSPECTIVE-2026-07-08.hbp|kind=hbp|bytes=4301|sha256=c11d4c929af8f2a25fb3dfa594ab07c9bfec8ebb4102245af8408d51c9c64d00|pointer=pair:system-interpretations-2026-07-08/RELIC-HOST8-ASI-OS-METAL-60D-KERNEL-PERSPECTIVE-2026-07-08.hbi|verified=+1|reason=ok:sidecar_named|json=0
+VAULTOBJ|path=system-interpretations-2026-07-08/RELIC-NEXT-ROUND-HARDWARE-USB-VERIFY-20260708.hbi|kind=hbi|bytes=1428|sha256=c0ea59bdb59908c48f6d21ffb9637efe186a387b26a90bc7406ceaa2eefdb5a0|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=system-interpretations-2026-07-08/RELIC-NEXT-ROUND-HARDWARE-USB-VERIFY-20260708.hbp|kind=hbp|bytes=3002|sha256=e4598bc88f6a4ed593259eab113c1571e52dcab3e55f590c9632bbc06284d5a7|pointer=pair:system-interpretations-2026-07-08/RELIC-NEXT-ROUND-HARDWARE-USB-VERIFY-20260708.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTKIND|kind=hbi|objects=3|verified=3|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=3|verified=3|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=3|files=93|objects=6|verified=6|failed=0|unresolved=0|json=0

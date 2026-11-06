@@ -151,6 +151,14 @@ analysis-of-cubes — both sidecars begin with the bytes `EF BB BF` and name
 bytes equal the files' sha256; LIGHT — `BOOK-OF-LIGHT.hbi` has no `.hbp`. The asolaria-stone-to-moss
 remote `HEAD` is cc15b76 (it and f032bc0 have diverged: 25 and 2 commits); f032bc0 is still served by GitHub.
 
+## Re-run over every vendored and pinned tree (2026-10-19)
+
+Build order step 15c: the reader and the referee over the 58 repositories aether vendors, at their vendored commits,
+and over the 386 repo@commit pairs aether's tracked text pins. 455 rows, 7,912,614 objects: 7,901,266 `+1`, 2,615
+`-1`, 8,733 `0`, and Rust equal to the referee on all 455. Every non-`+1` object of the pinned pass has a cause note.
+The rows, outputs, pin list and scripts are in [`corpus/rerun-2026-10-19/`](corpus/rerun-2026-10-19/README.md), audited
+on 2026-11-06 (one cause note corrected: a file the analyzer missed without `--full-history`).
+
 ## Writers of the corpus `.hbi` files
 
 `corpus/WRITERS.hbp`: one `HBIWRITER` row per corpus `.hbi` (header tag, writer, evidence,

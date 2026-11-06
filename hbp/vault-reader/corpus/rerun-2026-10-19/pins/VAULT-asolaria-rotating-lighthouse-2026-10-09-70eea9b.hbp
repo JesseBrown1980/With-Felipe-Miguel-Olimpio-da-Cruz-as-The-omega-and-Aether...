@@ -1,0 +1,11 @@
+VAULTOBJ|path=RESULTS-2026-10-09.hbi|kind=hbi|bytes=11031|sha256=74b41732cee07674d7ee328f7cbc6e20759a8b9a6cba556eed5b68cbecf7065a|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=RESULTS-2026-10-09.hbp|kind=hbp|bytes=5375|sha256=4263a87cec7fadfcd1b98867b8fa10fd62ee031f91c3292afa2563ebb8ad0cf4|pointer=pair:RESULTS-2026-10-09.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=1|files=17|objects=2|verified=2|failed=0|unresolved=0|json=0

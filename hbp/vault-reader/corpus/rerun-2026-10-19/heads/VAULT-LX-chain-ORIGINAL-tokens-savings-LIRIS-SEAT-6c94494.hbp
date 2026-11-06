@@ -1,0 +1,14 @@
+VAULTOBJ|path=receipts/IX-LX-CROSS-SEAT-BRIDGE-2026-07-05.hbi|kind=hbi|bytes=444|sha256=468d26cf2a6880bab9f4dd389411a698ac234cdcd3238950c06ee04dc93677b6|pointer=self|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/IX-LX-CROSS-SEAT-BRIDGE-2026-07-05.hbp|kind=hbp|bytes=714|sha256=4f45efe1f0c3e1f7ae5cdb00ee017d24d97f70aae3b79807b4f36a0f5e987d08|pointer=pair:receipts/IX-LX-CROSS-SEAT-BRIDGE-2026-07-05.hbi|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.hbi|kind=hbi|bytes=1059|sha256=62cdf8c69625bd3fc5f4779411d69a35943ccc840675bae99b828eae7e4c8f4b|pointer=self|verified=-1|reason=sidecar_name_differs|json=0
+VAULTOBJ|path=receipts/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.hbp|kind=hbp|bytes=1437|sha256=0520592759d67754668ccaa4d7e32f2feb355282e0c927548533457bbbc3ffaf|pointer=pair:receipts/LX-CHAIN-ORIGIN-TOKEN-SAVINGS-2026-07-05.hbi|verified=-1|reason=sidecar_name_differs|json=0
+VAULTKIND|kind=hbi|objects=2|verified=0|failed=2|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=2|verified=0|failed=2|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTREASON|reason=-1:sidecar_name_differs|count=4|json=0
+VAULTTOTAL|hbi=2|files=22|objects=4|verified=0|failed=4|unresolved=0|json=0

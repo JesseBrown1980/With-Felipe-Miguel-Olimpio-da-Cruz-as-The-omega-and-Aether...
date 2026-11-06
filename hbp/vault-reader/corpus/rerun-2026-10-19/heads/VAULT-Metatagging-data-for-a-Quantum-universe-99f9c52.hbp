@@ -1,0 +1,12 @@
+VAULTOBJ|path=docs/LIRIS-SH-PRELIGHT-PUBLIC-POINTER-2026-08-04.hbi|kind=hbi|bytes=598|sha256=3a63bd7f62a648fe9f6b5ef5bbe34f87d46c7285adde66a739887d307df9a4d8|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=docs/LIRIS-SH-PRELIGHT-PUBLIC-POINTER-2026-08-04.hbp|kind=hbp|bytes=2084|sha256=ca1c46d81541bd99987b1e95bd0ef209068070ca95170fb73eee750d62c71bb5|pointer=pair:docs/LIRIS-SH-PRELIGHT-PUBLIC-POINTER-2026-08-04.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=docs/LIRIS-SH-PRELIGHT-PUBLIC-POINTER-2026-08-04.hbp|kind=file|bytes=2084|sha256=ca1c46d81541bd99987b1e95bd0ef209068070ca95170fb73eee750d62c71bb5|pointer=docs/LIRIS-SH-PRELIGHT-PUBLIC-POINTER-2026-08-04.hbi:4:artifact|verified=+1|reason=ok:bytes+sha256|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=1|files=31|objects=3|verified=3|failed=0|unresolved=0|json=0

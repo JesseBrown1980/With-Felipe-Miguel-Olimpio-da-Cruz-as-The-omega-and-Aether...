@@ -1,0 +1,13 @@
+VAULTOBJ|path=fable5-office-render/hot-path/FABLE5-BIGPICKLE-MAP-2026-07-04.hbi|kind=hbi|bytes=1382|sha256=3af1d382d63cbc8b6ab4f1b45e5add027b13723040f8f2833255503caa4bac64|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=fable5-office-render/hot-path/FABLE5-BIGPICKLE-MAP-2026-07-04.hbp|kind=hbp|bytes=3424|sha256=5e05046fa7ba6b1b6d5da54e040bb4995182f3026ab665634b029e7a5a66e1e5|pointer=pair:fable5-office-render/hot-path/FABLE5-BIGPICKLE-MAP-2026-07-04.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=fable5-office-render/hot-path/FABLE5-ORCHESTRATOR-LAW-2026-07-04.hbi|kind=hbi|bytes=503|sha256=c2d37709f501d5f9d43da776788f0a312a40c31616e57c4cc36107e19e394f92|pointer=self|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTOBJ|path=fable5-office-render/hot-path/FABLE5-ORCHESTRATOR-LAW-2026-07-04.hbp|kind=hbp|bytes=1179|sha256=43e8541afa9734637fc37a6d8d7a92808420b900dfaf318c91bd9588f2f3ee06|pointer=pair:fable5-office-render/hot-path/FABLE5-ORCHESTRATOR-LAW-2026-07-04.hbi|verified=+1|reason=ok:sidecar_exact|json=0
+VAULTKIND|kind=hbi|objects=2|verified=2|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=2|verified=2|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=2|files=24|objects=4|verified=4|failed=0|unresolved=0|json=0

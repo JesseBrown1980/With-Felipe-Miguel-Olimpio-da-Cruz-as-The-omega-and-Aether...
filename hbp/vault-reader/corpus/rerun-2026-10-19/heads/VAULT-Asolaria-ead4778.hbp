@@ -1,0 +1,11 @@
+VAULTOBJ|path=reports/LIRIS-KERNEL-OMNILAB-TRILATERAL-ADVANCE-20260709T1700.hbi|kind=hbi|bytes=1771|sha256=56f86d62801bacf3e094803f49208a3eb356c95fe36485e639938641cb959ce0|pointer=self|verified=+1|reason=ok:sidecar_named|json=0
+VAULTOBJ|path=reports/LIRIS-KERNEL-OMNILAB-TRILATERAL-ADVANCE-20260709T1700.hbp|kind=hbp|bytes=3348|sha256=c2c9b44caabb3532199232ee4c736bc2368242a9631a8a2bca259392a96c4559|pointer=pair:reports/LIRIS-KERNEL-OMNILAB-TRILATERAL-ADVANCE-20260709T1700.hbi|verified=+1|reason=ok:sidecar_named|json=0
+VAULTKIND|kind=hbi|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=hbp|objects=1|verified=1|failed=0|unresolved=0|json=0
+VAULTKIND|kind=trinity|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=file|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=range|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=index|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=chain|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTKIND|kind=center|objects=0|verified=0|failed=0|unresolved=0|json=0
+VAULTTOTAL|hbi=1|files=4|objects=2|verified=2|failed=0|unresolved=0|json=0
