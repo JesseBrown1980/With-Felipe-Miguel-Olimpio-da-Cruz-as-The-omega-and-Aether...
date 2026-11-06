@@ -1,0 +1,28 @@
+H8RECEIPT|lane=measure|date=2026-10-19|what=second-machine measurement of 8-byte rooms (room n at byte 8n of one file), cloud container, independent of ACER|E=0|model_runs=0|integers_only=1|json=0
+SOURCE|program=/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/host8_rooms_probe.rs|sha256=8cc27fd00b01877fa81a8d797f028df905f5aa8ee85fd6b52d50d578fb134af4|bytes=18300|binary_sha256=254ec7686285ad8830086c94a8abcc53b21ad429800499239da1a3a3222e6654|crates=0|unsafe=0|float=0|json=0
+SOURCE|build=rustc +1.81.0 -O --edition 2021 -o host8_rooms_probe host8_rooms_probe.rs|build_rc=0|warnings=0|json=0
+SOURCE|run=rm -f run/host8_rooms_50m.bin && ./host8_rooms_probe /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/run "$(rustc +1.81.0 --version)"|runs=2|file_deleted_between_runs=1|file_deleted_after=1|json=0
+SOURCE|fmt_check=rustfmt +1.81.0 --check --edition 2021 host8_rooms_probe.rs|first_check=1_diff_hunk(main: args.get(2) chain)|formatted_with=rustfmt +1.81.0 --edition 2021|recheck_rc=0|json=0
+SOURCE|float_grep=grep -nE '\bf32\b|\bf64\b|as f[0-9]' host8_rooms_probe.rs|matches=0|grep_rc=1|unsafe_grep_matches=0|json=0
+MACHINE|kernel=6.18.44-fc-v139|lsblk_vda=vda,256G,1,virtio|logical_block=512|physical_block=4096|scheduler=mq-deadline|df_root_avail_after=3419049984|note=rotational=1 is the virtio-blk default flag, not evidence of a spinning disk|json=0
+H8RUN|run=1|start_utc=2026-10-19T12:03:35Z|json=0
+H8PROBE|step=header|N=50000000|file_bytes=400000000|room_bytes=8|rustc=rustc 1.81.0 (eeb90cda1 2024-09-04)|cpu_model=Intel(R) Xeon(R) Processor @ 2.10GHz|cpus=4|memtotal_kb=16479424|memavailable_kb=15613096|cached_kb=10083720|run_dir=/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/run|mount=/|fstype=ext4|source=/dev/vda|majmin=254:0|blockdev=vda|sysfs=/sys/devices/pci0000:00/0000:00:02.0/virtio1/block/vda|rotational=1|driver=virtio_blk|virtio=1|loadavg_x100_start=363,705,572|json=0
+H8PROBE|step=make|rooms=50000000|bytes=400000000|writes=48|chunk_bytes=8388608|write_ns=4096673343|sync_ns=407150860|ns=4503824203|mb_per_s=88|rooms_per_s=11101676|size_ok=1|load1_x100=342|json=0
+H8PROBE|step=verify|rooms_checked=50000000|bytes=400000000|ns=126953643|mb_per_s=3150|rooms_per_s=393844546|mismatch=0|load1_x100=342|json=0
+H8PROBE|step=ram|rooms=50000000|vec_bytes=400000000|build_ns=272108939|reads=20000000|seed=1|ns=455282215|per_s=43928796|ns_per_read=22|sum=4260965379936308874|mismatch=0|load1_x100=322|json=0
+H8PROBE|step=warm|reads=2000000|seed=2|ns=1317899758|per_s=1517566|ns_per_read=658|mismatch=0|load1_x100=322|json=0
+H8PROBE|step=cold|o_direct=1|block_bytes=4096|align_pad=1008|reads=20000|seed=3|ns=1353539761|per_s=14776|ns_per_read=67676|mismatch=0|errors=0|first_error=none|load1_x100=322|json=0
+H8PROBE|step=seqread|o_direct=1|chunk_bytes=8388608|align_pad=1008|chunks=48|bytes=400000000|bytes_ok=1|ns=250761329|mb_per_s=1595|spot_checks=96|mismatch=0|error=none|load1_x100=322|json=0
+H8PROBE|step=threads|threads=4|reads_per_thread=1000000|reads=4000000|seeds=100..103|ns=1008958574|per_s=3964483|per_s_per_thread=991120|mismatch=0|load1_x100=322|json=0
+H8PROBE|step=end|total_ns=9384174654|file=/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/run/host8_rooms_50m.bin|loadavg_x100_end=322,685,567|json=0
+H8RUN|run=2|start_utc=2026-10-19T12:03:49Z|json=0
+H8PROBE|step=header|N=50000000|file_bytes=400000000|room_bytes=8|rustc=rustc 1.81.0 (eeb90cda1 2024-09-04)|cpu_model=Intel(R) Xeon(R) Processor @ 2.10GHz|cpus=4|memtotal_kb=16479424|memavailable_kb=15621968|cached_kb=10083952|run_dir=/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/run|mount=/|fstype=ext4|source=/dev/vda|majmin=254:0|blockdev=vda|sysfs=/sys/devices/pci0000:00/0000:00:02.0/virtio1/block/vda|rotational=1|driver=virtio_blk|virtio=1|loadavg_x100_start=297,674,564|json=0
+H8PROBE|step=make|rooms=50000000|bytes=400000000|writes=48|chunk_bytes=8388608|write_ns=365274488|sync_ns=359606953|ns=724881441|mb_per_s=551|rooms_per_s=68976796|size_ok=1|load1_x100=297|json=0
+H8PROBE|step=verify|rooms_checked=50000000|bytes=400000000|ns=180964180|mb_per_s=2210|rooms_per_s=276297773|mismatch=0|load1_x100=297|json=0
+H8PROBE|step=ram|rooms=50000000|vec_bytes=400000000|build_ns=344947836|reads=20000000|seed=1|ns=412779964|per_s=48451964|ns_per_read=20|sum=4260965379936308874|mismatch=0|load1_x100=281|json=0
+H8PROBE|step=warm|reads=2000000|seed=2|ns=1109195601|per_s=1803108|ns_per_read=554|mismatch=0|load1_x100=281|json=0
+H8PROBE|step=cold|o_direct=1|block_bytes=4096|align_pad=1008|reads=20000|seed=3|ns=785914124|per_s=25448|ns_per_read=39295|mismatch=0|errors=0|first_error=none|load1_x100=281|json=0
+H8PROBE|step=seqread|o_direct=1|chunk_bytes=8388608|align_pad=1008|chunks=48|bytes=400000000|bytes_ok=1|ns=245216177|mb_per_s=1631|spot_checks=96|mismatch=0|error=none|load1_x100=281|json=0
+H8PROBE|step=threads|threads=4|reads_per_thread=1000000|reads=4000000|seeds=100..103|ns=953085635|per_s=4196894|per_s_per_thread=1049223|mismatch=0|load1_x100=281|json=0
+H8PROBE|step=end|total_ns=4847619069|file=/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/run/host8_rooms_50m.bin|loadavg_x100_end=281,664,562|json=0
+CLEANUP|file=/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/host8-rooms/measure/run/host8_rooms_50m.bin|exists_after=0|json=0

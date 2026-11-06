@@ -61,6 +61,10 @@ The guide, the tool's source and the sealed receipts are in
 screenshot of ACER's report. This repository's CI rebuilds the tool and re-seals the receipts byte for byte, and its
 cloud machine regenerated three whole 800 MB sectors identical to the drive's.
 
+What rooms on a drive can and cannot do as memory, set against RAM, GPU memory and the established mechanisms
+(direct-address tables, `mmap`, the page cache, CUDA oversubscription, GPUDirect Storage), with a second machine's
+measurement: [`docs/HOST8-ROOMS-ON-STORAGE.md`](docs/HOST8-ROOMS-ON-STORAGE.md).
+
 ## Quick start
 
 This repository is public. The code is MIT-licensed; crates marked "MIT OR Apache-2.0" may also be
