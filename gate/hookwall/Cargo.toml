@@ -15,5 +15,7 @@ path = "src/lib.rs"
 
 [dependencies]
 ed25519-dalek = { version = "2.1", default-features = false, features = ["zeroize"] }
-zeroize = { version = "1.7", default-features = false, features = ["derive"] }
+# Upstream declares zeroize "1.7". The "<1.9" bound (owner decision B2, 2026-11-08) keeps a build from the
+# package on Rust 1.81: zeroize 1.9.0 and 1.9.1 declare edition 2024 and rust-version 1.85.
+zeroize = { version = ">=1.7, <1.9", default-features = false, features = ["derive"] }
 sha2 = { version = "0.10", default-features = false }

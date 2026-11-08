@@ -107,7 +107,12 @@ resolve unchanged. That includes `host8/vendor/.../host8-serve/src/main.rs:14`
 
 Dependencies are the upstream workspace lines written in: `sha2 = { version = "0.10", default-features = false }` and
 `ed25519-dalek = { version = "2.1", default-features = false, features = ["zeroize"] }`. `ed25519-dalek`
-is declared by upstream `cosign-ledger/Cargo.toml:18`; no line of its `src/` uses it. Every third-party
+is declared by upstream `cosign-ledger/Cargo.toml:18`; no line of its `src/` uses it. `cosign-ledger/Cargo.toml`
+adds one line that is not upstream (owner decision B2, 2026-11-08):
+`zeroize = { version = ">=1.5, <1.9", default-features = false }`. It enables no feature. It bounds the
+`zeroize` that `ed25519-dalek`'s `zeroize` feature asks for (`1.5`) below 1.9: zeroize 1.9.0 and 1.9.1
+declare edition 2024 and rust-version 1.85, and a Rust 1.81 build from the crates.io package resolved
+1.9.1 (`docs/receipts/PUBLISH-READINESS-2026-11-08.md`). Every third-party
 version in `Cargo.lock` equals the version in federation-1024's own `Cargo.lock`: sha2 0.10.9,
 ed25519-dalek 2.2.0, curve25519-dalek 4.1.3, zeroize 1.8.2, ed25519 2.2.3, signature 2.2.0, subtle 2.6.1,
 digest 0.10.7, syn 2.0.117, and the rest.

@@ -24,8 +24,11 @@ tree before any edit. `src/syscall/mod.rs` is the upstream file cut after line 7
 `Handle`, `NanoTime`, `HookwallVerdict`, `AccessTier`); it is unedited.
 
 `src/lib.rs`, `Cargo.toml`, `Cargo.lock` and `rust-toolchain.toml` are new glue. The dependencies are
-the upstream workspace declarations, unchanged: `ed25519-dalek 2.1` (no default features,
+the upstream workspace declarations: `ed25519-dalek 2.1` (no default features,
 `zeroize`), `zeroize 1.7` (no default features, `derive`) and `sha2 0.10` (no default features).
+One upper bound is added (owner decision B2, 2026-11-08): `zeroize` is `>=1.7, <1.9`. zeroize 1.9.0
+and 1.9.1 declare edition 2024 and rust-version 1.85, and a Rust 1.81 build from the crates.io package
+resolved 1.9.1 (`docs/receipts/PUBLISH-READINESS-2026-11-08.md`).
 `Cargo.lock` pins the versions first resolved for this extract and built on Rust 1.81:
 `ed25519-dalek 2.2.0`, `curve25519-dalek 4.1.3`, `zeroize 1.8.2`, `sha2 0.10.9`.
 
