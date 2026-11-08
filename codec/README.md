@@ -7,6 +7,7 @@ The owner's DBBH -> DBWH codec, vendored unchanged, and a binary that runs it ov
 |---|---|
 | [`dbbh-dbwh/`](dbbh-dbwh/) | `JesseBrown1980/holographic-wormhole-codec` @ `49012803778ef89b5b7c3915f582d027d4f1e096`, byte-identical: `src/lib.rs`, `Cargo.toml`, `README.md`, `LICENSE`, `rust-toolchain.toml`. It builds in place with its own `Cargo.toml`. Rust 1.81, zero dependencies, integer arithmetic only. |
 | [`gguf-roundtrip/`](gguf-roundtrip/) | `asolaria-gguf-roundtrip`: runs the codec end to end on every GGUF in `gguf/MANIFEST.hbp` and prints HBP rows. Rust 1.81, depends only on the codec (by path). |
+| [`ladder-rungs/`](ladder-rungs/) | `asolaria-ladder-rungs`, tests only: the metatag ladder round trips (widths 1..16 and 1..64) that were added to the vendored `src/lib.rs` on 2026-10-18 (commits `231a050`, `1e20fa5`) and moved out on 2026-11-08, so the vendored files match their pins again (MEASURED 2026-11-08: `sha256sum -c UPSTREAM.sha256` 5 OK). Rust 1.81, depends only on the codec (by path) (MEASURED 2026-11-08: `ladder-rungs/check.sh` passes with rustc 1.81.0; its `Cargo.lock` lists the codec and nothing else). |
 
 ## The throat
 
@@ -62,7 +63,12 @@ The codec's own boundary line (upstream `README.md`, "Honest boundary"; also `sr
 id, size and SHA-256 of every copied file; [`dbbh-dbwh/UPSTREAM.sha256`](dbbh-dbwh/UPSTREAM.sha256)
 pins them. `src/lib.rs` has CRLF line endings upstream (blob `237c82a2…`); `dbbh-dbwh/.gitattributes`
 marks the directory `-text` so Git keeps those bytes. Added in aether: `Cargo.lock`,
-`UPSTREAM.sha256`, `PROVENANCE.md`, `.gitattributes`.
+`UPSTREAM.sha256`, `PROVENANCE.md`, `.gitattributes` and `RECEIPT-LADDER-RUNGS.hbp` (the ladder receipt;
+its tests are in `ladder-rungs/`). From 2026-10-18 to 2026-11-08 the vendored `src/lib.rs` and
+`README.md` carried the ladder additions (commits `231a050`, `1e20fa5`) and failed their pins
+(MEASURED at `7c4711f`: `sha256sum -c UPSTREAM.sha256` 3 OK, 2 FAILED). They are the upstream bytes
+again (MEASURED 2026-11-08: 5 OK; `git hash-object` gives `237c82a2…` and `749f30d9…`, the upstream
+blob ids; `dbbh-dbwh/PROVENANCE.md`, "The ladder tests").
 
 ## Run
 
@@ -74,6 +80,9 @@ sha256sum -c UPSTREAM.sha256
 cargo +1.81.0 clippy --locked --all-targets -- -D warnings
 ! grep -rnE '\bf(32|64)\b' src/
 cargo +1.81.0 test --locked --all-targets
+
+# The ladder tests: extracts, fmt, clippy -D warnings, 4 tests, rows = RECEIPT-LADDER-RUNGS.hbp lines 7-24
+../ladder-rungs/check.sh
 
 # The GGUF round trip
 cd ../gguf-roundtrip
@@ -194,7 +203,8 @@ In memory the packet is larger than the object for every GGUF: 5.333333 to 5.343
 
 ## Tests
 
-`dbbh-dbwh`: the codec's own 9 tests. `gguf-roundtrip`: 9 tests.
+`dbbh-dbwh`: the codec's own 9 tests. `ladder-rungs`: 4 tests (`ladder-rungs/README.md`). `gguf-roundtrip`: 9 tests.
+(MEASURED 2026-11-08, rustc 1.81.0: 9 passed; 4 passed, `ladder-rungs/check.sh`; 4 + 5 = 9 passed.)
 
 - `small_gguf_round_trips_byte_identical`: `follow/matrix/TIMED-CHIRAL-PUBLIC-COLOR-ORBITS.gguf`
   (2,200 bytes, a partial last block) through emit and traverse, byte-identical, `packet_bytes` = 11,756.
