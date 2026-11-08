@@ -237,7 +237,7 @@ reads them on the request into `Observed.benched` with provenance `real` or `abs
 have no `Signals` field and are reported in `Observed.benched` and the `OBSERVE` rows
 (`bench.rs:25`).
 Not connected: G1/G2/G3 (`gate/observed/src/lib.rs:85-87` are `None`) and the GSL
-`g4_state`, hard-coded `UNKNOWN` (`lib.rs:97`) (both MEASURED at `7c4711f`), because
+`g4_state`, hard-coded `UNKNOWN` (`lib.rs:98`) (both MEASURED at `7c4711f`), because
 this stack has no :4793 or :4949 service (UNVERIFIED, not re-checked here); the other
 networks of `Shannon-and-the-gnns-stage`, and the other trained models in
 `Asolaria-fnns-trained-and-reverse-gnns-many`. `asolaria gate` and the verdict crate
