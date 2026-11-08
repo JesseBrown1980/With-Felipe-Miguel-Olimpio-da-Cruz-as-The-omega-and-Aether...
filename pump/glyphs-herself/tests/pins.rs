@@ -1,7 +1,8 @@
 //! Hermetic checks against the cold-lane referee vectors (owner numpy, USIM @3f9f42d):
 //! the pinned Gaussian kernel and the 12 seed uint8 LUTs. The full GGUF byte-exactness
-//! (sha256 == recorded == owner Python) is proven by the CI job in ci-snippets/, which
-//! regenerates both the Python and the Rust outputs and `cmp`s them.
+//! (sha256 == recorded == owner Python) is checked by the glyphs-herself-cold job of
+//! .github/workflows/crates.yml, which regenerates both the Python and the Rust outputs and
+//! `cmp`s them (MEASURED on the cloud seat 2026-11-08; UNVERIFIED on a GitHub runner).
 use pump_glyphs_herself::mythos;
 use std::path::PathBuf;
 

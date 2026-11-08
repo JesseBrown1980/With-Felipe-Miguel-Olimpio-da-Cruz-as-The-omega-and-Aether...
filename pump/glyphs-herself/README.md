@@ -22,10 +22,11 @@ pump glyphs-mythos <seed> <out>      # ASOLARIA-MYTHOS-SELF-GLYPHS-256.gguf (str
 Both sha256 values equal the ones recorded in `receipts/FABLE5-DELETE-AND-REGENERATE.hbp`
 (mythos) and `gguf/asolaria/ASOLARIA-HERSELF.gguf.sha256` / REGEN-1.md (herself), and equal a
 fresh run of the owner's Python generators in `scratchpad/regen/venv` (`cmp` byte-identical). The
-CI job in `ci-snippets/pump-glyphs-herself.txt` reproduces the Python and the Rust output for
-both seeds and for a third seed (the first 90,000 B of the da43991 `books/*.md`, 269,648,424 B,
-sha256 `20cd8a24e9aed14efd54d0e26071356107fc9421aea4d55d6f1f46f130356203`, 31 of 256 glyphs
-with a finite cv) and compares them.
+CI job `glyphs-herself-cold` in `.github/workflows/crates.yml` reproduces the Python and the Rust
+output for both seeds and for a third seed (the first 90,000 B of the da43991 `books/*.md`,
+269,648,424 B, sha256 `20cd8a24e9aed14efd54d0e26071356107fc9421aea4d55d6f1f46f130356203`, 31 of
+256 glyphs with a finite cv) and compares them (MEASURED: its steps passed on the cloud seat on
+2026-11-08; UNVERIFIED on a GitHub runner until the job first runs there).
 
 Beyond those seeds, the tests compare the port with the owner's code on seeded inputs
 (`tests/`, vectors from `referee/dump_vectors.py`): 6 HERSELF bodies (whole-GGUF sha256),
