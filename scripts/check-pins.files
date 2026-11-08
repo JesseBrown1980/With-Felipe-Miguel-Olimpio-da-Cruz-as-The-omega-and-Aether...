@@ -61,6 +61,7 @@ docs/handoffs/proof-nanoseconds-ternary-2026-10-18/SHA256SUMS|ok=7|mismatch=0|ab
 events/UPSTREAM.sha256|ok=2|mismatch=0|absent=0|unparsed=0
 gate/fischer-upstream/UPSTREAM.sha256|ok=3|mismatch=0|absent=0|unparsed=0
 gguf/codex/SHA256SUMS|ok=2|mismatch=0|absent=0|unparsed=0
+gguf/codex/tools/SHA256SUMS|ok=10|mismatch=0|absent=0|unparsed=0
 gguf/follow-regen/UPSTREAM.sha256|ok=29|mismatch=0|absent=0|unparsed=0
 hbp/vault-reader/UPSTREAM.sha256|ok=76|mismatch=0|absent=0|unparsed=0
 hbp/vault-reader/corpus/rerun-2026-10-19/SHA256SUMS|ok=451|mismatch=0|absent=0|unparsed=0

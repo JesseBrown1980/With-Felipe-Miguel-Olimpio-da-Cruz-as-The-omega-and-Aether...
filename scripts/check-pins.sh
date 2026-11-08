@@ -28,17 +28,20 @@ LIST=0
 # A_FILES_NO_CHECKSUM_LINES, A_UNEXPECTED_OUTPUT and scripts/check-pins.files were derived from the
 # claim alone (line counts and the absent list, no hashing) and committed before the first run of
 # the code that measures them (UNVERIFIED: git does not record the run).
-A_FILES=102
-A_FILES_ALL_OK=94
+# Re-frozen 2026-11-08 on main after merging cloud/regen-tools-20261108, which adds one pin file,
+# gguf/codex/tools/SHA256SUMS (10 entries): A_FILES 102->103, A_FILES_ALL_OK 94->95, A_ENTRIES and A_OK +10,
+# and its row in scripts/check-pins.files. Written before the run that measures them.
+A_FILES=103
+A_FILES_ALL_OK=95
 A_FILES_WITH_ABSENT=8
-A_ENTRIES=14232
-A_OK=14116
+A_ENTRIES=14242
+A_OK=14126
 A_MISMATCH=0
 A_ABSENT=116
 A_UNPARSED=0
 A_FILES_NO_CHECKSUM_LINES=0
 A_UNEXPECTED_OUTPUT=0
-A_FILES_TABLE_SHA256=9806381af0584136e65e6db84bc28f19f94b6be153efa558c1cf7c6b5285cca3
+A_FILES_TABLE_SHA256=a0ed7a0081d9b1e85adf9bb9461be305730ddd342e9c39c541a0e5d8b3a17b1e
 A_ABSENT_LIST_SHA256=1d93bb146bd83eb9b466a6bdcf11e370e709d984f1dcb37670cadd19200ee176
 A_ABSENT_PER_FILE=(
   "62 docs/handoffs/acer-post60d-2026-10-18/FABLE5-MATRIX-IN-COLOUR-62-FILES-NOT-IN-AETHER-2026-10-18/SHA256SUMS"
