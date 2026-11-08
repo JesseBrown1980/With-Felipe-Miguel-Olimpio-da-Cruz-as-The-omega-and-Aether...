@@ -621,6 +621,28 @@ jobs:
           "$PUMP" herself "$T" "$W/rust-herself.gguf"
           cmp "$W/rust-herself.gguf" "$COLD_H"
           rm -rf "$W"
+  ternary:
+    # asolaria-ternary (published from 2026-11-08): the checks its README lists, without the --measure chain,
+    # whose enwik8 input is not in the repository.
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: ternary } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: the owner's vendored bytes and the tribit unit at their pins
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: the stdlib referee checks the quoted owner lines and the fixture
+        run: python3 -I tools/referee.py --check
+      - name: no float in tools/*.py (AST) or src, tests, examples
+        run: python3 -I -B tools/integer_only.py
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
   shadowcat-parity:
     # SHA256-PARITY-2026-10-19.hbp was written at fcddaf9, the last commit with the nine aether SHA-256 copies
     # it compares (CANON: its PARITYHDR commit= field; the next commit, 171a461, replaced the copies). The job
