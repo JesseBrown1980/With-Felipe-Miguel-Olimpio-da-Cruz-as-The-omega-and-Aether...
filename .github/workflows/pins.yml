@@ -8,8 +8,9 @@ jobs:
     # Every tracked UPSTREAM.sha256 / *SHA256SUMS outside */vendor/* passes `sha256sum -c`; the only
     # absent entries allowed are the frozen list scripts/check-pins.absent. The *.sha256 sidecars and
     # the pin files under */vendor/* are measured against frozen counts. All counts are frozen in
-    # scripts/check-pins.sh; a change in any of them fails this job.
-    runs-on: ubuntu-latest
+    # scripts/check-pins.sh and scripts/check-pins.files; a change in any of them fails this job.
+    # ubuntu-24.04, not ubuntu-latest: the script reads the GNU coreutils `sha256sum -c` messages.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: pin files, sidecars and vendor pins against the frozen counts
