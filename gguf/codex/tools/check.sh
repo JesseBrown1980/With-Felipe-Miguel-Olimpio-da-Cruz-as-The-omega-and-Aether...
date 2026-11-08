@@ -2,7 +2,8 @@
 # Checks for gguf/codex/tools (needs python3 >= 3.11, stdlib only). Usage: gguf/codex/tools/check.sh
 #   pins     every file listed in SHA256SUMS
 #   tests    tests/test_gguf_meta.py (4,104 repr vectors and the float-kv fixture)
-#   commands check_commands.py (../CODEX-COMMANDS.hbp against the manifest and the tree)
+#   commands check_commands.py (../CODEX-COMMANDS.hbp against the manifest and the tree; bash -n
+#            and the paste rules on every bash field)
 #   no float the repository's pattern, then an integer-rule scan of every .py here: no true
 #            division, no float literal, no float/complex/math/decimal name, no struct float format
 set -euo pipefail

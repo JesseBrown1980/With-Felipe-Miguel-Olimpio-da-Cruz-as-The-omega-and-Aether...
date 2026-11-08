@@ -1,16 +1,19 @@
 # gguf/codex/tools
 
-The staging and inspection tools used for the codex regeneration rounds in `../CODEX-REGENERATE.md`.
-They were written by the cloud seat for those rounds (not by the owner), and lived in that work
-directory as `regen/tools/`. All of them use the Python standard library and integers only.
-None of them runs an owner program, and nothing they compute goes into a regenerated output.
+The staging and inspection tools used for the codex regeneration rounds in `../CODEX-REGENERATE.md`,
+and two tools for `../CODEX-COMMANDS.hbp`. The cloud seat wrote all of them, not the owner; the
+first three lived in that work directory as `regen/tools/` (CANON: `../CODEX-MANIFEST.hbp:15` names
+`stage_office.py`). They import only the Python standard library and pass the integer-rule scan of
+`check.sh` (MEASURED: `check.sh`). `run_row.py` runs the command of a `../CODEX-COMMANDS.hbp` row,
+and so the owner program that row names; the other tools run no owner program.
 
 | file | what it does |
 |---|---|
-| `stage_office.py` | Builds the literal `D:/` trees that the USIM group-C programs glob: the office `FABLE5-*.hbi\|hbp` files from one USIM commit, the 4 `laws/*.qr` files, `prior3174.bin`, the wasm and, if asked, the CONSTELLATION GGUF. It writes `STAGE-MANIFEST.hbp`, with one row per staged file and its source. It checks every input against its recorded sha256 and the office inventory, and prints the counts that each program's globs select. |
+| `stage_office.py` | Builds the literal `D:/` trees that the USIM group-C programs glob: the office `FABLE5-*.hbi\|hbp` files from one USIM commit, the 4 `laws/*.qr` files, `prior3174.bin`, the wasm and, if asked, the CONSTELLATION GGUF. It writes `STAGE-MANIFEST.hbp`, with one row per staged file and its source. It stops when one of the 4 qr files or `prior3174.bin` differs from the sha256 in its `KNOWN` table. It reports, and does not stop on, a wasm that is not the `b98abbbb` copy and a staged file that differs from its office inventory row or from its copied `.sha256` sidecar; a staged file with neither is not checked. It prints the counts that each program's globs select. |
 | `gguf_meta.py` | Prints the header, the key/value metadata and the tensor descriptors of GGUF files. |
 | `tensor_eq.py` | For each tensor of one GGUF, prints its size and sha256 prefix, and the tensors of a second GGUF that are byte-equal to it (GGML types 0 and 24 only). |
-| `check_commands.py` | Checks `../CODEX-COMMANDS.hbp` against `../CODEX-MANIFEST.hbp` and the tree. |
+| `check_commands.py` | Checks `../CODEX-COMMANDS.hbp` against `../CODEX-MANIFEST.hbp` and the tree, and checks that every bash field of it can be pasted: `bash -n` parses it, it holds no single quote and no placeholder, every `cd` is inside a subshell, and every variable is a `VARS` one, in double quotes except `$STAGE`. It runs nothing but `bash -n`. |
+| `run_row.py` | Runs one row of `../CODEX-COMMANDS.hbp` as written: `setup` and `command` in one `bash`, then `setup` and `check` in another, from the repository root. It prints the sha256 of each text it ran and both exit statuses. |
 | `check.sh` | Runs every check below. |
 | `tests/` | `test_gguf_meta.py` and its two frozen expectation files. |
 
@@ -27,7 +30,7 @@ None of them runs an owner program, and nothing they compute goes into a regener
 - `stage_office.py`: the old and the new version were run with the same arguments into the same `--dest` path, for 3 recipes (the CONSTELLATION, SELF-64 and RIME-UNRIME-THREE stagings in `../CODEX-REGENERATE.md`). In all 3, stdout, `STAGE-MANIFEST.hbp` and the sha256 of every staged file were byte-identical (287, 291 and 310 files). With `--root E:`, stdout was the same as with the default.
 - `gguf_meta.py`: the old and the new version gave byte-identical output on the 37 GGUFs in this repository that are not LFS pointers (825 lines, sha256 `c9d43f49…0f4e`). None of the 37 has a float key, so this does not exercise the float path. The float path is covered by the two tests below.
 - `tests/test_gguf_meta.py`:
-  - `tests/repr-vectors.txt` holds 4,104 bit patterns and the text CPython 3.13.16 `repr()` gave for each. That covers every binary64 power of two, the binary64 nearest each power of ten from 1e-323 to 1e308, the subnormal and overflow edges, and random patterns. All 4,104 come out equal.
+  - `tests/repr-vectors.txt` holds 4,104 bit patterns and the text CPython 3.13.16 `repr()` gave for each. That covers every normal binary64 power of two and the two smallest subnormal ones (2,048 of the 2,098 positive powers of two), the binary64 nearest each power of ten from 1e-323 to 1e308, the subnormal and overflow edges, and random patterns. All 4,104 come out equal.
   - The test builds a GGUF with float keys from integers (1,701 B, `c24c7594…`). Its output equals `tests/float-kv.expected.txt`, which is what the old version printed for the same file.
   - The vectors were frozen with labels made of the letter f and the bit width. They were then relabelled `b64`/`b32`, so that the repository's no-float pattern does not match them. The texts were not changed: before relabelling, the file had sha256 `4a12c9f5…7cd4`.
 
@@ -45,7 +48,9 @@ python3 -I gguf/codex/tools/tensor_eq.py <a.gguf> <b.gguf>
 gguf/codex/tools/check.sh
 ```
 
-`../CODEX-COMMANDS.hbp` gives the full command for each of the 37 targets, using these tools.
+`../CODEX-COMMANDS.hbp` gives the full command for each of the 37 targets, using these tools. To run one
+row as written, export the variables its `VARS` row names, make `W` a new empty directory, and run
+`python3 -I gguf/codex/tools/run_row.py <n>` from the repository root.
 
 ## Checks
 
@@ -53,7 +58,7 @@ gguf/codex/tools/check.sh
 
 1. `sha256sum -c SHA256SUMS`;
 2. `tests/test_gguf_meta.py`;
-3. `check_commands.py`;
+3. `check_commands.py` (it calls `bash -n` on every bash field);
 4. the repository's no-float pattern (`\bf32\b|\bf64\b|as f[0-9]`) over this directory;
 5. an integer-rule scan of every `.py` file here, which looks for true division, float literals, float, complex, math or decimal names, and struct float formats.
 
