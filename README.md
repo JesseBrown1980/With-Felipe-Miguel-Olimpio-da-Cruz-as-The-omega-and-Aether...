@@ -260,15 +260,19 @@ themselves an input. Nothing in these gates persists or attests physical presenc
 
 ## Homes
 
-Asolaria is published at three public homes. That they mirror each other and are
-**byte-identical** to one another is CLAIMED (UNVERIFIED), not re-measured here: a
-`git ls-remote` + tree-sha comparison of the three homes is pending.
+Asolaria is published at three public homes. GitHub `main` is the source. The two Hugging Face
+homes hold the tree of `v0.1.0` (GitHub `0bb9fb2`), synced through the Hub API on 2026-11-08
+(MEASURED, [`docs/receipts/HOMES-SYNC-2026-11-08.hbp`](docs/receipts/HOMES-SYNC-2026-11-08.hbp)):
+- 15,890 of its 15,894 paths are byte-identical after LFS download, and none differs;
+- the Hub does not keep the 4 `__pycache__/*.pyc` files of one ACER handoff;
+- the API does not carry file modes, so the 33 executable scripts are 644 there;
+- the HF `.gitattributes` adds one LFS line per binary file.
 
 - GitHub — [JesseBrown1980/asolaria-aether](https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...)
 - Hugging Face — [Jessedbrown/asolaria](https://huggingface.co/Jessedbrown/asolaria)
 - Hugging Face — [Jessedbrown/asolaria-aether](https://huggingface.co/Jessedbrown/asolaria-aether)
 
-Each carries the same clean commit: the doctrine, the runnable slices
+Each carries the doctrine, the runnable slices
 (`prime_cylinder_expansion.py`, `slice_glyph_messaging.py` — pure stdlib, `E=0`; the owner's, byte-identical from `JesseBrown1980/Asolaria` at `f0622df`),
 the Rust 1.81 kernels under `kernel/tribit/` (ternary core) and `kernel/behcs1024-60d/` (the verified 60D / BEHCS-1024 hash-coordinate collapse),
 the Q-PRISM stack under `qprism/` (representation + recovery paths + combined throat), the deterministic time harness under `time/`,
