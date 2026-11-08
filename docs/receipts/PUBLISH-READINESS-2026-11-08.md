@@ -282,8 +282,9 @@ pinned and vendored copies.
      `asolaria-l0-edge`;
    - `asolaria-quant-head8` stays blocked via its versioned dev-dependency on `asolaria-l0-edge`.
 
-   `asolaria-ternary` is `publish = false`, so its own package was not listed or dry-run. Whether
-   it would package cleanly is UNVERIFIED.
+   `asolaria-ternary` was `publish = false` when this was written, so its own package was not listed
+   or dry-run here. The owner's decision of 2026-11-08 dropped that line; its package (29 files, no
+   binaries) and dry run are measured in the addendum (`PUBLISH-READINESS-ADDENDUM-2026-11-08.hbp`).
 6. **`asolaria-gate-fischer-upstream`** cannot be packaged as it stands, because cargo leaves out
    its vendored sources.
 7. **Corrections to the plan.**
@@ -392,9 +393,9 @@ each case the aether copy is the only one that packages.
 
 ### Still for the owner (not decided here)
 
-- **`asolaria-ternary`** (`publish = false`; its own package has not been measured). Publishing it
-  would clear the last recorded blocker of 3 crates: `asolaria-levels-agents`,
-  `asolaria-quant-head8` and `pump-glyphs-herself`.
+- **`asolaria-ternary`**: decided 2026-11-08, publish. `publish = false` is dropped, and the package
+  and the 3 crates it unblocks (`asolaria-levels-agents`, `asolaria-quant-head8`,
+  `pump-glyphs-herself`) are measured in the addendum.
 - **`hbp`** (name taken). A rename, or claiming an `asolaria-*` name, would unblock `hbp` and
   `hbp-relay`.
 - **`shadowcat`** (name taken). A rename, or claiming an `asolaria-*` name, for the aether
