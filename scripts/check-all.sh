@@ -3,7 +3,9 @@
 # Usage: scripts/check-all.sh [--no-eval]
 #   --no-eval  skip the Python Q-PRISM/N-Nest eval gate (it needs numpy/scipy/pytest)
 # Needs: rustup with toolchain 1.81.0 (+clippy), python3 >= 3.11, curl, git, node >= 18 (time/ and
-# eval/ only). Every job body runs under set -euo pipefail, so any failing command fails its job.
+# eval/ only). Every job body runs under set -euo pipefail, so a failing command fails its job, but
+# set -e does not stop on a check negated with ! or placed before the last command of an && / || list:
+# such a check must be the job's last command, or a command of its own.
 # ASOLARIA_TORCH_PYTHON=<python with torch 2.14.1+cpu, torch_geometric 2.8.1> runs the L0 torch
 # parity check; without it that check prints SKIP. The per-crate jobs of .github/workflows/crates.yml
 # are not run here.
@@ -238,7 +240,9 @@ job canon-archive bash -c 'set -euo pipefail
     if [ "$got_b" = "$want_b" ] && [ "$got_s" = "$want_s" ]; then ok=$((ok+1)); else echo "FAIL $p"; fi
   done < <(grep "^FILE|" "$cube")
   echo "canon-archive pins: $ok/$total, $sum bytes"
-  [ "$ok" = 46 ] && [ "$total" = 46 ] && [ "$sum" = 213855 ]
+  [ "$ok" = 46 ]
+  [ "$total" = 46 ]
+  [ "$sum" = 213855 ]
   (cd docs/handoffs/acer-zero-portal-update-2026-10-19 && sha256sum -c --quiet SHA256SUMS)'
 
 printf '\n=== summary ===\n'
