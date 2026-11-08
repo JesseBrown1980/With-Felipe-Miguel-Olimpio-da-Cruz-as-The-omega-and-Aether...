@@ -1,7 +1,8 @@
 name: asolaria-aether crates
-# One job per crate or tool that gate.yml does not run, in gate.yml's job style (Rust 1.81, --locked,
-# clippy -D warnings, the crate's tests, its referees' --check, its no-float grep). Where a committed
-# receipt or fixture can be regenerated here, the job regenerates it and compares it byte for byte.
+# Jobs for crates and tools that gate.yml does not run (not yet all of them), in gate.yml's job style (Rust
+# 1.81, --locked, clippy -D warnings, the crate's tests, its referees' --check, its no-float grep). Where a
+# committed receipt or fixture can be regenerated here, the job regenerates it and compares it byte for byte.
+# A comment that says what a step runs is read from the files it names (CANON) unless it carries another tag.
 on:
   push: { branches: [main] }
   workflow_dispatch:
@@ -148,7 +149,8 @@ jobs:
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
   hrm-mtp-enwik8:
-    # enwik8 only. tests/fixtures/rime-windunwind-enwik9.hbp needs enwik9 (1,000,000,000 B) and is not run here.
+    # enwik8 only. tests/fixtures/rime-windunwind-enwik9.hbp needs enwik9 (1,000,000,000 B) and is not run here
+    # (CANON: that fixture's header).
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: model/hrm-mtp } }
     steps:
@@ -187,9 +189,11 @@ jobs:
           sha256sum -c UPSTREAM.sha256
           (cd vendor/asolaria-cube-cloud/hutter/variants/mix && sha256sum -c hp_mix.rs.sha256)
           (cd vendor/asolaria-cube-cloud/results && sha256sum -c FABLE5-HUTTER-PRETEST-ARC-2026-07-17.hbp.sha256)
-      # cargo fmt would rewrite the vendored hp_mix.rs (the [[bin]] path), so rustfmt checks the crate's own test.
+      # cargo fmt --check fails on the vendored hp_mix.rs, the [[bin]] path (MEASURED 2026-11-08: 13 diffs, all in
+      # that file), so rustfmt checks only the crate's own test.
       - run: rustfmt +1.81.0 --edition 2021 --check tests/hp_mix.rs
-      # Cargo.toml [lints.clippy] allows unnecessary_cast and manual_clamp by name, for the vendored file only.
+      # Cargo.toml [lints.clippy] allows unnecessary_cast and manual_clamp by name, package-wide, because of the
+      # vendored file (CANON: model/hrm-fork/Cargo.toml:32-39).
       - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
       - run: cargo +1.81.0 test --locked
       - name: stdlib referee (hp_mix.rs line by line, integers) regenerates tests/fixtures/hp-mix.hbp
@@ -200,7 +204,8 @@ jobs:
           if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' tests/; then exit 1; fi
           if grep -nE '\bf(32|64)\b' vendor/asolaria-cube-cloud/hutter/variants/mix/hp_mix.rs | grep -vE '^[0-9]+:[[:space:]]*//'; then exit 1; fi
   hrm-fork-enwik8:
-    # enwik8 only. The enwik9 rows of tests/fixtures/hp-mix-enwik.hbp (236,419,493 B archive) are not run here.
+    # enwik8 only. The enwik9 rows of tests/fixtures/hp-mix-enwik.hbp (236,419,493 B archive) are not run here
+    # (CANON: that fixture's RUN|corpus=enwik9 row).
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: model/hrm-fork } }
     steps:
@@ -217,6 +222,7 @@ jobs:
           echo "2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  enwik8" | sha256sum -c
       # Upstream's recipe (hutter-tournament.yml:75-79): compress, then decompress as a separate run. hp_mix runs from
       # model/hrm-fork, because decoder_src_bytes is the size of the file named by file!() (hp_mix.rs:325-328).
+      # (CANON: the vendored copies of both files.)
       - name: hp_mix reproduces the enwik8 rows of tests/fixtures/hp-mix-enwik.hbp and the receipt's E8 mix size
         run: |
           set -euo pipefail
@@ -263,7 +269,8 @@ jobs:
         run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
       - run: cargo +1.81.0 fmt --check
       - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
-      # Asserts the Rust L0 and L4 against LIVE-CAPTURES.txt (scores recorded from the live servers).
+      # Asserts the Rust L0 and L4 against LIVE-CAPTURES.txt (scores recorded from the live servers; CANON:
+      # model/live-parity/README.md).
       - run: cargo +1.81.0 test --locked
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
@@ -434,7 +441,8 @@ jobs:
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
   gguf-roundtrip:
-    # The 27 stored GGUFs only; the 4 Git LFS GGUFs are pointers in the checkout and print NOT_MEASURED.
+    # The 27 stored GGUFs only; the 4 Git LFS GGUFs are pointers in the checkout and print NOT_MEASURED
+    # (MEASURED on the cloud seat 2026-11-08; UNVERIFIED on a GitHub runner).
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: codec/gguf-roundtrip } }
     steps:
@@ -455,10 +463,17 @@ jobs:
           test "$(grep -c . "$RUNNER_TEMP/receipt-stored.hbp")" -eq 81
           cmp "$RUNNER_TEMP/out-stored.hbp" "$RUNNER_TEMP/receipt-stored.hbp"
           test "$(grep -c '^GGUF_ROUNDTRIP|.*|storage=lfs_pointer|status=NOT_MEASURED|reason=lfs_pointer_without_lfs_dir|json=0$' "$out")" -eq 4
-          # The MANIFEST row is the receipt's except lfs_dir_given; the CODEC row is the receipt's except
-          # lib_rs_sha256, which names the src/lib.rs this build used.
+          # The MANIFEST row is the receipt's except lfs_dir_given. The CODEC row is the receipt's except
+          # lib_rs_sha256, which must name one of two codec src/lib.rs files: the pinned upstream one of the
+          # receipt (310a1c14...) or main's at 7c4711f, the same plus the ladder tests (15c484b8..., MEASURED
+          # 2026-11-08). Any other src/lib.rs fails here.
           diff <(grep '^MANIFEST|' "$out") <(grep '^MANIFEST|' "$R" | sed 's/|lfs_dir_given=1|/|lfs_dir_given=0|/')
-          lib="$(sha256sum ../dbbh-dbwh/src/lib.rs | cut -c1-64)"
+          lib="$(grep '^CODEC|' "$out" | sed -n 's/.*|lib_rs_sha256=\([0-9a-f]*\)|.*/\1/p')"
+          case "$lib" in
+            310a1c14743fdc65df42f741d19263e881f16da58094978deba20c1cbb62682c) ;;
+            15c484b88bbda9e9bc0d0537d96c262400aab2fcadc52f97ed78a8963eec9f40) ;;
+            *) echo "CODEC lib_rs_sha256=$lib is neither the receipt's nor main's at 7c4711f"; exit 1 ;;
+          esac
           diff <(grep '^CODEC|' "$out") <(grep '^CODEC|' "$R" | sed "s/|lib_rs_sha256=[0-9a-f]*|/|lib_rs_sha256=$lib|/")
           # The 27-file totals of codec/README.md ("Files in the repository").
           test "$(grep '^SUMMARY|' "$out")" = 'SUMMARY|rows=31|measured=27|not_measured=4|not_read=0|matches_manifest=27|verified_clone=27|byte_identical=27|traverse_verified_clone=27|traverse_byte_identical=27|held=0|object_bytes=19673170|packet_bytes=104924196|packet_over_object=5.333364|json=0'
@@ -535,7 +550,8 @@ jobs:
   glyphs-herself-cold:
     # Cold lane: the owner's numpy generators run unchanged and every output is compared with the Rust pump.
     # np.convolve sums with the OpenBLAS kernel chosen at runtime; the port follows ddot_k_HASWELL, so every
-    # Python run here sets OPENBLAS_CORETYPE=Haswell (the runner CPU needs AVX2 and FMA).
+    # Python run here sets OPENBLAS_CORETYPE=Haswell (the runner CPU needs AVX2 and FMA). (CANON:
+    # pump/glyphs-herself/README.md:53-61.)
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: pump/glyphs-herself } }
     env:
@@ -598,7 +614,8 @@ jobs:
           rm -rf "$W"
   shadowcat-parity:
     # SHA256-PARITY-2026-10-19.hbp was written at fcddaf9, the last commit with the nine aether SHA-256 copies
-    # it compares. The job checks out that commit beside this one and runs this commit's run.sh there.
+    # it compares (CANON: its PARITYHDR commit= field; the next commit, 171a461, replaced the copies). The job
+    # checks out that commit beside this one and runs this commit's run.sh there.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
