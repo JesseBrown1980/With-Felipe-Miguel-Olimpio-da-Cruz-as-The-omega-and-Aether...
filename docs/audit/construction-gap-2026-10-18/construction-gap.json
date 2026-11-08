@@ -2792,7 +2792,7 @@
     "component": "hookwall-gac: sign-gate.js origin",
     "claimed": "'likely in a historical commit of [asolaria-behcs-256]'.",
     "actual": "The full 85-commit behcs-256 history has no src/hookwall/ path. The Rust header that aether rewrote named '<DRIVE>:/asolaria-behcs-256/src/hookwall/sign-gate.js', a local drive tree on ACER, not the public repo. The JS original must come from ACER.",
-    "evidence": "git log --all on gap-work/behcs-256-hist.git for 'src/hookwall/*' and '*sign-gate*' returns nothing; aether gate/hookwall/PROVENANCE.md:110-111 records the original Source line."
+    "evidence": "git log --all on gap-work/behcs-256-hist.git for 'src/hookwall/*' and '*sign-gate*' returns nothing; aether gate/hookwall/PROVENANCE.md:117-118 records the original Source line."
    },
    {
     "component": "hookwall-gac: first hookwall and the hookwall implementations",
