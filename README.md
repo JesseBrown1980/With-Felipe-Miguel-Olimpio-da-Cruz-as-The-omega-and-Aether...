@@ -236,9 +236,11 @@ reads them on the request into `Observed.benched` with provenance `real` or `abs
 `Signals.l4` carries L4 (`lib.rs:84`) and the composite does not weight it; L1 and L2
 have no `Signals` field and are reported in `Observed.benched` and the `OBSERVE` rows
 (`bench.rs:25`).
-Not connected: G1/G2/G3 (`gate/observed/src/lib.rs:85-87` are `None`) and the GSL
-`g4_state`, hard-coded `UNKNOWN` (`lib.rs:98`) (both MEASURED at `7c4711f`), because
-this stack has no :4793 or :4949 service (UNVERIFIED, not re-checked here); the other
+Not connected: G1/G2/G3 (`gate/observed/src/lib.rs:85-87` are `None`) and G4
+(`g4_state` hard-coded `UNKNOWN`, `lib.rs:98`) (both MEASURED at `7c4711f`). G1-G4 come
+from the :4949 fabric (`beginning/10-quant-pid-office-2026-06/vendor/bigpickle-rebuild/docs/PRE-ASOLARIA-GNN-LINEAGE-AND-STORAGE-APPLICABILITY-2026-07-11.md:67-70`),
+which `observe` does not query (`gate/observed/README.md:47`), and this stack runs no
+:4949 service (UNVERIFIED, not re-checked here); the other
 networks of `Shannon-and-the-gnns-stage`, and the other trained models in
 `Asolaria-fnns-trained-and-reverse-gnns-many`. `asolaria gate` and the verdict crate
 still take caller-supplied scores, the scheduler's `score_q` is caller-supplied, and
