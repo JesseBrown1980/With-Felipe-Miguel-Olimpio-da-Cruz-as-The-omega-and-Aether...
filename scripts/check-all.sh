@@ -5,7 +5,8 @@
 # Needs: rustup with toolchain 1.81.0 (+clippy), python3 >= 3.11, curl, git, node >= 18 (time/ and
 # eval/ only). Every job body runs under set -euo pipefail, so any failing command fails its job.
 # ASOLARIA_TORCH_PYTHON=<python with torch 2.14.1+cpu, torch_geometric 2.8.1> runs the L0 torch
-# parity check; without it that check prints SKIP.
+# parity check; without it that check prints SKIP. The per-crate jobs of .github/workflows/crates.yml
+# are not run here.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -192,6 +193,53 @@ if [ -d cli ]; then
     rm -rf \"\$root\"
     no_float src/ tests/"
 fi
+
+# As in CI, the Host8 rooms crate builds outside the delivered folder unless CARGO_TARGET_DIR is set.
+job host8-rooms bash -c 'set -euo pipefail
+  cd docs/handoffs/acer-host8-rooms-guide-2026-10-19/host8rooms
+  tmp="$(mktemp -d)"
+  trap "rm -rf \"$tmp\"" EXIT
+  export CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-$tmp/host8rooms-target}"
+  (cd .. && sha256sum -c --quiet SHA256SUMS)
+  sha256sum -c TRIBIT.sha256
+  cmp src/tribit/mod.rs ../../acer-tribit-mod-rs-fb7e786-2026-10-18/kernel/core/src/tribit/mod.rs
+  tail -n +8 ../../../../kernel/tribit/src/lib.rs | cmp - src/tribit/mod.rs
+  cargo +1.81.0 fmt --check
+  cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+  cargo +1.81.0 test --locked
+  cargo +1.81.0 build --release --locked
+  bin="$(cd "$CARGO_TARGET_DIR" && pwd)/release/host8rooms"
+  t="$tmp/reseal"
+  mkdir -p "$t"
+  for r in MAKE:b6b64a02864356f9 VERIFY:cc391c49c90ee068 PROBE:f06366a0e0002d2e; do
+    name="${r%%:*}"; prior="${r##*:}"
+    cp "../receipts/ROOMS-$name.hbp" "$t/"
+    (cd "$t" && "$bin" seal "ROOMS-$name.hbp" "$prior" > "SEAL-$name.hbp")
+    for f in "SEAL-$name.hbp" "ROOMS-$name.hbp.hbi" "ROOMS-$name.hbp.sha256" "ROOMS-$name.hbp.hbi.sha256"; do
+      cmp "$t/$f" "../receipts/$f"
+    done
+  done
+  ! grep -rnE "\bf32\b|\bf64\b|as f[0-9]" src/'
+
+job canon-archive bash -c 'set -euo pipefail
+  cube=docs/handoffs/FABLE5-BROWN-HILBERT-PASS-2026-10-18.hbp
+  (cd docs/handoffs && sha256sum -c FABLE5-BROWN-HILBERT-PASS-2026-10-18.hbp.sha256)
+  ok=0; total=0; sum=0
+  while IFS= read -r row; do
+    arc=$(sed -n "s/.*|arc=\([^|]*\)|.*/\1/p" <<<"$row")
+    want_b=$(sed -n "s/.*|bytes=\([0-9]*\)|.*/\1/p" <<<"$row")
+    want_s=$(sed -n "s/.*|sha256=\([0-9a-f]*\)|.*/\1/p" <<<"$row")
+    case "$arc" in
+      */CLAUDE.md|*/AGENTS.md|*/CODEX.md) p="canon-archive/${arc%.md}.archived.md" ;;
+      *) p="canon-archive/$arc" ;;
+    esac
+    total=$((total+1))
+    got_b=$(wc -c < "$p"); got_s=$(sha256sum "$p" | cut -d" " -f1); sum=$((sum+got_b))
+    if [ "$got_b" = "$want_b" ] && [ "$got_s" = "$want_s" ]; then ok=$((ok+1)); else echo "FAIL $p"; fi
+  done < <(grep "^FILE|" "$cube")
+  echo "canon-archive pins: $ok/$total, $sum bytes"
+  [ "$ok" = 46 ] && [ "$total" = 46 ] && [ "$sum" = 213855 ]
+  (cd docs/handoffs/acer-zero-portal-update-2026-10-19 && sha256sum -c --quiet SHA256SUMS)'
 
 printf '\n=== summary ===\n'
 printf 'PASS  %s\n' "${passed[@]}"
