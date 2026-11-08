@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Runs the checks of the pump-kimi-stars CI jobs. Usage: pump/kimi-stars/check.sh [main|cold|parity]
+# Runs the checks of the kimi-stars (main) and kimi-stars-cold (cold, parity) CI jobs in
+# .github/workflows/crates.yml. Usage: pump/kimi-stars/check.sh [main|cold|parity]
 #   main    upstream pins, fmt, clippy, tests, the pump binary against the stored bytes, no float
 #           in the Rust lane
 #   cold    cold lane (PYTHON=<python with numpy 2.5.4>, default python3): the owner's two

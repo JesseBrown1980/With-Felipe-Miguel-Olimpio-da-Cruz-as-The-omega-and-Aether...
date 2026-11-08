@@ -1,0 +1,595 @@
+name: asolaria-aether crates
+# One job per crate or tool that gate.yml does not run, in gate.yml's job style (Rust 1.81, --locked,
+# clippy -D warnings, the crate's tests, its referees' --check, its no-float grep). Where a committed
+# receipt or fixture can be regenerated here, the job regenerates it and compares it byte for byte.
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions: { contents: read }
+jobs:
+  l1-prototype:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l1-prototype } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      # Stdlib Python, integers only: quantize.py regenerates src/weights.rs from the pinned checkpoint,
+      # int_referee.py regenerates tests/fixtures/expected-int.hbp; each --check diffs the committed file.
+      - name: referees regenerate the committed weights and fixture
+        run: |
+          set -euo pipefail
+          python3 -I tools/quantize.py --check
+          python3 -I tools/int_referee.py --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  l1-torch-parity:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l1-prototype } }
+    steps:
+      - uses: actions/checkout@v4
+      # The versions named in the header of the fixture the check compares.
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13.16' }
+      - name: Install torch 2.14.1+cpu and torch_geometric 2.8.1
+        run: |
+          set -euo pipefail
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install torch_geometric==2.8.1
+      - name: runner CPU
+        run: grep -m1 'model name' /proc/cpuinfo
+      # tools/model_parity.py pins the CPU kernels (ATEN_CPU_CAPABILITY=default, MKL_CBWR=COMPATIBLE, one thread).
+      - name: the vendored PrototypeGNN with the trained checkpoint reproduces tests/fixtures/expected-model.hbp
+        run: python -I tools/model_parity.py --check
+  l2-contrastive:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l2-contrastive } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: referees regenerate the committed weights and fixture
+        run: |
+          set -euo pipefail
+          python3 -I tools/quantize.py --check
+          python3 -I tools/math_referee.py --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  l2-torch-parity:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l2-contrastive } }
+    steps:
+      - uses: actions/checkout@v4
+      # The versions named in the header of the fixture the check compares.
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13.16' }
+      - name: Install torch 2.14.1+cpu and torch_geometric 2.8.1
+        run: |
+          set -euo pipefail
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install torch_geometric==2.8.1
+      - name: runner CPU
+        run: grep -m1 'model name' /proc/cpuinfo
+      # tools/model_parity.py pins the CPU kernels (ATEN_CPU_CAPABILITY=default, MKL_CBWR=COMPATIBLE, one thread).
+      - name: the vendored ContrastiveGNN with the trained checkpoint reproduces tests/fixtures/expected-model.hbp
+        run: python -I tools/model_parity.py --check
+  l4-gslgnn:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l4-gslgnn } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: referees regenerate the committed weights and fixture
+        run: |
+          set -euo pipefail
+          python3 -I tools/quantize.py --check
+          python3 -I tools/math_referee.py --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
+  l4-torch-parity:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/l4-gslgnn } }
+    steps:
+      - uses: actions/checkout@v4
+      # The versions named in the header of the fixture the check compares.
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13.16' }
+      - name: Install torch 2.14.1+cpu and torch_geometric 2.8.1
+        run: |
+          set -euo pipefail
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install torch_geometric==2.8.1
+      - name: runner CPU
+        run: grep -m1 'model name' /proc/cpuinfo
+      # tools/model_parity.py pins ATEN_CPU_CAPABILITY=avx2, MKL_ENABLE_INSTRUCTIONS=AVX2 and one thread.
+      - name: the served GSLGNN MODEL reproduces tests/fixtures/expected-model.hbp
+        run: python -I tools/model_parity.py --check
+  hrm-mtp:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/hrm-mtp } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      # Stdlib Python, integers only: the triad referee mirrors the vendored JavaScript; the rime referee runs
+      # the vendored rime_agents.py on LCG bytes and mirrors rime_windunwind.py on a synthetic bank.
+      - name: referees regenerate the committed fixtures
+        run: |
+          set -euo pipefail
+          python3 -I tools/triad_referee.py --check
+          python3 -I tools/rime_referee.py synthetic --check
+          python3 -I tools/rime_referee.py windsynth --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
+  hrm-mtp-enwik8:
+    # enwik8 only. tests/fixtures/rime-windunwind-enwik9.hbp needs enwik9 (1,000,000,000 B) and is not run here.
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/hrm-mtp } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81
+        run: rustup toolchain install 1.81.0 --profile minimal
+      - name: fetch enwik8 (sha256 pinned)
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/enwik" && cd "$RUNNER_TEMP/enwik"
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 20 -o enwik8.zip https://mattmahoney.net/dc/enwik8.zip
+          echo "547994d9980ebed1288380d652999f38a14fe291a6247c157c3d33d4932534bc  enwik8.zip" | sha256sum -c
+          unzip -q enwik8.zip
+          echo "2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  enwik8" | sha256sum -c
+      - name: the port reproduces tests/fixtures/rime-agents-enwik8.hbp; the vendored rime_agents.py agrees
+        run: |
+          set -euo pipefail
+          E="$RUNNER_TEMP/enwik"
+          cargo +1.81.0 run --locked -q --release --example rime_agents -- "$E/enwik8" > "$E/agents.hbp"
+          grep -v '^#' tests/fixtures/rime-agents-enwik8.hbp | diff - "$E/agents.hbp"
+          python3 -I tools/rime_referee.py agents --enwik8 "$E/enwik8" --rust "$E/agents.hbp"
+  hrm-fork:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/hrm-fork } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: upstream bytes unchanged (aether's pins and upstream's own sidecars)
+        run: |
+          set -euo pipefail
+          sha256sum -c UPSTREAM.sha256
+          (cd vendor/asolaria-cube-cloud/hutter/variants/mix && sha256sum -c hp_mix.rs.sha256)
+          (cd vendor/asolaria-cube-cloud/results && sha256sum -c FABLE5-HUTTER-PRETEST-ARC-2026-07-17.hbp.sha256)
+      # cargo fmt would rewrite the vendored hp_mix.rs (the [[bin]] path), so rustfmt checks the crate's own test.
+      - run: rustfmt +1.81.0 --edition 2021 --check tests/hp_mix.rs
+      # Cargo.toml [lints.clippy] allows unnecessary_cast and manual_clamp by name, for the vendored file only.
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: stdlib referee (hp_mix.rs line by line, integers) regenerates tests/fixtures/hp-mix.hbp
+        run: python3 -I tools/hp_mix_referee.py --check
+      - name: no float on this path (upstream's rule for hp_mix.rs strips whole-line comments)
+        run: |
+          set -euo pipefail
+          if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' tests/; then exit 1; fi
+          if grep -nE '\bf(32|64)\b' vendor/asolaria-cube-cloud/hutter/variants/mix/hp_mix.rs | grep -vE '^[0-9]+:[[:space:]]*//'; then exit 1; fi
+  hrm-fork-enwik8:
+    # enwik8 only. The enwik9 rows of tests/fixtures/hp-mix-enwik.hbp (236,419,493 B archive) are not run here.
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/hrm-fork } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81
+        run: rustup toolchain install 1.81.0 --profile minimal
+      - name: fetch enwik8 (sha256 pinned)
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/enwik" && cd "$RUNNER_TEMP/enwik"
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 20 -o enwik8.zip https://mattmahoney.net/dc/enwik8.zip
+          echo "547994d9980ebed1288380d652999f38a14fe291a6247c157c3d33d4932534bc  enwik8.zip" | sha256sum -c
+          unzip -q enwik8.zip
+          echo "2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8  enwik8" | sha256sum -c
+      # Upstream's recipe (hutter-tournament.yml:75-79): compress, then decompress as a separate run. hp_mix runs from
+      # model/hrm-fork, because decoder_src_bytes is the size of the file named by file!() (hp_mix.rs:325-328).
+      - name: hp_mix reproduces the enwik8 rows of tests/fixtures/hp-mix-enwik.hbp and the receipt's E8 mix size
+        run: |
+          set -euo pipefail
+          E="$RUNNER_TEMP/enwik"
+          cargo +1.81.0 build --locked --release
+          B="$(cd "${CARGO_TARGET_DIR:-target}" && pwd)/release/hp_mix"
+          F=tests/fixtures/hp-mix-enwik.hbp
+          R=vendor/asolaria-cube-cloud/results/FABLE5-HUTTER-PRETEST-ARC-2026-07-17.hbp
+          "$B" compress "$E/enwik8" "$E/enwik8.hp" > "$E/enwik8.log"
+          "$B" decompress "$E/enwik8.hp" "$E/enwik8.rt" >> "$E/enwik8.log"
+          cmp "$E/enwik8.rt" "$E/enwik8"
+          grep -E '^(PILOT\|mode=compress\|input_bytes=100000000\||DECOMPRESS\|.*\|output_bytes=100000000$)' "$F" | diff - "$E/enwik8.log"
+          run="$(grep '^RUN|corpus=enwik8|' "$F")"
+          grep -q "|archive_bytes=$(wc -c < "$E/enwik8.hp")|archive_sha256=$(sha256sum < "$E/enwik8.hp" | cut -c1-64)|" <<<"$run"
+          grep -q "|restored_sha256=$(sha256sum < "$E/enwik8.rt" | cut -c1-64)|" <<<"$run"
+          grep -q "^E8|variant=mix|archive_bytes=$(wc -c < "$E/enwik8.hp")|" "$R"
+          echo "ENWIK8|archive_bytes=$(wc -c < "$E/enwik8.hp")|archive_sha256=$(sha256sum < "$E/enwik8.hp" | cut -c1-64)|restored=byte_identical|json=0"
+  gnn-zoo:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/gnn-zoo } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13.16' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: Install torch 2.14.1+cpu and torch_geometric 2.8.1
+        run: |
+          set -euo pipefail
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install torch_geometric==2.8.1
+      - name: runner CPU
+        run: grep -m1 'model name' /proc/cpuinfo
+      # Pins (37 + 33), corpora, stdlib tools, fmt, clippy, tests, no float, the seven examples on
+      # tests/fixtures/parity-first.hbp, and with torch the zoo_torch.py checks and all PARITY rows of
+      # results/parity.hbp regenerated and diffed.
+      - run: ASOLARIA_TORCH_PYTHON=python bash check.sh
+  live-parity:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/live-parity } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      # Asserts the Rust L0 and L4 against LIVE-CAPTURES.txt (scores recorded from the live servers).
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  g-planes:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: model/g-planes } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: stdlib referee regenerates tests/fixtures/g-planes-referee.hbp
+        run: python3 -I tools/g_planes_referee.py --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  gnn-trio:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: planes/gnn-trio } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: vendored owner bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: stdlib referee regenerates tests/fixtures/gnn-trio-referee.hbp
+        run: python3 -I tools/referee.py --check
+      - name: the trio runs end to end on the synthetic envelope and mask set
+        run: cargo +1.81.0 run --locked --example trio
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
+  gulp-watchers:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: planes/gulp-watchers } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: stdlib referee regenerates the eight committed fixtures
+        run: python3 -I tools/referee.py --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  whiteroom-shannon:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: planes/whiteroom-shannon } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - name: the vendored files and line ranges equal upstream at the pinned commits (9 of 9)
+        run: |
+          set -euo pipefail
+          n=0
+          while read -r repo rev path here blob rng; do
+            curl -fsSL -o "$RUNNER_TEMP/up" "https://raw.githubusercontent.com/JesseBrown1980/$repo/$rev/$path"
+            test "$(git hash-object "$RUNNER_TEMP/up")" = "$blob"
+            if [ "$rng" = "-" ]; then cmp "$RUNNER_TEMP/up" "$here"; else sed -n "${rng%-*},${rng#*-}p" "$RUNNER_TEMP/up" | cmp - "$here"; fi
+            n=$((n+1))
+          done <<'EOF'
+          Shannon-and-the-gnns-stage 32f9670a648dbbd02d64524e91150efeec8e4d2c pipeline/hookwall.mjs vendor/Shannon-and-the-gnns-stage/pipeline/hookwall.mjs.lines-1-44 5d300345cd81a60d7eb96498de2dd7504ab511e2 1-44
+          Shannon-and-the-gnns-stage 32f9670a648dbbd02d64524e91150efeec8e4d2c pipeline/hookwall.mjs vendor/Shannon-and-the-gnns-stage/pipeline/hookwall.mjs.lines-46-97 5d300345cd81a60d7eb96498de2dd7504ab511e2 46-97
+          Shannon-and-the-gnns-stage 32f9670a648dbbd02d64524e91150efeec8e4d2c pipeline/shannon-boot.mjs vendor/Shannon-and-the-gnns-stage/pipeline/shannon-boot.mjs.lines-1-19 6ae92778c54db0289cde3ab92365cc5e4d1c6e33 1-19
+          Shannon-and-the-gnns-stage 32f9670a648dbbd02d64524e91150efeec8e4d2c pipeline/shannon-boot.mjs vendor/Shannon-and-the-gnns-stage/pipeline/shannon-boot.mjs.lines-21-117 6ae92778c54db0289cde3ab92365cc5e4d1c6e33 21-117
+          Shannon-and-the-gnns-stage 32f9670a648dbbd02d64524e91150efeec8e4d2c pipeline/shannon-boot.mjs vendor/Shannon-and-the-gnns-stage/pipeline/shannon-boot.mjs.lines-119-154 6ae92778c54db0289cde3ab92365cc5e4d1c6e33 119-154
+          Shannon-and-the-gnns-stage 32f9670a648dbbd02d64524e91150efeec8e4d2c pipeline/shannon-boot.mjs vendor/Shannon-and-the-gnns-stage/pipeline/shannon-boot.mjs.lines-156-178 6ae92778c54db0289cde3ab92365cc5e4d1c6e33 156-178
+          bigpickle-rebuild c592599c8f3d000b07cd5f4218b7d6b24d49d7d5 src/fabric-thinker-gnn.mjs vendor/bigpickle-rebuild/src/fabric-thinker-gnn.mjs 423bd2e60cf76e38e18b7a01370a0092d5dce0da -
+          bigpickle-rebuild c592599c8f3d000b07cd5f4218b7d6b24d49d7d5 src/fabric-thinker.mjs vendor/bigpickle-rebuild/src/fabric-thinker.mjs 71dd564dbe983c523cfca10d69ad0da6fbecaebd -
+          asolaria-behcs-256 818cc235a6db815e3b2591339cf9b42aad3e85a0 src/gnn/hybrid-harness.js vendor/asolaria-behcs-256/src/gnn/hybrid-harness.js 14863cbf4d375c608172b01f97bb4d9396f44f5e -
+          EOF
+          test "$n" -eq 9
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - name: tests, 54 of them (README.md)
+        run: |
+          set -euo pipefail
+          cargo +1.81.0 test --locked
+          test "$(cargo +1.81.0 test --locked -- --list 2>/dev/null | grep -c ': test$')" -eq 54
+      - name: stdlib referee regenerates the committed fixtures
+        run: python3 -I -B tools/referee.py --check
+      - name: white-room smoke run with the in-process L0
+        run: |
+          set -euo pipefail
+          out="$(cargo +1.81.0 run --locked -q --example whiteroom_smoke -- --l0)"
+          echo "$out"
+          test "$(tail -n 1 <<<"$out")" = 'HBPv1|row=metrics|ticks=12|genius=10|mistake=2|live=10|compacted=2|never_deleted=true|json=0'
+      - name: smoke run without --l0 equals quants/cubes examples/whiteroom_smoke
+        shell: bash
+        run: |
+          cargo +1.81.0 run --locked -q --example whiteroom_smoke > "$RUNNER_TEMP/ws.txt"
+          (cd ../../quants/cubes && cargo +1.81.0 run --locked -q --example whiteroom_smoke) > "$RUNNER_TEMP/cubes.txt"
+          cmp "$RUNNER_TEMP/ws.txt" "$RUNNER_TEMP/cubes.txt"
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/ examples/; then exit 1; fi
+  whiteroom-shannon-torch:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: planes/whiteroom-shannon } }
+    steps:
+      - uses: actions/checkout@v4
+      # The versions named in the header of the fixture the check compares.
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13.16' }
+      - name: Install torch 2.14.1+cpu and torch_geometric 2.8.1
+        run: |
+          set -euo pipefail
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install torch_geometric==2.8.1
+      - name: runner CPU
+        run: grep -m1 'model name' /proc/cpuinfo
+      # tools/l0_parity.py sets the kernel selection itself, as model/l0-edge/tools/model_parity.py does.
+      - name: the L0 server's MODEL reproduces tests/fixtures/l0-torch.hbp
+        run: python -I -B tools/l0_parity.py --check
+  dbbh-dbwh:
+    # Written against codec/dbbh-dbwh as it is on main at 7c4711f. Its UPSTREAM.sha256 is not checked here:
+    # on that commit src/lib.rs and README.md differ from their pins (MEASURED 2026-11-08; the ladder tests of
+    # 231a050 and 1e20fa5).
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: codec/dbbh-dbwh } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      # The codec's own workflow allows no lint; neither does this job.
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked --all-targets
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
+  gguf-roundtrip:
+    # The 27 stored GGUFs only; the 4 Git LFS GGUFs are pointers in the checkout and print NOT_MEASURED.
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: codec/gguf-roundtrip } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: the codec over the 27 stored GGUFs; their rows equal the committed receipt byte for byte
+        shell: bash
+        run: |
+          out="$RUNNER_TEMP/roundtrip.hbp"
+          cargo +1.81.0 run --locked -q --release > "$out"
+          R=RECEIPT-GGUF-ROUNDTRIP.hbp
+          stored() { awk -F'|' '$1=="GGUF_ROUNDTRIP"{keep=($3=="storage=file")} keep && ($1=="GGUF_ROUNDTRIP"||$1=="WORMHOLE"||$1=="CAPSULE")' "$1"; }
+          stored "$R" > "$RUNNER_TEMP/receipt-stored.hbp"
+          stored "$out" > "$RUNNER_TEMP/out-stored.hbp"
+          test "$(grep -c . "$RUNNER_TEMP/receipt-stored.hbp")" -eq 81
+          cmp "$RUNNER_TEMP/out-stored.hbp" "$RUNNER_TEMP/receipt-stored.hbp"
+          test "$(grep -c '^GGUF_ROUNDTRIP|.*|storage=lfs_pointer|status=NOT_MEASURED|reason=lfs_pointer_without_lfs_dir|json=0$' "$out")" -eq 4
+          # The MANIFEST row is the receipt's except lfs_dir_given; the CODEC row is the receipt's except
+          # lib_rs_sha256, which names the src/lib.rs this build used.
+          diff <(grep '^MANIFEST|' "$out") <(grep '^MANIFEST|' "$R" | sed 's/|lfs_dir_given=1|/|lfs_dir_given=0|/')
+          lib="$(sha256sum ../dbbh-dbwh/src/lib.rs | cut -c1-64)"
+          diff <(grep '^CODEC|' "$out") <(grep '^CODEC|' "$R" | sed "s/|lib_rs_sha256=[0-9a-f]*|/|lib_rs_sha256=$lib|/")
+          # The 27-file totals of codec/README.md ("Files in the repository").
+          test "$(grep '^SUMMARY|' "$out")" = 'SUMMARY|rows=31|measured=27|not_measured=4|not_read=0|matches_manifest=27|verified_clone=27|byte_identical=27|traverse_verified_clone=27|traverse_byte_identical=27|held=0|object_bytes=19673170|packet_bytes=104924196|packet_over_object=5.333364|json=0'
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  gguf-verify:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: gguf } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81 with clippy
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      # verify/ came from asolaria-stone-to-moss@743d3f0 with its .sha256 sidecars. Cargo.toml, Cargo.lock and
+      # src/sha256.rs no longer match theirs (MEASURED 2026-11-08; the shadowcat adapter of 171a461), so only the
+      # other three are checked.
+      - name: upstream sidecars that still hold (3 of 6)
+        run: |
+          set -euo pipefail
+          (cd verify && sha256sum -c rust-toolchain.toml.sha256)
+          (cd verify/src && sha256sum -c gguf.rs.sha256 main.rs.sha256)
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+        working-directory: gguf/verify
+      - run: cargo +1.81.0 test --locked
+        working-directory: gguf/verify
+      - name: every manifest row verifies (27 files) or matches its LFS pointer (4)
+        shell: bash
+        run: |
+          out="$(bash check.sh)"
+          echo "$out"
+          test "$(tail -n 1 <<<"$out")" = 'GGUF_CHECK|verified=27|lfs_pointers_matched=4|failed=0|json=0'
+      - name: make_manifest.py regenerates MANIFEST.hbp from the files and the verifier's output
+        run: python3 -I make_manifest.py "${CARGO_TARGET_DIR:-verify/target}/release/gguf-verify-hbp" --check
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' verify/src/; then exit 1; fi
+  kimi-stars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      # Pins, fmt, clippy, tests; the pump regenerates both receipts and the sidecars byte for byte. The
+      # 202,115,456 B KIMI-K3 GGUF is a Git LFS pointer here: it is checked by sha256 and size, then deleted.
+      - run: bash pump/kimi-stars/check.sh main
+  kimi-stars-cold:
+    # Cold lane: the owner's two generators, vendored unmodified, on numpy 2.5.4 against the Rust pump.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81
+        run: rustup toolchain install 1.81.0 --profile minimal
+      - run: python -m pip install numpy==2.5.4
+      - name: owner's programs vs the Rust pump on the owner's seeds (8 files)
+        run: PYTHON=python bash pump/kimi-stars/check.sh cold
+      - name: owner's programs vs the Rust pump on the 10 synthetic seeds
+        run: PYTHON=python bash pump/kimi-stars/check.sh parity
+  glyphs-herself:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: pump/glyphs-herself } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: upstream bytes unchanged
+        run: sha256sum -c UPSTREAM.sha256
+      - run: cargo +1.81.0 fmt --check
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
+      - run: cargo +1.81.0 test --locked
+      - name: no float on this path
+        run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  glyphs-herself-cold:
+    # Cold lane: the owner's numpy generators run unchanged and every output is compared with the Rust pump.
+    # np.convolve sums with the OpenBLAS kernel chosen at runtime; the port follows ddot_k_HASWELL, so every
+    # Python run here sets OPENBLAS_CORETYPE=Haswell (the runner CPU needs AVX2 and FMA).
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: pump/glyphs-herself } }
+    env:
+      OPENBLAS_CORETYPE: Haswell
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install Rust 1.81
+        run: rustup toolchain install 1.81.0 --profile minimal
+      - run: python -m pip install numpy==2.5.4
+      - name: runner CPU and the OpenBLAS kernel numpy uses
+        run: |
+          set -euo pipefail
+          grep -m1 'model name' /proc/cpuinfo
+          grep -m1 -o -w -E 'avx2' /proc/cpuinfo
+          grep -m1 -o -w -E 'fma' /proc/cpuinfo
+          python -I -c 'import numpy, sys; print("PYTHON|version=" + sys.version.split()[0] + "|numpy=" + numpy.__version__ + "|json=0")'
+          echo "OPENBLAS_CORETYPE=$OPENBLAS_CORETYPE"
+      - name: referee (owner lines and scripts run unchanged) regenerates every committed vector
+        run: python -I referee/dump_vectors.py --check .
+      - name: owner scripts == Rust pump == recorded sha256, three seeds
+        shell: bash
+        run: |
+          cargo +1.81.0 build --locked --release --bin pump
+          PUMP="$(cd "${CARGO_TARGET_DIR:-target}" && pwd)/release/pump"
+          W="$RUNNER_TEMP/pgh"; mkdir -p "$W"
+          # The public Universe Simulator tree at da43991; the LFS objects of later commits are not needed.
+          GIT_LFS_SKIP_SMUDGE=1 git clone --quiet --filter=blob:none --no-checkout https://github.com/JesseBrown1980/ASOLARIA-UNIVERSE-SIMULATOR-with-gravity-light-time-space-color-rime-winding-drills "$W/usim"
+          H="$W/herself"; T="$H/D:/asolaria-absorb/ASOLARIA-UNIVERSE-SIMULATOR"; mkdir -p "$T" "$H/script"
+          GIT_LFS_SKIP_SMUDGE=1 git -C "$W/usim" archive da43991 | tar -x -C "$T"
+          mythos() {   # mythos <seed-file> <sha256>: the owner's script and the port, byte for byte
+            M="$W/mythos"; rm -rf "$M"; mkdir -p "$M/D:/asolaria-absorb/kernel-pump" "$M/script"
+            cp "$1" "$M/D:/asolaria-absorb/kernel-pump/MYTHOS-SELF-EMISSION.txt"
+            cp vendor/pump_glyphs_mythos.py "$M/script/"
+            ( cd "$M" && python -I script/pump_glyphs_mythos.py || true )   # stops in the receipt stage, after the GGUF
+            COLD="$M/D:/asolaria-absorb/kernel-pump/ASOLARIA-MYTHOS-SELF-GLYPHS-256.gguf"
+            echo "$2  $COLD" | sha256sum -c -
+            "$PUMP" glyphs-mythos "$1" "$W/rust-mythos.gguf"
+            cmp "$W/rust-mythos.gguf" "$COLD"
+            rm -rf "$M" "$W/rust-mythos.gguf"
+          }
+          # MYTHOS, pinned seed: 269,604,512 B.
+          mythos vendor/MYTHOS-SELF-EMISSION.txt f29d4b9427252b17cc6151cd5f5627d080b5a021f009e46125cef5479db0d299
+          # MYTHOS, the first 90,000 B of da43991 books/*.md: 269,648,424 B.
+          ( cd "$T" && LC_ALL=C ls books/*.md | xargs cat > "$W/books-all.md" )
+          head -c 90000 "$W/books-all.md" > "$W/books90k.txt"
+          echo "13c256d3a383ef13a19854aff10c20cf1ad8ec0c7954e36c2ab87610885b1352  $W/books90k.txt" | sha256sum -c -
+          mythos "$W/books90k.txt" 20cd8a24e9aed14efd54d0e26071356107fc9421aea4d55d6f1f46f130356203
+          # HERSELF, the da43991 body less the files the generator writes: 3,295,808 B.
+          cp vendor/asolaria_herself.py "$H/script/"
+          ( cd "$T" && rm -f CODEBOOK.md PLAYBOOK.md RUNBOOK.md key/ASOLARIA-HERSELF-KEY-3174.bin \
+              measurements/asolaria_herself.py receipts/FABLE5-ASOLARIA-HERSELF.hbp \
+              gguf/asolaria/ASOLARIA-HERSELF.gguf gguf/asolaria/ASOLARIA-HERSELF.gguf.sha256 )
+          ( cd "$H" && python -I script/asolaria_herself.py || true )   # stops at FileNotFoundError(enwik9), after the GGUF
+          COLD_H="$T/gguf/asolaria/ASOLARIA-HERSELF.gguf"
+          echo "694b74325b0fc73ae3bdd100a476ec9df2419bb8fa0c3b9b95a8fcb5499fb680  $COLD_H" | sha256sum -c -
+          "$PUMP" herself "$T" "$W/rust-herself.gguf"
+          cmp "$W/rust-herself.gguf" "$COLD_H"
+          rm -rf "$W"
+  shadowcat-parity:
+    # SHA256-PARITY-2026-10-19.hbp was written at fcddaf9, the last commit with the nine aether SHA-256 copies
+    # it compares. The job checks out that commit beside this one and runs this commit's run.sh there.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Install Rust 1.81
+        run: rustup toolchain install 1.81.0 --profile minimal
+      - name: the parity run at fcddaf9 equals the committed receipt byte for byte
+        shell: bash
+        run: |
+          at="$RUNNER_TEMP/at-fcddaf9"
+          GIT_LFS_SKIP_SMUDGE=1 git clone --quiet --no-checkout "$GITHUB_WORKSPACE" "$at"
+          GIT_LFS_SKIP_SMUDGE=1 git -C "$at" checkout --quiet --detach fcddaf913a97ba5ae28468f58506913f769ff4f1
+          test -z "$(git -C "$at" status --porcelain)"
+          mkdir "$at/shadowcat/parity"
+          cp shadowcat/parity/run.sh shadowcat/parity/sha256_parity.rs "$at/shadowcat/parity/"
+          bash "$at/shadowcat/parity/run.sh" "$RUNNER_TEMP/parity.hbp"
+          cmp "$RUNNER_TEMP/parity.hbp" shadowcat/parity/SHA256-PARITY-2026-10-19.hbp
+      - name: no float on this path
+        run: if grep -nE '\bf32\b|\bf64\b|as f[0-9]' shadowcat/parity/sha256_parity.rs; then exit 1; fi
