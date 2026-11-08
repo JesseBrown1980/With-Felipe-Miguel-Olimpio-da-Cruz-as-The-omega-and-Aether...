@@ -26,7 +26,9 @@ codex (a seed plus the owner's own program, run unmodified) on 2026-10-17 and 20
   - `CODEX-MANIFEST.hbp` is not changed. Whether this re-run counts as the review that row 34
     asks for, which would make 29 of 37, is for the owner to decide.
   - `CODEX-COMMANDS-RUNS-2026-11-08.hbp` records rows of `CODEX-COMMANDS.hbp` run as written,
-    with the expectations committed before the runs.
+    with the expectations committed before the runs. 10 rows ran (n=1-4, 7, 8, 13 and 21-23),
+    all 8 expectations held, and every output was byte-exact (MEASURED: that receipt). The other
+    27 rows are UNVERIFIED in that form. These runs used the same seat and USIM clone as round 2.
 
 An artifact counts as byte-exact only when it regenerated with the stored sha256 in both a run
 and an independent review. Across rounds 1-3 that holds for 28 of 37 targets (997,616,582 B).
