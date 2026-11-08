@@ -1,4 +1,4 @@
-# expected GSLGNN outputs from tools/model_parity.py: the vendored gslgnn_inference_server.py MODEL (gslgnn_w9_3_seq47_v2.pt), torch 2.14.1+cpu, torch_geometric 2.8.1, seed 0x5deece66d, ATEN_CPU_CAPABILITY=avx2 MKL_ENABLE_INSTRUCTIONS=AVX2, 1 thread; do not edit
+# expected GSLGNN outputs from tools/model_parity.py: the vendored gslgnn_inference_server.py MODEL (gslgnn_w9_3_seq47_v2.pt), torch 2.14.1+cpu, torch_geometric 2.8.1, seed 0x5deece66d, ATEN_CPU_CAPABILITY=avx2 MKL_ENABLE_INSTRUCTIONS=AVX2 MKL_CBWR=AVX2, 1 thread; do not edit
 # x = Q24 inputs; GRAPH/BOUNDARY send them as float32 q / 2^24 (exact); REQUEST sends the doubles byte / 255 and x is floor(float32 * 2^24 + 1/2)
 # mask = attention > sigmoid(threshold), row-major; p_bits = float32 probs[:, 1] (hex); p_q24 = floor(p * 2^24 + 1/2); e4 = toFixed(4) of scores[0]
 LAYOUT|conv=torch_geometric.nn.conv.gcn_conv.GCNConv|gsl_gnn=models.gsl_gnn|staged=1|checkpoint_keys=19|renamed_keys=0|threshold_bits=3f000000|sigmoid_threshold_bits=3f1f597f

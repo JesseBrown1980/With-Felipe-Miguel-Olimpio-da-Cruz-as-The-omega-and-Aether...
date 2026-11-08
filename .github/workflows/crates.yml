@@ -414,30 +414,22 @@ jobs:
       - name: the L0 server's MODEL reproduces tests/fixtures/l0-torch.hbp
         run: python -I -B tools/l0_parity.py --check
   dbbh-dbwh:
-    # Written against codec/dbbh-dbwh as it is on main at 7c4711f. Its UPSTREAM.sha256 is not checked here:
-    # on that commit src/lib.rs and README.md differ from their pins (MEASURED 2026-11-08; the ladder tests of
-    # 231a050 and 1e20fa5). When the ladder tests and RECEIPT-LADDER-RUNGS.hbp move to a crate of their own
-    # (plan item A1), the ladder step moves with them and the pin check is added here.
+    # Plan item A1 (8e65470) restored codec/dbbh-dbwh to its upstream bytes and moved the two ladder tests to
+    # codec/ladder-rungs; RECEIPT-LADDER-RUNGS.hbp stays in codec/dbbh-dbwh. So the codec is checked at its
+    # pins here, and the ladder step is codec/ladder-rungs/check.sh (extracts, fmt, clippy, 4 tests, receipt).
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: codec/dbbh-dbwh } }
     steps:
       - uses: actions/checkout@v4
-      - name: Install Rust 1.81 with clippy
-        run: rustup toolchain install 1.81.0 --profile minimal -c clippy
+      - name: Install Rust 1.81 with clippy and rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: the vendored codec at its upstream pins
+        run: sha256sum -c UPSTREAM.sha256
       # The codec's own workflow allows no lint; neither does this job.
       - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
       - run: cargo +1.81.0 test --locked --all-targets
-      # The receipt's rows in its order: the 16-rung test, then the wide one, each run alone. grep -o drops the
-      # libtest text printed before the first row.
-      - name: the two ladder tests regenerate RECEIPT-LADDER-RUNGS.hbp (18 rows)
-        shell: bash
-        run: |
-          for t in tests::metatag_ladder_rungs_are_lossless_every_width tests::metatag_ladder_keeps_going_past_16; do
-            cargo +1.81.0 test --locked --lib "$t" -- --exact --nocapture
-          done > "$RUNNER_TEMP/ladder.out"
-          grep -oE '(RUNG|LADDER|WIDE-LADDER)\|.*' "$RUNNER_TEMP/ladder.out" > "$RUNNER_TEMP/ladder.rows"
-          test "$(grep -c . "$RUNNER_TEMP/ladder.rows")" -eq 18
-          grep -v '^#' RECEIPT-LADDER-RUNGS.hbp | diff - "$RUNNER_TEMP/ladder.rows"
+      - name: codec/ladder-rungs regenerates RECEIPT-LADDER-RUNGS.hbp lines 7-24 (18 rows)
+        run: bash ../ladder-rungs/check.sh
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
   gguf-roundtrip:
@@ -551,7 +543,9 @@ jobs:
     # Cold lane: the owner's numpy generators run unchanged and every output is compared with the Rust pump.
     # np.convolve sums with the OpenBLAS kernel chosen at runtime; the port follows ddot_k_HASWELL, so every
     # Python run here sets OPENBLAS_CORETYPE=Haswell (the runner CPU needs AVX2 and FMA). (CANON:
-    # pump/glyphs-herself/README.md:53-61.)
+    # pump/glyphs-herself/README.md:53-61.) np.exp's bits also follow numpy's dispatch (X86_V4 or not); the
+    # referee prints it and, on a host without X86_V4, checks its two exp-dependent vectors against their
+    # recorded sha256 (pump/glyphs-herself/PROVENANCE.md, "Captured constant").
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: pump/glyphs-herself } }
     env:

@@ -68,8 +68,11 @@ PYG_CONV = "torch_geometric.nn.conv.gcn_conv"
 
 sys.dont_write_bytecode = True  # no __pycache__ beside the staged or vendored sources
 # The float32 rounding of torch's matmuls depends on the CPU kernels, and with it where the mask crosses in
-# BOUNDARY rows; pinned here, the file reproduces on any x86-64 host with AVX2.
-CPU_KERNELS = {"ATEN_CPU_CAPABILITY": "avx2", "MKL_ENABLE_INSTRUCTIONS": "AVX2"}
+# BOUNDARY rows. MKL_ENABLE_INSTRUCTIONS only caps oneMKL's instruction set: on an AMD EPYC 7763 runner oneMKL
+# still took another code path, and the rows moved as they do here under MKL_CBWR=COMPATIBLE (first difference at
+# line 210, MEASURED 2026-11-08). MKL_CBWR=AVX2 selects oneMKL's AVX2 code path for reproducible results, and
+# on this host it gives the same rows as before.
+CPU_KERNELS = {"ATEN_CPU_CAPABILITY": "avx2", "MKL_ENABLE_INSTRUCTIONS": "AVX2", "MKL_CBWR": "AVX2"}
 os.environ.update(CPU_KERNELS)
 import torch  # noqa: E402
 import torch_geometric  # noqa: E402

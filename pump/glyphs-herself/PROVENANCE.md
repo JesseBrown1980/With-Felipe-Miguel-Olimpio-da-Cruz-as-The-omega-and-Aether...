@@ -43,6 +43,14 @@ by sha256 `736dacbcf52187573e2e421a9a037a3e6984fae94cd515934163aac44a16c60c`, as
 `model/l0-edge/tools/quantize.py` pins checkpoint weights. The referee regenerates it and the
 test `kernel_constant_matches_owner_numpy` checks the pin.
 
+The bit pattern also depends on numpy's runtime dispatch. With the X86_V4 (AVX-512) target, numpy runs its
+own SIMD `exp`; without it, the platform libm. The owner's run, and so the pin, is the X86_V4 one. On a host
+without X86_V4 (a GitHub AMD EPYC 7763 runner, or this seat with
+`NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR"`), the same lines give sha256 `abbd2e20…`, and
+`lut_cases.bin` changes with it (`07a125c8…`). The referee checks those two files against those pins on
+such a host, and checks every other vector byte for byte. The three GGUFs of the cold lane equal their
+recorded sha256 on both hosts (MEASURED 2026-11-08).
+
 ## Seeds (not vendored in full)
 
 - MYTHOS-SELF-GLYPHS-256 seed: `vendor/MYTHOS-SELF-EMISSION.txt`, 3,796 B (above).

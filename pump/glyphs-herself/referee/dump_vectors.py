@@ -31,6 +31,20 @@ import numpy as np
 
 MODE, CRATE = sys.argv[1], os.path.abspath(sys.argv[2])
 assert MODE in ("--write", "--check"), "usage: dump_vectors.py --write|--check <crate-dir>"
+
+# np.exp's binary64 bits depend on numpy's runtime dispatch: with the X86_V4 (AVX-512) target numpy runs its own
+# SIMD exp, without it the platform libm. The committed vectors are the owner's run, on an X86_V4 host. On a host
+# without X86_V4 the same owner lines give the two files below with these sha256 (MEASURED 2026-11-08: the cloud
+# seat with NPY_DISABLE_CPU_FEATURES="X86_V4 AVX512_ICL AVX512_SPR", and a GitHub AMD EPYC 7763 runner, the same
+# bytes). The GGUFs and every other vector are the same on both hosts.
+from numpy._core._multiarray_umath import __cpu_features__ as NPY_CPU
+X86_V4 = bool(NPY_CPU.get("X86_V4", False))
+NO_X86_V4_SHA256 = {
+    "mythos_kernel_f64.bin": "abbd2e20aa73e4000c18b705aff9c2963e50d14e2de1db32fbcf0c30d9b1e074",
+    "lut_cases.bin": "07a125c8a98b70e31be49ff2c3bfdc0e396c5ebf3c2392052c70464a3f69eec3",
+}
+print(f"numpy dispatch: X86_V4={int(X86_V4)}", flush=True)
+assert X86_V4 or MODE == "--check", "--write needs an X86_V4 host: the committed vectors are the owner's X86_V4 run"
 assert os.environ.get("OPENBLAS_CORETYPE") == "Haswell", "set OPENBLAS_CORETYPE=Haswell"
 VENDOR = os.path.join(CRATE, "vendor")
 VECTORS = os.path.join(CRATE, "tests", "vectors")
@@ -507,8 +521,9 @@ for name, build in BUILDERS:
         print(f"wrote {name} {len(data)} B sha256 {hashlib.sha256(data).hexdigest()}", flush=True)
     else:
         have = open(path, "rb").read() if os.path.exists(path) else None
-        ok = have == data
+        pinned = not X86_V4 and name in NO_X86_V4_SHA256
+        ok = hashlib.sha256(data).hexdigest() == NO_X86_V4_SHA256[name] if pinned else have == data
         bad += not ok
-        print(f"{'OK  ' if ok else 'DIFF'} {name} {len(data)} B sha256 {hashlib.sha256(data).hexdigest()}",
-              flush=True)
+        print(f"{'OK  ' if ok else 'DIFF'} {name} {len(data)} B sha256 {hashlib.sha256(data).hexdigest()}"
+              + (" (no X86_V4: the pinned sha256)" if pinned else ""), flush=True)
 sys.exit(1 if bad else 0)
