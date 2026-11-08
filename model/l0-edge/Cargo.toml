@@ -8,6 +8,10 @@ description = "Integer port of the Asolaria L0 EdgeLevelGNN: graph-event feature
 repository = "https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether..."
 keywords = ["gnn", "graph", "integer", "fixed-point"]
 categories = ["algorithms"]
+# The crates.io package leaves out the trained checkpoint (owner decision B2, 2026-11-08). It stays in the
+# repository, pinned by UPSTREAM.sha256 and read only by the Python under tools/ and vendor/; src/weights.rs carries
+# its Q24 integers, so no build, test or example of this crate reads it.
+exclude = ["vendor/gnn-sidecar/baseline_model.pt"]
 
 [lib]
 name = "l0_edge"

@@ -17,3 +17,7 @@ path = "src/lib.rs"
 [dependencies]
 sha2 = { version = "0.10", default-features = false }
 ed25519-dalek = { version = "2.1", default-features = false, features = ["zeroize"] }
+# Not in the upstream manifest. ed25519-dalek's "zeroize" feature asks zeroize "1.5"; this direct line adds only
+# the "<1.9" bound (owner decision B2, 2026-11-08), so a build from the package stays on Rust 1.81: zeroize
+# 1.9.0 and 1.9.1 declare edition 2024 and rust-version 1.85. No default features, so no feature is added.
+zeroize = { version = ">=1.5, <1.9", default-features = false }

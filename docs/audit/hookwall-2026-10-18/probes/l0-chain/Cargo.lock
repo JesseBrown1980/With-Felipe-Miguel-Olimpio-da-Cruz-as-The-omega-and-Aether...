@@ -9,6 +9,7 @@ dependencies = [
  "ed25519-dalek",
  "sha2",
  "zeroize",
+ "zeroize_derive",
 ]
 
 [[package]]
