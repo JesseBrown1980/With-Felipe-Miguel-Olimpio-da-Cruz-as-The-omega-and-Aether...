@@ -2867,6 +2867,86 @@
    "14. Regeneration closers (ACER and owner): the greedy_set_cover key writers, cm3ti_gt256.rs (26,377 B), the HERSELF tie order and the owner's enwik9, the Liris SOL GPT6 callings pair, the LAW 71 prism and M51 program, and the Whole-Monty reviewed Path 1/2/3 module. MODE_PATH123 stays held until that module exists.",
    "15. Last, once everything above is pinned: switch aether's own SHA-256 to shadowcat's sha256.rs after digest parity, wire the benched GNNs (L1/L2/L4) through the one hookwall fabric as observed and non-voting, and re-run the vault-reader over every vendored repo."
   ],
-  "notes": "The seven maps that returned items hold up on their own spot checks; the corrections above are the exceptions. The 'beginning' map returned nothing, and the missed list covers that gap.\n\nMethod:\n- I built a full path/blob/first-commit index over all 364 commits of the mirror (16,457 path/blob rows, 12,213 distinct blobs) and an aether blob set that includes the 141 untracked working-tree files.\n- I hash-checked every blob prefix the maps cite. Spot-checks of IN_AETHER and MISSING claims in the trained, 60d, qprism, shadowcat, rainbow and vaults maps matched, apart from the corrections listed.\n- I scanned every mirror blob for missing-artifact names (gaia-loader, behcs1024-language-kernel, extract-to-cube, cm3ti_gt256, greedy_set_cover, shadow cat, monty, 99.22, Anti-Drift Constitution, archaeology_timeline, SOVLINUX), and listed the members of every zip and tarball in the mirror.\n\nCoverage numbers:\n- aether holds 67 of the mirror's 12,213 distinct blobs (187 of 16,457 path/blob rows).\n- 0 of the 89 files in the first commit (b49a725, 2026-03-15) are in aether.\n- The pre-mirror 2026-02-19 to 03-13 release trees are in the mirror and none of them are in aether.\n- The only weight files in the mirror's whole history are baseline_model.pt (26caf521) and gslgnn-trained-2026-04-29.pt (e3a9712b), and both are in aether. Every other trained-weight gap is on ACER, the Liris seat or the USB, as the trained map says.\n\nWhat the files themselves say about the owner's headline numbers (quoted, not judged):\n- The terms index's '900_bytes' hits are false positives. One is a glyph formula row in 66f8caa5, one is '127,900 bytes' in a2e95436, and one is an inventory file. No file in the mirror states '30 EB into 900 B'.\n- MAP.md (Prism/Comb law) reads 'every cataloged prism/comb op is a bijection ... 0-loss re-relation, never sub-entropy compression'.\n- cube-cloud reads 'Reversibility = lossless recall, NOT a compression record'.\n- The rime crate reads 'Do not claim trained weights unless actual weight evidence exists'.\n- RESULTS-5355 reads 'The closed loop 3.1KB -> constellation -> exact original bytes has NOT been run'.\n- LAW 63 records beats_control=0.\n\nBiggest new finds:\n- The beginning layer itself: the 2026-02-19 snapshots, the 99.22% benchmark, the 03-15 monolith, the constitution, the first hooks, and the GAIA and ASO bundles.\n- gaia-loader.mjs, public on a bigpickle-rebuild branch.\n- The 1.72 GB system vault ASOLARIA-SYSTEM-2026-08-08.gguf, which the stones call 'the vault'.\n- Federation level_tag and link_auth (the levels-and-keys gate) and tier-policy.\n- The rime fixed-27 crate.\n- labs/aether-16-bit.\n- Two committed private keys that need rotation.\n\nFiles in /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/gap-work/critic/:\n- pbf-annot.tsv: path, blob, size, first date, first commit and AETHER flag for every mirror row.\n- aether-all.tsv and aether-blobset.txt.\n- dir-summary.txt.\n- grep1-3.tsv.\n- blobgrep.py.\n- zips/ and zips2/: extracted archive blobs, kept as data only.\n- bigpickle-gaia: a read-only clone of the gaia-loader branch.\n\nI edited, committed or pushed nothing outside gap-work."
+  "notes": "The seven maps that returned items hold up on their own spot checks; the corrections above are the exceptions. The 'beginning' map returned nothing, and the missed list covers that gap.\n\nMethod:\n- I built a full path/blob/first-commit index over all 364 commits of the mirror (16,457 path/blob rows, 12,213 distinct blobs) and an aether blob set that includes the 141 untracked working-tree files.\n- I hash-checked every blob prefix the maps cite. Spot-checks of IN_AETHER and MISSING claims in the trained, 60d, qprism, shadowcat, rainbow and vaults maps matched, apart from the corrections listed.\n- I scanned every mirror blob for missing-artifact names (gaia-loader, behcs1024-language-kernel, extract-to-cube, cm3ti_gt256, greedy_set_cover, shadow cat, monty, 99.22, Anti-Drift Constitution, archaeology_timeline, SOVLINUX), and listed the members of every zip and tarball in the mirror.\n\nCoverage numbers:\n- aether holds 67 of the mirror's 12,213 distinct blobs (187 of 16,457 path/blob rows).\n- 0 of the 89 files in the first commit (b49a725, 2026-03-15) are in aether.\n- The pre-mirror 2026-02-19 to 03-13 release trees are in the mirror and none of them are in aether.\n- The only weight files in the mirror's whole history are baseline_model.pt (26caf521) and gslgnn-trained-2026-04-29.pt (e3a9712b), and both are in aether. Every other trained-weight gap is on ACER, the Liris seat or the USB, as the trained map says.\n\nWhat the files themselves say about the owner's headline numbers (quoted, not judged):\n- The terms index's '900_bytes' hits are false positives. One is a glyph formula row in 66f8caa5, one is '127,900 bytes' in a2e95436, and one is an inventory file. No file in the mirror states '30 EB into 900 B'.\n- MAP.md (Prism/Comb law) reads 'every cataloged prism/comb op is a bijection ... 0-loss re-relation, never sub-entropy compression'.\n- cube-cloud reads 'Reversibility = lossless recall, NOT a compression record'.\n- The rime crate reads 'Do not claim trained weights unless actual weight evidence exists'.\n- RESULTS-5355 reads 'The closed loop 3.1KB -> constellation -> exact original bytes has NOT been run'.\n- LAW 63 records beats_control=0.\n\nBiggest new finds:\n- The beginning layer itself: the 2026-02-19 snapshots, the 99.22% benchmark, the 03-15 monolith, the constitution, the first hooks, and the GAIA and ASO bundles.\n- gaia-loader.mjs, public on a bigpickle-rebuild branch.\n- The 1.72 GB system vault ASOLARIA-SYSTEM-2026-08-08.gguf, which the stones call 'the vault'.\n- Federation level_tag and link_auth (the levels-and-keys gate) and tier-policy.\n- The rime fixed-27 crate.\n- labs/aether-16-bit.\n- Two committed private keys that need rotation.\n\nFiles in /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/gap-work/critic/:\n- pbf-annot.tsv: path, blob, size, first date, first commit and AETHER flag for every mirror row.\n- aether-all.tsv and aether-blobset.txt.\n- dir-summary.txt.\n- grep1-3.tsv.\n- blobgrep.py.\n- zips/ and zips2/: extracted archive blobs, kept as data only.\n- bigpickle-gaia: a read-only clone of the gaia-loader branch.\n\nI edited, committed or pushed nothing outside gap-work.",
+  "aether_stub_bodies": {
+   "what": "Function stub bodies in aether's own crates that return an `Unimplemented` error, recorded for item A13. These are code-in-aether-not-finished, distinct from the upstream census in `maps[]`.",
+   "aether_commit": "7c4711f",
+   "method": "`git grep` of each error type's `::Unimplemented` returns over `*.rs` at HEAD, then each line read and classified as a function stub body, a test assertion, an enum variant, or a doc comment. Only function bodies that return `Err(<Type>::Unimplemented)` are listed as stub bodies.",
+   "live_stub_bodies": [
+    {
+     "file": "kernel/lane/core/src/gnn/mod.rs",
+     "lines": [
+      121,
+      129,
+      137,
+      149
+     ],
+     "returns": "Err(GnnErr::Unimplemented)",
+     "functions": "load_onnx_model (121, unconditional); predict_route (129), rank_top_n (137), aggregate_verdict (149) — these three reach the stub only when a model is loaded; with no model loaded each returns a deterministic fallback (Local / in-order top-N / Hold).",
+     "status": "STUB_IN_AETHER",
+     "to_wire": "A real ONNX model load + forward; until then the handle is model_loaded=false and the fallbacks are the live path."
+    },
+    {
+     "file": "kernel/lane/core/src/envelope/mod.rs",
+     "lines": [
+      97,
+      104
+     ],
+     "returns": "Err(EnvelopeErr::Unimplemented)",
+     "functions": "dispatch_enqueue (97), dispatch_dequeue (104) — the header-typed API; superseded in practice by the live bytes-oriented siblings dispatch_enqueue_bytes / dispatch_dequeue_bytes (the FULL wire the syscall layer consumes).",
+     "status": "STUB_IN_AETHER",
+     "to_wire": "Either wire the header-typed API or retire it in favour of the bytes-oriented siblings."
+    },
+    {
+     "file": "ledger/cosign-council/cosign-ledger/src/lib.rs",
+     "lines": [
+      130,
+      136
+     ],
+     "returns": "Err(CosignChainErr::Unimplemented)",
+     "functions": "CosignChain::append (130), validate_end_to_end (136).",
+     "status": "STUB_IN_AETHER",
+     "to_wire": "sha-link and signature verification, named in the code as a Phase-3 wave."
+    }
+   ],
+   "listed_lines_that_are_not_stub_bodies": [
+    {
+     "file": "kernel/lane/core/src/envelope/mod.rs",
+     "lines": [
+      299
+     ],
+     "actual": "A test assertion inside `mod tests`: assert_eq!(dispatch_enqueue(&header, RouteHint::LOCAL), Err(EnvelopeErr::Unimplemented)). Not a stub body; it checks the stub at line 97."
+    },
+    {
+     "file": "gate/hookwall/src/syscall/mod.rs",
+     "lines": [
+      5,
+      14
+     ],
+     "actual": "Line 5 is the module doc comment stating the stub convention; line 14 is the doc comment above the `Unimplemented` variant (line 15). This file defines only the `SyscallErr` type and the tier enums — it has no syscall functions. The syscall functions live in kernel/lane/core/src/syscall/mod.rs, where all 16 canonical syscalls are FULL-wired (the test `unwired_stubs_still_return_unimplemented` records that none return Unimplemented for valid inputs). No syscall stub body exists in aether."
+    },
+    {
+     "file": "kernel/lane/core/src/agent_runtime/mod.rs",
+     "lines": [
+      94,
+      96
+     ],
+     "actual": "Enum doc comments above the OperatorWitnessRequired (95) and Unimplemented (97) variants. No function body returns AgentErr::Unimplemented; spawn_child_agent is FULL-wired. `git grep AgentErr::Unimplemented` finds returns only in the vendored federation-1024 copies, none in kernel/lane/core."
+    },
+    {
+     "file": "kernel/lane/core/src/bus_fabric/mod.rs",
+     "lines": [
+      52
+     ],
+     "actual": "Doc comment above the Unimplemented variant (53). No function body returns BusFabricErr::Unimplemented; label_for_handle returns BranchEmpty in phase-1 (test label_for_handle_phase1_returns_branch_empty)."
+    }
+   ],
+   "counts": {
+    "live_stub_bodies": 8,
+    "files_with_live_stubs": 3,
+    "listed_files_with_no_live_stub": 3
+   },
+   "note": "The plan that seeded A13 listed six files; three of them (syscall, agent_runtime, bus_fabric) define an `Unimplemented` variant but no body that returns it, and envelope line 299 is a test. Their Unimplemented variants are declared-but-unreturned in aether; flagged for the owner, not recorded as stub bodies."
+  }
  }
 }

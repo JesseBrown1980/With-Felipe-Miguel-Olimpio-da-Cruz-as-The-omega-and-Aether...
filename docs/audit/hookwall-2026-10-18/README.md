@@ -67,6 +67,9 @@ Best status reached per hop, after verification:
 - **L4** — `gate/observed` has a "reported, not weighted" slot, `Signals.l4`, and CI pins its weight
   at 0, but `observe()` always sets it to `None` (`gate/observed/src/lib.rs:79`) and depends on no L4
   crate; no row reports it.
+  **SUPERSEDED (2026-10-19)** by the "Wired since (2026-10-19)" section below: `gate/observed` now
+  depends on the L4 crate and `observe()` sets `Signals.l4` from a `Provenance::Real` L4 reading
+  (`gate/observed/src/lib.rs:84`), observed and non-voting, and `asolaria watch` recomputes the chain.
 - **L5+** — G1/G2/G3/G4, the trio and the hybrid harness are standalone libraries over fixtures. G4's
   consumer in `gate/verdict` is fail-closed, but `g4_state` is hard-coded `UNKNOWN`.
 

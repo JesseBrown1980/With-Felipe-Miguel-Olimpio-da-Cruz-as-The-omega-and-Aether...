@@ -100,9 +100,12 @@ item's priority, the **higher** of the two is used; the per-item notes keep both
 ### Reconciled hashes worth the owner's eye
 
 - **`gslgnn_w9_3_corpus.json`**: the body on ACER hashes **`7e7d0406…`** (68,695,303 B), while the
-  manifest pins **`corpus_sha256 0f123581…`** (`model/l2-contrastive/PROVENANCE.md:167`). The
-  delivered bytes differ from the manifest pin. Stated as measured, not interpreted — resolve before
-  parity (item 7).
+  manifest pins **`corpus_sha256 0f123581…`** (`model/l2-contrastive/PROVENANCE.md:167`).
+  **RESOLVED (line endings, not content):** the two hashes differ only by CRLF vs LF — `7e7d0406…`
+  is the CRLF (ACER) bytes and `0f123581…` is the LF bytes, which equals the manifest pin, so the
+  corpus content was never edited. The line-ending-independent content sha is
+  **`3b76c29d…`** (`docs/handoffs/gnn-drift-repro-2026-10-18/HOWTO.md:49`; frozen as `expect` in
+  `RUNBOOK.hbp:10`). MEASURED, not interpreted.
 - **`trianti.py`**: the finders recorded no pin. A read-only copy is in the owner export at
   `scratchpad/honest-compressor-9ebd6119/extract/trijection/trianti.py`; hashed here at task time it
   is **3,816 B, sha256 `e7c1a01fd5be6d67a34eb6fc966a0742cca730eaed10899dff72379346229b6c`** (item 19).
@@ -303,9 +306,12 @@ Paths with `…` in the table are truncated; the full sha256 values are given in
   `model/l2-contrastive/PROVENANCE.md:162-173`; `model/l4-gslgnn/PROVENANCE.md:249`.
 - **Where (body)**: on ACER `C:\Users\acer\Asolaria\services\gnn-sidecar\gslgnn_w9_3_corpus.json`.
 - **Pin (measured on ACER)**: 68,695,303 B, sha256 `7e7d0406ec97af413a8181a7ba646b433e4d16bbaaaaf537c3e92afc422b199e`.
-  **Hash discrepancy**: the manifest pins `corpus_sha256 0f1235818828b27d0e143385eb322733e784151bc8a2b8dc60855dc6f5e9699e`
-  (`model/l2-contrastive/PROVENANCE.md:167`; totalNodes 109, totalEdges 315249, benign 40). Send the
-  body as-is; record both values.
+  **Hash discrepancy — RESOLVED (line endings, not content)**: the manifest pins `corpus_sha256 0f1235818828b27d0e143385eb322733e784151bc8a2b8dc60855dc6f5e9699e`
+  (`model/l2-contrastive/PROVENANCE.md:167`; totalNodes 109, totalEdges 315249, benign 40). The ACER
+  body `7e7d0406…` is the CRLF rendering and the manifest `0f123581…` is the LF rendering of the same
+  content; the line-ending-independent content sha is `3b76c29d…`
+  (`docs/handoffs/gnn-drift-repro-2026-10-18/HOWTO.md:49`; frozen as `expect` in `RUNBOOK.hbp:10`), so
+  the corpus was never edited. Send the body as-is; record both values.
 - **Seed + codec (for later regen)**: `train_gslgnn_w9_3.py` @c4b2458c `build_corpus()` writing to
   `SIDECAR_DIR/gslgnn_w9_3_corpus.json`; seed = historical orchestrator ticks + Phase-1 tensor-fabric
   outputs; node features via `train_baseline.py:31-38` six-feature scaling. (FINDER 1 cites
