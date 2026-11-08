@@ -1,0 +1,12 @@
+CRATESHDR|item=A7|date=2026-11-08|seat=cloud|aether_commit=7c4711fcf133130a7e773d928a0879616fda56ac|aether_tree=66d4b5dfadb53648bd1f45c2c46303b9e9bb9270|toolchain=1.81.0|mode=read_only|writes_external=0|publish=0|json=0
+CRATESDEF|scope=every_git-tracked_Cargo.toml_with_a_[package]_table_whose_publish_is_not_false|excluded_from_any_change=docs/handoffs/acer-post60d-2026-10-18/FABLE5-SHADOWCAT-REMADE-BYTE-EXACT-2026-10-18/Cargo.toml(pinned_by_its_SHA256SUMS)|json=0
+CRATESDEF|list_cmd=cargo_+1.81.0_package_--list_--allow-dirty_run_in_the_crate_dir(no_build)|search_cmd=cargo_+1.81.0_search_--limit_1_NAME(exact_name_match_counts_as_TAKEN)|dry_run_cmd=cargo_+1.81.0_publish_--dry-run_--locked(leaf_crates_only:no_path_dependency_of_any_kind)|json=0
+CRATESDEF|gate_path=FLAG_if_any_component_of_the_repo-relative_path_is_vault,vaults,phone,phone-look,hold,held,held-for-owner_or_owner-enwik9(case-insensitive)|gate_path_review=REVIEW_if_a_component_only_contains_one_of_vault,phone,hold,held|json=0
+CRATESDEF|gate_binary=a_packaged_file_is_binary_if_its_first_8000_bytes_hold_a_NUL;FLAG_a_binary_under_a_vendor/_path_or_named_in_an_UPSTREAM.sha256_or_SHA256SUMS(third-party);REVIEW_any_other_binary|gate_size=REVIEW_if_packaged_raw_bytes_exceed_10485760(crates.io_limit_is_on_the_compressed_.crate)|json=0
+EXPECT|id=E1|frozen_before_measurement=1|text=55_package_manifests_are_not_publish=false|basis=plan_A7_count|json=0
+EXPECT|id=E2|frozen_before_measurement=1|text=cargo_package_--list_succeeds_for_every_one_of_them|json=0
+EXPECT|id=E3|frozen_before_measurement=1|text=content_gate_FLAG_count=0_across_every_packaged_file|json=0
+EXPECT|id=E4|frozen_before_measurement=1|text=no_exact_crates.io_match_for_asolaria_or_any_asolaria-*_package_name|json=0
+EXPECT|id=E5|frozen_before_measurement=1|text=cargo_publish_--dry-run_--locked_PASSES_on_every_leaf_crate|json=0
+EXPECT|id=E6|frozen_before_measurement=1|text=exactly_3_publishable_crates_depend_on_publish=false_asolaria-ternary:agents/levels,pump/glyphs-herself,quants/head8|basis=plan_B2|json=0
+EXPECT|id=E7|frozen_before_measurement=1|text=the_plan_B2_first_wave(asolaria-tribit,asolaria-behcs1024-60d,asolaria-server-fischer-eval,asolaria-gnn-int,asolaria-verify-schedule,asolaria-qprism-recovery,asolaria-omega-operator-catalog,asolaria-qprism-throat)is_8_crates_with_no_publish_blocker_in_their_manifests|json=0

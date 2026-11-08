@@ -1,0 +1,8 @@
+HOMESHDR|item=A6|date=2026-11-08|seat=cloud|aether_commit=7c4711fcf133130a7e773d928a0879616fda56ac|aether_tree=66d4b5dfadb53648bd1f45c2c46303b9e9bb9270|mode=read_only|writes_external=0|claim=README.md_Homes_says_byte-identical_at_three_homes|tag=CANON_claim_under_test|json=0
+HOMESDEF|match=refs/heads/main_commit_sha_equal_at_all_three|tree_match=tree_sha_of_that_commit_equal_at_all_three|tree_read=git_fetch_--depth=1_--filter=tree:0_into_a_scratch_bare_repo_then_cat-file|json=0
+HOMESHOME|id=felipe|url=https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...|json=0
+HOMESHOME|id=hf_asolaria|url=https://huggingface.co/Jessedbrown/asolaria|json=0
+HOMESHOME|id=hf_asolaria_aether|url=https://huggingface.co/Jessedbrown/asolaria-aether|json=0
+PREDICT|id=P1|frozen_before_measurement=1|text=the_three_homes_differ:at_least_one_pair_of_homes_has_a_different_main_commit_and_a_different_tree|json=0
+PREDICT|id=P2|frozen_before_measurement=1|text=felipe_refs/heads/main=7c4711fcf133130a7e773d928a0879616fda56ac|basis=local_remote-tracking_ref_felipe/main|json=0
+PREDICT|id=P3|frozen_before_measurement=1|text=huggingface.co_is_BLOCKED_by_the_session_network_proxy_so_P1_can_only_be_INCONCLUSIVE|basis=plan_A6_and_B3_say_huggingface.co_needs_an_allowlist_change|json=0
