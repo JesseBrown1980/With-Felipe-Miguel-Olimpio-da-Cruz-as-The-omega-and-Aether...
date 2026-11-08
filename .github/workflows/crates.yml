@@ -282,6 +282,19 @@ jobs:
         run: python3 -I tools/g_planes_referee.py --check
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/ tests/; then exit 1; fi
+  ncm-rq:
+    # model/ncm/rq has no committed receipt: the numbers in its README are printed by examples/report.rs and
+    # asserted by its tests.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.81 with clippy + rustfmt
+        run: rustup toolchain install 1.81.0 --profile minimal -c clippy -c rustfmt
+      - name: the vendored NCM files and the three manifests unchanged (42 of 42)
+        working-directory: model/ncm
+        run: sha256sum -c UPSTREAM.sha256
+      # fmt, clippy, the D1/D2 tests and the no-float grep; kernel/tribit builds with it as a path dependency.
+      - run: bash model/ncm/rq/check.sh
   gnn-trio:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: planes/gnn-trio } }
@@ -396,7 +409,8 @@ jobs:
   dbbh-dbwh:
     # Written against codec/dbbh-dbwh as it is on main at 7c4711f. Its UPSTREAM.sha256 is not checked here:
     # on that commit src/lib.rs and README.md differ from their pins (MEASURED 2026-11-08; the ladder tests of
-    # 231a050 and 1e20fa5).
+    # 231a050 and 1e20fa5). When the ladder tests and RECEIPT-LADDER-RUNGS.hbp move to a crate of their own
+    # (plan item A1), the ladder step moves with them and the pin check is added here.
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: codec/dbbh-dbwh } }
     steps:
@@ -406,6 +420,17 @@ jobs:
       # The codec's own workflow allows no lint; neither does this job.
       - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
       - run: cargo +1.81.0 test --locked --all-targets
+      # The receipt's rows in its order: the 16-rung test, then the wide one, each run alone. grep -o drops the
+      # libtest text printed before the first row.
+      - name: the two ladder tests regenerate RECEIPT-LADDER-RUNGS.hbp (18 rows)
+        shell: bash
+        run: |
+          for t in tests::metatag_ladder_rungs_are_lossless_every_width tests::metatag_ladder_keeps_going_past_16; do
+            cargo +1.81.0 test --locked --lib "$t" -- --exact --nocapture
+          done > "$RUNNER_TEMP/ladder.out"
+          grep -oE '(RUNG|LADDER|WIDE-LADDER)\|.*' "$RUNNER_TEMP/ladder.out" > "$RUNNER_TEMP/ladder.rows"
+          test "$(grep -c . "$RUNNER_TEMP/ladder.rows")" -eq 18
+          grep -v '^#' RECEIPT-LADDER-RUNGS.hbp | diff - "$RUNNER_TEMP/ladder.rows"
       - name: no float on this path
         run: if grep -rnE '\bf32\b|\bf64\b|as f[0-9]' src/; then exit 1; fi
   gguf-roundtrip:
