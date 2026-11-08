@@ -295,3 +295,118 @@ pinned and vendored copies.
      documentation). It does not hold
      for the vendored copies: 7 have a versionless path dependency, and 12 fail to list because
      a workspace root, a workspace member or a library source was not vendored.
+
+## Addendum: the B2 blockers, fixed and re-measured (2026-11-08)
+
+The owner's decision B2: fix the blockers of section 3, re-measure, then ask before any upload.
+Nothing was uploaded, pushed or tagged. The rows are in
+[`PUBLISH-READINESS-ADDENDUM-2026-11-08.hbp`](PUBLISH-READINESS-ADDENDUM-2026-11-08.hbp): MEASURED
+rows come from a command run for the addendum, DERIVED rows are computed from those rows and from
+the base receipt. The expectations X1 to X15 were frozen in `f9a578b`, before any manifest changed
+and before any measurement. Branch `cloud/crates-blockers-20261108`, from `main` `5a67cc6`.
+
+### What changed
+
+- **zeroize.** `gate/hookwall` now asks `zeroize` `>=1.7, <1.9`. `ledger/cosign-council/cosign-ledger`
+  gains a direct `zeroize` `>=1.5, <1.9` with default features off, so no feature is added. With
+  only that bound, the hookwall dry run still failed (X2, at `72b0c1f`): the `derive` feature asks
+  `zeroize_derive` `1.3`, and the fresh resolve picked `zeroize_derive` 1.5.0, which declares
+  edition 2024 and rust-version 1.85. `gate/hookwall` therefore also declares
+  `zeroize_derive = ">=1.3, <1.5"`. Neither line is upstream, and both `PROVENANCE.md` files now
+  say so.
+- **Locks.** No version moved. 11 lock files each gained one line, the new dependency edge: 3 gained
+  `zeroize` and 8 gained `zeroize_derive` (X1). `cargo +1.81.0 metadata` wrote them, and no
+  `cargo update --precise` was needed. `cargo +1.81.0 metadata --locked` passes in all 11
+  workspaces.
+- **Weights.** The four model manifests `exclude` their vendored `.pt` checkpoint. Two kinds of
+  code read the checkpoints: each crate's `tools/quantize.py` and `tools/model_parity.py`, and the
+  vendored inference servers those tools import (ADDPRE row). No `build.rs`, `src/`, `tests/` or
+  `examples/` file reads one: `src/weights.rs` already holds the Q24 integers. The files stay in
+  the repository under their `UPSTREAM.sha256` pins.
+
+### Frozen expectations
+
+| Expectation | Result |
+|---|---|
+| X1: no lock version moves; 11 locks gain exactly one edge line | held |
+| X2: zeroize bound alone, hookwall dry run fails on `zeroize_derive` 1.5.0 | held |
+| X3, X4: hookwall (14 files) and cosign-ledger (8 files) dry runs pass | held |
+| X5: L0/L1/L2/L4 list 33/17/18/21 files, no `.pt`, gate clean, dry runs pass | held |
+| X6: tests in the unpacked packages pass with the repo's counts (44, 13, 15, 18) | held. A first l1 and l2 run was given `--locked`, which X6 does not ask for when the package has no lock. Cargo exited 101 on both, and both rows are kept. |
+| X7: plain dry runs of the 9 path-dependency crates fail at the verify resolve, before any compile | **MISS** on the stage, 5 of 9. All 9 exit 101, each names a dependency that is not on crates.io, and none compiles anything. The 5 whose package carries a `Cargo.lock` fail earlier, while cargo prepares that lock. |
+| X8: patched dry runs of the same 9 pass | held |
+| X9: the 13 crates blocked through the 6 list with the base file counts, gate clean | held |
+| X10: remaining blockers as below | held (DERIVED) |
+| X11: clippy, `test --locked`, no-float grep and fmt (where the crate has it) pass for the 6 changed crates; `metadata --locked` passes in 11 workspaces | held |
+| X12: hookwall's plain `-D warnings` clippy fails only on the two lints its CI job allows | held |
+| X13: the worktree stays clean after every run | held |
+| X14: the index still has no zeroize 1.8.x above 1.8.2 and no zeroize_derive 1.4.x above 1.4.3 | held. The live index, read afterwards, agrees. |
+| X15: the pin check passes before the first commit and after the last | held |
+
+`cargo +1.81.0 fmt --check` reports 5 hunks in `gate/hookwall` (`src/crypto/mod.rs`, `src/lib.rs`).
+Its CI job has no fmt step and its toolchain file lists no rustfmt. This branch changes no `.rs`
+file.
+
+### New state of the 19 crates
+
+A plain dry run of a crate with versioned path dependencies fails until those dependencies are on
+crates.io (CANON). A patched dry run adds one `--config patch.crates-io.NAME.path=DIR` for each path
+dependency in the closure, so the verify build uses the repo's sources. It predicts the post-upload
+result only if the dependencies are uploaded from the same commit (DERIVED).
+
+| Crate | Files | Dry run | Remaining blocker |
+|---|---|---|---|
+| `asolaria-hookwall` | 14 | PASS | none |
+| `asolaria-server-cosign-ledger` | 8 | PASS | none. The name is also on 2 vendored manifests. |
+| `asolaria-l0-edge`, `-l1-prototype`, `-l2-contrastive`, `-l4-gslgnn` | 33, 17, 18, 21 | PASS | none |
+| `asolaria-verdict` | 6 | patched PASS | none, after `asolaria-hookwall` and the pinned `asolaria-server-fischer-eval` |
+| `asolaria-server-cosign-serve` | 14 | patched PASS | none, after `asolaria-server-cosign-ledger` |
+| `asolaria-port-address-emitter`, `-events`, `-g-planes`, `-hrm-mtp`, `-quant-cubes`, `-ste-certificate` | 13, 20, 8, 52, 68, 31 | patched PASS | none, after `asolaria-l0-edge` (and `aether-loop`, `asolaria-quant-hyperbehcs`) |
+| `asolaria-whiteroom-shannon` | 50 | patched PASS | none, after `l0-edge`, `quant-cubes` and `hrm-mtp` |
+| `asolaria-levels-agents`, `asolaria-quant-head8` | 36, 27 | not run | their own `publish = false` dependency `asolaria-ternary` |
+| `asolaria-observed` | 20 | not run | via `shadowcat` (name taken) |
+| `asolaria` (cli) | 11 | not run | via `asolaria-observed` |
+
+### Aether-written crates a publish would accept: 35 of 48, in dependency order (DERIVED)
+
+1. **Wave 1 (22).** The 15 of section 2's wave 1 (base dry run PASS, no file changed in their
+   directories since `7c4711f`), `asolaria-qr-read-int` (its dry run passed here), and the 6 of
+   this branch: `asolaria-hookwall`, `asolaria-server-cosign-ledger` and `asolaria-l0-edge`, `-l1-prototype`,
+   `-l2-contrastive`, `-l4-gslgnn`.
+2. **Before wave 2, 3 crates of other origin.**
+   - For `asolaria-verdict`: `asolaria-server-fischer-eval` (the pinned `gate/fischer-eval`).
+   - For `asolaria-quant-exact`: `qprism-3d-slice-harness` and `dbbh-coms-quant-prism` (the
+     copies under `quants/exact/vendor/`).
+3. **Wave 2 (12).** These patched dry runs passed here (4 of them in supplementary rows that were
+   not frozen):
+   - from section 2: `asolaria-qprism-throat`, `asolaria-kernel-lane`,
+     `asolaria-server-council-serve`, `asolaria-quant-exact`;
+   - newly unblocked: `asolaria-verdict`, `asolaria-server-cosign-serve`,
+     `asolaria-port-address-emitter`, `asolaria-events`, `asolaria-g-planes`, `asolaria-hrm-mtp`,
+     `asolaria-quant-cubes`, `asolaria-ste-certificate`.
+4. **Wave 3 (1).** `asolaria-whiteroom-shannon`.
+
+This order assumes the owner lets the aether copies take 4 names that vendored manifests also
+carry: `asolaria-server-cosign-ledger`, `-cosign-serve`, `-council-serve` and `-vote-quorum`. In
+each case the aether copy is the only one that packages.
+
+### Still for the owner (not decided here)
+
+- **`asolaria-ternary`** (`publish = false`; its own package has not been measured). Publishing it
+  would clear the last recorded blocker of 3 crates: `asolaria-levels-agents`,
+  `asolaria-quant-head8` and `pump-glyphs-herself`.
+- **`hbp`** (name taken). A rename, or claiming an `asolaria-*` name, would unblock `hbp` and
+  `hbp-relay`.
+- **`shadowcat`** (name taken). A rename, or claiming an `asolaria-*` name, for the aether
+  `shadowcat/Cargo.toml` would unblock `shadowcat`, then `asolaria-observed`, then `asolaria`.
+- **The 13 names on more than one manifest.**
+  - 4 have an aether copy that is the only one that packages: the cosign-ledger, cosign-serve,
+    council-serve and vote-quorum names above.
+  - `asolaria-server-fischer-eval` has 3 copies, and `asolaria-verdict`, `asolaria-observed` and
+    `asolaria` build against `gate/fischer-eval`, whose `src/` differs from the `host8/vendor` copy.
+  - `dbbh-coms-quant-prism` and `qprism-3d-slice-harness` matter for `asolaria-quant-exact`.
+  - 5 names have no aether-written copy and no aether dependent: `asolaria-host8-serve`,
+    `asolaria-kernel-boot`, `asolaria-server-agent-runtime`, `asolaria-server-gnn-oracle` and
+    `path2-two-shadow-recovery`.
+  - `shadowcat` also has a pinned ACER copy.
+- **Upload.** Ask before any `cargo publish` without `--dry-run`.
