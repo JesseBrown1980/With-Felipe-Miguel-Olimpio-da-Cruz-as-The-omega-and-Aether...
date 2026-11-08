@@ -45,3 +45,9 @@ RESULT|id=P3|held=0|verdict=MISS|why=huggingface.co_answered_read-only_git_ls-re
 CLAIMCHECK|claim=README.md_Homes:published_byte-identical_at_three_public_homes|verdict=FALSE_on_2026-11-08|why=HF_homes_hold_the_f966009_sync(87_commits_behind_felipe_main),and_even_against_f966009_they_differ_in_.gitattributes,8_file_modes_and_13_LFS-pointer_blobs(content_equal)|tag=MEASURED|json=0
 PREDICT|id=P4|frozen_before_measurement=1|phase=post-check_after_the_review(2026-11-08)|text=a_second_git_ls-remote_of_felipe_gives_refs/heads/main=7c4711fcf133130a7e773d928a0879616fda56ac_and_no_ref_whose_name_contains_publish-prep|basis=nothing_was_pushed_from_this_branch|json=0
 PREDICT|id=P5|frozen_before_measurement=1|phase=post-check_after_the_review(2026-11-08)|text=a_second_git_ls-remote_of_both_HF_homes_gives_the_same_refs/heads/main(hf_asolaria=0ef04538736d7116e6f7240eb4d339ffced15d54,hf_asolaria_aether=58ec0d37770e8b3b29e4ffa90f1c932888a1b018)|basis=nothing_was_uploaded_from_this_session|json=0
+POSTMEAS|measured_at=2026-11-08T19:25:35Z|cmd=git_ls-remote_URL(every_ref,read-only)|frozen_in=100f284|json=0
+POSTMEAS|id=felipe|ls_remote_exit=0|refs=2(HEAD,refs/heads/main)|refs/heads/main=7c4711fcf133130a7e773d928a0879616fda56ac|refs_named_like_publish-prep=0|refs/tags=0|tag=MEASURED|json=0
+POSTMEAS|id=hf_asolaria|ls_remote_exit=0|refs=2(HEAD,refs/heads/main)|refs/heads/main=0ef04538736d7116e6f7240eb4d339ffced15d54|tag=MEASURED|json=0
+POSTMEAS|id=hf_asolaria_aether|ls_remote_exit=0|refs=2(HEAD,refs/heads/main)|refs/heads/main=58ec0d37770e8b3b29e4ffa90f1c932888a1b018|tag=MEASURED|json=0
+RESULT|id=P4|held=1|why=felipe_main=7c4711fcf133130a7e773d928a0879616fda56ac;refs_named_like_publish-prep=0|tag=MEASURED|json=0
+RESULT|id=P5|held=1|why=hf_asolaria_main=0ef04538736d7116e6f7240eb4d339ffced15d54,hf_asolaria_aether_main=58ec0d37770e8b3b29e4ffa90f1c932888a1b018(both_unchanged_since_17:54)|tag=MEASURED|json=0
