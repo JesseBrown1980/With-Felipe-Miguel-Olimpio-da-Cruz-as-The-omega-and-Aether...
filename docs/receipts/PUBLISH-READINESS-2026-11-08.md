@@ -123,8 +123,10 @@ crates.io.
 
 ### Every crate whose publish is blocked (46 of 86)
 
-Some crates are blocked only through one of their dependencies; for those, the table names the
-blocked dependency.
+A crate can also be blocked through a path dependency that is itself blocked. The table names
+every such dependency, also for a crate that has a blocker of its own (the `via` field of the
+BLOCKED rows). The BLOCKROOT rows follow each chain down to the crates whose own blocker causes
+it.
 
 **aether-written (28)**
 
@@ -140,14 +142,14 @@ blocked dependency.
 | `asolaria-hookwall` | `gate/hookwall` | dry run: `zeroize 1.9.1` needs edition 2024 |
 | `asolaria-server-cosign-ledger` | `ledger/cosign-council/cosign-ledger` | dry run: `zeroize 1.9.1` needs edition 2024; name also on 2 vendored copies |
 | `asolaria-gate-fischer-upstream` | `gate/fischer-upstream` | dry run: vendored sources left out of the package (E0432) |
-| `asolaria-levels-agents` | `agents/levels` | depends on `publish = false` `asolaria-ternary` |
+| `asolaria-levels-agents` | `agents/levels` | depends on `publish = false` `asolaria-ternary`; also via `asolaria-hrm-mtp`, which is blocked via `asolaria-l0-edge` |
 | `pump-glyphs-herself` | `pump/glyphs-herself` | depends on `publish = false` `asolaria-ternary` |
-| `asolaria-quant-head8` | `quants/head8` | depends on `publish = false` `asolaria-ternary` |
+| `asolaria-quant-head8` | `quants/head8` | depends on `publish = false` `asolaria-ternary`; also via `asolaria-l0-edge` (versioned dev-dependency) |
 | `hbp` | `hbp` | name taken on crates.io |
 | `shadowcat` | `shadowcat` | name taken on crates.io; name also on the ACER copy |
 | `hbp-relay` | `hbp/relay` | via `hbp` |
-| `asolaria` | `cli` | via `asolaria-hookwall` and `asolaria-l0-edge` |
-| `asolaria-observed` | `gate/observed` | via `l0-edge`, `l1`, `l2`, `l4`, `shadowcat` and `hookwall` |
+| `asolaria` | `cli` | via `asolaria-hookwall`, `asolaria-verdict`, `asolaria-observed` and `asolaria-l0-edge` |
+| `asolaria-observed` | `gate/observed` | via `l0-edge`, `l1`, `l2`, `l4`, `shadowcat`, `verdict` and `hookwall` |
 | `asolaria-verdict` | `gate/verdict` | via `asolaria-hookwall` |
 | `asolaria-server-cosign-serve` | `ledger/cosign-council/cosign-serve` | via `asolaria-server-cosign-ledger` |
 | `asolaria-pump-kimi-stars` | `pump/kimi-stars` | via `asolaria-colour` |
@@ -155,7 +157,7 @@ blocked dependency.
 | `asolaria-events` | `events` | via `asolaria-l0-edge` (versioned dev-dependency) |
 | `asolaria-g-planes` | `model/g-planes` | via `asolaria-l0-edge` |
 | `asolaria-hrm-mtp` | `model/hrm-mtp` | via `asolaria-l0-edge` |
-| `asolaria-whiteroom-shannon` | `planes/whiteroom-shannon` | via `asolaria-l0-edge` and `asolaria-hrm-mtp` |
+| `asolaria-whiteroom-shannon` | `planes/whiteroom-shannon` | via `asolaria-l0-edge`, `asolaria-quant-cubes` and `asolaria-hrm-mtp` |
 | `asolaria-quant-cubes` | `quants/cubes` | via `asolaria-l0-edge` |
 | `asolaria-ste-certificate` | `search/ste-certificate` | via `asolaria-l0-edge` (versioned dev-dependency) |
 
@@ -172,12 +174,12 @@ those repositories, not for aether.
 
 | Crate | Manifest | Reason |
 |---|---|---|
-| `asolaria-kernel-boot` | `beginning/09-…/kernel/boot` | path dependency without a version (`asolaria-kernel-core`) |
+| `asolaria-kernel-boot` | `beginning/09-…/kernel/boot` | path dependency without a version (`asolaria-kernel-core`), which is itself blocked |
 | `asolaria-kernel-core` | `beginning/09-…/kernel/core` | dry run: `zeroize 1.9.1` needs edition 2024 |
 | `asolaria-server-agent-runtime` | `beginning/09-…/servers/agent-runtime` | list fails: workspace member `servers/gnn-oracle` not vendored |
 | `asolaria-server-cosign-ledger` | `beginning/09-…/servers/cosign-ledger` | list fails, for the same reason |
 | `asolaria-server-tier-policy` | `beginning/09-…/servers/tier-policy` | list fails, for the same reason |
-| `asolaria-server-highway` | `beginning/09-…/servers/highway` | list fails, for the same reason; 2 path dependencies without a version |
+| `asolaria-server-highway` | `beginning/09-…/servers/highway` | list fails, for the same reason; 2 path dependencies without a version, both to blocked crates |
 | `asolaria-host8-serve` | `beginning/10-…/servers/host8-serve` | list fails: workspace root not vendored; 6 path dependencies without a version |
 | `asolaria-host8-serve` | `host8/vendor/…/host8-serve` | list fails: workspace root not vendored; 7 path dependencies without a version |
 | `asolaria-kernel-boot` | `beginning/11-…/kernel/boot` | list fails: workspace root not vendored; path dependency without a version |
@@ -187,8 +189,8 @@ those repositories, not for aether.
 | `new-rime-fixed27-wave` | `beginning/11-…/rime/fixed27-wave-v2` | no `description` (the dry run passed) |
 | `asolaria-server-cosign-ledger` | `ledger/cosign-council/vendor/…/cosign-ledger` | list fails: `src/lib.rs` not vendored |
 | `asolaria-server-vote-quorum` | `ledger/cosign-council/vendor/…/vote-quorum` | list fails: `src/lib.rs` not vendored |
-| `asolaria-server-cosign-serve` | `ledger/cosign-council/vendor/…/cosign-serve` | path dependency without a version |
-| `asolaria-server-council-serve` | `ledger/cosign-council/vendor/…/council-serve` | path dependency without a version |
+| `asolaria-server-cosign-serve` | `ledger/cosign-council/vendor/…/cosign-serve` | path dependency without a version, to the vendored `asolaria-server-cosign-ledger`, which is itself blocked |
+| `asolaria-server-council-serve` | `ledger/cosign-council/vendor/…/council-serve` | path dependency without a version, to the vendored `asolaria-server-vote-quorum`, which is itself blocked |
 
 ### Not blocked: the 20 aether-written crates
 
@@ -231,12 +233,21 @@ pinned and vendored copies.
    - `asolaria` and `asolaria-observed`, which stay blocked by other dependencies.
 3. **Model weights in crates.** The L0, L1, L2 and L4 crates would ship vendored `.pt` weights.
    An `exclude` in those aether manifests would remove them from the package, unless their tests
-   need the bytes (UNVERIFIED). 9 more crates are blocked through `asolaria-l0-edge`; for 7 of
-   them it is the only cause.
+   need the bytes (UNVERIFIED). 11 more crates are blocked through `asolaria-l0-edge`, directly
+   or through a chain of blocked dependencies (its BLOCKROOT row). For 7 of them it is the only
+   cause. The other 4 are `asolaria`, `asolaria-observed`, `asolaria-levels-agents` and
+   `asolaria-quant-head8`.
 4. **Names.** `hbp` and `shadowcat` are taken on crates.io (plan B2: rename, or claim
    `asolaria-*`). Inside the repo, 13 names are carried by more than one of the 86 manifests, so
    only one copy of each can be published.
-5. **`asolaria-ternary`.** It still blocks exactly the 3 crates the plan named (B2).
+5. **`asolaria-ternary`.** It still blocks exactly the 3 crates the plan named (B2). Publishing
+   it alone would leave only `pump-glyphs-herself` with no recorded blocker (the UNBLOCKIF row):
+   - `asolaria-levels-agents` stays blocked via `asolaria-hrm-mtp`, which is blocked via
+     `asolaria-l0-edge`;
+   - `asolaria-quant-head8` stays blocked via its versioned dev-dependency on `asolaria-l0-edge`.
+
+   `asolaria-ternary` is `publish = false`, so its own package was not listed or dry-run. Whether
+   it would package cleanly is UNVERIFIED.
 6. **`asolaria-gate-fischer-upstream`** cannot be packaged as it stands, because cargo leaves out
    its vendored sources.
 7. **Corrections to the plan.**
