@@ -121,10 +121,25 @@ jobs:
           python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
           python -m pip install torch_geometric==2.8.1
       - name: runner CPU
-        run: grep -m1 'model name' /proc/cpuinfo
-      # tools/model_parity.py pins ATEN_CPU_CAPABILITY=avx2, MKL_ENABLE_INSTRUCTIONS=AVX2 and one thread.
-      - name: the served GSLGNN MODEL reproduces tests/fixtures/expected-model.hbp
-        run: python -I tools/model_parity.py --check
+        run: grep -m1 'model name' /proc/cpuinfo; grep -m1 vendor_id /proc/cpuinfo
+      # tools/model_parity.py pins ATEN_CPU_CAPABILITY=avx2, MKL_ENABLE_INSTRUCTIONS=AVX2, a oneMKL branch
+      # (MKL_CBWR) and one thread. oneMKL's COMPATIBLE branch is meant to give the same rows on any x86-64 CPU,
+      # so it is checked on every runner.
+      - name: the served GSLGNN MODEL on oneMKL's COMPATIBLE branch reproduces tests/fixtures/expected-model-compatible.hbp
+        run: python -I tools/model_parity.py --branch compatible --check
+      # The AVX2 branch is the file src/model.rs matches at the BOUNDARY crossings. oneMKL takes it on an Intel CPU
+      # only (an AMD EPYC 7763 runner gave FAIL at line 210 under MKL_CBWR=AVX2; MEASURED 2026-11-08), so on another
+      # vendor this step prints a row saying it did not run, and the Rust tests (l4-gslgnn job) still compare
+      # src/model.rs with that file on every runner.
+      - name: on an Intel CPU, the AVX2 branch reproduces tests/fixtures/expected-model.hbp
+        shell: bash
+        run: |
+          vendor="$(grep -m1 vendor_id /proc/cpuinfo | cut -d: -f2 | tr -d ' ')"
+          if [ "$vendor" = GenuineIntel ]; then
+            python -I tools/model_parity.py --branch avx2 --check
+          else
+            echo "L4_AVX2_BRANCH|vendor=$vendor|run=0|reason=oneMKL_takes_its_AVX2_branch_on_Intel_CPUs_only|json=0"
+          fi
   hrm-mtp:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: model/hrm-mtp } }

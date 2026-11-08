@@ -103,7 +103,8 @@ The torch check copies the vendored server, `models/__init__.py`, `models/gsl_gn
 checkpoint into a temporary directory in the layout the server imports from, imports the server
 there (its own lines build, remap, load and `eval()` the model), asserts that torch_geometric's
 `GCNConv` is in use, and compares its output with the committed file byte for byte. It pins
-`ATEN_CPU_CAPABILITY=avx2`, `MKL_ENABLE_INSTRUCTIONS=AVX2`, `MKL_CBWR=AVX2` and one thread.
+`ATEN_CPU_CAPABILITY=avx2`, `MKL_ENABLE_INSTRUCTIONS=AVX2`, `MKL_CBWR=AVX2` and one thread; `--branch compatible`
+checks `tests/fixtures/expected-model-compatible.hbp` under oneMKL's COMPATIBLE branch instead (PROVENANCE.md).
 `tools/model_parity.py --probe ../../acer/Asolaria/services/gnn-sidecar/gslgnn_w9_3_seq47.pt` prints the
 integer facts of the wiring map's probe inputs for the v2 and v1 checkpoints and writes nothing.
 

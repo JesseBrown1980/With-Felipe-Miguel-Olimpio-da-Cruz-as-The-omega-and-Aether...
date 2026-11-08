@@ -203,12 +203,18 @@ both torch environments on this host (`scratchpad/torchvenv`, `scratchpad/ci-tor
 2.14.1+cpu, torch_geometric 2.8.1, Python 3.13.16).
 
 `MKL_ENABLE_INSTRUCTIONS` only caps oneMKL's instruction set; it does not fix its code path. On a GitHub AMD
-EPYC 7763 runner (AVX2, no AVX-512), the pin above gave `--check` FAIL at line 210 (MEASURED 2026-11-08). On
-this host, `MKL_CBWR=COMPATIBLE` moves the rows the same way: FAIL, first difference at line 210. So the harness
-also sets `MKL_CBWR=AVX2`, oneMKL's AVX2 code path for reproducible results. On this host it leaves every row
-as it was (`--check` PASS, and the regenerated file differs only in its header line, which names the new
-variable). Whether that path is used on the AMD runner is checked by the `l4-torch-parity` job of
-`.github/workflows/crates.yml`.
+EPYC 7763 runner (AVX2, no AVX-512), `--check` gave FAIL at line 210 under the pin above, and again with
+`MKL_CBWR=AVX2` added (MEASURED 2026-11-08). On this host, `MKL_CBWR=COMPATIBLE` moves the rows the same way
+(FAIL, first difference at line 210). So oneMKL takes its AVX2 branch on an Intel CPU only. The harness
+therefore has two branches:
+- `--branch avx2` (the default) gives `MKL_CBWR=AVX2` and `tests/fixtures/expected-model.hbp`. That is the
+  file `src/model.rs` matches at the `BOUNDARY` crossings; its rows are those of the earlier pin.
+- `--branch compatible` gives `MKL_CBWR=COMPATIBLE` and `tests/fixtures/expected-model-compatible.hbp`.
+  That is oneMKL's branch meant to give the same results on any x86-64 CPU. Regenerated under it, 48
+  rows change, and `src/model.rs` fails `attention_mask_at_the_threshold_crossings` against them, so the
+  Rust tests stay on the AVX2 file.
+
+The `l4-torch-parity` job checks the compatible file on every runner and the AVX2 file on Intel runners.
 
 ## Measured agreement
 

@@ -25,14 +25,16 @@ needs more than 24 significant bits; torch's attention mask and probs[:, 1] per 
 (asolaria-score.mjs:112-113 and 127-128 mirrored: nodes [node(sha16(pid)), node(sha16(content))] as the float32 of
 the doubles byte / 255, edge [[0, 1]], scores[0] and +toFixed(4)), and BOUNDARY (inputs on both sides of the float32
 attention threshold for one entry, found by bisection, with torch's mask and probs[:, 1]).
-Writes tests/fixtures/expected-model.hbp; --check regenerates it in memory and diffs.
+Writes tests/fixtures/expected-model.hbp (--branch compatible: expected-model-compatible.hbp); --check regenerates
+it in memory and diffs.
 --seed N --out FILE writes the same rows from another seed to FILE (for examples/parity.rs).
 --probe V1_CHECKPOINT prints, and writes nothing, the integer facts of the wiring map's probe inputs
 (universe/tools/l4_probe.py: random.Random(4793) draws 500 pid/content pairs, then per checkpoint, v2 before v1,
 500 torch.rand inputs of 2-11 nodes with edge [[0, 1]]). v2 is the staged server's MODEL. v1 (gslgnn_w9_3_seq47.pt,
 pinned by sha256, not vendored, not served) is staged under the file name server line 18 reads, so the server's
 own lines 21-36 load it.
-Run: <torch venv>/bin/python -I tools/model_parity.py [--check | --seed N --out FILE | --probe V1_CHECKPOINT]
+Run: <torch venv>/bin/python -I tools/model_parity.py [--branch avx2|compatible] [--check | --seed N --out FILE |
+--probe V1_CHECKPOINT]
 """
 import hashlib
 import importlib.util
@@ -45,6 +47,7 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 EXPECTED = ROOT / "tests" / "fixtures" / "expected-model.hbp"
+EXPECTED_COMPATIBLE = ROOT / "tests" / "fixtures" / "expected-model-compatible.hbp"
 MATH = ROOT / "tests" / "fixtures" / "expected-math.hbp"
 SHA_FILE = ROOT / "UPSTREAM.sha256"
 SERVER = ROOT / "vendor" / "fnns" / "src" / "gslgnn_inference_server.py"
@@ -67,12 +70,21 @@ PROBE_INPUTS = 500
 PYG_CONV = "torch_geometric.nn.conv.gcn_conv"
 
 sys.dont_write_bytecode = True  # no __pycache__ beside the staged or vendored sources
-# The float32 rounding of torch's matmuls depends on the CPU kernels, and with it where the mask crosses in
-# BOUNDARY rows. MKL_ENABLE_INSTRUCTIONS only caps oneMKL's instruction set: on an AMD EPYC 7763 runner oneMKL
-# still took another code path, and the rows moved as they do here under MKL_CBWR=COMPATIBLE (first difference at
-# line 210, MEASURED 2026-11-08). MKL_CBWR=AVX2 selects oneMKL's AVX2 code path for reproducible results, and
-# on this host it gives the same rows as before.
-CPU_KERNELS = {"ATEN_CPU_CAPABILITY": "avx2", "MKL_ENABLE_INSTRUCTIONS": "AVX2", "MKL_CBWR": "AVX2"}
+# The float32 rounding of torch's matmuls depends on oneMKL's code path, and with it where the mask crosses in
+# BOUNDARY rows. --branch avx2 (the default) is oneMKL's AVX2 branch, the one src/model.rs matches at the crossings
+# (tests/fixtures/expected-model.hbp). oneMKL takes it on an Intel CPU only: on an AMD EPYC 7763 runner it gave
+# --check FAIL at line 210 under MKL_ENABLE_INSTRUCTIONS=AVX2 and under MKL_CBWR=AVX2 alike, as MKL_CBWR=COMPATIBLE
+# does on an Intel host (MEASURED 2026-11-08). --branch compatible is oneMKL's COMPATIBLE branch, meant to give the
+# same results on any x86-64 CPU (tests/fixtures/expected-model-compatible.hbp).
+BRANCHES = {"avx2": ("AVX2", EXPECTED), "compatible": ("COMPATIBLE", EXPECTED_COMPATIBLE)}
+BRANCH = "avx2"
+if sys.argv[1:2] == ["--branch"] and len(sys.argv) > 2:
+    BRANCH = sys.argv[2]
+    del sys.argv[1:3]
+if BRANCH not in BRANCHES:
+    sys.exit("usage: model_parity.py [--branch avx2|compatible] [--check | --seed N --out FILE | --probe V1_CHECKPOINT]")
+FIXTURE = BRANCHES[BRANCH][1]
+CPU_KERNELS = {"ATEN_CPU_CAPABILITY": "avx2", "MKL_ENABLE_INSTRUCTIONS": "AVX2", "MKL_CBWR": BRANCHES[BRANCH][0]}
 os.environ.update(CPU_KERNELS)
 import torch  # noqa: E402
 import torch_geometric  # noqa: E402
@@ -504,7 +516,7 @@ def probe(v1_checkpoint):
 
 def main():
     args = sys.argv[1:]
-    seed, out = DEFAULT_SEED, EXPECTED
+    seed, out = DEFAULT_SEED, FIXTURE
     if len(args) == 2 and args[0] == "--probe":
         torch.set_num_threads(1)
         probe(pathlib.Path(args[1]).resolve())
@@ -512,7 +524,8 @@ def main():
     if len(args) == 4 and args[0] == "--seed" and args[2] == "--out":
         seed, out = int(args[1], 0), pathlib.Path(args[3])
     elif args not in ([], ["--check"]):
-        print("usage: model_parity.py [--check | --seed N --out FILE | --probe V1_CHECKPOINT]", file=sys.stderr)
+        print("usage: model_parity.py [--branch avx2|compatible] [--check | --seed N --out FILE | --probe V1_CHECKPOINT]",
+              file=sys.stderr)
         return 2
     torch.set_num_threads(1)
     with tempfile.TemporaryDirectory() as directory:
@@ -521,7 +534,7 @@ def main():
         server = import_server(staged)
         text, summary = render(server.MODEL, seed)
     if args == ["--check"]:
-        committed = EXPECTED.read_bytes().decode("utf-8")
+        committed = FIXTURE.read_bytes().decode("utf-8")
         if committed != text:
             want, got = text.split("\n"), committed.split("\n")
             first = next((i for i, (w, g) in enumerate(zip(want, got)) if w != g), min(len(want), len(got)))
