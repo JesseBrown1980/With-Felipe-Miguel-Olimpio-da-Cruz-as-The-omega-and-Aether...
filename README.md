@@ -190,7 +190,7 @@ implementation existed, written fresh and honest. Full detail and provenance:
 | 6 — proposals | `proposals/verify-schedule/` | confidence-ranked verify scheduler; plans which proposals to verify, never fires |
 | 6 — L0 EdgeLevelGNN | `model/l0-edge/` | integer-only Q24 port of the **trained** L0 model (`baseline_model.pt`, vendored byte-identical) with the forward the port-4792 server runs, and of the `gnnDataExport.js` feature extractor it was trained on; within 6 Q24 units of torch over 3,273 fixture scores and 15 over 3,338 request rows; see its `PROVENANCE.md` |
 | 6 — GNN | `model/gnn-int/` | integer-only Q16 two-layer GCN + edge head; hand-set, **untrained** weights; no accuracy claims |
-| 6 — HRM, MTP | `model/hrm-mtp/` | integer-only Rust port of the prediction triad and the universe simulator's HRM and MTP slice agents (12 `src` modules + tests; `#![forbid(unsafe_code)]`, no `f32`/`f64`). What is still missing is a **trained HRM checkpoint**; the ports run only in their own tests and examples and no gate crate consumes them |
+| 6 — HRM, MTP | `model/hrm-mtp/` | integer-only Rust port of the HRM / MTP / zeta triad and the universe simulator's HRM and MTP slice agents (12 `src` modules + tests; `#![forbid(unsafe_code)]` at `src/lib.rs:6`, no `f32`/`f64`). What is still missing is a **trained HRM checkpoint** (`model/hrm-mtp/PROVENANCE.md:268-281`). The ports are consumed by `agents/levels` and `planes/whiteroom-shannon` (`agents/levels/Cargo.toml:18`, `planes/whiteroom-shannon/Cargo.toml:22`); no gate crate consumes them. MEASURED at `7c4711f` |
 
 The one rule every layer obeys: **no layer manufactures information.** Content
 addressing returns retained bytes; CRT needs jointly-sufficient shadows (which
@@ -228,11 +228,17 @@ between layers exists only where code calls code. These links are real code:
   scores -> the tighten-only verdict. On this path the caller supplies the events and
   the policy fields, and no score.
 
-L4 GSLGNN is wired as an observed, non-voting signal: `gate/observed/src/lib.rs:84`
-reads a `Provenance::Real` L4 reading (`gate/observed/src/bench.rs`), `Signals.l4`
-carries it and the composite does not weight it. Not connected: G1/G2/G3
-(`gate/observed/src/lib.rs:85-87` are `None`) and the GSL `g4_state`, hard-coded
-`UNKNOWN` (`lib.rs:97`), because this stack has no :4793 or :4949 service; the other
+L1 PrototypeGNN, L2 ContrastiveGNN and L4 GSLGNN are wired as observed, non-voting
+readings (MEASURED at `7c4711f`): `gate/observed` depends on the three model crates
+(`gate/observed/Cargo.toml:17-19`), `read_benched` (`gate/observed/src/bench.rs:111`)
+reads them on the request into `Observed.benched` with provenance `real` or `absent`
+(`gate/observed/src/lib.rs:61,81`), and `voting()` is true for L0 only (`bench.rs:70-72`).
+`Signals.l4` carries L4 (`lib.rs:84`) and the composite does not weight it; L1 and L2
+have no `Signals` field and are reported in `Observed.benched` and the `OBSERVE` rows
+(`bench.rs:25`).
+Not connected: G1/G2/G3 (`gate/observed/src/lib.rs:85-87` are `None`) and the GSL
+`g4_state`, hard-coded `UNKNOWN` (`lib.rs:97`) (both MEASURED at `7c4711f`), because
+this stack has no :4793 or :4949 service (UNVERIFIED, not re-checked here); the other
 networks of `Shannon-and-the-gnns-stage`, and the other trained models in
 `Asolaria-fnns-trained-and-reverse-gnns-many`. `asolaria gate` and the verdict crate
 still take caller-supplied scores, the scheduler's `score_q` is caller-supplied, and
@@ -252,8 +258,8 @@ themselves an input. Nothing in these gates persists or attests physical presenc
 
 ## Homes
 
-Asolaria is published at three public homes that mirror each other. That the three
-are **byte-identical** to one another is `CLAIMED`, not re-measured here: a
+Asolaria is published at three public homes. That they mirror each other and are
+**byte-identical** to one another is CLAIMED (UNVERIFIED), not re-measured here: a
 `git ls-remote` + tree-sha comparison of the three homes is pending.
 
 - GitHub — [JesseBrown1980/asolaria-aether](https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...)

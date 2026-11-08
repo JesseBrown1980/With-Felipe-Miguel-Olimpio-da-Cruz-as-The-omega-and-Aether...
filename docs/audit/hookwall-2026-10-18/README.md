@@ -61,15 +61,26 @@ Best status reached per hop, after verification:
   crates' tests. No gate crate depends on them; `Signals`, `VerifiedEnvelope` and the loop's
   `ScoreFields` have no L1/L2 field; the only L1/L2-shaped slot (the hybrid harness) has no caller and
   falls back to a sha256 stub.
+  **SUPERSEDED IN PART (2026-10-19)** by the "Wired since (2026-10-19)" section below: `gate/observed`
+  now depends on both crates (`gate/observed/Cargo.toml:17-18`) and reads them on the request into
+  `Observed.benched` (`gate/observed/src/bench.rs:111`, `src/lib.rs:61,81`), observed and non-voting.
+  Still true: `Signals`, `VerifiedEnvelope` and `ScoreFields` have no L1/L2 field. MEASURED at aether
+  `7c4711f`.
 - **L3** — the HRM/MTP ports run in their own tests and examples; no Hookwall component consumes
   them, the MTP pre-warm reaches nothing (the loop uses a second revolver without it), and no trained
   HRM checkpoint exists in aether.
+  **CORRECTED (2026-11-08)**: the ports do not run only in their own tests and examples. `agents/levels`
+  and `planes/whiteroom-shannon` depend on them (`agents/levels/Cargo.toml:18`,
+  `planes/whiteroom-shannon/Cargo.toml:22`), in commits `f966009` and `b9bf5e7`, both before this
+  audit's commit `cd9eaf1`. No Hookwall component consumes them. MEASURED at aether `7c4711f`.
 - **L4** — `gate/observed` has a "reported, not weighted" slot, `Signals.l4`, and CI pins its weight
   at 0, but `observe()` always sets it to `None` (`gate/observed/src/lib.rs:79`) and depends on no L4
   crate; no row reports it.
   **SUPERSEDED (2026-10-19)** by the "Wired since (2026-10-19)" section below: `gate/observed` now
-  depends on the L4 crate and `observe()` sets `Signals.l4` from a `Provenance::Real` L4 reading
-  (`gate/observed/src/lib.rs:84`), observed and non-voting, and `asolaria watch` recomputes the chain.
+  depends on the L4 crate (`gate/observed/Cargo.toml:19`) and `observe()` sets `Signals.l4` from a
+  `Provenance::Real` L4 reading (`gate/observed/src/lib.rs:84`, `src/bench.rs:139`), observed and
+  non-voting, and `asolaria watch` (`cli/src/main.rs:834`) recomputes the chain. MEASURED at aether
+  `7c4711f`.
 - **L5+** — G1/G2/G3/G4, the trio and the hybrid harness are standalone libraries over fixtures. G4's
   consumer in `gate/verdict` is fail-closed, but `g4_state` is hard-coded `UNKNOWN`.
 

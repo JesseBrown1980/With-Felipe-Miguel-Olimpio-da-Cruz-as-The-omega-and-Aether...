@@ -2868,10 +2868,13 @@
    "15. Last, once everything above is pinned: switch aether's own SHA-256 to shadowcat's sha256.rs after digest parity, wire the benched GNNs (L1/L2/L4) through the one hookwall fabric as observed and non-voting, and re-run the vault-reader over every vendored repo."
   ],
   "notes": "The seven maps that returned items hold up on their own spot checks; the corrections above are the exceptions. The 'beginning' map returned nothing, and the missed list covers that gap.\n\nMethod:\n- I built a full path/blob/first-commit index over all 364 commits of the mirror (16,457 path/blob rows, 12,213 distinct blobs) and an aether blob set that includes the 141 untracked working-tree files.\n- I hash-checked every blob prefix the maps cite. Spot-checks of IN_AETHER and MISSING claims in the trained, 60d, qprism, shadowcat, rainbow and vaults maps matched, apart from the corrections listed.\n- I scanned every mirror blob for missing-artifact names (gaia-loader, behcs1024-language-kernel, extract-to-cube, cm3ti_gt256, greedy_set_cover, shadow cat, monty, 99.22, Anti-Drift Constitution, archaeology_timeline, SOVLINUX), and listed the members of every zip and tarball in the mirror.\n\nCoverage numbers:\n- aether holds 67 of the mirror's 12,213 distinct blobs (187 of 16,457 path/blob rows).\n- 0 of the 89 files in the first commit (b49a725, 2026-03-15) are in aether.\n- The pre-mirror 2026-02-19 to 03-13 release trees are in the mirror and none of them are in aether.\n- The only weight files in the mirror's whole history are baseline_model.pt (26caf521) and gslgnn-trained-2026-04-29.pt (e3a9712b), and both are in aether. Every other trained-weight gap is on ACER, the Liris seat or the USB, as the trained map says.\n\nWhat the files themselves say about the owner's headline numbers (quoted, not judged):\n- The terms index's '900_bytes' hits are false positives. One is a glyph formula row in 66f8caa5, one is '127,900 bytes' in a2e95436, and one is an inventory file. No file in the mirror states '30 EB into 900 B'.\n- MAP.md (Prism/Comb law) reads 'every cataloged prism/comb op is a bijection ... 0-loss re-relation, never sub-entropy compression'.\n- cube-cloud reads 'Reversibility = lossless recall, NOT a compression record'.\n- The rime crate reads 'Do not claim trained weights unless actual weight evidence exists'.\n- RESULTS-5355 reads 'The closed loop 3.1KB -> constellation -> exact original bytes has NOT been run'.\n- LAW 63 records beats_control=0.\n\nBiggest new finds:\n- The beginning layer itself: the 2026-02-19 snapshots, the 99.22% benchmark, the 03-15 monolith, the constitution, the first hooks, and the GAIA and ASO bundles.\n- gaia-loader.mjs, public on a bigpickle-rebuild branch.\n- The 1.72 GB system vault ASOLARIA-SYSTEM-2026-08-08.gguf, which the stones call 'the vault'.\n- Federation level_tag and link_auth (the levels-and-keys gate) and tier-policy.\n- The rime fixed-27 crate.\n- labs/aether-16-bit.\n- Two committed private keys that need rotation.\n\nFiles in /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/gap-work/critic/:\n- pbf-annot.tsv: path, blob, size, first date, first commit and AETHER flag for every mirror row.\n- aether-all.tsv and aether-blobset.txt.\n- dir-summary.txt.\n- grep1-3.tsv.\n- blobgrep.py.\n- zips/ and zips2/: extracted archive blobs, kept as data only.\n- bigpickle-gaia: a read-only clone of the gaia-loader branch.\n\nI edited, committed or pushed nothing outside gap-work.",
-  "aether_stub_bodies": {
-   "what": "Function stub bodies in aether's own crates that return an `Unimplemented` error, recorded for item A13. These are code-in-aether-not-finished, distinct from the upstream census in `maps[]`.",
+  "unimplemented_stub_bodies": {
+   "what": "Function stub bodies that return an `Unimplemented` error in code aether builds, recorded for plan item A13. All of them are the owner's asolaria-federation-1024 code at dc1da1a9cd88b77eb463053312b7c42a7dbe9b33, which aether vendors byte-identical (kernel/lane/PROVENANCE.md and ledger/cosign-council/PROVENANCE.md, section 1 'Vendored byte-identical'). None of them is aether-written code. kernel/lane/core itself is a vendored copy of upstream kernel/core.",
+   "tag": "MEASURED at aether 7c4711f (pin lines and sha256sum below; lines read at that commit)",
+   "added": "2026-11-08, after this audit's 2026-10-18 date",
    "aether_commit": "7c4711f",
-   "method": "`git grep` of each error type's `::Unimplemented` returns over `*.rs` at HEAD, then each line read and classified as a function stub body, a test assertion, an enum variant, or a doc comment. Only function bodies that return `Err(<Type>::Unimplemented)` are listed as stub bodies.",
+   "method": "`git grep` of each error type's `::Unimplemented` returns over `*.rs` at 7c4711f, then each line read and classified as a function stub body, a test assertion, an enum variant, or a doc comment. Only function bodies that return `Err(<Type>::Unimplemented)` are listed as stub bodies. Each file's sha256 was compared with its UPSTREAM.sha256 pin line.",
+   "expectation_and_result": "The only expectation that existed before the measurement was plan item A13 itself: 14 lines in 6 files, all stub bodies (gnn 121,129,137,149; envelope 97,104,299; cosign-ledger 130,136; gate/hookwall syscall 5,14; agent_runtime 94,96; bus_fabric 52). Result: 8 lines in 3 files are stub bodies and 6 lines are not. MISS against the plan. MEASURED.",
    "live_stub_bodies": [
     {
      "file": "kernel/lane/core/src/gnn/mod.rs",
@@ -2882,9 +2885,12 @@
       149
      ],
      "returns": "Err(GnnErr::Unimplemented)",
-     "functions": "load_onnx_model (121, unconditional); predict_route (129), rank_top_n (137), aggregate_verdict (149) — these three reach the stub only when a model is loaded; with no model loaded each returns a deterministic fallback (Local / in-order top-N / Hold).",
-     "status": "STUB_IN_AETHER",
-     "to_wire": "A real ONNX model load + forward; until then the handle is model_loaded=false and the fallbacks are the live path."
+     "pinned": "kernel/lane/UPSTREAM.sha256:8 (08521775ace1a45d4701420c4b841dccada64d564a132e1b6587f98b875a085f), upstream kernel/core/src/gnn/mod.rs",
+     "pin_check": "MEASURED at aether 7c4711f: sha256sum of the file equals its pin line",
+     "functions": "load_onnx_model (121, unconditional); predict_route (129), rank_top_n (137) and aggregate_verdict (149) reach the stub only when model_loaded is true. model_loaded is set only at line 105, to false, and nothing in the file sets it true, so 129, 137 and 149 cannot be reached today and only 121 runs; with no model loaded the three return a deterministic fallback (Local, in-order top-N, Hold).",
+     "status": "STUB_IN_VENDORED_UPSTREAM",
+     "to_wire": "A real ONNX model load and forward. The file is pinned byte-identical to the owner's upstream, so aether does not edit it. Wiring happens upstream in asolaria-federation-1024 (and is then re-vendored at the new commit), or in a separate aether-written file next to the pinned one.",
+     "tag": "MEASURED at aether 7c4711f"
     },
     {
      "file": "kernel/lane/core/src/envelope/mod.rs",
@@ -2893,9 +2899,12 @@
       104
      ],
      "returns": "Err(EnvelopeErr::Unimplemented)",
-     "functions": "dispatch_enqueue (97), dispatch_dequeue (104) — the header-typed API; superseded in practice by the live bytes-oriented siblings dispatch_enqueue_bytes / dispatch_dequeue_bytes (the FULL wire the syscall layer consumes).",
-     "status": "STUB_IN_AETHER",
-     "to_wire": "Either wire the header-typed API or retire it in favour of the bytes-oriented siblings."
+     "pinned": "kernel/lane/UPSTREAM.sha256:6 (f5fb58c131026cadea0a1b5fb9b102f095fdd7703661e7196c328f17e7cc95a9), upstream kernel/core/src/envelope/mod.rs",
+     "pin_check": "MEASURED at aether 7c4711f: sha256sum of the file equals its pin line",
+     "functions": "dispatch_enqueue (97), dispatch_dequeue (104): the header-typed API. The file's own doc comments (lines 91-92, 102) name the bytes-oriented siblings dispatch_enqueue_bytes and dispatch_dequeue_bytes as the live FULL-wire path the syscall layer consumes.",
+     "status": "STUB_IN_VENDORED_UPSTREAM",
+     "to_wire": "Wire the header-typed API or retire it in favour of the bytes-oriented siblings. The file is pinned byte-identical to the owner's upstream, so aether does not edit it. Wiring happens upstream in asolaria-federation-1024 (and is then re-vendored at the new commit), or in a separate aether-written file next to the pinned one.",
+     "tag": "MEASURED at aether 7c4711f"
     },
     {
      "file": "ledger/cosign-council/cosign-ledger/src/lib.rs",
@@ -2904,9 +2913,12 @@
       136
      ],
      "returns": "Err(CosignChainErr::Unimplemented)",
+     "pinned": "ledger/cosign-council/UPSTREAM.sha256:1 (28fed0643b196e78a6d28aa2b57d24f7d38104ba598e8f455c51f2f90b7047cf), upstream servers/cosign-ledger/src/lib.rs",
+     "pin_check": "MEASURED at aether 7c4711f: sha256sum of the file equals its pin line",
      "functions": "CosignChain::append (130), validate_end_to_end (136).",
-     "status": "STUB_IN_AETHER",
-     "to_wire": "sha-link and signature verification, named in the code as a Phase-3 wave."
+     "status": "STUB_IN_VENDORED_UPSTREAM",
+     "to_wire": "sha-link and signature verification, which the code's doc comment (line 128) places in a Phase-3 wave. The file is pinned byte-identical to the owner's upstream, so aether does not edit it. Wiring happens upstream in asolaria-federation-1024 (and is then re-vendored at the new commit), or in a separate aether-written file next to the pinned one.",
+     "tag": "MEASURED at aether 7c4711f"
     }
    ],
    "listed_lines_that_are_not_stub_bodies": [
@@ -2915,7 +2927,8 @@
      "lines": [
       299
      ],
-     "actual": "A test assertion inside `mod tests`: assert_eq!(dispatch_enqueue(&header, RouteHint::LOCAL), Err(EnvelopeErr::Unimplemented)). Not a stub body; it checks the stub at line 97."
+     "actual": "A test assertion inside `mod tests` (from line 255): assert_eq!(dispatch_enqueue(&header, RouteHint::LOCAL), Err(EnvelopeErr::Unimplemented)). Not a stub body; it checks the stub at line 97.",
+     "tag": "MEASURED at aether 7c4711f"
     },
     {
      "file": "gate/hookwall/src/syscall/mod.rs",
@@ -2923,7 +2936,8 @@
       5,
       14
      ],
-     "actual": "Line 5 is the module doc comment stating the stub convention; line 14 is the doc comment above the `Unimplemented` variant (line 15). This file defines only the `SyscallErr` type and the tier enums — it has no syscall functions. The syscall functions live in kernel/lane/core/src/syscall/mod.rs, where all 16 canonical syscalls are FULL-wired (the test `unwired_stubs_still_return_unimplemented` records that none return Unimplemented for valid inputs). No syscall stub body exists in aether."
+     "actual": "Line 5 is the module doc comment stating the stub convention; line 14 is the doc comment above the `Unimplemented` variant (line 15). The file is upstream kernel/core/src/syscall/mod.rs cut after line 75 and otherwise unedited (gate/hookwall/PROVENANCE.md:20,23); it holds only the `SyscallErr` type and the tier enums, no syscall functions. The syscall functions are in the vendored kernel/lane/core/src/syscall/mod.rs (pinned at kernel/lane/UPSTREAM.sha256:11), where no body returns Err(SyscallErr::Unimplemented) (line 5, the same doc comment, is the only match); its test unwired_stubs_still_return_unimplemented (line 408) states that all 16 canonical syscalls are FULL-wired, with sys_exit a diverging stub (line 425).",
+     "tag": "MEASURED at aether 7c4711f"
     },
     {
      "file": "kernel/lane/core/src/agent_runtime/mod.rs",
@@ -2931,22 +2945,27 @@
       94,
       96
      ],
-     "actual": "Enum doc comments above the OperatorWitnessRequired (95) and Unimplemented (97) variants. No function body returns AgentErr::Unimplemented; spawn_child_agent is FULL-wired. `git grep AgentErr::Unimplemented` finds returns only in the vendored federation-1024 copies, none in kernel/lane/core."
+     "actual": "Enum doc comments above the OperatorWitnessRequired (95) and Unimplemented (97) variants. No function body in this file returns AgentErr::Unimplemented. The file is pinned at kernel/lane/UPSTREAM.sha256:1. Returns of AgentErr::Unimplemented exist in aether only in other vendored versions under beginning/09-federation-kernel-2026-05/vendor/ (for example Asolaria/federation-remake-1024/kernel/core/src/agent_runtime/mod.rs:130,135,140), none in kernel/lane/core.",
+     "tag": "MEASURED at aether 7c4711f"
     },
     {
      "file": "kernel/lane/core/src/bus_fabric/mod.rs",
      "lines": [
       52
      ],
-     "actual": "Doc comment above the Unimplemented variant (53). No function body returns BusFabricErr::Unimplemented; label_for_handle returns BranchEmpty in phase-1 (test label_for_handle_phase1_returns_branch_empty)."
+     "actual": "Doc comment above the Unimplemented variant (53). No function body in this file returns BusFabricErr::Unimplemented. The file is pinned at kernel/lane/UPSTREAM.sha256:2. Returns of BusFabricErr::Unimplemented exist in aether only in other vendored versions under beginning/09-federation-kernel-2026-05/vendor/ (for example asolaria-federation-1024/kernel/core/src/bus_fabric/mod.rs:83,89), none in kernel/lane/core.",
+     "tag": "MEASURED at aether 7c4711f"
     }
    ],
    "counts": {
-    "live_stub_bodies": 8,
+    "plan_listed_lines": 14,
+    "plan_listed_files": 6,
+    "live_stub_lines": 8,
     "files_with_live_stubs": 3,
+    "listed_lines_not_stub_bodies": 6,
     "listed_files_with_no_live_stub": 3
    },
-   "note": "The plan that seeded A13 listed six files; three of them (syscall, agent_runtime, bus_fabric) define an `Unimplemented` variant but no body that returns it, and envelope line 299 is a test. Their Unimplemented variants are declared-but-unreturned in aether; flagged for the owner, not recorded as stub bodies."
+   "note": "SyscallErr, AgentErr and BusFabricErr declare an `Unimplemented` variant that no body in the pinned dc1da1a9 copies returns. The variants sit in pinned, byte-identical files, so aether cannot remove or change them; keeping or removing them is an upstream decision for the owner in asolaria-federation-1024. Tag: MEASURED for the counts; the decision is the owner's."
   }
  }
 }
