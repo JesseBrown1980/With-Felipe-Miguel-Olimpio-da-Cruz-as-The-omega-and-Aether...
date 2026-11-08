@@ -34,18 +34,29 @@ Not copied (not part of the crate): `.github/workflows/rust-1.81-clippy-verifica
 
 - `Cargo.lock`: written by `cargo +1.81.0 generate-lockfile`; one package entry, no dependencies.
 - `UPSTREAM.sha256`, `PROVENANCE.md`, `.gitattributes`.
-- `RECEIPT-LADDER-RUNGS.hbp` (2026-10-18, commits `231a050` and `1e20fa5`): the metatag ladder
-  receipt. Its tests are in [`../ladder-rungs/`](../ladder-rungs/). It stays here because
-  `aether-universe` (committed from ACER) cites this path (`src/sources.rs:21`, `tests/secrets.rs:257`).
+- `RECEIPT-LADDER-RUNGS.hbp` (2026-10-18, commits `231a050` and `1e20fa5`; MEASURED: `git log`): the
+  metatag ladder receipt. Its tests are in [`../ladder-rungs/`](../ladder-rungs/). It stays here
+  because `aether-universe` (committed from ACER: `65aa4d4` and `012c84c`, author `acer`) cites this
+  path at `src/sources.rs:21` and `:191` and `tests/secrets.rs:257`, and `src/sources.rs:310-320`
+  asserts that the path exists (MEASURED 2026-11-08: `git grep RECEIPT-LADDER-RUNGS -- aether-universe`,
+  `git log`). `UPSTREAM.sha256` does not list it.
 
 ## The ladder tests, 2026-10-18 to 2026-11-08
 
-Commits `231a050` and `1e20fa5` added two ladder tests to `src/lib.rs` and a section to `README.md`.
-From then on `sha256sum -c UPSTREAM.sha256` failed on those two files (MEASURED at `7c4711f`: 3 OK,
-2 FAILED). On 2026-11-08 both were restored with `git checkout 88796e6 -- src/lib.rs README.md`,
-the commit that brought them in; `git hash-object` gives `237c82a2…` and `749f30d9…` again, the
-upstream blob ids. The tests and the README section moved to `../ladder-rungs/`, which reads the
-codec's private `to_symbols`/`from_symbols`/`hex` through byte-identical extracts of these lines.
+Commits `231a050` and `1e20fa5` added two ladder tests to `src/lib.rs` and a section to `README.md`
+(MEASURED: `git show --stat`). From then on `sha256sum -c UPSTREAM.sha256` failed on those two files
+(MEASURED at `7c4711f`: 3 OK, 2 FAILED). On 2026-11-08 both were restored with
+`git checkout 88796e6 -- src/lib.rs README.md`, the commit that brought them in (MEASURED:
+`git log --diff-filter=A`). `git hash-object` gives `237c82a2…` and `749f30d9…` again, the upstream
+blob ids, and `sha256sum -c UPSTREAM.sha256` gives 5 OK (MEASURED 2026-11-08). The tests moved to
+`../ladder-rungs/`, and its `README.md` restates the README section. That crate reads the codec's
+private `to_symbols`/`from_symbols`/`hex` through byte-identical extracts of these lines (MEASURED
+2026-11-08: `../ladder-rungs/check.sh` compares them with `cmp`, and its test
+`upstream_extracts_are_the_vendored_lines` passes).
+
+The receipt's line 6 still names the old command, `cargo +1.81.0 test metatag_ladder` in this
+directory. Run here now, it runs 0 tests (9 filtered out) (MEASURED 2026-11-08). The rows now come
+from `../ladder-rungs/check.sh`. The receipt is not edited.
 
 ## License
 
