@@ -1,0 +1,17 @@
+[package]
+name = "asolaria-ladder-rungs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+publish = false
+description = "Tests only: the metatag ladder round trips (byte <-> symbol, widths 1..16 and 1..64) of the owner's DBBH -> DBWH codec, kept beside codec/dbbh-dbwh so the vendored files stay byte-identical to upstream"
+
+[lib]
+name = "asolaria_ladder_rungs"
+path = "src/lib.rs"
+
+[dependencies]
+
+[dev-dependencies]
+holographic-wormhole-codec = { path = "../dbbh-dbwh", version = "0.1.0" }

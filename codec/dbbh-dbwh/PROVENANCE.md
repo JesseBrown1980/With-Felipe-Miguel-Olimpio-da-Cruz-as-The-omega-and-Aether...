@@ -34,6 +34,18 @@ Not copied (not part of the crate): `.github/workflows/rust-1.81-clippy-verifica
 
 - `Cargo.lock`: written by `cargo +1.81.0 generate-lockfile`; one package entry, no dependencies.
 - `UPSTREAM.sha256`, `PROVENANCE.md`, `.gitattributes`.
+- `RECEIPT-LADDER-RUNGS.hbp` (2026-10-18, commits `231a050` and `1e20fa5`): the metatag ladder
+  receipt. Its tests are in [`../ladder-rungs/`](../ladder-rungs/). It stays here because
+  `aether-universe` (committed from ACER) cites this path (`src/sources.rs:21`, `tests/secrets.rs:257`).
+
+## The ladder tests, 2026-10-18 to 2026-11-08
+
+Commits `231a050` and `1e20fa5` added two ladder tests to `src/lib.rs` and a section to `README.md`.
+From then on `sha256sum -c UPSTREAM.sha256` failed on those two files (MEASURED at `7c4711f`: 3 OK,
+2 FAILED). On 2026-11-08 both were restored with `git checkout 88796e6 -- src/lib.rs README.md`,
+the commit that brought them in; `git hash-object` gives `237c82a2…` and `749f30d9…` again, the
+upstream blob ids. The tests and the README section moved to `../ladder-rungs/`, which reads the
+codec's private `to_symbols`/`from_symbols`/`hex` through byte-identical extracts of these lines.
 
 ## License
 
@@ -61,3 +73,7 @@ honoured) and `cargo test --manifest-path … --all-targets -- --nocapture`, und
 | `cargo +1.81.0 test --locked --all-targets` | 9 passed, 0 failed |
 | `cargo +1.81.0 test --locked --all-targets --release` | 9 passed, 0 failed |
 | `cargo +1.81.0 fmt --check` | exit 0 |
+
+MEASURED again on 2026-11-08 after the restore (cloud seat, rustc 1.81.0): `sha256sum -c` 5 OK,
+clippy exit 0, both float patterns no match, `test --all-targets` 9 passed (also with `--release`),
+`fmt --check` exit 0.

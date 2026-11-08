@@ -30,24 +30,6 @@ RECEIPT      HBP hot-path rows, json=0
 ## Honest boundary
 - `MEASURED` (`cargo test`): the single-machine loop — verified byte-identical clone; consent gating
   (no-consent / collapse Held); insufficient-roof Held; tampered-shadow caught by the AGT round-trip.
-- `MEASURED` (metatag ladder, 2026-10-18 — `RECEIPT-LADDER-RUNGS.hbp`, test
-  `metatag_ladder_rungs_are_lossless_every_width`): the seed repo
-  (`Metatagging-data-for-a-Quantum-universe`) proved level transcodes lossless for the **256↔1024**
-  rung only (byte-8 ↔ symbol-10). Here every rung this codec represents — **width 1..16,
-  alphabet 2..65536** — round-trips byte↔symbol byte-exact with in-range (uniform) symbols:
-  85,793 inputs per rung (exhaustive 0/1/2-byte + 20,000 seeded integer-random), **1,372,688
-  round-trips, 0 failures**, the 4-rung cross-ladder exact, `receipt_sha256 ed2bc694…`. The proven
-  1024 rung is included and reproduced.
-- `MEASURED` (ladder keeps going, 2026-10-18 — test `metatag_ladder_keeps_going_past_16`): the
-  width-16 point above is the shipped codec's `u16` symbol — an implementation choice, **not** a
-  property of the ladder. The same byte↔symbol transform over `u64`/`u128` round-trips lossless for
-  **widths 1..64** (including the **60** rung): 4,530,752 round-trips, 0 failures. The bijection is
-  width-agnostic, so arbitrary precision carries it to any level — the width ladder is **unbounded**;
-  only a fixed integer type bounds one build.
-- `BOUNDARY`: the **width** ladder is unbounded (shown to 64). The separate **43+ Brown-Hilbert
-  *dimensional* catalog** is a different structure — and the 60-D tuple there (`kernel/behcs1024-60d`)
-  is a **one-way SHA-256 projection**, not a lossless rung (its own README: "does NOT decode or
-  reconstruct"), so it is measured by its projection properties, not by round-trip.
 - `UNVERIFIED`: the **live acer↔liris two-fabric traversal over Hilbra** — this crate is the throat;
   the live crossing (two physical mouths) is the next rung. Also no `SYSTEM_AFFIRMED` seal yet (council fallback).
 - `BOUNDARY`: **"clone" = classical representation copy** (no-cloning respected — not a physical quantum
