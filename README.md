@@ -268,6 +268,12 @@ homes hold the tree of `v0.1.0` (GitHub `0bb9fb2`), synced through the Hub API o
 - the API does not carry file modes, so the 33 executable scripts are 644 there;
 - the HF `.gitattributes` adds one LFS line per binary file.
 
+The 42 crates published to crates.io as 0.1.0 were built from GitHub `crates-0.1.0` (`ac5b158`),
+14 commits after `v0.1.0`, and `asolaria-recovery-omega-codecs` 0.1.1 from
+`asolaria-recovery-omega-codecs-v0.1.1` (`ea68fc2`). `v0.1.0` (`0bb9fb2`) stays the tree the Hugging Face
+homes hold (MEASURED, [`docs/receipts/CRATES-PUBLISH-2026-11-09.hbp`](docs/receipts/CRATES-PUBLISH-2026-11-09.hbp),
+[`docs/receipts/TAGS-2026-11-09.hbp`](docs/receipts/TAGS-2026-11-09.hbp)).
+
 - GitHub — [JesseBrown1980/asolaria-aether](https://github.com/JesseBrown1980/With-Felipe-Miguel-Olimpio-da-Cruz-as-The-omega-and-Aether...)
 - Hugging Face — [Jessedbrown/asolaria](https://huggingface.co/Jessedbrown/asolaria)
 - Hugging Face — [Jessedbrown/asolaria-aether](https://huggingface.co/Jessedbrown/asolaria-aether)
