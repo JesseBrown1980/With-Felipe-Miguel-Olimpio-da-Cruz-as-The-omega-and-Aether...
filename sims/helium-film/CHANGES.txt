@@ -1,0 +1,737 @@
+CHANGES: the final critic (FIX_FIRST) and the verifications of the first, second and third fix passes, applied to
+the helium film (Rollin) prediction freeze package
+
+Where things are. This file goes into the freeze commit as sims/helium-film/CHANGES.txt, and HFHDR fix_pass points
+there. The other files it names are not in the freeze commit. engine_plan.txt ("the engine plan" below) and
+open_constants.txt stay with the scratch copies until the code commit; recompute/ and draft/ stay outside the
+repository. Paths in this file are relative to the scratch folders of the package: draft/ and final/ to
+/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/helium/, recompute/ to its final/ folder
+(so recompute/ is final/recompute/, and a bare verify/ is recompute/verify/), and helium/ and helium-film/ to
+/tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/.
+
+In:  draft/PREDICTION-HELIUM-FILM.hbp  sha256 46d1293ea593af2188a4e1effce1e528a61e1ff7af4f2fc4536df22049c6be15
+     draft/critic.json (7 blocking items, 13 fixes, verdict FIX_FIRST)
+First pass out:  PREDICTION-HELIUM-FILM.hbp sha256 376f5e55aad0c39bdc7bc8407786fd61e094e8c249fb4657dda675358b4350fa
+     (sections BLOCKING ITEMS to SEEN, NOT CHANGED below; notes marked "second pass", "third pass" or "fourth
+     pass" were added later)
+Second pass out: PREDICTION-HELIUM-FILM.hbp sha256 14f0a233da302d5024ccaf9ae416fd3498dd21a87e11f5118c4128536f8efec7
+     (section SECOND PASS: 2 blocking and 17 minor verification findings)
+Third pass out:  PREDICTION-HELIUM-FILM.hbp sha256 6761327aed0daab9f5e5a09533155a41a0e40994f9ed8da4133cdd93658c2afd
+     (section THIRD PASS: 2 blocking and 10 minor findings of the verification of the second pass)
+Fourth pass out: final/PREDICTION-HELIUM-FILM.hbp sha256 392b39162d75cdf288746f59316c8126c88d634459d54fb5661542b470f6e630
+     (section FOURTH PASS at the end: 1 blocking and 8 minor findings of the verification of the third pass)
+     final/README.md, final/engine_plan.txt, final/open_constants.txt, final/CHANGES.txt (this file)
+
+How the file was made. The draft came from the synthesis gen.py. Copied as recompute/gen_draft.py, it regenerates
+the draft byte for byte (checked with cmp). recompute/gen_fix1.py is that script with every first-pass edit below;
+it still writes the first-pass file byte for byte. recompute/patch_fix2.py applies the second-pass edits to
+gen_fix1.py (each replacement must match exactly once) and writes recompute/gen_final.py, which writes the
+second-pass file byte for byte. recompute/patch_fix3.py applies the third-pass edits to gen_final.py in the same
+way and writes recompute/gen_fix3.py, which writes the third-pass file. recompute/patch_fix4.py applies the
+fourth-pass edits to gen_fix3.py in the same way and writes recompute/gen_fix4.py, which writes the final file.
+Run: cd recompute && python3 -I patch_fix2.py && python3 -I patch_fix3.py && python3 -I patch_fix4.py &&
+python3 -I gen_fix4.py ../PREDICTION-HELIUM-FILM.hbp.
+
+Counts after the pass: 57 CONST (K39 added), 29 PREDICT, 39 LANEROW, 27 HFDEF (cell.edge added), 1 HFHDR, 1 HFEND;
+tags DERIVED 9, CONJECTURE 20 (unchanged); verified=0 constants K19, K21, K25, K26, K27, K30, K34, K37, K62
+(unchanged); negative controls unchanged; every line ends in |json=0 and has no bar inside a value. No DERIVED
+row uses a verified=0 constant in its verdict inputs (checked by script).
+
+Rules kept: no repository changed; no engine code; no engine run; every moved number recomputed with integers,
+Fractions or outward-rounded enclosures (floats only in the copied lane scripts, for display).
+
+====================================================================================================
+BLOCKING ITEMS
+====================================================================================================
+
+B1. HF-N02 cannot measure its top mode (2-unit records alias the n = 82 mode).
+  Checked: period of n = 82 is in [2.2179, 2.2180] tu, below twice the 2-unit record interval; the alias
+  |eps - pi| is in [0.30875, 0.30876] rad/tu (exact_extra.py).
+  Choice: record every step (dt = 1/64), not every 1/4 tu. Reason, as corrected in the second pass (S-m1): per-step
+  records can alias only a mode with eps dt >= sqrt6 (eps above 64 sqrt6 in [156.7673, 156.7674] rad/tu), and
+  such an alias reads above 32 pi in [100.5309, 100.5310] rad/tu. So a planted fault that moves a frequency still
+  shows as a miss. The first pass wrote that per-step records cannot alias any frequency the RK4 integrates
+  stably (2 sqrt2/dt below pi/dt); that was false, because R(i sqrt6) = -1/2. At 1/4 tu (Nyquist 4 pi = 12.566) a
+  fault that pushed a mode above 12.57 rad/tu would alias and could read inside the band. Per-step records give
+  141.95 samples per period of the n = 82 mode (the first pass wrote 141.9).
+  Changed: K57 (the exception and its reason); HFDEF method.gp; HF-N02 method (per-step records, the frequency
+  rule pi (n_c - 1)/(t_last - t_first), linear interpolation between straddling steps); engine plan main.rs (one
+  row per sign change, lossless for this method, about 400 rows per mode), run table, and a planted fault
+  fault-n02-every-2tu.
+
+B2. HF-G05 (v) cannot be reached (the dx = 1/4 rerun of 2250 tu ends before t_max2).
+  Choice: rerun longer, not drop S2, so the S2 part of the dx check stays reachable. Length 4096 tu
+  (262,144 steps), not the critic's 3400 tu. Reason: with t_max2 near 2 P + 32 for half-period P, the top of
+  the frozen band P = 1876 with the 3 percent dx allowance needs 2 x 1.03 x 1876 + 32 = 3896.56 < 4096; 3400
+  reaches t_max2 only for P up to (3400 - 32)/2 = 1684 (1634.95 with the allowance; second pass, S-m16), so the
+  upper part of the band would stay unreachable.
+  Cost: 45-65 min per 144,000 steps scales to [81.92, 118.33] min, "about 82 to 119 min plus about 20 min
+  preparation"; on 2 vCPU with preparation [203.8, 276.7] min, under the 360 min job timeout. (Second pass,
+  S-m13: the dx = 1/4 preparation scales to 24-40 min, so [105.92, 158.33] min on 4 vCPU and [211.84, 316.66]
+  min on 2 vCPU, still under 360.)
+  Changed: HF-G05 (v), method, cost, from; engine plan run table, the why-4096 note, the long-job longest entry.
+
+B3. K61 references N_slip to t = 0, where Phi_path(0) is undefined; the release is not from rest.
+  Applied as given. K61: N_slip referenced at t_ref, the first valid record at t >= 64; defined only on valid
+  records at t >= t_ref; a rung is dissipative only on records at t >= 64; a note says why the t = 0 record is
+  not valid. HF-G05 (i): V = 0 on records with 64 <= t <= 4500, N_slip = 0 on valid records. HF-G05 statement:
+  the release is not exactly from rest; the bath phases drift apart at g u0, so at t = 64 the phase difference
+  is g u0 x 64 = u0/4 exactly (2 rad U8, 4 rad U16, 8 rad U32, 24 rad U96); that imprints an initial current
+  and can drive Josephson slips during the ramp in higher rungs, which no verdict counts. HF-G06 (iii) and
+  HF-G07 (classification, v_hi) now count only at t >= 64. Engine plan slip.rs.
+  Also (same defect class as B5): K61's points A = (48, 16) and B = (160, 16) are cell corners at dx = 1/2 and
+  1/4. They are now the cells centred at (48 - dx/2, 16 + dx/2) and (160 + dx/2, 16 + dx/2), a mirror pair
+  about x = 104.
+
+B4. HF-G09's drop observables are undefined and two are unreachable under the natural reading.
+  Applied as given. A free component is a 4-connected rho >= 1/2 component with no cell at signed distance
+  below 2.5 from any solid (so not connected to the film on the solid, and not to the pool, which lies on the
+  floor). A drop is a free component with area >= 16 xi^2 at first detection. Tracking: most shared cells with
+  a free component of the previous record (ties by first cell in row-major order); no shared cell means new.
+  Pinch-off point = centroid at the first free record; area at first detection; a drop is counted when its
+  tracked centroid goes from y >= 40 to y < 40 between two records at which it is free. The box [40, 56],
+  |x - 40| <= 12, the area band [40, 160] and the count >= 3 are unchanged; they are reachable now.
+  Changed: HF-G09 predicted, method, falsifier, from; engine plan drops.rs, reader, a neck fixture in tests.
+
+B5. Named observables fall on cell edges.
+  Checked exactly: at dx = 1/2 and 1/4 every listed row (y = 56, 64, 80, 96, 128, 40, 32, 24) and column
+  (x = 61, 83, 72, 104, and the mirror axis x = 0) is a cell edge (exact_extra.py). From the frozen slope and
+  s(24), ds/dh = -0.0951 at h = 24; a nearest-row choice moves s by 0.0119 (dx 1/4) to 0.0238 (dx 1/2), up to
+  0.0357 between them, against HF-G02 (iii)'s 0.03 band.
+  Applied: new HFDEF cell.edge (mean of the two straddling rows or columns, an exact rational; compared with the
+  1D reference at the exact h; the mirror axis reduces to the first column). Cited in HF-G02, G03 (a), G05
+  (Gamma_top and its wall-layer part on x = 104), G11 (c), G12, G13 and L01 (s_top). Engine plan obs.rs and the
+  reader; planted fault fault-nearest-row.
+
+B6. HF-L02 claim 2 rests on a 0.09 percent margin; its falsifier is inconsistent.
+  Recomputed (exact_extra.py): u1/v_R in [4.05725, 4.05726] (8.61 K, 1.92 A^-1) and [4.00357, 4.00358]
+  (8.68 K, 1.91 A^-1); margin over 4.00 at 1.1 K is [0.089, 0.090] percent.
+  Choice: lower the threshold to 3.9 at both grid points, not keep 4.00 at the low-T point only. Reason: both
+  temperatures stay in the claim, so a re-read of K18 can still falsify it; under the other option the 1.1 K
+  point would leave the claim and no re-read of K18 could flip the row.
+  Margins over 3.9: (u1/v_R)/3.9 in [1.026558, 1.026559] at 1.1 K and [1.040322, 1.040323] at low T, that is
+  2.655 and 4.032 percent, against 0.262 percent from the rounding of q0 (+/- 0.005/1.91) and 0.038 percent
+  from the u1(0) spread (238.21 against 238.30). Falsifier set to match: a certified u1/v_R below 3.9 at either
+  point, or a re-read of K14, K17 or K18 that puts it there (v_R/u1 up by a factor above 1.026558 at 1.1 K or
+  1.040322 at low T, that is by more than 2.6558 or 4.0322 percent; the first pass wrote "at least 2.655 or
+  4.032 percent", corrected in the second pass, S-m15), or v_R/v_PA below 100. Claim 1 rechecked: v_R/v_PA(315 A) in [233.1122, 233.1123]
+  and [236.2378, 236.2379].
+
+B7. HF-L03 and HF-L04 rest on grep audits whose patterns are not frozen.
+  Applied: both rows now carry a frozen audit rule in their method.
+  HF-L03: over every line written by hf-gp or hf-read (GP-SHORT.hbp, long/*.hbp, READ.hbp); tokens are maximal
+  runs of characters other than the space, the bar, =, comma, semicolon, colon, parentheses and square
+  brackets; MAPPED rows (first field MAPPED, written only for HF-L01) are exempt; any other line is offending if
+  a token equals m/s, cm, nm, A, K, kg or J, or He or 4He (case-sensitive), or helium (any case). This is the
+  critic's example list with the tokenizer fixed. hf-statics output and README.md are outside this rule,
+  because they speak about helium by design.
+  HF-L04: over every line of STATICS.hbp, GP-SHORT.hbp, long/*.hbp, READ.hbp and README.md, lowercased, a line
+  is offending if it contains 'validat' at a position not preceded by 'not a ' or 'not '. This is broader than
+  the critic's "next to an agreement within a factor 5": any un-negated use counts, so the falsifier is easier
+  to reach. The final README passes this rule (checked by script).
+  Consequence in the engine plan: READ.hbp now carries VERDICT rows only for the GP-based rows and the audits;
+  the statics verdicts stay in STATICS.hbp, so hf-read never prints a unit; names such as K_GP avoid bare
+  tokens.
+
+====================================================================================================
+FIXES
+====================================================================================================
+
+F1. HF-G08's order of events used the wrong instability test (V0 > 1/2 + g h).
+  Recomputed by exact inertia counts (Sylvester, exact Fraction LDL^T) on the engine row1d operator
+  (-(1/2) L4 + U_w, dx = 1/2, 84 free cells), and by an outward-rounded interval Sturm count on the critic's
+  dx = 1/20 2nd-order operator (exact_eig.py):
+    coexistence (E_b = -1/2):  C3* in [11.6388, 11.6389] (dx 1/2), [11.5457, 11.5458] (dx 1/20)
+    h = 48 (E_b = -0.6875):    C3* in [14.8356, 14.8357] (dx 1/2), [14.7300, 14.7301] (dx 1/20)
+    E_b(C3 = 10.7):            [-0.44592, -0.44591] (dx 1/2), [-0.45105, -0.45104] (dx 1/20)
+  The dx 1/20 values reproduce the critic's 11.55, 14.73 and -0.451. With t = 4 C3: about 47 and 59. The
+  other two thresholds were rechecked: complete wetting from C3 in [2.8283, 2.8284] (t about 11, see F3) and a
+  stable film at h = 24 from C3 in [5.225, 5.226] (t about 21). F3's energy moves both slightly: the first is
+  now written 2.83 (was 2.8), the second still rounds to 5.2.
+  Changed: HF-G08 statement (no verdict text); the draft value 10.7 is withdrawn with its reason.
+
+F2. K58 shelf geometry contradicts itself; G0's top was implicit.
+  Choice: 'y to 26' (keeps 14,336 sites and the HF-G14 cost), not 52 rows. Exact: -2 + 56/2 = 26;
+  -2 + 388/2 = 192 for G0 and G0d. Changed: K58.
+
+F3. HF-G11 (a): freeze the strip and the energy definition; freeze row1d.
+  Frozen in K58: row1d (88 cells, z in [-4, 40], two ghost cells at each end, zero at the solid end and at a
+  vacuum end, set to the last free cell at a liquid end, as gp1d.py) and the wetting strip (68 cells, z in
+  [-4, 30], liquid far end, g = 0, mu0, tau = 600). HF-G11 (a) now defines sigma_wl as the sum over the free
+  cells of [phi (-(1/2) L4 phi) + (U_w - mu0) rho + e(rho)] dz.
+  Recomputed (exact_wet.py: gp1d.py's relaxation ported to integer fixed point at 2^64, every energy an exact
+  rational). Under the draft np.diff energy the port reproduces wet4.txt and wet4_c0.txt to every printed digit
+  (+0.248917, +0.109946, -0.079674, -0.292719, -0.522940, -1.024244). Under the frozen energy:
+    sigma_wl(C3 = 0, 1, 2, 3, 4, 6) = +0.250128, +0.112761, -0.075030, -0.286257, -0.514694, -1.012396
+    (each the lower end of a width-1e-6 enclosure), frozen as +0.2501, +0.1128, -0.0750, -0.2863, -0.5147,
+    -1.0124, each +/- 0.01.
+  Important: the shift is not a uniform +0.0012. It is +0.0012 at C3 = 0, +0.0028, +0.0046, +0.0065, +0.0082,
+  and +0.0118 at C3 = 6. Left at the draft value, C3 = 6 would sit outside its own +/- 0.01 band under the
+  frozen definition, and a correct engine would come out NOT_MET. The sign pattern holds: S(2) in
+  [-0.17498, -0.17497], S(3) in [+0.03625, +0.03626]; interpolated threshold [2.8283, 2.8284] (was 2.80).
+  Convergence: tau 600 to 1200 changes nothing at C3 >= 1; at C3 = 0 it falls by 1.05e-4 as the free interface
+  drifts off the repulsive wall (toward the discrete sigma_lv in [0.249919, 0.249920], exact_angle.py).
+  Strip length: z in [-4, 60] gives -0.00135 at C3 = 3 and -0.00270 at C3 = 6 against [-4, 30] (the critic's
+  0.0017 and 0.0033 came from the np.diff energy); the finite strip is part of the definition.
+  Moved with the energy: the HF-G11 (b) 1D design Omegas at h = 24 (z in [-4, 50], thick start, tau 1500):
+  +0.2345461 (was +0.227), -0.1481550 (was -0.159), -0.5994915 (was -0.613), quoted as +0.235, -0.148, -0.599
+  (C3 = 6 sits on a 4-decimal tie, so 3 decimals). The film thicknesses are unchanged (3.7403, 4.3019,
+  4.6944). Young angles (exact_angle.py, arccos by certified Taylor bounds): C3 = 1 in [116.810, 116.811]
+  degrees (was 116), C3 = 2 in [72.535, 72.536] degrees (was 71); the meniscus bands are unchanged.
+  Changed: K58, HF-G11 (a), (b), (c), method, falsifier, from; HF-G02, G12 methods point at row1d.
+
+F4. HF-G03: the 180-degree angle is exact in the continuum; (b) is nearly trivially MET.
+  Choice: label (b) a bug check, not replace it with a dewetting run. Reason: a dewetting run would need new
+  frozen bands that no design calculation supports; the label keeps (b) falsifiable by a code fault, and part
+  (a) remains the physical negative control.
+  Changed: HF-G03 statement (the Bogomolny bound (1/2) phi'^2 + (rho/2)(rho - 1)^2 >= |phi'| phi |1 - rho|,
+  integrating to sigma_wl >= 1/4; the draft 0.2489 is an np.diff artifact; the frozen strip gives +0.2501),
+  predicted (cell-edge meniscus columns; '(b) bug check'), falsifier split into (a) and (b), from;
+  HFDEF control.NEGATIVE; README; LANEROW reasons for L2-GP-03 and L3-01.
+
+F5. rule.unverified and record.CONST.
+  Changed: rule.unverified now reads 'uses ... in its verdict', and names K27 in HF-S14 and K19 in HF-L03 as
+  context only; record.CONST lists the optional note field. Tags unchanged.
+
+F6. method.gp said 'std only'. Changed to 'std plus aether's shadowcat (SHA-256 only)'; README and the engine
+  plan say the same (the statics crate stays std only).
+
+F7. HF-S12: which ratio 'agree within 10 percent' uses.
+  Recomputed (exact_extra.py): d* in [340.8835, 340.8836]; window edges d* 1.1^(-4/3) in [300.2035, 300.2036]
+  and d* 0.9^(-4/3) in [392.2979, 392.2980], so the frozen window is v_PA/v_vA in [0.9, 1.1]. The reverse
+  ratio v_vA/v_PA in [0.9, 1.1] gives [296.2074, 296.2075] and [387.0760, 387.0761], added as information only.
+  Changed: HF-S12 statement, predicted, method.
+
+F8. HF-L01: where s_top comes from.
+  Changed: s_top = the mean over U8's records at t >= 64 of the outermost downward rho = 1/2 crossing above the
+  cap on the cap-top column x = 104, from the exact solid surface, each the mean of the two straddling columns.
+  HF-L01 statement and method; engine plan obs.rs.
+
+F9. Uncited helium statements.
+  Solid first layers: now cited as K39, D. R. Nelson and A. Amir 2013, arXiv:1303.5896, sect. 2, the Fig. 2.1
+  caption and the text after Eq. (2.3) ("the helium atoms solidify into a 'dead layer', in which superfluidity
+  is absent"), read from the lane 1 download (helium-film/lane1-statics/dl/cyl.txt, lines 338-343 and 363, and again at
+  482); verified=1,
+  REPORTED, background only, with a note that it is a review. Cited in HF-G05, HF-G14, HF-L01 and the README.
+  Extrinsic onset: no source was found in the lane downloads, so it is marked uncited background in HF-L01 and
+  the README, and listed as open item 12 in open_constants.txt.
+
+F10. Engine plan sidecar format.
+  Changed: the sidecar is one GNU sha256sum line (64 hex, two spaces, file name), as the repo's other .hbp
+  sidecars (checked: qprism/representation-bins/seeds/PUBLIC-FOLDER-3D-TREE.hbp.sha256). HFDEF pins says so.
+  check-pins.sh group B parses '^([0-9a-fA-F]{64})\ [\ *](.+)$' (read in the clone), so the B re-freeze
+  2216 -> 2217, 673 -> 674, 691 -> 692 stands. Remeasured read-only: git ls-remote gives refs/heads/main =
+  ac5b1580c4ad50ed2bc54e0762d1bb57f6ddee83; c8664c1..ac5b158 is 6 commits, none touching sims/. (Fourth pass,
+  U-m5: main has since moved to ea68fc2, which does not touch sims/ or scripts/check-pins.sh.)
+
+F11. Engine plan geom.rs: the minimum of per-solid signed distances is wrong inside touching solids.
+  Exact: at z = -1/4, U = 5/4 - (27/32) V0 = -239/500 at C3 = 32 and -1103/500 at C3 = 64 (the critic's -0.48
+  and -2.2).
+  Choice: both remedies. geom.rs computes the union distance that K55 specifies (needed anyway at G2's cup-floor
+  seam and at the G0 and G1 wall-on-floor seams, which the critic did not list but which have the same defect).
+  HF-G13's split is a per-face C3 on the single wall solid (C3 = 64 when the nearest point of the union's
+  boundary lies on the left face or the cap at x < 72, ties to 32).
+  Changed: K55 note; HF-G13 method and from; engine plan geom.rs, a union-distance test and fault-union-min.
+
+F12. Engine plan cost estimates are optimistic.
+  HF-S10: substitute d = w^4, so the Kontorovich equation is the monotone polynomial
+  g_n h w^12 + (rho_s/rho)(Gamma^2/2) w^10 = C3_He/m4, solved by integer bisection with no roots.
+  Verified exactly (exact_extra.py): d_flow/d_static at h = 1, 2, 3 cm in [0.9195507, 0.9195508],
+  [0.9523393, 0.9523394], [0.9652955, 0.9652956] (frozen 0.919551, 0.952339, 0.965296); Q(start) in
+  [4.2130627, 4.2130628]e-4 cm^3/s; the closed form t_c = G(w(1)) - G(w(3)) gives [17161.2094, 17161.2095] s;
+  the 2^16-panel bracket is at most 0.0613 s wide, so it lies in [17161.1482, 17161.2708], inside the frozen
+  [17160.2, 17162.3]; t_c/t_a in [1.30018, 1.30019]. No frozen HF-S10 number moves. Changed: HF-S10 method and
+  cost ('seconds'); engine plan section 2.
+  CI-short: the exact sum of the listed parts is [51.88, 96.53] min (was 20-25), with ci-threads counted as 1-2
+  min; the plan listed 0.89-1.35 min, so its parts summed to [51.77, 95.88] (second pass, S-m5: the plan now
+  lists 1-2 min, so the sum is exact). Found during the fix: the
+  draft YAML also ran the whole CI-short GP set on 1 thread, [117.5, 198.2] min more; the 1-thread check now
+  runs a ci-threads subset (537,526,272 site-steps, [0.89, 1.35] min) and compares checkpoint hashes. Job
+  timeout set to 150 min.
+  Also found: HF-G10 claims identical hashes on 1, 2 and 4 threads for the whole U0 run, but its cost counted
+  only the 4-thread run; the 1- and 2-thread reruns with preparation add [84.0, 126.0] min (HF-G10 cost, run
+  table, two dispatch entries). The run table listed 9 G0 runs as '8 runs'. All runs now sum to
+  [553.9, 797.4] min, about 9 to 13 h (was 8-10 h). (Second pass, S-m13: with the dx = 1/4 preparations at
+  24-40 min and G0 at dx = 1/4 at 16-32 min, [566.92, 869.33] min, about 9.4 to 14.5 h.)
+
+F13. "Checked and correct" (statics numbers, K52-K67 checks, HF-N01 and N02 values, record counts, citations,
+  DB98 u1(0), h*, the 2D uncertainty of HF-G11 and G12). No change needed. Rechecked here: the counts (now 57
+  CONST after K39), the tags, the file parsing, d* and its window, t_c, the HF-L02 values.
+
+====================================================================================================
+ADDED BY THIS PASS (supporting the fixes)
+====================================================================================================
+- HFHDR fix_pass field; HFDEF basis.statics and basis.gp name the fix-pass scripts with sha256 prefixes:
+  exact_extra.py fef1051e2184eea7, .out 384b12089e7e94e3; exact_wet.py 33b8d6fdc7360452, .out
+  21bbf7e8e78bf680; exact_angle.py 64b197b4bf48c884, .out 4c3b14b273bb7326; exact_eig.py 3e39d2d6292478e4,
+  .out 40faf5db3b442d0b (all checked against the files on disk).
+- Planted faults fault-n02-every-2tu, fault-union-min, fault-nearest-row (17 features in all).
+- HF-S14: a pronoun for Seki was replaced by the name, 'which Seki calls the true critical rate' (wording only).
+- open_constants.txt: items 12 (extrinsic onset, uncited) and 13 (K39, a review), renumbered after; item 25
+  carries the revised cost estimates.
+
+====================================================================================================
+SEEN, NOT CHANGED (outside the findings)
+====================================================================================================
+- The engine plan lets dropped dx = 1/4 reruns come out INCONCLUSIVE, while the verdict convention allows
+  INCONCLUSIVE only where a row names the precondition, and HF-G05 and HF-G07 do not. Left as the draft has it.
+  (Fixed in the second pass, S-m2: no run is dropped, and a part not run reads NOT_MET.)
+- HF-G09 keeps its pinch-off box [40, 56]. Under the new definition it is reachable, but no design calculation
+  sizes it; it remains a real outcome that can come out NOT_MET.
+
+====================================================================================================
+SECOND PASS: the verification of the first fix pass (2 blocking items, 17 minor items)
+====================================================================================================
+Rules kept: no repository changed; no engine code; no engine run; every moved number recomputed with integers,
+Fractions or outward-rounded enclosures (recompute/exact_fix2.py); floats only in the copied display checks.
+Counts unchanged: 57 CONST, 29 PREDICT, 39 LANEROW, 27 HFDEF; tags DERIVED 9, CONJECTURE 20. No band moved.
+
+S-B1. The wetting strip of HF-G11 (a) had no frozen start (K58).
+  Checked: for C3 <= 6, V0 = 8 C3/125 <= 48/125 = 0.384 < 1/2, so U_w - mu0 >= 1/2 - V0 >= 29/250 > 0
+  everywhere (exact_fix2.py), and the dry strip is a stable state. The verifier's integer RK4 at dt = 1/32 (the
+  engine's integrator; recompute/verify/v_wet.py), rerun: from the liquid start all six sigma_wl lie in their
+  bands (+0.2501290, +0.1127611, -0.0750295, -0.2862567, -0.5146937, -1.0123955). A seed variant
+  (verify/v_wet_seed.py, phi = 2^-20 on every free cell): at tau = 600 phi sits at the rounding floor (28 to 59
+  units at scale 2^60) and sigma_wl is an exact rational near 1e-32, so all six bands are missed. The float
+  display check (verify/seed_strip.py) gives max rho 6.5e-279, 5.4e-252, 3.0e-177 at C3 = 0, 3, 6.
+  Changed: K58 (the wetting strip starts from phi = 1 at z > 0 and 0 at z <= 0, as gp1d.py and exact_wet.py;
+  row1d starts as gp1d.py: a gap row from the same liquid start, a film row from phi = 1 on -1 < z < 10, or
+  -1 < z < 12 at C3 = 64); HF-G11 (a), method and from (the start is part of the definition, why, and the
+  1.05e-4 dependence on start and integrator at C3 = 0); HF-G12 method; engine plan modes.rs. The film-row start
+  is frozen for completeness only: extra.txt shows starts 10 and 4 give the same s at h = 24 and 96 (display).
+
+S-B2. HF-G07's v_hi could be read at a ramp record, or have no value.
+  Changed: HF-G07 statement (a vortex present at any record at t >= 64 counts, whatever made it; a slip
+  completed before t_ref is not counted); predicted (the first counted event of a rung is its first record at
+  t >= 64 with V > 0, or its first valid record with N_slip != 0; v_hi = v_rim at the last record with t >= 64
+  before it; the empty case, a first counted event at the record t = 64, is a named precondition: the claims
+  that use v_hi are not evaluated and the row reads INCONCLUSIVE unless another claim fails, then NOT_MET;
+  0.35 <= v_lo <= 0.95 is checked in every case); falsifier (v_lo > 0.95 added); from. HFDEF verdict: only
+  HF-G07 names a precondition. HF-G04: the dt/2 timing is the time of the first counted event at t >= 64, not a
+  first-vortex time, so it is defined in every dissipative rung, also one that is dissipative only through
+  slips. HF-G05 statement: a vortex present at t = 64 or later counts. Engine plan sections 3 and 4.
+  Choice: INCONCLUSIVE, not NOT_MET, for the empty case. Reason, as corrected in the fourth pass (U-B1): a vortex
+  the ramp made that is still present at the record t = 64 leaves no record at t >= 64 at which to read the onset
+  speed, and NOT_MET would fail a correct engine in that one case. The shield is one record wide. It covers only a
+  first counted event at the record t = 64, so it does not keep a release transient from failing a correct engine
+  in general. A ramp-made event first counted later in the lowest dissipative rung reads NOT_MET, because v_hi is
+  then read on the transient. A ramp-made event that makes U32 dissipative reads NOT_MET, because v_lo is then
+  U16's, about 0.235, below 0.35. The second pass wrote that the choice keeps a correct engine from failing on a
+  release transient; that holds only for the case at t = 64. The case is named and printed, and every other claim
+  stays live.
+  (Third pass: v_rim,max, and so v_lo, is now read on records at t >= 64 (T-B1); the empty case covers the dx check
+  only when the other run's first counted event comes by t = 68, and fails it when the other's comes after t = 68
+  (T-B2); "one record wide" is narrow in definition, not shown to be rare, and the row now says the empty case is
+  a foreseeable outcome (T-m1). Fourth pass: the window is 64 <= t <= t_end - 2, where q is defined (U-m2).)
+
+S-m1 and S-m11. K57's alias reason was false; two text slips.
+  Checked exactly (exact_fix2.py): R(iy) = 1 - y^2/2 + y^4/24 + i y (1 - y^2/6) and R(i sqrt6) = -1/2. Im R > 0
+  for 0 < y^2 < 6, so no alias below eps dt = sqrt6 (eps below 64 sqrt6, in [156.7673, 156.7674]). Re R is convex
+  in y^2, -1/2 at y^2 = 6 and -1/3 at y^2 = 8 (roots 6 -/+ 2 sqrt3 in [2.5358, 2.5359] and [9.4641, 9.4642]),
+  so Re R < 0 on 6 <= y^2 <= 8 and an alias reads abs(arg R) > pi/2 per step, above 32 pi in
+  [100.5309, 100.5310] rad/tu; at the edge 64 (pi/2 + atan(sqrt2/4)) in [122.280, 122.281]. The strip's highest
+  mode: eps^2 = 4480/9, eps in [22.3109, 22.3110], eps dt in [0.3486, 0.3487] (third pass, T-m7: that is the bound
+  over the strip, not a mode of it; the top mode, n = 255 with ky dx = pi, is in [22.31043, 22.31044], eps dt in
+  [0.34860, 0.34861]). n = 82: eps in
+  [2.8328401, 2.8328402], period in [2.2179, 2.2180], alias pi - eps in [0.30875, 0.30876], samples per period
+  in [141.9507, 141.9508].
+  Changed: K57, HF-N02 method and from, engine plan section 3, B1 above ("pi - 2.8328", "141.95").
+
+S-m2 and S-m12. The plan let dropped runs read INCONCLUSIVE, which no row names.
+  Choice: never drop; split a long run into segments; a part not run reads NOT_MET. Reason: the frozen verdict
+  rule already gives NOT_MET to a claim whose method was not run, and naming "not run" as a precondition would
+  give the rows an exit. A 3x slower engine puts g1-u8-dx4 at [317.76, 474.99] min on 4 vCPU, above 360, so
+  the plan needs segments, not drops. (Third pass, T-m9: only the top of that range exceeds 360.)
+  Changed: HFDEF verdict (a row any part of whose method was not run reads NOT_MET); engine plan section 0 item 5,
+  section 6 (segments; dispatch_pending is not a verdict), section 7; open_constants item 25.
+
+S-m3. "Records at every step" (K57, HF-N02, HFDEF method.gp).
+  Changed: the strip evaluates its mode coefficients at every step and records each sign change (the two
+  straddling steps and their raw coefficients), besides the 2-unit records. Engine plan main.rs: the 2-unit
+  records carry N and E for HF-G04.
+
+S-m4. HFHDR fix_pass, README Status, engine plan header.
+  Changed: HFHDR says the 7 blocking items and 12 fixes were applied, the 13th fix item (a confirmation) was
+  rechecked, and a second pass fixed 2 blocking and 17 minor verification items. It gives this file's full
+  scratch path, not its hash, because this file cites the hbp's hash. The README Status says the same. The
+  engine plan names helium-film/synth/calc/ again; the hashes of film4.txt, gap4.txt, wet4.txt, wet4_c0.txt,
+  ratio4.txt, extra.txt, statics.txt, gp1d.py and statics.py were rechecked and match the HFDEF prefixes.
+
+S-m5. CI-short sum and the G2 line.
+  Changed: ci-threads listed as 1-2 min (0.89-1.35 at 100-150 ns; [1.058, 1.563] at the [118.16, 174.44] ns the
+  G1 rows imply), so [51.88, 96.53] is now the exact sum of the listed parts. The G2 table line is split into the
+  three row costs (20-32 min with preparations; the old line gave 18-33); "G2's three runs alone take 17-26 min".
+
+S-m6. K55 note and geom.rs: the seam values hold at dx = 1/2.
+  Exact: at dx = 1/4, z = -1/8, U = 11/32 - (245/256) V0 = -1293/800 (C3 = 32) and -2861/800 (C3 = 64).
+
+S-m7 and S-m14. HF-G09 split and tie rules.
+  Changed: when several free components would continue the same previous one, only the one sharing the most
+  cells keeps the track (ties as stated) and the others are new; drops first detected at the same record are
+  ordered by their first cell in row-major order (by row j, then column i); each drop is counted at most once.
+  Engine plan drops.rs and section 4.
+
+S-m8. HF-L03 audit tokens (optional, applied).
+  Changed: the full stop is a separator; Angstrom (any case) is in the list; the row says only these tokens are
+  checked (a compound such as cm^3/s is not). '/' and '^' were not made separators: "m/s" must stay one token,
+  and "J^2" (the Jacobian) must not become "J". Engine plan sections 1 (read.rs), 4 and 7.
+
+S-m9. Changes outside the findings (K61 cells, Seki for the pronoun, the HFHDR field, the CI thread cut).
+  Kept as listed. The CI thread cut is now stated in HF-G10's cost, the README and the plan.
+
+S-m10. HF-G06 (iii) read N_slip at one fixed record.
+  Changed: for U80 and U96 both claims are read at the last valid record at or before t = 2250 of each run. The
+  plan's HF-G06 example of an INCONCLUSIVE read is gone.
+
+S-m13. dx = 1/4 costs did not scale.
+  Changed: a G1 preparation at dx = 1/4 takes 24-40 min (8 x 3-5), G0 at dx = 1/4 16-32 min (8 x 2-4); HF-G02,
+  HF-G05 and HF-G07 costs, the run table and its note, the totals ([566.92, 869.33] min, 9.4 to 14.5 h), the
+  longest dispatch entry ([105.92, 158.33] min on 4 vCPU, [211.84, 316.66] on 2 vCPU, under 360).
+
+S-m15. HF-L02 thresholds.
+  Changed: the falsifier says v_R/u1 must rise by a factor above (u1/v_R)/3.9, in [1.026558, 1.026559] at 1.1 K
+  and [1.040322, 1.040323] at low T, more than 2.6558 or 4.0322 percent; the statement margins say 2.6558 and
+  4.0322 percent.
+
+S-m16. HF-G05 (v) parenthetical.
+  Changed: 3400 reaches half-periods up to 1684 without the allowance and 1634.95 with it ([1634.95, 1634.96]).
+
+S-m17. CONST used_by (optional, applied).
+  Changed: the 18 missing pairs were added (K01, K02: HF-S01; K06: HF-L01; K08: HF-S07, S12, S14, L02, L03, L04;
+  K11: HF-L01; K20: HF-S12; K31: HF-S12; K52: HF-G02; K53: HF-G02, G03, G14; K56: HF-G05; K65: HF-G04).
+
+S-x. Edits not tied to one finding (listed in the third pass, T-m2; none moves a band, a tag or a count).
+  HFDEF basis.gp gained a sentence citing exact_fix2.py with its hash prefixes (0ae9bc5ea85415ce, output
+  5fb51e92efc01e79, both checked against the files); the from fields of HF-G04, HF-G06, HF-G09 and HF-L03 gained
+  second-pass notes; the plan's gp tests gained a short G1 run split into two segments (S-m2); in HF-L03 'the
+  word helium' became 'the words helium or Angstrom' (S-m8). All are in recompute/patch_fix2.py.
+
+Checks rerun on the second-pass file (recompute/verify/, each output beside its script):
+  v_parse (kinds, tags, verified=0, negative controls, fixed_by_inputs; used_by now has no missing pair),
+  v_edge, v_n02, v_l02, v_s10, v_eig, v_drop and v_cost: outputs identical to the verifier's (helium/verify2/);
+  v_wet (integer RK4 wetting strip: all six bands hold from the liquid start); v_wet_seed (new: a seed start
+  misses all six); exact_indep and last (independent exact checks of HF-L02, HF-S12, HF-S10, the RK4 factor at
+  sqrt6, the strip top mode, the dx = 1/4 seam values; last.py's CI sum [51.77, 95.88] is the old listing);
+  seed_strip and float_wet_eig (float display checks). Also: gen_fix1.py still writes the first-pass file byte
+  for byte, and the HF-L04 audit rule finds no offending line in the final README.
+
+====================================================================================================
+THIRD PASS: the verification of the second fix pass (2 blocking items, 10 minor items)
+====================================================================================================
+Rules kept: no repository changed (the aether clone was only read); no engine code; no engine run; every moved
+number recomputed with integers, Fractions or outward-rounded enclosures (recompute/exact_fix3.py); no float.
+Counts unchanged: 57 CONST, 29 PREDICT, 39 LANEROW, 27 HFDEF, 154 lines; tags DERIVED 9, CONJECTURE 20; the
+verified=0 set, the negative controls and fixed_by_inputs unchanged. No band moved. The second- and third-pass
+files differ in 13 fields, each traced below: HFHDR fix_pass, HFDEF basis.gp, K57 value, K58 value and source,
+HF-G07 predicted, falsifier and from, HF-N02 predicted, method and from, HF-L01 method and from.
+
+T-B1. HF-G07's v_lo had no record window (HF-L01 uses v_lo too).
+  Checked: K59 puts B = 4 on the cells with abs(x - 104) <= 4 within 12 of the cap, so the cap-top column
+  x = 104, where Gamma_top is read, lies under the barrier during the ramp; the K61 note says the path cells over
+  the cap have rho < 0.05 at t = 0. So on ramp records v_rim = q/Gamma_top is a ratio of two small numbers. The
+  ramp ends at step 4096 (t = 64), where B = 0.
+  Choice: the window "records at t >= 64", not the first forward swing. Reason: it is already the window of the
+  classification, of v_hi and of the first counted event, so every HF-G07 read now starts at the same record.
+  HF-G06 (ii) keeps its first forward swing, which also starts at t = 64, and HF-G07 says so.
+  Changed: HF-G07 predicted (v_rim = q/Gamma_top; the v_rim,max of a rung is the largest v_rim over its records
+  at t >= 64, with the reason) and from; HF-L01 method (v_lo as HF-G07 defines it) and from; engine plan
+  sections 3 and 4. (Fourth pass, U-m2: the window ends at t_end - 2, because q has no value at the last record.)
+
+T-B2. HF-G07's precondition let either run whose v_hi is read skip the dx check.
+  Choice: keep the precondition and close the dx case (the finding's first option), not a defined read at the
+  record t = 64. Reason: in the empty case a vortex is in the film at t = 64, so v_rim there is a release
+  transient, not an onset speed; reading it as v_hi would put v_hi <= 0.95 and v_lo <= v_hi on that transient
+  and could fail a correct engine, which the second pass set out to avoid.
+  Changed: HF-G07 predicted: if exactly one of the dx = 1/2 and dx = 1/4 runs of the lowest dissipative rung
+  has its first counted event at the record t = 64 and the other's comes more than 4 time units later (after
+  t = 68), the dx check fails (NOT_MET); the precondition covers only the remaining cases. The 4 time units are
+  HF-G04's dt/2 tolerance, max(1 percent, 4 time units), at t = 64. Falsifier and from to match; engine plan
+  sections 0, 3 and 4.
+  Cases: dx 1/2 at 64 and dx 1/4 at 500 (the finding's example): NOT_MET. dx 1/2 at 500 and dx 1/4 at 64
+  (the reverse case): NOT_MET. Both at 64: the dx ratio is not evaluated; INCONCLUSIVE unless another claim
+  fails. One at 64 and the other at 66 or 68: INCONCLUSIVE unless another claim fails. Neither at 64: the
+  ratio is evaluated as before.
+
+T-m1. The empty case is foreseeable.
+  Checked (exact_fix3.py): the release phase at t = 64 is g u0 x 64 = u0/4, so 8 rad in U32 (in [1.2732,
+  1.2733] turns) and 12 rad in U48 (in [1.9098, 1.9099] turns); a vortex takes about 10 time units to cross the
+  film (HF-G07 method); onset is expected between U32 and U48.
+  Changed: HF-G07 predicted says the empty case is a foreseeable outcome and an INCONCLUSIVE read is foreseen;
+  engine plan section 3; the note under S-B2 ("one record wide" is narrow in definition, not shown to be rare).
+  (Fourth pass, U-B1: "an INCONCLUSIVE read is foreseen" was too narrow. The row now says "an INCONCLUSIVE or a
+  NOT_MET read is foreseen", and why.)
+
+T-m2. Second-pass edits that its section did not list.
+  Changed: S-x added to the SECOND PASS section (basis.gp's exact_fix2.py sentence, the from-field notes of
+  HF-G04, G06, G09 and L03, the plan's segment test, 'word' to 'words' in HF-L03). Checked: each is in
+  recompute/patch_fix2.py, and the two hash prefixes match the files (0ae9bc5ea85415ce, 5fb51e92efc01e79).
+
+T-m3. README "Reading a row" left out INCONCLUSIVE and the not-run rule.
+  Changed: "INCONCLUSIVE only under a precondition the row names; only HF-G07 names one (a v_hi with no value).
+  A row any part of whose method was not run reads NOT_MET."
+
+T-m4. K58 row1d had no frozen relaxation length.
+  Changed: K58 row1d is "relaxed by imaginary-time RK4 at dt = 1/32 to tau = 2048 (65,536 steps)", as the
+  plan's run table already had (65,536/32 = 2048 exactly), with the note that the frozen 1D values came from
+  gp1d.py relaxed to tau = 800 by explicit Euler, and that its tau = 1600 runs at h = 24 and 96 agree with them to
+  every printed digit (extra.txt: 7.1935042 and 4.6345886, from starts 10 and 4 alike; display only). K58
+  source; engine plan modes.rs.
+
+T-m5. README Layout named only G1 as long runs.
+  Changed: "the long runs (G1, G0 at dx = 1/4, the G0 ladder, G0d and G0 asymmetric) in a workflow_dispatch
+  job", as plan section 6's matrix has.
+
+T-m6. HFHDR pointed at a scratch path that the freeze commit would not carry.
+  Choice: commit this file beside the hbp in the freeze commit, as sims/helium-film/CHANGES.txt, and point
+  HFHDR there. recompute/ is not committed; HFHDR says the scratch calculators named here and in HFDEF basis.*
+  stay outside the repository. Checked read-only in the aether clone at ac5b158: check-pins.sh group B counts
+  *.sha256 sidecars only, so a .txt file moves no frozen pin count, and no workflow reads sims/.
+  Changed: HFHDR fix_pass; README Status and Layout; engine plan header, section 0 item 1 and the section 1
+  layout; the head of this file.
+
+T-m7. K57 named a strip mode that the strip does not have.
+  Checked (exact_fix3.py): the mirrored x axis carries cos(pi n x/128), n = 0 to 255, so k dx = n pi/256 < pi
+  (n = 256 is the zero vector); y carries ky dx = 0 or pi; e0 per axis rises with t on [0, pi]. The top mode,
+  n = 255 with ky dx = pi: eps in [22.31043, 22.31044], eps dt in [0.34860, 0.34861]. The y-uniform family that
+  the seed excites tops out at [11.62322, 11.62323]. Every mode lies below sqrt(4480/9) in [22.3109, 22.3110].
+  Changed: K57 ("the strip's modes lie below sqrt(4480/9) = 22.3109, because k dx = n pi/256 < pi on its
+  mirrored x axis (the top one, n = 255 with ky dx = pi, is 22.3104; eps dt < 0.3487)"), engine plan section 3,
+  the note under S-m1. No verdict moves: the alias argument needs only every mode below 64 sqrt6 = 156.7673.
+
+T-m8 (optional, applied). HF-N02 dropped K57's limit on the alias bound.
+  Checked (exact_fix3.py), with u = y^2: Re R(iy) = (u^2 - 12 u + 24)/24 < 0 for 6 - 2 sqrt3 < u < 6 + 2 sqrt3
+  (6 + 2 sqrt3 in [9.4641, 9.4642]), so an alias reads above 100.531 rad per time unit past the edge u = 8 too;
+  d abs(R)^2/du = u^2 (u - 6)/144 > 0 for u > 6; at u = 6 + 2 sqrt3, abs(R)^2 = 2 + (2/3) sqrt3 in
+  [3.154700, 3.154701] and abs(R) in [1.77614, 1.77615], at eps = 64 sqrt(6 + 2 sqrt3) in [196.888, 196.889].
+  From the seed amplitude 2^-10 (2^30 at Q40), a growth of 2^16 to the 2^46 guard takes 20 steps at that rate,
+  21 with the worst factors (the 2^40 background, a cell cosine of 1/sqrt2, the Re/Im split).
+  Changed: HF-N02 method ("up to the stability edge (K57) and beyond it while y^2 < 6 + 2 sqrt3 ...; a mode with
+  a larger y grows by a factor of at least 1.776 per step ... and trips the overflow guard within about 20
+  steps, and that run reads NOT_MET") and from; engine plan section 3. (Fourth pass, U-m4: the 20 steps hold
+  for the seeded mode; a mode that only rounding seeds needs about 60.)
+
+T-m9. The plan's cost sum and its 3x case.
+  Checked (exact_fix3.py): the timed table entries alone sum to [559.92, 862.33] min; [566.92, 869.33] counts
+  row1d and wet ("seconds each") as 1 min, the box ("< 1 min") as 1 min and the G1 edge ("minutes") as 5 min.
+  A 3x slower g1-u8-dx4 with its preparation takes [317.76, 474.99] min on 4 vCPU, so only the top exceeds
+  360; on 2 vCPU [635.52, 949.98] min, which needs three segments at the top.
+  Changed: engine plan section 3 Total, section 0 item 5 ("up to 474.99 min on 4 vCPU, above 360") and
+  section 6; open_constants item 25; the note under S-m2.
+
+T-m10 (optional, applied). HF-N02's "about 5.5 percent" for the 2nd-order symbol.
+  Checked (exact_fix3.py): at n = 82 the 2nd-order symbol gives eps in [2.67948, 2.67949] against
+  [2.8328401, 2.8328402], low by [5.413, 5.414] percent of the 4th-order value ([5.723, 5.724] percent of the
+  2nd-order value). Changed: HF-N02 predicted ("about 5.4 percent"); engine plan section 5 fault-stencil-2nd.
+
+Also added by this pass: HFDEF basis.gp cites exact_fix3.py (abad5b5fbe2bf1da..., output 0ca360d85e526459...);
+the K58 source and the from fields of HF-G07, HF-N02 and HF-L01 name the third pass; HFHDR fix_pass names it;
+the README Status names it.
+
+Checks rerun on the third-pass file (recompute/verify3/):
+  the patch chain: in a clean copy, patch_fix2.py rebuilds gen_final.py and patch_fix3.py rebuilds gen_fix3.py
+  byte for byte; gen_fix1.py, gen_final.py and gen_fix3.py write the first-, second- and third-pass files
+  (376f5e55..., 14f0a233..., 6761327a...); v_parse.out is identical to recompute/verify/v_parse.out (kinds,
+  tags, verified=0 set, negative controls, fixed_by_inputs, field order, used_by, no tab, double space or
+  non-ASCII); audit_l04_readme.out: the HF-L04 rule finds no offending line in the third-pass README.
+
+====================================================================================================
+FOURTH PASS: the verification of the third fix pass (1 blocking item, 8 minor items)
+====================================================================================================
+Source: the two round-2 verifiers of workflow wf_baf3e992-df3 (the last two result lines of its journal.jsonl).
+One returned PASS with 4 minor items (agent a442d9ecbe4cd66ab). The other returned FIX_FIRST with 1 blocking and
+5 minor items (agent ad45a1ff5598274a5). Both raised the q item (U-m2), so there are 8 distinct minor items. The
+cloud seat decided the blocking item: option (1), disclose.
+Rules kept: no repository changed (this pass did not read the remote either); no engine code; no engine run;
+every moved number recomputed with integers, Fractions or outward-rounded enclosures (recompute/exact_fix4.py);
+no float.
+Counts unchanged: 57 CONST, 29 PREDICT, 39 LANEROW, 27 HFDEF, 154 lines; tags DERIVED 9, CONJECTURE 20; the
+verified=0 set, the negative controls and fixed_by_inputs unchanged. No band moved except the centre of HF-G12
+(c), 1.18090 to 1.18089 (U-m8). The third-pass and final files differ in 17 fields, each traced below: HFHDR
+base_commit and fix_pass, HFDEF method.gp and basis.gp, HF-G04 predicted, falsifier and from, HF-G05 method and
+from, HF-G07 predicted and from, HF-G12 predicted and from, HF-N02 method and from, HF-L01 method and from.
+
+U-B1. HF-G07 said the foreseen transient reads INCONCLUSIVE. Under the frozen rule that holds in one narrow case.
+  Checked (exact_fix4.py), in the K62 model (a design estimate, verified=0, about 20 percent): omega = 2 pi/T =
+  sqrt(g/(Lambda W_r)), with Lambda W_r/g = 5710848/25 and T in [3003.03, 3003.04]. For a release at t0 in
+  [0, 64], v_rim(t) = v_rim,max sin(omega (t - t0)) <= v_rim,max sin(omega t) up to t = T/4.
+    U48: v_rim,max = 0.70464. The bound is 0.0941 at t = 64, 0.0970 at t = 66 and 0.1464 at t = 100. It stays
+    below 0.35 for t < 248.43, or t < 203.96 with v_rim,max 20 percent higher. It reaches v* = 0.6 at t in
+    [486.9, 487.0].
+    U96, the top rung: 0.1940 at t = 66; below 0.35 for t < 119.95.
+    U16: v_rim,max = 0.23488, or 0.281856 at 20 percent higher. Reaching 0.35 would need a factor in
+    [1.4901, 1.4902].
+  These match the verifier's 0.097, 0.146, 0.349 at t = 248, about 490 and 0.235.
+  So there are two outcomes besides the empty case. (a) A ramp-made event first counted at t = 66 or later in the
+  lowest dissipative rung (its dx = 1/2 run) puts v_hi on the transient, below 0.35, and 0.35 <= v_lo <= v_hi
+  cannot hold: NOT_MET. (b) A ramp-made event that makes U32 dissipative leaves U16 as the top non-dissipative
+  rung, so v_lo is about 0.235, below 0.35: NOT_MET. Only a first counted event at the record t = 64 reads
+  INCONCLUSIVE.
+  Choice: disclose, the cloud seat's option (1). The precondition is not widened, because a wider precondition
+  would give the row a way out.
+  Changed: HF-G07 predicted: the precondition covers only a first counted event at the record t = 64; a ramp-made
+  event first counted later in the lowest dissipative rung reads NOT_MET, because v_hi is then read on the release
+  transient (K62: in U48, v_rim is about 0.1 at t = 66 and stays below 0.35 until about t = 248); a ramp-made event
+  that makes U32 dissipative reads NOT_MET, because v_lo is then U16's v_rim,max, about 0.235, below 0.35; "an
+  INCONCLUSIVE read is foreseen" became "an INCONCLUSIVE or a NOT_MET read is foreseen". Also HF-G07 from; the
+  S-B2 reason above; the T-m1 note; engine plan section 3 (with the corrected reason), section 0 item 5 and
+  section 4; README Status.
+  Note: the K62 model releases from rest, while the real release imprints an initial current (HF-G05). So these
+  numbers say what the design expects, and the frozen rule decides the verdict. The falsifier needs no change: it
+  already lists v_lo < 0.35 and v_lo > v_hi.
+
+U-m1. The summaries said the empty case is kept out of the dx check. The rule still skips the dx ratio when both
+runs start at t = 64, or one does and the other's first counted event comes by t = 68.
+  Changed: HF-G07 from ("the empty case kept out of the dx check unless the other run's first counted event comes
+  by t = 68"); engine plan section 0 item 5 and section 4 ("It covers the dx check only when the other run's first
+  counted event is at t <= 68"); the third-pass note under S-B2. The predicted field already said this, and no
+  verdict moves.
+
+U-m2. q, and so v_rim, has no value at a run's last record.
+  q(t) = (M_in(t - 2) - M_in(t + 2))/4 needs both neighbours. So it is defined on records with 2 <= t <= t_end - 2,
+  where t_end is 2250 for U0 and U32 to U96, 4500 for U8 and U16, and 4096 for the U8 dx = 1/4 rerun. The lower
+  limit 64 belongs to v_rim in HF-G07 and HF-L01 (T-B1), not to q.
+  Choice: both forms. HFDEF method.gp says once that q and v_rim exist only on records with both neighbours, and
+  that every read of them, and every bound on them, uses only those records. That covers HF-G04 (q in the dt/2
+  comparison) and HF-G06 (ii) (a swing that ends at 2250) without editing them. HF-G07 and HF-L01 name their
+  window, 64 <= t <= t_end - 2. HF-G05 says q_max, t_q and v_q are read on 2 <= t <= t_end - 2. HF-G05's windows do
+  not change: q before t = 64 is a mass flux and needs no barrier window, and in the design q_max and t_q fall near
+  the quarter period and in the first swing, far from both ends of the run.
+  Changed: HFDEF method.gp; HF-G05 method and from; HF-G07 predicted and from; HF-L01 method and from; engine plan
+  sections 3 and 4; the note under T-B1.
+
+U-m3. This file goes into the repository but cites files that stay outside it.
+  Changed: the "Where things are" paragraph at the head of this file (the engine plan and open_constants.txt stay
+  with the scratch copies until the code commit; what each path is relative to). HFHDR fix_pass says the same in
+  one clause. Engine plan header and section 0 item 1.
+
+U-m4 (optional, applied). The 20 steps to the overflow guard hold for the seeded mode only.
+  Checked (exact_fix4.py), at the minimum growth abs(R)^2 >= 2 + (2/3) sqrt3 of T-m8. The seeded mode (2^30 at
+  Q40) needs 2^16 of growth: 20 steps, or 21 with the worst factors, as exact_fix3.py found. A mode that only
+  rounding seeds needs 2^46 from one Q40 unit: 56 steps, or 57 with the worst factors (a target of
+  2 (2^46 + 2^40)). From 2^-8 units, the projection of a single one-unit error on a 512-cell mode, it takes 66, or
+  67. "About 60" covers these. The conclusion does not depend on the count: the guard trips long before a run of
+  up to 820,000 steps ends, and that run reads NOT_MET.
+  Changed: HF-N02 method ("so the seeded mode trips the overflow guard within about 20 steps, any mode within
+  about 60") and from; engine plan section 3; the T-m8 note.
+
+U-m5. Remote main moved to ea68fc2.
+  The FIX_FIRST verifier remeasured read-only (git ls-remote and the GitHub compare API). refs/heads/main is
+  ea68fc2c652e394738661c73b101ce44cc817965, one commit after ac5b158. That commit touches
+  .github/workflows/gate.yml, scripts/check-all.sh and qprism/recovery-omega-codecs/ (Cargo.toml, Cargo.lock,
+  README.md). It does not touch sims/ or scripts/check-pins.sh, and it adds no .sha256 file. This pass relies on
+  that measurement and did not re-read the remote.
+  Choice: the cloud seat's. The freeze is committed on aether main as it stands, not on a branch from ac5b158.
+  Changed: HFHDR base_commit ("ac5b1580c4ad50ed2bc54e0762d1bb57f6ddee83 (written against ac5b158; committed on main
+  ea68fc2 or later, whose later commits do not touch sims/)"); engine plan section 0 item 1 (the same words, the
+  remeasured state, a read-only check before the commit and a commit-message note); README Status; the note
+  under F10. The group B counts stand.
+
+U-m6. The segment state left out t_ref and its reference phases.
+  Changed: engine plan section 6. The state holds the field, the step number, the unwrapped K61 phases, t_ref with
+  Phi_AB(t_ref) and Phi_path(t_ref) once t_ref is set, and any other value that a record row derives from earlier
+  records. The split test's cut falls after t_ref (section 6 and the section 1 tests). So the split run must pass
+  t_ref and run more than 4096 real-time steps of G1. The plan does not size this test on its own (it sits in
+  "tests" in the CI-short estimate), so no cost line moves in this pass; the code commit must measure it.
+
+U-m7 (optional, applied). HF-G04's dt/2 timing part had no rung to rerun if HF-G07 has no dissipative rung.
+  Choice: say that the part then reads NOT_MET, and name no fallback rung. Reason: HFDEF verdict already gives
+  NOT_MET to a part that is not run, and a fallback rung would have nothing to time, because HF-G07's ladder
+  includes U80 and U96, so with no dissipative rung no rung has a counted event.
+  Changed: HF-G04 predicted, falsifier and from; engine plan section 0 item 5 and section 3.
+
+U-m8 (optional, applied). HF-G12 (c)'s band centre slipped in its last digit.
+  Checked (exact_fix4.py): gp1d.py's gap relaxation (C3 = -32, liquid start, z in [-4, 40], 88 cells, liquid far
+  end, tau = 800, 10,666 explicit steps at dt = 3/40), ported to integer fixed point at 2^64 as in exact_wet.py.
+  It gives x(24) in [7.1732474, 7.1732475] and x(40) in [6.0744287, 6.0744288] (gap4.txt 7.17325, extra.txt
+  6.074428791115779), so x(24)/x(40) is in [1.1808925, 1.1808926]. The printed basis values give [1.1808921,
+  1.1808938], and the verifier's Q40 RK4 row1d at tau = 2048 gave [1.1808924, 1.1808928]. All round to 1.18089.
+  The old centre 1.18090 was 6.3e-6 relative high. The band moves from [1.163186, 1.198614] to
+  [1.163176, 1.198604], and no verdict moves. The (b) values 7.1733 and 6.0744 still round as frozen.
+  Changed: HF-G12 predicted ((c) "within 1.5 percent of 1.18089") and from.
+
+Also added by this pass: HFDEF basis.gp cites exact_fix4.py (0523094447950bad..., output 88a169f055f9c8c2...);
+the from fields of HF-G04, HF-G05, HF-G07, HF-G12, HF-N02 and HF-L01 name the fourth pass; HFHDR fix_pass names it;
+the README Status and Layout name it; recompute/patch_fix4.py and recompute/gen_fix4.py extend the generator
+chain; the head of this file names the fourth-pass output.
+
+Checks rerun on the final file (recompute/verify4/, each output beside its script):
+  chain4.sh: in a clean copy, patch_fix2.py, patch_fix3.py and patch_fix4.py rebuild gen_final.py, gen_fix3.py
+  and gen_fix4.py byte for byte. gen_draft.py, gen_fix1.py, gen_final.py, gen_fix3.py and gen_fix4.py write
+  46d1293e..., 376f5e55..., 14f0a233..., 6761327a... and 392b3916..., and the last equals
+  final/PREDICTION-HELIUM-FILM.hbp. exact_fix4.py reproduces exact_fix4.out byte for byte.
+  v_parse.out (recompute/verify/v_parse.py rerun) is identical to verify3/v_parse.out.
+  fdiff_third_to_final.out (fdiff4.py on gen_fix3.py's output and the final file): the same rows, row order and
+  field order, and exactly the 17 fields above.
+  ast_float4.out: no float literal or float() call in exact_fix4.py or patch_fix4.py; every division listed has a
+  Fraction operand.
+  audit_l04_readme.out: the HF-L04 rule finds no offending line in the final README.
+  text_scan.out: every package file is ASCII, with no CR or tab; the pronoun scan finds only He, the element.
+
+
+====================================================================================================
+AT THE FREEZE (appended by the cloud seat when committing; the verifiers read CHANGES.txt without this section)
+====================================================================================================
+
+Verification of the fourth pass: two fresh verifiers, one round, both PASS, nothing blocking.
+The frozen PREDICTION-HELIUM-FILM.hbp is exactly the verified file, sha256
+392b39162d75cdf288746f59316c8126c88d634459d54fb5661542b470f6e630; the generator chain rebuilds every pass byte for byte.
+
+Decision on the one item put to the cloud seat: q is defined on records with 2 <= t <= t_end - 2 (a central
+difference), and the t >= 64 window applies to v_rim only (HF-G07, HF-L01). HF-G05 keeps 2 <= t, as written.
+
+The verifiers' minor items are listed below and left unapplied, so that the committed prediction file is the
+verified one. None moves a verdict. Where a from field reads more broadly than its predicted field, the predicted
+field governs. A later correction goes into PREDICTION-HELIUM-FILM-ADDENDUM-<date>.hbp, never into the frozen file.
+
+M01 [minor] CHANGES.txt, FOURTH PASS, U-m8 (last sentence of Checked); recompute/exact_fix4.py, the '(b) still rounds' line
+    CHANGES says 'The (b) values 7.1733 and 6.0744 still round as frozen.' That is false for 7.1733. exact_fix4.py gives x(24) in [7.1732474, 7.1732475], and that rounds to 7.1732. The FIX_FIRST verifier's Q40 value [7.173247, 7.173248] and the float run (7.17324749705683, display only) also round to 7.1732. The frozen 7.1733 is a double rounding: 7.1732475 went to 7.17325 in gap4.txt, then to 7.1733. The script line that CHANGES relies on prints a floor/ceil enclosure, [7.1732, 7.1733], which does not test rounding to the nearest value. The slip is 7.3e-6 relative, against HF-G12 (b)'s 2 percent band, so no verdict moves. 6.0744 does round as frozen. This is the same kind of last-digit slip that U-m8 corrected in (c).
+    Suggested: Do not move the band, because the decision moves only (c). Correct the CHANGES sentence instead, for example: 'x(24) rounds to 7.1732. The frozen 7.1733 is the half-up rounding of gap4.txt's 7.17325, 7.3e-6 relative high against a 2 percent band, so no verdict moves. It stays as frozen unless the cloud seat moves it. 6.0744 rounds as frozen.' If the script line is kept, label it as an enclosure, not a rounding check.
+
+M02 [minor] HF-G05 method and HFDEF method.gp (q defined on 2 <= t <= t_end - 2) against the decided text; CHANGES.txt U-m2
+    The decision text says q and v_rim are defined only on records with 64 <= t <= t_end - 2, and names HF-G05 (q_max, t_q). The pass wrote 2 <= t <= t_end - 2 for q in HF-G05 and in HFDEF method.gp. It kept 64 only for v_rim in HF-G07 and HF-L01. The refix output discloses this as partly applied. The reading matches both verifiers' own items, which were about the last record only. The decision also allowed the HFDEF route. No band, verdict or window of HF-G05 moves in the design: the barrier suppresses flow before t = 64, q_max falls near T/4 = 750, and t_q lies between t_min1 and t_max2. But CHANGES U-m2 does not say that this departs from the decided text.
+    Suggested: The cloud seat should confirm the 2 <= t reading. If it wants 64 <= t for q as well, a fifth patch changes HFDEF method.gp and the HF-G05 method. That also moves the windows of HF-G05 (iv) and HF-G06 (i). In either case, add one sentence to U-m2 saying that the decided text named 64 <= t for q, and why this pass did not apply that to HF-G05.
+
+M03 [minor] PREDICTION-HELIUM-FILM.hbp HF-G07 from; engine_plan.txt section 0 item 5 and section 4; README.md Status; CHANGES.txt S-B2 reason
+    The predicted field and plan section 3 are precise: 'a ramp-made event first counted later in the lowest dissipative rung (its dx = 1/2 run) reads NOT_MET'. The from field shortens this to '(a ramp-made event first counted after t = 64, or one that makes U32 dissipative, reads NOT_MET)'. That drops both 'in the lowest dissipative rung' and 'its dx = 1/2 run'. Read literally, it would also cover U96, whose slips after t_ref are expected. Plan sections 0 and 4 and S-B2 drop only '(its dx = 1/2 run)', and the README drops both. The qualifier matters in one subcase. Suppose the dx = 1/2 run's first counted event is at t = 64, and a ramp-made event in the dx = 1/4 rerun is first counted at t = 66 or 68. The rule then reads INCONCLUSIVE, not NOT_MET. The predicted field governs, so no verdict moves. This is the same class of item as round-2 U-m1, a frozen from field that says more than the rule.
+    Suggested: In the HF-G07 from field, write 'a ramp-made event first counted after t = 64 in the dx = 1/2 run of the lowest dissipative rung'. Add '(its dx = 1/2 run)' in plan section 0 item 5, section 4 and the S-B2 reason. In the README, write 'counted later in the lowest dissipative rung'.
+
+M04 [minor] CHANGES.txt head, 'Where things are' paragraph
+    It says 'The other files it names are not in the freeze commit.' But CHANGES names final/PREDICTION-HELIUM-FILM.hbp and final/README.md, and both go into the freeze commit (plan section 0 item 1). The sentence is wrong as written, although the next sentence lists correctly what stays outside.
+    Suggested: Write 'Apart from the prediction file and README.md, the files it names are not in the freeze commit.'
+
+M05 [minor] CHANGES.txt U-m2 ('in the design q_max and t_q fall near the quarter period and in the first swing')
+    HF-G05 (vi) defines t_q as the record of largest abs(q) between t_min1 and t_max2. That is the second swing (swing2 = M_in(t_max2) - M_in(t_min1)), near 3T/4, which is about 2250. It is not in the first swing. The conclusion still holds: t_q is far from both t = 64 and t_end - 2 = 4498.
+    Suggested: Write 'q_max falls near the quarter period and t_q in the second swing, near 3T/4, far from both ends of the run'.
+
+M06 [minor] README.md Layout heading '(planned; see the engine plan)'
+    This is optional and left over from round 2. The PASS verifier's item 3 noted that the README's pointer to the engine plan leads outside the freeze commit. The decision covered only HFHDR and the CHANGES head, and both were done. The committed README still points at a file that the freeze commit does not carry.
+    Suggested: Optional: '(planned; the engine plan stays with the scratch copies until the code commit)'.
+
+M07 [minor] engine_plan.txt section 3 (HF-G07 bullet) and CHANGES.txt U-m2, the t_end lists
+    This is optional. Both lists give t_end as 2250 for U0 and U32 to U96, 4500 for U8 and U16, and 4096 for the U8 dx = 1/4 rerun. They leave out HF-G07's two dx = 1/4 reruns, which run 2250 time units (HF-G07 cost). If U16 brackets onset, its rerun ends at 2250, not at the 4500 the list gives for U16. The rows define t_end as the run's last record, so no read is undefined.
+    Suggested: Optional: add 'and 2250 for the two HF-G07 dx = 1/4 reruns' to both lists.
+
+M08 [minor] PREDICTION-HELIUM-FILM.hbp HF-G12 predicted (b) '7.1733, 6.5353, 6.0744'; CHANGES.txt U-m8 ('The (b) values 7.1733 and 6.0744 still round as frozen'); recompute/exact_fix4.py line 103
+    x(24) is 7.1732475 (my exact Newton stationary state of K58 row1d: 7.1732474971; my Q40 RK4 at tau = 2048: 7.1732474963). It rounds to 7.1732, not 7.1733. The draft value is a double rounding: 7.1732475 to gap4.txt's 7.17325, then to 7.1733. U-m8 says the (b) values still round as frozen. That is wrong for 7.1733. The check behind it prints iv(x24, x24, 4), which is the floor and the ceiling, [7.1732, 7.1733], not a rounding. The slip is 7.3e-6 relative, against a 2 percent band, so no verdict moves. 6.5353 and 6.0744 are correct.
+    Suggested: Before the freeze, write 7.1732 in HF-G12 (b) and correct the U-m8 sentence. Or keep 7.1733 and say in U-m8 that it is a 7.3e-6 slip left as frozen. Make exact_fix4.py print a rounding, not a floor and ceiling.
+
+M09 [minor] PREDICTION-HELIUM-FILM.hbp HF-G07 predicted ('a ramp-made event first counted later in the lowest dissipative rung (its dx = 1/2 run) reads NOT_MET ... and a ramp-made event that makes U32 dissipative reads NOT_MET, because v_lo is then U16's v_rim,max')
+    The disclosure names only the dx = 1/2 run. Two more transient outcomes read NOT_MET, through falsifiers the row lists but does not tie to the transient. (1) A ramp-made event first counted at t >= 66 only in the dx = 1/4 rerun of the lowest dissipative rung, with the dx = 1/2 run at its natural onset (K62: record 488, v_hi in [0.5992, 0.5993]). Then the dx ratio fails: [0.156, 0.157] for an event at 66 and [0.358, 0.359] at 150. (2) A ramp-made event only in the dx = 1/4 rerun of U32 changes U32's classification. Here the stated reason (v_lo becomes U16's) does not apply, but the read is still NOT_MET. The general sentences ('covers only a first counted event at the record t = 64'; 'an INCONCLUSIVE or a NOT_MET read is foreseen') remain true. So nothing is misstated, only left out.
+    Suggested: Optional, one clause: 'the same holds in the dx = 1/4 reruns: a ramp-made event first counted after t = 64 in the rerun of the lowest dissipative rung only moves v_hi by far more than 10 percent, and one in the rerun of U32 changes its classification; both read NOT_MET'.
+
+M10 [minor] CHANGES.txt T-B2 'Cases' list ('One at 64 and the other at 66 or 68: INCONCLUSIVE unless another claim fails')
+    This list was not updated in the fourth pass. When the dx = 1/2 run is the one at 66 or 68 and the dx = 1/4 rerun is at 64, v_hi(dx 1/2) is read at t = 64 or 66, on the transient. K62 gives [0.0940, 0.0941] and [0.0969, 0.0970]. So v_lo <= v_hi fails and the row reads NOT_MET, as U-B1 (a) and the HF-G07 predicted field say. Only the order with dx = 1/2 at 64 and dx = 1/4 at 66 or 68 reads INCONCLUSIVE. The list is literally true, because of its 'unless another claim fails', but read alone it suggests INCONCLUSIVE for both orders. The round-2 verifiers' mechanical tables also listed 66/64 and 68/64 as INCONCLUSIVE.
+    Suggested: Add to the T-B2 cases: '(if it is the dx = 1/2 run that comes at 66 or 68, its v_hi is read on the release transient and the row reads NOT_MET, U-B1 (a))'.
+
+M11 [minor] PREDICTION-HELIUM-FILM.hbp HF-G04 predicted (dt/2 timing of the first counted event, within max(1 percent, 4 time units))
+    Optional. This is the dt form of the straddle that HF-G07 closes for dx. Suppose the lowest dissipative rung has a ramp-made event counted at the record t = 64 in one of the dt = 1/64 and dt = 1/128 runs. If the other run has no such event, or counts it after t = 68, the timing part fails (|488 - 64| > 4.88) and HF-G04 reads NOT_MET. HF-G07 names this outcome for its dx runs. HF-G04 does not. The risk is small, because halving dt changes the dynamics far less than halving dx.
+    Suggested: Optional: in HF-G04, add 'a ramp-made event at t = 64 in one dt run and not within 4 time units in the other reads NOT_MET, as in HF-G07's dx check'.
+
+M12 [minor] engine_plan.txt section 6 (segments) and section 1 gp tests (split G1 run with the cut after t_ref)
+    The segment state is complete. It holds the field, the step number, the unwrapped K61 phases, t_ref with Phi_AB(t_ref) and Phi_path(t_ref), and a catch-all for any value derived from earlier records. RK4 is one-step, and the barrier ramp follows from the step number. Two plan details remain. (1) Section 6 says the joined record files equal an unbroken run bit for bit, and also that the receipt head row names every segment. So only the record rows can be equal. The dispatch 'cmp against receipts/long/<name>.hbp' for a segmented entry is not defined. (2) The split test must reach a valid record at t >= 64. That needs a prepared G1 state, or a start that already has the film: from an unprepared start, t_ref may never be set. A cut at 66 compared through 68, plus the unbroken run, is 1,289,027,584 site-steps. That is [32.2, 48.3] s in release on 4 cores, plus a preparation (9,705,619,456 site-steps, 3 to 5 min) if no stored state is used. `cargo test` runs in the debug profile unless the crate sets an opt-level. U-m6 says the test is unsized, but it does not mention the preparation or the profile.
+    Suggested: Optional: say 'the joined record rows'. Say how a segmented entry is compared in CI. Say the split test starts from a stored prepared G1 state, runs in the release profile (or the crate sets an opt-level for tests), and is sized in the code commit.
+
+M13 [minor] engine_plan.txt section 3, HF-G07 bullet ('t_end (2250 for U0 and U32 to U96, 4500 for U8 and U16)')
+    The list leaves out the dx = 1/4 reruns: 2250 for the two bracketing reruns, which can include U16, and 4096 for U8's HF-G05 rerun. Read as a list, it would give 4500 to a U16 dx = 1/4 rerun. The frozen rows define t_end as the run's last record (HFDEF method.gp, HF-G07), and HF-G05 names 4096. So no read changes.
+    Suggested: Optional: write 't_end the run's last record (2250 for U0, U32 to U96 and the dx = 1/4 bracket reruns, 4500 for U8 and U16, 4096 for the U8 dx = 1/4 rerun)'.
+
