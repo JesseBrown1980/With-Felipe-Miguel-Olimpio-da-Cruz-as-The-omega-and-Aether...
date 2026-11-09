@@ -84,9 +84,7 @@ tree if preferred; CI uses `"${CARGO_TARGET_DIR:-target}"`.
 
 ```
 sha256sum -c UPSTREAM.sha256
-cargo +1.81.0 clippy --locked --all-targets -- -D warnings \
-  -A dead_code -A clippy::unusual_byte_groupings \
-  -A clippy::needless_range_loop -A clippy::unnecessary_to_owned
+cargo +1.81.0 clippy --locked --all-targets -- -D warnings
 cargo +1.81.0 test --locked
 cargo +1.81.0 build --locked --release
 ./target/release/omega_hyper_codec_v0 self-test
@@ -95,8 +93,10 @@ diff <(./target/release/omega_floor_codec_v0 self-test) \
 ```
 
 Upstream does not run clippy on these sources (`verify.yml:111` builds each with
-`rustc --edition=2021 --test -O`), so it lists no allowed lints. The four named
-allows keep the vendored bytes unedited: `dead_code` (items the hyper binary's
+`rustc --edition=2021 --test -O`), so it lists no allowed lints. Four lints are allowed
+by name in `Cargo.toml` (`[lints.rust]` and `[lints.clippy]`, package-wide since 0.1.1; 0.1.0 passed
+them only on the CI command line, so plain clippy failed on the published 0.1.0 crate). They keep
+the vendored bytes unedited: `dead_code` (items the hyper binary's
 non-test build does not use: hyper `:50`, `:52`, `:53`, `:168`, `:180`, `:300`,
 `:717`; catalog `:18-20`, `:176`, `:191`, `:199`, `:271`, `:354`), `clippy::unusual_byte_groupings`
 (catalog `:600`, `:638`), `clippy::needless_range_loop` (hyper `:452`) and

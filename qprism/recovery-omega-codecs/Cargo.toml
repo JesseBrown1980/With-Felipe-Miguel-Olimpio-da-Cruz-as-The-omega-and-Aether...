@@ -1,6 +1,6 @@
 [package]
 name = "asolaria-recovery-omega-codecs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.81"
 license = "MIT"
@@ -38,6 +38,15 @@ path = "omega-hyper-codec-integration-v0/omega_hyper_codec_v0.rs"
 # same level to the hyper binary and the catalog module it compiles in, without editing either.
 [lints.rust]
 unsafe_code = "forbid"
+# 0.1.1: the four upstream lints the README lists are allowed here, package-wide, so plain
+# `cargo clippy --all-targets -- -D warnings` passes on the published crate with the vendored
+# sources left byte-identical. 0.1.0 carried these allowances only on the CI command line.
+dead_code = "allow"
+
+[lints.clippy]
+unusual_byte_groupings = "allow"
+needless_range_loop = "allow"
+unnecessary_to_owned = "allow"
 
 [profile.release]
 overflow-checks = true

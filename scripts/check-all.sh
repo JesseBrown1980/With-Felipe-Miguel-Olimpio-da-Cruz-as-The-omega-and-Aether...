@@ -95,8 +95,7 @@ job omega-codecs bash -c "set -euo pipefail; $(declare -f rust no_float); ROOT='
   cd qprism/recovery-omega-codecs
   sha256sum -c UPSTREAM.sha256
   cmp omega-operator-catalog-v0/omega_operator_catalog.rs ../recovery/catalog/omega_operator_catalog.rs
-  rust qprism/recovery-omega-codecs -A dead_code -A clippy::unusual_byte_groupings \
-    -A clippy::needless_range_loop -A clippy::unnecessary_to_owned
+  rust qprism/recovery-omega-codecs
   test "$(cargo +1.81.0 test --locked --bin omega_floor_codec_v0 -- --list 2>/dev/null | grep -c ": test$")" = 11
   test "$(cargo +1.81.0 test --locked --bin omega_hyper_codec_v0 -- --list 2>/dev/null | grep -c ": test$")" = 34
   cargo +1.81.0 build -q --locked --release

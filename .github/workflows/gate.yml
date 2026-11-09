@@ -102,15 +102,9 @@ jobs:
         run: |
           sha256sum -c UPSTREAM.sha256
           cmp omega-operator-catalog-v0/omega_operator_catalog.rs ../recovery/catalog/omega_operator_catalog.rs
-      # Four upstream lints are allowed so the sources stay byte-identical (README lists each site);
-      # every other warning still denies.
-      - run: >
-          cargo +1.81.0 clippy --locked --all-targets --
-          -D warnings
-          -A dead_code
-          -A clippy::unusual_byte_groupings
-          -A clippy::needless_range_loop
-          -A clippy::unnecessary_to_owned
+      # Four upstream lints are allowed by name in Cargo.toml [lints] (README lists each site), so the
+      # sources stay byte-identical; every other warning still denies, and the published crate passes the same command.
+      - run: cargo +1.81.0 clippy --locked --all-targets -- -D warnings
       - name: test census pinned upstream (floor 11, hyper 34)
         run: |
           test "$(cargo +1.81.0 test --locked --bin omega_floor_codec_v0 -- --list 2>/dev/null | grep -c ': test$')" = 11
