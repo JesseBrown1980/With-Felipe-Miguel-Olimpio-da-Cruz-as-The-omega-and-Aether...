@@ -1,0 +1,592 @@
+CHANGES: fix pass on PREDICTION-BEC-CANONICAL.hbp, README.md and engine_plan.txt (2026-11-09)
+
+Source: the final critic's FIX_FIRST verdict in bec/wf.json (critic.blocking, 5 items; critic.fixes, 16 items), and the
+fix-pass task (engine B by CRT and rational reconstruction, the gate, the recomputations, SEQUENCE, these documents).
+Before the pass the package was copied to bec-fix/before/. The prediction file was 203 lines with sha256
+71808f929f6a684d30edfefbb97d3a550ff54a451e40d0af482348eb9025031a. It is now 207 lines. Its new sha256 is in the
+fix pass's return, and sha256sum gives it. No engine code was written and no engine ran. No repository was touched;
+the aether clone was only read.
+
+Scratch scripts, all under /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/bec-fix/ and listed with
+fingerprints in BECSMOKE SM9: f1_gauss.py, f2_precision.py, f3_o01.py, f4_x04.py, f5_gap.py (with f5_gap_lib.py),
+f6_gap_rows.py, f7_mm_smoke.py, f8_badprime_search.py, f9_mm_cost.py, f10_check.py, f11_t710.py; the text edits are
+rep.py and patches/p1 to p8.
+
+------------------------------------------------------------------------------------------------------------------------
+BLOCKING ITEMS
+
+B1. BEC-L04 and D10: the frozen gap ratios broke the bound gap < Delta1/3.
+- D10 now proves 0 < gap < Delta1/3 in one line: Delta1 = sum_e g_e (q^e/(1-q^e)) E[q^(e N_0)], and its e = 1 term
+  is 3 times the gap. The ratio tends to 1/3 from below; the e >= 2 terms carry one power of N fewer.
+- BEC-L04 now scores 0 < gap < Delta1/3 at every ladder point, in the statement, verdict_rule and falsifier.
+- The ratio itself is read and report, with no frozen band.
+- The old list (0.34, 0.89 and 0.40 broke the bound) is withdrawn. Its cause was summing the pole form over every m <= N.
+- D10 gives the correct pole-law estimate: sum the convolution E_m = sum_i C(m-i+2, 2) q^(m-i) F_i over m <= N. That
+  gives (H(1)/6)(w^3 + (3 k2 - 1) w - k3), w = N + 2 - mu1.
+- f5_gap.py checked it against exact values at the excluded q = 1/5, 1/3, 2/9, 3/5 and 2/3. It agrees to 4 digits or
+  better wherever M >= 5. Every exact ratio was 0.118 to 0.317: below 1/3 and rising.
+- The task asked for the gap ratios to be recomputed under the bound. f6_gap_rows.py did that from closed forms at the
+  ladder points (new constant: k3 = 21.12009, 50.73098, 771.9755 at 2/5, 1/2, 3/4).
+- Results: 2/5: 0.240, 0.281, 0.306, 0.319, 0.326; 1/2: 0.240, 0.270, 0.286, 0.302, 0.310, 0.322; 3/4: 0.227, 0.262,
+  0.291, 0.303. All are below 1/3 and rise along each ladder.
+- They are printed beside the read for context only and carry no verdict.
+- The same script reproduced every frozen Delta1 to 1e-10 (second pass, S4: 1e-9; the largest differences are 7.8e-10 at
+  (2/5, 32) and 6.7e-10 at (1/2, 48)). The two exceptions are (2/5, 16), at 3e-4, and (1/2, 32), at
+  6e-6, where the frozen value carries the 1/P(m <= N) factor.
+
+B2. BEC-O01: the scored TS read could not come out MET at 8 of the 10 TS points.
+- The inequality "lambda_1 bracket below q_hi/(1-q_hi)" is now scored only at TC, (7/10, 8) and (9/10, 16).
+- At the other 8 TS points it is read and report. The falsifier and verdict_rule now match.
+- The critic allowed (7/10, 8) and (9/10, 16) only if a certified lower bound on the gap exceeds the bracket width. One
+  does, by Jensen: gap >= (q/(1-q)) q^<N_0>, since q^n is convex in n. The reader certifies it as
+  (q_lo/(1-q_lo)) q_lo^(N f_hi).
+- From frozen f values only (f3_o01.py) the bound is about 0.09, 1.7e-21 and 1.2e-19 at TC, (7/10, 8) and (9/10, 16).
+  The D13 width estimates are 2.5e-32, 1.8e-32 and 2.8e-30. The margins are about 4e30, 1e11 and 4e10.
+- At the other 8 TS points the bound lies about 15 to 3250 orders of magnitude below the width.
+
+B3. The truncated-Gaussian estimate used the wrong formula.
+- D15, BEC-T10 and BEC-T11 now use sigma phi(M)/Phi(M), the D4 quantity.
+- f1_gauss.py recomputed the TC values in 60-digit Decimal from the Mellin forms: M = 0.484418, sigma = 28.485784,
+  Delta1_G = 14.732843, Y shift 0.230201, f = 0.055726, Var/(N0(N0+1)) = 0.464141, Var_G/V = 0.481964.
+- So BEC-T11's 0.131 and 0.0434 are now 0.230 and 0.0557, and BEC-T10's 0.8 is now 0.46.
+- BEC-T11's 0.48 is unchanged, because the variance formula was right.
+- Exact smoke at the excluded (4/5, 6) gives Delta1 = 0.1738 (Y shift 4.83e-3), which is 2.17 times the corrected
+  Gaussian. At the excluded q = 2/3, N = 32 to 56, the factor is 0.90 to 2.55, growing with M.
+- D15's heavy-tail sentence now says about 2.2 times. The quoted ratios were replaced, and the scored 0.02 threshold
+  still holds. The M >= 8 rule and the Chernoff certificate stay.
+
+B4. BEC-N05 and F7: the no-float gate could not see the engines.
+- Choice: a copy of ternary/tools/integer_only.py at ac5b158, not a wrapper.
+- Its AST and token checks are unchanged. Only the two scan-root lists in main() change, to files(["tools",
+  "engine-b"], ".py") and files(["engine-a/src", "engine-a/tests"], ".rs"), relative to sims/bec-canonical.
+- The docstring is kept, so CI requires the diff against the original to be exactly those two lines.
+- The summary line must show hits=0, python_files >= 6 and rust_files >= 11.
+- F7 now plants one float literal in each of the four roots, in a temporary copy. The gate copy must print four FAIL
+  lines and exit 1. The f32/f64 grep stays as an extra gate, and F7 does not rely on it.
+- BEC-N05, BEC-F01, LANEROW BEC-E20, the README and plan sections 4, 6 and 7 changed to match.
+- tools/check_points.py is an integer-pair port of calc/c12_check_points.py (a/b parsed and reduced by its own gcd; no
+  fractions import; the BEC-N05 gate scans it), not a copy: c12 imports fractions, so a copy would fail the gate on the clean
+  tree (second pass, S1).
+- BECDEF reader also changed in this pass, and was not listed: it said "integer-pair rationals, no fractions import"; it now
+  says "integer-pair rationals with their own Euclid; no fractions, decimal or math import and no true division, under the
+  copied integer_only gate of BEC-N05" (listed in the second pass, S9 b).
+
+B5. Not every pre-freeze computation was disclosed.
+- New BECSMOKE SM8 for the final critic: what k1 to k9 computed and where, with sha256 fingerprints of the nine scripts
+  and their outputs.
+- XP4 and XP5 now list the final critic (and XP5 also this pass).
+- BEC-L01, L02, L06, X03, B01, B02, G01 and G02 now cite "XP4: the N <= 3 sub-reads are fixed by BEC-C01 to C03 and
+  were evaluated by the final critic (k8)" and carry fixed_by_inputs=S, naming those sub-reads.
+- For consistency the same holds for BEC-X01 (d), X02 and O01. Their N <= 3 sub-reads are also fixed by the frozen
+  strings, and no seat evaluated them.
+- New BECEXCL EXCL-CRITIC: the critic's closed forms at q = i/41, i = 1 to 40. These 40 q join EXCL-UNION, which now has
+  56 q, listed in its braces so the unchanged calc/c12_check_points.py reads them (0 collisions).
+- The critic's exact runs at 1/5, 3/5, 2/3, 1/100000, 1/10000000, 2/7, 47/50 and 3/1000 are listed in SM8.
+- New BECSMOKE SM9 for this fix pass, with fingerprints.
+
+------------------------------------------------------------------------------------------------------------------------
+FIXES
+
+F1. BEC-X04 at q = 1/1000000, N = 16.
+- Option chosen: widen the bands, which keeps a falsifier. The other option, marking the read known-marginal, would
+  have removed it.
+- The forced loss is sum over r | 999999 of v_r((16!)^2) log2 r = 44.57 bits (f4_x04.py).
+- The den Z lower band is widened by 45 bits, to [8040, 8133]. The den Var lower band is widened by 90 bits, to
+  [16080, 16270]. (Second pass, S6: the den Var band is widened by 45 bits too, to [16125, 16270].)
+- f4_x04.py also checked the rule by exact runs at the excluded 1/100000, 1/10000000, 43/64, 1/5, 2/9, 3/5 and 2/7.
+  The loss is the sum plus 0 to 16 bits, and 0 to 7 bits at N = 16.
+- The sum is 0 at every other row q except 2/5, where it is at most 0.52 of 3N. No other point is marginal. (Second pass,
+  S11: with every prime r <= N counted, the forced loss is at most 0.79 of 3N, at (2/5, 256).)
+
+F2. PF5 run-level GUARD.
+- BEC-F01, BEC-X02 and plan section 6 now expect the GUARD exact_div at some n >= 2 at the first CS point. At
+  q = 1/2 and 3/4, c_1 = 1 makes every n = 1 division exact, and k = 2 divides by c_2^3 = 27 or 343.
+- The run-level GUARD is an expectation, not scored. The unit fixture stays the scored detection.
+
+F3. BEC-T01 at TC.
+- The reader evaluates W_bound and p_req with the engine's certified f_hi from the p = 128 run.
+- f2_precision.py: with the Gaussian f = 0.0557, N^(1/3) W_bound at p = 128 is 1.75e-33 (was 8.46e-34), p_req = 30
+  (was 29), and the bound at p_req is 0.00055.
+- The thresholds are p_req = 29 if f_hi < 0.050266, 30 if f_hi < 0.100532, and 31 if f_hi < 0.201064.
+- The TC p_req is read and report. BEC-T02's TC point moves from p = 13 to p_req - 16 = 14.
+
+F4. BEC-T02 (i).
+- The upper end "expected 0.35 to 12" is dropped, and only crit > 1/1000 is kept.
+- The row now says that at p_req - 16, (N^2 + 8N) u is 1.0 to 32.5, so neither the first-order nor the rigorous bound
+  applies.
+- The first-order N^(1/3) W_bound there (36.3 to 59.6, after F3) only indicates the size.
+- The critic's (N^2 + 8N) u range of 0.5 to 65 was recomputed, not copied: it included the n = 64 points (0.50) and TC at the
+  old p = 13 (65). The 9 points with n <= 32, with TC at p = 14, give 1.0 to 32.5 (f2_precision.py; exact in the second
+  pass's s1_compute.py).
+
+F5. Sidecar and pins (plan section 0, step 2).
+- The sidecar is the GNU line "<hex>  PREDICTION-BEC-CANONICAL.hbp", as the helium sidecar is (checked at ee50233).
+- The freeze commit must re-freeze group B every time. It starts from the post-helium values 2217, 674, 692 (read in
+  check-pins.sh at ee50233) and goes to 2218, 675, 693, with B_NOT_OK_SHA256 unchanged.
+- The old condition "if it pins files under sims/" is removed.
+
+F6. pi.
+- Option chosen: keep engine B's pi and use it. Engine B forms zeta(2) = pi^2/6, independent of engine A's series.
+  This adds a reachable falsifier: disjoint zeta(2) brackets.
+- Engine A's Machin pi, which no row used, is removed.
+- BEC-K01 (statement, method, falsifier), D14, BECDEF engine.A and engine.B, and plan sections 2 and 3 changed.
+
+F7. Engine A's source hashes.
+- Option chosen: an in-crate SHA-256 (src/sha256.rs, std only). It hashes the sources embedded by include_bytes!.
+- It has three FIPS 180-4 test vectors ("abc", the empty string, the 448-bit message), checked with hashlib in
+  f11_t710.py.
+- The reader recomputes every hash with hashlib and requires equality. This adds a falsifier to BEC-N04.
+- (Second pass, S2: engine B also hashes its own sources with hashlib, so it imports sys and hashlib.)
+
+F8. Costs.
+- The CI short job is now "under 15 min, of which BEC-F01's planted faults take under 10 min" (BEC-N04, plan section 7).
+- BEC-T01's reruns are 65 to 196 s of CPU, and BEC-T02's 66 to 198 s. Both together are 2.2 to 6.6 min of CPU (plan
+  section 8), from f2_precision.py: 4 N(N+1)/2 updates at 10 to 30 ns.
+
+F9. README overclaims.
+- (1) "is predicted to be met".
+- (2) "the full drift D_N is 23 to 128 times ... the next Mellin term alone is 23.4 to 126.5 times".
+- (3) the variance sentence is limited to the condensed side, with the q -> 1 agreement stated.
+- (4) the recomputation sentence now names the float and Decimal design values (ln B, t_c, t_M6, t_M8, the Gaussian
+  sizes).
+- (5) CALIBRATION.hbp is "measured rates, not regenerated".
+- Rule BUDGET now says "no receipt other than CALIBRATION.hbp contains a time or a rate".
+
+F10. EXCL-UNION wording.
+- It now says that the constructions ran in exact Fractions or integers, and that Decimal and floats were used for the
+  Mellin constants, the S and V sums, the pole tails, the Chernoff sums, the Gaussian estimates and printing.
+
+F11. BEC-L02 and BEC-B01 at q = 1/1000000.
+- S and V are certified to 2^-512, finer than 1e-6 C1 q^(N+1) (2.9e-105 at N = 16).
+- The 13-digit values are for display only.
+
+F12. BEC-O02.
+- New planted control PF9: the truncated-trace routine is fed the ground-mode coherent state with alpha^2 = <N_0>.
+  Then abs(Tr(rho a_0))^2 = alpha^2 (s_(N-1)/s_N)^2 > 0 (8/81 at q = 1/2, N = 1), and it must read MISS.
+- BEC-O02 is now control=NEGATIVE (PF9). Negative controls go from 5 to 6 (BECDEF control.NEGATIVE, BECEND, README).
+
+F13. BEC-N06.
+- READ rows carry only ids, read names and values, never statement text. So BEC-G02's coherent-state verdict cannot
+  trip K4.
+
+F14. BEC-T04, T06 and T08 at t = 7/10.
+- The four points are no longer called blind. The frozen Mellin values fix Y_N to 2.4e-13, g_N to 2.9e-12 and Var/N
+  to 3.1e-12 or better, if the D9 residual pattern holds (f11_t710.py). So those reads test the arithmetic and the
+  engines, not the expansion.
+- XP2, XP8 and the README changed to match.
+
+F15. D16.
+- Added: the induction shows only that N P_N is an integer polynomial. P_N itself has integer coefficients because Z_N
+  is a power series with integer coefficients.
+
+F16 (optional). Not applied.
+- BEC-L06 (d) stays CONJECTURE. No checked proof or citation for the discrete case was found in this pass.
+- BEC-L06 now names the route: truncating a log-concave law may lower its variance. A checked proof in a dated
+  addendum could make (d) DERIVED.
+
+------------------------------------------------------------------------------------------------------------------------
+TASK ITEMS BEYOND THE CRITIC
+
+T2. The engines' arithmetic.
+- Engine B now computes every exact quantity modulo 31-bit primes: 2^30 < p < 2^31, downward from 2^31 - 1, each
+  confirmed by deterministic Miller-Rabin with bases 2, 3, 5, 7. A p that divides b or any c_k is skipped and listed.
+  Inverses are pow(x, p - 2, p).
+- CRT recombines integers past 2^(beta+1). Rational reconstruction (the extended Euclidean algorithm stopped below
+  sqrt(M/2), with the cofactor prime to M) recovers each reduced fraction.
+- The size bounds are Z 2 beta + 1, <N_0> 2 beta + 2L + 1, <N_0^2> 2 beta + 4L + 1, Var 4 beta + 4L bits. (Second pass,
+  S7: L = ceil(log2 max(N, 2)), and the bounds are lower bounds on the product of the primes.)
+- Each value is confirmed against one extra prime p* and by its defining identity cross-multiplied in integers. A
+  failure is BECGUARD check=recon.
+- New D19 holds the derivation. BECDEF engine.B, rules GUARD, BUDGET, COMPARE (C2, C5) and INDEPENDENCE, D16, D17,
+  BEC-X01 and BEC-X02 changed.
+- Engine A keeps exact rationals as reduced big-integer pairs in Rust. The interval runs use dyadic integer pairs with
+  directed rounding, as stated in BECDEF engine.A and engine.B.
+- Cost (f7_mm_smoke.py and f9_mm_cost.py, rates measured at the excluded q = 5/8): q = 3/4 to N = 512 needs about
+  102,135 primes and a 3,164,124-bit Var modulus. It takes about 63 min on one core. The grid takes about 72 min.
+- Smoke at the excluded 5/8 and 2/7: all 40 fractions equal the exact Fraction values.
+- New planted fault PF8:
+  (a) fewprimes: the reconstruction fails or fails its extra-prime check from N = 2, where the frozen N = 2 variances
+      need 41 and 79 bits.
+  (b) keepprime: 2^31 - 1 is kept at q = 1/2, where it divides c_31; the check fails at N = 31 and 32.
+- In the smoke, too few primes failed all 20 fractions at each q. A kept prime dividing c_28 or c_40
+  (f8_badprime_search.py) failed exactly the fractions at N >= 28 or N >= 40, and none passed wrongly.
+- A composite modulus was tried first and rejected as a plant. It can return the true fraction times a factor of the
+  composite and then pass the extra-prime check.
+
+T3. The gate. See B4: a copy with two changed root lines, chosen over a wrapper.
+
+T4. Recomputed numbers. These are the gap ratios (B1), the Gaussian values (B3), the bands at q = 1/1000000 (F1), TC's
+    W_bound and p_req (F3), the p_req - 16 values and the (N^2 + 8N) u range (F4), and the costs (F8, T2). The O01
+    inequality is now scored differently, and its sizes are recomputed (B2). The t = 7/10 residual sizes are new (F14).
+    Each row that uses one cites its script in prefreeze. (Second pass, S5: this was not yet true for BEC-T04, T06, T08, N04
+    and X01, and the rows recomputed by the final critic's k2, k3, k4, k6 and k9 did not name them. They do now.)
+
+T5. SEQUENCE. The rule keeps its ancestor check and requires the freeze commit message to name the helium hash. At this
+    pass the aether clone shows the helium freeze on main as ee502335b270e9f47e4c9c317c9411c1eb36a4c2, after ac5b158,
+    ea68fc2 and 982a82d. The rule and plan section 0 record it and require a re-check on main. (Second pass, S10: the
+    clone's local main is still ac5b158; ee50233 is on its remote main, felipe/main, now 2ca50e9.)
+
+T6. Documents.
+- BECHDR has a fix_pass field.
+- BECEND has new records, negative controls, fixed_by_inputs S (5 to 14 rows), excluded (56 q) and fix_pass values.
+- f10_check.py recounted them from the file. Tags (19, 20, 1) and kinds are unchanged, and the pronoun scan is clean.
+- The README and engine plan are updated.
+- calc/ was not changed. Its SM7 fingerprints stay valid.
+
+========================================================================================================================
+SECOND PASS (2026-11-09)
+
+Source: verifier round 1's findings on the fixed package, 2 blocking and 19 minor (some minor items repeat each other). The
+verifier's scripts are in bec-fix/verify-r1/ (now BECSMOKE SM10). Before this pass the package was copied to bec-fix/r2/before/.
+The prediction file was 207 lines with sha256 0e54ba7a382ba7b509eb624b64f55e1260e664efea9d5f71ce9b5cb97591c132. It is now 209
+lines with sha256 3094cd7ae12bd17a0b7f4e59148e610e658c5a8c3f26fe4037fb3e99da0c72d0.
+
+Scratch, all under /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/bec-fix/r2/ and listed in BECSMOKE SM11:
+s1_compute.py (every number this pass moves, recomputed exactly, with s1_compute.txt), s2_c12_rerun.txt (calc/c12 rerun),
+s3_patch_hbp.py, s3_patch_hbp_b.py, s3_patch_hbp_c.py and s3_patch_docs.py (text edits only; a few plan lines were rewrapped
+by hand), s4_check.py (recount and scans), show.py (prints records). No engine code was written and no engine ran. No
+repository was touched; the aether clone was only read (git rev-parse, log, show).
+
+------------------------------------------------------------------------------------------------------------------------
+BLOCKING ITEMS
+
+S1. tools/check_points.py (also the minor item on plan section 0 step 2 and section 4).
+- The plan called it a copy of calc/c12_check_points.py. c12 imports fractions, and the copied gate scans tools/, so a copy
+  would read INTEGER_ONLY FAIL on the clean tree and BEC-N05 would read NOT_MET.
+- Plan sections 0 and 4 and CHANGES B4 now call it "an integer-pair port of calc/c12_check_points.py (a/b parsed and reduced
+  by its own gcd; no fractions import; the BEC-N05 gate scans it)", with the same output line.
+- Plan step 2 now reads "with no engine code; its one script is tools/check_points.py".
+- The frozen file needed no change here: rule POINTS and BEC-N05 already name tools/check_points.py, and N05 counts it.
+
+S2. Engine B's imports.
+- BEC-N04 says engine B prints its own sources' hashes by hashlib. BECDEF engine.B, BEC-N05 and plan section 3 said it
+  imports only sys. Two scored rows contradicted each other.
+- Option (a) is taken: engine B imports only sys and hashlib, both stdlib. BECDEF engine.B, the BEC-N05 statement, plan
+  section 3 and CHANGES F7 say so. BEC-N05 now predicts "the only imports in bec_b.py are sys and hashlib" in place of "one
+  import line". The gate allows hashlib.
+- Option (b) would have left engine B's head row without its source hashes, against the pins of BEC-N04.
+
+------------------------------------------------------------------------------------------------------------------------
+MINOR ITEMS
+
+S3. README overclaims.
+- BEC-O01: "where a lower bound on the gap, from Jensen with the frozen f values and certified by the reader at read time, is
+  10 or more orders above the estimated bracket width" (margins about 4e30, 1e11 and 4e10, fix-pass f3_o01.py).
+- t = 7/10: "to about 3e-12 or better (2.4e-13, 2.9e-12, 3.1e-12)" (fix-pass f11_t710.txt).
+
+S4. Disclosures that did not match the scripts.
+(a) EXCL-UNION: f10_check.py never ran c12. This pass reran calc/c12_check_points.py on the fixed file, before and after the
+    edits: 56 excluded q, 3 excluded t, 0 collisions, exit 0, the same bytes both times (s2_c12_rerun.txt). The saved
+    calc/c12_check_points.txt (16 q) stays unchanged, so its SM7 fingerprint stays valid. EXCL-UNION and BECEND cite the rerun.
+(b) BEC-L04: f6_gap_rows.py reproduced the frozen Delta1 to 1e-9, not 1e-10. The largest differences are 7.8e-10 at (2/5, 32)
+    and 6.7e-10 at (1/2, 48), read from f6_gap_rows.txt by s1_compute.py. CHANGES B1 had the same slip and is marked.
+(c) BEC-X04 prefreeze: den Var lost about twice the sum only as q -> 0. At 1/100000 and 1/10000000 the loss was from 0.04
+    bits below twice the sum to 14.6 above it. Elsewhere den Var also gains the numerator excess: its loss was -23 to 117
+    bits, from 69 bits below twice the sum to 29 above it (f4_x04.txt, read by s1_compute.py).
+(d) BEC-X04 and D17 said the gcd loss was 0.7N to 2.1N at the excluded q. The finding proposed 0.7N to 2.5N. The data give 0
+    to 2.5N: 0 at 3/1000, N = 16 (lane ENGINE band_check.txt), 0.63N at 2/9, N = 8, and 2.5N at 1/5, N = 8 and 24
+    (f4_x04.txt). Both now say 0 to 2.5N. The band [bits(D_N) - 3N, bits(D_N)] is unchanged.
+
+S5. Prefreeze citations.
+- BEC-T04, T06 and T08 cite fix-pass f11_t710.py (the t = 7/10 sizes, Mellin forms only) and the final critic's k4.
+- BEC-N04 now reads COMPUTED: the three FIPS vectors, checked with hashlib by f11_t710.py. It said none.
+- BEC-X01 cites f9_mm_cost.py for the prime counts and times in its cost field.
+- K01 to K03 cite the critic's k2; L02 to L05, B02, G01 and G02 cite k3; T01, T03, T04, T06, T08, T10 and T11 cite k4, and
+  T10 and T11 also k9; X02, B01 and F01 cite k6. T05 and T09 say "as BEC-T04" and "as BEC-T08".
+- CHANGES T4's claim now holds, and T4 is marked.
+
+S6. BEC-X04 den Var band at q = 1/1000000, N = 16.
+- It is widened by 45 bits, as the critic asked, not 90. The band is [16125, 16270]: 2 x 8133 - 6 x 16 - 45 = 16125, and
+  2 x 8133 + 2 x 1 + 2 = 16270, with bits(D_16) = 8133 and ceil(48 log2(10^6/999999)) = 1 (s1_compute.py).
+- It allows a loss of 141 bits against about 89 to 103 expected: twice 44.57, plus twice the 0 to 7 bits of other primes.
+  The falsifier is still reachable. CHANGES F1 is marked.
+
+S7. D19 modulus bounds.
+- L = ceil(log2 max(N, 2)) in D19, D17 and plan sections 3 and 8. With ceil(log2 N) the Var bound was one bit short at N = 1,
+  where B <= X_1^2 dominates. s1_compute.py checks the exponents for every N <= 2048. f9_mm_cost.py already used max(N, 2),
+  so no cost or prime count moves.
+- The bounds are now stated as "the product of the primes is at least 2^(2 beta + 1)" and so on, which gives
+  Mm > 2 max(A, B)^2. CHANGES T2 is marked.
+
+S8. BEC-X02 and the gcd size.
+- X02 now says "Engine B's construction does no big division ...; its only big divisions are the checked exact divisions of
+  the distribution step, d = X_N/g and n_j = n'_j/g (D19)".
+- Plan section 3: g has at most bits(D_N) - bits(t) + 1 bits (the BEC-X04 gcd loss), not "about 3N bits".
+
+S9. Plan sections 1, 3 and 7; CHANGES.
+(a) The sims/helium-film row is marked planned again: at ee50233 the folder holds only the frozen prediction, its sidecar,
+    README and CHANGES (git show --stat in the clone).
+(b) The BECDEF reader definition changed in the fix pass and was not listed. It is now listed in CHANGES B4.
+(c) Engine B's --self-test is defined in plan section 3: Miller-Rabin against trial division below 100000 and on 2047, 1373653
+    and 25326001; pow inverses; CRT and rational-reconstruction round trips; the dyadic rounding fixtures. s1_compute.py
+    checked the Miller-Rabin fixtures: each of the three is composite, a strong pseudoprime to its bases, and rejected by
+    bases 2, 3, 5 and 7; 3215031751 passes all four bases, which is why the prime list stays below it.
+(d) CHANGES F4 notes the recomputed range: the critic's 0.5 to 65 included the n = 64 points (0.50) and TC at the old p = 13
+    (65). The 9 points with n <= 32, with TC at p = 14, give 1.0 to 32.5 (exact in s1_compute.py).
+
+S10. SEQUENCE wording (rule SEQUENCE, README status, plan section 0, CHANGES T5).
+- The clone's local main is still ac5b158. Its remote main, felipe/main, is now 2ca50e9 and contains the helium freeze
+  ee50233, which adds PREDICTION-HELIUM-FILM.hbp (sha256 392b3916...) with its GNU sidecar line.
+- 2ca50e9 adds no .sha256 file and leaves scripts/check-pins.sh unchanged, so the post-helium pins 2217, 674 and 692 stand.
+- The re-check on main before the freeze commit stays.
+
+S11. BEC-X04 reasoning.
+- The forced loss comes from every prime r <= N, not only the primes dividing b - a: about 2 v_r(floor(N/d)!) log2 r bits
+  with d = ord_r(b/a) (verifier round 1, v7_gcdloss.py).
+- s1_compute.py recomputed it from a, b and N alone: 0.79 of 3N at (2/5, 256), 0.77 at (2/5, 128), 0.49 at (1/2, 256), 0.37
+  at (3/4, 512) and 0.93 at (1/1000000, 16), where every prime up to 13 that does not divide b has d = 1.
+- At the excluded 2/7, 5/8, 2/9, 43/64 and 2/3, N = 8 to 40, the forced product divides D_N/den Z_N in all 25 exact cases,
+  with 0 to 7.1 bits more.
+- The sentence "at most 0.52 of 3N at q = 2/5" is replaced. No band changes. CHANGES F1 is marked.
+
+S12. D19 and plan section 3: a prime with X_N = 0 mod p is not used at that N for the quantities that divide by Z_N. It is
+     listed per N in the head row, the next prime is used, and p* moves to the next prime below it in the same case.
+
+S13. D13 and BEC-T01.
+- D13's bound is derived for construction 1, which gives engine A's f bracket. Engine B's interval mode runs construction 2,
+  whose weight error for small y = q^k is about k(w+u), with k up to m. D13 now says so and derives no bound for engine B.
+- BEC-T01: engine B's W_N/W_bound and crit are read and report. The falsifier and verdict rule name engine A. BEC-N03 still
+  scores engine B's widths against engine A's (width ratio in [1/16, 16]; lane ENGINE measured E/Z width ratios of 0.97 to
+  1.04 at the excluded t = 5/7, N = 27 to 3375, engine/smoke_interval.txt).
+- The CONJECTURE sub-read option was not taken, so BEC-T01 stays DERIVED. The owner's target stays scored on engine A at all
+  11 points and at p_req.
+
+S14. Disclosure of verifier round 1.
+- New BECSMOKE SM10: what v1 to v7 and gate_mock/ computed and where, with sha256 fingerprints. This pass recomputed the
+  fingerprints, and all equal those the verifier gave.
+- XP2, XP4, XP5 and XP8 name verifier round 1. At t = 7/10 only Mellin forms were evaluated, at (7/10, 8) for M and x(N - S)
+  only. The verifier's Mellin forms at (9/10, 16) and (9/10, 32) and its (7/10, 8) values are in no saved script, and SM10
+  says so.
+- The rows that use those values cite SM10: K01 to K03, C01 (and so C02, C03), X01, X02, X04, L02 to L05, B01, B02, G01, G02,
+  O01, O02, T01 to T04, T06, T08, T10, T11 and F01.
+- XP4 and BEC-X01 no longer say that no seat evaluated the N <= 3 values: the verifier checked normalization and the variance
+  identity there. No seat evaluated the X01 (d), X02 and O01 sub-reads themselves.
+- New BECSMOKE SM11 for this pass, with fingerprints.
+
+S15. D19: "a wrong residue need not fail them, so the extra prime is the check that catches it". In the verifier's keepprime
+     smoke at the excluded 2/7 the integer identities failed too, at N = 40 and 42 (v5_multimod.txt). Plan section 3 matches.
+
+S16. D10: "0.118 to 0.317 at the sampled N". Verifier round 1 found 0.097 at (2/3, N = 30) to 0.320 at (1/5, N = 40);
+     s1_compute.py agrees, with exact brackets 0.0969 and 0.3201 at those excluded points.
+
+S17. BEC-O02 PF9: the routine takes each ground-mode entry as rho_(m,n) = alpha^(m+n) r_(m,n)/sqrt(m! n!), with rational
+     r_(m,n) and alpha^2. Since (n-1)! n! = n ((n-1)!)^2, rho_(n,n-1) sqrt(n) = alpha^(2n-1) r_(n,n-1)/(n-1)!, so
+     abs(Tr(rho a_0))^2 is a rational in alpha^2. The value 8/81 at q = 1/2, N = 1 was rechecked (s1_compute.py). Plan
+     section 4 matches.
+
+S18. Records and documents.
+- BECHDR's fix_pass field notes the second pass. BECEND: BECSMOKE 9 -> 11, the excluded line cites the rerun, and a new
+  second_pass field.
+- Tags (19, 20, 1), kinds, negative controls (6) and fixed_by_inputs (11 rows 1, 14 rows S) are unchanged. s4_check.py
+  recounted them and checked the required fields, the field format and the retired wording; its pronoun scan of the four
+  files found nothing.
+- The README has a section on this pass and one more honest limit (engine B's interval widths have no derived bound).
+
+Owner specification. Every item is kept: the two independent exact constructions (D2, BEC-X01); normalization (X01 c); the
+fixed-q rows and the q_N scaling rows; N^(1/3) W_N < 1/1000 (BEC-T01 on engine A, BEC-T02); certified C (BEC-K01); the variance
+identity (D3); <a_0> = 0 (BEC-O02); occupation, coherence and phase order kept separate; the boundary controls (BEC-B01, B02,
+C01); fixed-q <N_ex> bounded with an O(1/N) correction (BEC-L02, L04, D4); the canonical remainder OPEN (BEC-T07); no GP or
+Bogoliubov before the exact tests pass (GATE_GP); the freeze only after the helium-film freeze (SEQUENCE).
+
+Adjusted or not applied.
+- S4 (d): "0 to 2.5N" in place of the proposed "0.7N to 2.5N", which the excluded data contradict.
+- S13: the read-and-report option, not a CONJECTURE sub-read and not a construction-2 error recurrence.
+- The verifier's estimate that a crude construction-2 bound has an N^2 term about 4 times as large is not frozen. This pass
+  did not derive it.
+- The verifier's other numbers enter the file only where this pass recomputed them (S11, S16, S17) or as the verifier's own
+  report in SM10.
+
+
+AT THE FREEZE (appended by the cloud seat when committing; the verifiers read CHANGES.txt without this section)
+====================================================================================================================
+
+Verification. Round 1: two verifiers, FIX_FIRST and FIX_FIRST, with 2 blocking items (S1 and S2 above). The second
+pass fixed both. Round 2: two fresh verifiers, PASS and PASS, nothing blocking. The frozen
+PREDICTION-BEC-CANONICAL.hbp is exactly the verified file, sha256
+3094cd7ae12bd17a0b7f4e59148e610e658c5a8c3f26fe4037fb3e99da0c72d0. README.md, and this file above this section, are the
+verified bytes too. engine_plan.txt stays with the scratch copies until the code commit.
+
+tools/check_points.py. Written at the freeze, as plan section 0 step 2 says: an integer-pair port of
+calc/c12_check_points.py. Each rational is a reduced pair (num, den) with den > 0, parsed from a/b and reduced by its
+own gcd; anything that is not a/b or a bare integer is refused (0.5 is). On the frozen file it reads 56 excluded q and
+3 excluded t, prints the same line as c12, "collisions: q [], t [], calibration t n []", and exits 0. Plants on copies
+of the file: q 1/2; q 3/4 and 9/10; q 2/4 (read as 1/2); t 7/10. In each, both checkers named the same points and
+exited 1. Under the BEC-N05 gate copy (ac5b158's ternary/tools/integer_only.py with only the two root lines changed;
+the copy itself comes with the engine commit) the tools folder read python_files=2, rust_files=0, hits=0, OK. The
+script reads only the BECEXCL and BECPOINT records. It computes no physics value.
+
+Disclosure of verifier round 2 (owner rule: every pre-freeze computation is disclosed). BECSMOKE in the frozen file
+ends at SM11 and cannot take an SM12 now, so this paragraph is that record. An addendum file may carry it as an SM12
+record. The cloud seat recomputed every fingerprint below at the freeze (sha256, first 16 hex); all are equal to those
+the verifiers gave.
+
+Verifier A (scratch bec-fix/verify-r2/): fdiff.py c12604b117b8c2cc, recount.py 1fd6ffefc94b1a76, and gate/ (stub trees
+with no engine code; gate copy 29a03c35b21ea34e). It ran no recursion and no engine at any point. Its hand closed-form
+evaluations at row points: at t = 7/10 and 9/10, the two-term leading form f = 1 - t^3 - C t^2 N^(-1/3), with x =
+c3/(t n), at (7/10, 8) and (9/10, 16), to sanity-check the Jensen sizes; at N <= 3, bits(D_2), beta and the D19 bounds
+at q = 1/2 and 3/4 for N = 2 and 3, the bit needs of the frozen BEC-C02 Var strings, and Z_2(1/2) = 896/27; the
+truncated model's Z_1^(L), <N_0> and PF9 values at q = 1/2, N = 1, L = 1, 2, 3; the forced gcd-loss sum 44.57 at q =
+1/1000000, N = 16; bits(D_512) and 4 beta + 4L at q = 3/4; and (N^2 + 8N) u from the frozen p_req.
+
+Verifier B (scratch bec-fix/vr2-indep-7c/; script, then output): a1_small_n 157e58846ff345d3, 42b78a96b4d7b441;
+a2_constants 721eb62b3bcdaabb, 9d1d64108f309e88; a3_scaling 4951cc0fd568067e, cc14bbf784f2dbc0; a4_gap
+1bce029689f6eaa3, 1840589defce8b98; a5_gauss 719b42809755f7ff, bfc9a40e651cbf58; a6_identity 8a921b2513d0af45,
+c0749aabeed38559; a7_multimod 524899a74696985e, 41ae197708001082; a8_keepprime 0e9697d1d84cd3e1, 2c4818ceb9954c37;
+a8b_debug 861dc642492018f4 (no output file); a9_spot 0f7dbf904a5c1382, 0ae09d6f0862e2c8; a10_chernoff
+3205678c00ebeba8, 60f119362c4ed6be; a11_gcdloss c3d671f795ac04a6, b729cd8933859d74; a12_boundary bb90bd24c4955681,
+7a6628038ad2ff1f; a13_points 28364c437cc16870, 007ef8e33b90cbc0; gate_mock/ holds stub trees only. Row-point work,
+closed forms only: both constructions at N <= 3 at the seven row q (XP4); the BEC-K01 constants; the 11 q_N and log
+checks, and the D13 bound and p_req at the 11 scaling points from the frozen f values; closed forms at the 15 BEC-L04
+ladder points; the Gaussian estimate and summed S, V at TC; Mellin forms at (1/2, 8) and (9/10, 32); Chernoff ln B1,
+ln B2 and M at (1/2, 8), (1/2, 16), (9/10, 16) and (9/10, 32); L03 S, V at 2/5, 1/2, 3/4; the K02 logarithms and four
+t_N(q); X04 bits(D_N) at all 29 points and the gcd-loss rule at 5; L05 residuals at 1/2; G01, G02 bounds at (2/5, 16);
+L02 S, V at 1/1000000. Exact recursions ran only at excluded points: 1/5, 3/5, 2/3, 2/9, 47/50, 5/8, 4/5, 1/10000000
+and (t, n) = (4/5, 6).
+
+Rows that use these values (they would cite SM12): BEC-C01 to C03, K01 to K03, X01, X02, X04, L02 to L05, B01, B02,
+G01, G02, O01, O02, T01 to T04, T08 to T11, N05 and F01. The XP2, XP4 and XP5 seen lists add verifier round 2; so does
+XP8 for verifier A's two-term form at (7/10, 8) and (9/10, 16). Exposure: every row-point value above recomputes a
+frozen value or a closed form the file already fixes, except the truncated-model PF9 values 10/49, 4/25 and 84/625 (q
+= 1/2, N = 1, L = 1, 2, 3). Those are exposed now. BEC-O02 scores PF9 only as a positive value and MISS, so they move
+no verdict.
+
+Decisions at the freeze and for the engine commit. They keep the frozen rows as written: (0) this file is committed
+beside the hbp, so BECHDR's pointer to it holds (M03); (1) the BEC-N05 CI step diffs the gate copy against `git show
+ac5b158:ternary/tools/integer_only.py`, not the working-tree file (M05); (2) each F7 literal goes into a new fixture
+file of its own in each of the four roots, so python_files and rust_files each rise by two (M06); (3) the TC precision
+reruns wait until the reader has read the p = 128 run, and use the p_req and p_req - 16 it prints (BEC-T01); the other
+points use the frozen p_req, rechecked by the reader (M08).
+
+The verifiers' minor items are listed below and left unapplied, so that the committed prediction file is the verified
+one. None moves a verdict. Where a statement or a prefreeze field reads more broadly than its predicted field, the
+predicted field governs; where README.md and the prediction file differ, the prediction file governs. A later
+correction goes into PREDICTION-BEC-CANONICAL-ADDENDUM-<date>.hbp, never into the frozen file. M09 and M10 overlap;
+this section's disclosure paragraph meets both in substance.
+
+M01 [minor, verifier A] PREDICTION-BEC-CANONICAL.hbp BEC-O02 statement and prefreeze; CHANGES.txt F12 and S17
+    The PF9 example does not match how the row defines alpha^2. The row says the routine is fed 'the ground-mode
+    coherent state with alpha^2 = <N_0> of the same TRUNC run'. It then gives 'for example 8/81 at q = 1/2, N = 1,
+    where alpha^2 = 1/8'. But 1/8 is the full-model <N_0> from BEC-C01. In a TRUNC run at q = 1/2, N = 1 the truncated
+    model gives <N_0> = 1/Z_1^(L) = 2/5, 1/4 and 4/21 for L = 1, 2 and 3. PF9 would then read 10/49, 4/25 and 84/625.
+    No TRUNC run produces 8/81. The value carries no verdict, because the row only predicts a positive value and MISS,
+    so the falsifier is unaffected. Verifier round 1 (v6_spot) and s1_compute (f) repeated the same frozen-<N_0>
+    evaluation.
+    Suggested: Reword the example: 'for example, alpha^2 = 1/8 (the full-model <N_0> at q = 1/2, N = 1, BEC-C01) gives
+    8/81; in a TRUNC run alpha^2 is the truncated model's <N_0>'. Or quote the TRUNC values 10/49, 4/25 and 84/625 and
+    disclose them as this verifier's hand evaluation (XP4 class). Match CHANGES F12 and S17.
+
+M02 [minor, verifier A] PREDICTION-BEC-CANONICAL.hbp prefreeze of BEC-T02, BEC-X04 and BEC-O01; CHANGES.txt S5 and T4
+    Some rows still do not name the final critic's re-checks, although SM8 and XP5 list them. (1) critic.checked says
+    k4 computed 'T01 ... the p_req-16 range 35.1 to 59.6; T02 (ii) 0.27 and 0.71'. T02's prefreeze cites c7_scaling,
+    f2_precision, v4_certified and s1_compute, but not k4 or SM8. CHANGES S5 also leaves T02 out of its k4 list. (2)
+    k6 recomputed 'the 29 BEC-X04 bits(D_N) values and excess bounds'. X04's prefreeze does not cite k6; its statement
+    cites only k7. (3) k6 recounted the TRUNC modes and states. O01 cites only v6_spot for these. CHANGES S5 and T4
+    say that every row now names its scripts, which is not quite true. Round 1 classed this kind of omission as minor
+    (S5).
+    Suggested: Append to T02's prefreeze: 'final critic k4 (SM8, XP5: the (ii) values 0.27 and 0.71 and the p_req - 16
+    range at the old TC p)'. Append to X04's: 'final critic k6 (SM8: the 29 bits(D_N) values and excess bounds)'.
+    Append to O01's: 'final critic k6 (SM8: the TRUNC counts)'. Add T02, X04 and O01 to the lists in CHANGES S5.
+
+M03 [minor, verifier A] engine_plan.txt section 0 step 2 and README.md Layout, against BECHDR fix_pass and README Status
+    The frozen BECHDR says the changes are 'listed item by item in CHANGES.txt beside this file', and the README says
+    '`CHANGES.txt` lists every change'. The plan's freeze-commit list (the hbp, its sidecar, README.md and
+    tools/check_points.py) and the README layout both leave out CHANGES.txt. The helium freeze committed its
+    CHANGES.txt. A freeze that follows the plan would leave a dangling reference in a file that can no longer be
+    edited.
+    Suggested: Add 'CHANGES.txt' to plan section 0 step 2 and to the README layout block. The frozen file needs no
+    change.
+
+M04 [minor, verifier A] README.md Status paragraph (line 9)
+    'A fix pass ... applied the final critic's 5 blocking items and 16 fixes' overclaims: F16 (optional) was not
+    applied (CHANGES F16, BEC-L06 prefreeze). 'A second pass applied verifier round 1's 2 blocking and 19 minor
+    findings' also hides that S4 (d) was adjusted and S13 was resolved by choosing one of the offered options
+    (CHANGES, 'Adjusted or not applied'). This is the same kind of wording that F9 corrected.
+    Suggested: Write 'applied the 5 blocking items and 15 of the 16 fixes (the optional F16 is not applied)' and
+    'applied verifier round 1's findings, two of them adjusted as CHANGES.txt records'.
+
+M05 [minor, verifier A] BEC-N05 method and predicted; engine_plan.txt sections 4 and 7
+    The CI step diffs the gate copy 'against ternary/tools/integer_only.py' in the checkout at the run commit. The
+    statement defines the copy as one taken from the file 'at ac5b158'. If ternary's tool is edited later on main, a
+    correct build gives a diff of more than the two root lines, and N05 reads NOT_MET. ternary/ is unchanged from
+    ac5b158 to 2ca50e9, so nothing is affected today. Checked here: the two-line copy reads python_files=6,
+    rust_files=11, hits=0 on a stub tree, and four FAIL lines with exit 1 on the planted tree.
+    Suggested: In the method and plan sections 4 and 7, name the reference as 'git show
+    ac5b158:ternary/tools/integer_only.py' (or a committed copy of that blob) rather than the working-tree file.
+
+M06 [minor, verifier A] BEC-N05 predicted ('python_files and rust_files each two above the clean run'); BEC-F01 F7; plan section 6 F7 row
+    The +2 file counts hold only if each F7 literal goes into a new fixture file. If a literal is appended to an
+    existing file (for example bec_b.py), the counts do not change, and the predicted counts fail on a correct gate.
+    F01 and the plan say only 'a float literal planted in each of the four roots'.
+    Suggested: Say 'one new fixture file holding one float literal in each root' in F01, N05 and plan section 6.
+
+M07 [minor, verifier A] D15 ('exact Decimal and Fraction recursions'); D10 ('matched the exact gap to 4 digits or better wherever M >= 5')
+    Two wording inaccuracies. (1) At the excluded (t, n) = (4/5, 6), q is irrational and f1_gauss ran a 60-digit
+    Decimal recursion, not an exact one (SM9 says so correctly). (2) At the excluded (2/9, N = 8, M = 5.28),
+    f5_gap.txt gives gap_est/gap = 0.99982, which is 3.7 digits. The ratio itself matched to 5 digits, as BEC-L04
+    correctly says.
+    Suggested: D15: 'a 60-digit Decimal recursion at (4/5, 6) and exact Fraction recursions at q = 2/3'. D10: 'matched
+    the exact gap to about 4 digits (the ratio to 5 or better) wherever M >= 5'.
+
+M08 [minor, verifier A] engine_plan.txt section 0 step 6 and section 7
+    BEC-T01 now sets TC's p_req from the reader's certified f_hi (29, 30 or 31), and BEC-T02's TC point is that p_req
+    - 16. The plan does not say that the TC precision reruns must wait for the reader to read the p = 128 run, or how
+    the rerun precision reaches the engine.
+    Suggested: Add to step 6: 'the TC reruns use p_req and p_req - 16 as printed by the reader from the p = 128 run
+    (BEC-T01); the other points use the frozen p_req, rechecked by the reader'.
+
+M09 [minor, verifier A] BECSMOKE and BECEXPOSURE XP2, XP4, XP5 and XP8 (if the file is edited again)
+    This round-2 verifier ran no recursion and no engine at any point. It did make hand closed-form evaluations at row
+    points that are not yet in the file. At t = 7/10 and t = 9/10: the two-term leading form f = 1 - t^3 - C t^2
+    N^(-1/3), with x = c3/(t n), at (7/10, 8) and (9/10, 16), used to sanity-check the Jensen sizes. At N <= 3:
+    bits(D_2), beta and the D19 bounds at q = 1/2 and 3/4 for N = 2, 3; the bit needs of the frozen BEC-C02 Var
+    strings; Z_2(1/2) = 896/27; the truncated-model Z_1^(L), <N_0> and PF9 values at q = 1/2, N = 1, L = 1, 2, 3.
+    Also: the forced gcd-loss sum 44.57 at q = 1/1000000, N = 16, from b - a and N; bits(D_512) and 4 beta + 4L at q =
+    3/4; (N^2 + 8N) u from the frozen p_req. Scripts: bec-fix/verify-r2/fdiff.py c12604b117b8c2cc, recount.py
+    1fd6ffefc94b1a76, and gate/ (stub trees with no engine code; gate copy 29a03c35b21ea34e).
+    Suggested: If any of the items above is applied, add a BECSMOKE SM12 for verifier round 2 with these items and
+    fingerprints. Add a verifier round 2 line to XP2 and XP8 (the hand two-term form at (7/10, 8) and (9/10, 16)), to
+    XP4 (the N <= 3 and TRUNC N = 1 hand values) and to XP5. If the file is frozen as it stands, record them in the
+    freeze commit message.
+
+M10 [minor, verifier B] PREDICTION-BEC-CANONICAL.hbp: BECSMOKE (no record for verifier round 2), the XP2, XP4 and XP5 seen lists, BECEND records, and the prefreeze fields of the rows below; README.md disclosure sentence
+    This round made new pre-freeze computations at row points, and the file does not yet disclose them. Row-point
+    work, closed forms only: both constructions at N <= 3 at the seven row q (XP4), and the BEC-K01 constants. The 11
+    q_N and log checks, and the D13 bound and p_req at the 11 scaling points from the frozen f values. Closed forms at
+    the 15 BEC-L04 ladder points. The Gaussian estimate and summed S, V at TC. Mellin forms at (1/2, 8) and (9/10,
+    32). Chernoff ln B1, ln B2 and M at (1/2, 8), (1/2, 16), (9/10, 16) and (9/10, 32). L03 S, V at 2/5, 1/2, 3/4; K02
+    logarithms and 4 t_N(q); X04 bits(D_N) at all 29 points and the gcd-loss rule at 5; L05 residuals at 1/2; G01, G02
+    bounds at (2/5, 16); L02 S, V at 1/1000000. Exact recursions ran only at excluded points: 1/5, 3/5, 2/3, 2/9,
+    47/50, 5/8, 4/5, 1/10000000 and (t, n) = (4/5, 6). There was also a gate stub tree. The owner rule says each
+    pre-freeze computation is disclosed in the row that uses it. The package could not have done this yet, because the
+    work came after it.
+    Suggested: Before the freeze commit, add BECSMOKE SM12 (verifier round 2; also the other round-2 seat). Scripts
+    are in /tmp/claude-0/-home-user/b2fb539a-cb4d-5f0b-a22f-ca1a7fcb500d/scratchpad/bec-fix/vr2-indep-7c/, each with a
+    .txt output. Fingerprints, script then output: a1_small_n 157e58846ff345d3, 42b78a96b4d7b441; a2_constants
+    721eb62b3bcdaabb, 9d1d64108f309e88; a3_scaling 4951cc0fd568067e, cc14bbf784f2dbc0; a4_gap 1bce029689f6eaa3,
+    1840589defce8b98; a5_gauss 719b42809755f7ff, bfc9a40e651cbf58; a6_identity 8a921b2513d0af45, c0749aabeed38559;
+    a7_multimod 524899a74696985e, 41ae197708001082; a8_keepprime 0e9697d1d84cd3e1, 2c4818ceb9954c37; a8b_debug
+    861dc642492018f4 (no output file); a9_spot 0f7dbf904a5c1382, 0ae09d6f0862e2c8; a10_chernoff 3205678c00ebeba8,
+    60f119362c4ed6be; a11_gcdloss c3d671f795ac04a6, b729cd8933859d74; a12_boundary bb90bd24c4955681, 7a6628038ad2ff1f;
+    a13_points 28364c437cc16870, 007ef8e33b90cbc0; gate_mock/ holds stub trees only. Cite SM12 in the prefreeze fields
+    of BEC-C01 to C03, K01 to K03, X01, X02, X04, L02 to L05, B01, B02, G01, G02, O01, T01 to T04, T08 to T11, N05 and
+    F01. Add verifier round 2 to the XP2, XP4 and XP5 seen lists. Update BECEND (BECSMOKE 11 -> 12) and the README
+    disclosure sentence.
+
+M11 [minor, verifier B] README.md line 13 (Status): 'No seat ran either construction at a row point, with one exception that was found and fixed. That was q = 1/3'
+    This sentence is too broad. Verifier round 1's v1_closed.py ran both recursions as integer polynomials for N <= 3
+    and evaluated them at the seven row q (SM10, XP4). This round ran both constructions at the seven row q for N <=
+    3. The file's XP8 already has the right qualifier: 'beyond the N <= 3 closed forms of XP4'. The README sentence
+    lacks it.
+    Suggested: Reword to 'No seat ran either construction at a row point beyond N <= 3, where the frozen closed forms
+    already fix the values (XP4), with one exception that was found and fixed: q = 1/3 (XP1).'
+
+M12 [minor, verifier B] PREDICTION-BEC-CANONICAL.hbp BECEXPOSURE XP2, seen field: 'since <N_ex>_N = S(q_N) - Delta1 with ln Delta1 <= -84, this fixes the engine's <N_0> there to about 36 digits'
+    'There' covers six TS points and TC, but the bound ln Delta1 <= -84 holds only at (1/2, 8) and the larger-n
+    points. At (9/10, 16) the frozen ceiling is ln B1 <= -17.2. My check gives -17.25 at the reader's four theta
+    values, so B1 alone fixes <N_0> (about 625) to about 10 digits, not 36. At TC, Delta1 is about 15 (Gaussian
+    estimate 14.73), so S(q_N) does not fix <N_0> at all. The handling is still right. BEC-T11 keeps fixed_by_inputs=0
+    at TC. At (9/10, 16) the T04, T06 and T08 reads stay fixed by inputs, since N^(-2/3) Delta1 <= 1.3e-10 and
+    Delta2/Var <= 3e-8, far inside the 1e-5 sharp bands. Only the sentence is wrong.
+    Suggested: Reword to 'since <N_ex>_N = S(q_N) - Delta1 with 0 < Delta1 <= B1 (BEC-T03: ln B1 <= -84 at (1/2, 8),
+    -17.2 at (9/10, 16), lower at the other four), this fixes the engine's <N_0> at the six TS points to at least 10
+    digits; at TC Delta1 is about 15, so nothing is fixed there (BEC-T11 stays fixed_by_inputs=0)'.
